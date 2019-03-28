@@ -1,10 +1,15 @@
 .cke_button_icon {
+
   &.cke_button__forkimage_icon {
+    background: url('../../Js/ckeditor/skins/moono-lisa/icons_hidpi.png?t=J1QC') no-repeat 0 -696px!important;
+    background-size: 16px!important;
     font-size: 17px;
     color: #464646;
   }
 
   &.cke_button__forklink_icon {
+    background: url('../../Js/ckeditor/skins/moono-lisa/icons_hidpi.png?t=J1QC') no-repeat 0 -1512px!important;
+    background-size: 16px!important;
     font-size: 17px;
     color: #464646;
   }
