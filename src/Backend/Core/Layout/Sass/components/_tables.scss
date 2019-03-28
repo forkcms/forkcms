@@ -53,6 +53,10 @@
         margin-top: 0;
         position: static;
       }
+
+      &.fork-data-grid-action {
+        text-align: right;
+      }
     }
 
     td {
@@ -64,11 +68,6 @@
 
       a {
         text-decoration: none;
-      }
-
-      .btn {
-        display: flex;
-        align-items: center;
       }
     }
 
