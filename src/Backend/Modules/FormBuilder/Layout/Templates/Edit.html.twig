@@ -143,7 +143,7 @@
                         <div class="col-md-4 d-flex">
                           <div class="btn-group ml-auto" role="group">
                             <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ submitId }}">
-                              {{ macro.icon('pencil fa-fw') }}
+                              {{ macro.icon('pencil-alt fa-fw') }}
                               <span class="sr-only">{{ 'lbl.Edit'|trans|ucfirst }}</span>
                             </button>
                           </div>
@@ -170,19 +170,19 @@
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
                       </button>
                       <button id="datetimeSelector" data-field-id="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
+                        <i class="fas fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
                       </button>
                       <button id="dropdownSelector" data-field-id="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
                       </button>
                       <button id="checkboxSelector" data-field-id="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
+                        <i class="fas fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
                       </button>
                       <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
+                        <i class="fas fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
                       </button>
                       <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
-                        <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
+                        <i class="fas fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
                       </button>
                       {% if showMailmotorOption %}
                         <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
@@ -193,10 +193,10 @@
                     <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
                       <button id="headingSelector" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
+                        <i class="fas fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
                       </button>
                       <button id="paragraphSelector" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
+                        <i class="fas fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
                       </button>
                     </div>
                   </div>
@@ -224,12 +224,12 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showFormBuilderDelete %}
-  	  	    {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button" } ) }}
+  	  	    {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button" } ) }}
           {% endif %}
   	  	  {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group ml-auto" role="group">
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "name":"edit", "type":"submit" } ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "name":"edit", "type":"submit" } ) }}
         </div>
       </div>
     </div>
@@ -381,7 +381,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -488,7 +488,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -596,7 +596,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -683,7 +683,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -769,7 +769,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -855,7 +855,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -881,7 +881,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -907,7 +907,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>
@@ -962,7 +962,7 @@
         </div>
         <div class="modal-footer">
   	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+  	  	  {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
         </div>
       </div>
     </div>

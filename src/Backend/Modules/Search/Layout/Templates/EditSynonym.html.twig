@@ -42,7 +42,7 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showSearchDeleteSynonym %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "type":"button", "data-target":"#confirmDelete"}) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "type":"button", "data-target":"#confirmDelete"}) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Synonyms'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>

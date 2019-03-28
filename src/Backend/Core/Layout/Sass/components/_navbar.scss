@@ -390,9 +390,13 @@
   }
 
   .dropdown {
-    .fa-angle-right {
+
+    .dropdown-angle {
+      align-items: center;
       background-color: $primary;
       border-radius: 100%;
+      display: flex;
+      justify-content: center;
       height: 20px;
       margin: -3px 0;
       position: absolute;
@@ -402,12 +406,8 @@
       transition: all 250ms;
       width: 20px;
 
-      &:before {
+      .fa-angle-right {
         color: $white;
-        font-size: $font-size-btn;
-        left: 8px;
-        position: absolute;
-        top: 2px;
       }
     }
 

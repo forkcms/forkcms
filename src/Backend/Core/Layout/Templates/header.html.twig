@@ -38,7 +38,7 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="navbarProfileDropdown">
         <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="rounded-circle" alt="{{ authenticatedUserNickname }}" />
-        {{ macro.icon('angle-right') }}
+        <span class="dropdown-angle">{{ macro.icon('angle-right') }}</span>
       </a>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarProfileDropdown">
         {% if authenticatedUserEditUrl %}

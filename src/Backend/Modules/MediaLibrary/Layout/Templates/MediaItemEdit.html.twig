@@ -48,7 +48,7 @@
         <div class="btn-group pull-left" role="group">
           {% if showMediaLibraryMediaItemDelete %}
             {% if mediaItem.groups.count == 0 %}
-              {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
+              {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
             {% endif %}
           {% endif %}
         </div>

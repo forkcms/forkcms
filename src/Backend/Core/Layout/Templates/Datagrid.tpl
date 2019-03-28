@@ -11,18 +11,18 @@
       {option:headers.sorted}
       {option:headers.sortedAsc}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
-        {$headers.label} <span class="fa fa-sort-asc" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort-up" aria-hidden="true"></span>
       </a>
       {/option:headers.sortedAsc}
       {option:headers.sortedDesc}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
-        {$headers.label} <span class="fa fa-sort-desc" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort-down" aria-hidden="true"></span>
       </a>
       {/option:headers.sortedDesc}
       {/option:headers.sorted}
       {option:headers.notSorted}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable">
-        {$headers.label} <span class="fa fa-sort" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort" aria-hidden="true"></span>
       </a>
       {/option:headers.notSorted}
       {/option:headers.sorting}

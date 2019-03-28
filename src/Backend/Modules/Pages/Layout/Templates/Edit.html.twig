@@ -354,13 +354,13 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showPagesDelete and allowPagesDelete %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" }) }}
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
+          {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" }) }}
+          {{ macro.buttonIcon('', 'save', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
         </div>
       </div>
     </div>

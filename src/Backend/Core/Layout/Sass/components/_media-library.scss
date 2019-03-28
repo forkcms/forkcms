@@ -130,18 +130,13 @@
   position: relative;
 
   .icon {
-    @extend .fa-play-circle-o;
     color: $black;
-    font-family: FontAwesome;
+    font-size: 22px;
     margin-left: -9px;
     margin-top: -15px;
     position: absolute;
     left: 50%;
     top: 50%;
-
-    &:before {
-      font-size: 22px;
-    }
   }
 
   .url {

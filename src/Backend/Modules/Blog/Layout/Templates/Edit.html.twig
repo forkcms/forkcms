@@ -216,12 +216,12 @@
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           {% if showBlogDelete %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
+          {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
           {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
         </div>
       </div>

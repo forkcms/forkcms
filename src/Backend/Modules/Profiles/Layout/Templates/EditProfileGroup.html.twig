@@ -18,7 +18,7 @@
           <div class="col-md-6 col-lg-3">
             <div class="input-group">
               <span class="input-group-addon">
-                <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+                <span class="fas fa-calendar fa-fw" aria-hidden="true"></span>
                 <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
               </span>
               {% form_field expiration_date %}
@@ -28,7 +28,7 @@
           <div class="col-md-6 col-lg-3">
             <div class="input-group">
               <span class="input-group-addon">
-                <span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+                <span class="fas fa-clock-o fa-fw" aria-hidden="true"></span>
                 <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
               </span>
               {% form_field expiration_time %}
@@ -44,12 +44,12 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showProfilesDeleteProfileGroup %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ profileId ~ "#tabGroups", 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ profileId ~ "#tabGroups", 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"saveButton", "type":"submit", "name":"edit" }) }}
+          {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ profileId ~ "#tabGroups", 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"saveButton", "type":"submit", "name":"edit" }) }}
         </div>
       </div>
     </div>

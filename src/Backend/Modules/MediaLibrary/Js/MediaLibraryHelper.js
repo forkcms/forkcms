@@ -1501,7 +1501,7 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
       // is file, movie or audio
     } else {
-      html += '<div class="icon"></div>'
+      html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 

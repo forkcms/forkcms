@@ -53,7 +53,7 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showBlogDeleteCategory and allowBlogDeleteCategory %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>

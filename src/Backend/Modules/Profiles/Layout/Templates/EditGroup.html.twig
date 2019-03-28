@@ -23,12 +23,12 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showProfilesDeleteGroup %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Groups'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "name":"edit", "id":"saveButton" }) }}
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "name":"edit", "id":"saveButton" }) }}
         </div>
       </div>
     </div>

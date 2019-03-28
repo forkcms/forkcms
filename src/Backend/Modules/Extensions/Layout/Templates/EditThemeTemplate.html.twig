@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-2 col-lg-1">
                   <button class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                    {{ macro.icon('trash-o') }}
+                    {{ macro.icon('trash-alt') }}
                     <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
                   </button>
                 </div>
@@ -83,7 +83,7 @@
                         <div class="col-2 col-lg-1">
                           {# Button to remove block from this position #}
                           <button class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
-                            {{ macro.icon('trash-o') }}
+                            {{ macro.icon('trash-alt') }}
                             <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
                           </button>
                         </div>
@@ -191,11 +191,11 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>
     </div>

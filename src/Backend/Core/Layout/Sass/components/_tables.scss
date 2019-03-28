@@ -82,19 +82,6 @@
 
         &.sorted {
           color: $primary;
-          position: relative;
-
-          .fa:before {
-            position: absolute;
-          }
-
-          .fa-sort-desc:before {
-            top: 0;
-          }
-
-          .fa-sort-asc:before {
-            bottom: 0;
-          }
         }
       }
     }

@@ -103,7 +103,8 @@
 
 // Panel caret behavior
 .card .collapsed .fa-caret-down {
-  @extend .fa-caret-right;
+  transform: rotate(-90deg);
+  transition: transform 250ms;
 }
 
 .card-group {

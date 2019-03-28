@@ -1,14 +1,10 @@
 .cke_button_icon {
   &.cke_button__forkimage_icon {
-    @extend .fa;
-    @extend .fa-image;
     font-size: 17px;
     color: #464646;
   }
 
   &.cke_button__forklink_icon {
-    @extend .fa;
-    @extend .fa-link;
     font-size: 17px;
     color: #464646;
   }

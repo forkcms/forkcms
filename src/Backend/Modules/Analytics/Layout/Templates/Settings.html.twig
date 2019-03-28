@@ -122,7 +122,7 @@
         {% endif %}
         {% if not profile and (noAccounts == false or noAccounts is not defined) %}
           <div class="btn-group ml-auto" role="group">
-            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
+            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
           </div>
         {% endif %}
       </div>

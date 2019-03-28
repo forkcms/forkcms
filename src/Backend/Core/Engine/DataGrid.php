@@ -26,18 +26,18 @@ class DataGrid extends \SpoonDataGrid
     private static $mapIcons = [
         'add' => 'fa-plus',
         'copy' => 'fa-copy',
-        'edit' => 'fa-pencil',
+        'edit' => 'fa-pencil-alt',
         'clone' => 'fa-clone',
         'import' => 'fa-download',
         'export' => 'fa-upload',
-        'delete' => 'fa-trash-o',
+        'delete' => 'fa-trash-alt',
         'detail' => 'fa-eye',
         'details' => 'fa-eye',
         'approve' => 'fa-thumbs-o-up',
         'mark_as_spam' => 'fa-ban',
         'install' => 'fa-download',
-        'use_revision' => 'fa-file-o',
-        'use_draft' => 'fa-file-o',
+        'use_revision' => 'fa-file',
+        'use_draft' => 'fa-file',
         'custom_fields' => 'fa-tasks',
     ];
 
@@ -118,7 +118,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-sm pull-right">' .
-                ($icon ? '<span class="fa ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
+                ($icon ? '<span class="fas ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
                 ucfirst($value) .
                 '</a>';
 
@@ -130,7 +130,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-sm">' .
-                ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
+                ($icon ? '<span class="fas ' . $icon . '"></span>&nbsp;' : '') .
                 ucfirst($value) .
                 '</a>';
 
@@ -209,7 +209,7 @@ class DataGrid extends \SpoonDataGrid
         // rebuild value
         $value =
             '<a href="' . $url . '"' . $attributes . '>' .
-            ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
+            ($icon ? '<span class="fas ' . $icon . '"></span>&nbsp;' : '') .
             $value .
             '</a>';
 
@@ -284,15 +284,15 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder" aria-hidden="true"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fas fa-reorder" aria-hidden="true"></span>');
         $this->addColumn(
             'sortHandle',
             null,
             '<button data-role="order-move" data-direction="up" class="btn btn-default btn-sm" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
-                     <span class="fa fa-arrow-up" aria-hidden="true"></span>
+                     <span class="fas fa-arrow-up" aria-hidden="true"></span>
                    </button>
                    <button data-role="order-move" data-direction="down" class="btn btn-default btn-sm" aria-label="' . BackendLanguage::lbl('MoveDownOnePosition') . '">
-                     <span class="fa fa-arrow-down" aria-hidden="true"></span>
+                     <span class="fas fa-arrow-down" aria-hidden="true"></span>
                    </button>'
         );
 

@@ -274,11 +274,11 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if showUsersDelete and allowUsersDelete %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete" }) }}
           {% endif %}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
         </div>
       </div>
     </div>
