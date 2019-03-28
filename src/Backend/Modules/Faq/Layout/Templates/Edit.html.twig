@@ -32,8 +32,8 @@
           <li class="nav-item">
             <a class="nav-link" href="#tabFeedback" aria-controls="tabFeedback" role="tab" data-toggle="tab" aria-selected="false" id="feedback-tab">
               {{ 'lbl.Feedback'|trans|ucfirst }}
-              <span class="label label-success">{{ item.num_usefull_yes }}</span>
-              <span class="label label-danger">{{ item.num_usefull_no }}</span>
+              <span class="badge badge-success">{{ item.num_usefull_yes }}</span>
+              <span class="badge badge-danger">{{ item.num_usefull_no }}</span>
             </a>
           </li>
           <li class="nav-item">
@@ -90,7 +90,7 @@
                     <div class="form-group last">
                       <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                       {% form_field tags %} {% form_field_error tags %}
-                      <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
+                      <small class="form-text text-muted">{{ 'msg.HelpTextTags'|trans }}</small>
                     </div>
                   </div>
                 </div>
@@ -105,7 +105,7 @@
               <div class="col-md-12">
                 <div class="content-title">
                   <h2>{{ 'lbl.Feedback'|trans|ucfirst }}</h2>
-                  <p class="help-block">{{ 'msg.FeedbackInfo'|trans }}</p>
+                  <small class="form-text text-muted">{{ 'msg.FeedbackInfo'|trans }}</small>
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default' ) }}
         </div>
         <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-danger', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
         </div>
       </div>
     </div>

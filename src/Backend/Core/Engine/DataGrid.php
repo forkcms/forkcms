@@ -284,7 +284,7 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="fas fa-reorder" aria-hidden="true"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fas fa-bars" aria-hidden="true"></span>');
         $this->addColumn(
             'sortHandle',
             null,
