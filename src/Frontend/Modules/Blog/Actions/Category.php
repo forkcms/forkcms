@@ -26,7 +26,12 @@ class Category extends FrontendBaseBlock
 
     private function getCategory(): array
     {
-        $category = FrontendBlogModel::getCategory($this->url->getParameter(1));
+        $slug = $this->url->getParameter(1);
+        if (empty($slug)) {
+            throw new NotFoundHttpException();
+        }
+
+        $category = FrontendBlogModel::getCategory($slug);
 
         if (empty($category)) {
             throw new NotFoundHttpException();
