@@ -3,6 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\Form\BlogDeleteType;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
@@ -205,7 +206,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDate('publish_on_date', $this->record['publish_on']);
         $this->form->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
         if ($this->imageIsAllowed) {
-            $this->form->addImage('image');
+            $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
             $this->form->addCheckbox('delete_image');
         }
 
@@ -295,6 +296,8 @@ class Edit extends BackendBaseActionEdit
         if ($this->categoryId !== null) {
             $this->template->assign('categoryId', $this->categoryId);
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void
@@ -387,7 +390,7 @@ class Edit extends BackendBaseActionEdit
                         // only copy if the new name differs from the old filename
                         if (preg_replace($regex, '$1', $newName) != preg_replace($regex, '$1', $item['image'])) {
                             // loop folders
-                            foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
+                            foreach ($this->get(Thumbnails::class)->getFolders($imagePath, true) as $folder) {
                                 $filesystem->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
@@ -412,36 +415,47 @@ class Edit extends BackendBaseActionEdit
                     $this->url->getModule()
                 );
 
-                // active
-                if ($item['status'] == 'active') {
+                if ($item['status'] === 'active') {
                     // edit search index
                     BackendSearchModel::saveIndex(
                         $this->getModule(),
                         $item['id'],
                         ['title' => $item['title'], 'text' => $item['text']]
                     );
-
-                    // build URL
-                    $redirectUrl = BackendModel::createUrlForAction('Index') .
-                                   '&report=edited&var=' . rawurlencode($item['title']) .
-                                   '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
-                } elseif ($item['status'] == 'draft') {
-                    // draft: everything is saved, so redirect to the edit action
-                    $redirectUrl = BackendModel::createUrlForAction('Edit') .
-                                   '&report=saved-as-draft&var=' . rawurlencode($item['title']) .
-                                   '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
-                                   '&highlight=row-' . $item['revision_id'];
                 }
 
-                // append to redirect URL
-                if ($this->categoryId != null) {
-                    $redirectUrl .= '&category=' . $this->categoryId;
-                }
-
-                // everything is saved, so redirect to the overview
-                $this->redirect($redirectUrl);
+                $this->redirect($this->getRedirectUrl($item));
             }
         }
+    }
+
+    private function getRedirectUrl(array $blogPost): string
+    {
+        $redirectAction = 'Index';
+
+        $parameters = [
+            'id' => $blogPost['id'],
+            'highlight=row' => $blogPost['revision_id'],
+            'var' => $blogPost['title'],
+            'report' => 'edited',
+        ];
+
+        if ($this->categoryId !== null) {
+            $parameters['category'] = $this->categoryId;
+        }
+
+        if ($blogPost['status'] === 'draft') {
+            $redirectAction = 'Edit';
+            $parameters['report'] = 'saved-as-draft';
+            $parameters['draft'] = $blogPost['revision_id'];
+        }
+
+        return BackendModel::createUrlForAction($redirectAction) . '&' . http_build_query(
+            $parameters,
+            null,
+            '&',
+            PHP_QUERY_RFC3986
+        );
     }
 
     private function loadDeleteForm(): void

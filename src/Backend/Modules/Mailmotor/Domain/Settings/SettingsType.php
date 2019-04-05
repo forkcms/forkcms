@@ -69,7 +69,7 @@ class SettingsType extends AbstractType
                 'allow_add' => false,
                 'allow_delete' => false,
                 'required' => false,
-                'label' => false,
+                'label' => 'lbl.ListId',
             ]
         );
 

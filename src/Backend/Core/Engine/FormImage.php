@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use ForkCMS\Utility\Thumbnails;
 use SpoonFilter;
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
@@ -59,7 +60,7 @@ class FormImage extends SpoonFormImage
         $this->moveFile($path . '/source/' . $filename);
 
         // generate the thumbnails
-        Model::generateThumbnails($path, $path . '/source/' . $filename);
+        Model::get(Thumbnails::class)->generate($path, $path . '/source/' . $filename);
     }
 
     /**

@@ -13,22 +13,25 @@
             <li>
               <a href="/private/{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{ ('lbl.'~tertiaryItem.label)|trans|ucfirst }}</a>
             </li>
-            {% if ACTION|lower not in tertiaryItem.url%}
+            {% if ACTION|lower not in tertiaryItem.url and tertiaryItem.label != ACTION %}
               <li>
                 {{ ACTION|tolabel }}
               </li>
             {% endif %}
           {% endfor %}
-        {% elseif ACTION|lower not in secondaryItem.url%}
+        {% elseif ACTION|lower not in secondaryItem.url and secondaryItem.label != ACTION %}
           <li>
             {{ ACTION|tolabel }}
           </li>
         {% endif %}
       {% endfor %}
-    {% elseif ACTION|lower not in topLevelItem.url%}
+    {% elseif ACTION|lower not in topLevelItem.url and topLevelItem.label != ACTION %}
       <li>
         {{ ACTION|tolabel }}
       </li>
     {% endif %}
   {% endfor %}
+  {% if breadcrumbDetail %}
+    <li>{{ breadcrumbDetail }}</li>
+  {% endif %}
 </ol>

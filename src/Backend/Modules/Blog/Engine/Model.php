@@ -10,6 +10,7 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\Utility\Thumbnails;
 use Common\Doctrine\Entity\Meta;
 
 /**
@@ -182,7 +183,7 @@ class Model
         $images = $database->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
 
         foreach ($images as $image) {
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $image);
+            BackendModel::get(Thumbnails::class)->delete(FRONTEND_FILES_PATH . '/Blog/images', $image);
         }
 
         // delete records
@@ -339,27 +340,6 @@ class Model
      */
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
     {
-        if ($status !== null) {
-            $status = (string) $status;
-        }
-        $limit = (int) $limit;
-        $offset = (int) $offset;
-
-        // no status passed
-        if ($status === null) {
-            return (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-                 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
-                 INNER JOIN meta AS m ON p.meta_id = m.id
-                 WHERE i.locale = ?
-                 GROUP BY i.id
-                 LIMIT ?, ?',
-                [BL::getWorkingLanguage(), $offset, $limit]
-            );
-        }
-
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
@@ -382,12 +362,12 @@ class Model
     public static function getByTag(int $tagId): array
     {
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.title AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN blog_posts AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
-            ['Blog', (int) $tagId, 'active', BL::getWorkingLanguage()]
+            'SELECT i.id AS url, i.title AS name, mt.moduleName AS module
+             FROM TagsModuleTag AS mt
+             INNER JOIN TagsTag AS t ON mt.tag_id = t.id
+             INNER JOIN blog_posts AS i ON mt.moduleId = i.id
+             WHERE mt.moduleName = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
+            ['Blog', $tagId, 'active', BL::getWorkingLanguage()]
         );
 
         // overwrite the url
@@ -714,9 +694,6 @@ class Model
         }
 
         // Build meta
-        if (!is_array($meta)) {
-            $meta = [];
-        }
         if (!isset($meta['keywords'])) {
             $meta['keywords'] = $item['title'];
         }
@@ -905,8 +882,16 @@ class Model
     public static function update(array $item): int
     {
         $database = BackendModel::getContainer()->get('database');
+
+        // get the record of the exact item we're editing
+        $revision = self::getRevision($item['id'], $item['revision_id']);
+
+        // assign values
+        $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $revision['created_on']);
+        $item['num_comments'] = $revision['num_comments'];
+
         // check if new version is active
-        if ($item['status'] == 'active') {
+        if ($item['status'] === 'active') {
             // archive all older active versions
             $database->update(
                 'blog_posts',
@@ -915,15 +900,8 @@ class Model
                 [$item['id'], $item['status']]
             );
 
-            // get the record of the exact item we're editing
-            $revision = self::getRevision($item['id'], $item['revision_id']);
-
-            // assign values
-            $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $revision['created_on']);
-            $item['num_comments'] = $revision['num_comments'];
-
             // if it used to be a draft that we're now publishing, remove drafts
-            if ($revision['status'] == 'draft') {
+            if ($revision['status'] === 'draft') {
                 $database->delete(
                     'blog_posts',
                     'id = ? AND status = ?',
@@ -939,7 +917,7 @@ class Model
         $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Blog', 'max_num_revisions', 20);
 
         // set type of archive
-        $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
+        $archiveType = ($item['status'] === 'active' ? 'archived' : $item['status']);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $database->getColumn(
@@ -977,8 +955,11 @@ class Model
 
             // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
             foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
-                if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
-                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $imageOfDeletedRevision);
+                if (!in_array($imageOfDeletedRevision, $imagesToKeep, true)) {
+                    BackendModel::get(Thumbnails::class)->delete(
+                        FRONTEND_FILES_PATH . '/Blog/images',
+                        $imageOfDeletedRevision
+                    );
                 }
             }
 

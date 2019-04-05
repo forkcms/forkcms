@@ -1151,7 +1151,7 @@ jsBackend.mediaLibraryHelper.upload = {
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
+            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder')
               .append($link)
           }
         },
@@ -1346,6 +1346,19 @@ jsBackend.mediaLibraryHelper.upload = {
     // toggle uploaded box
     $('#uploadedMediaBox').toggle(showUploadedBox)
     $('#mediaWillBeConnectedToMediaGroup').toggle((currentMediaGroupId !== 0))
+
+    if (jsBackend.mediaLibraryHelper.upload.uploadedCount === 0) {
+      $('[data-role=uploadMediaStep1]').show()
+      $('[data-role=uploadMediaStep2]').hide()
+    } else {
+      $('[data-role=uploadMediaStep1]').hide()
+      $('[data-role=uploadMediaStep2]').show()
+    }
+
+    $('[data-role=uploadMediaGoToStep2]').on('click', function () {
+      $('[data-role=uploadMediaStep1]').hide()
+      $('[data-role=uploadMediaStep2]').show()
+    })
   },
 
   /**
@@ -1511,12 +1524,12 @@ jsBackend.mediaLibraryHelper.modalSelection = {
   selectItemAndSendToParent: function () {
     var directUrl = $(this).data('directUrl')
 
-    window.opener.postMessage(directUrl, '*')
-    window.close();
+    window.opener.postMessage({'media-url': directUrl}, '*')
+    window.close()
   },
 
   sendToParent: function () {
-    window.opener.postMessage($(this).data('directUrl'), '*')
+    window.opener.postMessage({'media-url': $(this).data('directUrl')}, '*')
     window.close()
   }
 };

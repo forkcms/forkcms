@@ -9,14 +9,13 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 
 class MediaItemUpload extends BackendBaseActionAdd
 {
-    /** @var MediaFolder */
+    /** @var MediaFolder|null */
     protected $mediaFolder;
 
     public function execute(): void
     {
         parent::execute();
 
-        /** @var MediaFolder|null $mediaFolder */
         $this->mediaFolder = $this->getMediaFolder();
 
         $this->parseJsFiles();
@@ -47,6 +46,7 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->template->assign('folderId', $mediaFolderId);
         $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
+        $this->header->appendDetailToBreadcrumbs((string) $this->mediaFolder);
     }
 
     private function parseJsFiles(): void

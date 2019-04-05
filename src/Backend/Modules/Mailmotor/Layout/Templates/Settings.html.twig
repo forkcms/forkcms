@@ -20,9 +20,7 @@
               <div class="panel-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
               <div class="panel-body">
                 <div class="form-group">
-                  {{ form_label(form.listId) }}
-                  {{ form_widget(form.listId) }}
-                  {{ form_errors(form.listId) }}
+                  {{ form_row(form.listId) }}
                 </div>
                 {% for languageListIdForm in form.languageListIds %}
                   <div class="form-group{% if loop.last %} last{% endif %}">

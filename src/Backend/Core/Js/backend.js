@@ -1,7 +1,7 @@
 /**
  * Backend related objects
  */
-/* global CKEDITOR, CKFinder, Bloodhound, linkList */
+/* global CKEDITOR, Bloodhound, linkList */
 
 var jsBackend =
   {
@@ -324,6 +324,8 @@ jsBackend.balloons = {
  * CK Editor related objects
  */
 jsBackend.ckeditor = {
+  prepared: false,
+
   defaultConfig: {
     customConfig: '',
 
@@ -373,9 +375,6 @@ jsBackend.ckeditor = {
     filebrowserImageUploadUrl: null,
     filebrowserFlashUploadUrl: null,
 
-    // uploading drag&drop images, see http://docs.ckeditor.com/#!/guide/dev_file_upload
-    uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-
     // load some extra plugins
     extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary',
 
@@ -398,25 +397,48 @@ jsBackend.ckeditor = {
 
     // load the editor
     if ($('textarea.inputEditor, textarea.inputEditorError').length > 0) {
-      // language options
-      jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language
-      jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language')
-
-      // content Css
-      jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/screen.css')
-      if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css')
-      jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css')
-      if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css')
-
-      // bind on some global events
-      CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition)
-      CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady)
+      jsBackend.ckeditor.prepare()
 
       // load the editors
       jsBackend.ckeditor.load()
     }
 
     jsBackend.ckeditor.fallBackBootstrapModals()
+    if (jsData.Core.preferred_editor === 'ck-editor') {
+      jsBackend.ckeditor.loadEditorsInCollections()
+    }
+  },
+
+  loadEditorsInCollections: function () {
+    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
+      jsBackend.ckeditor.prepare()
+      $(formCollectionItem).find('textarea.inputEditor, textarea.inputEditorError').ckeditor(
+        jsBackend.ckeditor.callback,
+        $.extend({}, jsBackend.ckeditor.defaultConfig)
+      )
+    })
+  },
+
+  prepare: function () {
+    if (jsBackend.ckeditor.prepared) {
+      return
+    }
+
+    // language options
+    jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language
+    jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language')
+
+    // content Css
+    jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/screen.css')
+    if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css')
+    jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css')
+    if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css')
+
+    // bind on some global events
+    CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition)
+    CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady)
+
+    jsBackend.ckeditor.prepared = true
   },
 
   destroy: function () {
@@ -1172,6 +1194,26 @@ jsBackend.forms = {
     jsBackend.forms.meta()
     jsBackend.forms.datePicker()
     jsBackend.forms.bootstrapTabFormValidation()
+    jsBackend.forms.imagePreview()
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      let imageField = $(this).get(0)
+      // make sure we are uploading an image by checking the data attribute
+      if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
+        // get the image preview by matching the image-preview data-id to the ImageField id
+        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          $imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL(imageField.files[0])
+      }
+    })
   },
 
   bootstrapTabFormValidation: function () {

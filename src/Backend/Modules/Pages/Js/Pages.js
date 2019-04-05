@@ -1555,13 +1555,17 @@ jsBackend.pages.tree = {
 
       if (collapsed) {
         $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
-        $.tree.reference('#tree div').close_all()
+        $.each($('#tree div'), function (index, element) {
+          $.tree.reference($(element).attr('id')).close_all()
+        })
 
         return
       }
 
       $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
-      $.tree.reference('#tree div').open_all()
+      $.each($('#tree div'), function (index, element) {
+        $.tree.reference($(element).attr('id')).open_all()
+      })
     })
   }
 }

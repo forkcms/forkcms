@@ -47,7 +47,9 @@
         "jdorn/sql-formatter": "1.2.17",
         "symfony/var-dumper": "^3.3",
         "squizlabs/php_codesniffer": "^2.7",
-        "symfony/phpunit-bridge": "^3.2"
+        "symfony/phpunit-bridge": "^3.2",
+        "phpstan/phpstan": "^0.10.3",
+        "phpstan/phpstan-symfony": "^0.10.2"
     },
     "config": {
         "bin-dir": "bin"
@@ -78,13 +80,17 @@
             "Common\\": "src/Common",
             "Console\\": "src/Console",
             "ForkCMS\\": "src/ForkCMS",
-            "ForkCMS\\App\\": "app",
-            "CKSource\\CKFinder\\": "src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder"
+            "ForkCMS\\App\\": "app"
         },
         "exclude-from-classmap": [
             "**/Tests/",
             "**/tests/",
             "**/Test/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ForkCMS\\Tests\\": "tests/"
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Exception;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
@@ -51,6 +52,20 @@ class Unsubscribe extends FrontendBaseBlock
                 NotImplementedUnsubscribedEvent::EVENT_NAME,
                 new NotImplementedUnsubscribedEvent($unsubscription)
             );
+        } catch (Exception $exception) {
+            $reason = json_decode($exception->getMessage());
+            // check if the error is one from mailchimp
+            if ($reason === false) {
+                throw $exception;
+            }
+
+            $this->template->assign('mailmotorUnsubscribeHasFormError', true);
+            $this->template->assign('form', $form->createView());
+
+            $this->loadTemplate();
+            $this->parse();
+
+            return;
         }
 
         $this->redirect(

@@ -208,6 +208,26 @@ jsFrontend.forms = {
     jsFrontend.forms.validation()
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
+    jsFrontend.forms.imagePreview()
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      let imageField = $(this).get(0)
+      // make sure we are uploading an image by checking the data attribute
+      if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
+        // get the image preview by matching the image-preview data-id to the ImageField id
+        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          $imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL(imageField.files[0])
+      }
+    })
   },
 
   // once text has been filled add another class to it (so it's possible to style it differently)
@@ -282,6 +302,13 @@ jsFrontend.forms = {
           // Rename the original field, used to contain the display value
           $(this).attr('id', $(this).attr('id') + '-display')
           $(this).attr('name', $(this).attr('name') + '-display')
+
+          // make sure we can make the value empty
+          $(this).on('change', function (event) {
+            if ($(this).val() === '') {
+              clone.val('')
+            }
+          })
         })
 
         $inputDatefields.datepicker({
@@ -452,7 +479,7 @@ jsFrontend.gravatar = {
       // valid gravatar id
       if (gravatarId !== '') {
         // build url
-        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404'
+        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=' + encodeURI(window.location.origin + '/src/Frontend/Core/Layout/images/default_author_avatar.gif')
 
         // add size if set before
         if (size !== '') url += '&s=' + size

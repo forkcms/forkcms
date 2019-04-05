@@ -118,7 +118,7 @@ class DataGrid extends \SpoonDataGrid
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs pull-right">' .
                 ($icon ? '<span class="fa ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
-                $value .
+                ucfirst($value) .
                 '</a>';
 
             // reset URL
@@ -130,7 +130,7 @@ class DataGrid extends \SpoonDataGrid
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs">' .
                 ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
-                $value .
+                ucfirst($value) .
                 '</a>';
 
             // reset URL
@@ -276,6 +276,8 @@ class DataGrid extends \SpoonDataGrid
 
         // hide the sequence column if present
         if ($this->hasColumn('sequence')) {
+            $this->setSortingColumns(['sequence']);
+            $this->setSortParameter('asc');
             $this->setColumnHidden('sequence');
         }
 

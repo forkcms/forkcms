@@ -87,7 +87,7 @@ class UploadModule extends BackendBaseActionAdd
             $fileName = $file['name'];
 
             if ($i === 0) {
-                $prefix = $this->extractPrefix($file);
+                $prefix = $this->extractPrefix($file['name']);
             }
 
             // check if the file is in one of the valid directories
@@ -184,7 +184,7 @@ class UploadModule extends BackendBaseActionAdd
      */
     private function extractPrefix(string $file): string
     {
-        $name = explode(PATH_SEPARATOR, $file['name']);
+        $name = explode(PATH_SEPARATOR, $file);
         $prefix = [];
 
         foreach ($name as $element) {
@@ -197,7 +197,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // If the zip has a top-level single directory, eg
         // /myModuleName/, then we should just assume that is the prefix.
-        return $file['name'];
+        return $file;
     }
 
     /**
@@ -225,22 +225,26 @@ class UploadModule extends BackendBaseActionAdd
 
     private function validateForm(): void
     {
-        // the form is submitted
-        if ($this->form->isSubmitted()) {
-            // shorten field variables
-            $fileFile = $this->form->getField('file');
-
-            // validate the file
-            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
-                $moduleName = $this->uploadModuleFromZip();
-            }
-
-            // passed all validation
-            if ($this->form->isCorrect()) {
-                // redirect to the install url, this is needed for doctrine modules because the container needs to
-                // load this module as an allowed module to get the entities working
-                $this->redirect(BackendModel::createUrlForAction('InstallModule') . '&module=' . $moduleName);
-            }
+        if (!$this->form->isSubmitted()) {
+            return;
         }
+
+        // shorten field variables
+        $fileFile = $this->form->getField('file');
+
+        // validate the file
+        $fileFile->isFilled(BL::err('FieldIsRequired'));
+        $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'));
+
+        // passed all validation
+        if (!$this->form->isCorrect()) {
+            return;
+        }
+
+        $moduleName = $this->uploadModuleFromZip();
+
+        // redirect to the install url, this is needed for doctrine modules because the container needs to
+        // load this module as an allowed module to get the entities working
+        $this->redirect(BackendModel::createUrlForAction('InstallModule') . '&module=' . $moduleName);
     }
 }

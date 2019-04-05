@@ -47,6 +47,8 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             $this->template->assign('mediaGallery', $mediaGallery);
             $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
+            $this->header->appendDetailToBreadcrumbs($mediaGallery->getTitle());
+
             // Call parent
             $this->parse();
             $this->display();

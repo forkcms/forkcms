@@ -1,3 +1,179 @@
+5.5.2  (2019-03-14)
+------------------
+Fixed:
+* Pages: Remove remove_image on pages add [#2779](https://github.com/forkcms/forkcms/pull/2779)
+
+
+5.5.1  (2019-03-13)
+------------------
+
+Fixed:
+* Core: Capitalize action button values in collections [#2742](https://github.com/forkcms/forkcms/pull/2742)
+* Core: Capitalize action buttons in the datagrid [#2740](https://github.com/forkcms/forkcms/pull/2740)
+* Core: Cleanup and minor bugfixes based on scrutinizer [#2731](https://github.com/forkcms/forkcms/pull/2731)
+* Core: Delete space between asterisk and label [#2761](https://github.com/forkcms/forkcms/pull/2761)
+* Core: Dont show empty divs when there is no content [#2756](https://github.com/forkcms/forkcms/pull/2756)
+* Core: Fix BackendModel::getExtrasForData [#2730](https://github.com/forkcms/forkcms/pull/2730)
+* Core: Fix double breadcrumb in backend [#2734](https://github.com/forkcms/forkcms/pull/2734)
+* Core: Fix Form validation : Deprecated .context [#2763](https://github.com/forkcms/forkcms/pull/2763)
+* Core: Fix image link in ckeditor [#2771](https://github.com/forkcms/forkcms/pull/2771)
+* Core: Give a max width to the image thumbnail to respect the quality and ratio [#2754](https://github.com/forkcms/forkcms/pull/2754)
+* Core: Prevent the whole panel from getting focused when clicking on an item within [#2744](https://github.com/forkcms/forkcms/pull/2744)
+* Blog: Fix saving a draft of an existing blog post [#2729](https://github.com/forkcms/forkcms/pull/2729)
+* ContentBlocks: Dont show hidden content blocks [#2755](https://github.com/forkcms/forkcms/pull/2755)
+* FAQ: Fix overview page [#2767](https://github.com/forkcms/forkcms/pull/2767)
+* MediaLibrary: Fix the media url when adding link to file [#2750](https://github.com/forkcms/forkcms/pull/2750)
+* Profiles: Get the display name from the profile array [#2753](https://github.com/forkcms/forkcms/pull/2753)
+* Installer: Fix mod_rewrite check for php-fpm [#2776](https://github.com/forkcms/forkcms/pull/2776)
+
+Changed:
+* Core: Add integrity to yarn.lock [#2775](https://github.com/forkcms/forkcms/pull/2775)
+* Core: Check only for the existence of the Facebook API ID [#2738](https://github.com/forkcms/forkcms/pull/2738)
+* Core: Restyle image upload  [#2757](https://github.com/forkcms/forkcms/pull/2757)
+* Blog: Use the default avatar path as default for gravatar instead of a 404 [#2770](https://github.com/forkcms/forkcms/pull/2770)
+
+Security:
+* Core: Updated composer dependencies
+* Core: Updated composer yarn
+
+
+5.5.0  (2019-01-14)
+------------------
+
+Added:
+* Core: Added option to change the sequence of a collection type [#2624](https://github.com/forkcms/forkcms/pull/2624)
+* Core: Added Phpstan integration [#2639](https://github.com/forkcms/forkcms/pull/2639)
+* Core: Added schema.org to the breadcrumbs [#2702](https://github.com/forkcms/forkcms/pull/2702)
+* Core: Added validator for unique data transfer objects [#2634](https://github.com/forkcms/forkcms/pull/2634)
+* Core: Automatically sequence when enabling drag and drop [#2662](https://github.com/forkcms/forkcms/pull/2662)
+* Core: Better breadcrumb support [#2663](https://github.com/forkcms/forkcms/pull/2663)
+* Core: The image preview is now updated when an image is selected [#2695](https://github.com/forkcms/forkcms/pull/2695)
+* Core: TitleType for easy titles with SymfonyForm [#2625](https://github.com/forkcms/forkcms/pull/2625)
+* Blog: Make the blog image clickable on the overview [#2706](https://github.com/forkcms/forkcms/pull/2706)
+* Location: Translate google maps to the interface and site language instead of the browser language [#2727](https://github.com/forkcms/forkcms/pull/2727)
+* MediaLibrary: Create directories on the overview page [#2692](https://github.com/forkcms/forkcms/pull/2692)
+* MediaLibrary: Mass action delete [#2644](https://github.com/forkcms/forkcms/pull/2644)
+
+Changed:
+* Core: Update the form layout [#2626](https://github.com/forkcms/forkcms/pull/2626)
+* Core: Use the jquery version defined in package.json [#2628](https://github.com/forkcms/forkcms/pull/2628)
+* Console: Improve the thumbnail generation console command [#2703](https://github.com/forkcms/forkcms/pull/2703)
+* Docs: Fixed typos [#2667](https://github.com/forkcms/forkcms/pull/2667)
+* Extensions: Prevent installation of a theme if it contains .tpl files [#2653](https://github.com/forkcms/forkcms/pull/2653)
+* MediaLibrary: Use find method instead of magic method [#2674](https://github.com/forkcms/forkcms/pull/2674)
+* Pages: Only build the navigation cache if vital information has changed [#2649](https://github.com/forkcms/forkcms/pull/2649)
+* Profiles: New profiles won't be automatically logged in anymore [#2690](https://github.com/forkcms/forkcms/pull/2690)
+
+Fixed:
+* Core: Fix DateTime class casing [#2673](https://github.com/forkcms/forkcms/pull/2673)
+* Core: Fix method to check if cookies are allowed [#2720](https://github.com/forkcms/forkcms/pull/2720)
+* Core: Fix phpunit [#2688](https://github.com/forkcms/forkcms/pull/2688)
+* Core: Fix track cookie [#2719](https://github.com/forkcms/forkcms/pull/2719)
+* Core: Remove role on nav list [#2665](https://github.com/forkcms/forkcms/pull/2665)
+* Authentication: Prevent logging out 40 times on backend login [#2705](https://github.com/forkcms/forkcms/pull/2705)
+* Blog: Correctly translate comment and comments as ids in the theme [#2726](https://github.com/forkcms/forkcms/pull/2726)
+* Blog: Fix blog posts not getting indexed by search engines [#2696](https://github.com/forkcms/forkcms/pull/2696)
+* Blog: Fix twitter card url [#2706](https://github.com/forkcms/forkcms/pull/2706)
+* Blog: Use a valid date format for the item props [#2666](https://github.com/forkcms/forkcms/pull/2666)
+* FAQ: Fix sequencing categories [#2689](https://github.com/forkcms/forkcms/pull/2689)
+* FormBuilder: Fix showing the wrong errors [#2700](https://github.com/forkcms/forkcms/pull/2700)
+* FormBuilder: Fix unreadable errors [#2699](https://github.com/forkcms/forkcms/pull/2699)
+* Locale: Fix export [#2672](https://github.com/forkcms/forkcms/pull/2672)
+* Mailmotor: Catch spam errors [#2670](https://github.com/forkcms/forkcms/pull/2670)
+* MediaGallery: Fix delete button [#2694](https://github.com/forkcms/forkcms/pull/2694)
+* MediaLibrary: Fix image urls in editors [#2701](https://github.com/forkcms/forkcms/pull/2701)
+* Pages: Toggle all submenus when clicking the button [#2698](https://github.com/forkcms/forkcms/pull/2698)
+* Tags: Fix casing errors [#2669](https://github.com/forkcms/forkcms/pull/2669)
+* Tags: Fix related tags widget [#2664](https://github.com/forkcms/forkcms/pull/2664)
+
+Removed:
+* MediaLibrary: Remove buggy cleanup functionality [#2693](https://github.com/forkcms/forkcms/pull/2693)
+
+
+5.4.1  (2018-10-16)
+------------------
+
+Fixed:
+* Core: Fix 404's in default theme [#2655](https://github.com/forkcms/forkcms/pull/2655)
+* Core: Fix assertions that use transchoice not translating [#2652](https://github.com/forkcms/forkcms/pull/2652)
+* Core: Fix cropping square images [#2659](https://github.com/forkcms/forkcms/pull/2659)
+* Core: Fix including source directory when getting image directories [#2660](https://github.com/forkcms/forkcms/pull/2660)
+* Core: Fixed thumbnail resize [#2641](https://github.com/forkcms/forkcms/pull/2641)
+* Core: Make the backend navigation scrollable [#2654](https://github.com/forkcms/forkcms/pull/2654)
+* Core: Update cronjob description since the cli is the only way to run them [#2638](https://github.com/forkcms/forkcms/pull/2638)
+* Blog: Fix check if the coeds to be moderated [#2656](https://github.com/forkcms/forkcms/pull/2656)
+* Blog: Fix double escaping of comments [#2637](https://github.com/forkcms/forkcms/pull/2637)
+* FAQ: Fix asking for feedback [#2661](https://github.com/forkcms/forkcms/pull/2661)
+* Install: Fix https detection [#2651](https://github.com/forkcms/forkcms/pull/2651)
+* Install: The install when module settings service is autowired [#2636](https://github.com/forkcms/forkcms/pull/2636)
+* Location: Fix directions [#2643](https://github.com/forkcms/forkcms/pull/2643)
+* MediaLibrary: Media folders were still being encoded on edit [#2632](https://github.com/forkcms/forkcms/pull/2632)
+* Search: Fix autosuggest containing html [#2658](https://github.com/forkcms/forkcms/pull/2658)
+* Search: Fix search settings error [#2650](https://github.com/forkcms/forkcms/pull/2650)
+
+
+5.4.0  (2018-08-14)
+------------------
+
+Added:
+* Core: Add way to display a collection in a symfony form as a tab [#2597](https://github.com/forkcms/forkcms/pull/2597)
+* Core: Added the twig debug extention to the backend when debug is enabled [#2593](https://github.com/forkcms/forkcms/pull/2593)
+* Core: Load tagged twig extensions in the backend [#2594](https://github.com/forkcms/forkcms/pull/2594)
+* Extensions: Add option to include translations in a theme [#2064](https://github.com/forkcms/forkcms/pull/2064)
+* MediaLibrary: Add options to control the amount of linked items [#2607](https://github.com/forkcms/forkcms/pull/2607)
+
+Changed:
+* Core: Update jQuery to the latest feature version in frontend [#2615](https://github.com/forkcms/forkcms/pull/2615)
+* Groups: Sort action rights alphabetically [#2592](https://github.com/forkcms/forkcms/pull/2592)
+* Locale: Improve error message when adding locale [#2603](https://github.com/forkcms/forkcms/pull/2603)
+* MediaLibrary: Changed the label for adding a folder to the root [#2608](https://github.com/forkcms/forkcms/pull/2608)
+* MediaLibrary: Improved the flow of adding new media [#2612](https://github.com/forkcms/forkcms/pull/2612)
+* MediaLibrary: Prevent deleting of folders that have subfolders [#2606](https://github.com/forkcms/forkcms/pull/2606)
+* MediaLibrary: Stop urlising the folder names [#2605](https://github.com/forkcms/forkcms/pull/2605)
+* Core: Updated composer and npm packages [#2621](https://github.com/forkcms/forkcms/pull/2621)
+
+Deprecated:
+* Core: Deprecated SpoonThumbnail in favour of the new Thumbnail service that works with imagine [#2492](https://github.com/forkcms/forkcms/pull/2492)
+
+Fixed:
+* Core: Fix ck editors not working in collections [#2596](https://github.com/forkcms/forkcms/pull/2596)
+* Core: Fix labels not being translated [#2595](https://github.com/forkcms/forkcms/pull/2595)
+* Core: Fix not being able to empty the datepicker field [#2617](https://github.com/forkcms/forkcms/pull/2617)
+* Core: Fix readability of the general symfony form errors [#2583](https://github.com/forkcms/forkcms/pull/2583)
+* Core: Make Dutch translation to open the tree navigation more consistent [#2581](https://github.com/forkcms/forkcms/pull/2581)
+* Core: Place the log files in the environment directories [#2609](https://github.com/forkcms/forkcms/pull/2609)
+* Core: Removed obsolete stylesheet [#2579](https://github.com/forkcms/forkcms/pull/2579)
+* Faq: Fix adding category [#2577](https://github.com/forkcms/forkcms/pull/2577)
+* FormBuilder: Fix malformed xml in FormBuilder locale [#2576](https://github.com/forkcms/forkcms/pull/2576)[#2588](https://github.com/forkcms/forkcms/pull/2588)
+* FormBuilder: Fix time field [#2600](https://github.com/forkcms/forkcms/pull/2600)
+* Locale: Fix glitch in translations inline edit [#2599](https://github.com/forkcms/forkcms/pull/2599)
+* MediaLibrary: Fix missing styling of the lightbox widget [#2598](https://github.com/forkcms/forkcms/pull/2598)
+* MediaLibrary: Fix validation [#2601](https://github.com/forkcms/forkcms/pull/2601)
+* Tests: Fix tests not working in non-multilingual websites that aren't in English [#2585](https://github.com/forkcms/forkcms/pull/2585)
+
+Security:
+* Profiles: Add brute force protection for profiles [#2584](https://github.com/forkcms/forkcms/pull/2584)
+* Profiles: Make sure the login action is correct [#2616](https://github.com/forkcms/forkcms/pull/2616)
+* Profiles: Sanitize querystring before redirect after profile login [#2613](https://github.com/forkcms/forkcms/pull/2613)
+* Profiles: Sanitize redirect url after profile login [#2620](https://github.com/forkcms/forkcms/pull/2620)
+
+Removed:
+* Users: Removed old unused files directory [#2618](https://github.com/forkcms/forkcms/pull/2618)
+
+5.3.1  (2018-06-27)
+------------------
+Fixed:
+* Core: Fix building the css directory from scratch [#2551](https://github.com/forkcms/forkcms/pull/2551)
+* Core: Fix language not set in frontend templates [#2530](https://github.com/forkcms/forkcms/pull/2530)
+* Core: Fix the ck editor custom icons [#2557](https://github.com/forkcms/forkcms/pull/2557)
+* Extensions: Fix upload module [#2571](https://github.com/forkcms/forkcms/pull/2571)
+* Mailmotor: Update composer version to get mailchimp fixes [#2568](https://github.com/forkcms/forkcms/pull/2568)
+* MediaLibrary: Fix media browse images and videos js errors [#2572](https://github.com/forkcms/forkcms/pull/2572)
+
+Changed:
+* Core: Optimize fetching the page extras [#2555](https://github.com/forkcms/forkcms/pull/2555)
+
+
 5.3.0  (2018-05-29)
 ------------------
 

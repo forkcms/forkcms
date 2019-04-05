@@ -85,6 +85,8 @@ class DataDetails extends BackendBaseActionIndex
         // assign
         $this->template->assign('data', $data);
         $this->template->assign('filter', $this->filter);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**

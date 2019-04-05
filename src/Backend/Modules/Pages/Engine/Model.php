@@ -96,7 +96,7 @@ class Model
     }
 
     /**
-     * @deprecated We don't use this method anymore apparently
+     * @deprecated Will become private since it is only used in this class
      */
     public static function createHtml(
         string $navigationType = 'page',
@@ -320,11 +320,10 @@ class Model
     {
         // get the items
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.title AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN pages AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
+            'SELECT i.id AS url, i.title AS name, mt.moduleName AS module
+             FROM TagsModuleTag AS mt
+             INNER JOIN TagsTag AS t ON mt.tag_id = t.id AND mt.moduleName = ? AND mt.tag_id = ?
+             INNER JOIN pages AS i ON mt.moduleId = i.id AND i.status = ?',
             ['pages', $tagId, 'active']
         );
 

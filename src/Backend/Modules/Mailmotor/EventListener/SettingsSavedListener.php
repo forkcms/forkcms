@@ -13,14 +13,14 @@ final class SettingsSavedListener
     /**
      * @var string
      */
-    protected $cacheDirectory;
+    private $cacheDirectory;
 
     public function __construct(string $cacheDirectory)
     {
         $this->cacheDirectory = $cacheDirectory;
     }
 
-    public function onSettingsSavedEvent(SettingsSavedEvent $event)
+    public function onSettingsSavedEvent(SettingsSavedEvent $event): void
     {
         /**
          * We must remove our container cache after this request.

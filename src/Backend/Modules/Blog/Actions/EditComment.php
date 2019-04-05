@@ -6,6 +6,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Language;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -64,6 +65,8 @@ class EditComment extends BackendBaseActionEdit
             $this->record['post_url'] . '#comment-' . $this->record['post_id']
         );
         $this->template->assign('itemTitle', $this->record['post_title']);
+
+        $this->header->appendDetailToBreadcrumbs(ucfirst(Language::lbl('Author')) . ': ' . $this->record['author']);
     }
 
     private function validateForm(): void

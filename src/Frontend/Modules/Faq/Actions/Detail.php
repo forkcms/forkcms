@@ -180,7 +180,7 @@ class Detail extends FrontendBaseBlock
             return (bool) $this->feedbackForm->getField('useful')->getValue();
         }
 
-        return false;
+        return true;
     }
 
     private function increaseViewCount(): void

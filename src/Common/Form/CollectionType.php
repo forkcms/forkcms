@@ -19,6 +19,7 @@ class CollectionType extends AbstractType
             [
                 'allow_add' => $options['allow_add'],
                 'allow_delete' => $options['allow_delete'],
+                'allow_sequence' => $options['allow_sequence'],
                 'add_button_text' => $options['add_button_text'],
                 'delete_button_text' => $options['delete_button_text'],
                 'prototype_name' => $options['prototype_name'],
@@ -35,6 +36,7 @@ class CollectionType extends AbstractType
             [
                 'allow_add' => false,
                 'allow_delete' => false,
+                'allow_sequence' => false,
                 'prototype' => true,
                 'prototype_name' => '__name__',
                 'add_button_text' => 'lbl.Add',

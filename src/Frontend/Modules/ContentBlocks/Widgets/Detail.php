@@ -19,6 +19,10 @@ class Detail extends FrontendBaseWidget
             Locale::frontendLanguage()
         );
 
+        if ($contentBlock->isHidden()) {
+            return;
+        }
+
         $this->template->assign('widgetContentBlocks', $contentBlock);
     }
 }
