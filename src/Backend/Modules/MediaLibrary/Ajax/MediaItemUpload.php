@@ -77,14 +77,12 @@ class MediaItemUpload extends BackendBaseAJAXAction
          */
         if ($method === 'OPTIONS') {
             $this->handlePreflight();
-            $this->response->send();
-            exit();
+            throw new RedirectException('exit', $this->response);
         }
 
         if ($method !== 'POST') {
             $this->response->setStatusCode(Response::HTTP_METHOD_NOT_ALLOWED);
-            $this->response->send();
-            exit();
+            throw new RedirectException('exit', $this->response);
         }
 
         $this->handleCorsRequest();
@@ -94,8 +92,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // For example: /myserver/handlers/endpoint.php?done
         if ($this->getRequest()->query->get('done') !== null) {
             $this->response->setContent($uploader->combineChunks('files'));
-            $this->response->send();
-            exit();
+            throw new RedirectException('exit', $this->response);
         }
 
         // Define upload dir

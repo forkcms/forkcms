@@ -13,7 +13,7 @@ class Model extends \Common\Core\Model
     /**
      * Visitor id from tracking cookie
      *
-     * @var string
+     * @var string|null
      */
     private static $visitorId;
 
@@ -238,7 +238,7 @@ class Model extends \Common\Core\Model
         $cookie = self::getContainer()->get('fork.cookie');
 
         // get/init tracking identifier
-        (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')
+        self::$visitorId = ($cookie->has('track') && $cookie->get('track', '') !== '')
             ? $cookie->get('track')
             : md5(uniqid('', true) . self::getSession()->getId());
 

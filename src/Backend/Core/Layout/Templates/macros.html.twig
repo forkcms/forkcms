@@ -19,9 +19,9 @@
   {% endif %}
 {% endmacro %}
 
-{% macro required() %}
+{%- macro required() -%}
   <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
-{% endmacro %}
+{%- endmacro -%}
 
 {% macro icon(icon) %}
   <span class="fa fa-{{ icon }}" aria-hidden="true"></span>

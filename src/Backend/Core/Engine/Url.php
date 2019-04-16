@@ -333,6 +333,10 @@ class Url extends KernelLoader
 
     public function getModule(): string
     {
+        if ($this->module === null) {
+            throw new Exception('Module has not yet been set.');
+        }
+
         return $this->module;
     }
 
@@ -341,11 +345,6 @@ class Url extends KernelLoader
         // set module
         if ($module !== null) {
             $this->setModule($module);
-        }
-
-        // check if module is set
-        if ($this->getModule() === null) {
-            throw new Exception('Module has not yet been set.');
         }
 
         // is this action allowed?

@@ -334,10 +334,10 @@
     options = $.extend(defaults, options)
 
     $input.on('invalid', function (e) {
-      if ($input.context.validity.valueMissing) {
+      if ($input[0].validity.valueMissing) {
         errorMessage = options.required
-      } else if (!$input.context.validity.valid) {
-        type = $input.context.type
+      } else if (!$input[0].validity.valid) {
+        type = $input[0].type
         errorMessage = options.value
 
         if (options[type]) {

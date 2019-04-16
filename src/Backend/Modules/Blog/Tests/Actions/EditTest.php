@@ -76,7 +76,7 @@ class EditTest extends WebTestCase
 
         // our url and our page should contain the new title of our blogpost
         self::assertContains(
-            '&report=edited&var=Edited%20blogpost%20for%20functional%20tests&id=1',
+            '&id=1&highlight%3Drow=2&var=Edited%20blogpost%20for%20functional%20tests&report=edited',
             $client->getHistory()->current()->getUri()
         );
         self::assertContains(
