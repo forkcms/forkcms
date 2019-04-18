@@ -9,7 +9,8 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
-use Symfony\Component\Intl\Intl as Intl;
+use ForkCMS\Utility\Geolocation;
+use Symfony\Component\Intl\Intl;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
@@ -46,8 +47,9 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
             }
 
-            // add js
-            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
+            $this->header->addJS(
+                'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . BL::getInterfaceLanguage()
+            );
 
             $this->loadData();
 
@@ -164,6 +166,8 @@ class Edit extends BackendBaseActionEdit
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
             $this->template->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void
@@ -194,7 +198,7 @@ class Edit extends BackendBaseActionEdit
                 // check if it's necessary to geocode again
                 if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
                     // define coordinates
-                    $coordinates = BackendLocationModel::getCoordinates(
+                    $coordinates = BackendModel::get(Geolocation::class)->getCoordinates(
                         $item['street'],
                         $item['number'],
                         $item['city'],

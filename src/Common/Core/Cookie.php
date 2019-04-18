@@ -146,7 +146,7 @@ final class Cookie
      */
     public function hasAllowedCookies(): bool
     {
-        return $this->get('cookie_bar_agree', 'N') === 'N';
+        return $this->get('cookie_bar_agree', 'N') === 'Y';
     }
 
     /**

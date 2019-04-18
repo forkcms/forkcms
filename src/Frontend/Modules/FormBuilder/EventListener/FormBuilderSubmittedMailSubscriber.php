@@ -109,7 +109,7 @@ final class FormBuilderSubmittedMailSubscriber
                 $message->setReplyTo([$email => $email]);
             }
         }
-        if ($message->getReplyTo() === null) {
+        if (empty($message->getReplyTo())) {
             $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
             $message->setReplyTo([$replyTo['email'] => $replyTo['name']]);
         }

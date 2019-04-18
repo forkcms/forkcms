@@ -47,7 +47,6 @@ class Categories extends BackendBaseActionIndex
         } else {
             $this->dataGrid->setColumnsHidden(['sequence']);
         }
-        $this->dataGrid->setRowAttributes(['id' => '[id]']);
         $this->dataGrid->setPaging(false);
 
         // check if this action is allowed

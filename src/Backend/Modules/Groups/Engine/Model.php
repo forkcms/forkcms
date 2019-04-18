@@ -52,7 +52,13 @@ class Model
 
     public static function delete(int $groupId): void
     {
-        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', [$groupId]);
+        /** @var SpoonDatabase $database */
+        $database = BackendModel::getContainer()->get('database');
+
+        $database->delete('groups', 'id = ?', [$groupId]);
+        $database->delete('groups_settings', 'group_id = ?', [$groupId]);
+        $database->delete('groups_rights_actions', 'group_id = ?', [$groupId]);
+        $database->delete('groups_rights_modules', 'group_id = ?', [$groupId]);
     }
 
     public static function deleteActionPermissions(array $actionPermissions): void
@@ -166,7 +172,7 @@ class Model
         $groupsByUser = static::getGroupsByUser($userId);
 
         foreach ($groupsByUser as $group) {
-            if ($group['id'] === $groupId) {
+            if ((int) $group['id'] === $groupId) {
                 return true;
             }
         }

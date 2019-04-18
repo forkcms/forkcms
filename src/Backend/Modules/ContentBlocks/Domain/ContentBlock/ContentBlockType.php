@@ -3,11 +3,11 @@
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Form\Type\EditorType;
+use Common\Form\TitleType;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,11 +17,7 @@ class ContentBlockType extends AbstractType
     {
         $builder->add(
             'title',
-            TextType::class,
-            [
-                'required' => true,
-                'label' => 'lbl.Title',
-            ]
+            TitleType::class
         )->add(
             'text',
             EditorType::class,

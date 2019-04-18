@@ -12,6 +12,7 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use ReCaptcha\ReCaptcha;
+use ReCaptcha\RequestMethod\CurlPost;
 use SpoonFormAttributes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -411,7 +412,7 @@ class Form extends FrontendBaseWidget
                     $this->form->addError(FL::err('RecaptchaInvalid'));
                 }
 
-                $recaptcha = new ReCaptcha($secret);
+                $recaptcha = new ReCaptcha($secret, new CurlPost());
 
                 $response = $recaptcha->verify($response);
 
@@ -555,13 +556,7 @@ class Form extends FrontendBaseWidget
                 );
             } else {
                 // not correct, show errors
-                // global form errors set
-                if ($this->form->getErrors() != '') {
-                    $this->template->assign('formBuilderError', $this->form->getErrors());
-                } else {
-                    // general error
-                    $this->template->assign('formBuilderError', FL::err('FormError'));
-                }
+                $this->template->assign('formBuilderError', FL::err('FormError'));
             }
         }
     }

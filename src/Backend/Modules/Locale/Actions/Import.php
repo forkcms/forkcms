@@ -65,35 +65,37 @@ class Import extends BackendBaseActionAdd
 
     private function validateForm(): void
     {
-        if ($this->form->isSubmitted()) {
-            $this->form->cleanupFields();
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
 
-            // redefine fields
-            /** @var $fileFile \SpoonFormFile */
-            $fileFile = $this->form->getField('file');
-            $chkOverwrite = $this->form->getField('overwrite');
+        $this->form->cleanupFields();
 
-            // name checks
-            if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-                // only xml files allowed
-                if ($fileFile->isAllowedExtension(['xml'], sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
-                    // load xml
-                    $xml = @simplexml_load_file($fileFile->getTempFileName());
+        /** @var $fileFile \SpoonFormFile */
+        $fileFile = $this->form->getField('file');
+        $chkOverwrite = $this->form->getField('overwrite');
 
-                    // invalid xml
-                    if ($xml === false) {
-                        $fileFile->addError(BL::getError('InvalidXML'));
-                    }
-                }
-            }
+        if ($fileFile->isFilled(BL::err('FieldIsRequired'))
+            && $fileFile->isAllowedExtension(['xml'], sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
+            $xml = @simplexml_load_file($fileFile->getTempFileName());
 
-            if ($this->form->isCorrect()) {
-                // import
-                $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
-
-                // everything is imported, so redirect to the overview
-                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
+            // invalid xml
+            if ($xml === false) {
+                $fileFile->addError(BL::getError('InvalidXML'));
             }
         }
+
+        if (!$this->form->isCorrect()) {
+            return;
+        }
+
+        // import
+        $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
+
+        // everything is imported, so redirect to the overview
+        $this->redirect(
+            BackendModel::createUrlForAction('Index') . '&report=imported&var='
+            . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery
+        );
     }
 }

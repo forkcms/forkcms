@@ -4,9 +4,7 @@ matrix:
   include:
     - php: 7.1
 
-script:
-  - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
-  - travis_wait 30 bin/simple-phpunit --coverage-clover=coverage.clover
+sudo: false
 
 before_script:
   - composer install
@@ -25,4 +23,26 @@ after_success:
 after_failure:
   - cat var/logs/test.log
 
-sudo: false
+jobs:
+  include:
+    - stage: test
+      php: 7.1
+      script: travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=coverage.clover
+    - stage: test
+      php: 7.1
+      script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
+    - stage: code quality
+      php: 7.1
+      before_script:
+        - mysql -e 'create database fork'
+        - mysql -u root fork < tests/data/test_db.sql
+        - cp app/config/parameters.yml.travis app/config/parameters.yml
+        - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
+        - composer install
+      script: bin/phpstan analyze src
+      after_success: skip
+    - stage: code quality
+      php: 7.1
+      before_script: composer install
+      script: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
+      after_success: skip

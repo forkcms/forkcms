@@ -61,7 +61,7 @@
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h2>{{ 'lbl.Image'|trans|ucfirst }}</h2>
+                      <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                     </div>
                     <div class="panel-body">
                       {% form_field image %} {% form_field_error image %}
@@ -105,7 +105,7 @@
                     <div class="form-group last">
                       <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
                       {% form_field publish_on_date %} {% form_field_error publish_on_date %}
-                      <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
+                      <label for="publishOnTime" class="control-label">{{ 'lbl.At'|trans }}</label>
                       {% form_field publish_on_time %} {% form_field_error publish_on_time %}
                     </div>
                   </div>
@@ -127,7 +127,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
-                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
+                        <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>

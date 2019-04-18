@@ -304,7 +304,13 @@ class Add extends BackendBaseActionAdd
 
         if ($this->showTags()) {
             // tags
-            $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+            $this->form->addText(
+                'tags',
+                null,
+                null,
+                'form-control js-tags-input',
+                'form-control danger js-tags-input'
+            )->setAttribute('aria-describedby', 'tags-info');
         }
 
         // a specific action
@@ -419,13 +425,13 @@ class Add extends BackendBaseActionAdd
                 if ($this->form->getField('is_action')->isChecked()) {
                     $data['is_action'] = true;
                 }
-                if ($redirectValue == 'internal') {
+                if ($redirectValue === 'internal') {
                     $data['internal_redirect'] = [
                         'page_id' => $this->form->getField('internal_redirect')->getValue(),
                         'code' => '301',
                     ];
                 }
-                if ($redirectValue == 'external') {
+                if ($redirectValue === 'external') {
                     $data['external_redirect'] = [
                         'url' => BackendPagesModel::getEncodedRedirectUrl(
                             $this->form->getField('external_redirect')->getValue()
@@ -441,7 +447,7 @@ class Add extends BackendBaseActionAdd
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
                     foreach (BL::getActiveLanguages() as $language) {
-                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                        if ($language !== BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
                             $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                         }
                     }

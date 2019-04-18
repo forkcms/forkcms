@@ -48,7 +48,7 @@ monolog:
     handlers:
         main:
             type:  rotating_file
-            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
+            path:  "%site.path_www%/var/logs/%kernel.environment%/error.log"
             level: error
             max_files: 10
         # swift:
@@ -197,6 +197,16 @@ services:
         class: Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    ForkCMS\Utility\Geolocation:
+        public: true
+        arguments:
+            - "@fork.settings"
+
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate

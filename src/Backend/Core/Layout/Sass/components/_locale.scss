@@ -1,7 +1,11 @@
 #locale .translationValue {
   word-break: break-all;
+  position: relative;
 
   .label {
     margin-left: 10px;
+    position: absolute;
+    right: 0;
+    font-size: 100%;
   }
 }

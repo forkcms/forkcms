@@ -58,7 +58,7 @@
       <div class="btn-toolbar">
         {% if showLocaleDelete %}
           <div class="btn-group pull-left" role="group">
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           </div>
         {% endif %}
         <div class="btn-group pull-right" role="group">

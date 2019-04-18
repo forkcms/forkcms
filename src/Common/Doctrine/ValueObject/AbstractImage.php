@@ -3,6 +3,7 @@
 namespace Common\Doctrine\ValueObject;
 
 use Backend\Core\Engine\Model;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -86,7 +87,7 @@ abstract class AbstractImage extends AbstractFile
         parent::upload();
 
         if (static::GENERATE_THUMBNAILS) {
-            Model::generateThumbnails(
+            Model::get(Thumbnails::class)->generate(
                 FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir(),
                 $this->getAbsolutePath('source')
             );
@@ -99,7 +100,7 @@ abstract class AbstractImage extends AbstractFile
     protected function removeOldFile(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
-            Model::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
+            Model::get(Thumbnails::class)->delete($this->getUploadRootDir(), $this->oldFileName);
 
             return;
         }
@@ -113,7 +114,7 @@ abstract class AbstractImage extends AbstractFile
     public function remove(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
-            Model::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
+            Model::get(Thumbnails::class)->delete($this->getUploadRootDir(), $this->fileName);
 
             return;
         }

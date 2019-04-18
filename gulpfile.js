@@ -146,9 +146,6 @@ gulp.task('serve:backend', function () {
 // frontend tasks
 gulp.task('build:frontend:assets:copy-images-vendors', function () {
   var components = {
-    'photoswipe': [
-      'node_modules/photoswipe/dist/default-skin/*.{png,svg,gif,jpg}'
-    ]
   }
 
   for (var key in components) {
@@ -165,7 +162,18 @@ gulp.task('build:frontend:assets:copy-js-vendors', function () {
   .pipe(gulp.dest('js/vendors'))
 })
 
+gulp.task('build:frontend:assets:copy-photoswipe-css-and-images', function () {
+  return gulp.src([
+    'node_modules/photoswipe/dist/photoswipe.css',
+    'node_modules/photoswipe/dist/default-skin/*.{png,svg,gif,jpg,css}'
+  ])
+    .pipe(gulp.dest('css/vendors/photoswipe'))
+})
+
 gulp.task('build:frontend:sass:generate-css', function () {
+  gulp.src([
+    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
+  ]).pipe(gulp.dest('./css/vendors'))
   return gulp.src([
     'src/Frontend/Core/Layout/Sass/debug.scss',
     'src/Frontend/Core/Layout/Sass/editor_content.scss',
@@ -211,6 +219,7 @@ gulp.task('build:frontend', function () {
   gulp.start(
     'build:frontend:assets:copy-images-vendors',
     'build:frontend:assets:copy-js-vendors',
+    'build:frontend:assets:copy-photoswipe-css-and-images',
     'build:frontend:sass:generate-css',
     'build:frontend:sass:generate-module-css'
   )

@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Common\Uri;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -104,7 +103,7 @@ class MediaFolder implements JsonSerializable
         ?MediaFolder $parent,
         int $userId
     ) {
-        $this->setName($name);
+        $this->name = $name;
         $this->parent = $parent;
         $this->userId = $userId;
         $this->items = new ArrayCollection();
@@ -125,7 +124,7 @@ class MediaFolder implements JsonSerializable
 
     public function update(string $name, MediaFolder $parent = null)
     {
-        $this->setName($name);
+        $this->name = $name;
 
         if ($parent instanceof self) {
             $this->setParent($parent);
@@ -209,13 +208,6 @@ class MediaFolder implements JsonSerializable
         return $this->name;
     }
 
-    private function setName(string $name): self
-    {
-        $this->name = Uri::getUrl($name);
-
-        return $this;
-    }
-
     public function getCreatedOn(): \DateTime
     {
         return $this->createdOn;
@@ -293,7 +285,7 @@ class MediaFolder implements JsonSerializable
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \Datetime();
+        $this->createdOn = $this->editedOn = new \DateTime();
     }
 
     /**
@@ -301,6 +293,11 @@ class MediaFolder implements JsonSerializable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
     }
 }

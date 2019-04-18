@@ -37,7 +37,7 @@ monolog:
     handlers:
         main:
             type: stream
-            path: "%site.path_www%/var/logs/logs.log"
+            path: "%site.path_www%/var/logs/%kernel.environment%/debug.log"
             level: debug
 
 parameters:
@@ -46,19 +46,19 @@ parameters:
     fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
 
 services:
+    fork.settings:
+        class: Common\ModulesSettings
+        public: true
+        arguments:
+            - "@database"
+            - "@cache.pool"
+
     # dummy service during the installation
     mailer_configurator:
         class: stdClass
 
-    # dummy service during the installation
-    fork.settings:
-        class: stdClass
-        public: true
-
-    # dummy service during the installation
     cache.pool:
-        class: stdClass
-        public: true
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
 
     database:
         class: SpoonDatabase
@@ -72,3 +72,8 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"

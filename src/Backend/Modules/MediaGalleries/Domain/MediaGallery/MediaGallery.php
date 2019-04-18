@@ -204,7 +204,7 @@ class MediaGallery
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \Datetime();
+        $this->createdOn = $this->editedOn = new \DateTime();
 
         $this->moduleExtraId = Model::insertExtra(
             ModuleExtraType::widget(),
@@ -221,7 +221,7 @@ class MediaGallery
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
     }
 
     /**

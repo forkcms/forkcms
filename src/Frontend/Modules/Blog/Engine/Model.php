@@ -3,10 +3,12 @@
 namespace Frontend\Modules\Blog\Engine;
 
 use Common\Mailer\Message;
+use ForkCMS\Utility\Thumbnails;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -72,7 +74,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -233,7 +235,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -334,7 +336,7 @@ class Model implements FrontendTagsInterface
 
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -491,7 +493,6 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
              c.author, c.email, c.website
@@ -501,14 +502,10 @@ class Model implements FrontendTagsInterface
             [$blogPostId, 'published', LANGUAGE]
         );
 
-        // loop comments and create gravatar id
         foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
             $row['gravatar_id'] = md5($row['email']);
         }
 
-        // return
         return $comments;
     }
 
@@ -535,7 +532,7 @@ class Model implements FrontendTagsInterface
         if (!empty($items)) {
             // init var
             $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+            $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             // reset url
             foreach ($items as &$row) {
@@ -743,7 +740,7 @@ class Model implements FrontendTagsInterface
         return self::completeBlogPost($blogPost);
     }
 
-    private static function completeBlogPost(array $blogPost)
+    private static function completeBlogPost(array $blogPost): array
     {
         if (isset($blogPost['meta_id'])) {
             $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
@@ -755,11 +752,19 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($blogPost['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+            $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $blogPost['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $blogPost['image'];
             }
+        }
+
+        if (isset($blogPost['id'])) {
+            $blogPost['tags'] = FrontendTagsModel::getForItem(
+                'Blog',
+                $blogPost['id'],
+                isset($blogPost['language']) ? Locale::fromString($blogPost['language']) : null
+            );
         }
 
         return $blogPost;

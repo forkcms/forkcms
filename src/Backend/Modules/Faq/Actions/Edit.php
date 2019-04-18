@@ -89,6 +89,8 @@ class Edit extends BackendBaseActionEdit
         // assign the active record and additional variables
         $this->template->assign('item', $this->record);
         $this->template->assign('feedback', $this->feedback);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['question']);
     }
 
     private function validateForm(): void

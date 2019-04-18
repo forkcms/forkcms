@@ -180,6 +180,10 @@ class Edit extends BackendBaseActionEdit
                 'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module,
             ];
+
+            usort($this->actions[$module], function ($a, $b) {
+                return strcmp($a["label"], $b["label"]);
+            });
         }
     }
 
@@ -399,6 +403,8 @@ class Edit extends BackendBaseActionEdit
 
         // only allow deletion of empty groups
         $this->template->assign('allowGroupsDelete', $this->dataGridUsers->getNumResults() == 0);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**

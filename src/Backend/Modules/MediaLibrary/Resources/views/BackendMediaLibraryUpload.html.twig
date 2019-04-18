@@ -76,129 +76,141 @@
   </div>
 </script>
 
-{# Step 0 - Choose type #}
-<div id="uploadMediaTypeBox" class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
-      </div>
-      <div class="panel-body">
-        <div class="form-group last">
-          <ul class="list-unstyled">
-            <li class="radiobutton">
-              <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
-            </li>
-            <li class="radiobutton">
-              <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-{# Step 1 - Choose folder #}
-<div class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">1) {{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
-      </div>
-      <div class="panel-body">
-        <p>
-          <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}{{ macro.required }}</label>
-          <select id="uploadMediaFolderId" name="uploadMediaFolderId">
-            <option></option>
-          </select>&nbsp;&nbsp;
-          <a href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
-            <span>{{ 'msg.MediaOrAddMediaFolder'|trans }}</span>
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
-{# Step 2 - Choose media to upload #}
-<div id="uploadMediaBox" class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">2) {{ 'msg.MediaChoseToUpload'|trans }}</h2>
-      </div>
-      <div id="fine-uploader-gallery"></div>
-      <div class="panel-footer">
-        <div class="form-group" data-role="cropper-is-mandatory-form-group">
-          <div class="checkbox">
-            <label for="enableCropperCheckbox">
-              <input type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
-              {{ 'lbl.EnableCropper'|trans|ucfirst }}
-            </label>
-            <span class="help-block" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</span>
-            <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
+<div data-role="uploadMediaStep1">
+  {# Choose type #}
+  <div class="row fork-module-content">
+    <div id="uploadMediaTypeBox">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
+          </div>
+          <div class="panel-body">
+            <div class="form-group last">
+              <ul class="list-unstyled">
+                <li class="radiobutton">
+                  <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
+                </li>
+                <li class="radiobutton">
+                  <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <div id="fine-uploader-gallery"></div>
     </div>
-  </div>
-</div>
 
-{# Step 2 - Adding a movie #}
-<div id="addMovieBox" class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">2) {{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
-      </div>
-      <div class="panel-body">
-        <p>
-          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
-          {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
-          <select id="mediaMovieStorageType" name="media_movie_source"></select>
-        </p>
-        <p>
-          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
-          <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
-          <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
-        </p>
-        <p>
-          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
-          <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
-        </p>
-      </div>
-      <div class="panel-footer">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right" role="group">
-            <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
-              {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+    {# Choose folder #}
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
+        </div>
+        <div class="panel-body">
+          <p>
+            <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}{{ macro.required }}</label>
+            <select id="uploadMediaFolderId" name="uploadMediaFolderId">
+              <option>{{ 'lbl.Loading'|trans|ucfirst }}</option>
+            </select>&nbsp;&nbsp;
+            <a href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+              <span>{{ 'msg.MediaOrAddMediaFolder'|trans }}</span>
             </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          {{ macro.buttonIcon('', 'chevron-right', 'lbl.Next'|trans|ucfirst, 'btn-primary', {"data-role":"uploadMediaGoToStep2", "type":"button"}, true) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-role="uploadMediaStep2" style="display: none">
+  {# Choose media to upload #}
+  <div id="uploadMediaBox" class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>
+        </div>
+        <div id="fine-uploader-gallery"></div>
+        <div class="panel-footer">
+          <div class="form-group" data-role="cropper-is-mandatory-form-group">
+            <div class="checkbox">
+              <label for="enableCropperCheckbox">
+                <input type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
+                {{ 'lbl.EnableCropper'|trans|ucfirst }}
+              </label>
+              <span class="help-block" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</span>
+              <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Adding a movie #}
+  <div id="addMovieBox" class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
+        </div>
+        <div class="panel-body">
+          <p>
+            <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
+            {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+            <select id="mediaMovieStorageType" name="media_movie_source"></select>
+          </p>
+          <p>
+            <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
+            <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
+            <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
+          </p>
+          <p>
+            <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
+            <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
+          </p>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right" role="group">
+              <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+                {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Uploaded media #}
+  <div id="uploadedMediaBox" class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default panel-editor">
+        <div class="panel-heading">
+          <h2 class="panel-title">{{ 'msg.MediaUploaded'|trans }}</h2>
+        </div>
+        <div class="panel-body">
+          <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
+          <div class="mediaConnectedBox">
+            <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-{# Step 3 - Uploaded media #}
-<div id="uploadedMediaBox" class="row fork-module-content">
-  <div class="col-md-12">
-    <div class="panel panel-default panel-editor">
-      <div class="panel-heading">
-        <h2 class="panel-title">3) {{ 'msg.MediaUploaded'|trans }}</h2>
-      </div>
-      <div class="panel-body">
-        <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
-        <div class="mediaConnectedBox">
-          <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 {# Add folder dialog #}
 {% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
 

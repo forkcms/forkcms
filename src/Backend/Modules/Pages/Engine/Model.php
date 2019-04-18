@@ -105,13 +105,15 @@ class Model
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
 
-        // copy location widgets and get copied widget ids
-        $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
-        $commandBus->handle($copyLocationWidgets);
-        $locationWidgetIds = $copyLocationWidgets->extraIdMap;
+        if (BackendModel::isModuleInstalled('Location')) {
+            // copy location widgets and get copied widget ids
+            $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
+            $commandBus->handle($copyLocationWidgets);
+            $locationWidgetIds = $copyLocationWidgets->extraIdMap;
 
-        // define old block ids
-        $locationWidgetOldIds = array_keys($locationWidgetIds);
+            // define old block ids
+            $locationWidgetOldIds = array_keys($locationWidgetIds);
+        }
 
         // get all old pages
         $ids = $database->getColumn(
@@ -238,9 +240,11 @@ class Model
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
                 }
 
-                // Overwrite the extra_id of the old location widget with the id of the new one
-                if (in_array($block['extra_id'], $locationWidgetOldIds)) {
-                    $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                if (BackendModel::isModuleInstalled('Location')) {
+                    // Overwrite the extra_id of the old location widget with the id of the new one
+                    if (in_array($block['extra_id'], $locationWidgetOldIds)) {
+                        $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                    }
                 }
 
                 // add block
@@ -288,7 +292,7 @@ class Model
     }
 
     /**
-     * @deprecated We don't use this method anymore apparently
+     * @deprecated Will become private since it is only used in this class
      */
     public static function createHtml(
         string $navigationType = 'page',

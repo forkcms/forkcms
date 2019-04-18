@@ -30,7 +30,7 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
         $ids = explode(',', $this->getRequest()->request->get('media_ids'));
 
         // We have no ids
-        if ($ids === null) {
+        if (empty($ids)) {
             return [];
         }
 

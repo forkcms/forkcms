@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use ForkCMS\Utility\Thumbnails;
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Language\Language as FL;
@@ -56,7 +57,7 @@ class FormImage extends SpoonFormImage
         $this->moveFile($path . '/source/' . $filename);
 
         // generate the thumbnails
-        Model::generateThumbnails($path, $path . '/source/' . $filename);
+        Model::get(Thumbnails::class)->generate($path, $path . '/source/' . $filename);
     }
 
     /**
