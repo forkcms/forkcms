@@ -37,7 +37,7 @@
               <td><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
               {% if allowComments %}
                 <td>
-                  <i class="fa fa-comments" aria-hidden="true"></i>
+                  <i class="fas fa-comments" aria-hidden="true"></i>
                   <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
                     {% if item.comments_multiple or not item.comments %}
                       {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}

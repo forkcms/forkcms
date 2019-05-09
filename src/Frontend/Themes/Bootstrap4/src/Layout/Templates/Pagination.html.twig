@@ -70,7 +70,7 @@
         <div class="col-2">
           {% if pagination.show_previous %}
             <a class="btn btn-primary btn-block" href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">
-              <span class="sr-only">{{ 'lbl.PreviousPage'|trans|ucfirst }}</span> <span class="fa fa-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">{{ 'lbl.PreviousPage'|trans|ucfirst }}</span> <span class="fas fa-chevron-left" aria-hidden="true"></span>
             </a>
           {% endif %}
         </div>
@@ -85,7 +85,7 @@
         <div class="col-2">
           {% if pagination.show_next %}
             <a class="btn btn-primary btn-block" href="{{ pagination.next_url }}" rel="prev nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}"{% if not pagination.show_next %} disabled{% endif %}>
-              <span class="sr-only">{{ 'lbl.NextPage'|trans }}</span> <span class="fa fa-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">{{ 'lbl.NextPage'|trans }}</span> <span class="fas fa-chevron-right" aria-hidden="true"></span>
             </a>
           {% endif %}
         </div>

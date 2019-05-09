@@ -33,7 +33,7 @@
         <div class="col-md-6">
           {% if item.allow_comments %}
             <div class="comment-count pull-right">
-              <i class="fa fa-comments" aria-hidden="true"></i>
+              <i class="fas fa-comments" aria-hidden="true"></i>
               <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
                 {% if item.comments_multiple or not item.comments %}
                   {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
