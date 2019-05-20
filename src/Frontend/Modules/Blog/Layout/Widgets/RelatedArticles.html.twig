@@ -1,0 +1,27 @@
+{#
+  variables that are available:
+  - {{ widgetBlogRecentArticlesList }}: contains an array with all posts, each element contains data about the post
+#}
+{% if widgetBlogRelatedArticles %}
+  <aside class="module-blog widget-blog-related-articles">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
+        <h3>{{ 'lbl.RelatedArticles'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        <ul>
+          {% for post in widgetBlogRelatedArticles %}
+            <li>
+              <a href="{{ post.full_url }}" title="{{ post.title }}">
+                {{ post.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+  </aside>
+{% endif %}
