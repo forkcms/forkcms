@@ -200,8 +200,13 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            $mailmotorGateway = $this->getContainer()->get('mailmotor.factory.public')->getSubscriberGateway();
-            if ($listId === '' || !$mailmotorGateway->ping($listId)) {
+
+            try {
+                $mailmotorGateway = $this->getContainer()->get('mailmotor.factory.public')->getSubscriberGateway();
+                if ($listId === '' || !$mailmotorGateway->ping($listId)) {
+                    $errors['list_id'] = BL::getError('WrongMailEngineCredentials', 'Mailmotor');
+                }
+            } catch (\Exception $mailMotorException) {
                 $errors['list_id'] = BL::getError('WrongMailEngineCredentials', 'Mailmotor');
             }
         }
