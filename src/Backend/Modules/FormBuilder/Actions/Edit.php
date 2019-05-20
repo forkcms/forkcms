@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Form\Type\DeleteType;
+use Backend\Modules\FormBuilder\Engine\Autocomplete;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
@@ -96,6 +97,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
 
+        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getValuesForDropdown());
+
         // textarea dialog
         $this->form->addText('textarea_label');
         $this->form->addTextarea('textarea_value');
@@ -157,6 +160,8 @@ class Edit extends BackendBaseActionEdit
         );
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
+
+        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getValuesForDropdown());
 
         // dropdown dialog
         $this->form->addText('dropdown_label');
