@@ -356,6 +356,10 @@
                       {% form_field textbox_error_message %}
                     </div>
                   </div>
+                  <div class="form-group">
+                    <label for="textboxAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
+                    {% form_field textbox_autocomplete %}
+                  </div>
                 </div>
               </div>
             </div>
@@ -570,6 +574,10 @@
                       <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                       {% form_field datetime_error_message %}
                     </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="datetimeAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
+                    {% form_field datetime_autocomplete %}
                   </div>
                 </div>
               </div>

@@ -157,6 +157,7 @@ class Form extends FrontendBaseWidget
                     'label' => $field['settings']['label'] ?? '',
                     'placeholder' => $field['settings']['placeholder'] ?? null,
                     'classname' => $field['settings']['classname'] ?? null,
+                    'autocomplete' => $field['settings']['autocomplete'] ?? null,
                     'required' => isset($field['validations']['required']),
                     'validations' => $field['validations'] ?? [],
                     'html' => '',
@@ -233,6 +234,11 @@ class Form extends FrontendBaseWidget
                         $txt->setAttribute('placeholder', $item['placeholder']);
                     }
 
+                    // add autocomplete attribute
+                    if ($item['autocomplete']) {
+                        $txt->setAttribute('autocomplete', $item['autocomplete']);
+                    }
+
                     $this->setCustomHTML5ErrorMessages($item, $txt);
 
                     // get content
@@ -278,6 +284,11 @@ class Form extends FrontendBaseWidget
                     // add required attribute
                     if ($item['required']) {
                         $datetime->setAttribute('required', null);
+                    }
+
+                    // add autocomplete attribute
+                    if ($item['autocomplete']) {
+                        $datetime->setAttribute('autocomplete', $item['autocomplete']);
                     }
 
                     $this->setCustomHTML5ErrorMessages($item, $datetime);
