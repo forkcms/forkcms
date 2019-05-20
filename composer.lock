@@ -3600,16 +3600,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "a503ab2c049300096b53eb4896eaf393ced74a34"
+                "reference": "d75e25a449ef111afc6049d936d4e6f3491d7a21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/a503ab2c049300096b53eb4896eaf393ced74a34",
-                "reference": "a503ab2c049300096b53eb4896eaf393ced74a34",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/d75e25a449ef111afc6049d936d4e6f3491d7a21",
+                "reference": "d75e25a449ef111afc6049d936d4e6f3491d7a21",
                 "shasum": ""
             },
             "require": {
@@ -3631,7 +3631,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2019-01-07T12:36:49+00:00"
+            "time": "2019-04-17T07:36:55+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3930,7 +3930,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
