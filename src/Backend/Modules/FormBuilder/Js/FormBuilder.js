@@ -206,7 +206,10 @@ jsBackend.FormBuilder.Fields = {
             case 'radiobuttonDialog':
               jsBackend.FormBuilder.Fields.saveRadiobutton()
               break
-            case 'checkboxDialog':
+            case 'mailmotorDialog':
+              jsBackend.FormBuilder.Fields.saveMailmotorbutton()
+              break
+            case 'checkboxDialogcheckboxDialog':
               jsBackend.FormBuilder.Fields.saveCheckbox()
               break
           }
@@ -419,6 +422,11 @@ jsBackend.FormBuilder.Fields = {
                 ) {
                   $('#textboxReplyTo').prop('checked', true)
                 }
+                if (data.data.field.settings.use_to_subscribe_with_mailmotor &&
+                  data.data.field.settings.use_to_subscribe_with_mailmotor === true
+                ) {
+                  $('#textboxMailmotor').prop('checked', true)
+                }
                 if (data.data.field.settings.send_confirmation_mail_to &&
                   data.data.field.settings.send_confirmation_mail_to === true
                 ) {
@@ -605,6 +613,15 @@ jsBackend.FormBuilder.Fields = {
 
                 // show dialog
                 $('#checkboxDialog').modal('show')
+              } else if (data.data.field.type === 'mailmotor') {
+                // mailmotor edit
+                // fill in form
+                $('#mailmotorId').val(data.data.field.id)
+                $('#mailmotorLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
+                $('#mailmotorListId').val(utils.string.htmlDecode(data.data.field.settings.list_id))
+
+                // show dialog
+                $('#mailmotorDialog').modal('show')
               } else if (data.data.field.type === 'heading') {
                 // heading edit
                 // fill in form
@@ -1160,6 +1177,65 @@ jsBackend.FormBuilder.Fields = {
   },
 
   /**
+   * Handle mailmotorButton save
+   */
+  saveMailmotorbutton: function () {
+    // init vars
+    var fieldId = $('#mailmotorId').val()
+    var type = 'mailmotor'
+    var label = $('#mailmotorLabel').val()
+    var listId = $('#mailmotorListId').val()
+
+    // make the call
+    $.ajax({
+      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+        form_id: jsBackend.FormBuilder.formId,
+        field_id: fieldId,
+        type: type,
+        label: label,
+        list_id: listId
+      }),
+      success: function (data, textStatus) {
+        // success
+        if (data.code === 200) {
+          // clear errors
+          $('.jsFieldError').html('')
+
+          // form contains errors
+          if (typeof data.data.errors !== 'undefined') {
+            // assign errors
+            if (typeof data.data.errors.label !== 'undefined') {
+              $('#mailmotorLabelError').html(data.data.errors.label)
+            }
+
+            if (typeof data.data.errors.list_id !== 'undefined') {
+              $('#mailmotorListIdError').html(data.data.errors.list_id)
+            }
+
+            // toggle error messages
+            jsBackend.FormBuilder.Fields.toggleValidationErrors('mailmotorDialog')
+          } else {
+            // saved!
+            // append field html
+            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+
+            // close console box
+            $('#mailmotorDialog').modal('hide')
+          }
+        } else {
+          // show error message
+          jsBackend.messages.add('danger', textStatus)
+        }
+
+        // alert the user
+        if (data.code !== 200 && jsBackend.debug) {
+          window.alert(data.message)
+        }
+      }
+    })
+  },
+
+  /**
    * Handle submit save
    */
   saveSubmit: function () {
@@ -1297,6 +1373,9 @@ jsBackend.FormBuilder.Fields = {
             if (typeof data.data.errors.reply_to_error_message !== 'undefined') {
               $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message)
             }
+            if (typeof data.data.errors.use_to_subscribe_with_mailmotor_error_message !== 'undefined') {
+              $('#textboxMailmotorErrorMessageError').html(data.data.errors.use_to_subscribe_with_mailmotor_error_message)
+            }
 
             // toggle error messages
             jsBackend.FormBuilder.Fields.toggleValidationErrors('textareaDialog')
@@ -1340,6 +1419,7 @@ jsBackend.FormBuilder.Fields = {
     var validationParameter = $('#textboxValidationParameter').val()
     var errorMessage = $('#textboxErrorMessage').val()
     var classname = $('#textboxClassname').val()
+    var mailmotor = $('#textboxMailmotor').is(':checked')
     var autocomplete = $('#textboxAutocomplete').val()
 
     // make the call
@@ -1351,6 +1431,7 @@ jsBackend.FormBuilder.Fields = {
         label: label,
         default_values: value,
         reply_to: replyTo,
+        use_to_subscribe_with_mailmotor: mailmotor,
         send_confirmation_mail_to: sendConfirmationMailTo,
         confirmation_mail_subject: confirmationMailSubject,
         required: required,
@@ -1385,6 +1466,9 @@ jsBackend.FormBuilder.Fields = {
             }
             if (typeof data.data.errors.reply_to_error_message !== 'undefined') {
               $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message)
+            }
+            if (typeof data.data.errors.use_to_subscribe_with_mailmotor_error_message !== 'undefined') {
+              $('#textboxMailmotorErrorMessageError').html(data.data.errors.use_to_subscribe_with_mailmotor_error_message)
             }
             if (typeof data.data.errors.send_confirmation_mail_to_error_message !== 'undefined') {
               $('#textboxSendConfirmationMailToErrorMessageError').html(data.data.errors.send_confirmation_mail_to_error_message)

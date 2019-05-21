@@ -211,6 +211,11 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $chk->parse();
+                } elseif ($field['type'] === 'mailmotor') {
+                    $chk = $this->form->addCheckbox($item['name'], false, $item['classname']);
+
+                    // get content
+                    $item['html'] = $chk->parse();
                 } elseif ($field['type'] === 'textbox') {
                     // create element
                     $txt = $this->form->addText($item['name'], $defaultValues, 255, $item['classname']);
@@ -373,6 +378,8 @@ class Form extends FrontendBaseWidget
                     $field['multiple'] = true;
                 } elseif ($field['type'] === 'submit') {
                     $submitValue = $field['html'];
+                } elseif ($field['type'] === 'mailmotor') {
+                    $field['isMailmotor'] = true;
                 } else {
                     $field['simple'] = true;
                 }
@@ -507,7 +514,7 @@ class Form extends FrontendBaseWidget
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
-                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
+                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha', 'mailmotor'])) {
                         continue;
                     }
 
