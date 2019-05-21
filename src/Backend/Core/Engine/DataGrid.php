@@ -27,6 +27,7 @@ class DataGrid extends \SpoonDataGrid
         'add' => 'fa-plus',
         'copy' => 'fa-copy',
         'edit' => 'fa-pencil',
+        'clone' => 'fa-clone',
         'import' => 'fa-download',
         'export' => 'fa-upload',
         'delete' => 'fa-trash-o',
@@ -111,7 +112,7 @@ class DataGrid extends \SpoonDataGrid
         // known actions that should have a button
         if (in_array(
             $lowercasedName,
-            ['add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install'],
+            ['add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install', 'clone'],
             true
         )) {
             // rebuild value, it should have special markup
@@ -154,6 +155,7 @@ class DataGrid extends \SpoonDataGrid
                 'install',
                 'use_revision',
                 'use_draft',
+                'clone',
             ]
         )) {
             // add special attributes for actions we know

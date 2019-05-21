@@ -48,6 +48,7 @@
           <ul class="dropdown-menu">
             <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
             <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
+            <li><a href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a></li>
           </ul>
         </div>
       {% endif %}
