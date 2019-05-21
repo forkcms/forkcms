@@ -18,8 +18,7 @@
               <ul class="mediaConnectedItems ui-sortable">
                 {% for connectedItem in mediaGroup.connectedItems %}
                   <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
-                    <div class="mediaHolder mediaHolder{{ connectedItem.item.type|ucfirst }}">
-
+                    <div class="mediaHolder mediaHolder{{ connectedItem.item.type|ucfirst }}"{% if connectedItem.item.type.isMovie %} style="background-image: url('{{ connectedItem.item.thumbnail() }}')"{% endif %}>
                       {# Audio #}
                       {% if connectedItem.item.type.isAudio %}
                         <div class="icon"></div>
@@ -40,7 +39,6 @@
                       {# Movie #}
                       {% if connectedItem.item.type.isMovie %}
                         <div class="icon"></div>
-                        <div class="url">{{ connectedItem.item.url }}</div>
                       {% endif %}
 
                     </div>

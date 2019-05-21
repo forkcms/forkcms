@@ -131,6 +131,11 @@
       width: 100%;
       word-wrap: break-word;
     }
+    .mediaHolderMovie {
+      height: 90px;
+      width: 140px;
+      background-size: cover;
+    }
     .mediaHolderImage img {
       width: 140px;
       height: 90px;
