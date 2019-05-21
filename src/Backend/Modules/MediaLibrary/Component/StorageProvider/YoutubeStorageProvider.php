@@ -11,7 +11,7 @@ class YoutubeStorageProvider extends MovieStorageProvider
         return '<iframe width="100%" height="100%" src="' . $this->includeUrl . $mediaItem->getUrl() . '" frameborder="0" allowfullscreen></iframe>';
     }
 
-    public function getWebPath(MediaItem $mediaItem): string
+    public function getThumbnail(MediaItem $mediaItem): string
     {
         return 'https://img.youtube.com/vi/' . $mediaItem->getUrl() . '/maxresdefault.jpg';
     }

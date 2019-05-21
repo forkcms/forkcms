@@ -33,7 +33,7 @@
       {% for mediaItem in mediaItems %}
         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
           <a href="{{ (mediaItem.getWebPath('media_library_lightbox_large')) }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
-            <img itemprop="thumbnail" src="{{ (mediaItem.getWebPath('media_library_lightbox_small')) }}" alt="{{ mediaItem.title }}" />
+            <img itemprop="thumbnail" src="{{ (mediaItem.getThumbnail('media_library_lightbox_small')) }}" alt="{{ mediaItem.title }}" />
           </a>
           <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ mediaItem.title }}{% endif %}</figcaption>
           {% if mediaItem.type == 'movie' %}
