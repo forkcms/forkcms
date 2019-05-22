@@ -209,6 +209,21 @@ jsFrontend.forms = {
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
     jsFrontend.forms.imagePreview()
+    jsFrontend.forms.requiredTooltip()
+  },
+
+  requiredTooltip: function () {
+    $(document).on('focus', '.form-control', function (event) {
+      var id = $(event.currentTarget).attr('id')
+
+      // show tooltip
+      $('label[for="' + id + '"]').find('abbr').tooltip('show')
+
+      // hide tooltip after 1 second
+      setTimeout(() => {
+        $('label[for="' + id + '"]').find('abbr').tooltip('hide')
+      }, 1000)
+    })
   },
 
   imagePreview: function () {

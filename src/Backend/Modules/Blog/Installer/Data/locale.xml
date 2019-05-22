@@ -418,5 +418,31 @@
 		<translation language="pl"><![CDATA[Można przesyłać tylko pliki XML.]]></translation>
       </item>
     </Blog>
+    <Core>
+      <item type="label" name="RelatedArticles">
+        <translation language="nl"><![CDATA[gerelateerde artikelen]]></translation>
+        <translation language="en"><![CDATA[related articles]]></translation>
+        <translation language="fr"><![CDATA[articles connexes]]></translation>
+        <translation language="de"><![CDATA[ähnliche Artikel]]></translation>
+        <translation language="pl"><![CDATA[artykuły pokrewne]]></translation>
+        <translation language="es"><![CDATA[artículos relacionados]]></translation>
+        <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
+        <translation language="it"><![CDATA[articoli correlati]]></translation>
+      </item>
+    </Core>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="label" name="RelatedArticles">
+        <translation language="nl"><![CDATA[gerelateerde artikelen]]></translation>
+        <translation language="en"><![CDATA[related articles]]></translation>
+        <translation language="fr"><![CDATA[articles connexes]]></translation>
+        <translation language="de"><![CDATA[ähnliche Artikel]]></translation>
+        <translation language="pl"><![CDATA[artykuły pokrewne]]></translation>
+        <translation language="es"><![CDATA[artículos relacionados]]></translation>
+        <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
+        <translation language="it"><![CDATA[articoli correlati]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>
