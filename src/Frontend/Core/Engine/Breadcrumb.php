@@ -59,7 +59,7 @@ class Breadcrumb extends KernelLoader
 
         array_map(
             function (array $breadcrumb) {
-                $this->addElement($breadcrumb['title'], $breadcrumb['url']);
+                $this->addElement($breadcrumb['title']);
             },
             $breadcrumbs
         );
@@ -92,7 +92,7 @@ class Breadcrumb extends KernelLoader
                 $pageUrl = null;
             }
 
-            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageUrl];
+            $breadcrumbs[] = ['title' => $pageInfo['navigation_title']];
 
             array_pop($pages);
         }
