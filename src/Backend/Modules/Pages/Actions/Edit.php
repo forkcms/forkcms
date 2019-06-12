@@ -770,8 +770,8 @@ class Edit extends BackendBaseActionEdit
         $cacheShouldBeUpdated = !(
             $this->record['title'] === $page['title']
             && $this->record['navigation_title'] === $page['navigation_title']
-            && $this->record['navigation_title_overwrite'] === $page['navigation_title_overwrite']
-            && $this->record['hidden'] === $page['hidden']
+            && $this->record['navigation_title_overwrite'] == $page['navigation_title_overwrite'] // can be 0 or false
+            && $this->record['hidden'] == $page['hidden'] // can be 0 or false
         );
 
         // build cache
