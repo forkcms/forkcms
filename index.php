@@ -27,6 +27,7 @@ $debug = getenv('FORK_DEBUG') === '1';
 // Fork has not yet been installed
 $parametersFile = __DIR__ . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();
+Request::setTrustedProxies(['127.0.0.1']);
 if (!file_exists($parametersFile)) {
     $env = 'install';
     if (strpos($request->getRequestUri(), '/install') !== 0) {
