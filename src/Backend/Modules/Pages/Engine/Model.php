@@ -1244,14 +1244,14 @@ class Model
         $database = BackendModel::getContainer()->get('database');
 
         // loop blocks
-        foreach ($blocks as $block) {
+        foreach ($blocks as $key => $block) {
             if ($block['extra_type'] === 'usertemplate') {
-                $block['extra_id'] = null;
+                $blocks[$key]['extra_id'] = null;
             }
-
-            // insert blocks
-            $database->insert('pages_blocks', $block);
         }
+
+        // insert blocks
+        $database->insert('pages_blocks', $blocks);
     }
 
     public static function loadUserTemplates(): array
