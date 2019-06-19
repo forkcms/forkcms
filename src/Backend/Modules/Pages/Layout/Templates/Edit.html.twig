@@ -305,13 +305,18 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-lg-3">
-                      {% if item.data.image %}
-                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
-                      {% endif %}
+                      <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-thumbnail{% if item.data.image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" />
                     </div>
                     <div class="col-lg-9">
-                      {% form_field image %} {% form_field_error image %}
-                      <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                      <div class="custom-file">
+                        {% form_field image %}
+                        <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                        {% form_field_error image %}
+                      </div>
+                      <div class="form-check">
+                        {% form_field remove_image %}
+                        <label for="removeImage">{{ 'lbl.Delete'|trans|ucfirst }}</label>
+                      </div>
                       {% form_field_error remove_image %}
                     </div>
                   </div>

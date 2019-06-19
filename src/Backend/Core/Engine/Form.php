@@ -132,7 +132,7 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'fork-form-image');
+        $class = (string) ($class ?? 'custom-file-input');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element

@@ -210,12 +210,16 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-lg-3">
-                      {% if item.data.image %}
-                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
-                      {% endif %}
+                      <div data-fork-cms-role="image-preview-wrapper" data-id="{{ form_edit.field('image').attributes.id }}">
+                        {% if item.data.image %}
+                          <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
+                        {% endif %}
+                      </div>
                     </div>
                     <div class="col-lg-9">
-                      {% form_field image %} {% form_field_error image %}
+                      {% form_field image %}
+                      <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                      {% form_field_error image %}
                     </div>
                   </div>
                 </div>

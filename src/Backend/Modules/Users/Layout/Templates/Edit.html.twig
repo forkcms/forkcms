@@ -14,9 +14,7 @@
           <table class="table table-striped">
             <tr>
               <td rowspan="{% if not record.settings.last_failed_login_attempt %}5{% endif %}{% if record.settings.last_failed_login_attempt %}6{% endif %}" class="text-center align-middle">
-                {% if record.settings.avatar %}
-                  <img class="rounded-circle" src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ record.settings.avatar }}" alt="" />
-                {% endif %}
+                <img class="rounded-circle rounded-circle-size-user{% if not record.settings.avatar %} d-none{% endif %}" src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ record.settings.avatar }}" alt="" data-fork-cms-role="image-preview" data-id="avatar" />
               </td>
               <th>{{ 'lbl.Name'|trans|ucfirst }}:</th>
               <td><strong>{{ record.settings.name }} {{ record.settings.surname }}</strong></td>
@@ -110,9 +108,11 @@
                     <small class="form-text text-muted">{{ 'msg.HelpNickname'|trans }}</small>
                   </div>
                   <div class="form-group last">
-                    <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                    <p class="help-block">{{ 'msg.HelpAvatar'|trans }}</p>
-                    {% form_field avatar %} {% form_field_error avatar %}
+                    <div class="custom-file">
+                      {% form_field avatar %}
+                      <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                    </div>
+                    {% form_field_error avatar %}
                   </div>
                 </div>
               </div>

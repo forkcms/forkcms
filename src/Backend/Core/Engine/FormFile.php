@@ -57,18 +57,18 @@ class FormFile extends \SpoonFormFile
         // add help txt if needed
         if (!$this->hideHelpTxt) {
             if (isset($this->attributes['extension'])) {
-                $output .= '<p class="help-block">' .
+                $output .= '<small class="form-text text-muted">' .
                            sprintf(
                                BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
                                $this->attributes['extension'],
                                Form::getUploadMaxFileSize()
-                           ) . '</p>';
+                           ) . '</small>';
             } else {
-                $output .= '<p class="help-block">' .
+                $output .= '<small class="form-text text-muted">' .
                            sprintf(
                                BackendLanguage::getMessage('HelpMaxFileSize'),
                                Form::getUploadMaxFileSize()
-                           ) . '</p>';
+                           ) . '</small>';
             }
         }
 

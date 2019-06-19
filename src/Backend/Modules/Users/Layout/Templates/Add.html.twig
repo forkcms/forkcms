@@ -79,15 +79,20 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label for="nickname" class="control-label">{{ 'lbl.Nickname'|trans|ucfirst }}{{ macro.required }}</label>
+                    {% form_field nickname %}
                     <small class="form-text text-muted">{{ 'msg.HelpNickname'|trans }}</small>
-                    {% form_field nickname %} {% form_field_error nickname %}
+                    {% form_field_error nickname %}
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                    <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                    <div class="custom-file">
+                      {% form_field avatar %}
+                      <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                    </div>
                     <small class="form-text text-muted">{{ 'msg.HelpAvatar'|trans }}</small>
-                    {% form_field avatar %} {% form_field_error avatar %}
+                    {% form_field_error avatar %}
                   </div>
                 </div>
               </div>

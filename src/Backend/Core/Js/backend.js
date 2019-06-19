@@ -1201,6 +1201,20 @@ jsBackend.forms = {
     jsBackend.forms.datePicker()
     jsBackend.forms.bootstrapTabFormValidation()
     jsBackend.forms.imagePreview()
+    jsBackend.forms.fileUpload()
+  },
+
+  fileUpload: function () {
+    $('.custom-file-input').on('change', function (event) {
+      var file = ''
+      event = event.originalEvent
+
+      for (var i = 0; i < event.target.files.length; i++) {
+        file = event.target.files[i]
+      }
+
+      $(event.currentTarget).siblings('.custom-file-label').text(file.name)
+    })
   },
 
   imagePreview: function () {
@@ -1214,6 +1228,11 @@ jsBackend.forms = {
         let reader = new FileReader()
 
         reader.onload = function (event) {
+          console.log($imagePreview)
+          if ($imagePreview.hasClass('d-none')) {
+            $imagePreview.removeClass('d-none')
+          }
+
           $imagePreview.attr('src', event.target.result)
         }
 

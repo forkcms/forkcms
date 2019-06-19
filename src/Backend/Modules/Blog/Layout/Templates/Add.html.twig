@@ -64,7 +64,20 @@
                       <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                     </div>
                     <div class="card-body">
-                      {% form_field image %} {% form_field_error image %}
+                      <div class="row">
+                        <div class="col-lg-3">
+                          <div data-fork-cms-role="image-preview-wrapper" data-id="image">
+                            <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                          </div>
+                        </div>
+                        <div class="col-lg-9">
+                          <div class="custom-file">
+                            {% form_field image %}
+                            <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                          </div>
+                          {% form_field_error image %}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 {% endif %}

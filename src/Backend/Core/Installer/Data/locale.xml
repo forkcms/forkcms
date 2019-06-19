@@ -5121,6 +5121,10 @@
         <translation language="tr"><![CDATA[içerik seç]]></translation>
         <translation language="pl"><![CDATA[wybierz treść]]></translation>
       </item>
+      <item type="label" name="ChooseFile">
+        <translation language="nl"><![CDATA[kies bestand]]></translation>
+        <translation language="en"><![CDATA[choose file]]></translation>
+      </item>
       <item type="label" name="City">
         <translation language="nl"><![CDATA[stad]]></translation>
         <translation language="en"><![CDATA[city]]></translation>
