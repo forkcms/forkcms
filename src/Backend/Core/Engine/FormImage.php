@@ -116,6 +116,9 @@ class FormImage extends SpoonFormImage
             throw new \SpoonFormException('A name is required for a file field. Please provide a name.');
         }
 
+        // each image field should have fork data role for image preview
+        $this->attributes['data-fork-cms-role'] = 'image-field';
+
         // start html generation
         $output = '<input type="file"';
 
