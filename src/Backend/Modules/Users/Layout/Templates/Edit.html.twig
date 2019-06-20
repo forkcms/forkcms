@@ -75,9 +75,9 @@
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane show active" id="tabProfile" aria-labelledby="tab-profile">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="content-block">
+            <div class="content-block">
+              <div class="row">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label for="email" class="control-label">
                       {{ 'lbl.Email'|trans|ucfirst }}
@@ -85,20 +85,8 @@
                     </label>
                     {% form_field email %} {% form_field_error email %}
                   </div>
-                  <div class="form-group">
-                    <label for="name" class="control-label">
-                      {{ 'lbl.Name'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    {% form_field name %} {% form_field_error name %}
-                  </div>
-                  <div class="form-group">
-                    <label for="surname" class="control-label">
-                      {{ 'lbl.Surname'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    {% form_field surname %} {% form_field_error surname %}
-                  </div>
+                </div>
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label for="nickname" class="control-label">
                       {{ 'lbl.Nickname'|trans|ucfirst }}
@@ -107,14 +95,33 @@
                     {% form_field nickname %} {% form_field_error nickname %}
                     <small class="form-text text-muted">{{ 'msg.HelpNickname'|trans }}</small>
                   </div>
-                  <div class="form-group last">
-                    <div class="custom-file">
-                      {% form_field avatar %}
-                      <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                    </div>
-                    {% form_field_error avatar %}
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="name" class="control-label">
+                      {{ 'lbl.Name'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field name %} {% form_field_error name %}
                   </div>
                 </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="surname" class="control-label">
+                      {{ 'lbl.Surname'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field surname %} {% form_field_error surname %}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group last">
+                <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                <div class="custom-file">
+                  {% form_field avatar %}
+                  <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                </div>
+                {% form_field_error avatar %}
               </div>
             </div>
           </div>
@@ -127,9 +134,9 @@
                       <legend>
                         {{ 'lbl.CurrentPassword'|trans|ucfirst }}
                       </legend>
-                      <div class="form-group">
-                        <label>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
-                        <span class="strength strength-{{ record.settings.password_strength }} badge">
+                      <div class="form-group d-flex align-items-center justify-content-start">
+                        <label class="mb-0">{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
+                        <span class="strength strength-{{ record.settings.password_strength }} badge ml-1">
                           {{ passwordStrengthLabel|ucfirst }}
                         </span>
                       </div>
