@@ -1885,7 +1885,7 @@ jsBackend.tabs = {
       $('.nav-tabs').tab()
 
       $('.tab-content .tab-pane').each(function () {
-        if ($(this).find('.formError').length > 0) {
+        if ($(this).find('.invalid-feedback').length > 0) {
           $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error')
         }
       })

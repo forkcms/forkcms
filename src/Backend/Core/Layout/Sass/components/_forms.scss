@@ -1,8 +1,4 @@
 // Style formError classes
-.formError {
-  @extend .text-danger;
-}
-
 .form-control {
   border-radius: $border-radius-sm;
   -webkit-box-shadow: inset 0 1px 3px rgba($black, .075);
@@ -100,9 +96,8 @@ select[size="1"] {
   margin-bottom: 0;
 }
 
-.formError,
-.text-danger {
-  color: $danger;
+.invalid-feedback {
+  display: block;
   font-weight: normal;
 }
 

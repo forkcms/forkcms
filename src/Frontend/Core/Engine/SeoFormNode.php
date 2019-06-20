@@ -241,7 +241,7 @@ class SeoFormNode extends \Twig_Node
     private function getError(string $fieldName): string
     {
         return "echo \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "
-            . "? '<span class=\"formError\">' "
+            . "? '<span class=\"invalid-feedback\">' "
             . ". \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "
             . ". '</span>' : '';";
     }

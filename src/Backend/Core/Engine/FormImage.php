@@ -144,7 +144,7 @@ class FormImage extends SpoonFormImage
             $template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
                 'file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
-                ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
+                ($this->errors != '') ? '<span class="invalid-feedback">' . $this->errors . '</span>' : ''
             );
         }
 

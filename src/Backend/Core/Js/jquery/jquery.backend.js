@@ -492,7 +492,7 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="invalid-feedback">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
@@ -763,7 +763,7 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="invalid-feedback">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
