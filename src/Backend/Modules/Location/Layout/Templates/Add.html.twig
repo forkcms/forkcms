@@ -20,40 +20,55 @@
           </h2>
         </div>
         <div class="card-body">
-          <div class="form-group">
-            <label for="street" class="control-label">
-              {{ 'lbl.Street'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field street %} {% form_field_error street %}
-          </div>
-          <div class="form-group">
-            <label for="number" class="control-label">
-              {{ 'lbl.Number'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field number %} {% form_field_error number %}
-          </div>
-          <div class="form-group">
-            <label for="zip" class="control-label">
-              {{ 'lbl.Zip'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field zip %} {% form_field_error zip %}
-          </div>
-          <div class="form-group">
-            <label for="city" class="control-label">
-              {{ 'lbl.City'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field city %} {% form_field_error city %}
-          </div>
-          <div class="form-group">
-            <label for="country" class="control-label">
-              {{ 'lbl.Country'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            {% form_field country %} {% form_field_error country %}
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="form-group">
+                <label for="street" class="control-label">
+                  {{ 'lbl.Street'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field street %} {% form_field_error street %}
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="form-group">
+                <label for="number" class="control-label">
+                  {{ 'lbl.Number'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field number %} {% form_field_error number %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="zip" class="control-label">
+                  {{ 'lbl.Zip'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field zip %} {% form_field_error zip %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="city" class="control-label">
+                  {{ 'lbl.City'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field city %} {% form_field_error city %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="country" class="control-label">
+                  {{ 'lbl.Country'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field country %} {% form_field_error country %}
+              </div>
+              <div class="hide">
+                {{ hidMapId|raw }} {{ hidRedirect|raw }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -61,11 +76,11 @@
   </div>
   <div class="row fork-module-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
+      <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.AddToMap'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add"} ) }}
         </div>
       </div>
