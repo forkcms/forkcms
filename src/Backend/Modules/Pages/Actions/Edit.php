@@ -251,7 +251,7 @@ class Edit extends BackendBaseActionEdit
         $chkMovePage->setAttribute('data-role', 'move-page-toggle');
         if (!(bool) $this->record['allow_move']) {
             $chkMovePage->setAttribute('disabled');
-            $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
+            $chkMovePage->setAttribute('class', 'form-check-input disabled');
         }
 
         $movePageTreeOptions = [
