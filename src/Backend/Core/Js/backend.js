@@ -1882,11 +1882,12 @@ jsBackend.tabs = {
   // init, something like a constructor
   init: function () {
     if ($('.nav-tabs').length > 0) {
-      $('.nav-tabs').tab()
-
       $('.tab-content .tab-pane').each(function () {
-        if ($(this).find('.invalid-feedback').length > 0) {
-          $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error')
+        // check if there are invalid feedback classes, if they are visible or do not have display none style
+        if ($(this).find('.invalid-feedback').length > 0 && ($(this).find('.invalid-feedback:visible').length > 0 || $(this).find('.invalid-feedback').css('display') != 'none')) {
+          $('.nav-tabs a[href="#' + $(this).attr('id') + '"]').addClass('bg-danger text-white')
+        } else {
+          $('.nav-tabs a[href="#' + $(this).attr('id') + '"]').removeClass('bg-danger text-white')
         }
       })
     }

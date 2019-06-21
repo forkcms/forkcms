@@ -39,8 +39,8 @@
       </div>
     {% endif %}
     <div class="col-md-4">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group ml-auto" role="group">
           <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ id }}" title="{{ 'lbl.Edit'|trans|ucfirst }}" aria-labelledby="edit-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('pencil-alt fa-fw') }}
             <span class="sr-only" id="edit-text-{{ id }}">{{ 'lbl.Edit'|trans|ucfirst }}</span>

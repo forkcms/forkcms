@@ -111,7 +111,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-lg-8">
                 <div class="card card-default card-editor">
                   <div class="card-heading">
                     <h2 class="card-title">
@@ -153,7 +153,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-lg-4">
                 <div id="formElements" class="card card-default">
                   <div class="card-heading">
                     <h2 class="card-title">
@@ -179,10 +179,10 @@
                         <i class="fas fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
                       </button>
                       <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
+                        <i class="fas fa-dot-circle fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
                       </button>
                       <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
-                        <i class="fas fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
+                        <i class="fas fa-redo-alt fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
                       </button>
                       {% if showMailmotorOption %}
                         <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
@@ -193,7 +193,7 @@
                     <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
                       <button id="headingSelector" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
+                        <i class="fas fa-heading fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
                       </button>
                       <button id="paragraphSelector" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fas fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
@@ -278,14 +278,12 @@
                     {% form_field textbox_value %}
                   </div>
                   <div class="form-group">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxReplyTo" class="control-label">
-                          {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
-                          {{ macro.infoTooltip('msg.HelpReplyTo'|trans) }}
-                        </label>
-                      </li>
-                    </ul>
+                    <div class="form-check">
+                      {% form_field textbox_reply_to %}
+                      <label for="textboxReplyTo" class="form-check-label">
+                        {{ 'lbl.ReplyTo'|trans|ucfirst }} {{ macro.infoTooltip('msg.HelpReplyTo'|trans) }}
+                      </label>
+                    </div>
                   </div>
                   {% if showMailmotorOption %}
                     <div class="form-group">
@@ -300,13 +298,12 @@
                     </div>
                   {% endif %}
                   <div class="form-group">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxSendConfirmationMailTo" class="control-label">
-                          {% form_field textbox_send_confirmation_mail_to %} {{ 'lbl.SendConfirmationMailTo'|trans|ucfirst }}
-                        </label>
-                      </li>
-                    </ul>
+                    <div class="form-check">
+                      {% form_field textbox_send_confirmation_mail_to %}
+                      <label for="textboxSendConfirmationMailTo" class="form-check-label">
+                        {{ 'lbl.SendConfirmationMailTo'|trans|ucfirst }}
+                      </label>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="textboxConfirmationMailSubject" class="control-label">
@@ -316,13 +313,14 @@
                     <p id="textboxConfirmationMailSubjectErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
                   </div>
                   <div class="jsValidation">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxRequired" class="control-label">
-                          {% form_field textbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}
+                    <div class="form-group">
+                      <div class="form-check">
+                        {% form_field textbox_required %}
+                        <label for="textboxRequired" class="form-check-label">
+                          {{ 'lbl.RequiredField'|trans|ucfirst }}
                         </label>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="textboxRequiredErrorMessage" class="control-label">
                         {{ 'lbl.ErrorMessage'|trans|ucfirst }}
@@ -431,11 +429,10 @@
                   </div>
                   <div class="jsValidation">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="textareaRequired" class="control-label">{% form_field textarea_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
+                      <div class="form-check">
+                        {% form_field textarea_required %}
+                        <label for="textareaRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                      </div>
                     </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="textareaRequiredErrorMessage" class="control-label">
@@ -504,7 +501,7 @@
         <div class="modal-body">
           <input type="hidden" name="datetime_id" id="datetimeId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="#tabDatetimeBasic" aria-controls="tabDatetimeBasic" role="tab" data-toggle="tab" aria-selected="true" id="datetime-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
             <li class="nav-item">
@@ -540,11 +537,10 @@
                   </div>
                   <div class="jsValidation">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="datetimeRequired" class="control-label">{% form_field datetime_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
+                      <div class="form-check">
+                        {% form_field datetime_required %}
+                        <label for="datetimeRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                      </div>
                     </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="datetimeRequiredErrorMessage" class="control-label">
@@ -613,7 +609,7 @@
           <input type="hidden" name="dropdown_id" id="dropdownId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
             <li class="nav-item">
-              <a class="nav-link" href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab" aria-selected="true" id="dropdown-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              <a class="nav-link active" href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab" aria-selected="true" id="dropdown-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#tabDropdownProperties" aria-controls="tabDropdownProperties" role="tab" data-toggle="tab" aria-selected="false" id="dropdown-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
@@ -651,10 +647,9 @@
                   </div>
                   <div class="jsValidation">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="dropdownRequired" class="control-label">{% form_field dropdown_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
+                      <ul class="form-check">
+                        {% form_field dropdown_required %}
+                        <label for="dropdownRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
                       </ul>
                     </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
@@ -700,7 +695,7 @@
           <input type="hidden" name="radiobutton_id" id="radiobuttonId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
             <li class="nav-item">
-              <a class="nav-link" href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab" aria-selected="true" id="radio-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              <a class="nav-link active" href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab" aria-selected="true" id="radio-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#tabRadiobuttonProperties" aria-controls="tabRadiobuttonProperties" role="tab" data-toggle="tab" aria-selected="false" id="radio-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
@@ -737,11 +732,10 @@
                   </div>
                   <div class="jsValidation">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="checkboxRequired" class="control-label">{% form_field radiobutton_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
+                      <div class="form-check">
+                        {% form_field radiobutton_required %}
+                        <label for="checkboxRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                      </div>
                     </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="checkboxRequiredErrorMessage" class="control-label">
@@ -786,7 +780,7 @@
           <input type="hidden" name="checkbox_id" id="checkboxId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
             <li class="nav-item">
-              <a class="nav-link" href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab" aria-selected="true" id="checkbox-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              <a class="nav-link active" href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab" aria-selected="true" id="checkbox-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#tabCheckboxProperties" aria-controls="tabCheckboxProperties" role="tab" data-toggle="tab" aria-selected="false" id="checkbox-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
@@ -823,11 +817,10 @@
                   </div>
                   <div class="jsValidation">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="checkboxRequired" class="control-label">{% form_field checkbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
+                      <div class="form-check">
+                        {% form_field checkbox_required %}
+                        <label for="checkboxRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                      </div>
                     </div>
                     <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
                       <label for="checkboxRequiredErrorMessage" class="control-label">
