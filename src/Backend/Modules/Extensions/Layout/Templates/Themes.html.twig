@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+  {% form settingsThemes %}
   <div class="row fork-module-content">
     <div class="col-12">
       <div class="card card-default">
@@ -45,7 +46,7 @@
                     <div class="card-footer">
                       {% if showExtensionsDetailTheme %}
                         <div class="btn-toolbar">
-                          <div class="btn-group pull-right" role="group">
+                          <div class="btn-group" role="group">
                             <button class="btn js-theme-selector {% if installedTheme.selected %}btn-primary{% else %}btn-default{% endif %}">
                               <div class="selected-theme{% if not installedTheme.selected %} d-none{% endif %}">
                                 {{ macro.icon('check') }}
@@ -72,7 +73,7 @@
       </div>
     </div>
   </div>
-  {% form settingsThemes %}
+  {% endform %}
   {% if installableThemes %}
     <div class="row fork-module-content">
       <div class="col-12">
@@ -138,15 +139,5 @@
       </div>
     </div>
   {% endif %}
-  <div class="row fork-module-actions">
-    <div class="col-12">
-      <div class="btn-toolbar">
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endform %}
 {% endblock %}
 

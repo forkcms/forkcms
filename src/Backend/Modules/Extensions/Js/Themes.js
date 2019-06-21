@@ -22,19 +22,21 @@ jsBackend.extensions.themeSelection = {
       // set checked
       radiobutton.prop('checked', true)
 
+      console.log(radiobutton.prop('checked'))
+
       // if the radiobutton is checked
       if (radiobutton.is(':checked')) {
         // remove the selected state from all other templates
-        $installedThemes.find('.panel').removeClass('card-primary').addClass('card-default')
+        $installedThemes.find('.card').removeClass('card-primary').addClass('card-default')
         listItems.removeClass('btn-primary').addClass('btn-default')
-        listItems.find('.available-theme').removeClass('hidden')
-        listItems.find('.selected-theme').addClass('hidden')
+        listItems.find('.available-theme').removeClass('d-none')
+        listItems.find('.selected-theme').addClass('d-none')
 
         // add a selected state to the parent
-        radiobutton.closest('.panel').addClass('card-primary').removeClass('card-default')
-        $this.addClass('btn-primary')
-        $this.find('.available-theme').addClass('hidden')
-        $this.find('.selected-theme').removeClass('hidden')
+        radiobutton.closest('.card').addClass('card-primary').removeClass('card-default')
+        $this.addClass('btn-primary').removeClass('btn-default')
+        $this.find('.available-theme').addClass('d-none')
+        $this.find('.selected-theme').removeClass('d-none')
       }
     })
   }
