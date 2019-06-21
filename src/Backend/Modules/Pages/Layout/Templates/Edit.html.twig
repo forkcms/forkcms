@@ -40,15 +40,15 @@
             {{ macro.icon('plus-square') }}
             <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
           </a>
-          <button type="button" class="btn btn-default dropdown-toggle pull-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
           </button>
-          <ul class="dropdown-menu">
-            <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
-            <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
-            <li><a href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a></li>
-          </ul>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+          </div>
         </div>
       {% endif %}
     </div>
