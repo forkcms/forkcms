@@ -27,9 +27,11 @@
           </div>
           <div class="card-body">
             <div class="form-group last">
-              <p class="help-block">
-                {{ 'msg.CertificateHelp'|trans|raw }}
-              </p>
+             <p>
+               <small class="form-text text-muted">
+                 {{ 'msg.CertificateHelp'|trans|raw }}
+               </small>
+             </p>
               {% form_field certificate %} {% form_field_error certificate %}
               <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
               {% form_field email %} {% form_field_error email %}

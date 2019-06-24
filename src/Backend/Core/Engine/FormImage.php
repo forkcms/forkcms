@@ -132,7 +132,11 @@ class FormImage extends SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<small class="form-text text-muted">' .
+
+            // set aria describedby to link the help text with the field
+            $this->attributes['aria-describedby'] = 'help' . ucfirst($this->attributes['id']);
+
+            $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">' .
                         sprintf(
                             BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
                             Form::getUploadMaxFileSize()

@@ -18,13 +18,15 @@
     <div class="col-md-12">
       <div class="form-group">
         <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|ucfirst }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpress'|trans|ucfirst }}</p>
-        {% form_field wordpress %} {% form_field_error wordpress %}
+        {% form_field wordpress %}
+        {% form_field_error wordpress %}
+        <small class="form-text text-muted">{{ 'msg.HelpWordpress'|trans|ucfirst }}</small>
       </div>
       <div class="form-group">
         <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|ucfirst }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpressFilter'|ucfirst }}</p>
-        {% form_field filter %} {% form_field_error filter %}
+        {% form_field filter %}
+        {% form_field_error filter %}
+        <small class="form-text text-muted">{{ 'msg.HelpWordpressFilter'|ucfirst }}</small>
       </div>
     </div>
   </div>

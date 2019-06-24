@@ -129,14 +129,15 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <p class="help-block">{{ 'msg.HelpTemplateFormat'|trans }}</p>
-                {% form_field format %} {% form_field_error format %}
+                {% form_field format %}
+                {% form_field_error format %}
+                <small class="form-text text-muted">{{ 'msg.HelpTemplateFormat'|trans }}</small>
               </div>
             </div>
             <div class="col-md-6">
-              <div class="help-block">
+              <small class="form-text text-muted">
                 {{ 'msg.HelpPositionsLayoutText'|trans|raw }}
-              </div>
+              </small>
             </div>
           </div>
         </div>

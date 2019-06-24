@@ -54,17 +54,22 @@ class FormFile extends \SpoonFormFile
             ]
         ) . ' />';
 
+
         // add help txt if needed
         if (!$this->hideHelpTxt) {
+
+            // set aria describedby to link the help text with the field
+            $this->attributes['aria-describedby'] = 'help' . ucfirst($this->attributes['id']);
+
             if (isset($this->attributes['extension'])) {
-                $output .= '<small class="form-text text-muted">' .
+                $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">' .
                            sprintf(
                                BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
                                $this->attributes['extension'],
                                Form::getUploadMaxFileSize()
                            ) . '</small>';
             } else {
-                $output .= '<small class="form-text text-muted">' .
+                $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">' .
                            sprintf(
                                BackendLanguage::getMessage('HelpMaxFileSize'),
                                Form::getUploadMaxFileSize()

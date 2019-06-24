@@ -47,8 +47,9 @@
         {% set label = name|humanize %}
       {%- endif -%}
     {% endif %}
+    {{- widget|raw }}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
+      {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
     </label>
   {% endif %}
 {% endblock checkbox_radio_label %}
@@ -63,13 +64,13 @@
 {% block form_errors -%}
   {% import "Layout/Templates/macros.html.twig" as macro %}
   {% if errors|length > 0 -%}
-    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
           <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
         {%- endfor -%}
     </ul>
-    {% if form.parent %}</span>{% else %}</div>{% endif %}
+    {% if form.parent %}</small>{% else %}</div>{% endif %}
   {%- endif %}
 {%- endblock form_errors %}
 
@@ -96,116 +97,87 @@
     data-method-name-selector="{{ '#' ~ methodId }}"
     data-parameters-selector="{{ '#' ~ parametersId }}"
   >
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.Titles'|trans|ucfirst }}</p></div>
-        <div class="panel-body">
-          <div class="form-group last">
-            <ul class="list-unstyled checkboxTextFieldCombo">
-              <li class="checkbox">
-                <p>
-                  {{ form_widget(form.titleOverwrite) }}
-                </p>
-                {{ form_label(form.title) }}
-                {{ form_widget(form.title) }}
-                {{ form_errors(form.title) }}
-                <p class="help-block">{{ 'msg.HelpPageTitle'|trans|raw }}</p>
-              </li>
-            </ul>
-          </div>
+    <fieldset>
+      <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
+      <div class="checkboxTextFieldCombo">
+        <div class="form-group">
+          {{ form_widget(form.titleOverwrite) }}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.title) }}
+          {{ form_widget(form.title) }}
+          {{ form_errors(form.title) }}
+          <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
         </div>
       </div>
-    </div>
+    </fieldset>
 
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.MetaInformation'|trans|ucfirst }}</p></div>
-        <div class="panel-body">
+    <fieldset>
+      <legend>{{ 'lbl.MetaInformation'|trans|ucfirst }}</legend>
+      <div class="checkboxTextFieldCombo">
+        <div class="form-group">
+          {{ form_widget(form.descriptionOverwrite) }}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.description) }}
+          {{ form_widget(form.description) }}
+          {{ form_errors(form.description) }}
+          <small class="form-text text-muted">{{ 'msg.HelpMetaDescription'|trans|raw }}</small>
+        </div>
+      </div>
+      <div class="checkboxTextFieldCombo">
+        <div class="form-group">
+          {{ form_widget(form.keywordsOverwrite) }}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.keywords) }}
+          {{ form_widget(form.keywords) }}
+          {{ form_errors(form.keywords) }}
+          <small class="form-text text-muted">{{ 'msg.HelpMetaKeywords'|trans|raw }}</small>
+        </div>
+      </div>
+      {% if form.custom_meta_tags %}
+        <div class="form-group">
+          {{ form_label(form.custom) }}
+          {{ form_widget(form.custom) }}
+          {{ form_errors(form.custom) }}
+          <small class="form-text text-muted">{{ 'msg.HelpMetaCustom'|trans|raw }}</small>
+        </div>
+      {% endif %}
+    </fieldset>
+
+    <fieldset>
+      <legend>{{ 'lbl.URL'|trans|ucfirst }}</legend>
+      <div class="checkboxTextFieldCombo">
+        <div class="form-group">
+          {{ form_widget(form.urlOverwrite) }}
+          {{ form_label(form.url) }}
+          <div class="form-inline">
+            <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
+          </div>
+          {{ form_errors(form.url) }}
+          <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="last">
+      <legend>{{ 'lbl.SEO'|trans|ucfirst }}</legend>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group last">
+            <label>{{ 'lbl.Index'|trans|ucfirst }}</label>
+            {{ form_widget(form.SEOIndex) }}
+          </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
-            <ul class="list-unstyled checkboxTextFieldCombo">
-              <li class="checkbox">
-                <p>
-                  {{ form_widget(form.descriptionOverwrite) }}
-                </p>
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
-                {{ form_errors(form.description) }}
-                <p class="help-block">{{ 'msg.HelpMetaDescription'|trans|raw }}</p>
-              </li>
-            </ul>
-          </div>
-          <div class="form-group{% if not form.custom_meta_tags %} last{% endif %}">
-            <ul class="list-unstyled checkboxTextFieldCombo">
-              <li class="checkbox">
-                <p>
-                  {{ form_widget(form.keywordsOverwrite) }}
-                </p>
-                {{ form_label(form.keywords) }}
-                {{ form_widget(form.keywords) }}
-                {{ form_errors(form.keywords) }}
-                <p class="help-block">{{ 'msg.HelpMetaKeywords'|trans|raw }}</p>
-              </li>
-            </ul>
-          </div>
-          {% if form.custom_meta_tags %}
-          <div class="form-group last">
-            {{ form_label(form.custom) }}
-            {{ form_widget(form.custom) }}
-            {{ form_errors(form.custom) }}
-            <p class="help-block">{{ 'msg.HelpMetaCustom'|trans|raw }}</p>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.URL'|trans|ucfirst }}</p></div>
-        <div class="panel-body">
-          <div class="form-group last">
-            <ul class="list-unstyled checkboxTextFieldCombo">
-              <li class="checkbox">
-                <p>
-                  {{ form_widget(form.urlOverwrite) }}
-                </p>
-                {{ form_label(form.url) }}
-                <div class="form-inline">
-                  <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
-                </div>
-                {{ form_errors(form.url) }}
-                <p class="help-block">{{ 'msg.HelpMetaURL'|trans|raw }}</p>
-              </li>
-            </ul>
+            <label>{{ 'lbl.Follow'|trans|ucfirst }}</label>
+            {{ form_widget(form.SEOFollow) }}
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.SEO'|trans|ucfirst }}</p></div>
-        <div class="panel-body">
-          <div class="col-md-6">
-            <div class="form-inline">
-              <div class="form-group last"><p><b>{{ 'lbl.Index'|trans|ucfirst }}</b></p>
-                <div class="inputListHorizontal">
-                  {{ form_widget(form.SEOIndex) }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-inline">
-              <div class="form-group last"><p><b>{{ 'lbl.Follow'|trans|ucfirst }}</b></p>
-                <div class="inputListHorizontal">
-                  {{ form_widget(form.SEOFollow) }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </fieldset>
   </div>
   <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
   <input type="hidden" id="{{ classId }}" value="{{ generate_url_callback_class }}">
@@ -228,7 +200,7 @@
       <div class="form-group{% if show_preview and preview_url %} col-lg-9{% endif %}">
         {{ form_widget(form.file) }}
         {% if help_text_message %}
-          <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+          <div class="form-text text-muted">{{ help_text_message|trans|format(help_text_argument) }}</div>
         {% endif %}
         {{ form_errors(form.file) }}
         {% if show_remove_image %}
@@ -364,7 +336,7 @@
 
 {% block help %}
   {% for attributeName, attributeValue in attr %}
-    {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
+    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 
