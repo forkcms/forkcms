@@ -29,6 +29,10 @@
         <translation language="pl"><![CDATA[edytuj kategorię]]></translation>
         <translation language="ru"><![CDATA[редактировать категорию]]></translation>
       </item>
+      <item type="label" name="ImportWordpress">
+        <translation language="nl"><![CDATA[wordpress import]]></translation>
+        <translation language="en"><![CDATA[wordpress import]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
