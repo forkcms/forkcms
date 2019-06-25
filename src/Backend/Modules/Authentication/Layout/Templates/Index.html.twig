@@ -10,7 +10,7 @@
       <div class="col-md-8 col-lg-6">
         <div class="page-header page-header-login">
           <div class="site-info">
-            <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">
+            <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">bo
             <div class="site-text">
               <h1 class="site-title">{{ SITE_TITLE }}</h1>
               <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
@@ -44,19 +44,23 @@
         <div class="login-form">
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon">
-                {{ macro.icon('envelope fa-fw') }}
-                <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              <span class="input-group-prepend">
+                <span class="input-group-text">
+                  {{ macro.icon('envelope fa-fw') }}
+                  <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+                </span>
               </span>
               {% form_field backend_email %}
-              {% form_field_error backend_email %}
             </div>
+            {% form_field_error backend_email %}
           </div>
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon">
-                {{ macro.icon('lock fa-fw') }}
-                <label class="sr-only" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
+              <span class="input-group-prepend">
+                <span class="input-group-text">
+                  {{ macro.icon('lock fa-fw') }}
+                  <label class="sr-only" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
+                </span>
               </span>
               {% form_field backend_password %} {% form_field_error backend_password %}
             </div>
@@ -83,14 +87,24 @@
     <div class="modal-content">
       {% form forgotPassword %}
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
-          <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="forgotPasswordDialogTitle">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
+
         <div class="form-group">
           <label for="backendEmailForgot" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
-          {% form_field backend_email_forgot %}
+          <div class="input-group">
+            <span class="input-group-prepend">
+              <span class="input-group-text">
+                {{ macro.icon('envelope fa-fw') }}
+                <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              </span>
+            </span>
+            {% form_field backend_email_forgot %}
+          </div>
           {% form_field_error backend_email_forgot %}
         </div>
       </div>
