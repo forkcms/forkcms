@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
 // get environment and debug mode from environment variables
-$env = getenv('FORK_ENV') ?: 'prod';
-$debug = getenv('FORK_DEBUG') === '1';
+$env = $_SERVER['FORK_ENV'] ?: 'prod';
+$debug = $_SERVER['FORK_DEBUG'] === '1';
 
 // Fork has not yet been installed
 $parametersFile = __DIR__ . '/app/config/parameters.yml';
