@@ -90,11 +90,12 @@
     .fa-chevron-left {
       color: $white;
       left: 50%;
-      margin-left: -15px;
-      padding: 10px;
+      margin-left: -8px;
+      margin-top: -5px;
       position: absolute;
-      top: 10px;
+      top: 50%;
       transform: rotate(0deg);
+      transform-origin: center center;
       transition: all 250ms;
     }
 
