@@ -655,16 +655,16 @@ $pagination-border-color:           $gray-300;
 
 $pagination-focus-box-shadow:       $input-btn-focus-box-shadow;
 
-$pagination-hover-color:            $link-hover-color;
-$pagination-hover-bg:               $gray-200;
-$pagination-hover-border-color:     $gray-300;
+$pagination-hover-color:            $white;
+$pagination-hover-bg:               $primary;
+$pagination-hover-border-color:     $primary;
 
 $pagination-active-color:           $component-active-color;
 $pagination-active-bg:              $component-active-bg;
 $pagination-active-border-color:    $pagination-active-bg;
 
 $pagination-disabled-color:         $gray-600;
-$pagination-disabled-bg:            $white;
+$pagination-disabled-bg:            $gray-100;
 $pagination-disabled-border-color:  $gray-300;
 
 

@@ -59,7 +59,7 @@
         {/option:massAction}
       </div>
       {option:paging}
-      <div class="text-center">
+      <div class="d-flex justify-content-center mt-3">
         {$paging}
       </div>
       {/option:paging}
