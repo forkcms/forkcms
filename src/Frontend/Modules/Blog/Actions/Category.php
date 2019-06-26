@@ -102,7 +102,6 @@ class Category extends FrontendBaseBlock
     private function setPageTitle(): void
     {
         $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Category')));
-        $this->header->setPageTitle($this->category['label']);
     }
 
     private function parse(): void
