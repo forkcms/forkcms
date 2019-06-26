@@ -15,4 +15,6 @@ interface StorageProviderInterface
     public function getLinkHTML(MediaItem $mediaItem): string;
 
     public function getWebPath(MediaItem $mediaItem): string;
+
+    public function getThumbnail(MediaItem $mediaItem): string;
 }
