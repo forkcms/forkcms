@@ -69,6 +69,7 @@ class MediaGalleryType extends AbstractType
                     'choice_value' => function (Status $status = null) {
                         return (string) $status;
                     },
+                    'expanded' => true,
                 ]
             )
             ->add(
