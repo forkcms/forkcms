@@ -546,7 +546,10 @@ jsFrontend.locale = {
     if (!jsFrontend.locale.initialized) jsFrontend.locale.init()
 
     // validate
-    if (typeof jsFrontend.locale.data[type][key] === 'undefined') return '{$' + type + key + '}'
+    if (typeof jsFrontend.locale.data[type] === 'undefined'
+      || typeof jsFrontend.locale.data[type][key] === 'undefined') {
+      return '{$' + type + key + '}'
+    }
 
     return jsFrontend.locale.data[type][key]
   },
