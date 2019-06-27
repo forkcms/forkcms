@@ -12,7 +12,7 @@
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
-    "ckeditor": "^4.7.3",
+    "ckeditor": "^4.11.4",
     "cropper": "^3.0.0-rc.2",
     "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
