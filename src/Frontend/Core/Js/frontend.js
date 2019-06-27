@@ -521,6 +521,10 @@ jsFrontend.locale = {
 
   // init, something like a constructor
   init: function () {
+    if (typeof jsFrontend.current.language == 'undefined') {
+      return
+    }
+
     $.ajax({
       url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
       type: 'GET',
