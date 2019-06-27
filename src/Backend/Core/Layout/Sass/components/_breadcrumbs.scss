@@ -5,16 +5,6 @@
   li + li {
     padding-left: 13px;
     position: relative;
-
-    &:before {
-      color: $gray-550;
-      content: '\f105';
-      font-family: FontAwesome;
-      font-size: $font-size-sm;
-      position: absolute;
-      left: 0;
-      padding: 0 3px 0 5px;
-    }
   }
 
   li {
@@ -33,6 +23,14 @@
         border-bottom: 1px solid $gray-550;
         text-decoration: none;
       }
+    }
+
+    .svg-inline--fa {
+      color: $gray-550;
+      position: absolute;
+      left: 4px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 }

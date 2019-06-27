@@ -6,32 +6,40 @@
     {% if topLevelItem.children is not empty %}
       {% for secondaryItem in topLevelItem.children if secondaryItem.active %}
         <li>
+          <i class="fas fa-chevron-right fa-xs"></i>
           <a href="/private/{{ LANGUAGE }}/{{ secondaryItem.url }}">{{- ('lbl.'~secondaryItem.label)|trans|ucfirst -}}</a>
         </li>
         {% if secondaryItem.children is not empty %}
           {% for tertiaryItem in secondaryItem.children if tertiaryItem.active %}
             <li>
+              <i class="fas fa-chevron-right fa-xs"></i>
               <a href="/private/{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{- ('lbl.'~tertiaryItem.label)|trans|ucfirst -}}</a>
             </li>
             {% if ACTION|lower not in tertiaryItem.url and tertiaryItem.label != ACTION %}
               <li>
+                <i class="fas fa-chevron-right fa-xs"></i>
                 <span>{{- ACTION|tolabel -}}</span>
               </li>
             {% endif %}
           {% endfor %}
         {% elseif ACTION|lower not in secondaryItem.url and secondaryItem.label != ACTION %}
           <li>
+            <i class="fas fa-chevron-right fa-xs"></i>
             <span>{{- ACTION|tolabel -}}</span>
           </li>
         {% endif %}
       {% endfor %}
     {% elseif ACTION|lower not in topLevelItem.url and topLevelItem.label != ACTION %}
       <li>
+        <i class="fas fa-chevron-right fa-xs"></i>
         <span>{{- ACTION|tolabel -}}</span>
       </li>
     {% endif %}
   {% endfor %}
   {% if breadcrumbDetail %}
-    <li><span>{{- breadcrumbDetail -}}</span></li>
+    <li>
+      <i class="fas fa-chevron-right fa-xs"></i>
+      <span>{{- breadcrumbDetail -}}</span>
+    </li>
   {% endif %}
 </ol>
