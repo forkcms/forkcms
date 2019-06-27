@@ -1518,7 +1518,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
 jsBackend.mediaLibraryHelper.modalSelection = {
   init: function () {
-    $('tr[data-direct-url] button').on('click', this.selectItemAndSendToParent)
+    $('button[data-direct-url]').on('click', this.selectItemAndSendToParent)
   },
 
   selectItemAndSendToParent: function () {

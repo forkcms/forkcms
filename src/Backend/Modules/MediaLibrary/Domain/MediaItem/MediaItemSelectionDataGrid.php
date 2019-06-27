@@ -157,7 +157,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         // our JS needs to know an id, so we can highlight it
         $attributes = [
             'id' => 'row-[id]',
-            'data-direct-url' => '[directUrl]',
         ];
         $this->setRowAttributes($attributes);
     }
