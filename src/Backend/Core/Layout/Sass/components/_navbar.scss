@@ -6,7 +6,6 @@
     -moz-box-shadow: -3px 0 4px 0 rgba($black, .3);
     box-shadow: -3px 0 4px 0 rgba($black, .3);
     display: none;
-    font-family: FontAwesome;
     height: 62px;
     position: absolute;
     right: 0;
@@ -14,7 +13,7 @@
     width: 40px;
     z-index: 10;
 
-    &:after {
+    .svg-inline--fa {
       color: $white;
       font-size: $font-size-xs;
       margin-top: -7px;
@@ -29,15 +28,13 @@
     box-shadow: 3px 0 4px 0 rgba($black, .3);
     left: 0;
 
-    &:after {
-      content: '\f053';
+    .svg-inline--fa {
       margin-right: -3.5px;
       right: 50%;
     }
   }
 
-  .js-nav-next:after {
-    content: '\f054';
+  .js-nav-next .svg-inline--fa {
     left: 50%;
     margin-left: -3.5px;
   }
@@ -182,7 +179,7 @@
         padding: 30px 20px 10px;
         position: relative;
 
-        &:before {
+        .svg-inline--fa {
           left: 50%;
           margin-left: -8px;
           top: 10px;
@@ -257,10 +254,9 @@
       color: $white;
       padding: 15px 50px;
 
-      &:before {
+      .svg-inline--fa {
         color: $white;
         position: absolute;
-        font-family: FontAwesome;
         font-size: $font-size-btn;
         left: 20px;
       }
@@ -334,34 +330,6 @@
       }
     }
   }
-}
-
-.nav-item-dashboard a:before {
-  content: '\f0e4';
-}
-
-.nav-item-pages a:before {
-  content: '\f0c5';
-}
-
-.nav-item-modules a:before {
-  content: '\f1b2';
-}
-
-.nav-item-marketing a:before {
-  content: '\f1fe';
-}
-
-.nav-item-mailmotor a:before {
-  content: '\f0e0';
-}
-
-.nav-item-medialibrary a:before {
-  content: '\f03e';
-}
-
-.nav-item-settings a:before {
-  content: '\f013';
 }
 
 .navbar-user {
@@ -496,7 +464,7 @@
       float: none;
       width: auto;
 
-      .nav-link:before {
+      .nav-link .svg-inline--fa {
         left: 16px;
       }
     }
@@ -523,10 +491,11 @@
           height: 50px;
           padding: 15px 50px;
 
-          &:before {
+          .svg-inline--fa {
             left: 16px;
             margin-left: 0;
-            top: auto;
+            top: 50%;
+            transform: translateY(-50%);
           }
         }
       }
@@ -558,7 +527,7 @@
 }
 
 @include media-breakpoint-up(md) {
-  .navbar-nav .nav-item .nav-link:before {
+  .navbar-nav .nav-item .nav-link .svg-inline--fa {
     left: 20px;
   }
 
