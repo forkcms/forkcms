@@ -7,7 +7,7 @@
       <div class="alert alert-warning d-lg-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
       <div id="tree">
@@ -42,19 +42,17 @@
       {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
     </div>
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
-          {% if showMediaLibraryMediaItemDelete %}
-            {% if mediaItem.groups.count == 0 %}
-              {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
-            {% endif %}
+  <div class="fork-module-actions">
+    <div class="btn-toolbar d-flex">
+      <div class="btn-group" role="group">
+        {% if showMediaLibraryMediaItemDelete %}
+          {% if mediaItem.groups.count == 0 %}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
           {% endif %}
-        </div>
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-default', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
-        </div>
+        {% endif %}
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
       </div>
     </div>
   </div>
