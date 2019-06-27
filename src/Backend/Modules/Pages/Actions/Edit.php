@@ -715,6 +715,9 @@ class Edit extends BackendBaseActionEdit
 
         $this->form->cleanupFields();
         $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+        if ($this->form->getField('navigation_title_overwrite')->isChecked()) {
+            $this->form->getField('navigation_title')->isFilled(BL::err('FieldIsRequired'));
+        }
         $this->meta->validate();
 
         if ($this->form->getField('move_page')->isChecked()) {
