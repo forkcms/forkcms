@@ -305,7 +305,7 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-lg-3">
-                      <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-thumbnail{% if item.data.image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" />
+                      <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-thumbnail{% if not item.data.image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" />
                     </div>
                     <div class="col-lg-9">
                       <div class="custom-file">
