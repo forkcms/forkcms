@@ -517,6 +517,7 @@ jsFrontend.gravatar = {
  */
 jsFrontend.locale = {
   initialized: false,
+  initializing: false,
   data: {},
 
   // init, something like a constructor
@@ -524,6 +525,8 @@ jsFrontend.locale = {
     if (typeof jsFrontend.current.language == 'undefined') {
       return
     }
+
+    jsFrontend.locale.initializing = true
 
     $.ajax({
       url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
@@ -533,6 +536,7 @@ jsFrontend.locale = {
       success: function (data) {
         jsFrontend.locale.data = data
         jsFrontend.locale.initialized = true
+        jsFrontend.locale.initializing = true
       },
       error: function (jqXHR, textStatus, errorThrown) {
         throw new Error('Regenerate your locale-files.')
@@ -543,7 +547,18 @@ jsFrontend.locale = {
   // get an item from the locale
   get: function (type, key) {
     // initialize if needed
-    if (!jsFrontend.locale.initialized) jsFrontend.locale.init()
+    if (!jsFrontend.locale.initialized && !jsFrontend.locale.initializing) jsFrontend.locale.init()
+
+    if (!jsFrontend.locale.initialized) {
+      setTimeout(
+        function () {
+          return jsFrontend.locale.get(type, key)
+        },
+        30
+      )
+
+      return;
+    }
 
     // validate
     if (typeof jsFrontend.locale.data[type] === 'undefined'
