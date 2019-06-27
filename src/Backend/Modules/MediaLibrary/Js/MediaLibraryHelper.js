@@ -1506,7 +1506,7 @@ jsBackend.mediaLibraryHelper.templates = {
     }
 
     html += '</div>'
-    html += '<button type="button" class="deleteMediaItem btn btn-danger" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-block" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
     html += '<span>' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'
@@ -1518,7 +1518,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
 jsBackend.mediaLibraryHelper.modalSelection = {
   init: function () {
-    $('tr[data-direct-url] a').on('click', this.selectItemAndSendToParent)
+    $('tr[data-direct-url] button').on('click', this.selectItemAndSendToParent)
   },
 
   selectItemAndSendToParent: function () {

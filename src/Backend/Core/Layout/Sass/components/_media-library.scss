@@ -71,6 +71,11 @@
     background: $gray-200;
     width: 140px;
     vertical-align: top;
+
+    a.btn {
+      border-radius: 0;
+      color: $white;
+    }
   }
 }
 
