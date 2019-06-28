@@ -1415,6 +1415,7 @@ jsBackend.pages.tree = {
     // jsTree options
     var options = {
       core: {
+        animation: 0,
         themes: {
           name: 'proton',
           responsive: true
@@ -1441,6 +1442,9 @@ jsBackend.pages.tree = {
       },
       search: {
         show_only_matches: true
+      },
+      dnd: {
+        inside_pos: "last",
       },
       plugins: ['dnd', 'types', 'state', 'search']
     }
