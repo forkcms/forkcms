@@ -1425,19 +1425,19 @@ jsBackend.pages.tree = {
       },
       types: {
         default: {
-          icon: 'fa fa-file-o'
+          icon: 'far fa-file'
         },
         home: {
-          icon: 'fa fa-home'
+          icon: 'fas fa-home'
         },
         anchor: {
-          icon: 'fa fa-file-o'
+          icon: 'far fa-file'
         },
         sitemap: {
-          icon: 'fa fa-sitemap'
+          icon: 'fas fa-sitemap'
         },
         error: {
-          icon: 'fa fa-exclamation-triangle'
+          icon: 'fas fa-exclamation-triangle'
         }
       },
       search: {

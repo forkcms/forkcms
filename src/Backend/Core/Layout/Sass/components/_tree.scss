@@ -24,10 +24,11 @@
 }
 
 .jstree {
+  margin-bottom: 20px;
 
   li {
     display: block;
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     line-height: 16px;
     min-height: 16px;
     max-width: 100%;
@@ -43,6 +44,15 @@
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .jstree-themeicon-custom {
+      color: $gray-550;
+      height: 16px;
+      line-height: 16px;
+      margin-right: 4px;
+      margin-top: 2px;
+      width: 16px;
     }
 
     // Show hidden pages as transparent.
@@ -86,11 +96,6 @@
     }
   }
 
-  // Make tree icons a subtle bit lighter
-  &.jstree .jstree-themeicon-custom {
-    color: $gray-550;
-  }
-
   // Make sure icon is white on hover/focus
   li a:hover,
   li a.active,
@@ -129,7 +134,7 @@
     font-family: FontAwesome;
     content: "\f178";
     font-size: 16px;
-    color: $brand-primary;
+    color: $primary;
   }
 
   &.marker_plus:before {
