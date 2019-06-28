@@ -832,7 +832,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>'
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -1393,7 +1393,7 @@ jsBackend.pages.template = {
 jsBackend.pages.tree = {
   // init, something like a constructor
   init: function () {
-    if ($('#tree').find('> [data-tree]').length === 0) return false;
+    if ($('#tree').find('> [data-tree]').length === 0) return false
 
     var openedIds = []
     if (typeof pageID !== 'undefined') {
@@ -1444,7 +1444,7 @@ jsBackend.pages.tree = {
         show_only_matches: true
       },
       dnd: {
-        inside_pos: "last",
+        inside_pos: 'last'
       },
       plugins: ['dnd', 'types', 'state', 'search']
     }
@@ -1453,30 +1453,30 @@ jsBackend.pages.tree = {
     var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
     // Search through pages
-    var searchThroughPages = function() {
-      var v = $('.js-tree-search').val();
+    var searchThroughPages = function () {
+      var v = $('.js-tree-search').val()
       $('#tree').find('> [data-tree]').each(function () {
-        $(this).jstree(true).search(v);
-      });
-    };
-    $('.js-tree-search').bind('keyup input', utils.events.debounce(searchThroughPages, 150));
+        $(this).jstree(true).search(v)
+      })
+    }
+    $('.js-tree-search').bind('keyup input', utils.events.debounce(searchThroughPages, 150))
 
     // To prevent FOUC, we only show the jsTree when it's done loading.
-    jsTreeInstance.on("ready.jstree", function (e, data) {
-      $('#tree').show();
-    });
+    jsTreeInstance.on('ready.jstree', function (e, data) {
+      $('#tree').show()
+    })
 
     // On selecting a node in the tree, visit the anchor.
-    jsTreeInstance.on("select_node.jstree", function (e, data) {
+    jsTreeInstance.on('select_node.jstree', function (e, data) {
       if (data && data.node && data.event) {
         // Get current and new URL
-        var node = data.node;
-        var currentPageURL = window.location.pathname + window.location.search;
-        var newPageURL = node.a_attr.href;
+        var node = data.node
+        var currentPageURL = window.location.pathname + window.location.search
+        var newPageURL = node.a_attr.href
 
         // Only redirect if destination isn't the current one.
         if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
-          window.location = newPageURL;
+          window.location = newPageURL
         }
       }
     })
