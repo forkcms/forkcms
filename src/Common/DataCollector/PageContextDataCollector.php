@@ -47,13 +47,13 @@ class PageContextDataCollector extends DataCollector
                 'title' => $pageRecord['title'],
                 'template' => $this->getFullTemplatePath($pageRecord['template_path']),
             ],
-            'widgets' => $this->getWidgets($this->page->getExtras()),
-            'block' => $this->getBlock($this->page->getExtras()),
+            'widgets' => $this->collectWidgets($this->page->getExtras()),
+            'block' => $this->collectBlock($this->page->getExtras()),
             'theme' => $this->theme,
         ];
     }
 
-    private function getWidgets(array $pageExtras): ?array
+    private function collectWidgets(array $pageExtras): ?array
     {
         $pageContextDataCollector = $this;
         $widgets = array_map(
@@ -70,7 +70,7 @@ class PageContextDataCollector extends DataCollector
         return empty($widgets) ? null : $widgets;
     }
 
-    private function getBlock(array $pageExtras): ?array
+    private function collectBlock(array $pageExtras): ?array
     {
         /** @var ExtraInterface $action */
         $action = $this->getClassInstances(ExtraInterface::class, $pageExtras)[0] ?? null;
