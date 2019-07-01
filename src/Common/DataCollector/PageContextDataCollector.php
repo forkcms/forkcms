@@ -151,4 +151,19 @@ class PageContextDataCollector extends DataCollector
     {
         return $this->data['block']['action'] ?? null;
     }
+
+    public function getBlockTemplate(): ?string
+    {
+        return $this->data['block']['template'] ?? null;
+    }
+
+    public function getPageTemplate(): string
+    {
+        return $this->data['page']['template'];
+    }
+
+    public function getWidgets(): ?array
+    {
+        return $this->data['widgets'];
+    }
 }
