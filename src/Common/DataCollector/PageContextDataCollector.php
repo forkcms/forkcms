@@ -116,4 +116,39 @@ class PageContextDataCollector extends DataCollector
 
         return str_replace($this->sitePath, '', FRONTEND_MODULES_PATH . '/' . $templatePath);
     }
+
+    public function getPageId(): int
+    {
+        return $this->data['page']['id'];
+    }
+
+    public function hasData(): bool
+    {
+        return !empty($this->data);
+    }
+
+    public function getPageTitle(): string
+    {
+        return $this->data['page']['title'];
+    }
+
+    public function getTheme(): string
+    {
+        return $this->data['theme'];
+    }
+
+    public function hasBlock(): bool
+    {
+        return !empty($this->data['block']);
+    }
+
+    public function getBlockModule(): ?string
+    {
+        return $this->data['block']['module'] ?? null;
+    }
+
+    public function getBlockAction(): ?string
+    {
+        return $this->data['block']['action'] ?? null;
+    }
 }

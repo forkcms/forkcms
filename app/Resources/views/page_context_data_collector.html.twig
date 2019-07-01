@@ -1,0 +1,36 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+  {% if collector.hasData %}
+    {% set icon %}
+      {{ include('views/Icon/context.svg') }}
+      <span class="sf-toolbar-value sf-toolbar-info-piece-additional">{{ collector.pageTitle }}</span>
+    {% endset %}
+    {% set text %}
+      <div class="sf-toolbar-info-piece">
+        <b>Page ID</b>
+        <span>{{ collector.pageId }}</span>
+      </div>
+      <div class="sf-toolbar-info-piece">
+        <b>Page title</b>
+        <span>{{ collector.pageTitle }}</span>
+      </div>
+      <div class="sf-toolbar-info-piece">
+        <b>Theme</b>
+        <span>{{ collector.theme }}</span>
+      </div>
+      {% if collector.hasBlock %}
+        <div class="sf-toolbar-info-piece">
+          <b>Module</b>
+          <span>{{ collector.blockModule }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+          <b>Action</b>
+          <span>{{ collector.blockAction }}</span>
+        </div>
+      {% endif %}
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+  {% endif %}
+{% endblock %}
+
