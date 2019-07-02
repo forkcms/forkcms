@@ -6,6 +6,7 @@ jsBackend.settings = {
     $('#facebookAdminIds').multipleTextbox(
       {
         emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
+        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
         addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
         removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
         canAddNew: true
