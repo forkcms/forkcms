@@ -7973,7 +7973,7 @@
         <translation language="sv"><![CDATA[personer]]></translation>
         <translation language="el"><![CDATA[Άνθρωποι]]></translation>
         <translation language="tr"><![CDATA[Kişiler]]></translation>
-        <translation language="pl"><![CDATA[osoby]]></translation>		
+        <translation language="pl"><![CDATA[osoby]]></translation>
       </item>
       <item type="label" name="PerVisit">
         <translation language="nl"><![CDATA[per bezoek]]></translation>
@@ -8090,7 +8090,7 @@
         <translation language="sv"><![CDATA[förhandsvisa]]></translation>
         <translation language="el"><![CDATA[προεπισκόπιση]]></translation>
         <translation language="tr"><![CDATA[önizleme]]></translation>
-        <translation language="pl"><![CDATA[podgląd]]></translation> 
+        <translation language="pl"><![CDATA[podgląd]]></translation>
       </item>
       <item type="label" name="Previous">
         <translation language="nl"><![CDATA[vorige]]></translation>
@@ -9997,7 +9997,7 @@
         <translation language="sv"><![CDATA[vikt]]></translation>
         <translation language="el"><![CDATA[βάρος]]></translation>
         <translation language="pl"><![CDATA[szerokość]]></translation>
-        <translation language="tr"><![CDATA[ağırlık]]></translation> 
+        <translation language="tr"><![CDATA[ağırlık]]></translation>
       </item>
       <item type="label" name="WhichModule">
         <translation language="nl"><![CDATA[welke module]]></translation>
