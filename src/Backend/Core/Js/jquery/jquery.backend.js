@@ -763,13 +763,17 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
 
           // we need the timeout otherwise the error is show every time the user presses enter in the tagbox
           timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+
+          $('html, body').animate({
+            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+          },500);
         }
 
         return !blockSubmit
@@ -777,13 +781,15 @@
 
       // build replace html
       var html = '<div class="form-inline tagsWrapper">' +
-        '    <div class="form-group input-group">' +
-        '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '       <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
-        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
-        '           <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
-        '       </button></span>' +
-        '   </div>' +
+        '    <div class="form-group">' +
+        '        <div class="input-group">' +
+        '           <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+        '           <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
+        '               <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '               <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '           </button></span>' +
+        '        </div>' +
+        '    </div>' +
         '    <div id="elementList-' + id + '" class="form-group tagList">' +
         '    </div>' +
         '</div>'
