@@ -492,7 +492,7 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="help-block text-danger">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
@@ -1211,6 +1211,7 @@
       emptyMessage: '',
       addLabel: 'add',
       removeLabel: 'delete',
+      errorMessage: 'Add the item before submitting',
       params: {},
       canAddNew: false,
       showIconOnly: false,
@@ -1226,11 +1227,29 @@
       var id = $(this).attr('id')
       var elements = get()
       var blockSubmit = false
+      var timer = null
 
       $('label[for="' + id + '"]').attr('for', 'addValue-' + id)
 
       // bind submit
       $(this.form).submit(function () {
+        // hide before..
+        $('#errorMessage-' + id).remove()
+
+        if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
+          // show warning
+          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
+
+          // clear other timers
+          clearTimeout(timer)
+
+          // we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
+          timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+          $('html, body').animate({
+            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+          },500);
+        }
+
         return !blockSubmit
       })
 
@@ -1244,12 +1263,14 @@
         '<div class="multipleTextWrapper">' +
         '<div id="elementList-' + id + '" class="multipleTextList">' +
         '</div>' +
+        '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
         '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
         '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></span>' +
+        '</div>' +
         '</div>' +
         '</div>'
 
@@ -1385,6 +1406,9 @@
           $('#addValue-' + id).val('').focus()
           $('#addButton-' + id).addClass('disabledButton')
         }
+
+        // remove error message
+        $('#errorMessage-' + id).remove()
 
         var values = value.split(options.splitChar)
         for (var e in values) {
