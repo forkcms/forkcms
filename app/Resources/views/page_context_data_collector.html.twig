@@ -29,6 +29,12 @@
           <span>{{ collector.blockAction }}</span>
         </div>
       {% endif %}
+      {% if collector.widgets %}
+        <div class="sf-toolbar-info-piece">
+          <b>Widgets</b>
+          <span>{{ collector.widgets|length }}</span>
+        </div>
+      {% endif %}
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
   {% endif %}
