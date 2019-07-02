@@ -796,7 +796,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>'
+    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text + '</textarea>'
     html += '</div>'
 
     html += '</div>'
