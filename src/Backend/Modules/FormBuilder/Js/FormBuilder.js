@@ -30,6 +30,7 @@ jsBackend.FormBuilder = {
       emptyMessage: jsBackend.locale.msg('NoEmailaddresses'),
       addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add', 'Core')),
       removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+      errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
       canAddNew: true
     })
   },
@@ -221,6 +222,7 @@ jsBackend.FormBuilder.Fields = {
             $('input#dropdownValues').multipleTextbox({
               splitChar: '|',
               emptyMessage: jsBackend.locale.msg('NoValues'),
+              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
               showIconOnly: true,
@@ -232,6 +234,7 @@ jsBackend.FormBuilder.Fields = {
               emptyMessage: jsBackend.locale.msg('NoValues'),
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
               showIconOnly: true,
               afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
             })
@@ -241,6 +244,7 @@ jsBackend.FormBuilder.Fields = {
               emptyMessage: jsBackend.locale.msg('NoValues'),
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
               showIconOnly: true,
               afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
             })
