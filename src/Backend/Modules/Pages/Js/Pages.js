@@ -615,6 +615,9 @@ jsBackend.pages.extras = {
 
     var templateUrl
 
+    // Set the title of the modal to the title of the user template
+    $('[data-fork-cms-role=user-template-title]').text(jsBackend.pages.template.userTemplates[userTemplateId].title)
+
     // if there already was content, use this.
     if (previousContent !== '') {
       $('#userTemplateHiddenPlaceholder').html(previousContent)
