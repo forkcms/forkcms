@@ -1491,7 +1491,7 @@ jsBackend.pages.tree = {
     // set the item selected
     if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
 
-    jsBackend.pages.tree.toggleJsTreeCollapse()
+    jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
   // before an item will be moved we have to do some checks
@@ -1581,7 +1581,7 @@ jsBackend.pages.tree = {
     })
   },
 
-  toggleJsTreeCollapse: function () {
+  toggleJsTreeCollapse: function (jsTreeInstance) {
     $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
       var $this = $(this)
       $this.toggleClass('tree-collapsed')
@@ -1590,17 +1590,13 @@ jsBackend.pages.tree = {
 
       if (collapsed) {
         $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
-        $.each($('#tree div'), function (index, element) {
-          $.tree.reference($(element).attr('id')).close_all()
-        })
+        jsTreeInstance.jstree('close_all')
 
         return
       }
 
       $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
-      $.each($('#tree div'), function (index, element) {
-        $.tree.reference($(element).attr('id')).open_all()
-      })
+      jsTreeInstance.jstree('open_all')
     })
   }
 }
