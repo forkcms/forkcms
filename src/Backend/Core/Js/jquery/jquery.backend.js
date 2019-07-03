@@ -1460,8 +1460,8 @@
           // loop elements
           for (var i in elements) {
             html += '    <li class="list-group-item"><div class="input-group">' +
-              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
-              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace('"', '&quot;') + '" />' +
+              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
               '           <span class="fa fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
               '        </button></span>' +
@@ -1496,10 +1496,7 @@
       }
 
       // remove an item
-      function remove (value) {
-        // get index for element
-        var index = $.inArray(value, elements)
-
+      function remove (index) {
         // remove element
         if (index > -1) elements.splice(index, 1)
 
