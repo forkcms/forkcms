@@ -1238,8 +1238,12 @@ class Model
      *
      * @param array $blocks The blocks to insert.
      */
-    public static function insertBlocks(array $blocks)
+    public static function insertBlocks(array $blocks): void
     {
+        if (empty($blocks)) {
+            return;
+        }
+
         // get database
         $database = BackendModel::getContainer()->get('database');
 
