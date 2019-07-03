@@ -17,6 +17,8 @@ services:
         volumes:
             - .:/var/www/html:cached
             - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
+        env_file:
+          - ./var/docker/.env
 
     db:
         image: "mariadb:latest"

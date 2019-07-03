@@ -25,4 +25,6 @@
 # Docker
 var/docker/db/data/*
 docker-compose.override.yml
-.env
+
+# Symfony's dotenv
+/.env.local
