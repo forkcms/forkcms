@@ -48,7 +48,7 @@
       {%- endif -%}
     {% endif %}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
+    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}
     </label>
   {% endif %}
 {% endblock checkbox_radio_label %}
@@ -374,7 +374,7 @@
       {{- form_label(form) -}}
     </div>
     <div class="panel-body">
-      {{- block('form_widget') -}}
+      {{- form_widget(form) -}}
     </div>
   </div>
 {%- endblock collection_row -%}

@@ -79,6 +79,12 @@ class Installer extends ModuleInstaller
             'RecentArticlesFull',
             'RecentArticlesFull'
         );
+        $extras['blog_widget_related_articles'] = $this->insertExtra(
+            'Blog',
+            ModuleExtraType::widget(),
+            'RelatedArticles',
+            'RelatedArticles'
+        );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
             'Blog',
             ModuleExtraType::widget(),

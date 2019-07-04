@@ -59,25 +59,25 @@ jsInstall.step2 = {
     if ($('#install_languages_same_interface_language').is(':checked')) {
       // just 1 language selected = only selected frontend language is available as interface language
       if ($('#install_languages_language_type_0').is(':checked')) {
-        $('#install_languages_interface_language option').prop('disabled', true)
-        $('#install_languages_interface_language option[value=' + $('#install_languages_default_language').val() + ']').removeAttr('disabled')
-        $('#install_languages_interface_language').val($('#install_languages_interface_language option:enabled:first').val())
+        $('#install_languages_default_interface_language option').prop('disabled', true)
+        $('#install_languages_default_interface_language option[value=' + $('#install_languages_default_language').val() + ']').removeAttr('disabled')
+        $('#install_languages_default_interface_language').val($('#install_languages_default_interface_language option:enabled:first').val())
       } else if ($('#install_languages_language_type_1').is(':checked')) {
-        $('#install_languages_interface_language option').prop('disabled', true)
+        $('#install_languages_default_interface_language option').prop('disabled', true)
         $('#languages input:checked').each(function () {
-          $('#install_languages_interface_language option[value=' + $(this).val() + ']').removeAttr('disabled')
+          $('#install_languages_default_interface_language option[value=' + $(this).val() + ']').removeAttr('disabled')
         })
 
-        if ($('#install_languages_interface_language option[value=' + $('#install_languages_interface_language').val() + ']').length === 0) {
-          $('#install_languages_interface_language').val($('#install_languages_interface_language option:enabled:first').val())
+        if ($('#install_languages_default_interface_language option[value=' + $('#install_languages_default_interface_language').val() + ']').length === 0) {
+          $('#install_languages_default_interface_language').val($('#install_languages_default_interface_language option:enabled:first').val())
         }
       }
     } else {
       // different languages than frontend
-      $('#install_languages_interface_language option').prop('disabled', true)
-      $('#interfaceLanguages input:checked').each(function () { $('#install_languages_interface_language option[value=' + $(this).val() + ']').removeAttr('disabled') })
-      if ($('#install_languages_interface_language option[value=' + $('#install_languages_interface_language').val() + ']').length === 0) {
-        $('#install_languages_interface_language').val($('#install_languages_interface_language option:enabled:first').val())
+      $('#install_languages_default_interface_language option').prop('disabled', true)
+      $('#interfaceLanguages input:checked').each(function () { $('#install_languages_default_interface_language option[value=' + $(this).val() + ']').removeAttr('disabled') })
+      if ($('#install_languages_default_interface_language option[value=' + $('#install_languages_default_interface_language').val() + ']').length === 0) {
+        $('#install_languages_default_interface_language').val($('#install_languages_default_interface_language option:enabled:first').val())
       }
     }
   },

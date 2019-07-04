@@ -344,10 +344,10 @@ class Language
             file_get_contents(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json'),
             true
         );
-        self::$act = (array) $translations['act'];
-        self::$err = (array) $translations['err'];
-        self::$lbl = (array) $translations['lbl'];
-        self::$msg = (array) $translations['msg'];
+        self::$act = (array) ($translations['act'] ?? []);
+        self::$err = (array) ($translations['err'] ?? []);
+        self::$lbl = (array) ($translations['lbl'] ?? []);
+        self::$msg = (array) ($translations['msg'] ?? []);
     }
 
     /**

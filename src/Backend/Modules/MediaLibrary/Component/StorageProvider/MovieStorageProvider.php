@@ -42,4 +42,9 @@ class MovieStorageProvider implements StorageProviderInterface
     {
         return $this->linkUrl . $mediaItem->getUrl();
     }
+
+    public function getThumbnail(MediaItem $mediaItem): string
+    {
+        return $this->getWebPath($mediaItem);
+    }
 }

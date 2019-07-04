@@ -209,6 +209,21 @@ jsFrontend.forms = {
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
     jsFrontend.forms.imagePreview()
+    jsFrontend.forms.requiredTooltip()
+  },
+
+  requiredTooltip: function () {
+    $(document).on('focus', '.form-control', function (event) {
+      var id = $(event.currentTarget).attr('id')
+
+      // show tooltip
+      $('label[for="' + id + '"]').find('abbr').tooltip('show')
+
+      // hide tooltip after 1 second
+      setTimeout(() => {
+        $('label[for="' + id + '"]').find('abbr').tooltip('hide')
+      }, 1000)
+    })
   },
 
   imagePreview: function () {
@@ -502,10 +517,17 @@ jsFrontend.gravatar = {
  */
 jsFrontend.locale = {
   initialized: false,
+  initializing: false,
   data: {},
 
   // init, something like a constructor
   init: function () {
+    if (typeof jsFrontend.current.language == 'undefined') {
+      return
+    }
+
+    jsFrontend.locale.initializing = true
+
     $.ajax({
       url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
       type: 'GET',
@@ -514,6 +536,7 @@ jsFrontend.locale = {
       success: function (data) {
         jsFrontend.locale.data = data
         jsFrontend.locale.initialized = true
+        jsFrontend.locale.initializing = true
       },
       error: function (jqXHR, textStatus, errorThrown) {
         throw new Error('Regenerate your locale-files.')
@@ -524,10 +547,24 @@ jsFrontend.locale = {
   // get an item from the locale
   get: function (type, key) {
     // initialize if needed
-    if (!jsFrontend.locale.initialized) jsFrontend.locale.init()
+    if (!jsFrontend.locale.initialized && !jsFrontend.locale.initializing) jsFrontend.locale.init()
+
+    if (!jsFrontend.locale.initialized) {
+      setTimeout(
+        function () {
+          return jsFrontend.locale.get(type, key)
+        },
+        30
+      )
+
+      return;
+    }
 
     // validate
-    if (typeof jsFrontend.locale.data[type][key] === 'undefined') return '{$' + type + key + '}'
+    if (typeof jsFrontend.locale.data[type] === 'undefined'
+      || typeof jsFrontend.locale.data[type][key] === 'undefined') {
+      return '{$' + type + key + '}'
+    }
 
     return jsFrontend.locale.data[type][key]
   },

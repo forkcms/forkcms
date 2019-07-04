@@ -70,6 +70,11 @@ class LocalStorageProvider implements LocalStorageProviderInterface
         return $this->getWebDir() . '/' . $mediaItem->getFullUrl();
     }
 
+    public function getThumbnail(MediaItem $mediaItem): string
+    {
+        return $this->getWebPath($mediaItem);
+    }
+
     public function getWebPathWithFilter(MediaItem $mediaItem, string $liipImagineBundleFilter = null): string
     {
         $webPath = $this->getWebPath($mediaItem);

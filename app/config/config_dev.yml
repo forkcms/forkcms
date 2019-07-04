@@ -28,6 +28,13 @@ services:
         tags:
             - { name: data_collector, template: "database_data_collector.html.twig", id: "database" }
 
+    page_context_collector:
+        class: Common\DataCollector\PageContextDataCollector
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: data_collector, template: "page_context_data_collector.html.twig", id: "page_context" }
+
     monolog.full_trace_formatter:
         class: Monolog\Formatter\LineFormatter
         calls:

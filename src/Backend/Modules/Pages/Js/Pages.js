@@ -615,6 +615,9 @@ jsBackend.pages.extras = {
 
     var templateUrl
 
+    // Set the title of the modal to the title of the user template
+    $('[data-fork-cms-role=user-template-title]').text(jsBackend.pages.template.userTemplates[userTemplateId].title)
+
     // if there already was content, use this.
     if (previousContent !== '') {
       $('#userTemplateHiddenPlaceholder').html(previousContent)
@@ -796,7 +799,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>'
+    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -1006,10 +1009,12 @@ jsBackend.pages.extras = {
     }
 
     // replace editor
-    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
+    if ($element.is('[data-ft-type="editor"]')) {
       $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key))
 
-      jsBackend.ckeditor.load()
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        jsBackend.ckeditor.load()
+      }
     }
   },
 
@@ -1088,15 +1093,17 @@ jsBackend.pages.extras = {
       return
     }
 
-    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
+    if ($element.is('[data-ft-type="editor"]')) {
       $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]')
 
       $element.html($textarea.val())
 
-      // destroy the editor
-      var editor = CKEDITOR.instances['user-template-cke-' + key]
-      if (editor) {
-        editor.destroy(true)
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        // destroy the editor
+        var editor = CKEDITOR.instances['user-template-cke-' + key]
+        if (editor) {
+          editor.destroy(true)
+        }
       }
     }
   },

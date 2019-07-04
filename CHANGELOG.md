@@ -1,3 +1,51 @@
+5.6.0  (2019-07-04)
+------------------
+
+Added:
+* Blog: Related blogposts widget based on tags [#2736](https://github.com/forkcms/forkcms/pull/2736)
+* DX: Add page context to symfony debug bar [#2852](https://github.com/forkcms/forkcms/pull/2852)
+* DX: Add Symfony's Dotenv [#2841](https://github.com/forkcms/forkcms/pull/2841)
+* FormBuilder: Autocomplete attributes on Formbuilder input fields [#2745](https://github.com/forkcms/forkcms/pull/2745)
+* FormBuilder: Subscribe to mailmotor checkbox [#2781](https://github.com/forkcms/forkcms/pull/2781)
+* Pages: Create a copy of a page [#2732](https://github.com/forkcms/forkcms/pull/2732)
+* Tags: Add the current tag to the page title on the detail action [#2819](https://github.com/forkcms/forkcms/pull/2819)
+
+Fixed:
+* Core: Fix add button not showing in collections [#2807](https://github.com/forkcms/forkcms/pull/2807)
+* Core: Fix input date in IE by adding a fallback for the native datepicker [#2840](https://github.com/forkcms/forkcms/pull/2840)
+* Core: Fix required tooltip not showing when tabbing [#2813](https://github.com/forkcms/forkcms/pull/2813)
+* Core: Show the correct maximum size for uploads [#2759](https://github.com/forkcms/forkcms/pull/2759)
+* Core: Update composer packages [#2794](https://github.com/forkcms/forkcms/pull/2794) [#2798](https://github.com/forkcms/forkcms/pull/2798) [#2799](https://github.com/forkcms/forkcms/pull/2799) [#2812](https://github.com/forkcms/forkcms/pull/2812) [#2792](https://github.com/forkcms/forkcms/pull/2792) [#2815](https://github.com/forkcms/forkcms/pull/2815) [#2818](https://github.com/forkcms/forkcms/pull/2818) [#2821](https://github.com/forkcms/forkcms/pull/2821) [#2822](https://github.com/forkcms/forkcms/pull/2822) [#2826](https://github.com/forkcms/forkcms/pull/2826) [#2827](https://github.com/forkcms/forkcms/pull/2827) [#2831](https://github.com/forkcms/forkcms/pull/2831) [#2832](https://github.com/forkcms/forkcms/pull/2832) [#2849](https://github.com/forkcms/forkcms/pull/2849) [#2848](https://github.com/forkcms/forkcms/pull/2848) 
+* Blog: Fix double page title on category detail page [#2845](https://github.com/forkcms/forkcms/pull/2845)
+* Blog: Fix error when the category slug is missing [#2784](https://github.com/forkcms/forkcms/pull/2784)
+* Blog: Fix missing macro import on import wordpress action [#2839](https://github.com/forkcms/forkcms/pull/2839)
+* Blog: Fix wrong date in archive breadcrumb [#2854](https://github.com/forkcms/forkcms/pull/2854)
+* ForkTheme: Fix bad value for time element [#2788](https://github.com/forkcms/forkcms/pull/2788)
+* Groups: Fix notice array to string conversation on EditGroup [#2790](https://github.com/forkcms/forkcms/pull/2790)
+* Installer: Fix languages not disabling when they are not possible [#2843](https://github.com/forkcms/forkcms/pull/2843)
+* Locale: Fix js locale on pageload [#2850](https://github.com/forkcms/forkcms/pull/2850)
+* MediaGalleries: Fix youtube and vimeo integration [#2816](https://github.com/forkcms/forkcms/pull/2816)
+* Pages: Fix invalid locale.xml [#2837](https://github.com/forkcms/forkcms/pull/2837)
+* Pages: Fix page tree cache always rebuilding [#2829](https://github.com/forkcms/forkcms/pull/2829)
+* Pages: Fix preferred editor in user templates [#2853](https://github.com/forkcms/forkcms/pull/2853)
+* Pages: Fix seo navigation title validation [#2844](https://github.com/forkcms/forkcms/pull/2844)
+
+Changed:
+* Core: Improve checking the use of SSL [#2783](https://github.com/forkcms/forkcms/pull/2783)
+* Core: Update composer packages [#2809](https://github.com/forkcms/forkcms/pull/2809) [#2835](https://github.com/forkcms/forkcms/pull/2835)
+* Blog: Move summary field to the top of the form [#2797](https://github.com/forkcms/forkcms/pull/2797)
+* Extensions: Don't allow the last remaining position to be removed instead of the first one [#2856](https://github.com/forkcms/forkcms/pull/2856)
+* ForkTheme: Don't use a link for the last item of a breadcrumb [#2846](https://github.com/forkcms/forkcms/pull/2846)
+* MediaGalleries: Use a radio button instead of a select for the status [#2847](https://github.com/forkcms/forkcms/pull/2847)
+* Pages: Insert all blocks in one query [#2828](https://github.com/forkcms/forkcms/pull/2828)
+* Pages: Show the user template that is used in the dialog to edit it [#2855](https://github.com/forkcms/forkcms/pull/2855)
+
+Security:
+* Core: Fix tagsBox and multipleTextbox validation and patch xss issue in multipleTextbox [#2857](https://github.com/forkcms/forkcms/pull/2857)
+* Core: Update composer packages [#2805](https://github.com/forkcms/forkcms/pull/2805) [#2804](https://github.com/forkcms/forkcms/pull/2804)
+* Core: Update jQuery [#2814](https://github.com/forkcms/forkcms/pull/2814)
+
+
 5.5.2  (2019-03-14)
 ------------------
 Fixed:

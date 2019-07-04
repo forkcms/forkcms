@@ -48,6 +48,7 @@
           <ul class="dropdown-menu">
             <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
             <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
+            <li><a href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a></li>
           </ul>
         </div>
       {% endif %}
@@ -111,10 +112,6 @@
                   {{ 'lbl.ChangeTemplate'|trans|ucfirst }}
                 </a>
               </p>
-
-              {% if formErrors %}
-                <span class="formError text-danger">{{ formErrors }}</span>
-              {% endif %}
 
               <div id="templateVisualFallback" style="display: none">
                 <div id="fallback" class="generalMessage singleMessage infoMessage">
@@ -477,7 +474,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.Content'|trans|capitalize }}</h4>
+          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>

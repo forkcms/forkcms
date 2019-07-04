@@ -1238,20 +1238,24 @@ class Model
      *
      * @param array $blocks The blocks to insert.
      */
-    public static function insertBlocks(array $blocks)
+    public static function insertBlocks(array $blocks): void
     {
+        if (empty($blocks)) {
+            return;
+        }
+
         // get database
         $database = BackendModel::getContainer()->get('database');
 
         // loop blocks
-        foreach ($blocks as $block) {
+        foreach ($blocks as $key => $block) {
             if ($block['extra_type'] === 'usertemplate') {
-                $block['extra_id'] = null;
+                $blocks[$key]['extra_id'] = null;
             }
-
-            // insert blocks
-            $database->insert('pages_blocks', $block);
         }
+
+        // insert blocks
+        $database->insert('pages_blocks', $blocks);
     }
 
     public static function loadUserTemplates(): array

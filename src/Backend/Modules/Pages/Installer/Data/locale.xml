@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
     <Pages>
@@ -747,6 +747,36 @@
         <translation language="es"><![CDATA[Los usuarios tienen que iniciar sesión para ver esta página.]]></translation>
         <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
         <translation language="pl"><![CDATA[Użytkownicy muszą być zalogowani, aby wyświetlić tę stronę.]]></translation>
+      </item>
+      <item type="label" name="CopyThisPage">
+        <translation language="nl"><![CDATA[kopieer deze pagina]]></translation>
+        <translation language="en"><![CDATA[copy this page]]></translation>
+        <translation language="fr"><![CDATA[copier cette page]]></translation>
+        <translation language="de"><![CDATA[diese Seite kopieren]]></translation>
+        <translation language="pl"><![CDATA[skopiować tę stronę]]></translation>
+        <translation language="es"><![CDATA[copiar esta página]]></translation>
+        <translation language="ru"><![CDATA[скопировать эту страницу]]></translation>
+        <translation language="it"><![CDATA[copiare questa pagina]]></translation>
+      </item>
+      <item type="message" name="CopiedTitle">
+        <translation language="nl"><![CDATA[%1$s kopie]]></translation>
+        <translation language="en"><![CDATA[%1$s copy]]></translation>
+        <translation language="fr"><![CDATA[%1$s copie]]></translation>
+        <translation language="de"><![CDATA[%1$s Kopie]]></translation>
+        <translation language="pl"><![CDATA[%1$s kopia]]></translation>
+        <translation language="es"><![CDATA[copia de 1$s]]></translation>
+        <translation language="ru"><![CDATA[%1$s копия]]></translation>
+        <translation language="it"><![CDATA[%1$s copia]]></translation>
+      </item>
+      <item type="message" name="CopySaveWarning">
+        <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De kopie is nog niet opgeslagen.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Important:</strong> The copy hasn't been saved yet.</p>]]></translation>
+        <translation language="fr"><![CDATA[<p><strong>Important:</strong> La copie n'a pas encore été sauvegardée.</p>]]></translation>
+        <translation language="de"><![CDATA[<p><strong> Wichtig:</strong> Die Kopie wurde noch nicht gespeichert.</p>]]></translation>
+        <translation language="pl"><![CDATA[<p><strong>Uwaga:</strong> Kopia nie została jeszcze zapisana.</p>]]></translation>
+        <translation language="es"><![CDATA[<p><strong>Importante:</strong> La copia aún no se ha guardado.</p>]]></translation>
+        <translation language="ru"><![CDATA[<p><strong>Важно:</strong> Копия еще не сохранена.</p>]]></translation>
+        <translation language="it"><![CDATA[<p><strong>Importante:</strong> La copia non è stata ancora salvata.</p>]]></translation>
       </item>
     </Pages>
     <Core>

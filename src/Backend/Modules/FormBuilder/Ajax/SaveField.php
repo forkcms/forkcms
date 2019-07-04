@@ -4,6 +4,7 @@ namespace Backend\Modules\FormBuilder\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
+use Backend\Modules\FormBuilder\Engine\Autocomplete;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Common\Uri as CommonUri;
@@ -35,6 +36,7 @@ class SaveField extends BackendBaseAJAXAction
                 'textarea',
                 'textbox',
                 'recaptcha',
+                'mailmotor',
             ]
         )) {
             $type = '';
@@ -48,6 +50,7 @@ class SaveField extends BackendBaseAJAXAction
         $defaultValues = trim($this->getRequest()->request->get('default_values', ''));
         $placeholder = trim($this->getRequest()->request->get('placeholder', ''));
         $classname = trim($this->getRequest()->request->get('classname', ''));
+        $listId = trim($this->getRequest()->request->get('list_id', ''));
         $required = $this->getRequest()->request->getBoolean('required');
         $requiredErrorMessage = trim($this->getRequest()->request->get('required_error_message', ''));
         $validation = $this->getRequest()->request->get('validation');
@@ -56,9 +59,11 @@ class SaveField extends BackendBaseAJAXAction
         }
         $validationParameter = trim($this->getRequest()->request->get('validation_parameter', ''));
         $errorMessage = trim($this->getRequest()->request->get('error_message', ''));
+        $autocomplete = $this->getRequest()->request->get('autocomplete', '');
 
         // special field for textbox
         $replyTo = $this->getRequest()->request->getBoolean('reply_to');
+        $useToSubscribeWithMailmotor = $this->getRequest()->request->getBoolean('use_to_subscribe_with_mailmotor');
         $sendConfirmationMailTo = $this->getRequest()->request->getBoolean('send_confirmation_mail_to');
         $confirmationMailSubject = trim($this->getRequest()->request->get('confirmation_mail_subject'));
 
@@ -111,6 +116,9 @@ class SaveField extends BackendBaseAJAXAction
             }
             if ($replyTo && $validation !== 'email') {
                 $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+            }
+            if ($useToSubscribeWithMailmotor && $validation !== 'email') {
+                $errors['use_to_subscribe_with_mailmotor_error_message'] = BL::getError('ActivateEmailValidationToUseThisOption');
             }
             if ($sendConfirmationMailTo && $validation !== 'email') {
                 $errors['send_confirmation_mail_to_error_message'] = BL::getError(
@@ -189,6 +197,20 @@ class SaveField extends BackendBaseAJAXAction
             if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
+        } elseif ($type === 'mailmotor') {
+            // validate checkbox
+            if ($label === '') {
+                $errors['label'] = BL::getError('LabelIsRequired');
+            }
+
+            try {
+                $mailmotorGateway = $this->getContainer()->get('mailmotor.factory.public')->getSubscriberGateway();
+                if ($listId === '' || !$mailmotorGateway->ping($listId)) {
+                    $errors['list_id'] = BL::getError('WrongMailEngineCredentials', 'Mailmotor');
+                }
+            } catch (\Exception $mailMotorException) {
+                $errors['list_id'] = BL::getError('WrongMailEngineCredentials', 'Mailmotor');
+            }
         }
 
         // got errors
@@ -247,11 +269,19 @@ class SaveField extends BackendBaseAJAXAction
             $settings['classname'] = \SpoonFilter::htmlspecialchars($classname);
         }
 
+        $settings['autocomplete'] = in_array($autocomplete, Autocomplete::POSSIBLE_VALUES) ? $autocomplete : '';
+
         // reply-to, only for textboxes
         if ($type === 'textbox') {
             $settings['reply_to'] = $replyTo;
             $settings['send_confirmation_mail_to'] = $sendConfirmationMailTo;
             $settings['confirmation_mail_subject'] = $confirmationMailSubject;
+            $settings['use_to_subscribe_with_mailmotor'] = $useToSubscribeWithMailmotor;
+        }
+
+        if ($type === 'mailmotor') {
+            unset($settings['values']);
+            $settings['list_id'] = $listId;
         }
 
         // only for datetime input

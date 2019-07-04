@@ -34,4 +34,11 @@ interface ModuleExtraInterface
      * @return string
      */
     public function getContent(): string;
+
+    /**
+     * The template that will be used
+     *
+     * @return string
+     */
+    public function getTemplatePath(): string;
 }

@@ -25,4 +25,7 @@
 
 # Docker
 var/docker/db/data/*
+
+# Symfony's dotenv
 .env
+/.env.local
