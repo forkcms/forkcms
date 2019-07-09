@@ -11670,6 +11670,10 @@
         <translation language="el"><![CDATA[Οι αλλαγές θα χαθούν.]]></translation>
         <translation language="pl"><![CDATA[Zmiany zostaną utracone]]></translation>
       </item>
+      <item type="message" name="SessionTimeoutWarning">
+        <translation language="nl"><![CDATA[Je sessie gaat verlopen, we raden je aan uw wijzigingen (tijdelijk) op te slaan]]></translation>
+        <translation language="en"><![CDATA[Your session will expire, we recommend you to save your changes (temporarily)]]></translation>
+      </item>
       <item type="error" name="ActionNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze actie.]]></translation>
         <translation language="en"><![CDATA[You have insufficient rights for this action.]]></translation>
