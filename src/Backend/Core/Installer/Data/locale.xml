@@ -12625,6 +12625,14 @@
         <translation language="nl"><![CDATA[inhoud bewerekn]]></translation>
         <translation language="en"><![CDATA[edit content]]></translation>
       </item>
+      <item type="label" name="PageNotAllowedToMove">
+        <translation language="nl"><![CDATA[Het is niet toegestaan deze pagina te veplaatsen]]></translation>
+        <translation language="en"><![CDATA[It's not allowed to change the position of this page]]></translation>
+      </item>
+      <item type="label" name="PageNotAllowedToHaveChildren">
+        <translation language="nl"><![CDATA[Deze pagina kan geen subpagina's bevatten]]></translation>
+        <translation language="en"><![CDATA[This page can not have subpages]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>

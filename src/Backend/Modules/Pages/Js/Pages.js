@@ -1452,6 +1452,10 @@ jsBackend.pages.tree = {
     // Init page tree
     var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
+    jsTreeInstance.on('move_node.jstree', function (event, data) {
+      jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
+    })
+
     // Search through pages
     var searchThroughPages = function () {
       var v = $('.js-tree-search').val()
@@ -1467,7 +1471,7 @@ jsBackend.pages.tree = {
     })
 
     // On selecting a node in the tree, visit the anchor.
-    jsTreeInstance.on('select_node.jstree', function (e, data) {
+    jsTreeInstance.on('select_node.jstree', function (e, data, jsTreeInstance) {
       if (data && data.node && data.event) {
         // Get current and new URL
         var node = data.node
@@ -1494,68 +1498,80 @@ jsBackend.pages.tree = {
     jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
-  // before an item will be moved we have to do some checks
-  beforeMove: function (node, refNode, type, tree) {
+  // when an item is moved
+  onMove: function (event, data, jsTreeInstance) {
+    var tree = data.new_instance.element.first().data('tree')
+
     // get pageID that has to be moved
-    var parentPageID
-    var currentPageID = $(node).prop('id').replace('page-', '')
-    if (typeof refNode === 'undefined') {
-      parentPageID = 0
-    } else {
-      parentPageID = $(refNode).prop('id').replace('page-', '')
+    var currentPageID = data.node.id.replace('page-', '')
+
+    // set the default type of moving
+    var type = 'before'
+
+    // init allowMove
+    var allowMove = false
+
+    // get the position where the page is dropped
+    var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+
+    // when node is dropped on the last position, we can not add it before the last one -> we need after
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined) {
+      droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
+      type = 'after'
     }
 
-    // home is a special item
-    if (parentPageID === '1') {
-      if (type === 'before') return false
-      if (type === 'after') return false
+    // when node is dropped on another node to move it inside
+    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === data.node.id) {
+      type = 'inside'
+      droppedOnElement = $('#' + data.parent)
     }
 
-    // init var
-    var result = false
+    // get pageID wheron the page has been dropped
+    var droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
 
-    // make the call
+    // before an item will be moved we have to do some checks
     $.ajax({
       async: false, // important that this isn't asynchronous
       data: {
         fork: {action: 'GetInfo'},
-        id: currentPageID
+        id: currentPageID,
+        dropped_on: droppedOnPageID
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         if (jsBackend.debug) window.alert(textStatus)
-        result = false
+        allowMove = false
       },
       success: function (json, textStatus) {
         if (json.code !== 200) {
           if (jsBackend.debug) window.alert(textStatus)
-          result = false
+          allowMove = false
         } else {
-          if (json.data.allow_move) result = true
+          // is page allowed to move
+          if (json.data.move_allowed) {
+            allowMove = true
+          } else {
+            jsTreeInstance.jstree('refresh')
+            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToMove'))
+            allowMove = false
+          }
+
+          // is parent allowed to have children
+          if (json.data.children_allowed) {
+            allowMove = true
+          } else {
+            jsTreeInstance.jstree('refresh')
+            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToHaveChildren'))
+            allowMove = false
+          }
         }
       }
     })
 
-    // return
-    return result
-  },
-
-  // when an item is moved
-  onMove: function (node, refNode, type, tree, rollback) {
-    // get the tree
-    tree = tree.container.data('tree')
-
-    // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('page-', '')
-
-    // get pageID wheron the page has been dropped
-    var droppedOnPageID
-    if (typeof refNode === 'undefined') {
-      droppedOnPageID = 0
-    } else {
-      droppedOnPageID = $(refNode).prop('id').replace('page-', '')
+    if (!allowMove) {
+      return
     }
 
-    // make the call
+    // move the page
     $.ajax({
       data: {
         fork: {action: 'Move'},
@@ -1572,7 +1588,7 @@ jsBackend.pages.tree = {
           jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
 
           // rollback
-          $.tree.rollback(rollback)
+          jsTreeInstance.jstree('refresh')
         } else {
           // show message
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
