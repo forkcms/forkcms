@@ -6912,6 +6912,7 @@
 									}
 									lastmv = { 'ins' : ins, 'par' : p, 'pos' : v === 'i' && ip === 'last' && i === 0 && !ins.is_loaded(tm) ? 'last' : i };
 									marker.css({ 'left' : l + 'px', 'top' : t + 'px' }).show();
+									marker.addClass(v);
 									data.helper.find('.jstree-icon').first().removeClass('jstree-er').addClass('jstree-ok');
 									if (data.event.originalEvent && data.event.originalEvent.dataTransfer) {
 										data.event.originalEvent.dataTransfer.dropEffect = is_copy ? 'copy' : 'move';

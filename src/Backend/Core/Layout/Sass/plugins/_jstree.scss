@@ -419,7 +419,7 @@ filter: gray;
 .jstree-proton .jstree-node,
 .jstree-proton .jstree-icon {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
 }
 .jstree-proton .jstree-node {
   background-position: -293px -5px;
@@ -517,13 +517,13 @@ filter: gray;
   background-position: 0 0;
 }
 .jstree-proton > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url("../images/jstree/throbber.gif") center center no-repeat;
 }
 .jstree-proton .jstree-file {
-  background: url("32px.png") -101px -69px no-repeat;
+  background: url("../images/jstree/32px.png") -101px -69px no-repeat;
 }
 .jstree-proton .jstree-folder {
-  background: url("32px.png") -261px -5px no-repeat;
+  background: url("../images/jstree/32px.png") -261px -5px no-repeat;
 }
 .jstree-proton > .jstree-container-ul > .jstree-node {
   margin-left: 0;
@@ -536,7 +536,7 @@ filter: gray;
 #jstree-dnd.jstree-proton .jstree-ok,
 #jstree-dnd.jstree-proton .jstree-er {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -588,7 +588,7 @@ filter: gray;
 .jstree-proton-small .jstree-node,
 .jstree-proton-small .jstree-icon {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
 }
 .jstree-proton-small .jstree-node {
   background-position: -295px -7px;
@@ -686,13 +686,13 @@ filter: gray;
   background-position: 0 0;
 }
 .jstree-proton-small > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url("../images/jstree/throbber.gif") center center no-repeat;
 }
 .jstree-proton-small .jstree-file {
-  background: url("32px.png") -103px -71px no-repeat;
+  background: url("../images/jstree/32px.png") -103px -71px no-repeat;
 }
 .jstree-proton-small .jstree-folder {
-  background: url("32px.png") -263px -7px no-repeat;
+  background: url("../images/jstree/32px.png") -263px -7px no-repeat;
 }
 .jstree-proton-small > .jstree-container-ul > .jstree-node {
   margin-left: 0;
@@ -705,7 +705,7 @@ filter: gray;
 #jstree-dnd.jstree-proton-small .jstree-ok,
 #jstree-dnd.jstree-proton-small .jstree-er {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -757,7 +757,7 @@ filter: gray;
 .jstree-proton-large .jstree-node,
 .jstree-proton-large .jstree-icon {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
 }
 .jstree-proton-large .jstree-node {
   background-position: -288px 0px;
@@ -855,13 +855,13 @@ filter: gray;
   background-position: 0 0;
 }
 .jstree-proton-large > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url("../images/jstree/throbber.gif") center center no-repeat;
 }
 .jstree-proton-large .jstree-file {
-  background: url("32px.png") -96px -64px no-repeat;
+  background: url("../images/jstree/32px.png") -96px -64px no-repeat;
 }
 .jstree-proton-large .jstree-folder {
-  background: url("32px.png") -256px 0px no-repeat;
+  background: url("../images/jstree/32px.png") -256px 0px no-repeat;
 }
 .jstree-proton-large > .jstree-container-ul > .jstree-node {
   margin-left: 0;
@@ -874,7 +874,7 @@ filter: gray;
 #jstree-dnd.jstree-proton-large .jstree-ok,
 #jstree-dnd.jstree-proton-large .jstree-er {
   background-size: 320px 96px;
-  background-image: url("32px.png");
+  background-image: url("../images/jstree/32px.png");
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -909,12 +909,12 @@ filter: gray;
     height: 30px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-ok {
-    background-image: url("30px.png");
+    background-image: url("../images/jstree/30px.png");
     background-position: 0 -150px;
     background-size: 90px 180px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-er {
-    background-image: url("30px.png");
+    background-image: url("../images/jstree/30px.png");
     background-position: -30px -150px;
     background-size: 90px 180px;
   }
@@ -939,7 +939,7 @@ filter: gray;
     overflow: hidden;
   }
   .jstree-proton-responsive .jstree-icon {
-    background-image: url("30px.png");
+    background-image: url("../images/jstree/30px.png");
     background-size: 90px 180px;
   }
   .jstree-proton-responsive .jstree-node,
@@ -1042,7 +1042,7 @@ filter: gray;
   .jstree-proton-responsive .jstree-node > .jstree-ocl,
   .jstree-proton-responsive .jstree-themeicon,
   .jstree-proton-responsive .jstree-checkbox {
-    background-image: url("30px.png");
+    background-image: url("../images/jstree/30px.png");
     background-size: 90px 180px;
   }
   .jstree-proton-responsive .jstree-node {
@@ -1064,59 +1064,15 @@ filter: gray;
     background-position: 0 0;
   }
   .jstree-proton-responsive .jstree-file {
-    background: url("30px.png") 0 -120px no-repeat;
+    background: url("../images/jstree/30px.png") 0 -120px no-repeat;
     background-size: 90px 180px;
   }
   .jstree-proton-responsive .jstree-folder {
-    background: url("30px.png") -30px -30px no-repeat;
+    background: url("../images/jstree/30px.png") -30px -30px no-repeat;
     background-size: 90px 180px;
   }
   .jstree-proton-responsive > .jstree-container-ul > .jstree-node {
     margin-left: 0;
     margin-right: 0;
   }
-}
-@font-face {
-  font-family: 'Titillium Web';
-  src: url('fonts/titillium/titilliumweb-extralight-webfont.eot');
-  src: url('fonts/titillium/titilliumweb-extralight-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/titillium/titilliumweb-extralight-webfont.woff') format('woff'), url('fonts/titillium/titilliumweb-extralight-webfont.ttf') format('truetype'), url('fonts/titillium/titilliumweb-extralight-webfont.svg#titillium_webthin') format('svg');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Titillium Web';
-  src: url('fonts/titillium/titilliumweb-regular-webfont.eot');
-  src: url('fonts/titillium/titilliumweb-regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/titillium/titilliumweb-regular-webfont.woff') format('woff'), url('fonts/titillium/titilliumweb-regular-webfont.ttf') format('truetype'), url('fonts/titillium/titilliumweb-regular-webfont.svg#titillium_webregular') format('svg');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Titillium Web';
-  src: url('fonts/titillium/titilliumweb-bold-webfont.eot');
-  src: url('fonts/titillium/titilliumweb-bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/titillium/titilliumweb-bold-webfont.woff') format('woff'), url('fonts/titillium/titilliumweb-bold-webfont.ttf') format('truetype'), url('fonts/titillium/titilliumweb-bold-webfont.svg#titillium_webbold') format('svg');
-  font-weight: 700;
-  font-style: normal;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  @font-face {
-    font-family: 'Titillium Web';
-    src: url('fonts/titillium/titilliumweb-extralight-webfont.svg#titillium_webthin') format('svg');
-    font-weight: 300;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Titillium Web';
-    src: url('fonts/titillium/titilliumweb-regular-webfont.svg#titillium_webregular') format('svg');
-    font-weight: 400;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'Titillium Web';
-    src: url('fonts/titillium/titilliumweb-bold-webfont.svg#titillium_webbold') format('svg');
-    font-weight: 700;
-    font-style: normal;
-  }
-}
-.jstree-proton {
-  font-family: 'Titillium Web', sans-serif, Arial, sans-serif;
 }

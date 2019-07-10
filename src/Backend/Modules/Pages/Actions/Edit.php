@@ -85,9 +85,6 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
 
-        // add CSS
-        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
-
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
 

@@ -18,7 +18,6 @@ class MediaItemIndex extends BackendBaseActionIndex
         parent::execute();
         $this->parse();
         $this->parseJSFiles();
-        $this->parseCssFiles();
         $this->display();
     }
 
@@ -133,12 +132,6 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
     }
-
-    private function parseCssFiles(): void
-    {
-        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
-    }
-
 
     private function parseMediaFolders(MediaFolder $mediaFolder = null): void
     {

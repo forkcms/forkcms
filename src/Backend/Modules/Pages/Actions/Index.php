@@ -30,9 +30,6 @@ class Index extends BackendBaseActionIndex
         // add js
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
 
-        // add CSS
-        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
-
         // load the dgRecentlyEdited
         $this->loadDataGrids();
 

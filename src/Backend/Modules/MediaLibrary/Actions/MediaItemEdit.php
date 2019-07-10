@@ -23,7 +23,6 @@ class MediaItemEdit extends BackendBaseActionEdit
         parent::execute();
 
         $this->parseJsFiles();
-        $this->parseCssFiles();
 
         /** @var MediaItem $mediaItem */
         $mediaItem = $this->getMediaItem();
@@ -116,10 +115,5 @@ class MediaItemEdit extends BackendBaseActionEdit
     private function parseJsFiles(): void
     {
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-    }
-
-    private function parseCssFiles(): void
-    {
-        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
     }
 }

@@ -24,6 +24,9 @@ use Symfony\Component\Debug\Debug;
 $env = getenv('FORK_ENV') ?: 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
+$env = 'dev';
+$debug = true;
+
 // Fork has not yet been installed
 $parametersFile = __DIR__ . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();

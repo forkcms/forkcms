@@ -19,7 +19,6 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->mediaFolder = $this->getMediaFolder();
 
         $this->parseJsFiles();
-        $this->parseCssFiles();
         $this->parse();
         $this->display();
     }
@@ -53,10 +52,5 @@ class MediaItemUpload extends BackendBaseActionAdd
     private function parseJsFiles(): void
     {
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-    }
-
-    private function parseCssFiles(): void
-    {
-        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
     }
 }
