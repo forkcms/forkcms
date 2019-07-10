@@ -216,6 +216,14 @@
         <translation language="el"><![CDATA[Επίπεδο ζουμ]]></translation>
         <translation language="pl"><![CDATA[poziom przybliżenia]]></translation>
       </item>
+      <item type="label" name="Locations">
+        <translation language="nl"><![CDATA[locaties]]></translation>
+        <translation language="en"><![CDATA[locations]]></translation>
+        <translation language="ru"><![CDATA[места]]></translation>
+        <translation language="de"><![CDATA[standorte]]></translation>
+        <translation language="fr"><![CDATA[emplacements]]></translation>
+        <translation language="pl"><![CDATA[lokalizacje]]></translation>
+      </item>
       <item type="message" name="HeightHelp">
         <translation language="nl"><![CDATA[minimum %1$spx]]></translation>
         <translation language="en"><![CDATA[Minimum %1$spx]]></translation>

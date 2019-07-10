@@ -2,14 +2,18 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation hidden-xs">
+  <div class="sub-navigation d-none d-sm-block">
     <div class="pages-tree">
-      <div class="alert alert-warning visible-sm">
+      <div class="alert alert-warning d-md-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
       <div id="tree">
         {{ tree|raw }}
       </div>
@@ -19,7 +23,7 @@
 
 {% block actionbar %}
   {% if showPagesIndex %}
-    <div class="btn-toolbar pull-right">
+    <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       </div>
@@ -49,35 +53,35 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div>
-        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
-          <li role="presentation" class="active mr-auto">
-            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+        <ul class="nav nav-tabs justify-content-end" role="tablist">
+          <li class="nav-item mr-auto">
+            <a class="active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="js-page-image-tab" role="presentation">
-            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+          <li class="nav-item js-page-image-tab">
+            <a class="nav-link" href="#tabImage" aria-controls="image" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           {% if showTags %}
-            <li role="presentation">
-              <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
           {% if showAuthenticationTab %}
             <li role="presentation">
               <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabContent">
+          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
             <div id="editTemplate">
 
               {# Do not change the ID! #}
@@ -98,11 +102,11 @@
                       <tr>
                         <td data-position="fallback" id="templatePosition-fallback"
                           colspan="1" class="box">
-                          <div class="panel panel-default panel-pages-block">
-                            <div class="panel-heading">
-                              <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
+                          <div class="card card-default card-pages-block">
+                            <div class="card-heading">
+                              <h2 class="card-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                               <div class="linkedBlocks">
                                 <!-- linked blocks will be added here -->
                               </div>
@@ -120,64 +124,55 @@
 
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabSettings">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    {% for _itr_19 in hidden %}
-                      <li class="radio">
-                        <label for="{{ _itr_19.id }}">{{ _itr_19.rbtHidden|raw }} {{ _itr_19.label|ucfirst }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
+          <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
+            <div class="form-group">
+              {% for _itr_22 in hidden %}
+                <div class="form-check">
+                  {{ _itr_22.rbtHidden|raw }}
+                  <label class="form-check-label" for="{{ _itr_22.id }}">{{ _itr_22.label|ucfirst }}</label>
                 </div>
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    <li class="checkbox">
-                      <label for="isAction" class="control-label">{% form_field is_action %} {{ 'msg.IsAction'|trans }}</label>
-                    </li>
-                  </ul>
-                </div>
-                {% if isGod %}
-                  <div class="form-group">
-                    <ul class="list-unstyled">
-                      {% for _itr_20 in allow %}
-                        <li class="checkbox">
-                          <label for="{{ _itr_20.id }}">{{ _itr_20.chkAllow|raw }} {{ _itr_20.label }}</label>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                {% form_field is_action %}
+                <label for="isAction" class="form-check-label">{{ 'msg.IsAction'|trans|ucfirst }}</label>
               </div>
             </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabRedirect">
-            <div class="row">
-              <div class="col-md-12">
-                {% if rbtRedirectError %}
-                  <div class="alert alert-danger">{{ rbtRedirectError }}</div>
-                {% endif %}
-                <ul class="list-unstyled radiobuttonFieldCombo">
-                  {% for _itr_21 in redirect %}
-                    <li class="radio">
-                      <div class="form-group">
-                        <label for="{{ _itr_21.id }}">{{ _itr_21.rbtRedirect|raw }} {{ _itr_21.label }}</label>
-                        {% if _itr_21.isInternal %}
-                          <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans }}</p>
-                          {% form_field internal_redirect %} {% form_field_error internal_redirect %}
-                        {% endif %}
-                        {% if _itr_21.isExternal %}
-                          <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans }}</p>
-                          {% form_field external_redirect %} {% form_field_error external_redirect %}
-                        {% endif %}
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-
+            {% if isGod %}
+              <div class="form-group">
+                {% for _itr_23 in allow %}
+                  <div class="form-check">
+                    {{ _itr_23.chkAllow|raw }}
+                    <label class="form-check-label" for="{{ _itr_23.id }}">{{ _itr_23.label }}</label>
+                  </div>
+                {% endfor %}
               </div>
+            {% endif %}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
+            {% if rbtRedirectError %}
+              <div class="alert alert-danger">{{ rbtRedirectError }}</div>
+            {% endif %}
+
+            <div class="radiobuttonFieldCombo">
+              {% for _itr_24 in redirect %}
+                <div class="form-group">
+                  <div class="form-check">
+                    {{ _itr_24.rbtRedirect|raw }}
+                    <label class="form-check-label" for="{{ _itr_24.id }}">{{ _itr_24.label }}</label>
+                  </div>
+                  {% if _itr_24.isInternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field internal_redirect %} {% form_field_error internal_redirect %}
+                  {% endif %}
+
+                  {% if _itr_24.isExternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field external_redirect %} {% form_field_error external_redirect %}
+                  {% endif %}
+                </div>
+              {% endfor %}
             </div>
           </div>
           {% if showAuthenticationTab %}
@@ -208,7 +203,7 @@
               </div>
             </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabImage">
+          <div role="tabpanel" class="tab-pane" id="tabImage" aria-labelledby="image-tab">
             <div class="row js-page-image-tab">
               <div class="col-md-12">
                 <div class="form-group">
@@ -217,12 +212,16 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-lg-3">
-                      {% if item.data.image %}
-                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
-                      {% endif %}
+                      <div data-fork-cms-role="image-preview-wrapper" data-id="{{ form_edit.field('image').attributes.id }}">
+                        {% if item.data.image %}
+                          <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
+                        {% endif %}
+                      </div>
                     </div>
                     <div class="col-lg-9">
-                      {% form_field image %} {% form_field_error image %}
+                      {% form_field image %}
+                      <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                      {% form_field_error image %}
                     </div>
                   </div>
                 </div>
@@ -237,36 +236,30 @@
             </div>
           </div>
           {% if showTags %}
-            <div role="tabpanel" class="tab-pane" id="tabTags">
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans }}</p>
-                  {% form_field tags %} {% form_field_error tags %}
-                  <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
-                </div>
+            <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
+              <div class="form-group last">
+                <label for="tags">{{ 'msg.AddTagsHere'|trans }}</label>
+                {% form_field tags %} {% form_field_error tags %}
+                <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
               </div>
             </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabSEO">
+          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
             {% if hreflangFields %}
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+              <fieldset class="last">
+                <legend>{{ 'lbl.Languages'|trans|ucfirst }}</legend>
+                <div class="row">
+                  {% for language, field in hreflangFields %}
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
+                        {{ field.field_hreflang|raw }}
+                      </div>
                     </div>
-                    <div class="panel-body">
-                      {% for language, field in hreflangFields %}
-                        <div class="form-group{% if loop.last %} last{% endif %}">
-                          <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
-                          {{ field.field_hreflang|raw }}
-                        </div>
-                      {% endfor %}
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
-              </div>
+              </fieldset>
             {% endif %}
           </div>
         </div>
@@ -275,19 +268,19 @@
   </div>
   <div id="pageButtons" class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
+      <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"id":"saveAsDraft"}) }}
+        <div class="btn-group ml-auto" role="group">
+          {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"id":"saveAsDraft"}) }}
           {{ macro.buttonIcon('', 'plus-square', 'lbl.AddPage'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"} ) }}
         </div>
       </div>
     </div>
   </div>
   {# This is the HTML content, hidden #}
-  <div class="fade hidden" id="editContent">
+  <div class="fade d-none" id="editContent">
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
@@ -325,9 +318,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="addBlockTitle">{{ 'lbl.ChooseContent'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addBlockTitle">{{ 'lbl.ChooseContent'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
@@ -374,8 +367,8 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
@@ -394,9 +387,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
@@ -455,10 +448,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="blockHtmlTitle">{{ 'lbl.Editor'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="blockHtmlTitle">{{ 'lbl.Editor'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">

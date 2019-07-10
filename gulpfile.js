@@ -89,13 +89,14 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/jquery-migrate/dist/jquery-migrate.min.js',
     'node_modules/jquery-ui-dist/jquery-ui.min.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
     'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js',
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
     'node_modules/cropper/dist/cropper.js',
-    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
+    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js',
+    'node_modules/jstree/dist/jstree.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })

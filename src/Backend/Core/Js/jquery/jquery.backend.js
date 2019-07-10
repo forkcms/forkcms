@@ -151,7 +151,7 @@
 
       // append the button
       $(this).closest('.input-group input').after(
-        '        <span class="input-group-btn"><button data-id="' + id + '" class="generatePasswordButton btn btn-default" type="button"><span>' + options.generateLabel + '</span></button></span>'
+        '        <span class="input-group-append"><button data-id="' + id + '" class="generatePasswordButton btn btn-primary" type="button"><span>' + options.generateLabel + '</span></button></span>'
       )
 
       $('.generatePasswordButton').live('click', generatePassword)
@@ -492,7 +492,7 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.keyValueWrapper').append('<span style="display: none;" id="errorMessage-' + id + '" class="text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.keyValueWrapper').append('<span style="display: none;" id="errorMessage-' + id + '" class="invalid-feedback">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
@@ -514,7 +514,7 @@
         '    <div class="form-group input-group">' +
         '        <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
         '        <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-primary">' +
-        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '           <span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '        </button></span>' +
         '   </div>' +
@@ -767,7 +767,7 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="invalid-feedback">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
@@ -789,7 +789,7 @@
         '        <div class="input-group">' +
         '           <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
         '           <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
-        '               <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '               <span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '               <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '           </button></span>' +
         '        </div>' +
@@ -952,7 +952,7 @@
             var value = utils.string.stripForTag(elements[i])
 
             html += '    <li class="list-group-item">' +
-              '        <button type="button" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash" aria-hidden="true"></span></button></span>' +
+              '        <button type="button" class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fas fa-trash" aria-hidden="true"></span></button></span>' +
               '       <span><strong>' + value + '</strong>' +
               '    </li>'
           }
@@ -1049,7 +1049,7 @@
       html += '        </select>' +
         '        <div class="input-group-btn">' +
         '            <button id="addButton-' + id + '" class="btn btn-success">' +
-        '                <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '                <span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '                <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '            </button>' +
         '        </div>' +
@@ -1140,8 +1140,8 @@
           // loop elements
           for (var i in elements) {
             html += '    <li class="list-group-item">' +
-              '        <button class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-              '            <span class="fa fa-trash" aria-hidden="true"></span><span class="sr-only">' + options.removeLabel + '</span>' +
+              '        <button class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '            <span class="fas fa-trash" aria-hidden="true"></span><span class="sr-only">' + options.removeLabel + '</span>' +
               '        </button>' +
               '        <span><strong>' + $('#' + id + ' option[value="' + elements[i] + '"]').html() + '</strong></span>' +
               '    </li>'
@@ -1276,10 +1276,10 @@
         '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
-        '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-primary">' +
+        '<span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
-        '</button></span>' +
+        '</button></div>' +
         '</div>' +
         '</div>' +
         '</div>'
@@ -1455,21 +1455,21 @@
           html = '<p class="helpTxt">' + options.emptyMessage + '</p>'
         } else {
           // start html
-          html = '<ul class="list-group">'
+          html = '<div>'
 
           // loop elements
           for (var i in elements) {
-            html += '    <li class="list-group-item"><div class="input-group">' +
+            html += '    <div class="form-group"><div class="input-group">' +
               '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace('"', '&quot;') + '" />' +
-              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
-              '           <span class="fa fa-trash" aria-hidden="true"></span>' +
+              '        <span class="input-group-append"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
+              '           <span class="fas fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
               '        </button></span>' +
-              '    </div></li>'
+              '    </div></div>'
           }
 
           // end html
-          html += '</ul>'
+          html += '</div>'
         }
 
         // set html

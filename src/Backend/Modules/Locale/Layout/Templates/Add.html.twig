@@ -14,18 +14,17 @@
           {{ 'lbl.ReferenceCode'|trans|ucfirst }}
           {{ macro.required }}
         </label>
-        <p class="help-block">{{ 'msg.HelpAddName'|trans }}</p>
         {% form_field name %} {% form_field_error name %}
+        <small class="form-text text-muted">{{ 'msg.HelpAddName'|trans }}</small>
       </div>
       <div class="form-group">
         <label for="value" class="control-label">
           {{ 'lbl.Translation'|trans|ucfirst }}
           {{ macro.required }}
         </label>
-        <p class="help-block">{{ 'msg.HelpAddValue'|trans }}</p>
         {% form_field value %} {% form_field_error value %}
       </div>
-      <div class="row">
+      <div class="form-row">
         <div class="col-md-3">
           <div class="form-group">
             <label for="language" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
@@ -56,7 +55,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"addButton", "name":"add"}) }}
         </div>
       </div>

@@ -8,14 +8,14 @@
 
   > tbody > tr:nth-of-type(even),
   thead > tr {
-    background-color: $gray-lightest;
+    background-color: $gray-100;
   }
 
   > tbody > tr:nth-of-type(even):hover,
   > tbody > tr:nth-of-type(even):focus {
     &:hover,
     &:focus {
-      background-color: $table-bg-hover;
+      background-color: $table-hover-bg;
     }
   }
 }
@@ -45,8 +45,22 @@
 
   tr {
 
+    td,
+    th {
+
+      &.check .form-check-input {
+        margin-left: 0;
+        margin-top: 0;
+        position: static;
+      }
+
+      &.fork-data-grid-action {
+        text-align: right;
+      }
+    }
+
     td {
-      font-size: $font-size-small;
+      font-size: $font-size-sm;
 
       &.title a {
         font-weight: 600;
@@ -58,28 +72,15 @@
     }
 
     th {
-      color: $gray;
-      font-size: $font-size-small;
+      color: $gray-700;
+      font-size: $font-size-sm;
       font-weight: 600;
 
       a {
-        color: $text-color;
+        color: $body-color;
 
         &.sorted {
-          color: $brand-primary;
-          position: relative;
-
-          .fa:before {
-            position: absolute;
-          }
-
-          .fa-sort-desc:before {
-            top: 0;
-          }
-
-          .fa-sort-asc:before {
-            bottom: 0;
-          }
+          color: $primary;
         }
       }
     }
@@ -95,5 +96,9 @@
 
   .form-group {
     margin-bottom: 0;
+  }
+
+  label {
+    font-size: $font-size-sm;
   }
 }

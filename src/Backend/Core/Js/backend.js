@@ -137,9 +137,9 @@ jsBackend.navigation = {
 
   mobile: function () {
     var navbarWidth = this.calculateNavbarWidth()
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
 
-    $('.navbar-default .navbar-nav').css('width', navbarWidth)
+    $('.navbar-dark .navbar-nav').css('width', navbarWidth)
 
     $('.js-nav-prev').on('click', function (e) {
       e.preventDefault()
@@ -155,7 +155,7 @@ jsBackend.navigation = {
   },
 
   resize: function () {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     var navbarWidth = this.calculateNavbarWidth()
     var windowWidth = this.calculateWindowWidth()
 
@@ -199,7 +199,9 @@ jsBackend.navigation = {
 
     if ($tooltip.length > 0) {
       $tooltip.tooltip({
-        trigger: 'manual'
+        boundary: 'window',
+        trigger: 'manual',
+        placement: 'right'
       })
 
       $tooltip.on('mouseover', function (e) {
@@ -215,7 +217,7 @@ jsBackend.navigation = {
   },
 
   setControls: function (offset) {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     var rightOffset = this.calculateOffset(offset)
 
     if ((parseInt($navbarNav.css('left')) + offset) >= 0) {
@@ -236,12 +238,12 @@ jsBackend.navigation = {
   },
 
   calculateNavbarWidth: function () {
-    var $navItem = $('.navbar-default .nav-item')
+    var $navItem = $('.navbar-dark .nav-item')
     return $navItem.width() * $navItem.length
   },
 
   calculateOffset: function (offset) {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     return this.calculateWindowWidth() - this.calculateNavbarWidth() - parseInt($navbarNav.css('left')) - offset
   }
 }
@@ -674,6 +676,7 @@ jsBackend.controls = {
         var $selectedRadiobutton = $this.find('input:radio:checked')
 
         $radiobutton.on('click', function (e) {
+
           // redefine
           var $this = $(this)
 
@@ -681,7 +684,7 @@ jsBackend.controls = {
           $this.parents('.radiobuttonFieldCombo:first').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea').addClass('disabled').prop('disabled', true)
 
           // get fields that should be enabled
-          var $fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
+          var $fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('.form-group').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
 
           // enable
           $fields.removeClass('disabled').prop('disabled', false)
@@ -917,34 +920,34 @@ jsBackend.controls = {
 
   // bind the password strength meter to the correct inputfield(s)
   bindPasswordStrengthMeter: function () {
+
     // variables
-    var $passwordStrength = $('.passwordStrength')
+    var $passwordStrength = $('[data-role="password-strength-meter"]')
 
     if ($passwordStrength.length > 0) {
       $passwordStrength.each(function () {
         // grab id
         var id = $(this).data('id')
-        var wrapperId = $(this).attr('id')
 
         // hide all
-        $('#' + wrapperId + ' p.strength').hide()
+        $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-role="password-strength"]').hide()
 
         // execute function directly
-        var classToShow = jsBackend.controls.checkPassword($('#' + id).val())
+        var strength = jsBackend.controls.checkPassword($('#' + id).val())
 
         // show
-        $('#' + wrapperId + ' p.' + classToShow).show()
+        $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-strength="' + strength + '"]').show()
 
         // bind keypress
         $(document).on('keyup', '#' + id, function () {
           // hide all
-          $('#' + wrapperId + ' p.strength').hide()
+          $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-role="password-strength"]').hide()
 
           // execute function directly
-          var classToShow = jsBackend.controls.checkPassword($('#' + id).val())
+          var strength = jsBackend.controls.checkPassword($('#' + id).val())
 
           // show
-          $('#' + wrapperId + ' p.' + classToShow).show()
+          $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-strength="' + strength + '"]').show()
         })
       })
     }
@@ -1198,6 +1201,20 @@ jsBackend.forms = {
     jsBackend.forms.datePicker()
     jsBackend.forms.bootstrapTabFormValidation()
     jsBackend.forms.imagePreview()
+    jsBackend.forms.fileUpload()
+  },
+
+  fileUpload: function () {
+    $('.custom-file-input').on('change', function (event) {
+      var file = ''
+      event = event.originalEvent
+
+      for (var i = 0; i < event.target.files.length; i++) {
+        file = event.target.files[i]
+      }
+
+      $(event.currentTarget).siblings('.custom-file-label').text(file.name)
+    })
   },
 
   imagePreview: function () {
@@ -1211,6 +1228,11 @@ jsBackend.forms = {
         let reader = new FileReader()
 
         reader.onload = function (event) {
+          console.log($imagePreview)
+          if ($imagePreview.hasClass('d-none')) {
+            $imagePreview.removeClass('d-none')
+          }
+
           $imagePreview.attr('src', event.target.result)
         }
 
@@ -1525,7 +1547,7 @@ jsBackend.forms = {
 
       allTags.initialize()
       $('.js-tags-input').tagsinput({
-        tagClass: 'label label-primary',
+        tagClass: 'badge badge-primary',
         typeaheadjs: {
           name: 'Tags',
           source: allTags.ttAdapter()
@@ -1824,10 +1846,10 @@ jsBackend.messages = {
 
     var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
       '<div class="container-fluid">' +
-      '<i class="fa fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
+      '<i class="fas fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +
       '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
-      '<span aria-hidden="true" class="fa fa-close"></span>' +
+      '<span aria-hidden="true" class="fas fa-times"></span>' +
       '</button>' +
       '</div>' +
       '</div>'
@@ -1860,11 +1882,12 @@ jsBackend.tabs = {
   // init, something like a constructor
   init: function () {
     if ($('.nav-tabs').length > 0) {
-      $('.nav-tabs').tab()
-
       $('.tab-content .tab-pane').each(function () {
-        if ($(this).find('.formError').length > 0) {
-          $($('.nav-tabs a[href="#' + $(this).attr('id') + '"]').parent()).addClass('has-error')
+        // check if there are invalid feedback classes, if they are visible or do not have display none style
+        if ($(this).find('.invalid-feedback').length > 0 && ($(this).find('.invalid-feedback:visible').length > 0 || $(this).find('.invalid-feedback').css('display') != 'none')) {
+          $('.nav-tabs a[href="#' + $(this).attr('id') + '"]').addClass('bg-danger text-white')
+        } else {
+          $('.nav-tabs a[href="#' + $(this).attr('id') + '"]').removeClass('bg-danger text-white')
         }
       })
     }

@@ -4,10 +4,10 @@
 {% block pagesTree %}
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
-      <div class="alert alert-warning visible-xs visible-sm">
+      <div class="alert alert-warning d-lg-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
       <div id="tree">
@@ -18,14 +18,14 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if showMediaLibraryMediaItemIndex %}
         {% if folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'list', 'lbl.Overview'|trans|ucfirst) }}
         {% endif %}
         {% if not folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}
         {% endif %}
       {% endif %}
     </div>

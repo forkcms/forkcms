@@ -24,7 +24,7 @@
           {{ usage|raw }}
         {% endif %}
         {% if not usage %}
-          <div class="panel-body">
+          <div class="card-body">
             <p>{{ 'msg.NoUsage'|trans }}</p>
           </div>
         {% endif %}
@@ -37,8 +37,8 @@
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"editButton", "type":"submit", "name":"edit"}) }}
+        <div class="btn-group ml-auto" role="group">
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"editButton", "type":"submit", "name":"edit"}) }}
         </div>
       </div>
     </div>

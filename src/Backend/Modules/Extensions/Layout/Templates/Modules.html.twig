@@ -2,7 +2,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if showExtensionsUploadModule %}
         {{ macro.buttonIcon( geturl('upload_module'), 'upload', 'lbl.UploadModule'|trans|ucfirst) }}
@@ -15,12 +15,12 @@
 {% block content %}
   {% if warnings %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="content-block content-block-pb">
           <div class="content-title">
             <h2>{{ 'msg.ModulesWarnings'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <ul>
               <li>
                 <strong>{{ warnings.module|raw }}</strong>
@@ -37,7 +37,7 @@
     </div>
   {% endif %}
   <div class="row fork-module-content">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="content-block content-block-pb">
         <div class="content-title">
           <h2>{{ 'lbl.InstalledModules'|trans|ucfirst }}</h2>
@@ -55,7 +55,7 @@
   </div>
   {% if dataGridInstallableModules %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="content-block">
           <div class="content-title">
             <h2>{{ 'lbl.InstallableModules'|trans|ucfirst }}</h2>
@@ -67,20 +67,18 @@
       </div>
     </div>
   {% endif %}
-  <div class="hidden">
-    <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
-          </div>
-          <div class="modal-body">
-            <p class="jsConfirmationMessage"></p>
-          </div>
-          <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
-            {{ macro.buttonIcon('#', 'check', 'lbl.Install'|trans|ucfirst, 'btn-primary jsConfirmationSubmit') }}
-          </div>
+  <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <p class="jsConfirmationMessage"></p>
+        </div>
+        <div class="modal-footer">
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
+          {{ macro.buttonIcon('#', 'check', 'lbl.Install'|trans|ucfirst, 'btn-primary jsConfirmationSubmit') }}
         </div>
       </div>
     </div>

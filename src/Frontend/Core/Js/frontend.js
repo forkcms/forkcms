@@ -229,15 +229,21 @@ jsFrontend.forms = {
   imagePreview: function () {
     $('input[type=file]').on('change', function () {
       let imageField = $(this).get(0)
+
       // make sure we are uploading an image by checking the data attribute
       if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
         // get the image preview by matching the image-preview data-id to the ImageField id
-        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        let $imagePreviewWrapper = $('[data-fork-cms-role="image-preview-wrapper"][data-id="' + imageField.id + '"]')
+
         // use FileReader to get the url
         let reader = new FileReader()
 
         reader.onload = function (event) {
-          $imagePreview.attr('src', event.target.result)
+          if ($imagePreviewWrapper.find('img').length > 0) {
+            $imagePreviewWrapper.find('img').attr('src', event.target.result)
+          } else {
+            $imagePreviewWrapper.append('<img src="' + event.target.result + '" class="img-thumbnail" />')
+          }
         }
 
         reader.readAsDataURL(imageField.files[0])

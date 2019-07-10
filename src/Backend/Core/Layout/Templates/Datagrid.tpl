@@ -11,18 +11,18 @@
       {option:headers.sorted}
       {option:headers.sortedAsc}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
-        {$headers.label} <span class="fa fa-sort-asc" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort-up" aria-hidden="true"></span>
       </a>
       {/option:headers.sortedAsc}
       {option:headers.sortedDesc}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable sorted">
-        {$headers.label} <span class="fa fa-sort-desc" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort-down" aria-hidden="true"></span>
       </a>
       {/option:headers.sortedDesc}
       {/option:headers.sorted}
       {option:headers.notSorted}
       <a href="{$headers.sortingURL}" title="{$headers.sortingLabel}" class="sortable">
-        {$headers.label} <span class="fa fa-sort" aria-hidden="true"></span>
+        {$headers.label} <span class="fas fa-sort" aria-hidden="true"></span>
       </a>
       {/option:headers.notSorted}
       {/option:headers.sorting}
@@ -53,15 +53,13 @@
   <tr
     {$footerAttributes}>
     <td colspan="{$numColumns}">
-      <div class="form-inline">
+      <div class="form-inline{option:massAction} jsMassAction"{/option:massAction}>
         {option:massAction}
-        <div class="form-group jsMassAction">
           {$massAction}
-        </div>
         {/option:massAction}
       </div>
       {option:paging}
-      <div class="text-center">
+      <div class="d-flex justify-content-center mt-3">
         {$paging}
       </div>
       {/option:paging}

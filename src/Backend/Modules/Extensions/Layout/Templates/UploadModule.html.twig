@@ -8,7 +8,7 @@
 {% block content %}
   {% if zlibIsMissing %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="alert alert-danger" role="alert">
           {{ 'msg.ZlibIsMissing'|trans }}
         </div>
@@ -17,7 +17,7 @@
   {% endif %}
   {% if notWritable %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="alert alert-danger" role="alert">
           {{ 'msg.ThemesNotWritable'|trans }}
         </div>
@@ -27,7 +27,7 @@
   {% if not zlibIsMissing %}
     {% form upload %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="form-group">
           <label for="file" class="control-label">
             {{ 'lbl.File'|trans|ucfirst }}
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="row fork-module-actions">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "id":"importButton", "type":"submit", "name":"add" }) }}

@@ -773,7 +773,7 @@ jsBackend.FormBuilder.Fields = {
     $('#datetimeDialog').find('.defaultValue').show()
 
     // select first tab
-    $('#' + id + ' .nav-tabs a:first').tab('show')
+    $('#' + id + ' .nav-tabs .nav-link:first').tab('show')
   },
 
   /**
@@ -888,7 +888,7 @@ jsBackend.FormBuilder.Fields = {
           // success
           if (data.code === 200) {
             // clear errors
-            $('.formError').html('')
+            $('.invalid-feedback').html('')
 
             // form contains errors
             if (typeof data.data.errors !== 'undefined') {

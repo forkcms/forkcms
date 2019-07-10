@@ -25,9 +25,9 @@ jsBackend.pages = {
     // show / hide the remove from search index checkbox on change
     $('#authRequired').on('change', function (e) {
       if ($(this).is(':checked')) {
-        $('[data-role="remove-from-search-index"]').removeClass('hidden')
+        $('[data-role="remove-from-search-index"]').removeClass('d-none')
       } else {
-        $('[data-role="remove-from-search-index"]').addClass('hidden')
+        $('[data-role="remove-from-search-index"]').addClass('d-none')
       }
     }).trigger('change')
 
@@ -272,9 +272,9 @@ jsBackend.pages.extras = {
       blockHTML += '<span class="templateDescription">' + description + '</span>'
     }
     blockHTML += '<div class="btn-group buttonHolder">' +
-      '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
-      '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
+      '<button class="btn btn-default btn-icon-only btn-sm toggleVisibility"><span class="fas fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-sm' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fas fa-pencil-alt" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
+      '<button class="deleteBlock btn btn-danger btn-icon-only btn-sm"><span class="fas fa-trash-alt" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
@@ -692,13 +692,13 @@ jsBackend.pages.extras = {
    * Creates the html for a normal link
    */
   getLinkFieldHtml: function (text, url, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-link-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-link-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group">'
     html += '<label>' + label + '</label>'
@@ -721,13 +721,13 @@ jsBackend.pages.extras = {
    * Creates the html for a link without content
    */
   getLinkWithoutContentFieldHtml: function (url, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-link-without-content-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>'
@@ -744,13 +744,13 @@ jsBackend.pages.extras = {
    * Creates the html for a text field
    */
   getTextFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-text-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />'
@@ -767,13 +767,13 @@ jsBackend.pages.extras = {
    * Creates the html for an editor
    */
   getTextAreaFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
+    var html = '<div class="card card-default card-editor" id="user-template-textarea-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>'
@@ -790,13 +790,13 @@ jsBackend.pages.extras = {
    * Creates the html for an editor
    */
   getEditorFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">'
+    var html = '<div class="card card-default card-editor" id="user-template-editor-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text + '</textarea>'
@@ -813,13 +813,13 @@ jsBackend.pages.extras = {
    * Creates the html for an image field
    */
   getImageFieldHtml: function (src, alt, label, isVisible, optionalHide, key) {
-    var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-image-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body clearfix">'
+    html += '<div class="card-body clearfix">'
 
     html += '<div class="form-group thumbnail">'
     html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />'
@@ -835,7 +835,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>'
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -850,13 +850,13 @@ jsBackend.pages.extras = {
    * Creates the html for an image background field
    */
   getImageBackgroundFieldHtml: function (src, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-image-background-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body clearfix">'
+    html += '<div class="card-body clearfix">'
 
     html += '<div class="form-group thumbnail">'
     html += '<img class="img-responsive"' + ' src="' + src + '" />'
@@ -1395,15 +1395,12 @@ jsBackend.pages.template = {
 }
 
 /**
- * All methods related to the tree
+ * All methods related to the pages tree
  */
 jsBackend.pages.tree = {
   // init, something like a constructor
   init: function () {
-    if ($('#tree div').length === 0) return false
-
-    // add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
-    if (!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden')
+    if ($('#tree').find('> [data-tree]').length === 0) return false
 
     var openedIds = []
     if (typeof pageID !== 'undefined') {
@@ -1422,112 +1419,166 @@ jsBackend.pages.tree = {
     // add home if needed
     if (!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1')
 
+    // jsTree options
     var options = {
-      ui: {theme_name: 'fork'},
-      opened: openedIds,
-      rules: {
+      core: {
+        animation: 0,
+        themes: {
+          name: 'proton',
+          responsive: true
+        },
         multiple: false,
-        multitree: 'all',
-        drag_copy: false
+        check_callback: true
       },
-      lang: {loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading'))},
-      callback: {
-        beforemove: jsBackend.pages.tree.beforeMove,
-        onselect: jsBackend.pages.tree.onSelect,
-        onmove: jsBackend.pages.tree.onMove
+      types: {
+        default: {
+          icon: 'far fa-file'
+        },
+        home: {
+          icon: 'fas fa-home'
+        },
+        anchor: {
+          icon: 'far fa-file'
+        },
+        sitemap: {
+          icon: 'fas fa-sitemap'
+        },
+        error: {
+          icon: 'fas fa-exclamation-triangle'
+        }
       },
-      plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
-      }
+      search: {
+        show_only_matches: true
+      },
+      dnd: {
+        inside_pos: 'last'
+      },
+      plugins: ['dnd', 'types', 'state', 'search']
     }
 
-    // create tree
-    $('#tree div').tree(options)
+    // Init page tree
+    var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
-    // layout fix for the tree
-    $('.tree li.open').each(function () {
-      // if the so-called open-element doesn't have any childs we should replace the open-class.
-      if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf')
+    jsTreeInstance.on('move_node.jstree', function (event, data) {
+      jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
     })
 
-    // set the item selected
-    if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
-
-    jsBackend.pages.tree.toggleJsTreeCollapse()
-  },
-
-  // before an item will be moved we have to do some checks
-  beforeMove: function (node, refNode, type, tree) {
-    // get pageID that has to be moved
-    var parentPageID
-    var currentPageID = $(node).prop('id').replace('page-', '')
-    if (typeof refNode === 'undefined') {
-      parentPageID = 0
-    } else {
-      parentPageID = $(refNode).prop('id').replace('page-', '')
+    // Search through pages
+    var searchThroughPages = function () {
+      var v = $('.js-tree-search').val()
+      $('#tree').find('> [data-tree]').each(function () {
+        $(this).jstree(true).search(v)
+      })
     }
+    $('.js-tree-search').bind('keyup input', utils.events.debounce(searchThroughPages, 150))
 
-    // home is a special item
-    if (parentPageID === '1') {
-      if (type === 'before') return false
-      if (type === 'after') return false
-    }
+    // To prevent FOUC, we only show the jsTree when it's done loading.
+    jsTreeInstance.on('ready.jstree', function (e, data) {
+      $('#tree').show()
+    })
 
-    // init var
-    var result = false
+    // On selecting a node in the tree, visit the anchor.
+    jsTreeInstance.on('select_node.jstree', function (e, data, jsTreeInstance) {
+      if (data && data.node && data.event) {
+        // Get current and new URL
+        var node = data.node
+        var currentPageURL = window.location.pathname + window.location.search
+        var newPageURL = node.a_attr.href
 
-    // make the call
-    $.ajax({
-      async: false, // important that this isn't asynchronous
-      data: {
-        fork: {action: 'GetInfo'},
-        id: currentPageID
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        if (jsBackend.debug) window.alert(textStatus)
-        result = false
-      },
-      success: function (json, textStatus) {
-        if (json.code !== 200) {
-          if (jsBackend.debug) window.alert(textStatus)
-          result = false
-        } else {
-          if (json.data.allow_move) result = true
+        // Only redirect if destination isn't the current one.
+        if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
+          window.location = newPageURL
         }
       }
     })
 
-    // return
-    return result
-  },
+    // // layout fix for the tree
+    // $('.tree li.open').each(function()
+    // {
+    //     // if the so-called open-element doesn't have any childs we should replace the open-class.
+    //     if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
+    // });
 
-  // when an item is selected
-  onSelect: function (node, tree) {
-    // get current and new URL
-    var currentPageURL = window.location.pathname + window.location.search
-    var newPageURL = $(node).find('a').prop('href')
+    // set the item selected
+    if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
 
-    // only redirect if destination isn't the current one.
-    if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) window.location = newPageURL
+    jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
   // when an item is moved
-  onMove: function (node, refNode, type, tree, rollback) {
-    // get the tree
-    tree = tree.container.data('tree')
+  onMove: function (event, data, jsTreeInstance) {
+    var tree = data.new_instance.element.first().data('tree')
 
     // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('page-', '')
+    var currentPageID = data.node.id.replace('page-', '')
 
-    // get pageID wheron the page has been dropped
-    var droppedOnPageID
-    if (typeof refNode === 'undefined') {
-      droppedOnPageID = 0
-    } else {
-      droppedOnPageID = $(refNode).prop('id').replace('page-', '')
+    // set the default type of moving
+    var type = 'before'
+
+    // init allowMove
+    var allowMove = false
+
+    // get the position where the page is dropped
+    var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+
+    // when node is dropped on the last position, we can not add it before the last one -> we need after
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined) {
+      droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
+      type = 'after'
     }
 
-    // make the call
+    // when node is dropped on another node to move it inside
+    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === data.node.id) {
+      type = 'inside'
+      droppedOnElement = $('#' + data.parent)
+    }
+
+    // get pageID wheron the page has been dropped
+    var droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
+
+    // before an item will be moved we have to do some checks
+    $.ajax({
+      async: false, // important that this isn't asynchronous
+      data: {
+        fork: {action: 'GetInfo'},
+        id: currentPageID,
+        dropped_on: droppedOnPageID
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        if (jsBackend.debug) window.alert(textStatus)
+        allowMove = false
+      },
+      success: function (json, textStatus) {
+        if (json.code !== 200) {
+          if (jsBackend.debug) window.alert(textStatus)
+          allowMove = false
+        } else {
+          // is page allowed to move
+          if (json.data.move_allowed) {
+            allowMove = true
+          } else {
+            jsTreeInstance.jstree('refresh')
+            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToMove'))
+            allowMove = false
+          }
+
+          // is parent allowed to have children
+          if (json.data.children_allowed) {
+            allowMove = true
+          } else {
+            jsTreeInstance.jstree('refresh')
+            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToHaveChildren'))
+            allowMove = false
+          }
+        }
+      }
+    })
+
+    if (!allowMove) {
+      return
+    }
+
+    // move the page
     $.ajax({
       data: {
         fork: {action: 'Move'},
@@ -1544,7 +1595,7 @@ jsBackend.pages.tree = {
           jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
 
           // rollback
-          $.tree.rollback(rollback)
+          jsTreeInstance.jstree('refresh')
         } else {
           // show message
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
@@ -1553,7 +1604,7 @@ jsBackend.pages.tree = {
     })
   },
 
-  toggleJsTreeCollapse: function () {
+  toggleJsTreeCollapse: function (jsTreeInstance) {
     $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
       var $this = $(this)
       $this.toggleClass('tree-collapsed')
@@ -1562,17 +1613,13 @@ jsBackend.pages.tree = {
 
       if (collapsed) {
         $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
-        $.each($('#tree div'), function (index, element) {
-          $.tree.reference($(element).attr('id')).close_all()
-        })
+        jsTreeInstance.jstree('close_all')
 
         return
       }
 
       $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
-      $.each($('#tree div'), function (index, element) {
-        $.tree.reference($(element).attr('id')).open_all()
-      })
+      jsTreeInstance.jstree('open_all')
     })
   }
 }

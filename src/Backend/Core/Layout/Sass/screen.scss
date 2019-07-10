@@ -1,12 +1,8 @@
 @charset 'UTF-8';
 
-// Font Awesome
-$fa-font-path: '/fonts/vendors';
-@import 'font-awesome/scss/font-awesome';
-
-
 // Bootstrap
-@import 'bootstrap-sass/assets/stylesheets/bootstrap/_variables';
+@import "bootstrap/scss/functions";
+@import 'bootstrap/scss/variables';
 @import 'bootstrap-variables';
 @import 'fork-variables';
 @import 'bootstrap-imports';
@@ -18,6 +14,7 @@ $fa-font-path: '/fonts/vendors';
 // Plugins
 @import 'plugins/jquery_ui';
 @import 'plugins/tags-input';
+@import 'plugins/jstree';
 
 // Components
 // Insert components here. Put all components in the components/ directory
@@ -28,7 +25,8 @@ $fa-font-path: '/fonts/vendors';
 @import 'components/navbar';
 @import 'components/tables';
 @import 'components/alerts';
-@import 'components/panels';
+//@import 'components/panels';
+@import 'components/cards';
 @import 'components/tabs';
 @import 'components/header';
 @import 'components/content-wrapper';
@@ -44,12 +42,14 @@ $fa-font-path: '/fonts/vendors';
 @import 'components/formbuilder';
 @import 'components/locale';
 @import 'components/themes';
-@import 'components/labels';
 @import 'components/tooltip';
 @import 'components/editor';
 @import 'components/installer';
 @import 'components/settings';
 @import 'components/ckeditor';
+@import 'components/media-library';
+@import 'components/badges';
+@import 'components/images';
 
 // Layout
 @import 'layouts/fork';

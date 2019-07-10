@@ -92,7 +92,7 @@ final class Header extends KernelLoader
         $this->addJS('/js/vendors/jquery.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap.bundle.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
