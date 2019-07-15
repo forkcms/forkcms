@@ -761,7 +761,7 @@ jsBackend.FormBuilder.Fields = {
    */
   resetDialog: function (id) {
     // clear all form fields
-    $('#' + id).find(':input').removeAttr('checked').removeAttr('selected').val('')
+    $('#' + id).find(':input').prop('checked', false).removeAttr('checked').removeAttr('selected').val('')
 
     // bind validation
     jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation')
