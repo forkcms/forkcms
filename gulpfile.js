@@ -19,13 +19,6 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
   .pipe(gulp.dest('./css/vendors'))
 })
 
-gulp.task('build:backend:assets:copy-fonts-vendors', function () {
-  return gulp.src([
-    'node_modules/font-awesome/fonts/**'
-  ])
-  .pipe(gulp.dest('fonts/vendors'))
-})
-
 gulp.task('build:backend:assets:copy-ckeditor', function () {
   var pluginFiles = '/**/*.@(js|png|jpg|jpeg|gif|css|html|svg)'
   return gulp.src(
@@ -132,12 +125,10 @@ gulp.task('build:backend:sass:generate-css', function () {
 
 const buildBackend = gulp.parallel(
   'build:backend:assets:copy-css-vendors',
-  'build:backend:assets:copy-fonts-vendors',
   'build:backend:assets:copy-js-vendors',
   'build:backend:assets:copy-fine-uploader-css-and-images',
   'build:backend:sass:generate-css',
-  'build:backend:assets:copy-ckeditor',
-  'build:backend:assets:copy-select2-js'
+  'build:backend:assets:copy-ckeditor'
 )
 
 gulp.task('serve:backend', function () {
