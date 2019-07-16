@@ -62,7 +62,7 @@
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
-  {% import "Layout/Templates/macros.html.twig" as macro %}
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
   {% if errors|length > 0 -%}
     {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
@@ -212,7 +212,7 @@
 {% endblock %}
 
 {% block fork_file_widget %}
-  {% import "Layout/Templates/macros.html.twig" as macro %}
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
   {% spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
@@ -240,7 +240,7 @@
 
 {% block bootstrap_collection_row %}
   {% spaceless %}
-    {% import "Layout/Templates/macros.html.twig" as macro %}
+    {% import 'Layout/Templates/macros.html.twig' as macro %}
     {% if prototype is defined %}
       {% set prototype_vars = {} %}
       {% if style is defined %}
