@@ -23,7 +23,7 @@
 }
 
 #footer {
-  background: $brand-primary-dark;
+  background: $blue-dark;
   text-align: center;
 
   .nav-pills {
@@ -34,21 +34,21 @@
 
       a {
         color: $white;
-        font-size: $font-size-small;
+        font-size: $font-size-sm;
         -webkit-font-smoothing: antialiased;
         padding: 15px;
 
         &:hover,
         &:focus {
           background: $white;
-          color: $brand-primary-dark;
+          color: $blue-dark;
         }
       }
     }
   }
 }
 
-@media screen and (min-width: $screen-md) {
+@include media-breakpoint-up(lg) {
 
   // add footer height between brackets to make the sticky footer work
   @include sticky-footer(52px);

@@ -7,7 +7,7 @@
     li {
 
       a {
-        font-size: $font-size-small;
+        font-size: $font-size-sm;
         font-weight: 500;
         -webkit-font-smoothing: antialiased;
       }
@@ -23,6 +23,6 @@
 
   &:hover .icon-bar,
   &:focus .icon-bar {
-    background: $navbar-default-bg;
+    background: $blue-dark;
   }
 }

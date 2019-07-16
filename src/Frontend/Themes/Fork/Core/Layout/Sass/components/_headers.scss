@@ -9,7 +9,7 @@
     margin: 100px 0;
 
     h1 {
-      font-size: $font-size-h2;
+      font-size: $h2-font-size;
       color: $white;
       -webkit-font-smoothing: antialiased;
       margin: 0;
@@ -17,29 +17,29 @@
   }
 
   &.header-blue {
-    background-color: $brand-primary-dark;
+    background-color: $blue-dark;
   }
 }
 
-@media screen and (min-width: $screen-md) {
+@include media-breakpoint-up(lg) {
 
   .header .page-header {
     margin: 150px 0;
 
     h1 {
-      font-size: $font-size-h1;
+      font-size: $h1-font-size;
     }
   }
 }
 
 
-@media screen and (min-width: $screen-lg) {
+@include media-breakpoint-up(xl) {
 
   .header .page-header {
     margin: 200px 0;
 
     h1 {
-      font-size: $font-size-h1;
+      font-size: $h1-font-size;
     }
   }
 }
