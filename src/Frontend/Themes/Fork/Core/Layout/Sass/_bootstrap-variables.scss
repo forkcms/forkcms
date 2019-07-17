@@ -9,10 +9,11 @@ $bootstrap-sass-asset-helper: false;
 
 $white:    #fff;
 $gray-100: #f8f9fa;
-$gray-200: #e9ecef;
+$gray-200: #E5E5E5;
 $gray-300: #dee2e6;
 $gray-400: #ced4da;
 $gray-500: #adb5bd;
+$gray-550: #999999;
 $gray-600: #6c757d;
 $gray-700: #495057;
 $gray-800: #343a40;
@@ -78,6 +79,7 @@ $info:          $cyan;
 $warning:       $yellow;
 $danger:        $red;
 $light:         $gray-100;
+$middle:        $gray-550;
 $dark:          $gray-800;
 
 $theme-colors: ();
@@ -91,6 +93,7 @@ $theme-colors: map-merge(
       "warning":    $warning,
       "danger":     $danger,
       "light":      $light,
+      "middle":     $middle,
       "dark":       $dark
     ),
     $theme-colors
@@ -472,7 +475,7 @@ $input-bg:                              $white;
 $input-disabled-bg:                     $gray-200;
 
 $input-color:                           $gray-700;
-$input-border-color:                    $white;
+$input-border-color:                    $gray-200;
 $input-border-width:                    $input-btn-border-width;
 $input-box-shadow:                      none;
 
@@ -888,7 +891,7 @@ $toast-header-border-color: rgba(0, 0, 0, .05);
 
 // Badges
 
-$badge-font-size:                   75%;
+$badge-font-size:                   $font-size-sm;
 $badge-font-weight:                 $font-weight-bold;
 $badge-padding-y:                   .25em;
 $badge-padding-x:                   .4em;
