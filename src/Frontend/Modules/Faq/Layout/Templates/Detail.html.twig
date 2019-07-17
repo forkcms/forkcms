@@ -12,7 +12,7 @@
       <h1 itemprop="about">{{ item.question }}</h1>
 
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
           {% if settings.allow_multiple_categories %}
             {{ 'lbl.Category'|trans|ucfirst }}
             <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}

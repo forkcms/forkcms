@@ -4,7 +4,7 @@
 
 <section class="module-formbuilder widget-formbuilder-form" id="formbuilder{{ formName|ucfirst }}">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
       {% block widget_alerts %}
         <div class="widget-alerts">
           {% if successMessage %}
@@ -31,7 +31,7 @@
 
                 {% for field in fields %}
                   <div class="row" id="field{{ field.name }}">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                       {# Headings and paragraphs #}
                       {% if field.plaintext %}
                         <div class="content">
@@ -82,7 +82,7 @@
                   </div>
                 {% endfor %}
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-12">
                     <div class="form-actions">
                       {% if hasRecaptchaField %}
                         <script>
