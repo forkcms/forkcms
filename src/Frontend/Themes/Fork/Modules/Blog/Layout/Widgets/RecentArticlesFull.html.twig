@@ -54,7 +54,7 @@
                   {{ 'lbl.Tags'|trans|ucfirst }}:
                   <span itemprop="keywords">
                   {% for tag in post.tags %}
-                    <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                    <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
                     {{ tag.name }}
                     </a>
                   {% endfor %}

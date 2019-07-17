@@ -15,18 +15,15 @@
     {% block widget_heading %}{% endblock %}
 
     {% block widget_body %}
-      <div class="widget-body media">
+      <ul class="list-group">
         {% for subpage in widgetSubpages %}
-          <div class="media-body">
-            <h3>
-              <a href="{{ subpage.full_url }}" title="{{ subpage.title }}">
-                {{ subpage.title }}
-              </a>
-            </h3>
-            {{ subpage.description|cleanupplaintext|raw }}
-          </div>
+          <li class="list-group-item list-group-item-action">
+            <a href="{{ subpage.full_url }}" title="{{ subpage.title }}">
+              {{ subpage.title }}
+            </a>
+          </li>
         {% endfor %}
-      </div>
+      </ul>
     {% endblock %}
 
     {% block widget_footer %}{% endblock %}

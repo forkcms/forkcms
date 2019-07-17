@@ -26,13 +26,12 @@
             {% endif %}
             <span itemprop="keywords">
               {% for tag in item.tags %}
-              <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+              <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
                 {{ tag.name }}
                 </a>{% if not loop.last %},{% endif %}
               {% endfor %}
             </span>
           {% endif %}
-          .
         </div>
       </div>
     </header>
@@ -150,10 +149,10 @@
   {% endif %}
 
   {% block block_footer %}
-    <nav class="block-footer" role="navigation">
-      <ul class="pager">
-        <li class="previous">
-          <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+    <nav class="block-footer" aria-label="Page navigation faq">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
             ← {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
           </a>
         </li>
