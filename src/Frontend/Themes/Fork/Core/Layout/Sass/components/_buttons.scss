@@ -2,12 +2,15 @@
   border-radius: 0;
 
   &.btn-default {
+    background: $white;
+    border-color: $white;
+    color: $blue-dark;
 
     &:hover,
     &:focus {
-      /*background: $btn-default-border;
-      border-color: $btn-default-border;
-      color: $btn-default-bg;*/
+      background: $blue-dark;
+      border-color: $white;
+      color: $white;
     }
   }
 }

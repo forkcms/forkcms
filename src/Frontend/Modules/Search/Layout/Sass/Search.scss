@@ -164,8 +164,10 @@ select[multiple].input-group.input-group-lg .twitter-typeahead {
   }
 }
 
-.input-group .twitter-typeahead {
-  display: table-cell !important;
+.form-inline .twitter-typeahead {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
 }
 
 .twitter-typeahead .tt-input[disabled],

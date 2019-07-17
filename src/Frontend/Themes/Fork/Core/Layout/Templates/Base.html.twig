@@ -6,51 +6,44 @@
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
   {% endblock %}
 
-  <div class="header header-blue" {% if page.data.image is defined and page.data.image is not empty %}style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');"{% endif %}>
-    {% block navigation %}
-      <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only" data-role="label">{{ 'lbl.OpenNavigation'|trans }}</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/{% if SITE_MULTILANGUAGE %}{{ LANGUAGE }}{% endif %}">{{ siteTitle }}</a>
-          </div>
-          <div id="navbar-main" class="navbar-collapse collapse">
-            {{ getnavigation('page', 0, 1) }}
-
-            {# Top positions #}
-            {% if positions.top %}
-              <div class="navbar-left">
-                {% for content in positions.top %}
-                  {% if content.html %}
-                    {{ content.html|raw }}
-                  {% endif %}
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            <div class="navbar-right">
-              {% include "Core/Layout/Templates/Languages.html.twig" %}
-            </div>
-          </div>
-        </div>
-      </nav>
-    {% endblock %}
-    <div class="header-inner">
+  {% block navigation %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
-        {% block pageTitle %}
-          {# Page title #}
-          {% if not hideContentTitle %}
-            <header class="page-header">
-              <h1>{{ contentTitle }}</h1>
-            </header>
+        <a class="navbar-brand" href="/{% if SITE_MULTILANGUAGE %}{{ LANGUAGE }}{% endif %}">{{ siteTitle }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only" data-role="label">{{ 'lbl.OpenNavigation'|trans }}</span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div id="navbar-main" class="collapse navbar-collapse">
+          {{ getnavigation('page', 0, 1) }}
+
+          {# Top positions #}
+          {% if positions.top %}
+            {% for content in positions.top %}
+              {% if content.html %}
+                {{ content.html|raw }}
+              {% endif %}
+            {% endfor %}
           {% endif %}
-        {% endblock %}
+
+          {% include "Core/Layout/Templates/Languages.html.twig" %}
+        </div>
       </div>
+    </nav>
+  {% endblock %}
+
+  <div class="header header-blue d-flex align-items-center"{% if page.data.image is defined and page.data.image is not empty %} style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');"{% endif %}>
+    <div class="container">
+      {% block pageTitle %}
+        {# Page title #}
+        {% if not hideContentTitle %}
+          <header class="page-header">
+            <h1>{{ contentTitle }}</h1>
+          </header>
+        {% endif %}
+      {% endblock %}
     </div>
   </div>
 

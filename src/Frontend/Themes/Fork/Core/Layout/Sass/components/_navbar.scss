@@ -1,28 +1,38 @@
-.navbar-default {
+.navbar-dark {
+  background: $blue-dark;
   border: 0;
   margin-bottom: 0;
+  padding: 0;
 
   .navbar-nav {
 
-    li {
+    .nav-link {
+      font-weight: 500;
+      -webkit-font-smoothing: antialiased;
+      padding: 1rem 0.7rem;
+    }
 
-      a {
-        font-size: $font-size-sm;
-        font-weight: 500;
-        -webkit-font-smoothing: antialiased;
-      }
+    .nav-link:hover,
+    .nav-link:focus,
+    .nav-item.active {
+      background: $blue-light;
     }
   }
 }
 
 .navbar-brand {
   font-family: 'Courgette', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0.8rem 0 0.8rem 1rem;
+  padding: 0;
 }
 
-.navbar-toggle {
+.navbar-toggler {
+  border: 0;
+  margin-right: 1rem;
+}
 
-  &:hover .icon-bar,
-  &:focus .icon-bar {
-    background: $blue-dark;
+@include media-breakpoint-up(lg) {
+  .navbar-brand {
+    margin: 0.8rem 1rem 0.8rem 0;
   }
 }

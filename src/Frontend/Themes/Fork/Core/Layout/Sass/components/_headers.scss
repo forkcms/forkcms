@@ -1,12 +1,12 @@
 .header {
   background-size: cover;
   background-position: center;
+  min-height: 250px;
 
   .page-header {
     border-bottom: 0;
     text-align: center;
     padding: 0;
-    margin: 100px 0;
 
     h1 {
       font-size: $h2-font-size;
@@ -23,23 +23,18 @@
 
 @include media-breakpoint-up(lg) {
 
-  .header .page-header {
-    margin: 150px 0;
+  .header {
+    min-height: 500px;
 
-    h1 {
+    .page-header h1 {
       font-size: $h1-font-size;
     }
   }
 }
 
-
 @include media-breakpoint-up(xl) {
 
-  .header .page-header {
-    margin: 200px 0;
-
-    h1 {
-      font-size: $h1-font-size;
-    }
+  .header {
+    min-height: 600px;
   }
 }
