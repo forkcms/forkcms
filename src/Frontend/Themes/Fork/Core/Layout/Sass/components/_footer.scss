@@ -27,12 +27,11 @@
   text-align: center;
 
   .nav-pills {
-    display: inline-block;
-    margin-bottom: -6px;
 
     li {
 
       a {
+        border-radius: 0;
         color: $white;
         font-size: $font-size-sm;
         -webkit-font-smoothing: antialiased;
