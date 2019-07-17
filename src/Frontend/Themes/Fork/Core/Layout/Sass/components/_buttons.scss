@@ -1,16 +1,14 @@
 .btn {
   border-radius: 0;
 
-  &.btn-default {
-    background: $white;
+  &.btn-outline-primary {
     border-color: $white;
-    color: $blue-dark;
+    color: $white;
 
     &:hover,
     &:focus {
-      background: $blue-dark;
-      border-color: $white;
-      color: $white;
+      background: $white;
+      color: $blue-dark;
     }
   }
 }
