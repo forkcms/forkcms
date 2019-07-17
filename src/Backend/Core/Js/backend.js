@@ -2068,7 +2068,7 @@ jsBackend.session = {
 
   sessionTimeoutPopup: function () {
     // show alert with warnign 15min after page load
-    setTimeout(function () {
+    setInterval(function () {
       window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
     }, 15 * 60 * 1000)
   }
