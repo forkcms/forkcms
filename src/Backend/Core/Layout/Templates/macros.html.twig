@@ -23,8 +23,8 @@
   <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {%- endmacro -%}
 
-{% macro icon(icon) %}
-  <span class="fas fa-{{ icon }}" aria-hidden="true"></span>
+{% macro icon(icon, iconType = 'fas') %}
+  <i class="{{ iconType }} fa-{{ icon }}"></i>
 {% endmacro %}
 
 {% macro infoTooltip(title) %}
