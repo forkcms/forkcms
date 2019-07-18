@@ -1228,7 +1228,6 @@ jsBackend.forms = {
         let reader = new FileReader()
 
         reader.onload = function (event) {
-          console.log($imagePreview)
           if ($imagePreview.hasClass('d-none')) {
             $imagePreview.removeClass('d-none')
           }
