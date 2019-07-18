@@ -1248,16 +1248,16 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.form-group').append('<span id="errorMessage-' + id + '" class="invalid-feedback d-none">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
 
           // we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
-          timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+          timer = setTimeout(function () { $('#errorMessage-' + id).removeClass('d-none') }, 200)
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
