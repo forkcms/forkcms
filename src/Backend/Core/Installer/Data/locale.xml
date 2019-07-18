@@ -11720,7 +11720,7 @@
         <translation language="pl"><![CDATA[Najpierw dodaj tag.]]></translation>
       </item>
       <item type="error" name="AddTextBeforeSubmitting">
-        <translation language="nl"><![CDATA[Voeg de text eerst toe voordat u opslaat.]]></translation>
+        <translation language="nl"><![CDATA[Voeg de tekst eerst toe voordat u opslaat.]]></translation>
         <translation language="en"><![CDATA[Add the text before submitting.]]></translation>
         <translation language="fr"><![CDATA[Veuillez ajouter le texte avant de valider.]]></translation>
         <translation language="de"><![CDATA[Füge das Text hinzu, bevor du den Eintrag speicherst.]]></translation>
