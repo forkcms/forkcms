@@ -5,8 +5,8 @@
   box-shadow: none;
 
   .card-heading {
-    border-top-left-radius: 0.12rem;
-    border-top-right-radius: 0.12rem;
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
     padding: 8px 15px 10px;
   }
 
@@ -93,10 +93,10 @@
 
 .card-transparent {
   background: $gray-100;
-  border: 1px solid #ddd;
+  border: 1px solid $gray-300;
 
   .card-heading {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $gray-300;
     margin-bottom: -1px;
   }
 }
@@ -113,7 +113,6 @@
   .card-heading {
 
     a {
-
       .card-title {
         color: $body-color;
       }
@@ -157,7 +156,6 @@
   }
 }
 
-.card-select label,
 .card-select label {
   margin-bottom: 0;
   width: 100%;
