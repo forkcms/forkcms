@@ -106,8 +106,12 @@ class PageContextDataCollector extends DataCollector
         $this->data = [];
     }
 
-    private function getFullTemplatePath(string $templatePath): string
+    private function getFullTemplatePath(string $templatePath): ?string
     {
+        if ($templatePath === '') {
+            return null;
+        }
+
         $themePath = FRONTEND_PATH . '/Themes/' . $this->theme;
 
         if (file_exists($themePath . '/Modules/' . $templatePath)) {
