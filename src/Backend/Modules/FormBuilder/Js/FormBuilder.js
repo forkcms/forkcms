@@ -210,7 +210,7 @@ jsBackend.FormBuilder.Fields = {
             case 'mailmotorDialog':
               jsBackend.FormBuilder.Fields.saveMailmotorbutton()
               break
-            case 'checkboxDialogcheckboxDialog':
+            case 'checkboxDialog':
               jsBackend.FormBuilder.Fields.saveCheckbox()
               break
           }
