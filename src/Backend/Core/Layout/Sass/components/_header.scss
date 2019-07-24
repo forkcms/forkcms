@@ -41,8 +41,7 @@
   color: $gray-700;
   font-size: $font-size-sm;
 
-  &:hover,
-  &:focus {
+  @include hover-focus {
     border-color: $primary;
     color: $primary;
     text-decoration: none;

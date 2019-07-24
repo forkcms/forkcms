@@ -13,8 +13,7 @@
 
   > tbody > tr:nth-of-type(even):hover,
   > tbody > tr:nth-of-type(even):focus {
-    &:hover,
-    &:focus {
+    @include hover-focus {
       background-color: $table-hover-bg;
     }
   }

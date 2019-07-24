@@ -104,8 +104,7 @@
       display: block;
     }
 
-    &:hover,
-    &:focus {
+    @include hover-focus {
       border: 0;
       outline: none;
 
@@ -152,8 +151,7 @@
       background-color: $white;
     }
 
-    &:hover,
-    &:focus {
+    @include hover-focus {
       background-color: $white;
 
       .icon-bar {
@@ -209,8 +207,7 @@
       color: $black;
       text-decoration: none;
 
-      &:hover,
-      &:focus {
+      @include hover-focus {
         background-color: transparent;
       }
     }
@@ -238,8 +235,7 @@
       .dropdown-toggle {
         color: $black;
 
-        &:hover,
-        &:focus {
+        @include hover-focus {
           background: transparent;
         }
       }
@@ -283,8 +279,7 @@
         color: $gray-700;
         padding: 12px 20px;
 
-        &:hover,
-        &:focus {
+        @include hover-focus {
           background-color: $primary;
           color: $white;
         }
@@ -310,8 +305,7 @@
           font-size: $font-size-sm;
           padding: 7px 32px;
 
-          &:hover,
-          &:focus {
+          @include hover-focus {
             color: $blue-dark;
           }
         }
@@ -419,9 +413,7 @@
         padding: 2px 6px;
       }
 
-      &:focus,
-      &:hover,
-      &:active {
+      @include hover-focus-active {
         background: $white;
         border-color: $primary;
 
