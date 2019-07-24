@@ -57,7 +57,6 @@ class FormFile extends \SpoonFormFile
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-
             // set aria describedby to link the help text with the field
             $this->attributes['aria-describedby'] = 'help' . ucfirst($this->attributes['id']);
 
