@@ -2066,11 +2066,11 @@ jsBackend.session = {
     jsBackend.session.sessionTimeoutPopup()
   },
 
+  // Display a session timeout warning 1 minute before the session might actually expire
   sessionTimeoutPopup: function () {
-    // show alert with warnign 15min after page load
     setInterval(function () {
       window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
-    }, 15 * 60 * 1000)
+    }, (jsBackend.Core.session_timeout - 60) * 1000)
   }
 }
 
