@@ -1,3 +1,14 @@
+5.6.1  (2019-07-29)
+------------------
+
+Fixed:
+* Core: Update composer packages [#2867](https://github.com/forkcms/forkcms/pull/2867) [#2868](https://github.com/forkcms/forkcms/pull/2868) 
+* Blog: Fix unrealistic example data [#2862](https://github.com/forkcms/forkcms/pull/2862)
+* Core: Fix error in debug toolbar when the templatePath isn't set on the object [#2863](https://github.com/forkcms/forkcms/pull/2863)
+* Pages: Update spoon library to fix the image upload on pages [#2864](https://github.com/forkcms/forkcms/pull/2864)
+* FormBuilder: Fix adding checkboxes [#2861](https://github.com/forkcms/forkcms/pull/2861)
+
+
 5.6.0  (2019-07-04)
 ------------------
 
