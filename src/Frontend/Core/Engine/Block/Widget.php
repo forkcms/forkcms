@@ -260,6 +260,6 @@ class Widget extends KernelLoader implements ModuleExtraInterface
 
     public function getTemplatePath(): string
     {
-        return $this->template->getPath($this->getCustomTemplate() ?? $this->object->templatePath);
+        return $this->template->getPath($this->getCustomTemplate() ?? $this->object->templatePath ?? '');
     }
 }
