@@ -23,6 +23,10 @@ final class IncludeOnceExtension extends AbstractExtension
                 'is_included',
                 [$this, 'isIncluded']
             ),
+            new TwigFunction(
+                'set_included',
+                [$this, 'setIncluded']
+            ),
         ];
     }
 
@@ -39,13 +43,21 @@ final class IncludeOnceExtension extends AbstractExtension
             return '';
         }
 
-        $this->includedTemplates[$template] = true;
+        $output = twig_include($env, $context, $template, $variables, $withContext, $ignoreMissing, $sandboxed);
 
-        return twig_include($env, $context, $template, $variables, $withContext, $ignoreMissing, $sandboxed);
+        // this needs to happen after we capture the output so we can check if it was previously included
+        $this->setIncluded($template);
+
+        return $output;
     }
 
     public function isIncluded(string $template): bool
     {
-        return array_key_exists($template, $this->includedTemplates);
+        return $this->includedTemplates[$template] ?? false;
+    }
+
+    public function setIncluded(string $template, bool $isIncluded = true): void
+    {
+        $this->includedTemplates[$template] = $isIncluded;
     }
 }
