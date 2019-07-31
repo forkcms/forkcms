@@ -221,3 +221,8 @@ services:
         public: true
         arguments:
             - "@translator.selector"
+
+    Common\Core\Twig\Extensions\IncludeOnceExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
