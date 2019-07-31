@@ -3,7 +3,7 @@
 namespace Frontend\Modules\MediaLibrary\Twig\Extensions;
 
 use Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
-use Twig_Markup;
+use Twig\TwigFunction;
 
 class FrontendHelperExtensions extends \Twig_Extension
 {
@@ -20,7 +20,7 @@ class FrontendHelperExtensions extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction(
+            new TwigFunction(
                 'media_library_widget',
                 [$this, 'parseWidget'],
                 ['is_safe' => ['html']]
