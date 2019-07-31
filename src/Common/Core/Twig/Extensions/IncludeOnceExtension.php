@@ -19,6 +19,10 @@ final class IncludeOnceExtension extends AbstractExtension
                 [$this, 'includeOnce'],
                 ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['all']]
             ),
+            new TwigFunction(
+                'is_included',
+                [$this, 'isIncluded']
+            ),
         ];
     }
 
@@ -31,13 +35,17 @@ final class IncludeOnceExtension extends AbstractExtension
         bool $ignoreMissing = false,
         bool $sandboxed = false
     ): string {
-
-        if (array_key_exists($template, $this->includedTemplates)) {
+        if ($this->isIncluded($template)) {
             return '';
         }
 
         $this->includedTemplates[$template] = true;
 
         return twig_include($env, $context, $template, $variables, $withContext, $ignoreMissing, $sandboxed);
+    }
+
+    public function isIncluded(string $template): bool
+    {
+        return array_key_exists($template, $this->includedTemplates);
     }
 }
