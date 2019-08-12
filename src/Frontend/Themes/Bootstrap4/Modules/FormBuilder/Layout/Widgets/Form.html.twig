@@ -39,6 +39,16 @@
                   </div>
                 {% endif %}
 
+                {# Mailmotor#}
+                {% if field.isMailmotor %}
+                  <div class="form-group{% if field.error %} has-error{% endif %}">
+                    <label class="control-label" for="{{ field.name }}">
+                      {{ field.html|raw }} {{ field.label|raw }}
+                    </label>
+                    {% if field.error %}<span class="text-danger help-inline">{{ field.error }}</span>{% endif %}
+                  </div>
+                {% endif %}
+
                 {# Radiobuttons and checkboxes #}
                 {% if field.multiple %}
                   <div class="form-group{% if field.error %} has-danger{% endif %}">
@@ -71,8 +81,6 @@
                 {% else %}
                   <input type="submit" value="{{ submitValue|raw }}" name="submit" class="btn btn-primary" />
                 {% endif %}
-
-
               </div>
             </div>
           </div>
