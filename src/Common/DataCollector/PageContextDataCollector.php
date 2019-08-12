@@ -39,18 +39,22 @@ class PageContextDataCollector extends DataCollector
             return;
         }
 
-        $pageRecord = $this->page->getRecord();
+        try {
+            $pageRecord = $this->page->getRecord();
 
-        $this->data = [
-            'page' => [
-                'id' => $this->page->getId(),
-                'title' => $pageRecord['title'],
-                'template' => $this->getFullTemplatePath($pageRecord['template_path']),
-            ],
-            'widgets' => $this->collectWidgets($this->page->getExtras()),
-            'block' => $this->collectBlock($this->page->getExtras()),
-            'theme' => $this->theme,
-        ];
+            $this->data = [
+                'page' => [
+                    'id' => $this->page->getId(),
+                    'title' => $pageRecord['title'],
+                    'template' => $this->getFullTemplatePath($pageRecord['template_path']),
+                ],
+                'widgets' => $this->collectWidgets($this->page->getExtras()),
+                'block' => $this->collectBlock($this->page->getExtras()),
+                'theme' => $this->theme,
+            ];
+        } catch (Throwable $throwable) {
+            // do nothing
+        }
     }
 
     private function collectWidgets(array $pageExtras): ?array
