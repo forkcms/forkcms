@@ -307,9 +307,9 @@ bootstrap-accessibility-plugin@^1.0.5:
   integrity sha1-nnw3t4n8QXkhgGiwbZInrxRY970=
 
 bootstrap-datepicker@^1.7.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.8.0.tgz#c63513931e6f09f16ae9f11b62f32d950df3958e"
-  integrity sha512-213St/G8KT3mjs4qu4qwww74KWysMaIeqgq5OhrboZjIjemIpyuxlSo9FNNI5+KzpkkxkRRba+oewiRGV42B1A==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.9.0.tgz#e4bfce3fcce1967876b21dc6833ec5994aaed090"
+  integrity sha512-9rYYbaVOheGYxjOr/+bJCmRPihfy+LkLSg4fIFMT9Od8WwWB/MB50w0JO1eBgKUMbb7PFHQD5uAfI3ArAxZRXA==
   dependencies:
     jquery ">=1.7.1 <4.0.0"
 
@@ -457,9 +457,9 @@ circular-json@^0.3.1:
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
 ckeditor@^4.7.3:
-  version "4.11.4"
-  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.11.4.tgz#5edbc235808f9e0f562e8e642eeb04fa1b01b633"
-  integrity sha512-h1EymdwFDdQuDO1vEisUagZ/WYiDnvvvtftYmbmqbbUf9vk21ovXb7mXnQimvTYJfRQBgJCoqfjFDfcQIfw9ig==
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.12.1.tgz#954a7b028dd611e44ba51cc7c2fe051cf1052186"
+  integrity sha512-pH2Su4oi0D4iN/3U8nUcwI7/lXHoOJi0aiN8e2zxnm4Ow5kq8eZP2ZGmpYyuqRyKZ2tHaU8+OyYi7laXcjiq9Q==
 
 class-utils@^0.3.5:
   version "0.3.6"
