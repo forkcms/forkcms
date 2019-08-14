@@ -1,3 +1,18 @@
+5.6.2  (2019-07-29)
+------------------
+
+Fixed:
+* Core: Update vendors [#2879](https://github.com/forkcms/forkcms/pull/2879)
+* Core: Make the PageContextDataCollector ignore all errors [#2878](https://github.com/forkcms/forkcms/pull/2878)
+* Core: Convert + to %20 in mailto urls [#2874](https://github.com/forkcms/forkcms/pull/2874)
+* Blog: Fix blog post comments rss action [#2870](https://github.com/forkcms/forkcms/pull/2870)
+* MediaGallery: Status didn't have a default state [#2869](https://github.com/forkcms/forkcms/pull/2869)
+* Core: Fix arrow function breaking Fork CMS in IE [#2873](https://github.com/forkcms/forkcms/pull/2873)
+* Core: Fix broken translation in pagination template [#2871](https://github.com/forkcms/forkcms/pull/2871)
+* ContentBlock: Use the correct icon for deleting a ContentBlock [#2875](https://github.com/forkcms/forkcms/pull/2875)
+* FormBuilder: Fix typo in Dutch RecaptchaKeyMissing translation [#2876](https://github.com/forkcms/forkcms/pull/2876)
+
+
 5.6.1  (2019-07-29)
 ------------------
 
