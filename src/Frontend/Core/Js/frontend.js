@@ -220,7 +220,7 @@ jsFrontend.forms = {
       $('label[for="' + id + '"]').find('abbr').tooltip('show')
 
       // hide tooltip after 1 second
-      setTimeout(() => {
+      setTimeout(function () {
         $('label[for="' + id + '"]').find('abbr').tooltip('hide')
       }, 1000)
     })
