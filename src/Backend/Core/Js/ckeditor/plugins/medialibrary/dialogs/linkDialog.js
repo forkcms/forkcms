@@ -208,8 +208,9 @@ CKEDITOR.dialog.add(
                                     url.searchParams.append('body', this.getDialog().getValueOf('tab', 'content'));
                                 }
 
-                                element.setAttribute('href', url.toString());
-                                element.setAttribute('data-cke-saved-href', url.toString());
+                                var href = url.toString().replace(/\+/g, '%20');
+                                element.setAttribute('href', href);
+                                element.setAttribute('data-cke-saved-href', href);
                             }
                         },
                         {
