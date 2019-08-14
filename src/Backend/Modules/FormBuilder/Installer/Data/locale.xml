@@ -1071,7 +1071,7 @@
         <translation language="pl"><![CDATA[1 zgłoszenie]]></translation>
       </item>
       <item type="message" name="RecaptchaKeysMissing">
-        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Één of beide reCAPTCHA keys ontbreken. Voeg ze toe op de <a href="%1$s">installingen pagina</a>]]></translation>
+        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Één of beide reCAPTCHA keys ontbreken. Voeg ze toe op de <a href="%1$s">instellingen pagina</a>]]></translation>
         <translation language="en"><![CDATA[<strong>Important</strong>: One or both reCAPTCHA keys are missing. Add them on the <a href="%1$s">settings page</a>]]></translation>
         <translation language="pl"><![CDATA[<strong> Ważne </strong>: brakuje jednego lub obu kluczy reCAPTCHA. Dodaj je do <a href="%1$s"> strony z instalacjami</a>]]></translation>
       </item>
