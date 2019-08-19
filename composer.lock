@@ -1455,16 +1455,16 @@
         },
         {
             "name": "google/recaptcha",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/recaptcha.git",
-                "reference": "c4a17d6af648d4f3814430cd103cba50b75b571c"
+                "reference": "98c4a6573b27e8b0990ea8789c74ea378795134c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/recaptcha/zipball/c4a17d6af648d4f3814430cd103cba50b75b571c",
-                "reference": "c4a17d6af648d4f3814430cd103cba50b75b571c",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/98c4a6573b27e8b0990ea8789c74ea378795134c",
+                "reference": "98c4a6573b27e8b0990ea8789c74ea378795134c",
                 "shasum": ""
             },
             "require": {
@@ -1498,7 +1498,7 @@
                 "recaptcha",
                 "spam"
             ],
-            "time": "2019-05-24T12:44:03+00:00"
+            "time": "2019-08-16T15:48:25+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2338,9 +2338,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in CampaignMonitor as a service. So you can subscribe/unsubscribe members to CampaignMonitor.",
@@ -2385,9 +2385,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in MailChimp as a service. So you can subscribe/unsubscribe members to MailChimp.",
@@ -2604,9 +2604,9 @@
             "authors": [
                 {
                     "name": "Matthias Mullie",
+                    "role": "Developer",
                     "email": "scrapbook@mullie.eu",
-                    "homepage": "https://www.mullie.eu",
-                    "role": "Developer"
+                    "homepage": "https://www.mullie.eu"
                 }
             ],
             "description": "Scrapbook is a PHP cache library, with adapters for e.g. Memcached, Redis, Couchbase, APC(u), SQL and additional capabilities (e.g. transactions, stampede protection) built on top.",
