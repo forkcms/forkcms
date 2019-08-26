@@ -187,7 +187,7 @@
                 <label class="control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error message %} {% form_field message %}
+                  {% form_field message %} {% form_field_error message %}
                 </div>
               </div>
             </div>
@@ -196,20 +196,20 @@
                 <label class="control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error author %} {% form_field author %}
+                  {% form_field author %} {% form_field_error author %}
                 </div>
               </div>
               <div class="control-group {% if txtEmailError %}error{% endif %}">
                 <label class="control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error email %} {% form_field email %}
+                  {% form_field email %} {% form_field_error email %}
                 </div>
               </div>
               <div class="control-group {% if txtWebsiteError %}error{% endif %}">
                 <label class="control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
                 <div class="controls">
-                  {% form_field_error website %} {% form_field website %}
+                  {% form_field website %} {% form_field_error website %}
                 </div>
               </div>
             </div>
