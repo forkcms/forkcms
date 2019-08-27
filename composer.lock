@@ -2338,9 +2338,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in CampaignMonitor as a service. So you can subscribe/unsubscribe members to CampaignMonitor.",
@@ -2385,9 +2385,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in MailChimp as a service. So you can subscribe/unsubscribe members to MailChimp.",
@@ -2604,9 +2604,9 @@
             "authors": [
                 {
                     "name": "Matthias Mullie",
+                    "role": "Developer",
                     "email": "scrapbook@mullie.eu",
-                    "homepage": "https://www.mullie.eu",
-                    "role": "Developer"
+                    "homepage": "https://www.mullie.eu"
                 }
             ],
             "description": "Scrapbook is a PHP cache library, with adapters for e.g. Memcached, Redis, Couchbase, APC(u), SQL and additional capabilities (e.g. transactions, stampede protection) built on top.",
@@ -5785,16 +5785,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.30",
+            "version": "v3.4.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "8f1f27c186496128b861810809c27d956d342417"
+                "reference": "028617b04ae19d99d89089626ac969d161244ebc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/8f1f27c186496128b861810809c27d956d342417",
-                "reference": "8f1f27c186496128b861810809c27d956d342417",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/028617b04ae19d99d89089626ac969d161244ebc",
+                "reference": "028617b04ae19d99d89089626ac969d161244ebc",
                 "shasum": ""
             },
             "require": {
@@ -5846,7 +5846,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-07-05T06:33:19+00:00"
+            "time": "2019-08-20T13:31:17+00:00"
         }
     ],
     "aliases": [],
