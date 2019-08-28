@@ -525,6 +525,24 @@ class Add extends BackendBaseActionAdd
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
                 }
 
+                $data['auth_required'] = false;
+                if (BackendModel::isModuleInstalled('Profiles') && $this->form->getField('auth_required')->isChecked()) {
+                    $data['auth_required'] = true;
+                    // get all groups and parse them in key value pair
+                    $groupItems = BackendProfilesModel::getGroups();
+
+                    if (!empty($groupItems)) {
+                        $data['auth_groups'] = $this->form->getField('auth_groups')->getValue();
+                    }
+                }
+
+                $data['remove_from_search_index'] = false;
+                if (BackendModel::isModuleInstalled('Profiles')
+                    && $this->form->getField('remove_from_search_index')->isChecked()
+                    && $this->form->getField('auth_required')->isChecked()) {
+                    $data['remove_from_search_index'] = true;
+                }
+
                 // just execute if the site is multi-language
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
@@ -627,28 +645,7 @@ class Add extends BackendBaseActionAdd
 
                 // active
                 if ($page['status'] === 'active') {
-                    // init var
-                    $text = '';
-
-                    // build search-text
-                    foreach ($this->blocksContent as $block) {
-                        $text .= ' ' . $block['html'];
-                    }
-
-
-                    if ($redirectValue === 'none') {
-                        // add to search index
-                        BackendSearchModel::saveIndex(
-                            $this->getModule(),
-                            $page['id'],
-                            ['title' => $page['title'], 'text' => $text]
-                        );
-                    } else {
-                        BackendSearchModel::removeIndex(
-                            $this->getModule(),
-                            $page['id']
-                        );
-                    }
+                    $this->saveSearchIndex($data['remove_from_search_index'] || $redirectValue !== 'none', $page);
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
@@ -740,5 +737,28 @@ class Add extends BackendBaseActionAdd
         $this->blocksContent = BackendPagesModel::getBlocks($id, $originalPage['revision_id']);
 
         return $originalPage;
+    }
+
+    private function saveSearchIndex(bool $removeFromSearchIndex, array $page): void
+    {
+        if ($removeFromSearchIndex) {
+            BackendSearchModel::removeIndex(
+                $this->getModule(),
+                $page['id']
+            );
+
+            return;
+        }
+
+        $searchText = '';
+        foreach ($this->blocksContent as $block) {
+            $searchText .= ' ' . $block['html'];
+        }
+
+        BackendSearchModel::saveIndex(
+            $this->getModule(),
+            $page['id'],
+            ['title' => $page['title'], 'text' => $searchText]
+        );
     }
 }
