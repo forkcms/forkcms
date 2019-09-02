@@ -127,13 +127,13 @@
             "authors": [
                 {
                     "name": "Benjamin Eberlei",
-                    "role": "Lead Developer",
-                    "email": "kontakt@beberlei.de"
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Richard Quadling",
-                    "role": "Collaborator",
-                    "email": "rquadling@gmail.com"
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
                 }
             ],
             "description": "Thin assertion library for input validation in business models.",
@@ -2558,16 +2558,16 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "044ff954e41579ff922ee3341b1695d12bb04840"
+                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/044ff954e41579ff922ee3341b1695d12bb04840",
-                "reference": "044ff954e41579ff922ee3341b1695d12bb04840",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/d27ff1ab823f288918d3c593cd3c7e56db0e7745",
+                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745",
                 "shasum": ""
             },
             "require": {
@@ -2604,9 +2604,9 @@
             "authors": [
                 {
                     "name": "Matthias Mullie",
-                    "role": "Developer",
                     "email": "scrapbook@mullie.eu",
-                    "homepage": "https://www.mullie.eu"
+                    "homepage": "https://www.mullie.eu",
+                    "role": "Developer"
                 }
             ],
             "description": "Scrapbook is a PHP cache library, with adapters for e.g. Memcached, Redis, Couchbase, APC(u), SQL and additional capabilities (e.g. transactions, stampede protection) built on top.",
@@ -2641,7 +2641,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2018-02-14T07:39:26+00:00"
+            "time": "2019-08-30T09:35:02+00:00"
         },
         {
             "name": "monolog/monolog",
