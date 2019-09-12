@@ -532,8 +532,8 @@ jsBackend.ckeditor = {
             editor.popup(window.location.origin + jsData.MediaLibrary.browseActionVideos, 800, 800)
 
             window.onmessage = function (event) {
-              if (event.data) {
-                this.setValueOf('general', 'embedCode', event.data)
+              if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
+                this.setValueOf('general', 'embedCode', event.data['media-url'])
               }
             }.bind(this.getDialog())
           },
