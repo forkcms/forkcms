@@ -518,8 +518,6 @@ jsBackend.ckeditor = {
     }
 
     if (evt.data.name === 'oembed') {
-      debugger
-
       dialogDefinition.getContents('general').elements.splice(
         2,
         0,
