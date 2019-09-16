@@ -744,23 +744,18 @@ jsBackend.pages.extras = {
    * Creates the html for a text field
    */
   getTextFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
-
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
-    html += '</div>'
-
-    html += '<div class="panel-body">'
-
-    html += '<div class="form-group last">'
-    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />'
-    html += '</div>'
-
-    html += '</div>'
-
-    html += '</div>'
-
-    return html
+    return `
+      <div class="panel panel-default" id="user-template-text-${key}">
+        <div class="panel-heading">
+          <h2 class="panel-title">${label}</h2>
+        </div>
+        <div class="panel-body">
+          <div class="form-group last">
+            <input data-ft-label="${label}" type="text" class="form-control" value="${text.trim()}" />
+          </div>
+        </div>
+      </div>
+    `
   },
 
   /**
