@@ -1,5 +1,5 @@
 ---
-name: ⚙ Improvement
+name: ⚙ Bugfixes and Improvements
 about: You have a bugfix or improvement to make Fork CMS better? 🎁
 ---
 
