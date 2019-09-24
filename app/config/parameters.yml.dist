@@ -12,7 +12,7 @@ parameters:
     fork.debug_message:     'Internal error.'
     fork.version:           '5.6.2'
 
-    session.cookie_secure:   false
+    session.cookie_secure:  false
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>
     site.default_title:     <site-default-title>
