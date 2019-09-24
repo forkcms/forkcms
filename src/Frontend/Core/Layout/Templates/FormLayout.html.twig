@@ -73,7 +73,7 @@
     {% if show_preview or show_remove_file %}
       <div class="form-group">
         {% if show_preview and preview_url %}
-          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
+          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank" rel="noopener noreferrer">
             <i class="fa fa-eye"></i>
             {{ preview_label|trans|ucfirst }}
           </a>
