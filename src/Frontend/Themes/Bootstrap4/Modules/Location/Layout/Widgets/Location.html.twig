@@ -14,7 +14,7 @@
           </div>
         </div>
         {% if widgetLocationSettings.full_url %}
-          <a href="{{ widgetLocationSettings.maps_url }}" class="btn pull-right" target="_blank">
+          <a href="{{ widgetLocationSettings.maps_url }}" class="btn pull-right" target="_blank" rel="noopener noreferrer">
             <small>{{ 'lbl.ViewLargeMap'|trans|ucfirst }}<span class="sr-only"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span></small>
           </a>
         {% endif %}
