@@ -744,22 +744,27 @@ jsBackend.pages.extras = {
    * Creates the html for a text field
    */
   getTextFieldHtml: function (text, label, key) {
-    return `
-      <div class="panel panel-default" id="user-template-text-${key}">
-        <div class="panel-heading">
-          <h2 class="panel-title">${label}</h2>
-        </div>
-        <div class="panel-body">
-          <div class="form-group last">
-            <input data-ft-label="${label}" type="text" class="form-control" value="${text.trim()}" />
-          </div>
-        </div>
-      </div>
-    `
+    var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
+
+    html += '<div class="panel-heading">'
+    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '</div>'
+
+    html += '<div class="panel-body">'
+
+    html += '<div class="form-group last">'
+    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text.trim() + '" />'
+    html += '</div>'
+
+    html += '</div>'
+
+    html += '</div>'
+
+    return html
   },
 
   /**
-   * Creates the html for an editor
+   * Creates the html for a text area
    */
   getTextAreaFieldHtml: function (text, label, key) {
     var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
@@ -771,7 +776,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>'
+    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -794,7 +799,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text + '</textarea>'
+    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
