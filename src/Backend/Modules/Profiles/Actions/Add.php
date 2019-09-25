@@ -76,7 +76,12 @@ class Add extends BackendBaseActionAdd
             ->setAttribute('type', 'email')
             ->makeRequired()
         ;
-        $this->form->addPassword('password')->makeRequired();
+        $this->form->addPassword('password');
+
+        if (!$this->notifyProfile) {
+            $this->form->getField('password')->makeRequired();
+        }
+
         $this->form->addText('display_name')->makeRequired();
         $this->form->addText('first_name');
         $this->form->addText('last_name');
