@@ -136,6 +136,7 @@ CKEDITOR.dialog.add(
                                         element.removeAttribute('target');
                                         if (this.getDialog().getValueOf('tab', 'openInNewWindow')) {
                                             element.setAttribute('target', '_blank');
+                                            element.setAttribute('rel', 'noopener noreferrer');
                                         }
                                     }
                                 },

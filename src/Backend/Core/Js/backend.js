@@ -1042,7 +1042,7 @@ jsBackend.controls = {
 
   // bind target blank
   bindTargetBlank: function () {
-    $('a.targetBlank').attr('target', '_blank')
+    $('a.targetBlank').attr('target', '_blank').attr('rel', 'noopener noreferrer')
   },
 
   // toggle between the working languages

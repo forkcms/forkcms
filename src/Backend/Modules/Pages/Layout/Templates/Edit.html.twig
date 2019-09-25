@@ -26,7 +26,7 @@
         {% if appendRevision %}
           {% set url = (url ~ '?page_revision=' ~ item.revision_id) %}
         {% endif %}
-        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank" }) }}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
 
       {% endif %}
 
