@@ -6,28 +6,31 @@ export class Pagination {
   goToPage (event) {
     let $current = $(event.currentTarget)
     let nextPageId = $current.val()
-    let url = window.location.href.split('?')[0]
 
-    let parameters =  this.getParameters()
-
-    parameters["page"] = nextPageId
-    window.location.replace(url + '?' + decodeURIComponent($.param(parameters)))
+    this.changePageInUrlAndReload(nextPageId)
   }
 
-  getParameters () {
-    if (typeof window.location.href.split('?')[1] === 'undefined') {
-      return {}
+  changePageInUrlAndReload (value) {
+    const key = 'page'
+    let parameters = document.location.search.substr(1).split('&')
+    let i = parameters.length
+
+    value = encodeURI(value)
+
+    while (i--) {
+      let parameter = parameters[i].split('=')
+
+      if (parameter[0] === key) {
+        parameter[1] = value
+        parameters[i] = parameter.join('=')
+        break
+      }
     }
 
-    let parameters = {}
-    let queryString = window.location.href.split('?')[1]
-    let rawParameters = queryString.split('&')
+    if (i < 0) {
+      parameters[parameters.length] = [key, value].join('=')
+    }
 
-    $.each(rawParameters, (index, rawParameter) => {
-      let parameterPair = rawParameter.split('=')
-      parameters[parameterPair[0]] = parameterPair[1]
-    })
-
-    return parameters
+    document.location.search = parameters.join('&')
   }
 }
