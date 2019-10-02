@@ -25,6 +25,7 @@ class ResponseSecurer
             'Expires' =>  '0',
             'Pragma' => 'no-cache',
             'referrer' => 'strict-origin-when-cross-origin',
+            'Referrer-Policy' => 'strict-origin-when-cross-origin',
             'X-XSS-Protection' => '1; mode=block',
             'X-Content-Type-Options' => 'nosniff',
         ];
