@@ -91,6 +91,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown('month', $months);
         $this->form->addDropdown('year', array_combine($years, $years));
         $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
+        $this->form->addEditor('about');
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');
@@ -119,6 +120,7 @@ class Add extends BackendBaseActionAdd
             $ddmMonth = $this->form->getField('month');
             $ddmYear = $this->form->getField('year');
             $ddmCountry = $this->form->getField('country');
+            $txtAbout = $this->form->getField('about');
 
             // email filled in?
             if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -191,6 +193,7 @@ class Add extends BackendBaseActionAdd
                 BackendProfilesModel::setSetting($this->id, 'birth_date', $birthDate);
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
+                BackendProfilesModel::setSetting($this->id, 'about', $txtAbout->getValue());
 
                 // notify values
                 $notifyValues = array_merge(
