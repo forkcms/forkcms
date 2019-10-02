@@ -14,8 +14,16 @@ class ResponseSecurer
      */
     public function onKernelResponse(FilterResponseEvent $event): void
     {
+        $cacheControl = 'max-age=0, must-revalidate, private, no-cache';
+        if (defined('APPLICATION') && APPLICATION === 'Backend') {
+            $cacheControl .= ', no-store';
+        }
+
         $headers = [
+            'Cache-Control' => $cacheControl,
             'X-Frame-Options' => 'deny',
+            'Expires' =>  '0',
+            'Pragma' => 'no-cache',
             'referrer' => 'strict-origin-when-cross-origin',
             'X-XSS-Protection' => '1; mode=block',
             'X-Content-Type-Options' => 'nosniff',
