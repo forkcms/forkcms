@@ -21,9 +21,22 @@ class ResponseSecurer
             'X-Content-Type-Options' => 'nosniff',
         ];
 
+
+        $responseHeaders = $event->getResponse()->headers;
         foreach ($headers as $header => $value) {
-            if (!$event->getResponse()->headers->has($header)) {
-                $event->getResponse()->headers->set($header, $value);
+            if (!$responseHeaders->has($header)) {
+                $responseHeaders->set($header, $value);
+            }
+        }
+
+        // Don't leak server config
+        $blockedHeaders = [
+            'x-powered-by',
+            'Server',
+        ];
+        foreach ($blockedHeaders as $blockedHeader) {
+            if ($responseHeaders->has($blockedHeader)) {
+                $responseHeaders->remove($blockedHeader);
             }
         }
     }
