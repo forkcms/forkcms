@@ -221,3 +221,7 @@ services:
         public: true
         arguments:
             - "@translator.selector"
+
+fos_rest:
+    routing_loader:
+        default_format: json
