@@ -161,9 +161,6 @@ jsBackend.mediaLibraryHelper.group = {
       $addMediaDialog.modal('hide')
     })
 
-    // on show
-    $addMediaDialog.on('show.bs.modal', jsBackend.mediaLibraryHelper.upload.init)
-
     // bind click when opening "add media dialog"
     $('.addMediaButton').on('click', function (e) {
       // prevent default
