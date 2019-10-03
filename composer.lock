@@ -2559,16 +2559,16 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "044ff954e41579ff922ee3341b1695d12bb04840"
+                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/044ff954e41579ff922ee3341b1695d12bb04840",
-                "reference": "044ff954e41579ff922ee3341b1695d12bb04840",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/d27ff1ab823f288918d3c593cd3c7e56db0e7745",
+                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745",
                 "shasum": ""
             },
             "require": {
@@ -2642,7 +2642,7 @@
                 "transactional",
                 "value"
             ],
-            "time": "2018-02-14T07:39:26+00:00"
+            "time": "2019-08-30T09:35:02+00:00"
         },
         {
             "name": "monolog/monolog",
