@@ -3459,9 +3459,9 @@ signal-exit@^3.0.0:
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
 simple-ajax-uploader@^2.5.5:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.5.5.tgz#a91402fdfbc678b1fa73b5d4fd5d8c21c0d9a922"
-  integrity sha1-qRQC/fvGeLH6c7XU/V2MIcDZqSI=
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.6.7.tgz#4a53f1635730fd5414b169988694f8324e4ca352"
+  integrity sha512-ZevKLmdZcggAaCzZZcikt/5fGKC6S9R4PaLHzIaH7hJDrTnmOZ/Q8HN+rjLioMijeSgLgXhyFVEqsoFfkocxKA==
 
 slice-ansi@0.0.4:
   version "0.0.4"
