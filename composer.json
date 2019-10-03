@@ -41,7 +41,9 @@
         "symfony/swiftmailer-bundle": "^3.0",
         "symfony/symfony": "^3.3",
         "tijsverkoyen/akismet": "1.1.*",
-        "tijsverkoyen/css-to-inline-styles": "1.5.*"
+        "tijsverkoyen/css-to-inline-styles": "1.5.*",
+        "friendsofsymfony/rest-bundle": "^2.5",
+        "jms/serializer-bundle": "^2.4"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
