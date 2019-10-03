@@ -243,7 +243,7 @@ class Language
      */
     public static function setLocale(string $language): void
     {
-        $application = (defined('APPLICATION') && APPLICATION === 'Console') ? 'Backend' : APPLICATION;
+        $application = (!defined('APPLICATION') || APPLICATION === 'Console') ? 'Backend' : APPLICATION;
 
         // validate file, generate it if needed
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
