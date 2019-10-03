@@ -3,6 +3,7 @@
 namespace Frontend\Core\Tests\Engine;
 
 use Common\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class AjaxTest extends WebTestCase
 {
@@ -12,11 +13,11 @@ class AjaxTest extends WebTestCase
 
         $client->request('GET', '/frontend/ajax');
         self::assertEquals(
-            500,
+            Response::HTTP_FORBIDDEN,
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Module not correct',
+            'Module not allowed',
             $client->getResponse()->getContent()
         );
     }
@@ -27,11 +28,11 @@ class AjaxTest extends WebTestCase
 
         $client->request('GET', '/frontend/ajax?action=Test');
         self::assertEquals(
-            500,
+            Response::HTTP_FORBIDDEN,
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Module not correct',
+            'Module not allowed',
             $client->getResponse()->getContent()
         );
     }
@@ -42,11 +43,11 @@ class AjaxTest extends WebTestCase
 
         $client->request('GET', '/frontend/ajax?module=Test');
         self::assertEquals(
-            500,
+            Response::HTTP_FORBIDDEN,
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Module not correct',
+            'Module not allowed',
             $client->getResponse()->getContent()
         );
     }
@@ -57,7 +58,7 @@ class AjaxTest extends WebTestCase
 
         $client->request('GET', '/frontend/ajax?module=Blog');
         self::assertEquals(
-            500,
+            Response::HTTP_BAD_REQUEST,
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
@@ -72,7 +73,7 @@ class AjaxTest extends WebTestCase
 
         $client->request('GET', '/frontend/ajax?module=Blog&action=Test');
         self::assertEquals(
-            500,
+            Response::HTTP_BAD_REQUEST,
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
