@@ -1437,7 +1437,7 @@ jsBackend.pages.tree = {
         onmove: jsBackend.pages.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
       }
     }
 
