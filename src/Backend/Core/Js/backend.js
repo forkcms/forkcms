@@ -51,6 +51,7 @@ var jsBackend =
       if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
+      jsBackend.session.init()
 
       // do not move, should be run as the last item.
       if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()
@@ -2055,6 +2056,19 @@ jsBackend.resizeFunctions = {
     return $(window).on('load resize', function () {
       return tick()
     })
+  }
+}
+
+jsBackend.session = {
+  init: function () {
+    jsBackend.session.sessionTimeoutPopup()
+  },
+
+  // Display a session timeout warning 1 minute before the session might actually expire
+  sessionTimeoutPopup: function () {
+    setInterval(function () {
+      window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
+    }, (jsBackend.Core.session_timeout - 60) * 1000)
   }
 }
 
