@@ -977,6 +977,10 @@
   </Backend>
   <Frontend>
     <Core>
+      <item type="label" name="About">
+        <translation language="nl"><![CDATA[over]]></translation>
+        <translation language="en"><![CDATA[about]]></translation>
+      </item>
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>

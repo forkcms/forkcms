@@ -91,7 +91,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown('month', $months);
         $this->form->addDropdown('year', array_combine($years, $years));
         $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
-        $this->form->addEditor('about');
+        $this->form->addTextarea('about');
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');

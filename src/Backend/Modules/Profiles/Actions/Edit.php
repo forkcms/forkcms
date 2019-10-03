@@ -116,7 +116,7 @@ class Edit extends BackendBaseActionEdit
             Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
-        $this->form->addEditor('about', BackendProfilesModel::getSetting($this->id, 'about'));
+        $this->form->addTextarea('about', BackendProfilesModel::getSetting($this->id, 'about'));
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');
