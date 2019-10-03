@@ -103,6 +103,12 @@
         </div>
       </fieldset>
 
+      <fieldset>
+        <legend>{{ 'lbl.About'|trans|ucfirst }}</legend>
+        <div class="form-group{% if txtAboutError %} has-error{% endif %}">
+          {% form_field_error about %} {% form_field about %}
+        </div>
+      </fieldset>
       <fieldset class="form-horizontal">
         <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
         <div class="form-group{% if fileAvatarError %} has-error{% endif %}">

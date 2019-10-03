@@ -96,6 +96,7 @@ class Settings extends FrontendBaseBlock
         $this->form->addDropdown('month', $months, $birthMonth)->setDefaultElement('');
         $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear)->setDefaultElement('');
         $this->form->addImage('avatar');
+        $this->form->addTextarea('about', $this->profile->getSetting('about'));
     }
 
     private function parse(): void
@@ -206,6 +207,7 @@ class Settings extends FrontendBaseBlock
                 'gender' => $this->form->getField('gender')->getValue(),
                 'birth_date' => $this->getSubmittedBirthDate(),
                 'avatar' => $this->getAvatar(),
+                'about' => $this->form->getField('about')->getValue(),
             ]
         );
 
