@@ -199,6 +199,13 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
+    fork.api_setup:
+        class: Common\EventListener\ApiSetupListener
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
