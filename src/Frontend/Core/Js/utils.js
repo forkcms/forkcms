@@ -75,7 +75,7 @@ utils.cookies = {
 
     var expireDate = new Date()
     expireDate.setDate(expireDate.getDate() + days)
-    document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/' + secure ? ';secure=true' : ''
+    document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/' + (secure ? ';secure=true' : '')
   }
 }
 
