@@ -194,6 +194,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    fork.controller_init:
+        class: Common\EventListener\ApplicationSetterListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
