@@ -1,3 +1,11 @@
 imports:
   - { resource: commands.yml }
   - { resource: repositories.yml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Backend\Modules\ContentBlocks\Api\ApiController: ~

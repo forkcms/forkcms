@@ -22,6 +22,10 @@ frontend_ajax:
     defaults:
         _controller: \ForkCMS\App\ForkController::frontendAjaxController
 
+# Api routing files
+content_blocks_api:
+    resource: '../src/Backend/Modules/ContentBlocks/Resources/config/routing.yml'
+
 # Frontend controller (this is as good as the default when no other route gets matched)
 frontend:
     path: /{route}
