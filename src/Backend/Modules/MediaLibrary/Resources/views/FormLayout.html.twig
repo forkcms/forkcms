@@ -4,6 +4,9 @@
 #}
 
 {% block media_group_widget %}
+  {% if not mediaGroup is defined %}
+    {% set mediaGroup = form.vars.data.mediaGroup %}
+  {% endif %}
   {{ include_once("MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig") }}
   {% import "Layout/Templates/macros.html.twig" as macro %}
   {% import _self as mediaMacro %}

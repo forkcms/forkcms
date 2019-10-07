@@ -183,11 +183,12 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupTransformFunction(): callable
     {
-        return function (MediaGroup $mediaGroup) {
+        return static function (MediaGroup $mediaGroup) {
             return [
                 'id' => $mediaGroup->getId(),
                 'type' => $mediaGroup->getType(),
                 'mediaIds' => implode(',', $mediaGroup->getIdsForConnectedItems()),
+                'mediaGroup' => $mediaGroup,
             ];
         };
     }
