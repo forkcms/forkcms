@@ -1457,7 +1457,7 @@ jsBackend.mediaLibraryHelper.templates = {
   getHTMLForMediaItemTableRow: function (mediaItem, connected) {
     var html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">'
     html += '<td class="check">'
-    html += '<input type="checkbox" class="toggleConnectedCheckbox"'
+    html += '<input type="checkbox" class="toggleConnectedCheckbox" id="media-' + mediaItem.id + '-checkbox"'
 
     if (connected) {
       html += ' checked="checked"'
@@ -1467,7 +1467,9 @@ jsBackend.mediaLibraryHelper.templates = {
 
     if (mediaItem.type === 'image') {
       html += '<td class="fullUrl">'
-      html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" class="toggleConnectedCheckbox" />'
+      html += '<label for="media-' + mediaItem.id + '-checkbox">'
+      html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" />'
+      html += '</label>'
       html += '</td>'
     }
 
