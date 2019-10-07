@@ -9,20 +9,14 @@ class SingleMediaGroupType extends MediaGroupType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $options['minimum_items'] = 1;
-        $options['maximum_items'] = 1;
-
         parent::buildForm($builder, $options);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
-        $resolver->remove(
-            [
-                'minimum_items',
-                'maximum_items',
-            ]
-        );
+
+        $resolver->setDefault('minimum_items', 1);
+        $resolver->setDefault('maximum_items', 1);
     }
 }
