@@ -758,18 +758,6 @@ jsBackend.mediaLibraryHelper.group = {
         // update folder count
         jsBackend.mediaLibraryHelper.group.updateFolderCount(mediaFolderId, '+', 1)
       }
-
-      // If we did click something else then the checkbox, we should toggle the checkbox as well
-      if (!$(this).parent().hasClass('check')) {
-        var $input = $(this).parent().parent().find('.check input')
-        var checked = $input.attr('checked')
-
-        if (checked) {
-          $input.removeAttr('checked')
-        } else {
-          $input.attr('checked', 'checked')
-        }
-      }
     })
 
     // select the correct folder
