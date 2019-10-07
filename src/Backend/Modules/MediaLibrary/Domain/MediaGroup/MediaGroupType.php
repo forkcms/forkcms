@@ -54,7 +54,10 @@ class MediaGroupType extends AbstractType
                 'mediaIds',
                 HiddenType::class,
                 [
-                    'attr' => ['class' => 'mediaIds'],
+                    'attr' => [
+                        'class' => 'mediaIds',
+                        'autocomplete' => 'off',
+                    ],
                     'error_bubbling' => false,
                     'constraints' => $this->getConstraints($options),
                 ]
@@ -161,7 +164,7 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupReverseTransformFunction(): callable
     {
-        return function (array $mediaGroupData) : MediaGroup {
+        return function (array $mediaGroupData): MediaGroup {
             return $this->saveMediaGroup(
                 $this->getMediaGroupFromMediaGroupData($mediaGroupData),
                 $this->getMediaItemIdsFromMediaGroupData($mediaGroupData)

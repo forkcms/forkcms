@@ -1457,7 +1457,7 @@ jsBackend.mediaLibraryHelper.templates = {
   getHTMLForMediaItemTableRow: function (mediaItem, connected) {
     var html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">'
     html += '<td class="check">'
-    html += '<input type="checkbox" class="toggleConnectedCheckbox" id="media-' + mediaItem.id + '-checkbox"'
+    html += '<input type="checkbox" autocomplete="off" class="toggleConnectedCheckbox" id="media-' + mediaItem.id + '-checkbox"'
 
     if (connected) {
       html += ' checked="checked"'
