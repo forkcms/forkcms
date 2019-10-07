@@ -110,8 +110,7 @@ jsBackend.mediaLibraryHelper.group = {
         // toggle class
         $(this).parent().toggleClass('selected')
 
-        // define groupId (@todo: can this shorter?)
-        var groupId = $(this).parent().parent().parent().parent().attr('id').replace('group-', '')
+        var groupId = $(this).closest('.mediaGroup').attr('id').replace('group-', '')
 
         // update disconnect button
         jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
