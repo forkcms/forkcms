@@ -3,7 +3,9 @@
 namespace Common\Core\Twig\Extensions;
 
 use Twig\Environment;
+use Twig\Error\LoaderError;
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\SandboxExtension;
 use Twig\TwigFunction;
 
 final class IncludeOnceExtension extends AbstractExtension
@@ -43,7 +45,38 @@ final class IncludeOnceExtension extends AbstractExtension
             return '';
         }
 
-        $output = twig_include($env, $context, $template, $variables, $withContext, $ignoreMissing, $sandboxed);
+        $alreadySandboxed = false;
+        $sandbox = null;
+        $output = '';
+        $isSandboxed = $sandboxed && $env->hasExtension(SandboxExtension::class);
+
+        if ($withContext) {
+            $variables = array_merge($context, $variables);
+        }
+
+        if ($isSandboxed) {
+            $sandbox = $env->getExtension(SandboxExtension::class);
+            if (!$alreadySandboxed = $sandbox->isSandboxed()) {
+                $sandbox->enableSandbox();
+            }
+        }
+
+        try {
+            $loaded = null;
+            try {
+                $loaded = $env->resolveTemplate($template);
+            } catch (LoaderError $e) {
+                if (!$ignoreMissing) {
+                    throw $e;
+                }
+            }
+
+            $output = $loaded ? $loaded->render($variables) : '';
+        } finally {
+            if ($isSandboxed && !$alreadySandboxed) {
+                $sandbox->disableSandbox();
+            }
+        }
 
         // this needs to happen after we capture the output so we can check if it was previously included
         $this->setIncluded($template);
