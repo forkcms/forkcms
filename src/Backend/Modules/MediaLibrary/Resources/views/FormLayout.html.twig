@@ -21,7 +21,7 @@
           {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           <div class="panel-body mediaConnectedBox">
-            <ul class="mediaConnectedItems ui-sortable">
+            <ul class="mediaConnectedItems ui-sortable"{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %}>
               {% for connectedItem in mediaGroup.connectedItems %}
                 <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
                   {{ mediaMacro.mediaItem(connectedItem) }}

@@ -89,6 +89,12 @@ class MediaGroupType extends AbstractType
         if ($options['aspect_ratio'] instanceof AspectRatio) {
             $view->vars['aspectRatio'] = $options['aspect_ratio']->asFloat();
         }
+        if (\is_int($options['minimum_items'])) {
+            $view->vars['minimumItems'] = $options['minimum_items'];
+        }
+        if (\is_int($options['maximum_items'])) {
+            $view->vars['maximumItems'] = $options['maximum_items'];
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
