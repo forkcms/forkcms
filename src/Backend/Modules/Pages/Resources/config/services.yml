@@ -1,1 +1,7 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
