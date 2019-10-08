@@ -134,7 +134,10 @@ final class ModuleExtra
         return $this->data;
     }
 
-    public function unserializedData(): ?string
+    /**
+     * @return mixed|null
+     */
+    public function unserializedData()
     {
         if ($this->getData() === null) {
             return null;

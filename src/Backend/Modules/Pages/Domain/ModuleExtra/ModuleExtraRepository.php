@@ -35,4 +35,20 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getBlocks(): array
+    {
+        return $this
+            ->createQueryBuilder('me', 'me.id')
+            ->where('me.type = :type')
+            ->andWhere('me.hidden = :hidden')
+            ->setParameters(
+                [
+                    'type' => (string) ModuleExtraType::block(),
+                    'hidden' => false,
+                ]
+            )
+            ->getQuery()
+            ->getResult();
+    }
 }

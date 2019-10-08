@@ -254,26 +254,7 @@ class CacheBuilder
     protected function getBlocks(): array
     {
         if (empty($this->blocks)) {
-            $this->blocks = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action, i.data
-                 FROM modules_extras AS i
-                 WHERE i.type = ? AND i.hidden = ?',
-                ['block', false],
-                'id'
-            );
-
-            $this->blocks = array_map(
-                function (array $block) {
-                    if ($block['data'] === null) {
-                        return $block;
-                    }
-
-                    $block['data'] = unserialize($block['data']);
-
-                    return $block;
-                },
-                $this->blocks
-            );
+            $this->blocks = $this->moduleExtraRepository->getBlocks();
         }
 
         return $this->blocks;

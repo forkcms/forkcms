@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Common\ModuleExtraType;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -553,12 +554,13 @@ class Model extends \Common\Core\Model
                     }
 
                     // loop extras
+                    /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] === $module && $extra['action'] === $action && $extra['action'] !== null) {
+                        if ($extra->getModule() === $module && $extra->getAction() === $action && $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])
-                                && array_intersect_assoc($data, (array) $extra['data']) !== $data
+                            if ($data !== null && $extra->unserializedData()
+                                && array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data
                             ) {
                                 // It is the correct action but has the wrong data
                                 continue;
@@ -568,10 +570,10 @@ class Model extends \Common\Core\Model
                             return self::getUrl($properties['page_id'], $language);
                         }
 
-                        if ($extra['module'] === $module && $extra['action'] === null) {
+                        if ($extra->getModule() === $module && $extra->getAction() === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])) {
-                                if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if ($data !== null && $extra->unserializedData() !== null) {
+                                if (array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
                                 }
@@ -580,7 +582,7 @@ class Model extends \Common\Core\Model
                                 $dataMatch = true;
                             }
 
-                            if ($data === null && $extra['data'] === null) {
+                            if ($data === null && $extra->unserializedData() === null) {
                                 $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }

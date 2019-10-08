@@ -2,12 +2,13 @@
 
 namespace Frontend\Core\Engine;
 
-use ForkCMS\App\KernelLoader;
-use Frontend\Core\Language\Language;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will be used to build the navigation
@@ -504,12 +505,15 @@ class Navigation extends KernelLoader
                     }
 
                     // loop extras
+                    /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] === $module && $extra['action'] === $action && $extra['action'] !== null) {
+                        if ($extra->getModule() === $module &&
+                            $extra->getAction() === $action &&
+                            $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])
-                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if ($data !== null && $extra->unserializedData() !== null
+                                && array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data) {
                                 // It is the correct action but has the wrong data
                                 continue;
                             }
@@ -517,10 +521,10 @@ class Navigation extends KernelLoader
                             return self::getUrl($properties['page_id'], $language);
                         }
 
-                        if ($extra['module'] === $module && $extra['action'] === null) {
+                        if ($extra->getModule() === $module && $extra->getAction() === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])) {
-                                if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if ($data !== null && $extra->unserializedData() !== null) {
+                                if (array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
                                 }
@@ -529,7 +533,7 @@ class Navigation extends KernelLoader
                                 $dataMatch = true;
                             }
 
-                            if ($data === null && $extra['data'] === null) {
+                            if ($data === null && $extra->unserializedData() === null) {
                                 $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
@@ -587,9 +591,10 @@ class Navigation extends KernelLoader
                     }
 
                     // loop extras
+                    /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ((int) $extra['id'] === $id) {
+                        if ($extra->getId() === $id) {
                             // exact page was found, so return
                             return self::getUrl($properties['page_id'], $language);
                         }
