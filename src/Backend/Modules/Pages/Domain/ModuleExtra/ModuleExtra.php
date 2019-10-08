@@ -15,14 +15,14 @@ final class ModuleExtra
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer", name="id")
+     * @ORM\Column(type="integer", name="id", options={"comment": "Unique ID for the extra."})
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="module")
+     * @ORM\Column(type="string", name="module", options={"comment":"The name of the module this extra belongs to."})
      */
     private $module;
 
@@ -36,7 +36,7 @@ final class ModuleExtra
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="label")
+     * @ORM\Column(type="string", name="label", options={"comment":"The label for this extra. It will be used for displaying purposes."})
      */
     private $label;
 
@@ -50,7 +50,7 @@ final class ModuleExtra
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text", name="data", nullable=true)
+     * @ORM\Column(type="text", name="data", nullable=true, , options={"comment":"A serialized value with the optional parameters."})
      */
     private $data;
 
@@ -64,7 +64,7 @@ final class ModuleExtra
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", name="sequence")
+     * @ORM\Column(type="integer", name="sequence", options={"comment":"The sequence in the backend."})
      */
     private $sequence;
 
