@@ -50,7 +50,7 @@ final class ModuleExtra
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text", name="data", nullable=true, , options={"comment":"A serialized value with the optional parameters."})
+     * @ORM\Column(type="text", name="data", nullable=true, options={"comment":"A serialized value with the optional parameters."})
      */
     private $data;
 
