@@ -21,7 +21,7 @@
           {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           <div class="panel-body mediaConnectedBox">
-            <ul class="mediaConnectedItems ui-sortable"{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %}>
+            <ul class="mediaConnectedItems ui-sortable">
               {% for connectedItem in mediaGroup.connectedItems %}
                 <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
                   {{ mediaMacro.mediaItem(connectedItem) }}
@@ -41,7 +41,7 @@
           <div class="panel-footer mediaEditBox">
             <div class="btn-toolbar">
               <div class="btn-group pull-left" role="group">
-                <button type="button" {% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %} data-i="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
+                <button type="button"{% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %}{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %} data-i="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
                   {{ macro.icon('plus-square') }}
                   <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
                 </button>

@@ -40,6 +40,8 @@ var mediaGroups = {}
 var currentMediaGroupId = 0
 var mediaFolderId
 var currentAspectRatio = false
+var minimumMediaItemsCount = false
+var maximumMediaItemsCount = false
 var currentMediaItemIds = []
 jsBackend.mediaLibraryHelper.group = {
   init: function () {
@@ -176,6 +178,14 @@ jsBackend.mediaLibraryHelper.group = {
       currentAspectRatio = $(this).data('aspectRatio')
       if (currentAspectRatio === undefined) {
         currentAspectRatio = false
+      }
+      maximumMediaItemsCount = $(this).data('maximumMediaCount')
+      if (maximumMediaItemsCount === undefined) {
+        maximumMediaItemsCount = false
+      }
+      minimumMediaItemsCount = $(this).data('minimumMediaCount')
+      if (minimumMediaItemsCount === undefined) {
+        minimumMediaItemsCount = false
       }
 
       // get current media for group
@@ -758,10 +768,42 @@ jsBackend.mediaLibraryHelper.group = {
         // update folder count
         jsBackend.mediaLibraryHelper.group.updateFolderCount(mediaFolderId, '+', 1)
       }
+
+      // validate the minimum and maximum count
+      jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
     })
 
     // select the correct folder
     jsBackend.mediaLibraryHelper.group.updateFolderSelected()
+
+    // validate the minimum and maximum count
+    jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
+  },
+
+  /**
+   * Runs the validation for the minimum and maximum count of connected media
+   */
+  validateMinimumMaximumCount: function() {
+    var connectedMediaCount = currentMediaItemIds.length
+    var $minimumCountError = $('[data-role="fork-media-count-error"]')
+    var $submitButton = $('#addMediaSubmit')
+
+    if (maximumMediaItemsCount !== false && connectedMediaCount > maximumMediaItemsCount) {
+      $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('hidden')
+      $submitButton.addClass('disabled').attr('disabled', true)
+
+      return
+    }
+
+    if (minimumMediaItemsCount !== false && connectedMediaCount < minimumMediaItemsCount) {
+      $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('hidden')
+      $submitButton.addClass('disabled').attr('disabled', true)
+
+      return
+    }
+
+    $minimumCountError.html('').addClass('hidden')
+    $submitButton.removeClass('disabled').attr('disabled', false)
   }
 }
 
