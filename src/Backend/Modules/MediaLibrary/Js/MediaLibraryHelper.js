@@ -1027,13 +1027,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
     // bind delete actions
     $('#uploadedMedia').on('click', '[data-fork=disconnect]', function () {
-      var $mediaItem = $(this).closest('[data-fork=mediaItem]')
-      jsBackend.mediaLibraryHelper.group.disconnectMediaFromGroup(
-        $mediaItem.data('mediaId'),
-        $mediaItem.data('folderId'),
-        currentMediaGroupId
-      )
-      $(this).parent().remove()
+      $(this).parent().parent().remove()
     })
   },
 
