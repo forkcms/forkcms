@@ -1,0 +1,11 @@
+doctrine:
+    dbal:
+        types: ~
+    orm:
+        mappings:
+            module_extra:
+                type: annotation
+                is_bundle: false
+                dir: "%kernel.project_dir%/src/Backend/Modules/Pages/Domain/ModuleExtra"
+                alias: ModuleExtra
+                prefix: Backend\Modules\Pages\Domain\ModuleExtra
