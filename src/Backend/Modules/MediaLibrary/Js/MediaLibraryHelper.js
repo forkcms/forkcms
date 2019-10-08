@@ -1470,7 +1470,10 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<div class="icon"></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
-
+    html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
+    html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
+    html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
+    html += '</button>'
     html += '</div>'
     html += '</li>'
 
@@ -1533,11 +1536,11 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 
-    html += '</div>'
-    html += '<button type="button" class="deleteMediaItem btn btn-default" '
+    html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
-    html += '<span>' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
     html += '</button>'
+    html += '</div>'
     html += '</li>'
 
     return html
