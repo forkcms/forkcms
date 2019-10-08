@@ -3,6 +3,8 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -21,13 +23,23 @@ class CacheBuilder
      */
     protected $cache;
 
+    /**
+     * @var ModuleExtraRepository
+     */
+    private $moduleExtraRepository;
+
     protected $blocks;
     protected $sitemapId;
 
-    public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
+    public function __construct(
+        \SpoonDatabase $database,
+        CacheItemPoolInterface $cache,
+        ModuleExtraRepository $moduleExtraRepository
+    )
     {
         $this->database = $database;
         $this->cache = $cache;
+        $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
     public function buildCache(string $language): void
@@ -270,24 +282,19 @@ class CacheBuilder
     protected function getSitemapId(): int
     {
         if (empty($this->sitemapId)) {
-            $widgets = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action
-                 FROM modules_extras AS i
-                 WHERE i.type = ? AND i.hidden = ?',
-                ['widget', false],
-                'id'
-            );
+            $widgets = $this->moduleExtraRepository->getWidgets();
 
             // search sitemap
-            foreach ($widgets as $id => $row) {
-                if ($row['action'] == 'Sitemap') {
-                    $this->sitemapId = $id;
+            /** @var ModuleExtra $moduleExtra */
+            foreach ($widgets as $moduleExtra) {
+                if ($moduleExtra->getAction() === 'Sitemap') {
+                    $this->sitemapId = $moduleExtra->getId();
                     break;
                 }
             }
         }
 
-        return (int) $this->sitemapId;
+        return $this->sitemapId;
     }
 
     protected function getOrder(

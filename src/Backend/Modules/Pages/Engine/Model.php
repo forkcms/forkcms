@@ -2,20 +2,21 @@
 
 namespace Backend\Modules\Pages\Engine;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
-use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
-use SimpleBus\Message\Bus\MessageBus;
-use InvalidArgumentException;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use ForkCMS\App\ForkController;
 use Frontend\Core\Language\Language as FrontendLanguage;
+use InvalidArgumentException;
+use SimpleBus\Message\Bus\MessageBus;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
@@ -74,7 +75,11 @@ class Model
     {
         static $cacheBuilder = null;
         if ($cacheBuilder === null) {
-            $cacheBuilder = new CacheBuilder(BackendModel::get('database'), BackendModel::get('cache.pool'));
+            $cacheBuilder = new CacheBuilder(
+                BackendModel::get('database'),
+                BackendModel::get('cache.pool'),
+                BackendModel::get(ModuleExtraRepository::class)
+            );
         }
 
         return $cacheBuilder;
