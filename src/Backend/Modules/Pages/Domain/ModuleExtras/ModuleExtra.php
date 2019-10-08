@@ -134,6 +134,15 @@ final class ModuleExtra
         return $this->data;
     }
 
+    public function unserializedData(): ?string
+    {
+        if ($this->getData() === null) {
+            return null;
+        }
+
+        return unserialize($this->getData());
+    }
+
     public function isHidden(): bool
     {
         return $this->hidden;
