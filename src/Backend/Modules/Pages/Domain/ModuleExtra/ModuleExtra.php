@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Pages\Domain\ModuleExtras;
+namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
 use Doctrine\ORM\Mapping as ORM;
 
