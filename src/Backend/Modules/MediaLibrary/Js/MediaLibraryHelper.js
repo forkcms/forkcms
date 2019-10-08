@@ -90,54 +90,23 @@ jsBackend.mediaLibraryHelper.group = {
           // remove selected class
           ui.item.removeClass('selected')
 
-          // update disconnect button
-          jsBackend.mediaLibraryHelper.group.updateDisconnectButton(currentMediaGroupId)
-          // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
-        } else {
-          // don't prevent the click, click handler does the rest
-          ui.item.removeClass('preventClick')
+          return
         }
+
+        // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
+        // don't prevent the click, click handler does the rest
+        ui.item.removeClass('preventClick')
       }
     })
 
-    // bind hover to media items so you see the edit button
-    $('.mediaConnectedItems').on('hover', '.ui-state-default', function () {
-      $(this).toggleClass('hover')
-    })
+    $('[data-fork=connectedItems]').on('click', '[data-fork=disconnect]', function () {
+      var $mediaItem = $(this).closest('[data-fork=mediaItem]')
 
-    // bind click to media items so you can select them
-    $('.mediaConnectedItems').on('click', '.mediaHolder', function () {
-      // click handler executes
-      if (!$(this).parent().hasClass('preventClick')) {
-        // toggle class
-        $(this).parent().toggleClass('selected')
-
-        var groupId = $(this).closest('.mediaGroup').attr('id').replace('group-', '')
-
-        // update disconnect button
-        jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
-        // else remove prevent click
-      } else {
-        $(this).parent().removeClass('preventClick')
-      }
-
-      // external modules could use this
-      $('body').trigger('mediaSelectedConnectedItemsChanged')
-    })
-
-    // bind click to disconnect button so you can disconnect media items
-    $('.mediaEditBox').on('click', '.disconnectMediaItemsButton', function () {
-      // button is not disabled
-      if (!$(this).hasClass('disabled')) {
-        // define groupId
-        var groupId = $(this).data('i')
-
-        // disconnect items
-        jsBackend.mediaLibraryHelper.group.disconnectMediaFromGroup(groupId)
-
-        // update disconnect button
-        jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
-      }
+      jsBackend.mediaLibraryHelper.group.disconnectMediaFromGroup(
+        $mediaItem.data('mediaId'),
+        $mediaItem.data('folderId'),
+        $mediaItem.closest('[data-media-group-id]').data('mediaGroupId')
+      )
     })
   },
 
@@ -168,13 +137,13 @@ jsBackend.mediaLibraryHelper.group = {
       e.preventDefault()
 
       // redefine folderId when clicked on other group
-      if ($(this).data('i') !== currentMediaGroupId || $(this).data('aspectRatio') !== currentAspectRatio) {
+      if ($(this).data('groupId') !== currentMediaGroupId || $(this).data('aspectRatio') !== currentAspectRatio) {
         // clear folders cache
         jsBackend.mediaLibraryHelper.group.clearFoldersCache()
       }
 
       // define groupId
-      currentMediaGroupId = $(this).data('i')
+      currentMediaGroupId = $(this).data('groupId')
       currentAspectRatio = $(this).data('aspectRatio')
       if (currentAspectRatio === undefined) {
         currentAspectRatio = false
@@ -231,27 +200,20 @@ jsBackend.mediaLibraryHelper.group = {
   /**
    * Disconnect media fast from this group
    *
+   * @param {int} mediaId The media id we want to disconnect.
+   * @param {int} folderId The folder of the media item we want to disconnect.
    * @param {int} groupId The group id we want to disconnect from.
    */
-  disconnectMediaFromGroup: function (groupId) {
+  disconnectMediaFromGroup: function (mediaId, folderId, groupId) {
     // define currentMediaGroupId
     currentMediaGroupId = groupId
 
     // current ids
     var currentIds = $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',')
 
-    // get selected items
-    var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(currentMediaGroupId)
-
-    // get ids from selected items
-    $items.each(function () {
-      // get id
-      var id = $(this).attr('id').replace('media-', '')
-
-      // remove from array
-      currentIds = jQuery.grep(currentIds, function (value) {
-        return value !== id
-      })
+    // remove from array
+    currentIds = jQuery.grep(currentIds, function (value) {
+      return value !== mediaId
     })
 
     // redefine current media group
@@ -285,22 +247,18 @@ jsBackend.mediaLibraryHelper.group = {
           jsBackend.mediaLibraryHelper.group.updateGroupMedia()
 
           // update folder counts for items
-          jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items)
-
-          // update disconnect button
-          jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
+          jsBackend.mediaLibraryHelper.group.updateFolderCount(folderId, '-', 1)
         }
       })
-    } else {
-      // update group media
-      jsBackend.mediaLibraryHelper.group.updateGroupMedia()
 
-      // update folder counts for items
-      jsBackend.mediaLibraryHelper.group.updateFolderCountsForItemsToDisconnect($items)
-
-      // update disconnect button
-      jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
+      return
     }
+
+    // update group media
+    jsBackend.mediaLibraryHelper.group.updateGroupMedia()
+
+    // update folder counts for items
+    jsBackend.mediaLibraryHelper.group.updateFolderCount(folderId, '-', 1)
   },
 
   /**
@@ -397,8 +355,7 @@ jsBackend.mediaLibraryHelper.group = {
         // Redefine wrong id (mediaGroupId was missing)
         $(this).attr('id', 'group-' + mediaGroupId)
         $(this).data('id', mediaGroupId)
-        $(this).find('.addMediaButton').first().data('i', mediaGroupId)
-        $(this).find('.disconnectMediaItemsButton').first().data('i', mediaGroupId)
+        $(this).find('.addMediaButton').first().data('groupId', mediaGroupId)
 
         activateFallback = true
       }
@@ -508,31 +465,9 @@ jsBackend.mediaLibraryHelper.group = {
     })
   },
 
-  /**
-   * @param {int} groupId
-   * @returns {*|jQuery|HTMLElement}
-   */
-  getSelectedItems: function (groupId) {
-    return jsBackend.mediaLibraryHelper.group.get(groupId).find('.mediaConnectedItems li.selected')
-  },
-
   updateFolderSelected: function () {
     // select the current media folder
     $('#mediaFolders').val(mediaFolderId)
-  },
-
-  /**
-   * Enable/disable the disconnect button
-   *
-   * @param {int} groupId
-   */
-  updateDisconnectButton: function (groupId) {
-    // init variables
-    var $group = jsBackend.mediaLibraryHelper.group.get(groupId)
-    var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(groupId)
-
-    // toggle disabled button
-    $group.find('.mediaEditBox .disconnectMediaItemsButton').toggleClass('disabled', ($items.length <= 0))
   },
 
   /**
@@ -580,22 +515,6 @@ jsBackend.mediaLibraryHelper.group = {
 
     // update folders
     jsBackend.mediaLibraryHelper.group.updateFolders()
-  },
-
-  /**
-   * Update folder counts for items
-   *
-   * @param {array} $items - The media items
-   */
-  updateFolderCountsForItemsToDisconnect: function ($items) {
-    // update folder count
-    $items.each(function () {
-      // get id
-      var thisFolderId = $(this).data('folderId')
-
-      // update folder count
-      jsBackend.mediaLibraryHelper.group.updateFolderCount(thisFolderId, '-', 1)
-    })
   },
 
   updateFolders: function () {
@@ -1107,7 +1026,13 @@ jsBackend.mediaLibraryHelper.upload = {
     }).trigger('change')
 
     // bind delete actions
-    $('#uploadedMedia').on('click', '.deleteMediaItem', function () {
+    $('#uploadedMedia').on('click', '[data-fork=disconnect]', function () {
+      var $mediaItem = $(this).closest('[data-fork=mediaItem]')
+      jsBackend.mediaLibraryHelper.group.disconnectMediaFromGroup(
+        $mediaItem.data('mediaId'),
+        $mediaItem.data('folderId'),
+        currentMediaGroupId
+      )
       $(this).parent().remove()
     })
   },
@@ -1461,8 +1386,8 @@ jsBackend.mediaLibraryHelper.templates = {
    * @returns {string}
    */
   getHTMLForMediaItemToConnect: function (mediaItem) {
-    var html = '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">'
-    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">'
+    var html = '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
+    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     if (mediaItem.type === 'image') {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
@@ -1524,8 +1449,8 @@ jsBackend.mediaLibraryHelper.templates = {
     var html = ''
 
     // create element
-    html += '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">'
-    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">'
+    html += '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
+    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     // is image
     if (mediaItem.type === 'image') {
