@@ -613,7 +613,7 @@ jsBackend.mediaLibraryHelper.group = {
     })
 
     $(mediaItemTypes).each(function (index, type) {
-      $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(html[type]) : rowNoItems)
+      $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $('<tbody>' + html[type] + '</tbody>') : rowNoItems)
       $('#mediaCount' + utils.string.ucfirst(type)).text('(' + counts[type] + ')')
     })
 
@@ -659,11 +659,6 @@ jsBackend.mediaLibraryHelper.group = {
 
     // get table
     var $tables = $('.mediaTable')
-
-    // redo odd-even
-    $tables.find('tr').removeClass('odd').removeClass('even')
-    $tables.find('tr:even').addClass('odd')
-    $tables.find('tr:odd').addClass('even')
 
     // bind change when connecting/disconnecting media
     $tables.find('.toggleConnectedCheckbox').on('click', function () {
