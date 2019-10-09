@@ -3,9 +3,10 @@
 namespace Frontend\Modules\MediaLibrary\Twig\Extensions;
 
 use Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class FrontendHelperExtensions extends \Twig_Extension
+class FrontendHelperExtensions extends AbstractExtension
 {
     /**
      * @var FrontendHelper
