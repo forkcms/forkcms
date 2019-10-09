@@ -727,7 +727,7 @@ jsBackend.mediaLibraryHelper.group = {
     if (disabled !== '') {
       $tabs.children(disabled).addClass('disabled').children('a').removeAttr('data-toggle')
     }
-    $tabs.children(enabled).addClass('active').children('a').attr('data-toggle', 'tab')
+    $tabs.children(enabled).children('a').attr('data-toggle', 'tab').first().tab('show')
 
     // get table
     var $tables = $('.mediaTable')
