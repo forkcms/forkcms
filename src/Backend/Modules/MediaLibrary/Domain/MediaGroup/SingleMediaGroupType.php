@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SingleMediaGroupType extends MediaGroupType
+final class SingleMediaGroupType extends MediaGroupType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
