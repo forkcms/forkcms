@@ -703,18 +703,18 @@ jsBackend.mediaLibraryHelper.group = {
    * Runs the validation for the minimum and maximum count of connected media
    */
   validateMinimumMaximumCount: function() {
-    var connectedMediaCount = currentMediaItemIds.length
+    var totalMediaCount = jsBackend.mediaLibraryHelper.upload.uploadedCount + currentMediaItemIds.length
     var $minimumCountError = $('[data-role="fork-media-count-error"]')
     var $submitButton = $('#addMediaSubmit')
 
-    if (maximumMediaItemsCount !== false && connectedMediaCount > maximumMediaItemsCount) {
+    if (maximumMediaItemsCount !== false && totalMediaCount > maximumMediaItemsCount) {
       $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('hidden')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
-    if (minimumMediaItemsCount !== false && connectedMediaCount < minimumMediaItemsCount) {
+    if (minimumMediaItemsCount !== false && totalMediaCount < minimumMediaItemsCount) {
       $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('hidden')
       $submitButton.addClass('disabled').attr('disabled', true)
 
@@ -1028,6 +1028,8 @@ jsBackend.mediaLibraryHelper.upload = {
     // bind delete actions
     $('#uploadedMedia').on('click', '[data-fork=disconnect]', function () {
       $(this).parent().parent().remove()
+      --jsBackend.mediaLibraryHelper.upload.uploadedCount
+      jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
     })
   },
 

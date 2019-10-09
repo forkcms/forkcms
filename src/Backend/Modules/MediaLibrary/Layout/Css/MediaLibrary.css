@@ -186,7 +186,8 @@
   background: none;
   border: none;
 }
-#addMediaDialog #tabLibrary .options{
+#addMediaDialog #tabLibrary .options,
+#addMediaDialog #tabUploadMedia .options {
   margin-bottom: 1em;
 }
 #addMediaDialog #tabLibrary .tab-content {
