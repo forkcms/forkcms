@@ -5,7 +5,6 @@ namespace Backend\Modules\Pages\Domain\ModuleExtra;
 use Common\ModuleExtraType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\NonUniqueResultException;
 
 class ModuleExtraRepository extends ServiceEntityRepository
 {
@@ -18,6 +17,11 @@ class ModuleExtraRepository extends ServiceEntityRepository
     {
         // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($moduleExtra);
+    }
+
+    public function save(ModuleExtra $moduleExtra): void
+    {
+        $this->getEntityManager()->flush($moduleExtra);
     }
 
     public function getWidgets(): array
@@ -46,6 +50,22 @@ class ModuleExtraRepository extends ServiceEntityRepository
                 [
                     'type' => (string) ModuleExtraType::block(),
                     'hidden' => false,
+                ]
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findWidgetsByModuleAndAction(string $module, string $action): array
+    {
+        return $this
+            ->createQueryBuilder('me', 'me.id')
+            ->where('me.module = :module')
+            ->andWhere('me.action = :action')
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'action' => $action,
                 ]
             )
             ->getQuery()
