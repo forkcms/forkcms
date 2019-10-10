@@ -11,6 +11,9 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax');
+
+        var_dump((string) $client->getResponse()->getContent());
+
         self::assertEquals(
             500,
             $client->getResponse()->getStatusCode()
