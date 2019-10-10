@@ -87,5 +87,6 @@
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
         <env name="FORK_ENV" value="test" />
+        <env name="FORK_DEBUG" value="1" />
     </php>
 </phpunit>
