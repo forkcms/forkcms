@@ -13,3 +13,12 @@ framework:
         collect: false
     router:
         resource: "%kernel.project_dir%/app/config/routing_install.yml"
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+monolog:
+    handlers:
+        main:
+            type: 'null'
