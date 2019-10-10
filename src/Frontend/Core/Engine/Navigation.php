@@ -512,8 +512,8 @@ class Navigation extends KernelLoader
                             $extra->getAction() === $action &&
                             $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && $extra->unserializedData() !== null
-                                && array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data) {
+                            if ($data !== null && $extra->getData() !== null
+                                && array_intersect_assoc($data, (array) $extra->getData()) !== $data) {
                                 // It is the correct action but has the wrong data
                                 continue;
                             }
@@ -523,8 +523,8 @@ class Navigation extends KernelLoader
 
                         if ($extra->getModule() === $module && $extra->getAction() === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && $extra->unserializedData() !== null) {
-                                if (array_intersect_assoc($data, (array) $extra->unserializedData()) !== $data) {
+                            if ($data !== null && $extra->getData() !== null) {
+                                if (array_intersect_assoc($data, (array) $extra->getData()) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
                                 }
@@ -533,7 +533,7 @@ class Navigation extends KernelLoader
                                 $dataMatch = true;
                             }
 
-                            if ($data === null && $extra->unserializedData() === null) {
+                            if ($data === null && $extra->getData() === null) {
                                 $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }

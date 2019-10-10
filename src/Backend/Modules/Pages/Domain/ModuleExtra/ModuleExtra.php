@@ -73,7 +73,7 @@ class ModuleExtra
         string $type,
         string $label,
         ?string $action,
-        ?string $data,
+        $data,
         bool $hidden,
         int $sequence
     ) {
@@ -81,7 +81,7 @@ class ModuleExtra
         $this->type = $type;
         $this->label = $label;
         $this->action = $action;
-        $this->data = $data;
+        $this->data = serialize($data);
         $this->hidden = $hidden;
         $this->sequence = $sequence;
     }
@@ -91,7 +91,7 @@ class ModuleExtra
         string $type,
         string $label,
         ?string $action,
-        ?string $data,
+        $data,
         bool $hidden,
         int $sequence
     ): void {
@@ -99,7 +99,7 @@ class ModuleExtra
         $this->type = $type;
         $this->label = $label;
         $this->action = $action;
-        $this->data = $data;
+        $this->data = serialize($data);
         $this->hidden = $hidden;
         $this->sequence = $sequence;
     }
@@ -129,21 +129,16 @@ class ModuleExtra
         return $this->action;
     }
 
-    public function getData(): ?string
-    {
-        return $this->data;
-    }
-
     /**
      * @return mixed|null
      */
-    public function unserializedData()
+    public function getData()
     {
-        if ($this->getData() === null) {
+        if ($this->data === null) {
             return null;
         }
 
-        return unserialize($this->getData());
+        return unserialize($this->data);
     }
 
     public function isHidden(): bool
