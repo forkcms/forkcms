@@ -38,8 +38,6 @@
                   </div>
                 </div>
 
-                {# Including the MediaLibrary MediaGroup Helper #}
-                {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
                 {{ form_widget(form.mediaGroup, {'mediaGroup': mediaGroup}) }}
 
                 {{ form_row(form.text) }}

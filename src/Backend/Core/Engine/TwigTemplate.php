@@ -13,7 +13,6 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\FormRenderer;
 use Twig_Environment;
 use Twig_Extension_Debug;
