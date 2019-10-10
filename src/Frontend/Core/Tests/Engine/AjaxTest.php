@@ -12,6 +12,7 @@ class AjaxTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/frontend/ajax');
+
         self::assertEquals(
             Response::HTTP_FORBIDDEN,
             $client->getResponse()->getStatusCode()
