@@ -380,7 +380,7 @@ jsBackend.ckeditor = {
     uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
     // load some extra plugins
-    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary',
+    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary,codemirror',
 
     // remove useless plugins
     removePlugins: 'image2,a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
