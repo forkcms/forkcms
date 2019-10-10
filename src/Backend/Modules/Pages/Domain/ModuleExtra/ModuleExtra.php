@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository")
  * @ORM\Table(name="modules_extras")
  */
-final class ModuleExtra
+class ModuleExtra
 {
     /**
      * @var int
