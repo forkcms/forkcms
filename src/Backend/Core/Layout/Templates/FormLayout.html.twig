@@ -332,10 +332,6 @@
   {{ form_widget(form) }}
 {% endblock %}
 
-{% block media_group_widget %}
-  {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
-{% endblock media_group_widget %}
-
 {% block form_row %}
   <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
     {{- form_label(form) -}}
