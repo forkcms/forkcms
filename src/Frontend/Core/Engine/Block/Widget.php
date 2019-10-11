@@ -3,6 +3,7 @@
 namespace Frontend\Core\Engine\Block;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Common\Exception\RepositoryNotFoundException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
@@ -248,7 +249,7 @@ class Widget extends KernelLoader implements ModuleExtraInterface
     ): self {
         $moduleExtraRepository = FrontendModel::getContainer()->get(ModuleExtraRepository::class);
         if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-            throw new RuntimeException('Repository "' . ModuleExtraRepository::class . '" was not found');
+            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
         }
 
         return new self(
