@@ -97,4 +97,30 @@ class ModuleExtraRepository extends ServiceEntityRepository
 
         return $results[0]['data'];
     }
+
+    public function getWidgetId(string $module, string $action): ?int
+    {
+        /** @var ModuleExtra|null $moduleExtra */
+        $moduleExtra = $this
+            ->createQueryBuilder('em')
+            ->where('em.module = :module')
+            ->andWhere('em.type = :type')
+            ->andWhere('em.action = :action')
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'type' => (string) ModuleExtraType::widget(),
+                    'action' => $action,
+                ]
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            return null;
+        }
+
+        return $moduleExtra->getId();
+    }
 }

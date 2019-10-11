@@ -4,6 +4,7 @@ namespace Backend\Modules\FormBuilder\Installer;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\ModuleExtraType;
 
 /**
@@ -168,12 +169,19 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id
-             FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
-        );
+        /** @var ModuleExtraRepository $repo */
+        $repo = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+
+        if (!$repo instanceof ModuleExtraRepository) {
+            throw new \RuntimeException('Could not find "' . ModuleExtraRepository::class . '"');
+        }
+
+        $widgetId = $repo->getWidgetId('Search', 'Form');
+
+        if ($widgetId === null) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 }
