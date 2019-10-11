@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\ModuleExtra;
 use Common\ModuleExtraType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use RuntimeException;
 
 class ModuleExtraRepository extends ServiceEntityRepository
 {
@@ -126,5 +127,32 @@ class ModuleExtraRepository extends ServiceEntityRepository
         }
 
         return $moduleExtra->getId();
+    }
+
+    public function updateWidgetDataByModuleAndSequence(string $module, string $sequence, $data): void
+    {
+        $moduleExtra = $this->findOneBy(
+            [
+                'module' => $module,
+                'type' => 'widget',
+                'sequence' => $sequence,
+            ]
+        );
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new RuntimeException('Widget not found');
+        }
+
+        $moduleExtra->update(
+            $moduleExtra->getModule(),
+            $moduleExtra->getType(),
+            $moduleExtra->getLabel(),
+            $moduleExtra->getAction(),
+            $data,
+            $moduleExtra->isHidden(),
+            $moduleExtra->getSequence()
+        );
+
+        $this->save($moduleExtra);
     }
 }

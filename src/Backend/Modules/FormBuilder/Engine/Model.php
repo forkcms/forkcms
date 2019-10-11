@@ -2,8 +2,10 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Common\Exception\RepositoryNotFoundException;
 use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FL;
 use Symfony\Component\Finder\Finder;
@@ -549,24 +551,23 @@ class Model
         // update item
         $database->update('forms', $values, 'id = ?', $id);
 
-        // build array
-        $extra = [
-            'data' => serialize(
-                [
-                    'language' => BL::getWorkingLanguage(),
-                    'extra_label' => $values['name'],
-                    'id' => $id,
-                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
-                ]
-            ),
-        ];
+        // @todo this should be handled in a message handler
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
 
-        // update extra
-        $database->update(
-            'modules_extras',
-            $extra,
-            'module = ? AND type = ? AND sequence = ?',
-            ['FormBuilder', 'widget', '400' . $id]
+        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
+            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
+        }
+
+        $moduleExtraRepository->updateWidgetDataByModuleAndSequence(
+            'FormBuilder',
+            '400' . $id,
+            [
+                'language' => BL::getWorkingLanguage(),
+                'extra_label' => $values['name'],
+                'id' => $id,
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
+            ]
         );
 
         return $id;
