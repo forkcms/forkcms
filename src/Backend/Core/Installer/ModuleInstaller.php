@@ -3,6 +3,7 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
@@ -74,6 +75,11 @@ class ModuleInstaller
     private $example;
 
     /**
+     * @var ModuleExtraRepository
+     */
+    protected $moduleExtraRepository;
+
+    /**
      * @param SpoonDatabase $database The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
@@ -82,6 +88,7 @@ class ModuleInstaller
      */
     public function __construct(
         SpoonDatabase $database,
+        ModuleExtraRepository $moduleExtraRepository,
         array $languages,
         array $interfaceLanguages,
         bool $example = false,
@@ -92,6 +99,7 @@ class ModuleInstaller
         $this->interfaceLanguages = $interfaceLanguages;
         $this->example = $example;
         $this->variables = $variables;
+        $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
     /**

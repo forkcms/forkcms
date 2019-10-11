@@ -3,6 +3,7 @@
 namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
@@ -372,11 +373,13 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
-            ['Search', 'Form']
-        );
+        $widgetId = $this->moduleExtraRepository->getWidgetId('Search', 'Form');
+
+        if (!$widgetId instanceof ModuleExtra) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 
     private function hasPageWithProfilesBlock(string $language): bool

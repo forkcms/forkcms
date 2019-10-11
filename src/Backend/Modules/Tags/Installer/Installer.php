@@ -3,6 +3,7 @@
 namespace Backend\Modules\Tags\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Common\ModuleExtraType;
 
 /**
@@ -74,11 +75,13 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
-        );
+        $widgetId = $this->moduleExtraRepository->getWidgetId('Search', 'Form');
+
+        if (!$widgetId instanceof ModuleExtra) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 
     private function hasPageWithTagsBlock(string $language): bool
