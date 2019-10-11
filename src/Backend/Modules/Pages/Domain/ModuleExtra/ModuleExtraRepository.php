@@ -71,4 +71,30 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getWidgetDataByModuleAndActionAndItemId(string $module, string $action, ?int $id): ?string
+    {
+        $results = $this
+            ->createQueryBuilder('me')
+            ->select('me.data')
+            ->where('me.module = :module')
+            ->andWhere('me.action = :action')
+            ->andWhere('me.data LIKE :id')
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'action' => $action,
+                    'id' => '%s:2:"id";i:' . $id . ';%',
+                ]
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getArrayResult();
+
+        if (count($results) === 0 || !array_key_exists('data', $results[0])) {
+            return null;
+        }
+
+        return $results[0]['data'];
+    }
 }

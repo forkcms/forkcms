@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Exception\RedirectException;
 use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
