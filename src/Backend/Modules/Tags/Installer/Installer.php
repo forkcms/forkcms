@@ -77,7 +77,7 @@ class Installer extends ModuleInstaller
     {
         $widgetId = $this->moduleExtraRepository->getWidgetId('Search', 'Form');
 
-        if (!$widgetId instanceof ModuleExtra) {
+        if ($widgetId === null) {
             throw new \RuntimeException('Could not find Search Widget');
         }
 
