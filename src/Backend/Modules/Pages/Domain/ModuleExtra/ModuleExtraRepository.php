@@ -61,10 +61,12 @@ class ModuleExtraRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('me', 'me.id')
             ->where('me.module = :module')
+            ->andWhere('me.type = :type')
             ->andWhere('me.action = :action')
             ->setParameters(
                 [
                     'module' => $module,
+                    'type' => (string) ModuleExtraType::widget(),
                     'action' => $action,
                 ]
             )
@@ -78,11 +80,13 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->createQueryBuilder('me')
             ->select('me.data')
             ->where('me.module = :module')
+            ->andWhere('me.type = :type')
             ->andWhere('me.action = :action')
             ->andWhere('me.data LIKE :id')
             ->setParameters(
                 [
                     'module' => $module,
+                    'type' => (string) ModuleExtraType::widget(),
                     'action' => $action,
                     'id' => '%s:2:"id";i:' . $id . ';%',
                 ]
