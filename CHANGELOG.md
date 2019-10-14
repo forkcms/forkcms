@@ -1,3 +1,43 @@
+5.7.0  (2019-10-03)
+------------------
+
+Added:
+* Core: Show session timeout warning in the backend [#2858](https://github.com/forkcms/forkcms/pull/2858)
+* Profiles: Added about field for profiles [#2914](https://github.com/forkcms/forkcms/pull/2914)
+* Core: Add codemirror to CKEditor for improved source edits [#2906](https://github.com/forkcms/forkcms/pull/2906)
+* Core: Twig extension include once [#2918](https://github.com/forkcms/forkcms/pull/2918)
+* Core: Require ext-json in composer.json [#2925](https://github.com/forkcms/forkcms/pull/2925)
+* MediaLibrary: Single media group type and media count validation [#2924](https://github.com/forkcms/forkcms/pull/2924)
+
+Fixed:
+* Core: Update vendors [#2917](https://github.com/forkcms/forkcms/pull/2917) [#2889](https://github.com/forkcms/forkcms/pull/2889) [#2907](https://github.com/forkcms/forkcms/pull/2907) [#2887](https://github.com/forkcms/forkcms/pull/2887) [#2881](https://github.com/forkcms/forkcms/pull/2881) [#2884](https://github.com/forkcms/forkcms/pull/2884) [#2886](https://github.com/forkcms/forkcms/pull/2886) [#2922](https://github.com/forkcms/forkcms/pull/2922) [#2923](https://github.com/forkcms/forkcms/pull/2923)
+* Blog: Fix order of comment form fieldss and their error messages [#2885](https://github.com/forkcms/forkcms/pull/2885)
+* Users: Add an error instead of an editor when bruteforcing the backend [#2883](https://github.com/forkcms/forkcms/pull/2883)
+* Pages: Fix authentication checkboxes not saving when adding a page [#2882](https://github.com/forkcms/forkcms/pull/2882)
+* MediaLibrary: Fix broken links in docs [#2898](https://github.com/forkcms/forkcms/pull/2898)
+* Extensions: Use smaller thumbnail for the fork theme [#2899](https://github.com/forkcms/forkcms/pull/2899)
+* Github: Improve issue and PR templates  [#2905](https://github.com/forkcms/forkcms/pull/2905)
+* FAQ: Fix publish button colour [#2902](https://github.com/forkcms/forkcms/pull/2902)
+* Profiles: Password is only required when the profile doesn't get a notification email [#2892](https://github.com/forkcms/forkcms/pull/2892)
+* Docker: Fix dockerfile [#2891](https://github.com/forkcms/forkcms/pull/2891)
+* Locale: Fix building English backend translation cache from the console [#2910](https://github.com/forkcms/forkcms/pull/2910)
+* MediaLibrary: Fix dropzone triggered multiple times [#2903](https://github.com/forkcms/forkcms/pull/2903)
+* Pages: Fix whitespace not being trimmed from text fields [#2901](https://github.com/forkcms/forkcms/pull/2901)
+* MediaLibrary: Show session timeout warning 15min after page load [#2897](https://github.com/forkcms/forkcms/pull/2897) [#2931](https://github.com/forkcms/forkcms/pull/2931)
+* Extensions: Fix English translation for template image checkbox [#2916](https://github.com/forkcms/forkcms/pull/2916)
+* Profiles: Reset login attempts on unblock [#2921](https://github.com/forkcms/forkcms/pull/2921)
+* MediaGallery: Add missing default status [#2919](https://github.com/forkcms/forkcms/pull/2919)
+* MediaLibrary: Fix wrong tab content shown when first tab is disabled in media library [#2926](https://github.com/forkcms/forkcms/pull/2926)
+* Core: Fix env variables loading in test mode [#2928](https://github.com/forkcms/forkcms/pull/2928)
+* Extensions: Add missing translation [#2929](https://github.com/forkcms/forkcms/pull/2929)
+* Core: Fix adding timestamp form php to css and js not working [#2930](https://github.com/forkcms/forkcms/pull/2930)
+
+Security:
+* Core: Add rel=noopener nofeferrer to all the _blank links [#2908](https://github.com/forkcms/forkcms/pull/2908)
+* Core: Make sure that cookies are flagged as secure on https [#2909](https://github.com/forkcms/forkcms/pull/2909) [#2920](https://github.com/forkcms/forkcms/pull/2920)
+* Core: Improve the default headers [#2912](https://github.com/forkcms/forkcms/pull/2912)
+
+
 5.6.2  (2019-07-29)
 ------------------
 
