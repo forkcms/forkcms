@@ -742,9 +742,7 @@ class Model
                 // add default widgets
                 foreach ($position['widgets'] as $widget) {
                     // fetch extra_id for this extra
-                    $moduleExtraRepository = BackendModel::getContainer()->get(
-                        'Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'
-                    );
+                    $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
                     if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
                         throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);

@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Service;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -161,7 +162,7 @@ class ForkInstaller
         // create the core installer
         return new CoreInstaller(
             $this->container->get('database'),
-            $this->container->get('Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'),
+            $this->container->get(ModuleExtraRepository::class),
             $data->getLanguages(),
             $data->getInterfaceLanguages(),
             $data->hasExampleData(),
@@ -185,7 +186,7 @@ class ForkInstaller
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
                     $this->container->get('database'),
-                    $this->container->get('Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'),
+                    $this->container->get(ModuleExtraRepository::class),
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),
                     $data->hasExampleData(),
