@@ -35,8 +35,7 @@ class CacheBuilder
         \SpoonDatabase $database,
         CacheItemPoolInterface $cache,
         ModuleExtraRepository $moduleExtraRepository
-    )
-    {
+    ) {
         $this->database = $database;
         $this->cache = $cache;
         $this->moduleExtraRepository = $moduleExtraRepository;
