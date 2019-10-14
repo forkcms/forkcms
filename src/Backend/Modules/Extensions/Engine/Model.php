@@ -744,10 +744,6 @@ class Model
                     // fetch extra_id for this extra
                     $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-                    if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-                        throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
-                    }
-
                     $extraId = $moduleExtraRepository->getWidgetId(
                         $widget['module'],
                         $widget['action'],

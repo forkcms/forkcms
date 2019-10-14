@@ -555,10 +555,6 @@ class Model
         /** @var ModuleExtraRepository $moduleExtraRepository */
         $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
 
-        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
-        }
-
         $moduleExtraRepository->updateWidgetDataByModuleAndSequence(
             'FormBuilder',
             '400' . $id,

@@ -15,7 +15,6 @@ use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -136,10 +135,6 @@ class Model extends \Common\Core\Model
     {
         $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
-        }
-
         $parameters = [];
 
         if ($module !== null) {
@@ -178,14 +173,13 @@ class Model extends \Common\Core\Model
      *
      * @param int $id The id of the extra to delete.
      * @param bool $deleteBlock Should the block be deleted? Default is false.
+     *
+     * @deprecated Use \Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository instead
      */
     public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
         /** @var ModuleExtraRepository $moduleExtraRepository */
         $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
-        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
-        }
 
         $moduleExtra = $moduleExtraRepository->find($id);
 

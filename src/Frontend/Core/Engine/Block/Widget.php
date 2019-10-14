@@ -248,9 +248,6 @@ class Widget extends KernelLoader implements ModuleExtraInterface
         int $id = null
     ): self {
         $moduleExtraRepository = FrontendModel::getContainer()->get(ModuleExtraRepository::class);
-        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
-            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
-        }
 
         return new self(
             $kernel,
