@@ -692,6 +692,7 @@ class Model
         // run installer
         $installer = new $class(
             BackendModel::getContainer()->get('database'),
+            BackendModel::getContainer()->get(ModuleExtraRepository::class),
             BL::getActiveLanguages(),
             array_keys(BL::getInterfaceLanguages()),
             false,
