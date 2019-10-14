@@ -2,7 +2,10 @@
 
 namespace Backend\Modules\Faq\Installer;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\ModuleExtraType;
 
 /**
@@ -176,17 +179,11 @@ class Installer extends ModuleInstaller
         $database = $this->getDatabase();
 
         // get sequence for widget
-        $sequenceExtra = $database->getVar(
-            'SELECT MAX(i.sequence) + 1
-             FROM modules_extras AS i
-             WHERE i.module = ?',
-            ['faq']
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $sequenceExtra = $moduleExtraRepository->getNextSequenceByModule('faq');
 
-        // build array
-        $item = [];
-        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra(
+        $moduleExtra = new ModuleExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
             $this->getModule(),
@@ -195,6 +192,14 @@ class Installer extends ModuleInstaller
             false,
             $sequenceExtra
         );
+
+        $moduleExtraRepository->add($moduleExtra);
+        $moduleExtraRepository->save($moduleExtra);
+
+        // build array
+        $item = [];
+        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+        $item['extra_id'] = $moduleExtra->getId();
         $item['language'] = $language;
         $item['title'] = $title;
         $item['sequence'] = 1;
@@ -202,25 +207,23 @@ class Installer extends ModuleInstaller
         // insert category
         $item['id'] = (int) $database->insert('faq_categories', $item);
 
-        // build data for widget
-        $extra = [
-            'data' => serialize(
-                [
-                    'id' => $item['id'],
-                    'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
-                ]
-            ),
-        ];
-
-        // update widget
-        $database->update(
-            'modules_extras',
-            $extra,
-            'id = ?',
-            [$item['extra_id']]
+        // Update data with the
+        $moduleExtra->update(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            $this->getModule(),
+            'CategoryList',
+            [
+                'id' => $item['id'],
+                'extra_label' => 'Category: ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
+            ],
+            false,
+            $sequenceExtra
         );
+
+        $moduleExtraRepository->save($moduleExtra);
 
         return $item['id'];
     }

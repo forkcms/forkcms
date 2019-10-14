@@ -175,4 +175,19 @@ class ModuleExtraRepository extends ServiceEntityRepository
 
         $this->save($moduleExtra);
     }
+
+    public function getNextSequenceByModule(string $module): int
+    {
+        $qb = $this->createQueryBuilder('me');
+        $qb
+            ->select($qb->expr()->max('me.sequence'))
+            ->where('me.module = :module')
+            ->setParameter('module', $module);
+
+        $currentSequenceNumber = (int) $qb
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $currentSequenceNumber + 1;
+    }
 }
