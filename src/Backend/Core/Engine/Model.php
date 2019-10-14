@@ -210,6 +210,8 @@ class Model extends \Common\Core\Model
      * @param string $field The field of the data you want to check the value for.
      * @param string $value The value to check the field for.
      * @param string $action In case you want to search for a certain action.
+     *
+     * @deprecated Not in use
      */
     public static function deleteExtrasForData(
         string $module,
