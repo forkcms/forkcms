@@ -891,6 +891,11 @@
         <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
         <translation language="pl"><![CDATA[Nazwa folderu motywu nie jest zgodna z nazwą motywu w pliku info.xml.]]></translation>
       </item>
+      <item type="label" name="DetailModule">
+        <translation language="nl"><![CDATA[Module details]]></translation>
+        <translation language="en"><![CDATA[Module details]]></translation>
+        <translation language="fr"><![CDATA[Détails du module]]></translation>
+      </item>
     </Extensions>
   </Backend>
 </locale>
