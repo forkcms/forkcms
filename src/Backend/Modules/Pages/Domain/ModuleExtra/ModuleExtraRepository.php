@@ -103,21 +103,35 @@ class ModuleExtraRepository extends ServiceEntityRepository
         return $results[0]['data'];
     }
 
-    public function getWidgetId(string $module, string $action): ?int
+    public function getWidgetId(string $module, string $action, bool $isDataNull = null, bool $isHidden = null): ?int
     {
         /** @var ModuleExtra|null $moduleExtra */
-        $moduleExtra = $this
+        $qb = $this
             ->createQueryBuilder('em')
             ->where('em.module = :module')
             ->andWhere('em.type = :type')
             ->andWhere('em.action = :action')
-            ->setParameters(
-                [
-                    'module' => $module,
-                    'type' => (string) ModuleExtraType::widget(),
-                    'action' => $action,
-                ]
-            )
+            ->setParameter('module', $module)
+            ->setParameter('type', (string) ModuleExtraType::widget())
+            ->setParameter('action', $action);
+
+        if ($isDataNull === true) {
+            $qb
+                ->andWhere($qb->expr()->isNull('em.data'));
+        }
+
+        if ($isDataNull === false) {
+            $qb
+                ->andWhere($qb->expr()->isNotNull('em.data'));
+        }
+
+        if ($isHidden !== null) {
+            $qb
+                ->andWhere('em.hidden = :isHidden')
+                ->setParameter('isHidden', $isHidden);
+        }
+
+        $moduleExtra = $qb
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

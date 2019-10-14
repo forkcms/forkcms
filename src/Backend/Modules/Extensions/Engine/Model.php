@@ -2,15 +2,17 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\ModulesSettings;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Exception;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Common\Exception\RepositoryNotFoundException;
+use Common\ModulesSettings;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
@@ -740,11 +742,19 @@ class Model
                 // add default widgets
                 foreach ($position['widgets'] as $widget) {
                     // fetch extra_id for this extra
-                    $extraId = (int) BackendModel::getContainer()->get('database')->getVar(
-                        'SELECT i.id
-                         FROM modules_extras AS i
-                         WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-                        ['widget', $widget['module'], $widget['action'], false]
+                    $moduleExtraRepository = BackendModel::getContainer()->get(
+                        'Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'
+                    );
+
+                    if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
+                        throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
+                    }
+
+                    $extraId = $moduleExtraRepository->getWidgetId(
+                        $widget['module'],
+                        $widget['action'],
+                        true,
+                        false
                     );
 
                     // add extra to defaults
