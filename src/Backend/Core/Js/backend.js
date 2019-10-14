@@ -2068,7 +2068,7 @@ jsBackend.session = {
   sessionTimeoutPopup: function () {
     setInterval(function () {
       window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
-    }, (jsBackend.Core.session_timeout - 60) * 1000)
+    }, (jsData.Core.session_timeout - 60) * 1000)
   }
 }
 
