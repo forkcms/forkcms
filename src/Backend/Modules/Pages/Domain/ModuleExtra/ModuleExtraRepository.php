@@ -25,6 +25,12 @@ class ModuleExtraRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($moduleExtra);
     }
 
+    public function delete(ModuleExtra $moduleExtra): void
+    {
+        $this->getEntityManager()->remove($moduleExtra);
+        $this->getEntityManager()->flush($moduleExtra);
+    }
+
     public function getWidgets(): array
     {
         return $this

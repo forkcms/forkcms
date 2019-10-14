@@ -2,16 +2,20 @@
 
 namespace Backend\Core\Engine;
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BackendLanguage;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Common\Exception\RepositoryNotFoundException;
 use Common\ModuleExtraType;
+use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Language\Language as FrontendLanguage;
-use Backend\Core\Language\Language as BackendLanguage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -130,36 +134,34 @@ class Model extends \Common\Core\Model
      */
     public static function deleteExtra(string $module = null, string $type = null, array $data = null): void
     {
-        // init
-        $query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
-        $parameters = [];
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-        // module
-        if ($module !== null) {
-            $query .= ' AND i.module = ?';
-            $parameters[] = $module;
+        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
+            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
         }
 
-        // type
+        $parameters = [];
+
+        if ($module !== null) {
+            $parameters['module'] = $module;
+        }
+
         if ($type !== null) {
-            $query .= ' AND i.type = ?';
-            $parameters[] = $type;
+            $parameters['type'] = $type;
         }
 
         // get extras
-        $extras = (array) self::getContainer()->get('database')->getRecords($query, $parameters);
+        $extras = $moduleExtraRepository->findBy($parameters);
 
-        // loop found extras
+        /** @var ModuleExtra $extra */
         foreach ($extras as $extra) {
-            // get extra data
-            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
-
+            $extraData = $extra->getData();
             // if we have $data parameter set and $extraData not null we should not delete such extra
             if ($data !== null && $extraData === null) {
                 continue;
             }
 
-            if ($data !== null && $extraData !== null) {
+            if ($data !== null && $extraData !== null && is_array($extraData)) {
                 foreach ($data as $dataKey => $dataValue) {
                     if (isset($extraData[$dataKey]) && $dataValue !== $extraData[$dataKey]) {
                         continue 2;
@@ -167,7 +169,7 @@ class Model extends \Common\Core\Model
                 }
             }
 
-            self::deleteExtraById($extra['id']);
+            $moduleExtraRepository->delete($extra);
         }
     }
 
@@ -179,7 +181,19 @@ class Model extends \Common\Core\Model
      */
     public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
-        self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        if (!$moduleExtraRepository instanceof ModuleExtraRepository) {
+            throw RepositoryNotFoundException::withRepository(ModuleExtraRepository::class);
+        }
+
+        $moduleExtra = $moduleExtraRepository->find($id);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new RuntimeException('Could not find extra with id = ' . $id);
+        }
+
+        $moduleExtraRepository->delete($moduleExtra);
 
         if ($deleteBlock) {
             self::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
