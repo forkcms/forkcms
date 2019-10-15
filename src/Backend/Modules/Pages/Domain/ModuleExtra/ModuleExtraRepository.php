@@ -180,7 +180,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('me');
         $qb
-            ->select($qb->expr()->max('me.sequence'))
+            ->select('MAX(me.sequence) + 1')
             ->where('me.module = :module')
             ->setParameter('module', $module);
 
@@ -188,6 +188,14 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
 
-        return $currentSequenceNumber + 1;
+        if ($currentSequenceNumber > 0) {
+            return $currentSequenceNumber;
+        }
+
+        $qb->select('CEIL(MAX(me.sequence) / 1000) * 1000');
+
+        return (int) $qb
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

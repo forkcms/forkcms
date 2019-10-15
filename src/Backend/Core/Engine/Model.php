@@ -566,7 +566,9 @@ class Model extends \Common\Core\Model
                     /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra->getModule() === $module && $extra->getAction() === $action && $extra->getAction() !== null) {
+                        if ($extra->getModule() === $module &&
+                            $extra->getAction() === $action &&
+                            $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
                             if ($data !== null && $extra->getData()
                                 && array_intersect_assoc($data, (array) $extra->getData()) !== $data
@@ -721,21 +723,10 @@ class Model extends \Common\Core\Model
      */
     private static function getNextModuleExtraSequenceForModule(string $module): int
     {
-        $database = self::get('database');
-        // set next sequence number for this module
-        $sequence = (int) $database->getVar(
-            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
-            [$module]
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-        // this is the first extra for this module: generate new 1000-series
-        if ($sequence > 0) {
-            return $sequence;
-        }
-
-        return (int) $database->getVar(
-            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
-        );
+        return $moduleExtraRepository->getNextSequenceByModule($module);
     }
 
     /**

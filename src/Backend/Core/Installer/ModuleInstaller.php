@@ -3,15 +3,16 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\ModuleExtraType;
+use Common\Uri as CommonUri;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Common\Uri as CommonUri;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\ModuleExtraType;
 
 /**
  * The base-class for the installer
@@ -467,20 +468,10 @@ class ModuleInstaller
 
     private function getNextSequenceForModule(string $module): int
     {
-        // set next sequence number for this module
-        $sequence = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
-            [$module]
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-        // this is the first extra for this module: generate new 1000-series
-        if ($sequence > 0) {
-            return $sequence;
-        }
-
-        return (int) $this->getDatabase()->getVar(
-            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
-        );
+        return $moduleExtraRepository->getNextSequenceByModule($module);
     }
 
     /**
