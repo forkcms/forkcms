@@ -8,7 +8,6 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\Exception\RepositoryNotFoundException;
 use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;

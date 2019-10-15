@@ -3,7 +3,6 @@
 namespace Frontend\Core\Engine\Block;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Common\Exception\RepositoryNotFoundException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
@@ -11,7 +10,6 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
-use RuntimeException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
