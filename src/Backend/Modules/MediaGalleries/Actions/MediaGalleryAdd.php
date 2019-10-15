@@ -104,7 +104,7 @@ class MediaGalleryAdd extends ActionAdd
     {
         $this->template->assign('form', $form->createView());
         $this->template->assign('backLink', $this->getBackLink());
-        $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
+        $this->template->assign('mediaGroup', $form->getData()->mediaGroup); // @deprecated not needed anymore from Fork 5.7
 
         // Call parent
         $this->parse();

@@ -17,6 +17,7 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
+        cookie_secure: '%session.cookie_secure%'
     cache:
         app: cache.adapter.filesystem
         pools:
@@ -217,6 +218,11 @@ services:
         public: true
         arguments:
             - "%site.path_www%"
+
+    Common\Core\Twig\Extensions\IncludeOnceExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
 
 fos_rest:
     routing_loader:

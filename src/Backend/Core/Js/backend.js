@@ -51,6 +51,7 @@ var jsBackend =
       if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
+      jsBackend.session.init()
 
       // do not move, should be run as the last item.
       if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()
@@ -379,7 +380,7 @@ jsBackend.ckeditor = {
     uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
     // load some extra plugins
-    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary',
+    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary,codemirror',
 
     // remove useless plugins
     removePlugins: 'image2,a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
@@ -518,8 +519,6 @@ jsBackend.ckeditor = {
     }
 
     if (evt.data.name === 'oembed') {
-      debugger
-
       dialogDefinition.getContents('general').elements.splice(
         2,
         0,
@@ -532,8 +531,8 @@ jsBackend.ckeditor = {
             editor.popup(window.location.origin + jsData.MediaLibrary.browseActionVideos, 800, 800)
 
             window.onmessage = function (event) {
-              if (event.data) {
-                this.setValueOf('general', 'embedCode', event.data)
+              if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
+                this.setValueOf('general', 'embedCode', event.data['media-url'])
               }
             }.bind(this.getDialog())
           },
@@ -2057,6 +2056,19 @@ jsBackend.resizeFunctions = {
     return $(window).on('load resize', function () {
       return tick()
     })
+  }
+}
+
+jsBackend.session = {
+  init: function () {
+    jsBackend.session.sessionTimeoutPopup()
+  },
+
+  // Display a session timeout warning 1 minute before the session might actually expire
+  sessionTimeoutPopup: function () {
+    setInterval(function () {
+      window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
+    }, (jsData.Core.session_timeout - 60) * 1000)
   }
 }
 
