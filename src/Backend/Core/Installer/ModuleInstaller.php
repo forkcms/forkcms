@@ -524,33 +524,6 @@ class ModuleInstaller
     }
 
     /**
-     * @param string $module
-     * @param ModuleExtraType $type
-     * @param string $label
-     * @param array|null $data
-     *
-     * @return int
-     */
-    private function findModuleExtraId(string $module, ModuleExtraType $type, string $label, array $data = null): int
-    {
-        // build query
-        $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
-        $parameters = [$module, $type, $label];
-
-        if ($data === null) {
-            $query .= ' AND data IS NULL';
-
-            return (int) $this->getDatabase()->getVar($query, $parameters);
-        }
-
-        $query .= ' AND data = ?';
-        $parameters[] = serialize($data);
-
-        // get id (if it already exists)
-        return (int) $this->getDatabase()->getVar($query, $parameters);
-    }
-
-    /**
      * Insert a meta item
      *
      * @param string $keywords The keyword of the item.
