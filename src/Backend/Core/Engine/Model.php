@@ -685,19 +685,18 @@ class Model extends \Common\Core\Model
         bool $hidden = false,
         int $sequence = null
     ): int {
-        // return id for inserted extra
-        return self::get('database')->insert(
-            'modules_extras',
-            [
-                'module' => $module,
-                'type' => $type,
-                'label' => $label ?? $module, // if label is empty, fallback to module
-                'action' => $action ?? null,
-                'data' => $data === null ? null : serialize($data),
-                'hidden' => $hidden,
-                'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
-            ]
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+
+        if ($sequence === null) {
+            $sequence = $moduleExtraRepository->getNextSequenceByModule($module);
+        }
+
+        $moduleExtra = new ModuleExtra($module, $type, $label ?? $module, $action ?? null, $data, $hidden, $sequence);
+        $moduleExtraRepository->add($moduleExtra);
+        $moduleExtraRepository->save($moduleExtra);
+
+        return $moduleExtra->getId();
     }
 
     /**
@@ -714,19 +713,6 @@ class Model extends \Common\Core\Model
         }
 
         return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return int
-     */
-    private static function getNextModuleExtraSequenceForModule(string $module): int
-    {
-        /** @var ModuleExtraRepository $moduleExtraRepository */
-        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
-
-        return $moduleExtraRepository->getNextSequenceByModule($module);
     }
 
     /**
