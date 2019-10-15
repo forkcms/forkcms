@@ -38,9 +38,9 @@ doctrine:
                         dir: "%kernel.project_dir%/src/Common/Doctrine/Entity"
                         alias: Common
                         prefix: Common\Doctrine\Entity
-        dql:
-            numeric_functions:
-                ceil: DoctrineExtensions\Query\Mysql\Ceil
+                dql:
+                    numeric_functions:
+                        ceil: DoctrineExtensions\Query\Mysql\Ceil
 
 doctrine_orm_bridge:
     entity_manager: default
