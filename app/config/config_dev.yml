@@ -1,3 +1,6 @@
+imports:
+    - { resource: config.yml }
+
 framework:
     profiler: { only_exceptions: false }
     router:

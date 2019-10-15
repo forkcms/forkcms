@@ -1,0 +1,223 @@
+imports:
+    - { resource: console.yml }
+    - { resource: form.yml }
+    - { resource: doctrine.yml }
+
+framework:
+    secret: "%kernel.secret%"
+    router:
+        resource: "%kernel.project_dir%/app/config/routing.yml"
+        strict_requirements: ~
+    serializer: true
+    form:            ~
+    validation:
+        enable_annotations: true
+    csrf_protection: ~
+    templating:
+        engines: ['twig']
+    session:
+        handler_id: ~
+    cache:
+        app: cache.adapter.filesystem
+        pools:
+            cache.search:
+                adapter: cache.app
+                public: true
+                default_lifetime: 3600
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ 'ForkCMSInstallerBundle' ]
+    filters:
+        cssrewrite: ~
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+        - "%fork.form.theme%"
+    paths:
+        '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
+
+monolog:
+    handlers:
+        main:
+            type:  rotating_file
+            path:  "%site.path_www%/var/logs/%kernel.environment%/error.log"
+            level: error
+            max_files: 10
+        # swift:
+        #     type:       swift_mailer
+        #     from_email: %fork.debug_email%
+        #     to_email:   %fork.debug_email%
+        #     subject:    %site.default_title% %fork.debug_message%
+        #     level:      error
+        #     formatter:  monolog.formatter.html
+        #     content_type: text/html
+
+swiftmailer:
+    transport: "sendmail"
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: "%kernel.project_dir%/"
+                cache_prefix: src/Frontend/Files/Cache
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.project_dir%/"
+                locator: filesystem_insecure
+    cache: default
+    data_loader: default
+
+    # your filter sets are defined here
+    filter_sets:
+        # the name of the "filter set"
+        media_library_backend_thumbnail:
+            # adjust the image quality to 95%
+            quality: 95
+            # list of transformations to apply (the "filters")
+            filters:
+                ## Using the "thumbnail + background" combination will crop the
+                ## the centered image to create your required width/height.
+                # Use the "outbound" mode to crop the image when the size ratio of the input differs
+                thumbnail: { size : [140, 90], mode : outbound }
+                background: { size : [140, 90], position : center }
+        media_library_lightbox_small:
+            filters:
+                scale: { dim : [800, 600] }
+        media_library_lightbox_large:
+            filters:
+                scale: { dim : [1600, 800] }
+        media_library_slider_pano:
+            filters:
+                scale: { dim : [1600, 600] }
+        media_library_one_image_large:
+            filters:
+                thumbnail: { size : [1600, 500], mode : inbound }
+
+services:
+    templating.name_parser.public:
+        alias: templating.name_parser
+        public: true
+    file_locator.public:
+        alias: file_locator
+        public: true
+    logger.public:
+        alias: logger
+        public: true
+    command_bus.public:
+        alias: command_bus
+        public: true
+    liip_imagine.cache.manager.public:
+        alias: liip_imagine.cache.manager
+        public: true
+    mailmotor.factory.public:
+        alias: mailmotor.factory
+        public: true
+    database:
+        class: SpoonDatabase
+        public: true
+        arguments:
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
+        calls:
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
+            # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
+            # and caused some queries to break.
+            - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
+            - [ setDebug, [ "%kernel.debug%" ]]
+    mailer_configurator:
+        class: Common\Mailer\Configurator
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
+        arguments:
+            - "@fork.settings"
+            - "@service_container"
+
+    cache.filesystem.adapter:
+        class: League\Flysystem\Adapter\Local
+        arguments:
+            - "%kernel.cache_dir%"
+    cache.filesystem.filesystem:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - "@cache.filesystem.adapter"
+    cache.adapter:
+        class: MatthiasMullie\Scrapbook\Adapters\Flysystem
+        arguments:
+            - "@cache.filesystem.filesystem"
+    cache.buffer:
+        class: MatthiasMullie\Scrapbook\Buffered\BufferedStore
+        arguments:
+            - "@cache.adapter"
+    cache.pool:
+        class: MatthiasMullie\Scrapbook\Psr6\Pool
+        public: true
+        arguments:
+            - "@cache.buffer"
+    cache.backend_navigation:
+        class: Backend\Core\Engine\NavigationCache
+        public: true
+        arguments:
+            - "@database"
+            - "@cache.pool"
+
+    fork.settings:
+        class: Common\ModulesSettings
+        public: true
+        arguments:
+            - "@database"
+            - "@cache.pool"
+            - "%fork.is_installed%"
+
+    fork.cookie:
+        class: Common\Core\Cookie
+        public: true
+
+    fork.cookie_setter:
+        class: Common\EventListener\ForkCookieSetter
+        arguments:
+            - "@fork.cookie"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    fork.controller_init:
+        class: Common\EventListener\ApplicationSetterListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 2 }
+
+    fork.api_setup:
+        class: Common\EventListener\ApiSetupListener
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
+
+    fork.response_securer:
+        class: Common\EventListener\ResponseSecurer
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    ForkCMS\Utility\Geolocation:
+        public: true
+        arguments:
+            - "@fork.settings"
+
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"
+
+fos_rest:
+    routing_loader:
+        default_format: json
