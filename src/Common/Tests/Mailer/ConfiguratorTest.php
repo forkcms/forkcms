@@ -81,10 +81,7 @@ class ConfiguratorTest extends TestCase
 
     private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder('Common\ModulesSettings')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        return $this->createMock('Common\ModulesSettings');
     }
 
     private function getContainerMock(): PHPUnit_Framework_MockObject_MockObject
