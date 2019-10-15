@@ -243,16 +243,15 @@ class Language
      */
     public static function setLocale(string $language): void
     {
+        $application = (!defined('APPLICATION') || APPLICATION === 'Console') ? 'Backend' : APPLICATION;
+
         // validate file, generate it if needed
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
-            BackendLocaleModel::buildCache('en', APPLICATION);
+            BackendLocaleModel::buildCache('en', $application);
         }
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             // if you use the language in the console act like it is in the backend
-            BackendLocaleModel::buildCache(
-                $language,
-                (!defined('APPLICATION') || APPLICATION === 'Console') ? 'Backend' : APPLICATION
-            );
+            BackendLocaleModel::buildCache($language, $application);
         }
 
         // store

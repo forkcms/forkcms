@@ -116,6 +116,7 @@ class Edit extends BackendBaseActionEdit
             Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
+        $this->form->addTextarea('about', BackendProfilesModel::getSetting($this->id, 'about'));
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');
@@ -213,6 +214,7 @@ class Edit extends BackendBaseActionEdit
             $ddmMonth = $this->form->getField('month');
             $ddmYear = $this->form->getField('year');
             $ddmCountry = $this->form->getField('country');
+            $txtAbout = $this->form->getField('about');
 
             // email filled in?
             if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -306,6 +308,7 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'birth_date', $birthDate);
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
+                BackendProfilesModel::setSetting($this->id, 'about', $txtAbout->getValue());
 
                 $displayName = (isset($values['display_name'])) ?
                     $values['display_name'] : $this->profile['display_name'];

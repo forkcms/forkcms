@@ -26,6 +26,7 @@ class MediaBrowserVideos extends MediaBrowser
         $mediaFolderId = ($this->mediaFolder instanceof MediaFolder) ? $this->mediaFolder->getId() : null;
 
         $this->template->assign('folderId', $mediaFolderId);
+        $this->template->assign('mediaType', 'video');
         $this->template->assign('tree', $this->get('media_library.manager.tree_media_browser_videos')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }

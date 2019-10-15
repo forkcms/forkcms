@@ -13,7 +13,6 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\FormRenderer;
 use Twig_Environment;
 use Twig_Extension_Debug;
@@ -109,7 +108,13 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function connectSymfonyForms(): void
     {
-        $rendererEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig'], $this->environment);
+        $rendererEngine = new TwigRendererEngine(
+            [
+                'Layout/Templates/FormLayout.html.twig',
+                'MediaLibrary/Resources/views/FormLayout.html.twig',
+            ],
+            $this->environment
+        );
         $csrfTokenManager = Model::get('security.csrf.token_manager');
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(

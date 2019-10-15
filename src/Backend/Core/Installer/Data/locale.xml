@@ -10589,7 +10589,7 @@
         <translation language="pl"><![CDATA[Kategoria "%1$s" została zapisana.]]></translation>
       </item>
       <item type="message" name="EditorImagesWithoutAlt">
-        <translation language="nl"><![CDATA[Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank">lees meer</a>)</small>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank" rel="noopener noreferrer">lees meer</a>)</small>.]]></translation>
         <translation language="en"><![CDATA[There are images without an alt-attribute.]]></translation>
         <translation language="hu"><![CDATA[Vannak képek alt-attribútum nélkül.]]></translation>
         <translation language="it"><![CDATA[Ci sono delle immagini senza l'attributo alt]]></translation>
@@ -11669,6 +11669,10 @@
         <translation language="sv"><![CDATA[Ändringar kommer att förloras.]]></translation>
         <translation language="el"><![CDATA[Οι αλλαγές θα χαθούν.]]></translation>
         <translation language="pl"><![CDATA[Zmiany zostaną utracone]]></translation>
+      </item>
+      <item type="message" name="SessionTimeoutWarning">
+        <translation language="nl"><![CDATA[Je sessie gaat verlopen, we raden je aan uw wijzigingen (tijdelijk) op te slaan]]></translation>
+        <translation language="en"><![CDATA[Your session will expire, we recommend you to save your changes (temporarily)]]></translation>
       </item>
       <item type="error" name="ActionNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze actie.]]></translation>

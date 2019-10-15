@@ -253,7 +253,7 @@
     {% if show_preview or show_remove_file %}
       <div class="form-group">
         {% if show_preview and preview_url %}
-          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
+          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank" rel="noopener noreferrer">
             {{ macro.icon('eye') }}
             {{ preview_label|trans|ucfirst }}
           </a>
@@ -331,10 +331,6 @@
 {% block media_group_row %}
   {{ form_widget(form) }}
 {% endblock %}
-
-{% block media_group_widget %}
-  {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
-{% endblock media_group_widget %}
 
 {% block form_row %}
   <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">

@@ -273,7 +273,7 @@ jsBackend.pages.extras = {
     }
     blockHTML += '<div class="btn-group buttonHolder">' +
       '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank" rel="noopener noreferrer"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
       '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
@@ -753,7 +753,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />'
+    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text.trim() + '" />'
     html += '</div>'
 
     html += '</div>'
@@ -764,7 +764,7 @@ jsBackend.pages.extras = {
   },
 
   /**
-   * Creates the html for an editor
+   * Creates the html for a text area
    */
   getTextAreaFieldHtml: function (text, label, key) {
     var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
@@ -776,7 +776,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>'
+    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -799,7 +799,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text + '</textarea>'
+    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -1437,7 +1437,7 @@ jsBackend.pages.tree = {
         onmove: jsBackend.pages.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
       }
     }
 

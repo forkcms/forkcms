@@ -54,7 +54,10 @@ class MediaGroupType extends AbstractType
                 'mediaIds',
                 HiddenType::class,
                 [
-                    'attr' => ['class' => 'mediaIds'],
+                    'attr' => [
+                        'class' => 'mediaIds',
+                        'autocomplete' => 'off',
+                    ],
                     'error_bubbling' => false,
                     'constraints' => $this->getConstraints($options),
                 ]
@@ -88,6 +91,12 @@ class MediaGroupType extends AbstractType
 
         if ($options['aspect_ratio'] instanceof AspectRatio) {
             $view->vars['aspectRatio'] = $options['aspect_ratio']->asFloat();
+        }
+        if (\is_int($options['minimum_items'])) {
+            $view->vars['minimumItems'] = $options['minimum_items'];
+        }
+        if (\is_int($options['maximum_items'])) {
+            $view->vars['maximumItems'] = $options['maximum_items'];
         }
     }
 
@@ -155,7 +164,7 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupReverseTransformFunction(): callable
     {
-        return function (array $mediaGroupData) : MediaGroup {
+        return function (array $mediaGroupData): MediaGroup {
             return $this->saveMediaGroup(
                 $this->getMediaGroupFromMediaGroupData($mediaGroupData),
                 $this->getMediaItemIdsFromMediaGroupData($mediaGroupData)
@@ -183,11 +192,12 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupTransformFunction(): callable
     {
-        return function (MediaGroup $mediaGroup) {
+        return static function (MediaGroup $mediaGroup) {
             return [
                 'id' => $mediaGroup->getId(),
                 'type' => $mediaGroup->getType(),
                 'mediaIds' => implode(',', $mediaGroup->getIdsForConnectedItems()),
+                'mediaGroup' => $mediaGroup,
             ];
         };
     }

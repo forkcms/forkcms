@@ -32,8 +32,8 @@ if ('prod' !== $_SERVER['FORK_ENV']) {
     }
 }
 
-$_SERVER['FORK_ENV'] = $_ENV['FORK_ENV'] = $_SERVER['FORK_ENV'] ?: $_ENV['FORK_ENV'] ?: 'dev';
+$_SERVER['FORK_ENV'] = $_ENV['FORK_ENV'] = $_SERVER['APP_ENV'] = $_SERVER['FORK_ENV'] ?: $_ENV['FORK_ENV'] ?: 'dev';
 $_SERVER['FORK_DEBUG'] = $_SERVER['FORK_DEBUG'] ?? $_ENV['FORK_DEBUG'] ?? 'prod' !== $_SERVER['FORK_ENV'];
-$_SERVER['FORK_DEBUG'] = $_ENV['FORK_DEBUG'] = (int) $_SERVER['FORK_DEBUG'] || filter_var($_SERVER['FORK_DEBUG'], FILTER_VALIDATE_BOOLEAN) ? '1' : '0';
+$_SERVER['FORK_DEBUG'] = $_ENV['FORK_DEBUG'] = $_SERVER['APP_DEBUG'] = (int) $_SERVER['FORK_DEBUG'] || filter_var($_SERVER['FORK_DEBUG'], FILTER_VALIDATE_BOOLEAN) ? '1' : '0';
 
 return $loader;
