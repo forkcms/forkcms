@@ -318,25 +318,6 @@ class Model extends \Common\Core\Model
         return $possibleFormats;
     }
 
-    public static function getExtras(array $ids): array
-    {
-        // get database
-        $database = self::getContainer()->get('database');
-
-        array_walk($ids, 'intval');
-
-        // create an array with an equal amount of question marks as ids provided
-        $extraIdPlaceHolders = array_fill(0, count($ids), '?');
-
-        // get extras
-        return (array) $database->getRecords(
-            'SELECT i.*
-             FROM modules_extras AS i
-             WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
-            $ids
-        );
-    }
-
     /**
      * Get extras for data
      *
@@ -346,6 +327,8 @@ class Model extends \Common\Core\Model
      * @param string $action In case you want to search for a certain action.
      *
      * @return array The ids for the extras.
+     *
+     * @deprecated Not in use
      */
     public static function getExtrasForData(string $module, string $key, string $value, string $action = null): array
     {
@@ -867,35 +850,27 @@ class Model extends \Common\Core\Model
             throw new Exception('The key ' . $key . ' can\'t be updated.');
         }
 
-        // key is 'data' and value is not serialized
-        if ($key === 'data' && is_array($value)) {
-            // serialize value
-            $value = $value === null ? null : serialize($value);
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
+        $moduleExtra = $moduleExtraRepository->find($id);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new \RuntimeException('ModuleExtra with id = ' . $id . ' not found');
         }
 
-        self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', [$id]);
-    }
+        $module = $moduleExtra->getModule();
+        $label = $moduleExtra->getLabel();
+        $type = $moduleExtra->getType();
+        $action = $moduleExtra->getAction();
+        $data = $moduleExtra->getData();
+        $hidden = $moduleExtra->isHidden();
+        $sequence = $moduleExtra->getSequence();
 
-    /**
-     * Update extra data
-     *
-     * @param int $id The id for the extra.
-     * @param string $key The key in the data you want to update.
-     * @param string|array $value The new value.
-     */
-    public static function updateExtraData(int $id, string $key, $value): void
-    {
-        $database = self::getContainer()->get('database');
+        // Set the value dynamically
+        $$key = $value;
 
-        $serializedData = (string) $database->getVar(
-            'SELECT i.data
-             FROM modules_extras AS i
-             WHERE i.id = ?',
-            [$id]
-        );
+        $moduleExtra->update($module, $type, $label, $action, $data, $hidden, $sequence);
 
-        $data = empty($serializedData) ? [] : unserialize($serializedData);
-        $data[$key] = $value;
-        $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
+        $moduleExtraRepository->save($moduleExtra);
     }
 }

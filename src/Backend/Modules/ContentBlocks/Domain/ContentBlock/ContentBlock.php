@@ -3,6 +3,8 @@
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -227,26 +229,41 @@ class ContentBlock
     /**
      * Update the widget so it shows the correct title and has the correct template
      */
-    private function updateWidget()
+    private function updateWidget(): void
     {
         $editUrl = Model::createUrlForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
-        // @TODO replace this with an implementation with doctrine
-        $extras = Model::getExtras([$this->extraId]);
-        $extra = reset($extras);
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
+        $moduleExtra = $moduleExtraRepository->find($this->extraId);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new \RuntimeException('ModuleExtra with id = ' . $this->extraId . ' not found');
+        }
+
         $data = [
             'id' => $this->id,
             'language' => (string) $this->locale,
             'edit_url' => $editUrl,
         ];
-        if (isset($extra['data'])) {
-            $data = $data + (array) $extra['data'];
+        if ($moduleExtra->getData() !== null) {
+            $data = $data + (array) $moduleExtra->getData();
         }
         $data['custom_template'] = $this->template;
         $data['extra_label'] = $this->title;
 
-        Model::updateExtra($this->extraId, 'data', $data);
+        $moduleExtra->update(
+            $moduleExtra->getModule(),
+            $moduleExtra->getType(),
+            $moduleExtra->getLabel(),
+            $moduleExtra->getAction(),
+            $data,
+            $moduleExtra->isHidden(),
+            $moduleExtra->getSequence()
+        );
+
+        $moduleExtraRepository->save($moduleExtra);
     }
 
     public function archive()
