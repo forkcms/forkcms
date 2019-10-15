@@ -26,11 +26,17 @@ after_failure:
 jobs:
   include:
     - stage: test
+      name: Functional
       php: 7.1
       script: travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=coverage.clover
     - stage: test
+      name: Unit
       php: 7.1
       script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
+    - stage: installer
+      name: Installer
+      php: 7.1
+      script: travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=coverage.clover
     - stage: code quality
       php: 7.1
       before_script:

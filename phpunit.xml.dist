@@ -9,6 +9,12 @@
          stderr="true"
 >
     <testsuites>
+        <testsuite name="installer">
+            <directory>src/ForkCMS/Bundle/InstallerBundle/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <testsuites>
         <testsuite name="unit">
             <directory>src/*/*Bundle/Tests</directory>
             <directory>src/*/Bundle/*Bundle/Tests</directory>
@@ -60,6 +66,7 @@
             <directory>src/*Bundle/Tests/Controller</directory>
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
+            <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests</exclude>
         </testsuite>
     </testsuites>
 
