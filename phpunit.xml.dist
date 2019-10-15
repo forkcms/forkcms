@@ -12,9 +12,7 @@
         <testsuite name="installer">
             <directory>src/ForkCMS/Bundle/InstallerBundle/Tests</directory>
         </testsuite>
-    </testsuites>
 
-    <testsuites>
         <testsuite name="unit">
             <directory>src/*/*Bundle/Tests</directory>
             <directory>src/*/Bundle/*Bundle/Tests</directory>
@@ -56,9 +54,7 @@
             <exclude>src/Backend/Modules/Users/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>
-    </testsuites>
 
-    <testsuites>
         <testsuite name="functional">
             <directory>src/Backend/Modules/*/Tests/Actions</directory>
             <directory>src/*/*Bundle/Tests/Controller</directory>
