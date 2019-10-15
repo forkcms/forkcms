@@ -27,6 +27,7 @@ jobs:
     include:
         -   stage: code quality
             php: 7.1
+            name: PHP Static Analysis Tool
             before_script:
                 - mysql -e 'create database fork'
                 - mysql -u root fork < tests/data/test_db.sql
@@ -37,6 +38,7 @@ jobs:
             after_success: skip
         -   stage: code quality
             php: 7.1
+            name: PHP Code Sniffer
             before_script: composer install
             script: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
             after_success: skip
