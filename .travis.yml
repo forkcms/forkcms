@@ -48,7 +48,7 @@ jobs:
             name: Unit
             php: 7.1
             script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
-        -   stage: installer
+        -   stage: test
             name: Installer
             php: 7.1
             script: travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=coverage.clover
