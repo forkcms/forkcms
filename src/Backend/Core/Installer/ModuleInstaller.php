@@ -5,6 +5,7 @@ namespace Backend\Core\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -496,9 +497,19 @@ class ModuleInstaller
         bool $hidden = false,
         int $sequence = null
     ): int {
-        $extraId = $this->findModuleExtraId($module, $type, $label, $data);
-        if ($extraId !== 0) {
-            return $extraId;
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $moduleExtra = $moduleExtraRepository->findOneBy(
+            [
+                'module' => $module,
+                'type' => (string) $type,
+                'label' => $label,
+                'data' => $data,
+            ]
+        );
+
+        if ($moduleExtra instanceof ModuleExtra) {
+            return $moduleExtra->getId();
         }
 
         return Model::insertExtra(
