@@ -180,6 +180,11 @@
 /**
  * Media Dialog
  */
+#addMediaDialog .modal-dialog,
+#cropperMediaDialog .modal-dialog {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
 #addMediaDialog .modal-body,
 #cropperMediaDialog .modal-body {
   padding: 0;
