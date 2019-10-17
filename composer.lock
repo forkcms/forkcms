@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba7268f9dd5879458879b87450c2af28",
+    "content-hash": "dd6f1921c73a4501ad30032207f2e24e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -4132,16 +4132,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "3.2.2",
+            "version": "3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "996352f69c82383a70269227470b97202bb547cb"
+                "reference": "f0098ab1b6afa84f3e09cdb4567870418c5eb121"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/996352f69c82383a70269227470b97202bb547cb",
-                "reference": "996352f69c82383a70269227470b97202bb547cb",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/f0098ab1b6afa84f3e09cdb4567870418c5eb121",
+                "reference": "f0098ab1b6afa84f3e09cdb4567870418c5eb121",
                 "shasum": ""
             },
             "require": {
@@ -4163,7 +4163,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2019-07-24T14:34:23+00:00"
+            "time": "2019-10-17T11:29:04+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
