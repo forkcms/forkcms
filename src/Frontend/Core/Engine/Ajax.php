@@ -122,6 +122,10 @@ class Ajax extends KernelLoader implements ApplicationInterface
     public function setAction(string $action): void
     {
         $ajaxActionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $action;
+        if ($this->getModule() === 'Core') {
+            $ajaxActionClass = 'Frontend\\Core\\Ajax\\' . $action;
+        }
+
         if (!class_exists($ajaxActionClass)) {
             throw new BadRequestHttpException('Action class ' . $ajaxActionClass . ' does not exist');
         }
