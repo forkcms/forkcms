@@ -5,3 +5,4 @@ services:
         public: true
 
     Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
+    Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository: ~

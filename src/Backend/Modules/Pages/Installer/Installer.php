@@ -6,6 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\ModuleExtraType;
 
@@ -517,6 +518,11 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClass(ModuleExtra::class);
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                ModuleExtra::class,
+                PageBlock::class,
+            ]
+        );
     }
 }

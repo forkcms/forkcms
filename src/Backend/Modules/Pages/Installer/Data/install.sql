@@ -24,18 +24,3 @@ CREATE TABLE IF NOT EXISTS `pages` (
   PRIMARY KEY (`revision_id`),
   KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `pages_blocks` (
-  `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
-  `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
-  `extra_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'rich_text',
-  `extra_data` text COLLATE utf8mb4_unicode_ci,
-  `html` text COLLATE utf8mb4_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `visible` tinyint(1) NOT NULL DEFAULT '1',
-  `sequence` int(11) NOT NULL,
-  KEY `idx_rev_status` (`revision_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
