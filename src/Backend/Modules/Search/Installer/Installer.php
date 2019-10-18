@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Search\Installer;
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\ModuleExtraType;
 use Backend\Core\Installer\ModuleInstaller;
 

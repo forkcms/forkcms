@@ -2,8 +2,9 @@
 
 namespace Backend\Modules\Tags\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\ModuleExtraType;
 
 /**
@@ -75,7 +76,9 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        $widgetId = $this->moduleExtraRepository->getWidgetId('Search', 'Form');
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
+        $widgetId = $moduleExtraRepository->getWidgetId('Search', 'Form');
 
         if ($widgetId === null) {
             throw new \RuntimeException('Could not find Search Widget');

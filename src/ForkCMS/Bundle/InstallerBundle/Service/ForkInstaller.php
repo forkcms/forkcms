@@ -162,7 +162,6 @@ class ForkInstaller
         // create the core installer
         return new CoreInstaller(
             $this->container->get('database'),
-            $this->container->get(ModuleExtraRepository::class),
             $data->getLanguages(),
             $data->getInterfaceLanguages(),
             $data->hasExampleData(),
@@ -186,7 +185,6 @@ class ForkInstaller
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
                     $this->container->get('database'),
-                    $this->container->get(ModuleExtraRepository::class),
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),
                     $data->hasExampleData(),
