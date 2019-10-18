@@ -101,7 +101,7 @@ class PageBlock
         int $revisionId,
         string $position,
         ?int $extraId,
-        string $extraType,
+        ?string $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
@@ -110,7 +110,7 @@ class PageBlock
         $this->revisionId = $revisionId;
         $this->position = $position;
         $this->extraId = $extraId;
-        $this->extraType = $extraType;
+        $this->extraType = $extraType ?? 'rich_text';
         $this->extraData = $extraData;
         $this->html = $html;
         $this->visible = $visible;
