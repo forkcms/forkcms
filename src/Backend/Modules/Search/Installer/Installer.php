@@ -3,12 +3,10 @@
 namespace Backend\Modules\Search\Installer;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Common\ModuleExtraType;
-use Backend\Core\Installer\ModuleInstaller;
-use RuntimeException;
 
 /**
  * Installer for the search module
@@ -123,16 +121,23 @@ class Installer extends ModuleInstaller
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::getContainer()->get(PageBlockRepository::class);
 
-        /** @var PageBlock $pageBlock */
-        $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $pageRevisionId]);
+        $pageBlocks = $pageBlockRepository->findBy(['revisionId' => $pageRevisionId]);
 
-        if (!$pageBlock instanceof PageBlock) {
-            throw new RuntimeException('No page block exists for revision_id = ' . $pageRevisionId);
+        if (count($pageBlocks) === 0) {
+            return '';
         }
 
-        $blocks = (array) $pageBlock->getHtml();
-
-        return empty($blocks) ? '' : strip_tags(implode(' ', $blocks));
+        return strip_tags(
+            implode(
+                ' ',
+                array_map(
+                    function (PageBlock $pageBlock) {
+                        return $pageBlock->getHtml();
+                    },
+                    $pageBlocks
+                )
+            )
+        );
     }
 
     private function hasExistingSearchIndex(string $language): bool
