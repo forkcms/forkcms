@@ -7,6 +7,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use RuntimeException;
 
+/**
+ * @method ModuleExtra|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ModuleExtra|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ModuleExtra[]    findAll()
+ * @method ModuleExtra[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class ModuleExtraRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
