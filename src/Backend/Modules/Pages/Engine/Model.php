@@ -389,7 +389,9 @@ class Model
 
         // delete blocks and their revisions
         if (!empty($revisionIDs)) {
-            $database->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByRevisionIds($revisionIDs);
         }
 
         // delete page and the revisions
