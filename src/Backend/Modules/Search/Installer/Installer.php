@@ -127,7 +127,7 @@ class Installer extends ModuleInstaller
         $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $pageRevisionId]);
 
         if (!$pageBlock instanceof PageBlock) {
-            throw new RuntimeException('No page block exists for revision_id = ' , $pageRevisionId);
+            throw new RuntimeException('No page block exists for revision_id = ' . $pageRevisionId);
         }
 
         $blocks = (array) $pageBlock->getHtml();
