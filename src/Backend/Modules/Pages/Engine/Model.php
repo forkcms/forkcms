@@ -619,13 +619,6 @@ class Model
         );
     }
 
-    public static function getMaximumBlockId(): int
-    {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.id) FROM pages_blocks AS i'
-        );
-    }
-
     public static function getMaximumPageId($language = null): int
     {
         $language = $language ?? BL::getWorkingLanguage();
