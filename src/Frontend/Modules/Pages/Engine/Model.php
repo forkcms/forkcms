@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
@@ -127,15 +128,11 @@ class Model implements FrontendTagsInterface
 
         // prepare items for search
         foreach ($items as &$item) {
-            $item['text'] = implode(
-                ' ',
-                (array) $database->getColumn(
-                    'SELECT pb.html
-                     FROM pages_blocks AS pb
-                     WHERE pb.revision_id = ?',
-                    [$item['text']]
-                )
-            );
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = FrontendModel::get(PageBlockRepository::class);
+            $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $item['text']]);
+
+            $item['text'] = implode(' ', (array) $pageBlock->getHtml());
 
             $item['full_url'] = FrontendNavigation::getUrl($item['id']);
         }

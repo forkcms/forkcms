@@ -4,8 +4,11 @@ namespace Backend\Modules\Search\Installer;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Common\ModuleExtraType;
 use Backend\Core\Installer\ModuleInstaller;
+use RuntimeException;
 
 /**
  * Installer for the search module
@@ -117,11 +120,17 @@ class Installer extends ModuleInstaller
 
     private function getContentFromBlocksForPageRevision(int $pageRevisionId): string
     {
-        // @todo: Replace with a PageBlockRepository method when it exists.
-        $blocks = (array) $this->getDatabase()->getColumn(
-            'SELECT html FROM pages_blocks WHERE revision_id = ?',
-            [$pageRevisionId]
-        );
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::getContainer()->get(PageBlockRepository::class);
+
+        /** @var PageBlock $pageBlock */
+        $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $pageRevisionId]);
+
+        if (!$pageBlock instanceof PageBlock) {
+            throw new RuntimeException('No page block exists for revision_id = ' , $pageRevisionId);
+        }
+
+        $blocks = (array) $pageBlock->getHtml();
 
         return empty($blocks) ? '' : strip_tags(implode(' ', $blocks));
     }

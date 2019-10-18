@@ -7,6 +7,8 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Common\ModuleExtraType;
@@ -727,46 +729,50 @@ class ModuleInstaller
             return $revision['id'];
         }
 
-        $this->getDatabase()->insert(
-            'pages_blocks',
-            $this->completePageBlockRecords($blocks, $revision['revision_id'])
-        );
+        $this->completeAndSavePageBlocks($blocks, $revision['revision_id']);
 
         // return page id
         return $revision['id'];
     }
 
-    private function completePageBlockRecords(array $blocks, int $defaultRevisionId): array
+    private function completeAndSavePageBlocks(array $blocks, int $defaultRevisionId): void
     {
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+
         // array of positions and linked blocks (will be used to automatically set block sequence)
         $positions = [];
 
-        return array_map(
-            function (array $block) use (&$positions, $defaultRevisionId) {
-                $block['position'] = $block['position'] ?? 'main';
-                $positions[$block['position']][] = $block;
-                $block['revision_id'] = $block['revision_id'] ?? $defaultRevisionId;
-                $block['created_on'] = $block['created_on'] ?? gmdate('Y-m-d H:i:s');
-                $block['edited_on'] = $block['edited_on'] ?? gmdate('Y-m-d H:i:s');
-                $block['extra_id'] = $block['extra_id'] ?? null;
-                $block['visible'] = $block['visible'] ?? true;
-                $block['sequence'] = $block['sequence'] ?? count($positions[$block['position']]) - 1;
-                $block['html'] = $block['html'] ?? '';
+        foreach ($blocks as $block) {
+            $position = $block['position'] ?? 'main';
 
-                // get the html from the template file if it is defined
-                if (!empty($block['html'])) {
-                    $block['html'] = file_get_contents($block['html']);
-                }
+            $positions[$position][] = $block;
 
-                // sort array by its keys, so the array is always the same for SpoonDatabase::insert,
-                // when you don't provide an array with arrays sorted in the same order, the fields get
-                // mixed into different columns
-                ksort($block);
+            $revisionId = $block['revision_id'] ?? $defaultRevisionId;
+            $extraId = $block['extra_id'] ?? null;
+            $visible = $block['visible'] ?? true;
+            $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
+            $html = $block['html'] ?? '';
 
-                return $block;
-            },
-            $blocks
-        );
+            // get the html from the template file if it is defined
+            if ($html !== null && $html !== '') {
+                $html = file_get_contents($block['html']);
+            }
+
+            $pageBlock = new PageBlock(
+                $revisionId,
+                $position,
+                $extraId,
+                null,
+                null,
+                $html,
+                $visible,
+                $sequence
+            );
+
+            $pageBlockRepository->add($pageBlock);
+            $pageBlockRepository->save($pageBlock);
+        }
     }
 
     /**

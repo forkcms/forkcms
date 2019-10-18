@@ -2,16 +2,17 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Service;
 
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\Container;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This service installs fork
@@ -220,21 +221,14 @@ class ForkInstaller
                 [$extra['id']]
             );
 
-            // build insert array for this extra
-            $insertExtras = [];
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = Model::get(PageBlockRepository::class);
             foreach ($revisionIds as $revisionId) {
-                $insertExtras[] = [
-                    'revision_id' => $revisionId,
-                    'position' => $extra['position'],
-                    'extra_id' => $extra['id'],
-                    'created_on' => gmdate('Y-m-d H:i:s'),
-                    'edited_on' => gmdate('Y-m-d H:i:s'),
-                    'visible' => true,
-                ];
-            }
+                $pageBlock = new PageBlock($revisionId, $extra['position'], $extra['id'], '', null, null, true, 0);
 
-            // insert block
-            $this->container->get('database')->insert('pages_blocks', $insertExtras);
+                $pageBlockRepository->add($pageBlock);
+                $pageBlockRepository->save($pageBlock);
+            }
         }
     }
 

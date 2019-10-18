@@ -10,6 +10,8 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksT
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use ForkCMS\App\ForkController;
@@ -158,10 +160,9 @@ class Model
 
                 // delete blocks and their revisions
                 if (!empty($revisionIDs)) {
-                    $database->delete(
-                        'pages_blocks',
-                        'revision_id IN (' . implode(',', $revisionIDs) . ')'
-                    );
+                    /** @var PageBlockRepository $pageBlockRepository */
+                    $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+                    $pageBlockRepository->deleteByRevisionIds($revisionIDs);
                 }
 
                 // delete page and the revisions
@@ -1242,18 +1243,38 @@ class Model
             return;
         }
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
 
         // loop blocks
-        foreach ($blocks as $key => $block) {
-            if ($block['extra_type'] === 'usertemplate') {
-                $blocks[$key]['extra_id'] = null;
-            }
-        }
+        foreach ($blocks as $block) {
+            $revisionId = $block['revision_id'];
+            $position = $block['position'];
+            $extraId = $block['extra_id'];
+            $extraType = $block['extra_type'];
+            $extraData = $block['extra_data'];
+            $html = $block['html'];
+            $visible = $block['visible'];
+            $sequence = $block['sequence'];
 
-        // insert blocks
-        $database->insert('pages_blocks', $blocks);
+            if ($block['extra_type'] === 'usertemplate') {
+                $extraId = null;
+            }
+
+            $pageBlock = new PageBlock(
+                $revisionId,
+                $position,
+                $extraId,
+                $extraType,
+                $extraData,
+                $html,
+                $visible,
+                $sequence
+            );
+
+            $pageBlockRepository->add($pageBlock);
+            $pageBlockRepository->save($pageBlock);
+        }
     }
 
     public static function loadUserTemplates(): array
@@ -1407,7 +1428,10 @@ class Model
             // any revisions to delete
             if (!empty($revisionsToDelete)) {
                 $database->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
-                $database->delete('pages_blocks', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+
+                /** @var PageBlockRepository $pageBlockRepository */
+                $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+                $pageBlockRepository->deleteByRevisionIds($revisionsToDelete);
             }
         }
 

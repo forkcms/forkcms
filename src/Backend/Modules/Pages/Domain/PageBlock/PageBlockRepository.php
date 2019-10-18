@@ -28,4 +28,36 @@ class PageBlockRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->flush($pageBlock);
     }
+
+    public function deleteByRevisionIds(array $ids): void
+    {
+        $this
+            ->createQueryBuilder('em')
+            ->delete()
+            ->where('em.revisionId IN :ids')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function deleteByExtraId(int $extraId): void
+    {
+        $this
+            ->createQueryBuilder('em')
+            ->delete()
+            ->where('em.extraId = :extraId')
+            ->setParameter('extraId', $extraId)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function clearExtraId(int $extraId): void
+    {
+        $this
+            ->createQueryBuilder('em')
+            ->where('em.extraId = :extraId')
+            ->set('em.extraId', null)
+            ->getQuery()
+            ->execute();
+    }
 }

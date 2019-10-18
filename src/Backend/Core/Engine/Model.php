@@ -7,6 +7,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FrontendLanguage;
@@ -189,17 +190,16 @@ class Model extends \Common\Core\Model
         $moduleExtraRepository->delete($moduleExtra);
 
         if ($deleteBlock) {
-            self::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByExtraId($id);
 
             return;
         }
 
-        self::getContainer()->get('database')->update(
-            'pages_blocks',
-            ['extra_id' => null],
-            'extra_id = ?',
-            $id
-        );
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+        $pageBlockRepository->clearExtraId($id);
     }
 
     /**

@@ -9,6 +9,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -235,7 +236,10 @@ class Model
         if (!empty($ids)) {
             // delete those pages and the linked blocks
             $database->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
-            $database->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
+
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByRevisionIds($ids);
         }
 
         return true;
