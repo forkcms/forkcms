@@ -23,7 +23,8 @@ class Page
     public const DRAFT = 'draft';
 
     /**
-     * The real page_id
+     * The real page id although revision id is the real one... (legacy stuff here)
+     * @todo Fix this legacy stuff with the multiple ids.
      *
      * @var int
      *
@@ -201,7 +202,6 @@ class Page
 
     public function __construct(
         int $id,
-        int $revisionId,
         int $userId,
         ?int $parentId,
         ?int $templateId,
@@ -222,7 +222,6 @@ class Page
         bool $allowDelete = true
     ) {
         $this->id = $id;
-        $this->revisionId = $revisionId;
         $this->userId = $userId;
         $this->parentId = $parentId;
         if ($this->parentId === null) {
