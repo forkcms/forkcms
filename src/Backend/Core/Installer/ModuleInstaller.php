@@ -7,12 +7,17 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\Doctrine\Entity\Meta;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
+use DateTime;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -722,17 +727,36 @@ class ModuleInstaller
 
         $revision = $this->completePageRevisionRecord($revision, (array) $meta);
 
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+        /** @var Meta $meta */
+        $meta = $metaRepository->find($revision['meta_id']);
+
         // insert page
-        $revision['revision_id'] = $this->getDatabase()->insert('pages', $revision);
+        $page = new Page(
+            $revision['id'],
+            $revision['user_id'],
+            $revision['parent_id'],
+            $revision['template_id'],
+            $meta,
+            $revision['language'],
+            $revision['title'],
+            $revision['navigation_title'],
+            new DateTime($revision['publish_on']),
+            $revision['sequence']
+        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $pageRepository->add($page);
+        $pageRepository->save($page);
 
         if (empty($blocks)) {
-            return $revision['id'];
+            return $page->getId();
         }
 
-        $this->completeAndSavePageBlocks($blocks, $revision['revision_id']);
+        $this->completeAndSavePageBlocks($blocks, $page->getRevisionId());
 
-        // return page id
-        return $revision['id'];
+        return $page->getId();
     }
 
     private function completeAndSavePageBlocks(array $blocks, int $defaultRevisionId): void
