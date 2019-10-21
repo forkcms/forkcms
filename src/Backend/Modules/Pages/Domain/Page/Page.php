@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\Page\PageRepository")
  * @ORM\Table(
  *     name="pages",
  *     indexes={
