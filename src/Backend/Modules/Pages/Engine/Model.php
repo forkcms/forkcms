@@ -10,6 +10,8 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksT
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -408,13 +410,17 @@ class Model
 
     public static function exists(int $pageId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM pages AS i
-             WHERE i.id = ? AND i.language = ? AND i.status IN (?, ?)
-             LIMIT 1',
-            [$pageId, BL::getWorkingLanguage(), 'active', 'draft']
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $page = $pageRepository->findOneBy(
+            [
+                'id' => $pageId,
+                'language' => BL::getWorkingLanguage(),
+                'status' => [Page::ACTIVE, Page::DRAFT],
+            ]
         );
+
+        return $page instanceof Page;
     }
 
     /**
