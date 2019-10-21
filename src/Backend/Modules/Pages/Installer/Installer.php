@@ -6,6 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\ModuleExtraType;
@@ -21,7 +22,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Pages');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
+        // @todo Remove install.sql
+//        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureEntities();
         $this->configureBackendNavigation();
@@ -522,6 +524,7 @@ class Installer extends ModuleInstaller
             [
                 ModuleExtra::class,
                 PageBlock::class,
+                Page::class,
             ]
         );
     }
