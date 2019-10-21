@@ -6,3 +6,4 @@ services:
 
     Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
     Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository: ~
+    Backend\Modules\Pages\Domain\Page\PageRepository: ~
