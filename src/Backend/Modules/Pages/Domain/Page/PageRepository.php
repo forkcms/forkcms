@@ -115,7 +115,9 @@ class PageRepository extends ServiceEntityRepository
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
             ->where('p.id = :id')
             ->andWhere('p.revisionId = :revisionId')
-            ->andWhere('p.language = :language');
+            ->andWhere('p.language = :language')
+            ->groupBy('p.revisionId')
+        ;
 
         $qb->setParameters(
             [
