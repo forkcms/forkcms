@@ -73,6 +73,30 @@ class PageRepository extends ServiceEntityRepository
         return $this->processFields($results[0]);
     }
 
+    public function getLatestVersion(int $id, string $language): ?int
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->select('MAX(p.revisionId)')
+            ->where('p.id = :id')
+            ->andWhere('p.language = :language')
+            ->andWhere('p.status != :status');
+
+        $qb->setParameters(
+            [
+                'id' => $id,
+                'language' => $language,
+                'status' => Page::ARCHIVE,
+            ]
+        );
+
+        return $qb
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

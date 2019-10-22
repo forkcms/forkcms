@@ -580,12 +580,10 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
 
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT revision_id
-             FROM pages AS i
-             WHERE i.id = ? AND i.language = ? AND i.status != ?',
-            [$id, $language, 'archive']
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+
+        return (int) $pageRepository->getLatestVersion($id, $language);
     }
 
     public static function getMaximumPageId($language = null): int
