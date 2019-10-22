@@ -125,6 +125,25 @@ class PageRepository extends ServiceEntityRepository
         return $max;
     }
 
+    public function getMaximumSequence(int $parentId, string $language): int
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->select('MAX(p.sequence)')
+            ->where('p.language = :language')
+            ->andWhere('p.parentId = :parentId');
+
+        $qb->setParameters(
+            [
+                'language' => $language,
+                'parentId' => $parentId
+            ]
+        );
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

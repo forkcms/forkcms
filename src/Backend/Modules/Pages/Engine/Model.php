@@ -600,13 +600,11 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
 
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+
         // get the maximum sequence inside a certain leaf
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.sequence)
-             FROM pages AS i
-             WHERE i.language = ? AND i.parent_id = ?',
-            [$language, $parentId]
-        );
+        return $pageRepository->getMaximumSequence($parentId, $language);
     }
 
     public static function getPagesForDropdown(string $language = null): array
