@@ -24,13 +24,13 @@ final class ApiController
     }
 
     /**
-     * @Rest\Get("/content-blocks")
+     * @Rest\Get("/content-blocks/{language}")
      */
-    public function getContentblocksAction(): JsonResponse
+    public function getContentblocksAction(string $language): JsonResponse
     {
         return JsonResponse::create(
             json_decode(
-                $this->serializer->serialize($this->blockRepository->findAll(), 'json'),
+                $this->serializer->serialize($this->blockRepository->findBy(['locale' => $language]), 'json'),
                 true
             )
         );
