@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Common\Doctrine\Entity\Meta;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -373,5 +374,29 @@ class Page
     public function setEditedOn(): void
     {
         $this->editedOn = new DateTime();
+    }
+
+    /**
+     * @todo This should become an instance method
+     */
+    public static function isForbiddenToDelete(int $pageId): bool
+    {
+        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+    }
+
+    /**
+     * @todo This should become an instance method
+     */
+    public static function isForbiddenToMove(int $pageId): bool
+    {
+        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+    }
+
+    /**
+     * @todo This should become an instance method
+     */
+    public static function isForbiddenToHaveChildren(int $pageId): bool
+    {
+        return $pageId === BackendModel::ERROR_PAGE_ID;
     }
 }

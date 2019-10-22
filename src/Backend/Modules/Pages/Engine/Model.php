@@ -442,52 +442,16 @@ class Model
         // redefine
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get page (active version)
-        $return = (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on,
-                UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-             IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
-             GROUP_CONCAT(b.extra_id) AS extra_ids
-             FROM pages AS i
-             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
-             LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
-             WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-             GROUP BY i.revision_id',
-            ['block', $pageId, $revisionId, $language]
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $page = $pageRepository->getOne($pageId, $revisionId, $language);
 
         // no page?
-        if (empty($return)) {
+        if ($page === null) {
             return false;
         }
 
-        $return['move_allowed'] = (bool) $return['allow_move'];
-        $return['children_allowed'] = (bool) $return['allow_children'];
-        $return['delete_allowed'] = (bool) $return['allow_delete'];
-
-        if (self::isForbiddenToDelete($return['id'])) {
-            $return['allow_delete'] = false;
-        }
-
-        if (self::isForbiddenToMove($return['id'])) {
-            $return['allow_move'] = false;
-        }
-
-        if (self::isForbiddenToHaveChildren($return['id'])) {
-            $return['allow_children'] = false;
-        }
-
-        // convert into bools for use in template engine
-        $return['edit_allowed'] = (bool) $return['allow_edit'];
-        $return['has_extra'] = (bool) $return['has_extra'];
-
-        // unserialize data
-        if ($return['data'] !== null) {
-            $return['data'] = unserialize($return['data']);
-        }
-
-        // return
-        return $return;
+        return $page;
     }
 
     public static function isForbiddenToDelete(int $pageId): bool
