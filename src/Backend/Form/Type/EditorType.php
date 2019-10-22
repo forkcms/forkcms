@@ -2,8 +2,10 @@
 
 namespace Backend\Form\Type;
 
+use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use Common\Core\Header\Priority;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,10 +13,52 @@ class EditorType extends TextareaType
 {
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
-        if (Model::getPreferredEditor() !== 'ck-editor') {
+        switch (Model::getPreferredEditor()) {
+            case 'ck-editor':
+                $this->configureCkEditorOptions($optionsResolver);
+
+                break;
+            case 'sir-trevor':
+                $this->configureSirTrevorOptions($optionsResolver);
+
+                break;
+            default:
+                parent::configureOptions($optionsResolver);
+
+                break;
+        }
+    }
+
+    public function configureSirTrevorOptions(OptionsResolver $optionsResolver): void
+    {
+        $optionsResolver->setDefaults(['attr' => ['class' => 'inputSirTrevor']]);
+
+        if (!Model::has('header')) {
             return;
         }
+        /** @var Header $header */
+        $header = Model::get('header');
 
+        $header->addJS(
+            '/js/vendors/sir-trevor.min.js',
+            null,
+            false,
+            true,
+            true,
+            Priority::core()
+        );
+        $header->addCSS(
+            '/css/vendors/sir-trevor/sir-trevor.min.css',
+            null,
+            true,
+            false,
+            true,
+            Priority::core()
+        );
+    }
+
+    public function configureCkEditorOptions(OptionsResolver $optionsResolver): void
+    {
         $optionsResolver->setDefaults(['attr' => ['class' => 'inputEditor']]);
 
         if (!Model::has('header')) {
