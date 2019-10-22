@@ -692,9 +692,6 @@ class ModuleInstaller
         if (!isset($revision['data']['image']) && $this->installExample()) {
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }
-        if ($revision['data'] !== null) {
-            $revision['data'] = serialize($revision['data']);
-        }
 
         return $revision;
     }
@@ -743,8 +740,18 @@ class ModuleInstaller
             $revision['title'],
             $revision['navigation_title'],
             new DateTime($revision['publish_on']),
-            $revision['sequence']
+            $revision['sequence'],
+            $revision['navigation_title_overwrite'],
+            $revision['hidden'],
+            $revision['status'],
+            $revision['type'],
+            $revision['data'],
+            $revision['allow_move'],
+            $revision['allow_children'],
+            $revision['allow_edit'],
+            $revision['allow_delete']
         );
+
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
         $pageRepository->add($page);
