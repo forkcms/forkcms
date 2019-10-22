@@ -593,7 +593,7 @@ class Model
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
 
-        return $pageRepository->getMaxPageId($language, BackendAuthentication::getUser()->isGod());
+        return $pageRepository->getMaximumPageId($language, BackendAuthentication::getUser()->isGod());
     }
 
     public static function getMaximumSequence(int $parentId, string $language = null): int

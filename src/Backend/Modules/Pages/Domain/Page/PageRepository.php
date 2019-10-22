@@ -97,7 +97,7 @@ class PageRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getMaxPageId(string $language, bool $isGodUser): int
+    public function getMaximumPageId(string $language, bool $isGodUser): int
     {
         $qb = $this->createQueryBuilder('p');
 
