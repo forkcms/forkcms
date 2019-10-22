@@ -848,6 +848,11 @@ es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.9, es5-ext@~0.10.14:
     es6-symbol "~3.1.1"
     next-tick "^1.0.0"
 
+es5-shim@^4.5.12:
+  version "4.5.13"
+  resolved "https://registry.yarnpkg.com/es5-shim/-/es5-shim-4.5.13.tgz#5d88062de049f8969f83783f4a4884395f21d28b"
+  integrity sha512-xi6hh6gsvDE0MaW4Vp1lgNEBpVcCXRWfPXj5egDvtgLz4L9MEvNwYEMdJH+JJinWkwa8c3c3o5HduV7dB/e1Hw==
+
 es6-iterator@^2.0.1, es6-iterator@~2.0.1, es6-iterator@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/es6-iterator/-/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
@@ -3463,6 +3468,14 @@ simple-ajax-uploader@^2.5.5:
   resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.6.7.tgz#4a53f1635730fd5414b169988694f8324e4ca352"
   integrity sha512-ZevKLmdZcggAaCzZZcikt/5fGKC6S9R4PaLHzIaH7hJDrTnmOZ/Q8HN+rjLioMijeSgLgXhyFVEqsoFfkocxKA==
 
+sir-trevor@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/sir-trevor/-/sir-trevor-0.8.2.tgz#aa8ec7619f6a1c513480cb6dac4b7b76d206e55a"
+  integrity sha512-j+tIzemydeZLFJsHsFu5Mg2/0BW7ccOoMtucXwUWznrEU5nxPknsSfODqJv2qpC8sHt5LHJPbubMZK03miaSug==
+  dependencies:
+    es5-shim "^4.5.12"
+    svg4everybody "^2.1.9"
+
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
@@ -3757,6 +3770,11 @@ supports-color@^3.2.3:
   integrity sha1-ZawFBLOVQXHYpklGsq48u4pfVPY=
   dependencies:
     has-flag "^1.0.0"
+
+svg4everybody@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/svg4everybody/-/svg4everybody-2.1.9.tgz#5bd9f6defc133859a044646d4743fabc28db7e2d"
+  integrity sha1-W9n23vwTOFmgRGRtR0P6vCjbfi0=
 
 table@^3.7.8:
   version "3.8.3"

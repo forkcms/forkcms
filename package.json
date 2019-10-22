@@ -26,6 +26,7 @@
     "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
+    "sir-trevor": "^0.8.2",
     "slick-carousel": "^1.6.0",
     "standard": "^10.0.3"
   },
