@@ -38,12 +38,8 @@ final class ApiController
 
     /**
      * @Rest\Get("/content-blocks/{language}/{id}")
-     *
-     * @param string $language
-     * @param int $id
-     * @return JsonResponse
      */
-    public function getContentblockAction($language, $id): JsonResponse
+    public function getContentblockAction(string $language, int $id): JsonResponse
     {
         $contentBlock = $this->blockRepository->findOneBy(['locale' => $language, 'id' => $id]);
 
