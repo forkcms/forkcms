@@ -7,6 +7,7 @@ use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Common\Doctrine\Entity\Meta;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
@@ -142,6 +143,57 @@ class PageRepository extends ServiceEntityRepository
         );
 
         return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getPageTree(array $parentIds, string $language, array $data = null, int $level = 1): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('p.id')
+            ->addSelect('p.title')
+            ->addSelect('p.parentId as parent_id')
+            ->addSelect('p.navigationTitle as navigation_title')
+            ->addSelect('p.type')
+            ->addSelect('p.hidden')
+            ->addSelect('p.data')
+            ->addSelect('m.url')
+            ->addSelect('m.data as meta_data')
+            ->addSelect('m.seoFollow as seo_follow')
+            ->addSelect('m.seoIndex as seo_index')
+            ->addSelect('p.allowChildren as allow_children')
+            ->addSelect('ifelse(count(e.id) > 0, 1, 0) AS has_extra')
+            ->addSelect('group_concat(b.extraId) AS extra_ids')
+            ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children')
+        ;
+        $qb
+            ->from(Page::class, 'p', 'p.id')
+            ->innerJoin(Meta::class, 'm', Join::WITH, 'p.meta = m.id')
+            ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId')
+            ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
+            ->leftJoin(Page::class, 'p2', Join::WITH, 'p2.parentId = p.id AND p2.status = :active AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.language = :language')
+            ->where($qb->expr()->in('p.parentId', ':parentIds'))
+            ->andWhere('p.status = :status')
+            ->andWhere('p.language = :language')
+            ->groupBy('p.revisionId')
+            ->orderBy('p.sequence', 'ASC')
+        ;
+
+        $qb->setParameters(
+            [
+                'active' => 'active',
+                'data' => '%s:9:\"is_action\";b:1;%',
+                'hidden' => 'N',
+                'language' => $language,
+                'parentIds' => $parentIds,
+                'status' => Page::ACTIVE,
+                'type' => 'block',
+            ]
+        );
+
+        return $qb
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder

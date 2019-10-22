@@ -829,31 +829,9 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get data
-        $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT
-                 i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
-                m.url, m.data AS meta_data, m.seo_follow, m.seo_index, i.allow_children,
-                IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
-                GROUP_CONCAT(b.extra_id) AS extra_ids,
-                IF(COUNT(p.id), 1, 0) AS has_children
-             FROM pages AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
-             LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
-             LEFT OUTER JOIN pages AS p
-                ON p.parent_id = i.id
-                AND p.status = "active"
-                AND p.hidden = "N"
-                AND p.data NOT LIKE "%s:9:\"is_action\";b:1;%"
-             AND p.language = i.language
-             WHERE i.parent_id IN (' . implode(', ', $ids) . ')
-                 AND i.status = ? AND i.language = ?
-             GROUP BY i.revision_id
-             ORDER BY i.sequence ASC',
-            ['block', 'active', $language],
-            'id'
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $data[$level] = $pageRepository->getPageTree($ids, $language);
 
         // get the childIDs
         $childIds = array_keys($data[$level]);
