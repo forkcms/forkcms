@@ -49,24 +49,10 @@ class PageRepository extends ServiceEntityRepository
     {
         $qb = $this->buildGetQuery($id, $revisionId, $language);
 
-        $results = $qb->getQuery()->getScalarResult();
-
         // @todo This wil not be necessary when we can return the entities instead of arrays
+        $results = $qb->getQuery()->getScalarResult();
         foreach ($results as &$result) {
-            foreach ($result as $key => $value) {
-                if (strpos($key, 'p_') === 0) {
-                    unset($result[$key]);
-                    $key = substr($key, 2);
-
-                    preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
-                    $ret = $matches[0];
-                    foreach ($ret as &$match) {
-                        $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
-                    }
-                    $key = implode('_', $ret);
-                }
-                $result[$key] = $value;
-            }
+            $result = $this->processFields($result);
         }
 
         return $results;
@@ -77,67 +63,14 @@ class PageRepository extends ServiceEntityRepository
         $qb = $this->buildGetQuery($id, $revisionId, $language);
         $qb->setMaxResults(1);
 
-        $results = $qb->getQuery()->getScalarResult();
-
         // @todo This wil not be necessary when we can return the entities instead of arrays
-        foreach ($results as &$result) {
-            foreach ($result as $key => $value) {
-                if (strpos($key, 'p_') === 0) {
-                    unset($result[$key]);
-                    $key = substr($key, 2);
-
-                    preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
-                    $ret = $matches[0];
-                    foreach ($ret as &$match) {
-                        $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
-                    }
-                    $key = implode('_', $ret);
-                }
-
-                if (is_bool($value)) {
-                    if ($value === true) {
-                        $value = '1';
-                    } else {
-                        $value = '0';
-                    }
-                }
-
-                $result[$key] = $value;
-            }
-        }
+        $results = $qb->getQuery()->getScalarResult();
 
         if (count($results) === 0) {
             return null;
         }
 
-        $page = $results[0];
-
-        $page['move_allowed'] = (bool) $page['allow_move'];
-        $page['children_allowed'] = (bool) $page['allow_children'];
-        $page['delete_allowed'] = (bool) $page['allow_delete'];
-
-        if (Page::isForbiddenToDelete($page['id'])) {
-            $page['allow_delete'] = false;
-        }
-
-        if (Page::isForbiddenToMove($page['id'])) {
-            $page['allow_move'] = false;
-        }
-
-        if (Page::isForbiddenToHaveChildren($page['id'])) {
-            $page['allow_children'] = false;
-        }
-
-        // convert into bools for use in template engine
-        $page['edit_allowed'] = (bool) $page['allow_edit'];
-        $page['has_extra'] = (bool) $page['has_extra'];
-
-        // unserialize data
-        if ($page['data'] !== null) {
-            $page['data'] = unserialize($page['data']);
-        }
-
-        return $page;
+        return $this->processFields($results[0]);
     }
 
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
@@ -170,5 +103,59 @@ class PageRepository extends ServiceEntityRepository
         );
 
         return $qb;
+    }
+
+    private function processFields($result): array
+    {
+        foreach ($result as $key => $value) {
+            if (strpos($key, 'p_') === 0) {
+                unset($result[$key]);
+                $key = substr($key, 2);
+
+                preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
+                $ret = $matches[0];
+                foreach ($ret as &$match) {
+                    $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
+                }
+                $key = implode('_', $ret);
+            }
+
+            if (is_bool($value)) {
+                if ($value === true) {
+                    $value = '1';
+                } else {
+                    $value = '0';
+                }
+            }
+
+            $result[$key] = $value;
+        }
+
+        $result['move_allowed'] = (bool) $result['allow_move'];
+        $result['children_allowed'] = (bool) $result['allow_children'];
+        $result['delete_allowed'] = (bool) $result['allow_delete'];
+
+        if (Page::isForbiddenToDelete($result['id'])) {
+            $result['allow_delete'] = false;
+        }
+
+        if (Page::isForbiddenToMove($result['id'])) {
+            $result['allow_move'] = false;
+        }
+
+        if (Page::isForbiddenToHaveChildren($result['id'])) {
+            $result['allow_children'] = false;
+        }
+
+        // convert into bools for use in template engine
+        $result['edit_allowed'] = (bool) $result['allow_edit'];
+        $result['has_extra'] = (bool) $result['has_extra'];
+
+        // unserialize data
+        if ($result['data'] !== null) {
+            $result['data'] = unserialize($result['data']);
+        }
+
+        return $result;
     }
 }
