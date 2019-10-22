@@ -23,6 +23,9 @@ final class ApiController
         $this->serializer = $serializer;
     }
 
+    /**
+     * @Rest\Get("/content-blocks")
+     */
     public function getContentblocksAction(): JsonResponse
     {
         return JsonResponse::create(
