@@ -33,10 +33,10 @@ class PageBlockRepository extends ServiceEntityRepository
 
     public function deleteByRevisionIds(array $ids): void
     {
-        $this
-            ->createQueryBuilder('em')
+        $qb = $this->createQueryBuilder('em');
+        $qb
             ->delete()
-            ->where('em.revisionId IN :ids')
+            ->where($qb->expr()->in('em.revisionId', ':ids'))
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
