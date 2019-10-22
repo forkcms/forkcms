@@ -515,15 +515,11 @@ class Model
         // redefine
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get page (active version)
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-             FROM pages_blocks AS b
-             INNER JOIN pages AS i ON b.revision_id = i.revision_id
-                WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-                ORDER BY b.sequence ASC',
-            [$pageId, $revisionId, $language]
-        );
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+        $pageBlocks = $pageBlockRepository->getBlocksForPage($pageId, $revisionId, $language);
+
+        return $pageBlocks;
     }
 
     public static function getByTag(int $tagId): array

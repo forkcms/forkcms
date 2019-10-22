@@ -41,6 +41,7 @@ doctrine:
                 dql:
                     numeric_functions:
                         ceil: DoctrineExtensions\Query\Mysql\Ceil
+                        unix_timestamp: \DoctrineExtensions\Query\Mysql\UnixTimestamp
 
 doctrine_orm_bridge:
     entity_manager: default

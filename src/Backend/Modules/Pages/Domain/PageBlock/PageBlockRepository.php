@@ -2,8 +2,10 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method PageBlock|null find($id, $lockMode = null, $lockVersion = null)
@@ -59,5 +61,54 @@ class PageBlockRepository extends ServiceEntityRepository
             ->set('em.extraId', null)
             ->getQuery()
             ->execute();
+    }
+
+    public function getBlocksForPage(int $pageId, int $revisionId, string $language): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('b')
+            ->addSelect('unix_timestamp(b.createdOn) as created_on')
+            ->addSelect('unix_timestamp(b.editedOn) as edited_on')
+            ->from(PageBlock::class, 'b')
+            // @todo Use relation when it exists
+            ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
+            ->where('p.id = :pageId')
+            ->andWhere('p.revisionId = :revisionId')
+            ->andWhere('p.language = :language')
+            ->orderBy('b.sequence', 'ASC');
+
+        $qb->setParameters(
+            [
+                'pageId' => $pageId,
+                'revisionId' => $revisionId,
+                'language' => $language,
+            ]
+        );
+
+        $results = $qb
+            ->getQuery()
+            ->getScalarResult();
+
+        // @todo This wil not be necessary when we can return the entities instead of arrays
+        foreach ($results as &$result) {
+            foreach ($result as $key => $value) {
+                if (strpos($key, 'b_') === 0) {
+                    unset($result[$key]);
+                    $key = substr($key, 2);
+
+                    preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
+                    $ret = $matches[0];
+                    foreach ($ret as &$match) {
+                        $match = ($match == strtoupper($match) ? strtolower($match) : lcfirst($match));
+                    }
+                    $key = implode('_', $ret);
+                }
+                $result[$key] = $value;
+            }
+        }
+
+        return $results;
     }
 }
