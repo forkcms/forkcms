@@ -97,6 +97,34 @@ class PageRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function getMaxPageId(string $language, bool $isGodUser): int
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->select('MAX(p.id)')
+            ->where('p.language = :language');
+
+        $qb->setParameters(
+            [
+                'language' => $language,
+            ]
+        );
+
+        $max = $qb
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // pages created by a user that isn't a god should have an id higher then 1000
+        // with this hack we can easily find which pages are added by a user
+        if ($max < 1000 && !$isGodUser) {
+            return $max + 1000;
+        }
+
+        return $max;
+    }
+
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

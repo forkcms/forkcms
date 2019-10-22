@@ -590,20 +590,10 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get the maximum id
-        $maximumMenuId = (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.id) FROM pages AS i WHERE i.language = ?',
-            [$language]
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
 
-        // pages created by a user that isn't a god should have an id higher then 1000
-        // with this hack we can easily find which pages are added by a user
-        if ($maximumMenuId < 1000 && !BackendAuthentication::getUser()->isGod()) {
-            return $maximumMenuId + 1000;
-        }
-
-        // fallback
-        return $maximumMenuId;
+        return $pageRepository->getMaxPageId($language, BackendAuthentication::getUser()->isGod());
     }
 
     public static function getMaximumSequence(int $parentId, string $language = null): int
