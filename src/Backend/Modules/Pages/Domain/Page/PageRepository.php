@@ -180,29 +180,7 @@ class PageRepository extends ServiceEntityRepository
 
     private function processFields($result): array
     {
-        foreach ($result as $key => $value) {
-            if (strpos($key, 'p_') === 0) {
-                unset($result[$key]);
-                $key = substr($key, 2);
-
-                preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
-                $ret = $matches[0];
-                foreach ($ret as &$match) {
-                    $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
-                }
-                $key = implode('_', $ret);
-            }
-
-            if (is_bool($value)) {
-                if ($value === true) {
-                    $value = '1';
-                } else {
-                    $value = '0';
-                }
-            }
-
-            $result[$key] = $value;
-        }
+        $result = self::removeTablePrefixes($result);
 
         $result['move_allowed'] = (bool) $result['allow_move'];
         $result['children_allowed'] = (bool) $result['allow_children'];
@@ -227,6 +205,35 @@ class PageRepository extends ServiceEntityRepository
         // unserialize data
         if ($result['data'] !== null) {
             $result['data'] = unserialize($result['data']);
+        }
+
+        return $result;
+    }
+
+    private static function removeTablePrefixes($result, string $prefix = 'p_'): array
+    {
+        foreach ($result as $key => $value) {
+            if (strpos($key, $prefix) === 0) {
+                unset($result[$key]);
+                $key = substr($key, 2);
+
+                preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
+                $ret = $matches[0];
+                foreach ($ret as &$match) {
+                    $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
+                }
+                $key = implode('_', $ret);
+            }
+
+            if (is_bool($value)) {
+                if ($value === true) {
+                    $value = '1';
+                } else {
+                    $value = '0';
+                }
+            }
+
+            $result[$key] = $value;
         }
 
         return $result;
