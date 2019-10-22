@@ -4,6 +4,7 @@ namespace Backend\Modules\ContentBlocks\Api;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,9 +33,16 @@ final class ApiController
         );
     }
 
-    public function getContentblockAction($contentBlock): JsonResponse
+    /**
+     * @Rest\Get("/content-blocks/{language}/{id}")
+     *
+     * @param string $language
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getContentblockAction($language, $id): JsonResponse
     {
-        $contentBlock = $this->blockRepository->find($contentBlock);
+        $contentBlock = $this->blockRepository->findOneBy(['locale' => $language, 'id' => $id]);
 
         if (!$contentBlock instanceof ContentBlock) {
             throw new NotFoundHttpException();
