@@ -127,7 +127,7 @@
   {% block footerScripts %}
   {# General Javascript #}
     {% for jsFile in jsFiles %}
-      <script src="{{ jsFile.file|raw }}"></script>
+      <script src="{{ jsFile|raw }}"></script>
     {% endfor %}
 
     <script src="{{ THEME_URL }}/Core/Js/bundle.js?t={{ LAST_MODIFIED_TIME }}"></script>
