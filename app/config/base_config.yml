@@ -224,6 +224,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    Common\BlockEditor\Twig\ParseBlocksExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
+
 fos_rest:
     routing_loader:
         default_format: json
