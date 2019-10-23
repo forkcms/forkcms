@@ -1,7 +1,7 @@
 /**
  * Backend related objects
  */
-/* global CKEDITOR, CKFinder, Bloodhound, linkList */
+/* global CKEDITOR, CKFinder, Bloodhound, linkList, SirTrevor */
 
 var jsBackend =
   {
@@ -48,7 +48,11 @@ var jsBackend =
       jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
-      if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        jsBackend.ckeditor.init()
+      } else if (jsData.Core.preferred_editor === 'sir-trevor') {
+        jsBackend.sirTrevor.init()
+      }
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
       jsBackend.session.init()
@@ -562,6 +566,50 @@ jsBackend.ckeditor = {
         }
       })
     }
+  }
+}
+
+/**
+ * Sir Trevor related objects
+ */
+jsBackend.sirTrevor = {
+  defaultConfig: {
+    defaultType: 'Text',
+    iconUrl: '/css/vendors/sir-trevor/sir-trevor-icons.svg',
+    blockLimit: 0,
+    blockTypeLimits: {},
+    required: []
+  },
+
+  // initialize the editor
+  init: function () {
+    SirTrevor.setDefaults({
+      iconUrl: jsBackend.sirTrevor.defaultConfig.iconUrl
+    })
+
+    var editors = $('textarea.inputSirTrevor')
+    if (editors.length > 0) {
+      editors.each(function (element) {
+        jsBackend.sirTrevor.load(this)
+      })
+    }
+
+    jsBackend.sirTrevor.loadEditorsInCollections()
+  },
+
+  loadEditorsInCollections: function () {
+    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
+      $(formCollectionItem).find('textarea.inputSirTrevor').each(function (element) {
+        jsBackend.sirTrevor.load(this)
+      })
+    })
+  },
+
+  load: function (element) {
+    var editor = new SirTrevor.Editor($.extend({el: element}, jsBackend.sirTrevor.defaultConfig))
+
+    // set sir trevor id so we can use this later
+    $(element).attr('data-sir-trevor-id', editor.ID)
   }
 }
 
