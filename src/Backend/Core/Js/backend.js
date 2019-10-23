@@ -1,7 +1,7 @@
 /**
  * Backend related objects
  */
-/* global CKEDITOR, CKFinder, Bloodhound, linkList, SirTrevor */
+/* global CKEDITOR, CKFinder, Bloodhound, linkList, BlockEditor */
 
 var jsBackend =
   {
@@ -50,8 +50,8 @@ var jsBackend =
       jsBackend.tableSequenceByDragAndDrop.init()
       if (jsData.Core.preferred_editor === 'ck-editor') {
         jsBackend.ckeditor.init()
-      } else if (jsData.Core.preferred_editor === 'sir-trevor') {
-        jsBackend.sirTrevor.init()
+      } else if (jsData.Core.preferred_editor === 'block-editor') {
+        jsBackend.blockEditor.init()
       }
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
@@ -572,44 +572,26 @@ jsBackend.ckeditor = {
 /**
  * Sir Trevor related objects
  */
-jsBackend.sirTrevor = {
-  defaultConfig: {
-    defaultType: 'Text',
-    iconUrl: '/css/vendors/sir-trevor/sir-trevor-icons.svg',
-    blockLimit: 0,
-    blockTypeLimits: {},
-    required: []
-  },
+jsBackend.blockEditor = {
 
   // initialize the editor
   init: function () {
-    SirTrevor.setDefaults({
-      iconUrl: jsBackend.sirTrevor.defaultConfig.iconUrl
-    })
-
-    var editors = $('textarea.inputSirTrevor')
+    var editors = $('textarea.inputBlockEditor')
     if (editors.length > 0) {
-      editors.each(function (element) {
-        jsBackend.sirTrevor.load(this)
+      editors.each(function (index, element) {
+        BlockEditor.create($(this))
       })
     }
 
-    jsBackend.sirTrevor.loadEditorsInCollections()
+    jsBackend.blockEditor.loadEditorsInCollections()
   },
 
   loadEditorsInCollections: function () {
     $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
-      $(formCollectionItem).find('textarea.inputSirTrevor').each(function (element) {
-        jsBackend.sirTrevor.load(this)
+      $(formCollectionItem).find('textarea.inputSirTrevor').each(function () {
+        BlockEditor.create($(this))
       })
     })
-  },
-
-  load: function (element) {
-    var editor = new SirTrevor.Editor($.extend({el: element}, jsBackend.sirTrevor.defaultConfig))
-
-    // set sir trevor id so we can use this later
-    $(element).attr('data-sir-trevor-id', editor.ID)
   }
 }
 

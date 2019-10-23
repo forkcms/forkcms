@@ -1,5 +1,5 @@
 // Webpack uses this to work with directories
-const path = require('path');
+const path = require('path')
 
 // This is main configuration object.
 // Here you write different options and tell Webpack what to do
@@ -35,4 +35,4 @@ module.exports = {
   // on final bundle. For now we don't need production's JavaScript
   // minifying and other thing so let's set mode to development
   mode: 'development'
-};
+}

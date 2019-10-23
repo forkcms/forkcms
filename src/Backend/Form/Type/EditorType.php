@@ -18,8 +18,8 @@ class EditorType extends TextareaType
                 $this->configureCkEditorOptions($optionsResolver);
 
                 break;
-            case 'sir-trevor':
-                $this->configureSirTrevorOptions($optionsResolver);
+            case 'block-editor':
+                $this->configureBlockEditorOptions($optionsResolver);
 
                 break;
             default:
@@ -29,9 +29,9 @@ class EditorType extends TextareaType
         }
     }
 
-    public function configureSirTrevorOptions(OptionsResolver $optionsResolver): void
+    public function configureBlockEditorOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults(['attr' => ['class' => 'inputSirTrevor']]);
+        $optionsResolver->setDefaults(['attr' => ['class' => 'inputBlockEditor']]);
 
         if (!Model::has('header')) {
             return;
@@ -40,18 +40,10 @@ class EditorType extends TextareaType
         $header = Model::get('header');
 
         $header->addJS(
-            '/js/vendors/sir-trevor.min.js',
+            '/js/editor.js',
             null,
             false,
             true,
-            true,
-            Priority::core()
-        );
-        $header->addCSS(
-            '/css/vendors/sir-trevor/sir-trevor.min.css',
-            null,
-            true,
-            false,
             true,
             Priority::core()
         );

@@ -4,7 +4,7 @@ parameters:
     fork.form.available_editors:
         ck-editor: 'CK Editor'
         html: 'HTML'
-        sir-trevor: 'Sir Trevor'
+        block-editor: 'Block Editor'
 
 services:
     fork.datepicker.form:
