@@ -644,6 +644,26 @@
   dependencies:
     codex-notifier "^1.1.2"
 
+"@editorjs/embed@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/embed/-/embed-2.2.1.tgz#90dbcac6e163d20c665fcc1a218d4ba1db80e2f1"
+  integrity sha512-jjhgJf+LkYr8UfsQPavfukCq0+SIkz1MD8vmWkN29uU2zItWsScmfRis3YoLZJ7Rrz+yDeS8GyUjxTg2iQa0Vg==
+
+"@editorjs/header@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.3.1.tgz#4909d192c484f93ee830403c19efa06538df419a"
+  integrity sha512-YFyfyKs0Az9h4bugO96hr5bC8hO8E4UU8JZnZaa/s2gETxzQmJng8gQp7n3h7rhehMlO9iuyJa92fASyzTgBEQ==
+
+"@editorjs/list@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/list/-/list-1.4.0.tgz#e92459a8ac2305bc4385245e329c8b5c8437456a"
+  integrity sha512-iYDXGbVXvsAJbSxbjFMP4p7kS1zhQyNDqVNzkfMRhItulzKYlOMlFjTIGHqu5SxPy6NrcckhVFaWdfGDn5/gEA==
+
+"@editorjs/paragraph@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/paragraph/-/paragraph-2.6.0.tgz#49ec5ee2eabe84c57f876eac989df99126df616a"
+  integrity sha512-aOLTX7JXVMNCMYEsEwuUtX0864eGRRMzOJ7h1ZaNdjriSHjz0/2cl9VPQBQtIsOkkSvybGGlbHBtGWbflzZ4aQ==
+
 "@gulp-sourcemaps/map-sources@1.X":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@gulp-sourcemaps/map-sources/-/map-sources-1.0.0.tgz#890ae7c5d8c877f6d384860215ace9d7ec945bda"

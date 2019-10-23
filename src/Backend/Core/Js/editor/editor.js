@@ -1,4 +1,8 @@
 import EditorJS from '@editorjs/editorjs'
+import Embed from '@editorjs/embed'
+import Header from '@editorjs/header'
+import List from '@editorjs/list'
+import Paragraph from '@editorjs/paragraph'
 
 class BlockEditor {
   static create ($element) {
@@ -13,8 +17,32 @@ class BlockEditor {
         editor.save().then((outputData) => {
           $element.val(JSON.stringify(outputData))
         }).catch((error) => {
-          console.log('Saving failed: ', error)
+          console.debug('Saving failed: ', error)
         })
+      },
+      tools: {
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true
+        },
+        header: {
+          class: Header,
+          shortcut: 'CMD+SHIFT+H'
+        },
+        list: {
+          class: List,
+          inlineToolbar: true
+        },
+        embed: {
+          class: Embed,
+          inlineToolbar: true,
+          config: {
+            services: {
+              youtube: true,
+              vimeo: true
+            }
+          }
+        }
       }
     })
   }
