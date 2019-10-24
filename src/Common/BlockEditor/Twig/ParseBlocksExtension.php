@@ -4,7 +4,6 @@ namespace Common\BlockEditor\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 final class ParseBlocksExtension extends AbstractExtension
 {
@@ -21,6 +20,12 @@ final class ParseBlocksExtension extends AbstractExtension
 
     public function parseBlocks(string $json): string
     {
+        $data = json_decode($json, true);
+
+        if ($data === false) {
+            return $json;
+        }
+
         return '<h1>content</h1>';
     }
 }
