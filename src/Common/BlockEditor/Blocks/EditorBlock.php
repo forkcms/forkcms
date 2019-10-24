@@ -2,16 +2,16 @@
 
 namespace Common\BlockEditor\Blocks;
 
-use Frontend\Core\Engine\TwigTemplate;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class EditorBlock
 {
-    /** @var TwigTemplate */
-    private $template;
+    /** @var ContainerInterface */
+    private $container;
 
-    public function __construct(TwigTemplate $template)
+    public function __construct(ContainerInterface $container)
     {
-        $this->template = $template;
+        $this->container = $container;
     }
 
     final public function getName(): string
