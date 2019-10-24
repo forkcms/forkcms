@@ -81,7 +81,12 @@ class EditorType extends TextareaType
         );
 
         $optionsResolver->setDefault('editorBlocks', $editorBlocks);
-        $optionsResolver->setAllowedValues('editorBlocks', EditorBlocks::class);
+        $optionsResolver->setAllowedValues(
+            'editorBlocks',
+            static function ($editorBlocks): bool {
+                return $editorBlocks instanceof EditorBlocks;
+            }
+        );
     }
 
     public function configureCkEditorOptions(OptionsResolver $optionsResolver): void
@@ -92,7 +97,13 @@ class EditorType extends TextareaType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $header = $this->getHeader();
-        switch ($this->preferredEditor && $header !== null) {
+        if ($header === null) {
+            parent::buildView($view, $form, $options);
+
+            return;
+        }
+
+        switch ($this->preferredEditor) {
             case 'ck-editor':
                 $this->buildCkEditorView($view, $form, $options, $header);
 
