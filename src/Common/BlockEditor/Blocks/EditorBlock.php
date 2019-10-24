@@ -2,19 +2,19 @@
 
 namespace Common\BlockEditor\Blocks;
 
-use JsonSerializable;
+use Frontend\Core\Engine\TwigTemplate;
 
-abstract class EditorBlock implements JsonSerializable
+abstract class EditorBlock
 {
-    /** @var array */
-    protected $data;
+    /** @var TwigTemplate */
+    private $template;
 
-    public function __construct(array $data)
+    public function __construct(TwigTemplate $template)
     {
-        $this->data = $data;
+        $this->template = $template;
     }
 
-    final public static function getName(): string
+    final public function getName(): string
     {
         return static::class;
     }
@@ -22,15 +22,12 @@ abstract class EditorBlock implements JsonSerializable
     /**
      * @return array The config must contain the key "class" with the JS class for the editor
      */
-    abstract public static function getConfig(): array;
+    abstract public function getConfig(): array;
 
     /**
      * @see https://github.com/editor-js/editorjs-php#configuration-file
      */
-    abstract public static function getValidation(): array;
+    abstract public function getValidation(): array;
 
-    public function jsonSerialize(): array
-    {
-        return $this->data;
-    }
+    abstract public function parse(array $data): string;
 }

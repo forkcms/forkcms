@@ -7,6 +7,12 @@ parameters:
         block-editor: 'Block Editor'
 
 services:
+    Common\BlockEditor\Blocks\:
+        autowire: true
+        autoconfigure: true
+        resource: '../../src/Common/BlockEditor/Blocks'
+        tags: ['fork.block_editor.block']
+
     fork.datepicker.form:
         class: Common\Form\DatePickerType
         arguments:
