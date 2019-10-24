@@ -45,7 +45,7 @@ final class EditorBlocks
 
     public function getValidation(): array
     {
-        return $this->validation;
+        return ['tools' => $this->validation];
     }
 
     public function getJavaScriptUrls(): array
