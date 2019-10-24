@@ -123,14 +123,12 @@ class EditorType extends TextareaType
     {
         parent::buildView($view, $form, $options);
 
-        $header->addJS(
-            '/js/editor.js',
-            null,
-            false,
-            true,
-            true,
-            Priority::core()
-        );
+        $javaScriptUrls = $options['editorBlocks']->getJavaScriptUrls();
+        $javaScriptUrls['/js/editor.js'] = '/js/editor.js';
+
+        foreach ($javaScriptUrls as $url) {
+            $header->addJS($url, null, false, true, true, Priority::core());
+        }
     }
 
     public function buildCkEditorView(FormView $view, FormInterface $form, array $options, Header $header): void
