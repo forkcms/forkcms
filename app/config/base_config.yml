@@ -25,6 +25,10 @@ framework:
                 adapter: cache.app
                 public: true
                 default_lifetime: 3600
+            cache.block_editor:
+                adapter: cache.app
+                public: true
+                default_lifetime: 31622400 # one year
 
 # Assetic Configuration
 assetic:
@@ -226,6 +230,7 @@ services:
 
     Common\BlockEditor\Twig\ParseBlocksExtension:
         public: false
+        autowire: true
         tags:
             - { name: twig.extension }
 
