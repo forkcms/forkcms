@@ -21,6 +21,7 @@ services:
           - { name: form.type }
     form.type.editor:
         class: Backend\Form\Type\EditorType
+        autowire: true
         tags:
             - { name: form.type, alias: editor}
     form.type.meta:
