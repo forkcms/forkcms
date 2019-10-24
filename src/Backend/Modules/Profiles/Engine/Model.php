@@ -521,8 +521,7 @@ class Model
         $html = '<div class="dataGridAvatar">' . "\n";
         $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
-            $html .= '      <a href="' .
-                     BackendModel::createUrlForAction(
+            $html .= '      <a href="' . BackendModel::createUrlForAction(
                 'Edit',
                 'Profiles'
             ) . '&amp;id=' . $id . '">' . "\n";
@@ -532,8 +531,7 @@ class Model
             $html .= '      </a>' . "\n";
         }
         $html .= '  </div>';
-        $html .= '  <p><a href="' .
-                 BackendModel::createUrlForAction(
+        $html .= '  <p><a href="' . BackendModel::createUrlForAction(
             'Edit',
             'Profiles'
         ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
