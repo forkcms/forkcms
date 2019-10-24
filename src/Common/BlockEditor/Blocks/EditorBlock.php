@@ -14,7 +14,10 @@ abstract class EditorBlock implements JsonSerializable
         $this->data = $data;
     }
 
-    abstract public static function getName(): string;
+    final public static function getName(): string
+    {
+        return static::class;
+    }
 
     /**
      * @return array The config must contain the key "class" with the JS class for the editor
