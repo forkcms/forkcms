@@ -68,7 +68,7 @@ class EditorType extends TextareaType
                 }
 
                 $editorBlocks->configureBlocks(
-                    array_map(
+                    ...array_map(
                         static function (string $editorBlockFCQN) use ($container): EditorBlock {
                             return $container->get($editorBlockFCQN);
                         },
