@@ -51,7 +51,7 @@ class EditorType extends TextareaType
     {
         $optionsResolver->setDefaults(
             [
-                'attr' => ['class' => 'inputBlockEditor'],
+                'attr' => ['class' => 'inputBlockEditor sr-only'],
                 'blocks' => [
                     HeaderBlock::class,
                 ],
@@ -129,6 +129,8 @@ class EditorType extends TextareaType
         foreach ($javaScriptUrls as $url) {
             $header->addJS($url, null, false, true, true, Priority::core());
         }
+
+        $view->vars['attr']['fork-block-editor-config'] = json_encode($options['editorBlocks']->getConfig(), JSON_HEX_APOS);
     }
 
     public function buildCkEditorView(FormView $view, FormInterface $form, array $options, Header $header): void

@@ -570,7 +570,7 @@ jsBackend.ckeditor = {
 }
 
 /**
- * Sir Trevor related objects
+ * Block editor related objects
  */
 jsBackend.blockEditor = {
 
@@ -579,18 +579,20 @@ jsBackend.blockEditor = {
     var editors = $('textarea.inputBlockEditor')
     if (editors.length > 0) {
       editors.each(function () {
-        BlockEditor.editor.fromJson($(this), "{\"header\":{\"shortcut\":\"CMD+SHIFT+H\",\"class\":\"BlockEditor.blocks.Header\"}}")
+        jsBackend.blockEditor.createEditor($(this))
       })
     }
 
     jsBackend.blockEditor.loadEditorsInCollections()
   },
 
+  createEditor: function ($element) {
+    BlockEditor.editor.fromJson($element, $element.attr('fork-block-editor-config'))
+  },
+
   loadEditorsInCollections: function () {
-    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
-      $(formCollectionItem).find('textarea.inputSirTrevor').each(function () {
-        BlockEditor.editor.fromJson($(this), "{\"header\":{\"shortcut\":\"CMD+SHIFT+H\",\"class\":\"BlockEditor.blocks.Header\"}}")
-      })
+    $('[data-addfield=collection]').on('collection-field-added', function () {
+      jsBackend.blockEditor.createEditor($(this))
     })
   }
 }
