@@ -578,8 +578,8 @@ jsBackend.blockEditor = {
   init: function () {
     var editors = $('textarea.inputBlockEditor')
     if (editors.length > 0) {
-      editors.each(function (index, element) {
-        BlockEditor.create($(this))
+      editors.each(function () {
+        BlockEditor.editor.fromJson($(this), "{\"header\":{\"shortcut\":\"CMD+SHIFT+H\",\"class\":\"BlockEditor.blocks.Header\"}}")
       })
     }
 
@@ -589,7 +589,7 @@ jsBackend.blockEditor = {
   loadEditorsInCollections: function () {
     $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
       $(formCollectionItem).find('textarea.inputSirTrevor').each(function () {
-        BlockEditor.create($(this))
+        BlockEditor.editor.fromJson($(this), "{\"header\":{\"shortcut\":\"CMD+SHIFT+H\",\"class\":\"BlockEditor.blocks.Header\"}}")
       })
     })
   }

@@ -5,7 +5,31 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 
 class BlockEditor {
-  static create ($element) {
+  static getClassFromVariableName (string) {
+    let scope = window
+    let scopeSplit = string.split('.')
+    let i
+
+    for (i = 0; i < scopeSplit.length - 1; i++) {
+      scope = scope[scopeSplit[i]]
+
+      if (scope === undefined) return
+    }
+
+    return scope[scopeSplit[scopeSplit.length - 1]]
+  }
+
+  static fromJson ($element, jsonConfig) {
+    let config = JSON.parse(jsonConfig)
+    for (const name of Object.keys(config)) {
+      // @TODO ask if we should we replace this by forcing the blocks to be added to window.BlockEditor.blocks
+      config[name].class = this.getClassFromVariableName(config[name].class)
+    }
+
+    this.create($element, config)
+  }
+
+  static create ($element, tools) {
     $element.hide()
     let editorId = $element.id + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
@@ -27,32 +51,19 @@ class BlockEditor {
           console.debug('Saving failed: ', error)
         })
       },
-      tools: {
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true
-        },
-        header: {
-          class: Header,
-          shortcut: 'CMD+SHIFT+H'
-        },
-        list: {
-          class: List,
-          inlineToolbar: true
-        },
-        embed: {
-          class: Embed,
-          inlineToolbar: true,
-          config: {
-            services: {
-              youtube: true,
-              vimeo: true
-            }
-          }
-        }
-      }
+      tools: tools
     })
   }
 }
 
-window.BlockEditor = BlockEditor
+if (window.BlockEditor === undefined) {
+  window.BlockEditor = {blocks: {}}
+}
+if (window.BlockEditor.blocks === undefined) {
+  window.BlockEditor.blocks = {}
+}
+window.BlockEditor.editor = BlockEditor
+window.BlockEditor.blocks.Header = Header
+window.BlockEditor.blocks.Embed = Embed
+window.BlockEditor.blocks.List = List
+window.BlockEditor.blocks.Paragraph = Paragraph
