@@ -5,15 +5,33 @@ namespace Backend\Form\Type;
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use Common\BlockEditor\Blocks\EditorBlock;
+use Common\BlockEditor\Blocks\Header as HeaderBlock;
+use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditorType extends TextareaType
 {
+    /** @var ContainerInterface */
+    private $container;
+
+    /** @var string */
+    private $preferredEditor;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+        $this->preferredEditor = Model::getPreferredEditor();
+    }
+
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
-        switch (Model::getPreferredEditor()) {
+        switch ($this->preferredEditor) {
             case 'ck-editor':
                 $this->configureCkEditorOptions($optionsResolver);
 
@@ -31,13 +49,68 @@ class EditorType extends TextareaType
 
     public function configureBlockEditorOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults(['attr' => ['class' => 'inputBlockEditor']]);
+        $optionsResolver->setDefaults(
+            [
+                'attr' => ['class' => 'inputBlockEditor'],
+                'blocks' => [
+                    HeaderBlock::class,
+                ],
+            ]
+        );
 
-        if (!Model::has('header')) {
-            return;
+        $editorBlocks = new EditorBlocks();
+        $container = $this->container;
+        $optionsResolver->setAllowedValues(
+            'blocks',
+            static function (array $blocks) use ($editorBlocks, $container): bool {
+                if (empty($blocks)) {
+                    return false;
+                }
+
+                $editorBlocks->configureBlocks(
+                    array_map(
+                        static function (string $editorBlockFCQN) use ($container): EditorBlock {
+                            return $container->get($editorBlockFCQN);
+                        },
+                        $blocks
+                    )
+                );
+
+                return true;
+            }
+        );
+
+        $optionsResolver->setDefault('editorBlocks', $editorBlocks);
+        $optionsResolver->setAllowedValues('editorBlocks', EditorBlocks::class);
+    }
+
+    public function configureCkEditorOptions(OptionsResolver $optionsResolver): void
+    {
+        $optionsResolver->setDefault('attr', ['class' => 'inputEditor']);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options): void
+    {
+        $header = $this->getHeader();
+        switch ($this->preferredEditor && $header !== null) {
+            case 'ck-editor':
+                $this->buildCkEditorView($view, $form, $options, $header);
+
+                break;
+            case 'block-editor':
+                $this->buildBlockEditorView($view, $form, $options, $header);
+
+                break;
+            default:
+                parent::buildView($view, $form, $options);
+
+                break;
         }
-        /** @var Header $header */
-        $header = Model::get('header');
+    }
+
+    public function buildBlockEditorView(FormView $view, FormInterface $form, array $options, Header $header): void
+    {
+        parent::buildView($view, $form, $options);
 
         $header->addJS(
             '/js/editor.js',
@@ -49,34 +122,38 @@ class EditorType extends TextareaType
         );
     }
 
-    public function configureCkEditorOptions(OptionsResolver $optionsResolver): void
+    public function buildCkEditorView(FormView $view, FormInterface $form, array $options, Header $header): void
     {
-        $optionsResolver->setDefaults(['attr' => ['class' => 'inputEditor']]);
+        parent::buildView($view, $form, $options);
 
-        if (!Model::has('header')) {
-            return;
-        }
-        // add the needed javascript to the header;
-        $header = Model::get('header');
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
         $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
         $header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
+        $currentLanguage = Language::getWorkingLanguage();
         // add the internal link lists-file
-        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $currentLanguage . '.js')) {
             $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $currentLanguage . '.js'
             );
             $header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
-                ) . '.js?m=' . $timestamp,
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . $currentLanguage . '.js?m=' . $timestamp,
                 null,
                 false,
                 true,
                 false
             );
         }
+    }
+
+    private function getHeader(): ?Header
+    {
+        if ($this->container->has('header')) {
+            return $this->container->get('header');
+        }
+
+        return null;
     }
 
     public function getParent(): string
