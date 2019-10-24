@@ -59,16 +59,16 @@ class FormFile extends \SpoonFormFile
             if (isset($this->attributes['extension'])) {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
-                               $this->attributes['extension'],
-                               Form::getUploadMaxFileSize()
-                           ) . '</p>';
+                    BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
+                    $this->attributes['extension'],
+                    Form::getUploadMaxFileSize()
+                ) . '</p>';
             } else {
                 $output .= '<p class="help-block">' .
                            sprintf(
-                               BackendLanguage::getMessage('HelpMaxFileSize'),
-                               Form::getUploadMaxFileSize()
-                           ) . '</p>';
+                    BackendLanguage::getMessage('HelpMaxFileSize'),
+                    Form::getUploadMaxFileSize()
+                ) . '</p>';
             }
         }
 

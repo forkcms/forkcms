@@ -161,9 +161,9 @@ class DataGridFunctions
             if ($allowed) {
                 $html .= '     <a href="' .
                     BackendModel::createUrlForAction(
-                        'Edit',
-                        'Users'
-                    ) . '&amp;id=' . $id . '">' . "\n";
+                    'Edit',
+                    'Users'
+                ) . '&amp;id=' . $id . '">' . "\n";
             }
             $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/Users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";

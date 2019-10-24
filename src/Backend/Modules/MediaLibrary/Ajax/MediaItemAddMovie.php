@@ -101,10 +101,10 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         if ($movieStorageType === null
             || !in_array(
-                (string) $movieStorageType,
-                StorageType::POSSIBLE_VALUES_FOR_MOVIE,
-                true
-            )
+            (string) $movieStorageType,
+            StorageType::POSSIBLE_VALUES_FOR_MOVIE,
+            true
+        )
         ) {
             throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
         }
