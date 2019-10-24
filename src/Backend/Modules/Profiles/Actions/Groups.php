@@ -173,8 +173,8 @@ class Groups extends BackendBaseActionIndex
             // complete output
             $output = '<a href="' .
                       BackendModel::createUrlForAction(
-                          'Index'
-                      ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
+                'Index'
+            ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }
 
         return $output;
