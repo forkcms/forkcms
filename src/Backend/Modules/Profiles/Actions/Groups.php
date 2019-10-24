@@ -171,8 +171,7 @@ class Groups extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // complete output
-            $output = '<a href="' .
-                      BackendModel::createUrlForAction(
+            $output = '<a href="' . BackendModel::createUrlForAction(
                 'Index'
             ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }

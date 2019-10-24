@@ -115,26 +115,22 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '</ul>' . "\n";
                     $value .= "\t" . '</div>' . "\n\n";
                 } elseif ($object instanceof SpoonFormDropdown) {
-                    $value .= "\t" . '<p{option:ddm';
-                        str_replace(
-                            '[]',
-                            '',
-                            SpoonFilter::toCamelCase($object->getName())
-                        ) . 'Error} class="errorArea"{/option:ddm' .
-                        str_replace(
-                            '[]',
-                            '',
-                            SpoonFilter::toCamelCase($object->getName())
-                        ) . 'Error}>' . "\n";
-                    $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                        str_replace(
+                    $value .= "\t" . '<p{option:ddm' .str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . 'Error} class="errorArea"{/option:ddm' . str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . 'Error}>' . "\n";
+                    $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' . str_replace(
                         '[]',
                         '',
                         SpoonFilter::toCamelCase($object->getName())
                     ) . '</label>' . "\n";
                     $value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) .
-                        '} {$ddm' .
-                        str_replace(
+                        '} {$ddm' . str_replace(
                         '[]',
                         '',
                         SpoonFilter::toCamelCase($object->getName())

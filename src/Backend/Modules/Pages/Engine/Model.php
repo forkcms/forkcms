@@ -839,8 +839,7 @@ class Model
                 $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '    <a href="' .
-                         BackendModel::createUrlForAction(
+                $html .= '    <a href="' . BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,
@@ -937,8 +936,7 @@ class Model
 
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
-        $html .= '            <a href="' .
-                 BackendModel::createUrlForAction(
+        $html .= '            <a href="' . BackendModel::createUrlForAction(
             'Edit',
             null,
             null,
@@ -968,8 +966,7 @@ class Model
                     $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                     // insert link
-                    $html .= '            <a href="' .
-                             BackendModel::createUrlForAction(
+                    $html .= '            <a href="' . BackendModel::createUrlForAction(
                         'Edit',
                         null,
                         null,
@@ -1004,8 +1001,7 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,
@@ -1039,8 +1035,7 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,

@@ -129,8 +129,7 @@ class FormImage extends SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<p class="help-block">' .
-                        sprintf(
+            $output .= '<p class="help-block">' . sprintf(
                 BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
                 Form::getUploadMaxFileSize()
             ) . '</p>';
