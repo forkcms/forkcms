@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EditorType extends TextareaType
 {
@@ -49,16 +51,32 @@ class EditorType extends TextareaType
 
     public function configureBlockEditorOptions(OptionsResolver $optionsResolver): void
     {
+        $editorBlocks = new EditorBlocks();
         $optionsResolver->setDefaults(
             [
                 'attr' => ['class' => 'inputBlockEditor sr-only'],
                 'blocks' => [
                     HeaderBlock::class,
                 ],
+                'constraints' => [
+                    new Callback(
+                        [
+                            'callback' => static function (
+                                ?string $json,
+                                ExecutionContextInterface $executionContext
+                            ) use ($editorBlocks): void {
+                                if ($editorBlocks->isValid($json)) {
+                                    return;
+                                }
+
+                                $executionContext->addViolation(Language::err('InvalidValue'));
+                            },
+                        ]
+                    ),
+                ],
             ]
         );
 
-        $editorBlocks = new EditorBlocks();
         $container = $this->container;
         $optionsResolver->setAllowedValues(
             'blocks',
@@ -130,7 +148,10 @@ class EditorType extends TextareaType
             $header->addJS($url, null, false, true, true, Priority::core());
         }
 
-        $view->vars['attr']['fork-block-editor-config'] = json_encode($options['editorBlocks']->getConfig(), JSON_HEX_APOS);
+        $view->vars['attr']['fork-block-editor-config'] = json_encode(
+            $options['editorBlocks']->getConfig(),
+            JSON_HEX_APOS
+        );
     }
 
     public function buildCkEditorView(FormView $view, FormInterface $form, array $options, Header $header): void

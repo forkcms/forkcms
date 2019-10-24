@@ -3,6 +3,8 @@
 namespace Common\BlockEditor;
 
 use Common\BlockEditor\Blocks\EditorBlock;
+use EditorJS\EditorJS;
+use EditorJS\EditorJSException;
 
 final class EditorBlocks
 {
@@ -43,9 +45,15 @@ final class EditorBlocks
         return $this->config;
     }
 
-    public function getValidation(): array
+    public function isValid(string $json): bool
     {
-        return ['tools' => $this->validation];
+        try {
+            new EditorJS($json, json_encode(['tools' => $this->validation]));
+        } catch (EditorJSException $editorJSException) {
+            return false;
+        }
+
+        return true;
     }
 
     public function getJavaScriptUrls(): array
