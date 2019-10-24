@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace Common\BlockEditor;
 
+use Common\BlockEditor\Blocks\EditorBlock;
 use Doctrine\Common\Collections\ArrayCollection;
 
 final class EditorBlocks
