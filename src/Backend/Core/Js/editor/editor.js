@@ -10,9 +10,16 @@ class BlockEditor {
     let editorId = $element.id + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
 
+    let data = {}
+    try {
+      data = JSON.parse($element.text())
+    } catch (e) {
+      // ignore the current content since we can't decode it
+    }
+
     const editor = new EditorJS({
       holder: editorId,
-      data: JSON.parse($element.text()),
+      data: data,
       onChange: () => {
         editor.save().then((outputData) => {
           $element.val(JSON.stringify(outputData))
