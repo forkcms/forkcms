@@ -29,8 +29,8 @@ abstract class EditorBlock
      */
     abstract public function getValidation(): array;
 
-    /** The path to the JS file with the config needed to make this block work in the editor */
-    abstract public function getJavaScriptPath(): string;
+    /** The url to the JS file with the config needed to make this block work in the editor */
+    abstract public function getJavaScriptUrl(): ?string;
 
     abstract public function parse(array $data): string;
 }

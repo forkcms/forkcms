@@ -3,63 +3,39 @@
 namespace Common\BlockEditor;
 
 use Common\BlockEditor\Blocks\EditorBlock;
-use Doctrine\Common\Collections\ArrayCollection;
 
 final class EditorBlocks
 {
-    /** @var ArrayCollection */
-    private $blocks;
-
     /** @var array */
     private $config;
 
     /** @var array */
     private $validation;
 
-    /** @var bool */
-    private $allowUnConfiguredBlocks;
+    /** @var array */
+    private $javaScriptUrls;
 
-    public function __construct(bool $allowUnConfiguredBlocks = false, string ...$possibleBlocks)
+    public function __construct(EditorBlock ...$editorBlocks)
     {
-        $this->blocks = new ArrayCollection();
-        $this->allowUnConfiguredBlocks = $allowUnConfiguredBlocks;
         $this->config = [];
         $this->validation = [];
+        $this->javaScriptUrls = [];
 
-        $this->configureBlocks($possibleBlocks);
+        $this->configureBlocks(...$editorBlocks);
     }
 
-    public function addBlocks(EditorBlock ...$editorBlocks): self
+    public function configureBlocks(EditorBlock ...$editorBlocks): self
     {
         foreach ($editorBlocks as $editorBlock) {
-            if ($this->allowUnConfiguredBlocks && !array_key_exists($editorBlock::getName(), $this->config)) {
-                $this->configureBlocks(get_class($editorBlock));
-            }
-
-            if (!$this->blocks->contains($editorBlock) && array_key_exists($editorBlock::getName(), $this->config)) {
-                $this->blocks->add($editorBlock);
-            }
-        }
-
-        return $this;
-    }
-
-    public function configureBlocks(string ...$editorBlockFQCNs): self
-    {
-        foreach ($editorBlockFQCNs as $editorBlockFQCN) {
-            if (is_subclass_of($editorBlockFQCN, EditorBlock::class)) {
-                $this->config[$editorBlockFQCN::getName()] = $editorBlockFQCN::getConfig();
-                $this->validation[$editorBlockFQCN::getName()] = $editorBlockFQCN::getValidation();
+            $this->config[$editorBlock->getName()] = $editorBlock->getConfig();
+            $this->validation[$editorBlock->getName()] = $editorBlock->getValidation();
+            $javaScriptUrl = $editorBlock->getJavaScriptUrl();
+            if ($javaScriptUrl !== null) {
+                $this->javaScriptUrls[$javaScriptUrl] = $javaScriptUrl;
             }
         }
 
         return $this;
-    }
-
-    /** @return EditorBlock[] */
-    public function getBlocks(): array
-    {
-        return $this->blocks->toArray();
     }
 
     public function getConfig(): array
@@ -70,5 +46,10 @@ final class EditorBlocks
     public function getValidation(): array
     {
         return $this->validation;
+    }
+
+    public function getJavaScriptUrls(): array
+    {
+        return $this->javaScriptUrls;
     }
 }
