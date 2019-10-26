@@ -13,20 +13,17 @@ class Model
     {
         // get form
         $form = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.email_subject, i.email_template, i.language, i.method, i.name, i.email,
-                    i.success_message, i.identifier
+            'SELECT i.id, i.language, i.name, i.database, i.success_message, i.identifier
              FROM forms AS i
              WHERE i.id = ?',
             $id
         );
 
-        // unserialize the recipients
-        if (isset($form['email'])) {
-            $form['email'] = (array) unserialize($form['email']);
-        }
-
-        // get validation
+        // get fields
         $form['fields'] = self::getFields($id);
+
+        // get emails
+        $form['emails'] = self::getEmails($id);
 
         return $form;
     }
@@ -76,6 +73,32 @@ class Model
         }
 
         return $fields;
+    }
+
+    public static function getEmails(int $formId): array
+    {
+        // get fields
+        $emails = (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.id, i.email_subject, i.email_data, i.email_recipient, i.email_to_field, i.email_to_addresses, i.email_from, i.email_body, i.email_template
+             FROM forms_emails AS i
+             WHERE i.form_id = ?',
+            $formId,
+            'id'
+        );
+
+        if (empty($emails)) return [];
+
+        // edit data
+        foreach ($emails as &$email) {
+
+            if (!empty($email['email_to_addresses'])) {
+                $email['email_to_addresses'] = unserialize($email['email_to_addresses']);
+            }
+
+            $email['email_from'] = unserialize($email['email_from']);
+        }
+
+        return $emails;
     }
 
     public static function insertData(array $formData): int

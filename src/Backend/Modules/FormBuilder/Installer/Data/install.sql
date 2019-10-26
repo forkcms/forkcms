@@ -3,12 +3,9 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
-  `email` text COLLATE utf8mb4_unicode_ci,
+  `database` tinyint(1) NOT NULL DEFAULT '0',
   `success_message` text COLLATE utf8mb4_unicode_ci,
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Form.html.twig',
-  `email_subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -32,6 +29,23 @@ CREATE TABLE IF NOT EXISTS `forms_data_fields` (
   PRIMARY KEY (`id`),
   KEY `data_id` (`data_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `forms_emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `form_id` int(11) unsigned NOT NULL,
+  `email_data` tinyint(1) NOT NULL DEFAULT '0',
+  `email_subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email_recipient` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Form.html.twig',
+  `email_to_field` int(11) DEFAULT NULL,
+  `email_to_addresses` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_from` text COLLATE utf8mb4_unicode_ci,
+  `email_body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Form.html.twig',
+  `created_on` datetime NOT NULL,
+  `edited_on` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_fields` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

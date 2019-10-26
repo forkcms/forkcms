@@ -504,7 +504,7 @@ class Form extends FrontendBaseWidget
 
                 $dataId = null;
                 // insert data
-                if ($this->item['method'] !== 'email') {
+                if ($this->item['database']) {
                     $dataId = FrontendFormBuilderModel::insertData($data);
                 }
 
@@ -549,7 +549,7 @@ class Form extends FrontendBaseWidget
                     $fields[$field['id']] = $fieldData;
 
                     // insert
-                    if ($this->item['method'] !== 'email') {
+                    if ($this->item['database']) {
                         FrontendFormBuilderModel::insertDataField($fieldData);
                     }
                 }

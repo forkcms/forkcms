@@ -1,24 +1,18 @@
 {% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
 
-{% block title %}
-  <title>{{ SITE_TITLE }} - {{ 'msg.FormBuilderSubject'|trans|format(name) }}</title>
-{% endblock %}
-
 {% block main %}
-  <h2>{{ SITE_TITLE }}: {{ subject|format(name) }}</h2>
-  <hr />
-  {% if is_confirmation_mail %}
-    <p>{{ 'msg.YouJustSentTheFollowingMessage'|trans }}</p>
-    <hr>
-  {% endif %}
+  <p>
+    {{ message|raw }}
+  </p>
   <h3>{{ 'lbl.SenderInformation'|trans|ucfirst }}</h3>
   <p>
     <strong>{{ 'lbl.SentOn'|trans|ucfirst }}:</strong><br />
     {{ sentOn|spoondate(dateFormatLong, LANGUAGE) }}
   </p>
-
-  <h3>{{ 'lbl.Content'|trans|ucfirst }}</h3>
-  {% for field in fields %}
-    <p><strong>{{ field.label }}:</strong><br /> {{ field.value|raw }}</p>
-  {% endfor %}
+  {% if email_data %}
+    <h3>{{ 'lbl.Content'|trans|ucfirst }}</h3>
+    {% for field in fields %}
+      <p><strong>{{ field.label }}:</strong><br /> {{ field.value|raw }}</p>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

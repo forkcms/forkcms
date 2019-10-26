@@ -106,10 +106,6 @@ class Data extends BackendBaseActionIndex
     private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
-
-        if ($this->record['method'] === 'email') {
-            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
-        }
     }
 
     private function loadDataGrid(): void

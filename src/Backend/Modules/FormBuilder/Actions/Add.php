@@ -36,17 +36,7 @@ class Add extends BackendBaseActionAdd
     {
         $this->form = new BackendForm('add');
         $this->form->addText('name')->makeRequired();
-        $this->form->addDropdown(
-            'method',
-            [
-                'database' => BL::getLabel('MethodDatabase'),
-                'database_email' => BL::getLabel('MethodDatabaseEmail'),
-                'email' => BL::getLabel('MethodEmail'),
-            ],
-            'database_email'
-        )->makeRequired();
-        $this->form->addText('email');
-        $this->form->addText('email_subject');
+        $this->form->addCheckbox('database');
         $this->form->addText('identifier', BackendFormBuilderModel::createIdentifier());
         $this->form->addEditor('success_message')->makeRequired();
 
@@ -63,35 +53,13 @@ class Add extends BackendBaseActionAdd
 
             // shorten the fields
             $txtName = $this->form->getField('name');
-            $txtEmail = $this->form->getField('email');
-            $txtEmailSubject = $this->form->getField('email_subject');
-            $ddmMethod = $this->form->getField('method');
+            $chkDatabase = $this->form->getField('database');
             $txtSuccessMessage = $this->form->getField('success_message');
             $txtIdentifier = $this->form->getField('identifier');
-
-            $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
-                $error = false;
-
-                // check the addresses
-                foreach ($emailAddresses as $address) {
-                    $address = trim($address);
-
-                    if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
-                        $error = true;
-                        break;
-                    }
-                }
-
-                // add error
-                if ($error) {
-                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
-                }
-            }
 
             // identifier
             if ($txtIdentifier->isFilled()) {
@@ -110,12 +78,7 @@ class Add extends BackendBaseActionAdd
                 $values['language'] = BL::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
-                $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() === 'database_email' || $ddmMethod->getValue() === 'email')
-                    ? serialize($emailAddresses) : null;
-                $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
-                $values['email_template'] = count($this->templates) > 1
-                    ? $this->form->getField('template')->getValue() : $this->templates[0];
+                $values['database'] = (int) $chkDatabase->isChecked();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :

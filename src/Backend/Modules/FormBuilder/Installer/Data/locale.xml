@@ -18,6 +18,15 @@
         <translation language="el"><![CDATA[Προσθήκη]]></translation>
         <translation language="pl"><![CDATA[dodaj]]></translation>
       </item>
+      <item type="message" name="AddedEmail">
+        <translation language="nl"><![CDATA[De email werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The email has been added.]]></translation>
+        <translation language="fr"><![CDATA[L'email a été ajouté.]]></translation>
+      </item>
+      <item type="label" name="AddEmail">
+        <translation language="nl"><![CDATA[email toevoegen]]></translation>
+        <translation language="en"><![CDATA[add email]]></translation>
+      </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
         <translation language="en"><![CDATA[add fields]]></translation>
@@ -82,6 +91,21 @@
         <translation language="el"><![CDATA[Πεδίο επιλογής]]></translation>
         <translation language="pl"><![CDATA[powrót do zgłoszeń]]></translation>
       </item>
+      <item type="label" name="Classname">
+        <translation language="nl"><![CDATA[CSS-klasse]]></translation>
+        <translation language="en"><![CDATA[CSS class]]></translation>
+        <translation language="it"><![CDATA[Classe CSS]]></translation>
+        <translation language="ru"><![CDATA[CSS-класс]]></translation>
+        <translation language="zh"><![CDATA[CSS类]]></translation>
+        <translation language="fr"><![CDATA[Classe CSS]]></translation>
+        <translation language="hu"><![CDATA[CSS osztály]]></translation>
+        <translation language="de"><![CDATA[CSS-Klasse]]></translation>
+        <translation language="es"><![CDATA[Clases CSS]]></translation>
+        <translation language="uk"><![CDATA[CSS клас]]></translation>
+        <translation language="sv"><![CDATA[CSS-klass]]></translation>
+        <translation language="el"><![CDATA[CSS Class]]></translation>
+        <translation language="pl"><![CDATA[klasa CSS]]></translation>
+      </item>
       <item type="label" name="DefaultValue">
         <translation language="nl"><![CDATA[standaardwaarde]]></translation>
         <translation language="en"><![CDATA[default value]]></translation>
@@ -144,6 +168,11 @@
         <translation language="el"><![CDATA[πτυσσόμενη λίστα]]></translation>
         <translation language="pl"><![CDATA[lista rozwijana]]></translation>
       </item>
+      <item type="label" name="EditEmail">
+        <translation language="nl"><![CDATA[bewerk email]]></translation>
+        <translation language="en"><![CDATA[edit email]]></translation>
+        <translation language="fr"><![CDATA[éditer l'email]]></translation>
+      </item>
       <item type="label" name="EditForm">
         <translation language="nl"><![CDATA[bewerk formulier "%1$s"]]></translation>
         <translation language="en"><![CDATA[edit form "%1$s"]]></translation>
@@ -158,6 +187,11 @@
         <translation language="sv"><![CDATA[ändra formulär "%1$s"]]></translation>
         <translation language="el"><![CDATA[Μεταβολή της φόρμας "%1$s"]]></translation>
         <translation language="pl"><![CDATA[edytuj od "%1$s"]]></translation>
+      </item>
+      <item type="label" name="EmailFieldsData">
+        <translation language="nl"><![CDATA[voeg de ingegeven velden toe aan de email]]></translation>
+        <translation language="en"><![CDATA[add the entered fields to the email]]></translation>
+        <translation language="fr"><![CDATA[ajouter les champs entrés à l'email]]></translation>
       </item>
       <item type="label" name="ErrorMessage">
         <translation language="nl"><![CDATA[foutmelding]]></translation>
@@ -270,51 +304,6 @@
         <translation language="el"><![CDATA[Αναγνωριστικό]]></translation>
         <translation language="pl"><![CDATA[identyfikator]]></translation>
       </item>
-      <item type="label" name="Method">
-        <translation language="nl"><![CDATA[methode]]></translation>
-        <translation language="en"><![CDATA[method]]></translation>
-        <translation language="it"><![CDATA[metodo]]></translation>
-        <translation language="ru"><![CDATA[Метод]]></translation>
-        <translation language="zh"><![CDATA[方法]]></translation>
-        <translation language="fr"><![CDATA[méthode]]></translation>
-        <translation language="hu"><![CDATA[módszer]]></translation>
-        <translation language="de"><![CDATA[Methode]]></translation>
-        <translation language="es"><![CDATA[método]]></translation>
-        <translation language="uk"><![CDATA[Метод]]></translation>
-        <translation language="sv"><![CDATA[metod]]></translation>
-        <translation language="el"><![CDATA[Μέθοδος]]></translation>
-        <translation language="pl"><![CDATA[metoda]]></translation>
-      </item>
-      <item type="label" name="MethodDatabase">
-        <translation language="nl"><![CDATA[opslaan in de database]]></translation>
-        <translation language="en"><![CDATA[save in the database]]></translation>
-        <translation language="it"><![CDATA[salva nel database]]></translation>
-        <translation language="ru"><![CDATA[Сохранить в БД]]></translation>
-        <translation language="zh"><![CDATA[保存到数据库]]></translation>
-        <translation language="fr"><![CDATA[sauvegarder en base de donnée]]></translation>
-        <translation language="hu"><![CDATA[adatbázisba mentés]]></translation>
-        <translation language="de"><![CDATA[in der Datenbank speichern]]></translation>
-        <translation language="es"><![CDATA[guardar en base de datos]]></translation>
-        <translation language="uk"><![CDATA[Зберегти в БД]]></translation>
-        <translation language="sv"><![CDATA[spara i databas]]></translation>
-        <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων]]></translation>
-        <translation language="pl"><![CDATA[zapisz w bazie danych]]></translation>
-      </item>
-      <item type="label" name="MethodDatabaseEmail">
-        <translation language="nl"><![CDATA[opslaan in de database en email verzenden]]></translation>
-        <translation language="en"><![CDATA[save in the database and send email]]></translation>
-        <translation language="it"><![CDATA[salva nel database e invia mail]]></translation>
-        <translation language="ru"><![CDATA[Сохранить в БД и отправить по E-Mail]]></translation>
-        <translation language="zh"><![CDATA[保存到数据库并发送邮件]]></translation>
-        <translation language="fr"><![CDATA[sauvegarder en base de données et envoyer par e-mail]]></translation>
-        <translation language="hu"><![CDATA[adatbázisba mentés és email-ben küldés]]></translation>
-        <translation language="de"><![CDATA[in der Datenbank speichern und als E-Mail versenden]]></translation>
-        <translation language="es"><![CDATA[guardar en base de datos y enviar un email]]></translation>
-        <translation language="uk"><![CDATA[Зберегти в БД і нідіслати на e-mail]]></translation>
-        <translation language="sv"><![CDATA[spara i databas och skicka e-post]]></translation>
-        <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
-        <translation language="pl"><![CDATA[zapisz w bazie danych i wyślij email]]></translation>
-      </item>
       <item type="label" name="MailmotorListId">
         <translation language="de"><![CDATA[list id]]></translation>
         <translation language="el"><![CDATA[κατάλογος id]]></translation>
@@ -357,16 +346,15 @@
         <translation language="ru"><![CDATA[Используйте этот адрес электронной почты для подписки на рассылку с помощью mailmotor.]]></translation>
         <translation language="pl"><![CDATA[Użyj tego adresu e-mail, aby zapisać się do programu Mailmotor.]]></translation>
       </item>
-      <item type="label" name="MethodEmail">
-        <translation language="nl"><![CDATA[email verzenden]]></translation>
-        <translation language="en"><![CDATA[send email]]></translation>
-        <translation language="it"><![CDATA[invia mail]]></translation>
-        <translation language="fr"><![CDATA[envoyer par e-mail]]></translation>
-        <translation language="hu"><![CDATA[email-ben küldés]]></translation>
-        <translation language="de"><![CDATA[E-Mail versenden]]></translation>
-        <translation language="es"><![CDATA[enviar un email]]></translation>
-        <translation language="sv"><![CDATA[skicka e-post]]></translation>
-        <translation language="pl"><![CDATA[wyślij email]]></translation>
+      <item type="message" name="HelpSaveInDatabase">
+        <translation language="nl"><![CDATA[Vink aan om de ingezonden formulieren op te slaan in de database.]]></translation>
+        <translation language="fr"><![CDATA[Cochez pour enregistrer les formulaires soumis dans la base de données.]]></translation>
+        <translation language="en"><![CDATA[Check to save the submitted forms in the database.]]></translation>
+      </item>
+      <item type="label" name="Message">
+        <translation language="nl"><![CDATA[bericht]]></translation>
+        <translation language="en"><![CDATA[message]]></translation>
+        <translation language="fr"><![CDATA[message]]></translation>
       </item>
       <item type="label" name="MinutesAgo">
         <translation language="nl"><![CDATA[%1$s minuten geleden]]></translation>
@@ -473,21 +461,6 @@
         <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
         <translation language="pl"><![CDATA[miejsce zarezerwowane]]></translation>
       </item>
-      <item type="label" name="Classname">
-        <translation language="nl"><![CDATA[CSS-klasse]]></translation>
-        <translation language="en"><![CDATA[CSS class]]></translation>
-        <translation language="it"><![CDATA[Classe CSS]]></translation>
-        <translation language="ru"><![CDATA[CSS-класс]]></translation>
-        <translation language="zh"><![CDATA[CSS类]]></translation>
-        <translation language="fr"><![CDATA[Classe CSS]]></translation>
-        <translation language="hu"><![CDATA[CSS osztály]]></translation>
-        <translation language="de"><![CDATA[CSS-Klasse]]></translation>
-        <translation language="es"><![CDATA[Clases CSS]]></translation>
-        <translation language="uk"><![CDATA[CSS клас]]></translation>
-        <translation language="sv"><![CDATA[CSS-klass]]></translation>
-        <translation language="el"><![CDATA[CSS Class]]></translation>
-        <translation language="pl"><![CDATA[klasa CSS]]></translation>
-      </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="en"><![CDATA[preview]]></translation>
@@ -575,6 +548,21 @@
         <translation language="sv"><![CDATA[obligatoriskt]]></translation>
         <translation language="el"><![CDATA[Απαιτείται]]></translation>
         <translation language="pl"><![CDATA[wymagane]]></translation>
+      </item>
+      <item type="label" name="SaveInDatabase">
+        <translation language="nl"><![CDATA[opslaan in de database]]></translation>
+        <translation language="en"><![CDATA[save in the database]]></translation>
+        <translation language="it"><![CDATA[salva nel database]]></translation>
+        <translation language="ru"><![CDATA[Сохранить в БД]]></translation>
+        <translation language="zh"><![CDATA[保存到数据库]]></translation>
+        <translation language="fr"><![CDATA[sauvegarder en base de donnée]]></translation>
+        <translation language="hu"><![CDATA[adatbázisba mentés]]></translation>
+        <translation language="de"><![CDATA[in der Datenbank speichern]]></translation>
+        <translation language="es"><![CDATA[guardar en base de datos]]></translation>
+        <translation language="uk"><![CDATA[Зберегти в БД]]></translation>
+        <translation language="sv"><![CDATA[spara i databas]]></translation>
+        <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων]]></translation>
+        <translation language="pl"><![CDATA[zapisz w bazie danych]]></translation>
       </item>
       <item type="label" name="SecondsAgo">
         <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
@@ -909,6 +897,11 @@
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτή την υποβολή;]]></translation>
         <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć te zgłoszenie?]]></translation>
       </item>
+      <item type="message" name="ConfirmDeleteEmail">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de e-mail wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the e-mail?]]></translation>
+        <translation language="fr"><![CDATA[Êtes-vous sûr de vouloir supprimer l'e-mail?]]></translation>
+      </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The form "%1$s" was removed.]]></translation>
@@ -921,6 +914,11 @@
         <translation language="es"><![CDATA[El formulario "%1$s" fue eliminado.]]></translation>
         <translation language="el"><![CDATA[Η φόρμα "%1$s" διεγράφη.]]></translation>
         <translation language="pl"><![CDATA[Formularz "%1$s" został usunięty.]]></translation>
+      </item>
+      <item type="message" name="DeletedEmail">
+        <translation language="nl"><![CDATA[De email werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The email was removed.]]></translation>
+        <translation language="fr"><![CDATA[L'email a été effacé.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd opgeslagen.]]></translation>
@@ -935,6 +933,29 @@
         <translation language="sv"><![CDATA[formulär "%1$s" sparades.]]></translation>
         <translation language="el"><![CDATA[Η φόρμα "%1$s" αποθηκεύτηκε.]]></translation>
         <translation language="pl"><![CDATA[Formularz "%1$s" został zapisany.]]></translation>
+      </item>
+      <item type="label" name="Emails">
+        <translation language="nl"><![CDATA[emails]]></translation>
+        <translation language="en"><![CDATA[emails]]></translation>
+        <translation language="fr"><![CDATA[courriels]]></translation>
+      </item>
+      <item type="error" name="EmailValidationIsRequired">
+        <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
+        <translation language="pl"><![CDATA[Sprawdzanie poprawności adresu e-mail jest wymagane, gdy pole to jest używane jako adres e-mail do odpowiedzi.]]></translation>
+      </item>
+      <item type="error" name="ErrorMessageIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide an error message.]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un messaggio di errore.]]></translation>
+        <translation language="ru"><![CDATA[Введите текст сообщения об ошибке.]]></translation>
+        <translation language="zh"><![CDATA[请输入错误提示信息。]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir un message d'erreur.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek add meg a hibaüzenetet.]]></translation>
+        <translation language="de"><![CDATA[Bitte gib eine Fehlermeldung an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introudce un mensaje de error.]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange ett felmeddelande.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε ένα μήνυμα λάθους.]]></translation>
+        <translation language="pl"><![CDATA[Proszę wprowadzić komunikat o błędzie.]]></translation>
       </item>
       <item type="message" name="HelpIdentifier">
         <translation language="nl"><![CDATA[De identifier wordt in de URL geplaatst na het succesvol opslaan van formulier.]]></translation>
@@ -1013,6 +1034,11 @@
         <translation language="sv"><![CDATA[Det finns inga inskick än.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη υποβολές.]]></translation>
         <translation language="pl"><![CDATA[Brak jeszcze zgłoszeń.]]></translation>
+      </item>
+      <item type="message" name="NoEmails">
+        <translation language="nl"><![CDATA[Er zijn nog geen emails.]]></translation>
+        <translation language="en"><![CDATA[There are no emails yet.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore d'emails.]]></translation>
       </item>
       <item type="message" name="NoFields">
         <translation language="nl"><![CDATA[Er zijn nog geen velden.]]></translation>
@@ -1097,20 +1123,6 @@
         <translation language="de"><![CDATA[Zeit und Datum]]></translation>
         <translation language="pl"><![CDATA[czas i data]]></translation>
       </item>
-      <item type="error" name="ErrorMessageIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide an error message.]]></translation>
-        <translation language="it"><![CDATA[Per favore fornisci un messaggio di errore.]]></translation>
-        <translation language="ru"><![CDATA[Введите текст сообщения об ошибке.]]></translation>
-        <translation language="zh"><![CDATA[请输入错误提示信息。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir un message d'erreur.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek add meg a hibaüzenetet.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine Fehlermeldung an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introudce un mensaje de error.]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange ett felmeddelande.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε ένα μήνυμα λάθους.]]></translation>
-        <translation language="pl"><![CDATA[Proszę wprowadzić komunikat o błędzie.]]></translation>
-      </item>
       <item type="error" name="IdentifierExists">
         <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
         <translation language="it"><![CDATA[Questo identificatore è già esistente.]]></translation>
@@ -1181,6 +1193,11 @@
         <translation language="el"><![CDATA[Το αναγνωριστικό χρησιμοποιείται ήδη.]]></translation>
         <translation language="pl"><![CDATA[Ten identyfikator już jest używany.]]></translation>
       </item>
+      <item type="label" name="ValueOfAField">
+        <translation language="nl"><![CDATA[Waarde van een veld]]></translation>
+        <translation language="en"><![CDATA[Value of a field]]></translation>
+        <translation language="fr"><![CDATA[Valeur d'un champ]]></translation>
+      </item>
       <item type="error" name="ValueIsRequired">
         <translation language="nl"><![CDATA[Gelieve een waarde in te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide a value.]]></translation>
@@ -1196,10 +1213,7 @@
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
         <translation language="pl"><![CDATA[Proszę wprowadzić wartość.]]></translation>
       </item>
-      <item type="error" name="EmailValidationIsRequired">
-        <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
-        <translation language="pl"><![CDATA[Sprawdzanie poprawności adresu e-mail jest wymagane, gdy pole to jest używane jako adres e-mail do odpowiedzi.]]></translation>
-      </item>
+
       <item type="error" name="ActivateEmailValidationToUseThisOption">
         <translation language="nl"><![CDATA[Activeer email validatie om deze optie te kunnen gebruiken.]]></translation>
         <translation language="en"><![CDATA[Activate email validation to use this option.]]></translation>

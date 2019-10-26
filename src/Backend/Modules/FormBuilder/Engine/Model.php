@@ -14,10 +14,16 @@ use Symfony\Component\Finder\Finder;
 class Model
 {
     const QUERY_BROWSE =
-        'SELECT i.id, i.name, i.email, i.method,
+        'SELECT i.id, i.name,
          (SELECT COUNT(fd.form_id) FROM forms_data AS fd WHERE fd.form_id = i.id) AS sent_forms
          FROM forms AS i
          WHERE i.language = ?';
+
+    const QUERY_BROWSE_EMAILS =
+        'SELECT i.id, i.email_subject, i.email_to_addresses        
+         FROM forms_emails AS i
+         WHERE i.language = ?
+         AND i.form_id = ?';
 
     /**
      * Calculate time ago.
@@ -151,6 +157,18 @@ class Model
     }
 
     /**
+     * Deletes an email
+     *
+     * @param array $ids Ids of data items.
+     */
+    public static function deleteEmail(int $id): void
+    {
+        $database = BackendModel::getContainer()->get('database');
+
+        $database->delete('forms_emails', 'id = ?', $id);
+    }
+
+    /**
      * Delete a field.
      *
      * @param int $id Id of a field.
@@ -205,6 +223,24 @@ class Model
             'SELECT 1
              FROM forms_data AS fd
              WHERE fd.id = ?
+             LIMIT 1',
+            $id
+        );
+    }
+
+    /**
+     * Does the emailexist.
+     *
+     * @param int $id Id of the email item.
+     *
+     * @return bool
+     */
+    public static function existsEmail(int $id): bool
+    {
+        return (bool) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT 1
+             FROM forms_emails AS f
+             WHERE f.id = ?
              LIMIT 1',
             $id
         );
@@ -293,14 +329,34 @@ class Model
      */
     public static function get(int $id): array
     {
-        $return = (array) BackendModel::getContainer()->get('database')->getRecord(
+        return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT f.* FROM forms AS f WHERE f.id = ?',
+            $id
+        );
+    }
+
+    /**
+     * Get all email data for a given id.
+     *
+     * @param int $id The id for the record to get.
+     *
+     * @return array
+     */
+    public static function getEmail(int $id): array
+    {
+        $return = (array) BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT e.* FROM forms_emails AS e WHERE e.id = ?',
             $id
         );
 
         // unserialize the emailaddresses
-        if (isset($return['email'])) {
-            $return['email'] = (array) unserialize($return['email']);
+        if (isset($return['email_to_addresses'])) {
+            $return['email_to_addresses'] = (array) unserialize($return['email_to_addresses']);
+        }
+
+        // unserialize the email_from data
+        if (isset($return['email_from'])) {
+            $return['email_from'] = (array) unserialize($return['email_from']);
         }
 
         return $return;
@@ -443,6 +499,39 @@ class Model
     }
 
     /**
+     * Get all fields of a form for dropdown
+     *
+     * @param int $id Id of a form.
+     *
+     * @return array
+     */
+    public static function getRecipientFieldsForDropdown(int $id): array
+    {
+        $fields = (array) BackendModel::getContainer()->get('database')->getRecords(
+            'SELECT ff.id, ff.settings
+             FROM forms_fields AS ff
+             WHERE ff.form_id = ?
+             AND ff.type = ?
+             ORDER BY ff.sequence ASC',
+            [$id, 'textbox']
+        );
+
+        if (empty($fields)) return [];
+
+        foreach ($fields as $field) {
+            // unserialize
+            if ($field['settings'] !== null) {
+                $field['settings'] = unserialize($field['settings']);
+
+                // push to array
+                $return[$field['id']] = $field['settings']['label'];
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * Get a label/action/message from locale.
      * Used as datagridfunction.
      *
@@ -511,6 +600,18 @@ class Model
     }
 
     /**
+     * Add a new email.
+     *
+     * @param array $values The data to insert.
+     *
+     * @return int
+     */
+    public static function insertEmail(array $values): int
+    {
+        return BackendModel::getContainer()->get('database')->insert('forms_emails', $values);
+    }
+
+    /**
      * Add a new field.
      *
      * @param array $values The data to insert.
@@ -570,6 +671,20 @@ class Model
         );
 
         return $id;
+    }
+
+    /**
+     * Update an email.
+     *
+     * @param array $values The new data.
+     *
+     * @return int
+     */
+    public static function updateEmail(array $values): int
+    {
+        BackendModel::getContainer()->get('database')->update('forms_emails', $values, 'id = ?', $values['id']);
+
+        return $values['id'];
     }
 
     /**
