@@ -86,11 +86,12 @@ class Model
             'id'
         );
 
-        if (empty($emails)) return [];
+        if (empty($emails)) {
+            return [];
+        }
 
         // edit data
         foreach ($emails as &$email) {
-
             if (!empty($email['email_to_addresses'])) {
                 $email['email_to_addresses'] = unserialize($email['email_to_addresses']);
             }

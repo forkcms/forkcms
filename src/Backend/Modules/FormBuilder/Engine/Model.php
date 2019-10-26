@@ -516,7 +516,9 @@ class Model
             [$id, 'textbox']
         );
 
-        if (empty($fields)) return [];
+        if (empty($fields)) {
+            return [];
+        }
 
         foreach ($fields as $field) {
             // unserialize
