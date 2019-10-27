@@ -15,6 +15,20 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 class AddEmail extends BackendBaseActionAdd
 {
     /**
+     * The form id
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
+     * The form data
+     *
+     * @var array
+     */
+    private $record = [];
+
+    /**
      * The available templates
      *
      * @var array

@@ -18,6 +18,20 @@ use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 class EditEmail extends BackendBaseActionEdit
 {
     /**
+     * The form id
+     *
+     * @var int
+     */
+    private $formId;
+
+    /**
+     * The email
+     *
+     * @var array
+     */
+    private $email = [];
+
+    /**
      * The available templates
      *
      * @var array

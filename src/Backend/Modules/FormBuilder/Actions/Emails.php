@@ -14,6 +14,20 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class Emails extends BackendBaseActionIndex
 {
+    /**
+     * The form id
+     *
+     * @var int
+     */
+    private $id;
+
+    /**
+     * The form data
+     *
+     * @var array
+     */
+    private $record = [];
+
     public function execute(): void
     {
         $this->id = $this->getRequest()->query->getInt('id');
