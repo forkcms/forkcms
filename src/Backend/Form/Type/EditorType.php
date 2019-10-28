@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\EditorBlock;
 use Common\BlockEditor\Blocks\Header as HeaderBlock;
+use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\Paragraph;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
@@ -59,6 +60,7 @@ class EditorType extends TextareaType
                 'blocks' => [
                     HeaderBlock::class,
                     Paragraph::class,
+                    ListBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
