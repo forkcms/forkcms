@@ -83,13 +83,6 @@ gulp.task('build:backend:assets:copy-fine-uploader-css-and-images', function () 
   ])
   .pipe(gulp.dest('./css/vendors/fine-uploader'))
 })
-gulp.task('build:backend:assets:copy-sir-trevor-css-and-images', function () {
-  return gulp.src([
-    'node_modules/sir-trevor/build/sir-trevor.min.css',
-    'node_modules/sir-trevor/build/sir-trevor-icons.svg',
-  ])
-  .pipe(gulp.dest('./css/vendors/sir-trevor'))
-})
 
 gulp.task('build:backend:assets:copy-js-vendors', function () {
   return gulp.src([
@@ -102,8 +95,7 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
     'node_modules/cropper/dist/cropper.js',
-    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js',
-    'node_modules/sir-trevor/build/sir-trevor.min.js'
+    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })
@@ -136,7 +128,6 @@ gulp.task('build:backend', function () {
     'build:backend:assets:copy-fonts-vendors',
     'build:backend:assets:copy-js-vendors',
     'build:backend:assets:copy-fine-uploader-css-and-images',
-    'build:backend:assets:copy-sir-trevor-css-and-images',
     'build:backend:sass:generate-css',
     'build:backend:assets:copy-ckeditor'
   )

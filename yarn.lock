@@ -5778,14 +5778,6 @@ simple-ajax-uploader@^2.5.5:
   resolved "https://registry.yarnpkg.com/simple-ajax-uploader/-/simple-ajax-uploader-2.6.7.tgz#4a53f1635730fd5414b169988694f8324e4ca352"
   integrity sha512-ZevKLmdZcggAaCzZZcikt/5fGKC6S9R4PaLHzIaH7hJDrTnmOZ/Q8HN+rjLioMijeSgLgXhyFVEqsoFfkocxKA==
 
-sir-trevor@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/sir-trevor/-/sir-trevor-0.8.2.tgz#aa8ec7619f6a1c513480cb6dac4b7b76d206e55a"
-  integrity sha512-j+tIzemydeZLFJsHsFu5Mg2/0BW7ccOoMtucXwUWznrEU5nxPknsSfODqJv2qpC8sHt5LHJPbubMZK03miaSug==
-  dependencies:
-    es5-shim "^4.5.12"
-    svg4everybody "^2.1.9"
-
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
