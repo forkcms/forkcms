@@ -262,7 +262,7 @@ class PageRepository extends ServiceEntityRepository
 
         // unserialize data
         if ($result['data'] !== null) {
-            $result['data'] = unserialize($result['data']);
+            $result['data'] = unserialize($result['data'], ['allowed_classes' => false]);
         }
 
         return $result;
