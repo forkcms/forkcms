@@ -242,7 +242,10 @@ class Page
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
         $this->status = $status;
-        $this->data = serialize($data);
+        $this->data = $data;
+        if ($data !== null) {
+            $this->data = serialize($data);
+        }
         $this->allowMove = $allowMove;
         $this->allowChildren = $allowChildren;
         $this->allowEdit = $allowEdit;
