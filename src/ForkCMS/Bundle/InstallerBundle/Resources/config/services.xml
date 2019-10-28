@@ -19,5 +19,10 @@
             <argument type="service" id="forkcms.requirements.checker"/>
             <tag name="console.command" />
         </service>
+
+        <service id="forkcms.console.installer.install" class="ForkCMS\Bundle\InstallerBundle\Console\InstallCommand">
+            <argument type="service" id="forkcms.installer"/>
+            <tag name="console.command" />
+        </service>
     </services>
 </container>
