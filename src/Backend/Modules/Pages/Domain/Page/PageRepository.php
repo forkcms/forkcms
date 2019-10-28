@@ -222,6 +222,71 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findOneByParentsAndUrlAndStatusAndLanguage(
+        array $parentIds,
+        string $url,
+        string $status,
+        string $language
+    ): ?Page {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->join('p.meta', 'meta');
+
+        $qb
+            ->where($qb->expr()->in('p.parentId', ':parentIds'))
+            ->andWhere('p.status = :status')
+            ->andWhere('meta.url = :url')
+            ->andWhere('p.language = :language');
+
+        $qb->setParameters(
+            [
+                'parentIds' => $parentIds,
+                'status' => $status,
+                'url' => $url,
+                'language' => $language,
+            ]
+        );
+
+        return $qb
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
+        array $parentIds,
+        string $url,
+        string $status,
+        string $language,
+        int $excludedId
+    ): ?Page {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->join('p.meta', 'meta');
+
+        $qb
+            ->where($qb->expr()->in('p.parentId', ':parentIds'))
+            ->andWhere('p.status = :status')
+            ->andWhere('meta.url = :url')
+            ->andWhere('p.id <> :id')
+            ->andWhere('p.language = :language');
+
+        $qb->setParameters(
+            [
+                'parentIds' => $parentIds,
+                'status' => $status,
+                'url' => $url,
+                'id' => $excludedId,
+                'language' => $language,
+            ]
+        );
+
+        return $qb
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

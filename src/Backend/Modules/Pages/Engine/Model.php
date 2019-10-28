@@ -1027,6 +1027,9 @@ class Model
 
     public static function getUrl(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+
         $parentIds = [$parentId ?? self::NO_PARENT_PAGE_ID];
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
@@ -1050,17 +1053,15 @@ class Model
 
         // no specific id
         if ($id === null) {
+            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguage(
+                $parentIds,
+                $url,
+                Page::ACTIVE,
+                BL::getWorkingLanguage()
+            );
+
             // no items?
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM pages AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ? AND m.url = ?
-                    AND i.language = ?
-                 LIMIT 1',
-                ['active', $url, BL::getWorkingLanguage()]
-            )
-            ) {
+            if ($page instanceof Page) {
                 // add a number
                 $url = BackendModel::addNumber($url);
 
@@ -1070,16 +1071,15 @@ class Model
         } else {
             // one item should be ignored
             // there are items so, call this method again.
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM pages AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ?
-                    AND m.url = ? AND i.id != ? AND i.language = ?
-                 LIMIT 1',
-                ['active', $url, $id, BL::getWorkingLanguage()]
-            )
-            ) {
+            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
+                $parentIds,
+                $url,
+                Page::ACTIVE,
+                BL::getWorkingLanguage(),
+                $id
+            );
+
+            if ($page instanceof Page) {
                 // add a number
                 $url = BackendModel::addNumber($url);
 
