@@ -2,13 +2,12 @@
 
 namespace Common\BlockEditor\Blocks;
 
-final class Header extends EditorBlock
+final class ParagraphBlock extends EditorBlock
 {
     public function getConfig(): array
     {
         return [
-            'shortcut' => 'CMD+SHIFT+H',
-            'class' => 'BlockEditor.blocks.Header',
+            'class' => 'BlockEditor.blocks.Paragraph',
         ];
     }
 
@@ -17,19 +16,14 @@ final class Header extends EditorBlock
         return [
             'text' => [
                 'type' => 'string',
-                'required' => true,
-                'allowedTags' => 'b,i,a[href]',
-            ],
-            'level' => [
-                'type' => 'int',
-                'canBeOnly' => [1, 2, 3, 4, 5, 6],
+                'allowedTags' => 'i,b,u,a[href]',
             ],
         ];
     }
 
     public function parse(array $data): string
     {
-        return '<h' . $data['level'] . '>' . $data['text'] . '</h' . $data['level'] . '>';
+        return '<p>' . $data['text'] . '</p>';
     }
 
     public function getJavaScriptUrl(): ?string

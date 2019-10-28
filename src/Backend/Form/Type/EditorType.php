@@ -6,9 +6,9 @@ use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\EditorBlock;
-use Common\BlockEditor\Blocks\Header as HeaderBlock;
+use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
-use Common\BlockEditor\Blocks\Paragraph;
+use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -59,7 +59,7 @@ class EditorType extends TextareaType
                 'attr' => ['class' => 'inputBlockEditor sr-only'],
                 'blocks' => [
                     HeaderBlock::class,
-                    Paragraph::class,
+                    ParagraphBlock::class,
                     ListBlock::class,
                 ],
                 'constraints' => [

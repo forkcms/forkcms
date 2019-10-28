@@ -3,7 +3,7 @@
 namespace Common\BlockEditor\Twig;
 
 use Common\BlockEditor\Blocks\EditorBlock;
-use Common\BlockEditor\Blocks\Paragraph;
+use Common\BlockEditor\Blocks\ParagraphBlock;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Extension\AbstractExtension;
@@ -56,7 +56,7 @@ final class ParseBlocksExtension extends AbstractExtension
         foreach ($data['blocks'] as $block) {
             $blockParserFQCN = $block['type'];
             if ($blockParserFQCN === 'paragraph') {
-                $blockParserFQCN = Paragraph::class;
+                $blockParserFQCN = ParagraphBlock::class;
             }
 
             if (!$this->container->has($blockParserFQCN)) {
