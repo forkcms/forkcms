@@ -23,7 +23,7 @@ final class ParagraphBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return '<p>' . $data['text'] . '</p>';
+        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/ParagraphBlock.html.twig', $data);
     }
 
     public function getJavaScriptUrl(): ?string
