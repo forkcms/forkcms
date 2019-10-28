@@ -2,7 +2,7 @@
 
 namespace Common\BlockEditor\Twig;
 
-use Common\BlockEditor\Blocks\EditorBlock;
+use Common\BlockEditor\Blocks\AbstractBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -63,7 +63,7 @@ final class ParseBlocksExtension extends AbstractExtension
                 continue;
             }
             $blockParser = $this->container->get($blockParserFQCN);
-            if (!$blockParser instanceof EditorBlock) {
+            if (!$blockParser instanceof AbstractBlock) {
                 continue;
             }
 

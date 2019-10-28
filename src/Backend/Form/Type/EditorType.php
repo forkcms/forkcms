@@ -5,7 +5,7 @@ namespace Backend\Form\Type;
 use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use Common\BlockEditor\Blocks\EditorBlock;
+use Common\BlockEditor\Blocks\AbstractBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
@@ -91,7 +91,7 @@ class EditorType extends TextareaType
 
                 $editorBlocks->configureBlocks(
                     ...array_map(
-                        static function (string $editorBlockFCQN) use ($container): EditorBlock {
+                        static function (string $editorBlockFCQN) use ($container): AbstractBlock {
                             return $container->get($editorBlockFCQN);
                         },
                         $blocks

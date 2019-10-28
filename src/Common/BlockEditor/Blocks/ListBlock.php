@@ -2,7 +2,7 @@
 
 namespace Common\BlockEditor\Blocks;
 
-final class ListBlock extends EditorBlock
+final class ListBlock extends AbstractBlock
 {
     public function getConfig(): array
     {

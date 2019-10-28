@@ -2,7 +2,7 @@
 
 namespace Common\BlockEditor\Blocks;
 
-final class HeaderBlock extends EditorBlock
+final class HeaderBlock extends AbstractBlock
 {
     public function getConfig(): array
     {

@@ -5,7 +5,7 @@ namespace Common\BlockEditor\Blocks;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-abstract class EditorBlock
+abstract class AbstractBlock
 {
     /** @var ContainerInterface */
     private $container;
@@ -19,7 +19,7 @@ abstract class EditorBlock
     {
         $class = static::class;
 
-        if ($class === Paragraph::class) {
+        if ($class === ParagraphBlock::class) {
             return 'paragraph'; // we can't get around this exception
         }
 

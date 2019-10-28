@@ -2,7 +2,7 @@
 
 namespace Common\BlockEditor\Blocks;
 
-final class ParagraphBlock extends EditorBlock
+final class ParagraphBlock extends AbstractBlock
 {
     public function getConfig(): array
     {

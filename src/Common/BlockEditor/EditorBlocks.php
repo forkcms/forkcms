@@ -2,7 +2,7 @@
 
 namespace Common\BlockEditor;
 
-use Common\BlockEditor\Blocks\EditorBlock;
+use Common\BlockEditor\Blocks\AbstractBlock;
 use EditorJS\EditorJS;
 use EditorJS\EditorJSException;
 
@@ -17,7 +17,7 @@ final class EditorBlocks
     /** @var array */
     private $javaScriptUrls;
 
-    public function __construct(EditorBlock ...$editorBlocks)
+    public function __construct(AbstractBlock ...$editorBlocks)
     {
         $this->config = [];
         $this->validation = [];
@@ -26,7 +26,7 @@ final class EditorBlocks
         $this->configureBlocks(...$editorBlocks);
     }
 
-    public function configureBlocks(EditorBlock ...$editorBlocks): self
+    public function configureBlocks(AbstractBlock ...$editorBlocks): self
     {
         foreach ($editorBlocks as $editorBlock) {
             $this->config[$editorBlock->getName()] = $editorBlock->getConfig();
