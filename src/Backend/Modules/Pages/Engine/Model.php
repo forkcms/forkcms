@@ -271,7 +271,7 @@ class Model
             $tags = BackendTagsModel::getTags('pages', $activePage->getId(), 'string', $fromLanguage);
 
             // save tags
-            if ($tags != '') {
+            if ($tags !== '') {
                 $saveWorkingLanguage = BL::getWorkingLanguage();
 
                 // If we don't set the working language to the target language,
