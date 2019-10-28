@@ -29,7 +29,7 @@ final class HeaderBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return '<h' . $data['level'] . '>' . $data['text'] . '</h' . $data['level'] . '>';
+        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/HeaderBlock.html.twig', $data);
     }
 
     public function getJavaScriptUrl(): ?string
