@@ -8,6 +8,7 @@ use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\AbstractBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
+use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
@@ -61,6 +62,7 @@ class EditorType extends TextareaType
                     HeaderBlock::class,
                     ParagraphBlock::class,
                     ListBlock::class,
+                    MediaLibraryImageBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
