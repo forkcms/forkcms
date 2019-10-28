@@ -22,7 +22,6 @@ class BlockEditor {
   static fromJson ($element, jsonConfig) {
     let config = JSON.parse(jsonConfig)
     for (const name of Object.keys(config)) {
-      // @TODO ask if we should we replace this by forcing the blocks to be added to window.BlockEditor.blocks
       config[name].class = this.getClassFromVariableName(config[name].class)
     }
 
