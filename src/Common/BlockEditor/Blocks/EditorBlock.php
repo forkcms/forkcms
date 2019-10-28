@@ -2,6 +2,7 @@
 
 namespace Common\BlockEditor\Blocks;
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class EditorBlock
@@ -39,4 +40,12 @@ abstract class EditorBlock
     abstract public function getJavaScriptUrl(): ?string;
 
     abstract public function parse(array $data): string;
+
+    final protected function parseWithTwig(string $template, array $data): string
+    {
+        /** @var TwigTemplate $templating */
+        $templating = $this->container->get('templating');
+
+        return $templating->render($template, ['editorBlock' => $data]);
+    }
 }
