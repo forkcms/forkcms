@@ -342,10 +342,13 @@ class Model
      */
     public static function delete(int $id, string $language = null, int $revisionId = null): bool
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get record
         $page = self::get($id, $revisionId, $language);
@@ -359,24 +362,18 @@ class Model
         }
 
         // get revision ids
-        $revisionIDs = (array) $database->getColumn(
-            'SELECT i.revision_id
-             FROM pages AS i
-             WHERE i.id = ? AND i.language = ?',
-            [$id, $language]
-        );
+        $pages = $pageRepository->findBy(['id' => $id, 'language' => $language]);
 
-        // get meta ids
-        $metaIDs = (array) $database->getColumn(
-            'SELECT i.meta_id
-             FROM pages AS i
-             WHERE i.id = ? AND i.language = ?',
-            [$id, $language]
+        $revisionIDs = array_map(
+            function (Page $page) {
+                return $page->getRevisionId();
+            },
+            $pages
         );
 
         // delete meta records
-        if (!empty($metaIDs)) {
-            $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+        foreach ($pages as $page) {
+            $metaRepository->remove($page->getMeta());
         }
 
         // delete blocks and their revisions
@@ -388,7 +385,7 @@ class Model
 
         // delete page and the revisions
         if (!empty($revisionIDs)) {
-            $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            $pageRepository->deleteByRevisionIds($revisionIDs);
         }
 
         // delete tags
