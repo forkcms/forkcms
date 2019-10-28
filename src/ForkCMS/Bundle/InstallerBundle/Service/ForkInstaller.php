@@ -307,7 +307,8 @@ class ForkInstaller
             '<database-user>' => addslashes($data->getDatabaseUsername()),
             '<database-password>' => addslashes($data->getDatabasePassword()),
             '<database-port>' => $data->getDatabasePort(),
-            '<site-protocol>' => $this->isHttpRequest() ? 'https' : 'http',
+            '<session.cookie-secure>' => $this->isHttpsRequest() ? 'true' : 'false',
+            '<site-protocol>' => $this->isHttpsRequest() ? 'https' : 'http',
             '<site-domain>' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
@@ -319,7 +320,7 @@ class ForkInstaller
         ];
     }
 
-    private function isHttpRequest(): bool
+    private function isHttpsRequest(): bool
     {
         if (!isset($_SERVER['HTTPS'])) {
             return false;
