@@ -202,6 +202,26 @@ class PageRepository extends ServiceEntityRepository
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
+    public function getFirstChild(int $pageId, string $status, string $language): ?Page
+    {
+        return $this
+            ->createQueryBuilder('p')
+            ->where('p.parentId = :id')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.language = :language')
+            ->orderBy('p.sequence', 'ASC')
+            ->setMaxResults(1)
+            ->setParameters(
+                [
+                    'id' => $pageId,
+                    'status' => $status,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

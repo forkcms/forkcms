@@ -500,31 +500,19 @@ class Model
     }
 
     /**
-     * Get the first child for a given parent
-     *
-     * @param int $pageId The Id of the page to get the first child for.
-     *
-     * @return mixed
+     * Get the id first child for a given parent
      */
-    public static function getFirstChildId(int $pageId)
+    public static function getFirstChildId(int $parentId): ?int
     {
-        // get child
-        $childId = (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM pages AS i
-             WHERE i.parent_id = ? AND i.status = ? AND i.language = ?
-             ORDER BY i.sequence ASC
-             LIMIT 1',
-            [$pageId, 'active', BL::getWorkingLanguage()]
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $page = $pageRepository->getFirstChild($parentId, Page::ACTIVE, BL::getWorkingLanguage());
 
-        // return
-        if ($childId !== 0) {
-            return $childId;
+        if ($page instanceof Page) {
+            return $page->getId();
         }
 
-        // fallback
-        return false;
+        return null;
     }
 
     public static function getFullUrl(int $id): string

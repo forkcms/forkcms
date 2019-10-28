@@ -647,7 +647,7 @@ class Edit extends BackendBaseActionEdit
         $showDelete = true;
 
         // has children?
-        if (BackendPagesModel::getFirstChildId($this->record['id']) !== false) {
+        if (BackendPagesModel::getFirstChildId($this->record['id']) !== null) {
             $showDelete = false;
         }
         if (!$this->record['delete_allowed']) {
