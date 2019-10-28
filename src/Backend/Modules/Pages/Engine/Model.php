@@ -16,6 +16,9 @@ use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Doctrine\Entity\Meta;
+use Common\Doctrine\Repository\MetaRepository;
+use DateTime;
 use ForkCMS\App\ForkController;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
@@ -103,6 +106,9 @@ class Model
         /** @var MessageBus $commanBus */
         $commandBus = BackendModel::get('command_bus');
 
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+
         $toLocale = Locale::fromString($toLanguage);
         $fromLocale = Locale::fromString($fromLanguage);
 
@@ -125,52 +131,41 @@ class Model
         }
 
         // get all old pages
-        $ids = $database->getColumn(
-            'SELECT id
-             FROM pages AS i
-             WHERE i.language = ? AND i.status = ?',
-            [$toLanguage, 'active']
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Page::ACTIVE]);
 
-        // any old pages
-        if (!empty($ids)) {
-            // delete existing pages
-            foreach ($ids as $id) {
-                // redefine
-                $id = (int) $id;
+        // delete existing pages
+        /** @var Page $page */
+        foreach ($pages as $page) {
+            // redefine
+            $activePage = $page->getId();
 
-                // get revision ids
-                $revisionIDs = (array) $database->getColumn(
-                    'SELECT i.revision_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ?',
-                    [$id, $toLanguage]
-                );
+            // get revision ids
+            $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
+            $revisionIDs = array_map(
+                function (Page $page) {
+                    return $page->getRevisionId();
+                },
+                $pagesById
+            );
 
-                // get meta ids
-                $metaIDs = (array) $database->getColumn(
-                    'SELECT i.meta_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ?',
-                    [$id, $toLanguage]
-                );
+            /** @var Page $item */
+            foreach ($pagesById as $item) {
+                $metaRepository->remove($item->getMeta());
+            }
 
-                // delete meta records
-                if (!empty($metaIDs)) {
-                    $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
-                }
+            // delete blocks and their revisions
+            if (!empty($revisionIDs)) {
+                /** @var PageBlockRepository $pageBlockRepository */
+                $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+                $pageBlockRepository->deleteByRevisionIds($revisionIDs);
+            }
 
-                // delete blocks and their revisions
-                if (!empty($revisionIDs)) {
-                    /** @var PageBlockRepository $pageBlockRepository */
-                    $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
-                    $pageBlockRepository->deleteByRevisionIds($revisionIDs);
-                }
-
-                // delete page and the revisions
-                if (!empty($revisionIDs)) {
-                    $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
-                }
+            // delete page and the revisions
+            /** @var Page $item */
+            foreach ($pagesById as $item) {
+                $pageRepository->remove($item);
             }
         }
 
@@ -178,62 +173,57 @@ class Model
         $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
-        $ids = BackendModel::getContainer()->get('database')->getColumn(
-            'SELECT id
-             FROM pages AS i
-             WHERE i.language = ? AND i.status = ?',
-            [$fromLanguage, 'active']
-        );
+        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Page::ACTIVE]);
 
         // loop
-        foreach ($ids as $id) {
+        /** @var Page $activePage */
+        foreach ($activePages as $activePage) {
             // get data
-            $sourceData = self::get($id, null, $fromLanguage);
+            $sourceData = self::get($activePage->getId(), null, $fromLanguage);
 
             // get and build meta
-            $meta = $database->getRecord(
-                'SELECT *
-                 FROM meta
-                 WHERE id = ?',
-                [$sourceData['meta_id']]
-            );
+            /** @var Meta $originalMeta */
+            $originalMeta = $metaRepository->find($sourceData['meta_id']);
 
-            // remove id
-            unset($meta['id']);
+            $meta = Meta::copy($originalMeta);
 
-            // init page
-            $page = [];
+            // Insert new meta
+            $metaRepository->add($meta);
+            $metaRepository->save($meta);
 
             // build page
-            $page['id'] = $sourceData['id'];
-            $page['user_id'] = BackendAuthentication::getUser()->getUserId();
-            $page['parent_id'] = $sourceData['parent_id'];
-            $page['template_id'] = $sourceData['template_id'];
-            $page['meta_id'] = (int) $database->insert('meta', $meta);
-            $page['language'] = $toLanguage;
-            $page['type'] = $sourceData['type'];
-            $page['title'] = $sourceData['title'];
-            $page['navigation_title'] = $sourceData['navigation_title'];
-            $page['navigation_title_overwrite'] = $sourceData['navigation_title_overwrite'];
-            $page['hidden'] = $sourceData['hidden'];
-            $page['status'] = 'active';
-            $page['publish_on'] = BackendModel::getUTCDate();
-            $page['created_on'] = BackendModel::getUTCDate();
-            $page['edited_on'] = BackendModel::getUTCDate();
-            $page['allow_move'] = $sourceData['allow_move'];
-            $page['allow_children'] = $sourceData['allow_children'];
-            $page['allow_edit'] = $sourceData['allow_edit'];
-            $page['allow_delete'] = $sourceData['allow_delete'];
-            $page['sequence'] = $sourceData['sequence'];
-            $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
+            $page = new Page(
+                $sourceData['id'],
+                BackendAuthentication::getUser()->getUserId(),
+                $sourceData['parent_id'],
+                $sourceData['template_id'],
+                $meta,
+                $toLanguage,
+                $sourceData['type'],
+                $sourceData['title'],
+                new DateTime(),
+                $sourceData['sequence'],
+                $sourceData['navigation_title_overwrite'],
+                $sourceData['hidden'],
+                Page::ACTIVE,
+                $sourceData['type'],
+                $sourceData['data'],
+                $sourceData['allow_move'],
+                $sourceData['allow_children'],
+                $sourceData['allow_edit'],
+                $sourceData['allow_delete']
+            );
 
             // insert page, store the id, we need it when building the blocks
-            $revisionId = self::insert($page);
+            $pageRepository->add($page);
+            $pageRepository->save($page);
+
+            $revisionId = $page->getRevisionId();
 
             $blocks = [];
 
             // get the blocks
-            $sourceBlocks = self::getBlocks($id, null, $fromLanguage);
+            $sourceBlocks = self::getBlocks($activePage->getId(), null, $fromLanguage);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -272,13 +262,13 @@ class Model
             // add
             BackendSearchModel::saveIndex(
                 'Pages',
-                (int) $page['id'],
-                ['title' => $page['title'], 'text' => $text],
+                (int) $page->getId(),
+                ['title' => $page->getTitle(), 'text' => $text],
                 $toLanguage
             );
 
             // get tags
-            $tags = BackendTagsModel::getTags('pages', $id, 'string', $fromLanguage);
+            $tags = BackendTagsModel::getTags('pages', $activePage->getId(), 'string', $fromLanguage);
 
             // save tags
             if ($tags != '') {
@@ -290,7 +280,7 @@ class Model
                 // tags.url
                 BL::setWorkingLanguage($toLanguage);
 
-                BackendTagsModel::saveTags($page['id'], $tags, 'pages', $toLanguage);
+                BackendTagsModel::saveTags($page->getId(), $tags, 'pages', $toLanguage);
                 BL::setWorkingLanguage($saveWorkingLanguage);
             }
         }
@@ -1537,7 +1527,7 @@ class Model
                 [
                     'parent_id' => $newParent,
                     'sequence' => $newSequence,
-                    'type' => $newType
+                    'type' => $newType,
                 ],
                 'id = ? AND language = ? AND status = ?',
                 [$pageId, $language, 'active']
@@ -1570,7 +1560,7 @@ class Model
             [
                 'parent_id' => $newParent,
                 'sequence' => $newSequence,
-                'type' => $newType
+                'type' => $newType,
             ],
             'id = ? AND language = ? AND status = ?',
             [$pageId, $language, 'active']

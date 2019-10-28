@@ -35,6 +35,12 @@ class PageRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($page);
     }
 
+    public function remove(Page $page): void
+    {
+        $this->getEntityManager()->remove($page);
+        $this->getEntityManager()->flush($page);
+    }
+
     public function deleteByRevisionIds(array $ids): void
     {
         $this

@@ -167,6 +167,23 @@ class Meta
         $this->seoIndex = $seoIndex;
     }
 
+    public static function copy(self $meta): self
+    {
+        return new Meta(
+            $meta->getKeywords(),
+            $meta->isKeywordsOverwrite(),
+            $meta->getDescription(),
+            $meta->isDescriptionOverwrite(),
+            $meta->getTitle(),
+            $meta->isTitleOverwrite(),
+            $meta->getUrl(),
+            $meta->isUrlOverwrite(),
+            $meta->getCustom(),
+            $meta->getSEOFollow(),
+            $meta->getSEOIndex(),
+            $meta->getData()
+        );
+    }
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
