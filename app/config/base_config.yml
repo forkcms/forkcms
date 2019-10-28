@@ -153,6 +153,10 @@ services:
         class: League\Flysystem\Adapter\Local
         arguments:
             - "%kernel.cache_dir%"
+    cache.array.adapter:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        arguments:
+            - "%kernel.cache_dir%"
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
