@@ -16,6 +16,12 @@ abstract class EditorBlock
 
     final public function getName(): string
     {
+        $class = static::class;
+
+        if ($class === Paragraph::class) {
+            return 'paragraph'; // we can't get around this exception
+        }
+
         return static::class;
     }
 
