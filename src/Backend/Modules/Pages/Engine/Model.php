@@ -1572,22 +1572,32 @@ class Model
 
     private static function updateUrlAfterMove(int $pageId, array $page, int $newParent): void
     {
-        $database = BackendModel::getContainer()->get('database');
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+        $meta = $metaRepository->find($page['meta_id']);
 
-        $currentUrl = (string) $database->getVar(
-            'SELECT url
-             FROM meta AS m
-             WHERE m.id = ?',
-            [$page['meta_id']]
-        );
+        if (!$meta instanceof Meta) {
+            return;
+        }
 
         $newUrl = self::getUrl(
-            $currentUrl,
+            $meta->getUrl(),
             $pageId,
             $newParent,
             isset($page['data']['is_action']) && $page['data']['is_action']
         );
 
-        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+        $meta->update(
+            $meta->getKeywords(),
+            $meta->isKeywordsOverwrite(),
+            $meta->getDescription(),
+            $meta->isDescriptionOverwrite(),
+            $meta->getTitle(),
+            $meta->isTitleOverwrite(),
+            $newUrl,
+            $meta->isUrlOverwrite()
+        );
+
+        $metaRepository->save($meta);
     }
 }
