@@ -77,7 +77,7 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function get(int $id, int $revisionId = null, string $language = null)
+    public function get(int $id, int $revisionId = null, string $language = null): array
     {
         $qb = $this->buildGetQuery($id, $revisionId, $language);
 
@@ -396,7 +396,7 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    private function buildGetQuery(int $pageId, int $revisionId, string $language): QueryBuilder
+    private function buildGetQuery(int $pageId, ?int $revisionId, ?string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -413,19 +413,25 @@ class PageRepository extends ServiceEntityRepository
             ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId AND b.extraId IS NOT NULL')
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
             ->where('p.id = :id')
-            ->andWhere('p.revisionId = :revisionId')
-            ->andWhere('p.language = :language')
             ->groupBy('p.revisionId')
         ;
 
-        $qb->setParameters(
-            [
-                'type' => 'block',
-                'id' => $pageId,
-                'revisionId' => $revisionId,
-                'language' => $language,
-            ]
-        );
+        $parameters = [
+            'type' => 'block',
+            'id' => $pageId,
+        ];
+
+        if ($revisionId !== null) {
+            $qb->andWhere('p.revisionId = :revisionId');
+            $parameters['revisionId'] = $revisionId;
+        }
+
+        if ($language !== null) {
+            $qb->andWhere('p.language = :language');
+            $parameters['language'] = $language;
+        }
+
+        $qb->setParameters($parameters);
 
         return $qb;
     }
