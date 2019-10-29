@@ -9,6 +9,12 @@ use Common\Uri;
 use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
 
+/**
+ * @method Meta|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Meta|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Meta[]    findAll()
+ * @method Meta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class MetaRepository extends EntityRepository
 {
     /**
