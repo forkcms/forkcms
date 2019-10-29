@@ -13,13 +13,25 @@ jsBackend.template = {
     if ($('#position1').length === 0) jsBackend.template.addPosition()
 
     // first position can't be removed
-    $('#position1').closest('.jsPosition').find('.jsDeletePosition').remove()
+    jsBackend.template.hideLastDeletePositionButton()
 
     // add handlers
     $(document).on('click', '.jsAddPosition', jsBackend.template.addPosition)
     $(document).on('click', '.jsAddBlock', jsBackend.template.addBlock)
     $(document).on('click', '.jsDeletePosition', jsBackend.template.deletePosition)
     $(document).on('click', '.jsDeleteBlock', jsBackend.template.deleteBlock)
+  },
+
+  hideLastDeletePositionButton: function () {
+    var deletePositionButton = $('#positions .jsDeletePosition')
+
+    if (deletePositionButton.length === 2) {
+      deletePositionButton.last().hide()
+
+      return
+    }
+
+    deletePositionButton.show()
   },
 
   /**
@@ -77,6 +89,8 @@ jsBackend.template = {
 
     // add to dom
     positionContainer.insertAfter($('#positions .jsPosition:last'))
+
+    jsBackend.template.hideLastDeletePositionButton()
   },
 
   /**
@@ -134,6 +148,8 @@ jsBackend.template = {
         $('select[id^=type]', this).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex)
       })
     })
+
+    jsBackend.template.hideLastDeletePositionButton()
   }
 }
 

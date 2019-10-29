@@ -136,6 +136,7 @@ CKEDITOR.dialog.add(
                                         element.removeAttribute('target');
                                         if (this.getDialog().getValueOf('tab', 'openInNewWindow')) {
                                             element.setAttribute('target', '_blank');
+                                            element.setAttribute('rel', 'noopener noreferrer');
                                         }
                                     }
                                 },
@@ -152,8 +153,8 @@ CKEDITOR.dialog.add(
                                         editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
 
                                         window.onmessage = function (event) {
-                                            if (event.data) {
-                                                this.setValueOf('tab', 'url', event.data);
+                                            if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
+                                                this.setValueOf('tab', 'url', event.data['media-url']);
                                             }
                                         }.bind(this.getDialog());
                                     },
@@ -208,8 +209,9 @@ CKEDITOR.dialog.add(
                                     url.searchParams.append('body', this.getDialog().getValueOf('tab', 'content'));
                                 }
 
-                                element.setAttribute('href', url.toString());
-                                element.setAttribute('data-cke-saved-href', url.toString());
+                                var href = url.toString().replace(/\+/g, '%20');
+                                element.setAttribute('href', href);
+                                element.setAttribute('data-cke-saved-href', href);
                             }
                         },
                         {

@@ -49,10 +49,10 @@
         <li{% if not pagination.show_next %} class="disabled" {% endif %}>
           {% if pagination.show_next %}
             <a href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">
-              <span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;
+              <span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;
             </a>
           {% else %}
-            <span><span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;</span>
+            <span><span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;</span>
           {% endif %}
         </li>
       </ul>

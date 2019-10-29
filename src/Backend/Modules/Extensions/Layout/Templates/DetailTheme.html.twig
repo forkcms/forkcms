@@ -81,7 +81,7 @@
                 {% for author in information.authors %}
                   <li>
                     {% if author.url %}
-                    <a href="{{ author.url }}" target="_blank" title="{{ author.name }}">
+                    <a href="{{ author.url }}" target="_blank" rel="noopener noreferrer" title="{{ author.name }}">
                       {% endif %}
                       {{ author.name }}
                       {% if author.url %}

@@ -80,26 +80,24 @@ class Model
                 $queryNr = count($where);
 
                 // add query
-                $where[$queryNr] = '(' .
-                                   mb_substr(
-                                       str_repeat(
-                                           'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                                           count($terms)
-                                       ),
-                                       0,
-                                       -4
-                                   ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr .
+                $where[$queryNr] = '(' . mb_substr(
+                    str_repeat(
+                        'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                        count($terms)
+                    ),
+                    0,
+                    -4
+                ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr .
                                    '.language = ? AND i' . $queryNr . '.active = ? AND m' .
                                    $queryNr . '.searchable = ?';
-                $order[$queryNr] = '(' .
-                                   mb_substr(
-                                       str_repeat(
-                                           'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) + ',
-                                           count($terms)
-                                       ),
-                                       0,
-                                       -3
-                                   ) . ') * m' . $queryNr . '.weight';
+                $order[$queryNr] = '(' . mb_substr(
+                    str_repeat(
+                        'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) + ',
+                        count($terms)
+                    ),
+                    0,
+                    -3
+                ) . ') * m' . $queryNr . '.weight';
                 $join[$queryNr] = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
 
                 // add params
@@ -138,24 +136,24 @@ class Model
             $query =
                 'SELECT i.module, i.other_id, SUM(' .
                 mb_substr(
-                    str_repeat(
-                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ',
-                        count($terms)
-                    ),
-                    0,
-                    -3
-                ) . ') * m.weight AS score
+                str_repeat(
+                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ',
+                    count($terms)
+                ),
+                0,
+                -3
+            ) . ') * m.weight AS score
                  FROM search_index AS i
                  INNER JOIN search_modules AS m ON i.module = m.module
                  WHERE (' .
                 mb_substr(
-                    str_repeat(
-                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                        count($terms)
-                    ),
-                    0,
-                    -4
-                ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+                str_repeat(
+                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                    count($terms)
+                ),
+                0,
+                -4
+            ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
                  GROUP BY module, other_id
                  ORDER BY score DESC
                  LIMIT ?, ?';
@@ -300,17 +298,15 @@ class Model
                 $queryNr = count($where);
 
                 // add query
-                $where[$queryNr] = '(' .
-                                   mb_substr(
-                                       str_repeat(
-                                           'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                                           count($terms)
-                                       ),
-                                       0,
-                                       -4
-                                   ) .
-                                   ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' .
-                                   $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
+                $where[$queryNr] = '(' . mb_substr(
+                    str_repeat(
+                        'MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                        count($terms)
+                    ),
+                    0,
+                    -4
+                ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr
+                . '.active = ? AND m' . $queryNr . '.searchable = ?';
                 $join[$queryNr] = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
 
                 // add params
@@ -348,13 +344,13 @@ class Model
                      INNER JOIN search_modules AS m ON i.module = m.module
                      WHERE (' .
                 mb_substr(
-                    str_repeat(
-                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                        count($terms)
-                    ),
-                    0,
-                    -4
-                ) .
+                str_repeat(
+                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                    count($terms)
+                ),
+                0,
+                -4
+            ) .
                 ') AND i.language = ? AND i.active = ? AND m.searchable = ?
                 GROUP BY i.module, i.other_id
             ) AS results';

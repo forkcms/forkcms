@@ -9,6 +9,7 @@ jsBackend.search = {
     if ($synonymBox.length > 0) {
       $synonymBox.multipleTextbox({
         emptyMessage: jsBackend.locale.msg('NoSynonymsBox'),
+        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
         addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
         removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteSynonym'))
       })

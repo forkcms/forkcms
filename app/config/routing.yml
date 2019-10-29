@@ -2,6 +2,8 @@
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+# Backend controller
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
@@ -9,6 +11,8 @@ backend:
         _locale: ~
         module: ~
         action: ~
+
+#Ajax controllers
 backend_ajax:
     path: /backend/ajax
     defaults:
@@ -17,6 +21,12 @@ frontend_ajax:
     path: /frontend/ajax
     defaults:
         _controller: \ForkCMS\App\ForkController::frontendAjaxController
+
+# Api routing files
+content_blocks_api:
+    resource: '../src/Backend/Modules/ContentBlocks/Resources/config/routing.yml'
+
+# Frontend controller (this is as good as the default when no other route gets matched)
 frontend:
     path: /{route}
     defaults:

@@ -149,7 +149,7 @@ class Index extends BackendBaseActionIndex
                 BackendModel::getSession()->set('backend_last_attempt', time());
 
                 // too many attempts
-                $this->form->addEditor('too many attempts');
+                $this->form->addError('too many attempts');
 
                 $this->getContainer()->get('logger.public')->info(
                     "Too many login attempts for user '{$txtEmail->getValue()}'."

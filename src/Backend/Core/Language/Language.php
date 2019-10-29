@@ -95,7 +95,7 @@ class Language
     public static function getCurrentModule(): string
     {
         // Needed to make it possible to use the backend language in the console.
-        if (defined('APPLICATION') && APPLICATION === 'Console') {
+        if (!defined('APPLICATION') || APPLICATION === 'Console') {
             return 'Core';
         }
 
@@ -243,16 +243,15 @@ class Language
      */
     public static function setLocale(string $language): void
     {
+        $application = (!defined('APPLICATION') || APPLICATION === 'Console') ? 'Backend' : APPLICATION;
+
         // validate file, generate it if needed
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
-            BackendLocaleModel::buildCache('en', APPLICATION);
+            BackendLocaleModel::buildCache('en', $application);
         }
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             // if you use the language in the console act like it is in the backend
-            BackendLocaleModel::buildCache(
-                $language,
-                (defined('APPLICATION') && APPLICATION === 'Console') ? 'Backend' : APPLICATION
-            );
+            BackendLocaleModel::buildCache($language, $application);
         }
 
         // store
@@ -273,18 +272,18 @@ class Language
             file_get_contents(BACKEND_CACHE_PATH . '/Locale/en.json'),
             true
         );
-        self::$err = (array) $translations['err'];
-        self::$lbl = (array) $translations['lbl'];
-        self::$msg = (array) $translations['msg'];
+        self::$err = (array) ($translations['err'] ?? []);
+        self::$lbl = (array) ($translations['lbl'] ?? []);
+        self::$msg = (array) ($translations['msg'] ?? []);
 
         // overwrite with the requested language's translations
         $translations = json_decode(
             file_get_contents(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json'),
             true
         );
-        $err = (array) $translations['err'];
-        $lbl = (array) $translations['lbl'];
-        $msg = (array) $translations['msg'];
+        $err = (array) ($translations['err'] ?? []);
+        $lbl = (array) ($translations['lbl'] ?? []);
+        $msg = (array) ($translations['msg'] ?? []);
         foreach ($err as $module => $translations) {
             if (!isset(self::$err[$module])) {
                 self::$err[$module] = [];

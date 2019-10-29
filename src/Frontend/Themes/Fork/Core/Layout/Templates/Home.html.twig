@@ -8,13 +8,13 @@
   <div class="row">
     {# Main positions #}
     {% for content in positions.main %}
-      <div class="col-lg-offset-2 col-lg-8">
-        <div class="section-home font-size-large">
-          {% if content.html %}
+      {% if content.html %}
+        <div class="col-lg-offset-2 col-lg-8">
+          <div class="section-home font-size-large">
             {{ content.html|raw }}
-          {% endif %}
+          </div>
         </div>
-      </div>
+      {% endif %}
     {% endfor %}
   </div>
 

@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {{ macro.buttonIcon(SITE_URL ~ itemURL, 'eye', 'lbl.View'|trans|ucfirst, '', {"target":"_blank"}) }}
+      {{ macro.buttonIcon(SITE_URL ~ itemURL, 'eye', 'lbl.View'|trans|ucfirst, '', {"target":"_blank", "rel":"noopener noreferrer"}) }}
     </div>
   </div>
 {% endblock %}

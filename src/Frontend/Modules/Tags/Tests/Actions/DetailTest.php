@@ -37,7 +37,7 @@ class DetailTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
-            'Tags',
+            'most used - Tags',
             $crawler->filter('title')->text()
         );
         $this->assertContains('<a href="/en/tags" title="To tags overview">', $crawler->html());

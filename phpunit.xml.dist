@@ -9,6 +9,10 @@
          stderr="true"
 >
     <testsuites>
+        <testsuite name="installer">
+            <directory>src/ForkCMS/Bundle/InstallerBundle/Tests</directory>
+        </testsuite>
+
         <testsuite name="unit">
             <directory>src/*/*Bundle/Tests</directory>
             <directory>src/*/Bundle/*Bundle/Tests</directory>
@@ -50,9 +54,7 @@
             <exclude>src/Backend/Modules/Users/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>
-    </testsuites>
 
-    <testsuites>
         <testsuite name="functional">
             <directory>src/Backend/Modules/*/Tests/Actions</directory>
             <directory>src/*/*Bundle/Tests/Controller</directory>
@@ -60,6 +62,7 @@
             <directory>src/*Bundle/Tests/Controller</directory>
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
+            <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests</exclude>
         </testsuite>
     </testsuites>
 
@@ -86,5 +89,7 @@
     </filter>
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <env name="FORK_ENV" value="test" />
+        <env name="FORK_DEBUG" value="1" />
     </php>
 </phpunit>

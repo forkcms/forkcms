@@ -715,6 +715,9 @@ class Edit extends BackendBaseActionEdit
 
         $this->form->cleanupFields();
         $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+        if ($this->form->getField('navigation_title_overwrite')->isChecked()) {
+            $this->form->getField('navigation_title')->isFilled(BL::err('FieldIsRequired'));
+        }
         $this->meta->validate();
 
         if ($this->form->getField('move_page')->isChecked()) {
@@ -770,8 +773,8 @@ class Edit extends BackendBaseActionEdit
         $cacheShouldBeUpdated = !(
             $this->record['title'] === $page['title']
             && $this->record['navigation_title'] === $page['navigation_title']
-            && $this->record['navigation_title_overwrite'] === $page['navigation_title_overwrite']
-            && $this->record['hidden'] === $page['hidden']
+            && $this->record['navigation_title_overwrite'] == $page['navigation_title_overwrite'] // can be 0 or false
+            && $this->record['hidden'] == $page['hidden'] // can be 0 or false
         );
 
         // build cache

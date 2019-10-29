@@ -87,7 +87,7 @@ class EditGroup extends BackendBaseActionEdit
                 $values = ['name' => $txtName->getValue()];
 
                 // update values
-                BackendProfilesModel::updateGroup($this->id, ['name' => $values]);
+                BackendProfilesModel::updateGroup($this->id, $values);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
