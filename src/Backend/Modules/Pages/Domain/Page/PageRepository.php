@@ -176,6 +176,44 @@ class PageRepository extends ServiceEntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function getNewSequenceForMove(int $parentId, string $language): int
+    {
+        return $this
+            ->createQueryBuilder('p')
+            ->select('COALESCE(MAX(p.sequence), 0) + 1')
+            ->where('p.id = :parentId')
+            ->andWhere('p.language = :language')
+            ->andWhere('p.status = :status')
+            ->setParameters(
+                [
+                    'parentId' => $parentId,
+                    'language' => $language,
+                    'status' => Page::ACTIVE,
+                ]
+            )
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function incrementSequence(int $parentId, string $language, int $sequence): void
+    {
+        $this
+            ->createQueryBuilder('p')
+            ->set('p.sequence', 'p.sequence + 1')
+            ->where('p.parentId = :parentId')
+            ->andWhere('p.language = :language')
+            ->andWhere('p.sequence > :sequence')
+            ->setParameters(
+                [
+                    'parentId' => $parentId,
+                    'language' => $language,
+                    'sequence' => $sequence,
+                ]
+            )
+            ->getQuery()
+            ->execute();
+    }
+
     public function getPageTree(array $parentIds, string $language, array $data = null, int $level = 1): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

@@ -22,6 +22,7 @@ use DateTime;
 use ForkCMS\App\ForkController;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
+use RuntimeException;
 use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -1373,31 +1374,45 @@ class Model
         $newTemplate['data'] = @unserialize($newTemplate['data']);
 
         // fetch all pages
-        $pages = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT *
-             FROM pages
-             WHERE template_id = ? AND status IN (?, ?)',
-            [$oldTemplateId, 'active', 'draft']
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $pages = $pageRepository->findBy(['templateId' => $oldTemplateId, 'status' => [Page::ACTIVE, Page::DRAFT]]);
 
         // there is no active/draft page with the old template id
-        if (empty($pages)) {
+        if (count($pages) === 0) {
             return;
         }
 
         // loop pages
+        /** @var Page $page */
         foreach ($pages as $page) {
             // fetch blocks
-            $blocksContent = self::getBlocks($page['id'], $page['revision_id'], $page['language']);
-
-            // unset revision id
-            unset($page['revision_id']);
-
-            // change template
-            $page['template_id'] = $newTemplateId;
+            $blocksContent = self::getBlocks($page->getId(), $page->getRevisionId(), $page->getLanguage());
 
             // save new page revision
-            $page['revision_id'] = self::update($page);
+            $newPageRevisionId = self::update(
+                [
+                    'id' => $page->getId(),
+                    'user_id' => $page->getUserId(),
+                    'parent_id' => $page->getParentId(),
+                    'template_id' => $newTemplateId,
+                    'meta_id' => $page->getMeta()->getId(),
+                    'language' => $page->getLanguage(),
+                    'title' => $page->getTitle(),
+                    'navigation_title' => $page->getNavigationTitle(),
+                    'publish_on' => $page->getPublishOn()->format('Y-m-d H:i:s'),
+                    'sequence' => $page->getSequence(),
+                    'navigation_title_overwrite' => $page->isNavigationTitleOverwrite(),
+                    'hidden' => $page->isHidden(),
+                    'status' => $page->getStatus(),
+                    'type' => $page->getType(),
+                    'data' => $page->getData(),
+                    'allow_move' => $page->isAllowMove(),
+                    'allow_children' => $page->isAllowChildren(),
+                    'allow_edit' => $page->isAllowEdit(),
+                    'allow_delete' => $page->isAllowDelete(),
+                ]
+            );
 
             // overwrite all blocks with current defaults
             if ($overwrite) {
@@ -1405,8 +1420,8 @@ class Model
 
                 // fetch default blocks for this page
                 $defaultBlocks = [];
-                if (isset($newTemplate['data']['default_extras_' . $page['language']])) {
-                    $defaultBlocks = $newTemplate['data']['default_extras_' . $page['language']];
+                if (isset($newTemplate['data']['default_extras_' . $page->getLanguage()])) {
+                    $defaultBlocks = $newTemplate['data']['default_extras_' . $page->getLanguage()];
                 } elseif (isset($newTemplate['data']['default_extras'])) {
                     $defaultBlocks = $newTemplate['data']['default_extras'];
                 }
@@ -1417,7 +1432,7 @@ class Model
                     foreach ($blocks as $extraId) {
                         // add to the list
                         $blocksContent[] = [
-                            'revision_id' => $page['revision_id'],
+                            'revision_id' => $newPageRevisionId,
                             'position' => $position,
                             'extra_id' => $extraId,
                             'extra_type' => 'rich_text',
@@ -1433,7 +1448,7 @@ class Model
                 // don't overwrite blocks, just re-use existing
                 // set new page revision id
                 foreach ($blocksContent as &$block) {
-                    $block['revision_id'] = $page['revision_id'];
+                    $block['revision_id'] = $newPageRevisionId;
                     $block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
                     $block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
                 }
@@ -1509,60 +1524,50 @@ class Model
         string $newParent,
         int $droppedOnPageId
     ): void {
-        $database = BackendModel::getContainer()->get('database');
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
 
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
-            $newSequence = (int) $database->getVar(
-                'SELECT MAX(i.sequence)
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                [$newParent, $language, 'active']
-            ) + 1;
+            $newSequence = $pageRepository->getNewSequenceForMove($newParent, $language);
 
-            $database->update(
-                'pages',
-                [
-                    'parent_id' => $newParent,
-                    'sequence' => $newSequence,
-                    'type' => $newType,
-                ],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
+            $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Page::ACTIVE]);
+
+            foreach ($pages as $page) {
+                $page->move($newParent, $newSequence, $newType);
+                $pageRepository->save($page);
+            }
 
             return;
         }
 
+        $droppedOnPage = $pageRepository
+            ->findOneBy(
+                [
+                    'id' => $droppedOnPageId,
+                    'language' => $language,
+                    'status' => Page::ACTIVE,
+                ]
+            );
+
+        if (!$droppedOnPage instanceof Page) {
+            throw new RuntimeException('Drop on page not found');
+        }
+
         // calculate new sequence for items that should be moved before or after
-        $droppedOnPageSequence = (int) $database->getVar(
-            'SELECT i.sequence
-             FROM pages AS i
-             WHERE i.id = ? AND i.language = ? AND i.status = ?
-             LIMIT 1',
-            [$droppedOnPageId, $language, 'active']
-        );
+        $droppedOnPageSequence = $droppedOnPage->getSequence();
 
         $newSequence = $droppedOnPageSequence + ($typeOfDrop === self::TYPE_OF_DROP_BEFORE ? -1 : 1);
 
         // increment all pages with a sequence that is higher than the new sequence;
-        $database->execute(
-            'UPDATE pages
-                 SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND sequence > ?',
-            [$newParent, $language, $newSequence]
-        );
+        $pageRepository->incrementSequence($newParent, $language, $newSequence);
 
-        $database->update(
-            'pages',
-            [
-                'parent_id' => $newParent,
-                'sequence' => $newSequence,
-                'type' => $newType,
-            ],
-            'id = ? AND language = ? AND status = ?',
-            [$pageId, $language, 'active']
-        );
+        $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Page::ACTIVE]);
+
+        foreach ($pages as $page) {
+            $page->move($newParent, $newSequence, $newType);
+            $pageRepository->save($page);
+        }
     }
 
     private static function updateUrlAfterMove(int $pageId, array $page, int $newParent): void

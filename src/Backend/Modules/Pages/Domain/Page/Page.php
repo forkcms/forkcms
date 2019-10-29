@@ -458,4 +458,11 @@ class Page
     {
         return $pageId === BackendModel::ERROR_PAGE_ID;
     }
+
+    public function move(int $parentId, int $sequence, string $type): void
+    {
+        $this->parentId = $parentId;
+        $this->sequence = $sequence;
+        $this->type = $type;
+    }
 }
