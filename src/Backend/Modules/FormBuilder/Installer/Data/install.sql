@@ -1,18 +1,20 @@
-CREATE TABLE IF NOT EXISTS `forms` (
+CREATE TABLE `forms` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email',
   `email` text COLLATE utf8mb4_unicode_ci,
+  `success_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `success_message` text COLLATE utf8mb4_unicode_ci,
+  `success_page` int(11) NOT NULL DEFAULT '0',
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Form.html.twig',
   `email_subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `forms_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

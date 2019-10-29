@@ -5,6 +5,7 @@ namespace Frontend\Modules\FormBuilder\Widgets;
 use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Locale;
@@ -344,8 +345,12 @@ class Form extends FrontendBaseWidget
         // form name
         $formName = 'form' . $this->item['id'];
         $this->template->assign('formName', $formName);
-        $this->template->assign('formAction', $this->createAction() . '#' . $formName);
         $this->template->assign('successMessage', false);
+        $formAction = $this->createAction();
+        if ($this->item['success_type'] == 'message') {
+            $formAction .= '#' . $formName;
+        }
+        $this->template->assign('formAction', $formAction);
 
         if ($this->hasRecaptchaField) {
             $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
@@ -563,10 +568,14 @@ class Form extends FrontendBaseWidget
                 FrontendModel::getSession()->set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . $this->url->getQueryString();
-                $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
-                $redirect .= 'identifier=' . $this->item['identifier'];
-                $redirect .= '#' . $this->formName;
+                if ($this->item['success_type'] == 'page') {
+                    $redirect = FrontendNavigation::getUrl($this->item['success_page']);
+                } else {
+                    $redirect = SITE_URL . $this->url->getQueryString();
+                    $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
+                    $redirect .= 'identifier=' . $this->item['identifier'];
+                    $redirect .= '#' . $this->formName;
+                }
 
                 throw new RedirectException(
                     'Redirect',

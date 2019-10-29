@@ -33,6 +33,21 @@ jsBackend.FormBuilder = {
       errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
       canAddNew: true
     })
+
+    jsBackend.FormBuilder.handleSuccessType()
+    $('input[name="success_type"]').change(function(e) {
+      jsBackend.FormBuilder.handleSuccessType()
+    });
+  },
+
+  handleSuccessType: function() {
+    if ($('input[name="success_type"]:checked').val() == 'page') {
+      $('.js-success-page').removeClass('hide');
+      $('.js-success-message').addClass('hide');
+    } else {
+      $('.js-success-page').addClass('hide');
+      $('.js-success-message').removeClass('hide');
+    }
   },
 
   /**
