@@ -115,84 +115,80 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '</ul>' . "\n";
                     $value .= "\t" . '</div>' . "\n\n";
                 } elseif ($object instanceof SpoonFormDropdown) {
-                    $value .= "\t" . '<p{option:ddm' .
-                              str_replace(
-                                  '[]',
-                                  '',
-                                  SpoonFilter::toCamelCase($object->getName())
-                              ) . 'Error} class="errorArea"{/option:ddm' .
-                              str_replace(
-                                  '[]',
-                                  '',
-                                  SpoonFilter::toCamelCase($object->getName())
-                              ) . 'Error}>' . "\n";
-                    $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              str_replace(
-                                  '[]',
-                                  '',
-                                  SpoonFilter::toCamelCase($object->getName())
-                              ) . '</label>' . "\n";
+                    $value .= "\t" . '<p{option:ddm' .str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . 'Error} class="errorArea"{/option:ddm' . str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . 'Error}>' . "\n";
+                    $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' . str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . '</label>' . "\n";
                     $value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) .
-                              '} {$ddm' .
-                              str_replace(
-                                  '[]',
-                                  '',
-                                  SpoonFilter::toCamelCase($object->getName())
-                              ) . 'Error}' . "\n";
+                        '} {$ddm' . str_replace(
+                        '[]',
+                        '',
+                        SpoonFilter::toCamelCase($object->getName())
+                    ) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormImage) {
                     $value .= "\t" . '<p{option:file' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:file' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                        'Error} class="errorArea"{/option:file' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                        SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
-                              '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                        '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormFile) {
                     $value .= "\t" . '<p{option:file' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:file' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                        'Error} class="errorArea"{/option:file' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                        SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
-                              '} {$file' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                        '} {$file' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormRadiobutton) {
                     $value .= "\t" . '<div{option:rbt' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:rbt' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                        'Error} class="errorArea"{/option:rbt' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
-                              '</p>' . "\n";
+                        '</p>' . "\n";
                     $value .= "\t\t" . '{$rbt' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t\t" . '<ul class="inputList">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
-                              $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) .
-                              '} {$' . $object->getName() . '.label}</label></li>' . "\n";
+                        $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) .
+                        '} {$' . $object->getName() . '.label}</label></li>' . "\n";
                     $value .= "\t\t\t" . '{/iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t" . '</ul>' . "\n";
                     $value .= "\t" . '</div>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormDate) {
                     $value .= "\t" . '<p{option:txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error}>' . "\n";
+                        'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
+                        'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                        SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              '} <span class="helpTxt">{$msgHelpDateField}</span> {$txt' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                        '} <span class="helpTxt">{$msgHelpDateField}</span> {$txt' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormTime) {
                     $value .= "\t" . '<p{option:txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              'Error}>' . "\n";
+                        'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
+                        'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                        SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                              '} <span class="helpTxt">{$msgHelpTimeField}</span> {$txt' .
-                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                        '} <span class="helpTxt">{$msgHelpTimeField}</span> {$txt' .
+                        SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif (($object instanceof SpoonFormPassword) ||
                           ($object instanceof SpoonFormTextarea) ||
