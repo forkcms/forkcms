@@ -180,7 +180,7 @@ class PageRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('p')
-            ->select('COALESCE(MAX(p.sequence), 0) + 1')
+            ->select('COALESCE(MAX(p.sequence), 0)')
             ->where('p.id = :parentId')
             ->andWhere('p.language = :language')
             ->andWhere('p.status = :status')
@@ -192,7 +192,7 @@ class PageRepository extends ServiceEntityRepository
                 ]
             )
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult() + 1;
     }
 
     public function incrementSequence(int $parentId, string $language, int $sequence): void
