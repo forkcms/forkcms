@@ -1048,9 +1048,6 @@ class Model
             ];
         }
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
         // no specific id
         if ($id === null) {
             $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguage(
@@ -1132,11 +1129,6 @@ class Model
 
         // return the unique URL!
         return $url;
-    }
-
-    public static function insert(array $page): int
-    {
-        return (int) BackendModel::getContainer()->get('database')->insert('pages', $page);
     }
 
     /**
