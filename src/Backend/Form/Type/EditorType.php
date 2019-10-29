@@ -71,6 +71,10 @@ class EditorType extends TextareaType
                                 ?string $json,
                                 ExecutionContextInterface $executionContext
                             ) use ($editorBlocks): void {
+                                if ($json === null) {
+                                    return;
+                                }
+
                                 if ($editorBlocks->isValid($json)) {
                                     return;
                                 }
