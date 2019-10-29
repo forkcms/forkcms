@@ -1267,8 +1267,10 @@ class Model
 
     public static function update(array $page): int
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
 
         if (self::isForbiddenToDelete($page['id'])) {
             $page['allow_delete'] = false;
@@ -1283,50 +1285,69 @@ class Model
         }
 
         // update old revisions
-        if ($page['status'] != 'draft') {
-            $database->update(
-                'pages',
-                ['status' => 'archive'],
-                'id = ? AND language = ?',
-                [(int) $page['id'], $page['language']]
-            );
+        if ($page['status'] !== Page::DRAFT) {
+            $pageEntities = $pageRepository->findBy(['id' => $page['id'], 'language' => $page['language']]);
+
+            foreach ($pageEntities as $pageEntity) {
+                $pageEntity->archive();
+                $pageRepository->save($pageEntity);
+            }
         } else {
-            $database->delete(
-                'pages',
-                'id = ? AND user_id = ? AND status = ? AND language = ?',
-                [(int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', $page['language']]
+            $pageRepository->deleteByIdAndUserIdAndStatusAndLanguage(
+                (int) $page['id'],
+                BackendAuthentication::getUser()->getUserId(),
+                Page::DRAFT,
+                $page['language']
             );
         }
 
-        // insert
-        $page['revision_id'] = (int) $database->insert('pages', $page);
+        $meta = $metaRepository->find($page['meta_id']);
+
+        $pageEntity = new Page(
+            $page['id'],
+            $page['user_id'],
+            $page['parent_id'],
+            $page['template_id'],
+            $meta,
+            $page['language'],
+            $page['title'],
+            $page['navigation_title'],
+            new DateTime($page['publish_on']),
+            $page['sequence'],
+            $page['navigation_title_overwrite'],
+            $page['hidden'],
+            $page['status'],
+            $page['type'],
+            $page['data'],
+            $page['allow_move'],
+            $page['allow_children'],
+            $page['allow_edit'],
+            $page['allow_delete']
+        );
+
+        $pageRepository->add($pageEntity);
+        $pageRepository->save($pageEntity);
 
         // how many revisions should we keep
         $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) $database->getColumn(
-            'SELECT i.revision_id
-             FROM pages AS i
-             WHERE i.id = ? AND i.status = ?
-             ORDER BY i.edited_on DESC
-             LIMIT ?',
-            [(int) $page['id'], 'archive', $rowsToKeep]
-        );
+        $revisionIdsToKeep = $pageRepository->getRevisionIdsToKeep($page['id'], $rowsToKeep);
 
         // delete other revisions
-        if (!empty($revisionIdsToKeep)) {
+        if (count($revisionIdsToKeep) !== 0) {
             // because blocks are linked by revision we should get all revisions we want to delete
-            $revisionsToDelete = (array) $database->getColumn(
-                'SELECT i.revision_id
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.status = ? AND i.revision_id NOT IN(' . implode(', ', $revisionIdsToKeep) . ')',
-                [(int) $page['id'], 'archive']
-            );
+
+            $revisionsToDelete = $pageRepository
+                ->getRevisionIdsToDelete(
+                    $page['id'],
+                    Page::ARCHIVE,
+                    $revisionIdsToKeep
+                );
 
             // any revisions to delete
-            if (!empty($revisionsToDelete)) {
-                $database->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+            if (count($revisionsToDelete) !== 0) {
+                $pageRepository->deleteByRevisionIds($revisionsToDelete);
 
                 /** @var PageBlockRepository $pageBlockRepository */
                 $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
@@ -1335,7 +1356,7 @@ class Model
         }
 
         // return the new revision id
-        return $page['revision_id'];
+        return $pageEntity->getRevisionId();
     }
 
     /**

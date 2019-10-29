@@ -754,7 +754,7 @@ class Edit extends BackendBaseActionEdit
             'allow_edit' => $this->record['allow_edit'],
             'allow_delete' => $this->record['allow_delete'],
             'sequence' => $this->record['sequence'],
-            'data' => serialize($data),
+            'data' => $data,
         ];
 
         $page = $this->changePagePermissions($page);

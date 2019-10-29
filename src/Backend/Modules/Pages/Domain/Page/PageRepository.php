@@ -52,6 +52,31 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function deleteByIdAndUserIdAndStatusAndLanguage(
+        int $id,
+        int $userId,
+        string $status,
+        string $language
+    ): void {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->delete()
+            ->where('p.id = :id')
+            ->andWhere('p.userId = :userId')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.language = :language')
+            ->setParameters(
+                [
+                    'id' => $id,
+                    'userId' => $userId,
+                    'status' => $status,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->execute();
+    }
+
     public function get(int $id, int $revisionId = null, string $language = null)
     {
         $qb = $this->buildGetQuery($id, $revisionId, $language);
@@ -220,6 +245,52 @@ class PageRepository extends ServiceEntityRepository
             )
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getRevisionIdsToKeep(int $id, int $rowsToKeep): array
+    {
+        $result = $this
+            ->createQueryBuilder('p')
+            ->select('p.revisionId')
+            ->where('p.id = :id')
+            ->andWhere('p.status = :status')
+            ->orderBy('p.editedOn', 'DESC')
+            ->setMaxResults($rowsToKeep)
+            ->setParameters(
+                [
+                    'id' => $id,
+                    'status' => Page::ARCHIVE,
+                ]
+            )
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_SCALAR);
+
+        return array_column($result, 'revisionId');
+    }
+
+    public function getRevisionIdsToDelete(int $id, string $status, array $revisionsToKeep): array
+    {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->select('p.revisionId');
+        $qb
+            ->where('p.id = :id')
+            ->andWhere('p.status = :status')
+            ->andWhere($qb->expr()->notIn('p.revisionId', ':revisionsToKeep'));
+
+        $qb->setParameters(
+            [
+                'id' => $id,
+                'status' => $status,
+                'revisionsToKeep' => $revisionsToKeep,
+            ]
+        );
+
+        $result = $qb
+            ->getQuery()
+            ->getResult();
+
+        return array_column($result, 'revisionId');
     }
 
     public function findOneByParentsAndUrlAndStatusAndLanguage(

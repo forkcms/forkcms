@@ -252,6 +252,57 @@ class Page
         $this->allowDelete = $allowDelete;
     }
 
+    public function update(
+        int $id,
+        int $userId,
+        ?int $parentId,
+        ?int $templateId,
+        Meta $meta,
+        string $language,
+        string $title,
+        string $navigationTitle,
+        DateTime $publishOn,
+        int $sequence,
+        bool $navigationTitleOverwrite = false,
+        bool $hidden = true,
+        string $status = self::ACTIVE,
+        string $type = 'root',
+        $data = null,
+        bool $allowMove = true,
+        bool $allowChildren = true,
+        bool $allowEdit = true,
+        bool $allowDelete = true
+    ): void {
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->parentId = $parentId;
+        if ($this->parentId === null) {
+            $this->parentId = 0;
+        }
+        $this->templateId = $templateId;
+        if ($this->templateId === null) {
+            $this->templateId = 0;
+        }
+        $this->meta = $meta;
+        $this->language = $language;
+        $this->title = $title;
+        $this->navigationTitle = $navigationTitle;
+        $this->publishOn = $publishOn;
+        $this->sequence = $sequence;
+        $this->type = $type;
+        $this->navigationTitleOverwrite = $navigationTitleOverwrite;
+        $this->hidden = $hidden;
+        $this->status = $status;
+        $this->data = $data;
+        if ($data !== null) {
+            $this->data = serialize($data);
+        }
+        $this->allowMove = $allowMove;
+        $this->allowChildren = $allowChildren;
+        $this->allowEdit = $allowEdit;
+        $this->allowDelete = $allowDelete;
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -359,7 +410,7 @@ class Page
 
     public function getData()
     {
-        return unserialize($this->data);
+        return unserialize($this->data, ['allowed_classes' => false]);
     }
 
     /**
@@ -377,6 +428,11 @@ class Page
     public function setEditedOn(): void
     {
         $this->editedOn = new DateTime();
+    }
+
+    public function archive(): void
+    {
+        $this->status = self::ARCHIVE;
     }
 
     /**
