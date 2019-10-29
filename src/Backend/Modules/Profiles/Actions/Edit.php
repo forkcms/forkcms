@@ -310,8 +310,7 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
                 BackendProfilesModel::setSetting($this->id, 'about', $txtAbout->getValue());
 
-                $displayName = (isset($values['display_name'])) ?
-                    $values['display_name'] : $this->profile['display_name'];
+                $displayName = $values['display_name'] ?? $this->profile['display_name'];
 
                 $redirectUrl = BackendModel::createUrlForAction('Index') .
                                '&var=' . rawurlencode($values['email']) .

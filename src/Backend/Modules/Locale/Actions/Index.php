@@ -104,10 +104,10 @@ class Index extends BackendBaseActionIndex
         }
 
         // create datagrids
-        $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : []);
-        $this->dgMessages = new BackendDataGridArray(isset($translations['msg']) ? $translations['msg'] : []);
-        $this->dgErrors = new BackendDataGridArray(isset($translations['err']) ? $translations['err'] : []);
-        $this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : []);
+        $this->dgLabels = new BackendDataGridArray($translations['lbl'] ?? []);
+        $this->dgMessages = new BackendDataGridArray($translations['msg'] ?? []);
+        $this->dgErrors = new BackendDataGridArray($translations['err'] ?? []);
+        $this->dgActions = new BackendDataGridArray($translations['act'] ?? []);
 
         // put the datagrids (references) in an array so we can loop them
         $dataGrids = [

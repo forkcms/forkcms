@@ -2,8 +2,11 @@
 
 namespace Backend\Modules\Blog\Installer;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\ModuleExtraType;
 
 /**
@@ -21,6 +24,7 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Blog');
         $this->makeSearchable($this->getModule());
+        $this->configureEntities();
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureSettings();
@@ -29,6 +33,16 @@ class Installer extends ModuleInstaller
         $this->configureBackendWidgets();
         $this->configureFrontendExtras();
         $this->configureFrontendPages();
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Comment::class,
+                Category::class,
+            ]
+        );
     }
 
     private function configureBackendActionRightsForBlogArticle(): void
@@ -158,20 +172,15 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'spamfilter', false);
     }
 
-    /**
-     * Fetch the id of the first category in this language we come across
-     *
-     * @param string $language The language to use.
-     *
-     * @return int
-     */
     private function getCategory(string $language): int
     {
-        // @todo: Replace this with a BlogCategoryRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM blog_categories WHERE language = ?',
-            [$language]
-        );
+        $category = Model::get('blog.repository.category')->findOneByLocale($language);
+
+        if (!$category instanceof Category) {
+            return 0;
+        }
+
+        return $category->getId();
     }
 
     private function getSearchWidgetId(): int
@@ -212,7 +221,7 @@ class Installer extends ModuleInstaller
     {
         $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['language'] = $language;
+        $item['locale'] = $language;
         $item['title'] = $title;
 
         return (int) $this->getDatabase()->insert('blog_categories', $item);
@@ -329,9 +338,9 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => $firstBlogPostId,
-                    'language' => $language,
-                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'postId' => $firstBlogPostId,
+                    'locale' => $language,
+                    'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
                     'email' => 'forkcms-sample@spoon-library.com',
                     'website' => 'http://www.spoon-library.com',
@@ -346,9 +355,9 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => $firstBlogPostId,
-                    'language' => $language,
-                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'postId' => $firstBlogPostId,
+                    'locale' => $language,
+                    'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',
                     'email' => 'forkcms-sample@sumocoders.be',
                     'website' => 'https://www.sumocoders.be',
