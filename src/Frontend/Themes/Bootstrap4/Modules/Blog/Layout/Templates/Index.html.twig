@@ -11,13 +11,13 @@ variables that are available:
       {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
     </div>
   {% else %}
-    {% for row in items|batch(3) %}
-      <div class="card-deck mb-3">
-        {% for item in row  %}
+    <div class="row">
+      {% for item in items %}
+        <div class="col-md-6 col-lg-4 mb-3">
           {{ articles.articleCard(item) }}
-        {% endfor %}
-      </div>
-    {% endfor %}
+        </div>
+      {% endfor %}
+     </div>
   {% endif %}
 </div>
 {% include 'Core/Layout/Templates/Pagination.html.twig' %}
