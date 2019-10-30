@@ -199,6 +199,14 @@
         <translation language="en"><![CDATA[Please add a new mail address.]]></translation>
         <translation language="pl"><![CDATA[Proszę podać nowy adres mailowy.]]></translation>
       </item>
+      <item type="label" name="AddProfileGroup">
+        <translation language="nl"><![CDATA[voeg profiel toe aan groep]]></translation>
+        <translation language="en"><![CDATA[add profile to group]]></translation>
+      </item>
+      <item type="label" name="EditProfileGroup">
+        <translation language="nl"><![CDATA[bewerk profiel groep]]></translation>
+        <translation language="en"><![CDATA[edit profile group]]></translation>
+      </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>
         <translation language="en"><![CDATA[expires on]]></translation>
