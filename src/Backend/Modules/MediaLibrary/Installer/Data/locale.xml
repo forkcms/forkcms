@@ -177,6 +177,13 @@
         <translation language="ru"><![CDATA[удаление медиа]]></translation>
         <translation language="pl"><![CDATA[usunąć media]]></translation>
       </item>
+      <item type="label" name="MediaItemDuplicate">
+        <translation language="de"><![CDATA[dupliziertes Medienelement]]></translation>
+        <translation language="en"><![CDATA[duplicate media item]]></translation>
+        <translation language="fr"><![CDATA[article multimédia en double]]></translation>
+        <translation language="nl"><![CDATA[media item dupliceren]]></translation>
+        <translation language="ru"><![CDATA[дублирующий элемент мультимедиа]]></translation>
+      </item>
       <item type="label" name="MediaItemIndex">
         <translation language="de"><![CDATA[Übersicht]]></translation>
         <translation language="en"><![CDATA[overview]]></translation>
