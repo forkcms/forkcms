@@ -36,7 +36,7 @@ class ProfileGroup
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight",
-     *     mappedBy="profile",
+     *     mappedBy="group",
      *     cascade={"persist", "remove"}
      * )
      */
