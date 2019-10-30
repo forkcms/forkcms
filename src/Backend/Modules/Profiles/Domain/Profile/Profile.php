@@ -3,7 +3,7 @@
 namespace Backend\Modules\Profiles\Domain\Profile;
 
 use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
-use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -74,7 +74,7 @@ class Profile
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting",
+     *     targetEntity="Setting",
      *     mappedBy="profile",
      *     cascade={"persist","remove"}
      * )
@@ -181,7 +181,7 @@ class Profile
     public function getSetting(string $name): ?string
     {
         $foundSetting = $this->settings->filter(
-            function (ProfileSetting $setting) use ($name) {
+            function (Setting $setting) use ($name) {
                 return $setting->getName() === $name;
             }
         );
@@ -193,7 +193,7 @@ class Profile
         return $foundSetting->first()->getValue();
     }
 
-    public function addSetting(ProfileSetting $setting): void
+    public function addSetting(Setting $setting): void
     {
         $this->settings->add($setting);
     }
@@ -208,13 +208,13 @@ class Profile
     public function setSetting(string $name, ?string $value): void
     {
         $foundSetting = $this->settings->filter(
-            function (ProfileSetting $setting) use ($name) {
+            function (Setting $setting) use ($name) {
                 return $setting->getName() === $name;
             }
         );
 
         if ($foundSetting->isEmpty()) {
-            $this->settings->add(new ProfileSetting($this, $name, $value));
+            $this->settings->add(new Setting($this, $name, $value));
 
             return;
         }

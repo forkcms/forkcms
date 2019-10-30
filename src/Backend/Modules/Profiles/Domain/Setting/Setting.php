@@ -1,17 +1,17 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileSetting;
+namespace Backend\Modules\Profiles\Domain\Setting;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="ProfilesProfileSetting")
- * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSettingRepository")
+ * @ORM\Table(name="ProfilesSetting")
+ * @ORM\Entity(repositoryClass="SettingRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class ProfileSetting
+class Setting
 {
     /**
      * @var Profile

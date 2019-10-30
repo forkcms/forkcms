@@ -25,9 +25,9 @@ doctrine:
       profile_setting:
         type: annotation
         is_bundle: false
-        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileSetting"
-        alias: ProfilesProfileSetting
-        prefix: Backend\Modules\Profiles\Domain\ProfileSetting
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/Setting"
+        alias: ProfilesSetting
+        prefix: Backend\Modules\Profiles\Domain\Setting
       profile_session:
         type: annotation
         is_bundle: false

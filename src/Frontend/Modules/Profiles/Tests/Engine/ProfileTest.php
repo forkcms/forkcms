@@ -48,8 +48,8 @@ final class ProfileTest extends WebTestCase
         );
 
         $settings = [];
-        foreach ($profile->getSettings()->toArray() as $profileSetting) {
-            $settings[$profileSetting->getName()] = $profileSetting->getValue();
+        foreach ($profile->getSettings()->toArray() as $Setting) {
+            $settings[$Setting->getName()] = $Setting->getValue();
         }
         $this->assertEquals(
             [
@@ -87,8 +87,8 @@ final class ProfileTest extends WebTestCase
         );
 
         $settings = [];
-        foreach ($profile->getSettings()->toArray() as $profileSetting) {
-            $settings[$profileSetting->getName()] = $profileSetting->getValue();
+        foreach ($profile->getSettings()->toArray() as $Setting) {
+            $settings[$Setting->getName()] = $Setting->getValue();
         }
         $this->assertEquals(
             [

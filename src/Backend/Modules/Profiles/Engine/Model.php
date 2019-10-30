@@ -6,7 +6,7 @@ use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
-use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -400,7 +400,7 @@ class Model
             ]
         );
 
-        if (!$setting instanceof ProfileSetting) {
+        if (!$setting instanceof Setting) {
             return null;
         }
 
@@ -787,18 +787,18 @@ class Model
      */
     public static function setSetting(int $profileId, string $name, $value): void
     {
-        $profileSettingRepository = BackendModel::get('profile.repository.profile_setting');
+        $SettingRepository = BackendModel::get('profile.repository.profile_setting');
 
         $profile = BackendModel::get('profile.repository.profile')->find($profileId);
 
-        $existingSetting = $profileSettingRepository->findOneBy(
+        $existingSetting = $SettingRepository->findOneBy(
             [
                 'profile' => $profile,
                 'name' => $name,
             ]
         );
 
-        if ($existingSetting instanceof ProfileSetting) {
+        if ($existingSetting instanceof Setting) {
             $existingSetting->update($value);
 
             BackendModel::get('doctrine.orm.default_entity_manager')->flush();
@@ -806,8 +806,8 @@ class Model
             return;
         }
 
-        $setting = new ProfileSetting($profile, $name, $value);
-        $profileSettingRepository->add($setting);
+        $setting = new Setting($profile, $name, $value);
+        $SettingRepository->add($setting);
     }
 
     /**

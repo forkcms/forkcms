@@ -2757,12 +2757,12 @@ CREATE TABLE `ProfilesSession` (
 
 
 
-# Dump of table ProfilesProfileSetting
+# Dump of table ProfilesSetting
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ProfilesProfileSetting`;
+DROP TABLE IF EXISTS `ProfilesSetting`;
 
-CREATE TABLE `ProfilesProfileSetting` (
+CREATE TABLE `ProfilesSetting` (
   `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,

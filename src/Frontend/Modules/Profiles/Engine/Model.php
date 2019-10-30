@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Profile\Status;
-use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -26,17 +26,17 @@ class Model
 
     public static function deleteSetting(int $profileId, string $name): void
     {
-        $profileSettingRepository = FrontendModel::get('profile.repository.profile_setting');
+        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
 
         $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
-        $profileSetting = $profileSettingRepository->findOneBy(
+        $Setting = $SettingRepository->findOneBy(
             [
                 'profile' => $profile,
                 'name' => $name,
             ]
         );
 
-        $profileSettingRepository->remove($profileSetting);
+        $SettingRepository->remove($Setting);
     }
 
     public static function existsByEmail(string $email, int $excludedId = 0): bool
@@ -161,18 +161,18 @@ class Model
      */
     public static function getIdBySetting(string $name, $value): ?int
     {
-        $profileSetting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
+        $Setting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
             [
                 'name' => $name,
                 'value' => $value,
             ]
         );
 
-        if (!$profileSetting instanceof ProfileSetting) {
+        if (!$Setting instanceof Setting) {
             return null;
         }
 
-        return $profileSetting->getProfile()->getId();
+        return $Setting->getProfile()->getId();
     }
 
     /**
@@ -232,7 +232,7 @@ class Model
             ]
         );
 
-        if (!$setting instanceof ProfileSetting) {
+        if (!$setting instanceof Setting) {
             return null;
         }
 
@@ -242,11 +242,11 @@ class Model
     public static function getSettings(int $profileId): array
     {
         $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
-        $profileSettings = $profile->getSettings();
+        $Settings = $profile->getSettings();
 
         $settings = [];
-        foreach ($profileSettings as $profileSetting) {
-            $settings[$profileSetting->getName()] = $profileSetting->getValue();
+        foreach ($Settings as $Setting) {
+            $settings[$Setting->getName()] = $Setting->getValue();
         }
 
         return $settings;
@@ -353,18 +353,18 @@ class Model
      */
     public static function setSetting(int $id, string $name, $value): void
     {
-        $profileSettingRepository = FrontendModel::get('profile.repository.profile_setting');
+        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
 
         $profile = FrontendModel::get('profile.repository.profile')->find($id);
 
-        $existingSetting = $profileSettingRepository->findOneBy(
+        $existingSetting = $SettingRepository->findOneBy(
             [
                 'profile' => $profile,
                 'name' => $name,
             ]
         );
 
-        if ($existingSetting instanceof ProfileSetting) {
+        if ($existingSetting instanceof Setting) {
             $existingSetting->update($value);
 
             FrontendModel::get('doctrine.orm.default_entity_manager')->flush();
@@ -372,9 +372,9 @@ class Model
             return;
         }
 
-        $setting = new ProfileSetting($profile, $name, $value);
+        $setting = new Setting($profile, $name, $value);
         $profile->addSetting($setting);
-        $profileSettingRepository->add($setting);
+        $SettingRepository->add($setting);
     }
 
     /**
