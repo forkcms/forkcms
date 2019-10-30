@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Status;
 use Common\WebTestCase;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication;
@@ -53,7 +54,7 @@ final class AuthenticationTest extends WebTestCase
 
     public function testGettingLoginStatusForNonExistingUser()
     {
-        $this->assertEquals(Authentication::LOGIN_INVALID, Authentication::getLoginStatus('non@existe.nt', 'wrong'));
+        $this->assertEquals(Status::invalid(), Authentication::getLoginStatus('non@existe.nt', 'wrong'));
     }
 
     public function testGettingLoginStatusForUserWithWrongPassword()

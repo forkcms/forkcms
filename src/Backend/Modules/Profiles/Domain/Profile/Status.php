@@ -10,6 +10,7 @@ final class Status
     private const STATUS_INACTIVE = 'inactive';
     private const STATUS_DELETED = 'deleted';
     private const STATUS_BLOCKED = 'blocked';
+    private const STATUS_INVALID = 'invalid';
 
     /** @var string */
     private $status;
@@ -70,6 +71,11 @@ final class Status
         return $this->status === self::STATUS_DELETED;
     }
 
+    public function isInvalid(): bool
+    {
+        return $this->status === self::STATUS_INVALID;
+    }
+
     public static function active(): self
     {
         return new self(self::STATUS_ACTIVE);
@@ -88,5 +94,10 @@ final class Status
     public static function deleted(): self
     {
         return new self(self::STATUS_DELETED);
+    }
+
+    public static function invalid(): self
+    {
+        return new self(self::STATUS_INVALID);
     }
 }
