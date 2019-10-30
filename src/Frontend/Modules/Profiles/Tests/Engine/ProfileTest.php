@@ -63,12 +63,9 @@ final class ProfileTest extends WebTestCase
         $profile->setSetting('my_second_setting', 'My updated value');
         $this->assertEquals('My updated value', $profile->getSetting('my_second_setting'));
 
-        // @TODO The toArray will not work because the profile doesn't have an ID, this should be fixed?
-        /*$profileArray = $profile->toArray();
+        $profileArray = $profile->toArray();
         $this->assertArrayHasKey('display_name', $profileArray);
         $this->assertEquals('Fork CMS', $profileArray['display_name']);
-        $this->assertArrayHasKey('registered_on', $profileArray);
-        $this->assertEquals(1234567890, $profileArray['registered_on']);*/
     }
 
     public function testLoadingOfProfile(): void

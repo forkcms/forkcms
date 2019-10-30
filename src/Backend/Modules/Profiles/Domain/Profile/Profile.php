@@ -292,12 +292,12 @@ class Profile
     public function toArray(): array
     {
         return [
-            'id' => $this->getId(),
-            'email' => $this->getEmail(),
-            'password' => $this->getPassword(),
-            'status' => (string) $this->getStatus(),
-            'display_name' => $this->getDisplayName(),
-            'url' => $this->getUrl(),
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+            'status' => (string) $this->status,
+            'display_name' => $this->displayName,
+            'url' => $this->url,
         ];
     }
 }
