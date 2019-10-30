@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use Backend\Modules\Profiles\Domain\Profile\Status;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation;
@@ -61,20 +62,22 @@ class Login extends FrontendBaseBlock
             return $this->form->isCorrect();
         }
 
-        $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
+        $loginStatus = Status::fromString(
+            FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue())
+        );
 
         $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
-        if ($loginStatus === FrontendProfilesAuthentication::LOGIN_INVALID && $profileId !== 0) {
+        if ($profileId !== 0 && $loginStatus->isInvalid()) {
             $loginAttempts = (int) FrontendProfilesModel::getSetting($profileId, 'login_attempts');
 
             FrontendProfilesModel::setSetting($profileId, 'login_attempts', ++$loginAttempts);
             if ($loginAttempts >= 10) {
-                $loginStatus = FrontendProfilesAuthentication::LOGIN_BLOCKED;
+                $loginStatus = Status::blocked();
                 FrontendProfilesModel::update($profileId, ['status' => $loginStatus]);
             }
         }
 
-        if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+        if (!$loginStatus->isActive()) {
             $errorString = sprintf(
                 FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
                 FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')

@@ -59,7 +59,7 @@ class MassAction extends BackendBaseAction
                         [
                              'profile_id' => $id,
                              'group_id' => $newGroupId,
-                             'starts_on' => BackendModel::getUTCDate(),
+                             'starts_on' => time(),
                         ]
                     );
                 }

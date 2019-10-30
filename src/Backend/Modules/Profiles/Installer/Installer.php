@@ -2,7 +2,13 @@
 
 namespace Backend\Modules\Profiles\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Group\Group;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
+use Backend\Modules\Profiles\Domain\Session\Session;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
@@ -18,8 +24,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Profiles');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -404,6 +410,19 @@ class Installer extends ModuleInstaller
              WHERE e.module = ? AND p.language = ? AND e.action = ?
              LIMIT 1',
             [$this->getModule(), $language, $action]
+        );
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Profile::class,
+                Group::class,
+                GroupRight::class,
+                Session::class,
+                Setting::class,
+            ]
         );
     }
 }

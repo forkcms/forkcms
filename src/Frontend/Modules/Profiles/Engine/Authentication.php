@@ -2,9 +2,11 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\Status;
+use Backend\Modules\Profiles\Domain\Session\Session;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * Profile authentication functions.
@@ -12,44 +14,9 @@ use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 class Authentication
 {
     /**
-     * The login credentials are correct and the profile is active.
-     *
-     * @var string
-     */
-    const LOGIN_ACTIVE = 'active';
-
-    /**
-     * The login credentials are correct, but the profile is inactive.
-     *
-     * @var string
-     */
-    const LOGIN_INACTIVE = 'inactive';
-
-    /**
-     * The login credentials are correct, but the profile has been deleted.
-     *
-     * @var string
-     */
-    const LOGIN_DELETED = 'deleted';
-
-    /**
-     * The login credentials are correct, but the profile has been blocked.
-     *
-     * @var string
-     */
-    const LOGIN_BLOCKED = 'blocked';
-
-    /**
-     * The login credentials are incorrect or the profile does not exist.
-     *
-     * @var string
-     */
-    const LOGIN_INVALID = 'invalid';
-
-    /**
      * The current logged in profile.
      *
-     * @var FrontendProfilesProfile
+     * @var Profile|null
      */
     private static $profile;
 
@@ -58,11 +25,7 @@ class Authentication
      */
     public static function cleanupOldSessions(): void
     {
-        // remove all sessions with date older then 1 month
-        FrontendModel::getContainer()->get('database')->delete(
-            'profiles_sessions',
-            'date <= DATE_SUB(NOW(), INTERVAL 1 MONTH)'
-        );
+        FrontendModel::get('profile.repository.profile_session')->cleanup();
     }
 
     /**
@@ -77,21 +40,20 @@ class Authentication
     {
         // check password
         if (!FrontendProfilesModel::verifyPassword($email, $password)) {
-            return self::LOGIN_INVALID;
+            return Status::invalid();
         }
 
         // get the status
-        $loginStatus = FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT p.status
-             FROM profiles AS p
-             WHERE p.email = ?',
-            [$email]
-        );
+        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
 
-        return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
+        if (!$profile instanceof Profile) {
+            return (string) Status::inactive();
+        }
+
+        return (string) $profile->getStatus();
     }
 
-    public static function getProfile(): FrontendProfilesProfile
+    public static function getProfile(): ?Profile
     {
         return self::$profile;
     }
@@ -100,7 +62,7 @@ class Authentication
     {
         // profile object exist? (this means the session/cookie checks have
         // already happened in the current request and we cached the profile)
-        if (isset(self::$profile)) {
+        if (self::$profile instanceof Profile) {
             return true;
         }
 
@@ -109,28 +71,17 @@ class Authentication
             $sessionId = FrontendModel::getSession()->getId();
 
             // get profile id
-            $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT p.id
-                 FROM profiles AS p
-                 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
-                 WHERE ps.session_id = ?',
-                (string) $sessionId
-            );
+            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySessionId($sessionId);
 
-            // valid profile id
-            if ($profileId !== 0) {
-                // update session date
-                FrontendModel::getContainer()->get('database')->update(
-                    'profiles_sessions',
-                    ['date' => FrontendModel::getUTCDate()],
-                    'session_id = ?',
-                    $sessionId
-                );
+            if ($Session instanceof Session) {
+                $profile = $Session->getProfile();
 
-                // new user object
-                self::$profile = new FrontendProfilesProfile($profileId);
+                $Session->updateDate();
+                $profile->registerLogin();
+                FrontendModel::get('doctrine.orm.entity_manager')->flush();
 
-                // logged in
+                self::$profile = $profile;
+
                 return true;
             }
 
@@ -140,42 +91,25 @@ class Authentication
             // secret
             $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
 
-            // get profile id
-            $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT p.id
-                 FROM profiles AS p
-                 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
-                 WHERE ps.secret_key = ?',
-                $secret
-            );
+            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySecretKey($secret);
 
-            // valid profile id
-            if ($profileId !== 0) {
+            if ($Session instanceof Session) {
+                $profile = $Session->getProfile();
+
                 // get new secret key
                 $profileSecret = FrontendProfilesModel::getEncryptedString(
                     FrontendModel::getSession()->getId(),
                     FrontendProfilesModel::getRandomString()
                 );
 
-                // update session record
-                FrontendModel::getContainer()->get('database')->update(
-                    'profiles_sessions',
-                    [
-                        'session_id' => FrontendModel::getSession()->getId(),
-                        'secret_key' => $profileSecret,
-                        'date' => FrontendModel::getUTCDate(),
-                    ],
-                    'secret_key = ?',
-                    $secret
-                );
+                $Session->updateSecretKey(FrontendModel::getSession()->getId(), $profileSecret);
+                $profile->registerLogin();
+                FrontendModel::get('doctrine.orm.entity_manager')->flush();
 
                 FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $profileSecret);
-
                 FrontendModel::getSession()->set('frontend_profile_logged_in', true);
 
-                FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
-
-                self::$profile = new FrontendProfilesProfile($profileId);
+                self::$profile = $profile;
 
                 return true;
             }
@@ -214,39 +148,39 @@ class Authentication
             FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
+        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
+        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+
         // delete all records for this session to prevent duplicate keys (this should never happen)
-        FrontendModel::getContainer()->get('database')->delete(
-            'profiles_sessions',
-            'session_id = ?',
-            FrontendModel::getSession()->getId()
-        );
+        $Sessions = $SessionRepository->findBySessionId(FrontendModel::getSession()->getId());
+        foreach ($Sessions as $Session) {
+            $SessionRepository->remove($Session);
+        }
 
         // insert new session record
-        FrontendModel::getContainer()->get('database')->insert(
-            'profiles_sessions',
-            [
-                'profile_id' => $profileId,
-                'session_id' => FrontendModel::getSession()->getId(),
-                'secret_key' => $secretKey,
-                'date' => FrontendModel::getUTCDate(),
-            ]
+        $Session = new Session(
+            FrontendModel::getSession()->getId(),
+            $profile,
+            $secretKey
         );
+        $SessionRepository->add($Session);
 
         // update last login
-        FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
+        $profile->registerLogin();
+        FrontendModel::get('doctrine.orm.entity_manager')->flush();
 
         // load the profile object
-        self::$profile = new FrontendProfilesProfile($profileId);
+        self::$profile = $profile;
     }
 
     public static function logout(): void
     {
-        // delete session records
-        FrontendModel::getContainer()->get('database')->delete(
-            'profiles_sessions',
-            'session_id = ?',
-            [FrontendModel::getSession()->getId()]
-        );
+        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
+        $Sessions = $SessionRepository->findBySessionId(FrontendModel::getSession()->getId());
+
+        foreach ($Sessions as $Session) {
+            $SessionRepository->remove($Session);
+        }
 
         // set is_logged_in to false
         FrontendModel::getSession()->set('frontend_profile_logged_in', false);

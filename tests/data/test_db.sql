@@ -2687,80 +2687,87 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table profiles
+# Dump of table ProfilesProfile
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles`;
+DROP TABLE IF EXISTS `ProfilesProfile`;
 
-CREATE TABLE `profiles` (
+CREATE TABLE `ProfilesProfile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `displayName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registered_on` datetime NOT NULL,
-  `last_login` datetime NOT NULL,
+  `registeredOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
+  `lastLogin` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups
+# Dump of table ProfilesGroup
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups`;
+DROP TABLE IF EXISTS `ProfilesGroup`;
 
-CREATE TABLE `profiles_groups` (
+CREATE TABLE `ProfilesGroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups_rights
+# Dump of table ProfilesGroupRight
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups_rights`;
+DROP TABLE IF EXISTS `ProfilesGroupRight`;
 
-CREATE TABLE `profiles_groups_rights` (
+CREATE TABLE `ProfilesGroupRight` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  `starts_on` datetime DEFAULT NULL,
-  `expires_on` datetime DEFAULT NULL,
+  `startsOn` datetime DEFAULT NULL,
+  `expiresOn` datetime DEFAULT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expires_on`)
+  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expiresOn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_sessions
+# Dump of table ProfilesSession
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_sessions`;
+DROP TABLE IF EXISTS `ProfilesSession`;
 
-CREATE TABLE `profiles_sessions` (
-  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
+CREATE TABLE `ProfilesSession` (
   `profile_id` int(11) NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sessionId` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `secretKey` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
-  PRIMARY KEY (`session_id`,`profile_id`),
+  PRIMARY KEY (`sessionId`,`profile_id`),
   KEY `fk_profiles_sessions_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_settings
+# Dump of table ProfilesSetting
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_settings`;
+DROP TABLE IF EXISTS `ProfilesSetting`;
 
-CREATE TABLE `profiles_settings` (
+CREATE TABLE `ProfilesSetting` (
+  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

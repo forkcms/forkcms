@@ -2,12 +2,13 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\Status;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Frontend\Modules\Profiles\Engine\Profile;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
@@ -66,7 +67,7 @@ class ChangePassword extends FrontendBaseBlock
     {
         $loginStatus = FrontendProfilesAuthentication::getLoginStatus($email, $password);
 
-        return $loginStatus === FrontendProfilesAuthentication::LOGIN_ACTIVE;
+        return $loginStatus === (string) Status::active();
     }
 
     private function validateForm(): bool

@@ -46,12 +46,12 @@ class Index extends BackendBaseActionIndex
         $parameters = [];
 
         // construct the query in the controller instead of the model as an allowed exception for data grid usage
-        $query = 'SELECT p.id, p.email, p.display_name, p.status,
-                  UNIX_TIMESTAMP(p.registered_on) AS registered_on FROM profiles AS p';
+        $query = 'SELECT p.id, p.email, p.displayName, p.status,
+                  UNIX_TIMESTAMP(p.registeredOn) AS registeredOn FROM ProfilesProfile AS p';
         $where = [];
 
         // add status
-        if (isset($this->filter['status'])) {
+        if (isset($this->filter['status']) && $this->filter['status'] !== '') {
             $where[] = 'p.status = ?';
             $parameters[] = $this->filter['status'];
         }
@@ -64,8 +64,8 @@ class Index extends BackendBaseActionIndex
 
         // add group
         if (isset($this->filter['group'])) {
-            $query .= ' INNER JOIN profiles_groups_rights AS pgr ON pgr.profile_id = p.id AND
-                        (pgr.expires_on IS NULL OR pgr.expires_on > NOW())';
+            $query .= ' INNER JOIN ProfilesGroupRight AS pgr ON pgr.profile_id = p.id AND
+                        (pgr.expiresOn IS NULL OR pgr.expiresOn > NOW())';
             $where[] .= 'pgr.group_id = ?';
             $parameters[] = $this->filter['group'];
         }
@@ -119,13 +119,13 @@ class Index extends BackendBaseActionIndex
         );
 
         // sorting columns
-        $this->dgProfiles->setSortingColumns(['email', 'display_name', 'status', 'registered_on'], 'email');
+        $this->dgProfiles->setSortingColumns(['email', 'displayName', 'status', 'registeredOn'], 'email');
 
         // set column function
         $this->dgProfiles->setColumnFunction(
             [new BackendDataGridFunctions(), 'getLongDate'],
-            ['[registered_on]'],
-            'registered_on',
+            ['[registeredOn]'],
+            'registeredOn',
             true
         );
 
