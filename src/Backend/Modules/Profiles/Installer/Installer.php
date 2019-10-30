@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Profiles\Domain\Profile\Profile;
-use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
+use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSession\ProfileSession;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
@@ -418,7 +418,7 @@ class Installer extends ModuleInstaller
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [
                 Profile::class,
-                ProfileGroup::class,
+                Group::class,
                 ProfileGroupRight::class,
                 ProfileSession::class,
                 ProfileSetting::class,

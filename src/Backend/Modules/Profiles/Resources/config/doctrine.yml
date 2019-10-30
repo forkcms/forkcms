@@ -13,14 +13,14 @@ doctrine:
       profile_group:
         type: annotation
         is_bundle: false
-        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileGroup"
-        alias: ProfilesProfileGroup
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/Group"
+        alias: ProfilesGroup
         prefix: Backend\Modules\Profiles\Domain\ProfileGroup
       profile_group_right:
         type: annotation
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileGroupRight"
-        alias: ProfilesProfileGroupRight
+        alias: ProfilesGroupRight
         prefix: Backend\Modules\Profiles\Domain\ProfileGroupRight
       profile_setting:
         type: annotation

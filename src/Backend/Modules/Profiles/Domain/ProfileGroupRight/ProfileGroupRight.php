@@ -3,13 +3,13 @@
 namespace Backend\Modules\Profiles\Domain\ProfileGroupRight;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
-use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
+use Backend\Modules\Profiles\Domain\Group\Group;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(
- *      name="ProfilesProfileGroupRight",
+ *      name="ProfilesGroupRight",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"profile_id", "group_id"})
  *      }
@@ -36,9 +36,9 @@ class ProfileGroupRight
     private $profile;
 
     /**
-     * @var ProfileGroup
+     * @var Group
      *
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup", inversedBy="rights")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="rights")
      */
     private $group;
 
@@ -72,7 +72,7 @@ class ProfileGroupRight
 
     public function __construct(
         Profile $profile,
-        ProfileGroup $group,
+        Group $group,
         ?DateTime $startsOn,
         ?DateTime $expiresOn
     ) {
@@ -85,7 +85,7 @@ class ProfileGroupRight
         $group->addRight($this);
     }
 
-    public function update(ProfileGroup $group, DateTime $startsOn, ?DateTime $expiresOn): void
+    public function update(Group $group, DateTime $startsOn, ?DateTime $expiresOn): void
     {
         $this->group = $group;
         $this->startsOn = $startsOn;
@@ -102,7 +102,7 @@ class ProfileGroupRight
         return $this->profile;
     }
 
-    public function getGroup(): ProfileGroup
+    public function getGroup(): Group
     {
         return $this->group;
     }

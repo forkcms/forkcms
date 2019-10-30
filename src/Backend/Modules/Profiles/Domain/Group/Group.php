@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileGroup;
+namespace Backend\Modules\Profiles\Domain\Group;
 
 use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use DateTime;
@@ -9,11 +9,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="ProfilesProfileGroup")
- * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroupRepository")
+ * @ORM\Table(name="ProfilesGroup")
+ * @ORM\Entity(repositoryClass="GroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class ProfileGroup
+class Group
 {
     /**
      * @var int

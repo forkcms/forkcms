@@ -2707,12 +2707,12 @@ CREATE TABLE `ProfilesProfile` (
 
 
 
-# Dump of table ProfilesProfileGroup
+# Dump of table ProfilesGroup
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ProfilesProfileGroup`;
+DROP TABLE IF EXISTS `ProfilesGroup`;
 
-CREATE TABLE `ProfilesProfileGroup` (
+CREATE TABLE `ProfilesGroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdOn` datetime NOT NULL,
@@ -2722,12 +2722,12 @@ CREATE TABLE `ProfilesProfileGroup` (
 
 
 
-# Dump of table ProfilesProfileGroupRight
+# Dump of table ProfilesGroupRight
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ProfilesProfileGroupRight`;
+DROP TABLE IF EXISTS `ProfilesGroupRight`;
 
-CREATE TABLE `ProfilesProfileGroupRight` (
+CREATE TABLE `ProfilesGroupRight` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,

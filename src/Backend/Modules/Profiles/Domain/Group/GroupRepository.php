@@ -1,18 +1,18 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileGroup;
+namespace Backend\Modules\Profiles\Domain\Group;
 
 use Doctrine\ORM\EntityRepository;
 
-final class ProfileGroupRepository extends EntityRepository
+final class GroupRepository extends EntityRepository
 {
-    public function add(ProfileGroup $group): void
+    public function add(Group $group): void
     {
         $this->getEntityManager()->persist($group);
         $this->getEntityManager()->flush();
     }
 
-    public function remove(ProfileGroup $group): void
+    public function remove(Group $group): void
     {
         $this->getEntityManager()->remove($group);
         $this->getEntityManager()->flush();
@@ -30,7 +30,7 @@ final class ProfileGroupRepository extends EntityRepository
                 ->setParameter(':id', $excludedGroupId);
         }
 
-        return $query->getQuery()->getOneOrNullResult() instanceof ProfileGroup;
+        return $query->getQuery()->getOneOrNullResult() instanceof Group;
     }
 
     public function findWithExcludedIds(array $excludeIds): array

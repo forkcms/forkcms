@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Profile\Status;
-use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
+use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\Mailer\Message;
@@ -46,8 +46,8 @@ class Model
     const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, IF(gr.expiresOn IS NULL, 0, UNIX_TIMESTAMP(gr.expiresOn)) AS expires_on,
           IF(gr.expiresOn IS NOT NULL AND gr.expiresOn <= NOW(), 1, 0) AS hidden
-         FROM ProfilesProfileGroup AS g
-         INNER JOIN ProfilesProfileGroupRight AS gr ON gr.group_id = g.id
+         FROM ProfilesGroup AS g
+         INNER JOIN ProfilesGroupRight AS gr ON gr.group_id = g.id
          WHERE gr.profile_id = ?';
 
     /**
@@ -122,7 +122,7 @@ class Model
 
     public static function existsGroup(int $groupId): bool
     {
-        return BackendModel::get('profile.repository.profile_group')->find($groupId) instanceof ProfileGroup;
+        return BackendModel::get('profile.repository.profile_group')->find($groupId) instanceof Group;
     }
 
     public static function existsGroupName(string $groupName, int $excludedGroupId = 0): bool
@@ -243,7 +243,7 @@ class Model
     {
         $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
 
-        if (!$group instanceof ProfileGroup) {
+        if (!$group instanceof Group) {
             return [];
         }
 
@@ -605,7 +605,7 @@ class Model
 
     public static function insertGroup(array $group): int
     {
-        $group = new ProfileGroup($group['name']);
+        $group = new Group($group['name']);
 
         BackendModel::get('profile.repository.profile_group')->add($group);
 
@@ -864,7 +864,7 @@ class Model
     {
         $groupEntity = BackendModel::get('profile.repository.profile_group')->find($groupId);
 
-        if (!$groupEntity instanceof ProfileGroup) {
+        if (!$groupEntity instanceof Group) {
             return $groupId;
         }
 
