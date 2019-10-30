@@ -74,7 +74,7 @@ class Profile
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Setting",
+     *     targetEntity="Backend\Modules\Profiles\Domain\Setting\Setting",
      *     mappedBy="profile",
      *     cascade={"persist","remove"}
      * )

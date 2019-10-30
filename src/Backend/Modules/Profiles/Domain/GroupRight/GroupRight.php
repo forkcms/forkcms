@@ -38,7 +38,7 @@ class GroupRight
     /**
      * @var Group
      *
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="rights")
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Profiles\Domain\Group\Group", inversedBy="rights")
      */
     private $group;
 

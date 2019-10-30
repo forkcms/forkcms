@@ -12,10 +12,10 @@ services:
       - Backend\Modules\Profiles\Domain\Setting\Setting
 
   profile.repository.profile_group:
-    class: Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroupRepository
+    class: Backend\Modules\Profiles\Domain\Group\GroupRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup
+      - Backend\Modules\Profiles\Domain\Group\Group
 
   profile.repository.profile_group_right:
     class: Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository
