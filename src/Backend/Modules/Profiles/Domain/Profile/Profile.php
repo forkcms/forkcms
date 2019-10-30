@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\Profile;
 
-use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -64,7 +64,7 @@ class Profile
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight",
+     *     targetEntity="Backend\Modules\Profiles\Domain\GroupRight\GroupRight",
      *     mappedBy="profile"
      * )
      */
@@ -168,7 +168,7 @@ class Profile
         return $this->rights;
     }
 
-    public function addRight(ProfileGroupRight $groupRight): void
+    public function addRight(GroupRight $groupRight): void
     {
         $this->rights->add($groupRight);
     }
@@ -281,7 +281,7 @@ class Profile
     public function isInGroup(int $groupId): bool
     {
         $foundGroups = $this->getRights()->filter(
-            function (ProfileGroupRight $groupRight) use ($groupId) {
+            function (GroupRight $groupRight) use ($groupId) {
                 return $groupRight->getGroup()->getId() === $groupId;
             }
         );

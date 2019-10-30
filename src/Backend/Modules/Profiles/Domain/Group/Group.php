@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\Group;
 
-use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,7 +35,7 @@ class Group
      * @var Collection;
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight",
+     *     targetEntity="Backend\Modules\Profiles\Domain\GroupRight\GroupRight",
      *     mappedBy="group",
      *     cascade={"persist", "remove"}
      * )
@@ -116,7 +116,7 @@ class Group
         ];
     }
 
-    public function addRight(ProfileGroupRight $groupRight): void
+    public function addRight(GroupRight $groupRight): void
     {
         $this->rights->add($groupRight);
     }

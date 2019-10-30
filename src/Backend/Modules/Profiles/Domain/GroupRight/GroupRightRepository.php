@@ -1,19 +1,19 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileGroupRight;
+namespace Backend\Modules\Profiles\Domain\GroupRight;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Doctrine\ORM\EntityRepository;
 
-final class ProfileGroupRightRepository extends EntityRepository
+final class GroupRightRepository extends EntityRepository
 {
-    public function add(ProfileGroupRight $groupRight): void
+    public function add(GroupRight $groupRight): void
     {
         $this->getEntityManager()->persist($groupRight);
         $this->getEntityManager()->flush();
     }
 
-    public function remove(ProfileGroupRight $groupRight): void
+    public function remove(GroupRight $groupRight): void
     {
         $this->getEntityManager()->remove($groupRight);
         $this->getEntityManager()->flush();

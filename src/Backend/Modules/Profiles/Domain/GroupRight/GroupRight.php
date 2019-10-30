@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileGroupRight;
+namespace Backend\Modules\Profiles\Domain\GroupRight;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Group\Group;
@@ -14,10 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  *          @ORM\UniqueConstraint(columns={"profile_id", "group_id"})
  *      }
  * )
- * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRightRepository")
+ * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class ProfileGroupRight
+class GroupRight
 {
     /**
      * @var int

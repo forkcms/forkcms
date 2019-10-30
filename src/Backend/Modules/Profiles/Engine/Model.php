@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Engine;
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\Group\Group;
-use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
@@ -134,7 +134,7 @@ class Model
     {
         $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
 
-        return $groupRight instanceof ProfileGroupRight;
+        return $groupRight instanceof GroupRight;
     }
 
     public static function get(int $profileId): array
@@ -281,7 +281,7 @@ class Model
         $linkedGroups = BackendModel::get('profile.repository.profile_group_right')
             ->findLinkedToProfile($profile, $includeId);
         $excludeGroupIds = array_map(
-            function (ProfileGroupRight $groupRight) {
+            function (GroupRight $groupRight) {
                 return $groupRight->getGroup()->getId();
             },
             $linkedGroups
@@ -308,7 +308,7 @@ class Model
     {
         $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
 
-        if (!$groupRight instanceof ProfileGroupRight) {
+        if (!$groupRight instanceof GroupRight) {
             return [];
         }
 
@@ -328,7 +328,7 @@ class Model
         $groupRights = BackendModel::get('profile.repository.profile_group_right')->findByProfile($profile);
 
         return array_map(
-            function (ProfileGroupRight $groupRight) {
+            function (GroupRight $groupRight) {
                 return [
                     'id' => $groupRight->getId(),
                     'group_id' => $groupRight->getGroup()->getId(),
@@ -630,12 +630,12 @@ class Model
         }
 
         $existingGroupRight = $profile->getRights()->filter(
-            function (ProfileGroupRight $groupRight) use ($group) {
+            function (GroupRight $groupRight) use ($group) {
                 return $groupRight->getGroup()->getId() === $group->getId();
             }
         )->first();
 
-        if ($existingGroupRight instanceof ProfileGroupRight) {
+        if ($existingGroupRight instanceof GroupRight) {
             $existingGroupRight->update(
                 $group,
                 DateTime::createFromFormat('U', $membership['starts_on']),
@@ -647,7 +647,7 @@ class Model
             return $existingGroupRight->getId();
         }
 
-        $groupRight = new ProfileGroupRight(
+        $groupRight = new GroupRight(
             $profile,
             $group,
             DateTime::createFromFormat('U', $membership['starts_on']),
@@ -887,7 +887,7 @@ class Model
     {
         $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
 
-        if (!$groupRight instanceof ProfileGroupRight) {
+        if (!$groupRight instanceof GroupRight) {
             return $membershipId;
         }
 

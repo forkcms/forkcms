@@ -19,9 +19,9 @@ doctrine:
       profile_group_right:
         type: annotation
         is_bundle: false
-        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileGroupRight"
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/GroupRight"
         alias: ProfilesGroupRight
-        prefix: Backend\Modules\Profiles\Domain\ProfileGroupRight
+        prefix: Backend\Modules\Profiles\Domain\GroupRight
       profile_setting:
         type: annotation
         is_bundle: false

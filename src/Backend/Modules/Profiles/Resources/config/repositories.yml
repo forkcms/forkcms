@@ -18,10 +18,10 @@ services:
       - Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup
 
   profile.repository.profile_group_right:
-    class: Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRightRepository
+    class: Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight
+      - Backend\Modules\Profiles\Domain\GroupRight\GroupRight
 
   profile.repository.profile_session:
     class: Backend\Modules\Profiles\Domain\ProfileSession\ProfileSessionRepository

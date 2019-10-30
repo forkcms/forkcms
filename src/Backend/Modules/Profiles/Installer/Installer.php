@@ -6,7 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Group\Group;
-use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSession\ProfileSession;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\ModuleExtraType;
@@ -419,7 +419,7 @@ class Installer extends ModuleInstaller
             [
                 Profile::class,
                 Group::class,
-                ProfileGroupRight::class,
+                GroupRight::class,
                 ProfileSession::class,
                 ProfileSetting::class,
             ]
