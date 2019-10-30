@@ -1,17 +1,17 @@
 <?php
 
-namespace Backend\Modules\Profiles\Domain\ProfileSession;
+namespace Backend\Modules\Profiles\Domain\Session;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="ProfilesProfileSession")
- * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileSession\ProfileSessionRepository")
+ * @ORM\Table(name="ProfilesSession")
+ * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\Session\SessionRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class ProfileSession
+class Session
 {
     /**
      * @var string

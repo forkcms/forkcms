@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Profile\Status;
-use Backend\Modules\Profiles\Domain\ProfileSession\ProfileSession;
+use Backend\Modules\Profiles\Domain\Session\Session;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
@@ -71,12 +71,12 @@ class Authentication
             $sessionId = FrontendModel::getSession()->getId();
 
             // get profile id
-            $profileSession = FrontendModel::get('profile.repository.profile_session')->findOneBySessionId($sessionId);
+            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySessionId($sessionId);
 
-            if ($profileSession instanceof ProfileSession) {
-                $profile = $profileSession->getProfile();
+            if ($Session instanceof Session) {
+                $profile = $Session->getProfile();
 
-                $profileSession->updateDate();
+                $Session->updateDate();
                 $profile->registerLogin();
                 FrontendModel::get('doctrine.orm.entity_manager')->flush();
 
@@ -91,10 +91,10 @@ class Authentication
             // secret
             $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
 
-            $profileSession = FrontendModel::get('profile.repository.profile_session')->findOneBySecretKey($secret);
+            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySecretKey($secret);
 
-            if ($profileSession instanceof ProfileSession) {
-                $profile = $profileSession->getProfile();
+            if ($Session instanceof Session) {
+                $profile = $Session->getProfile();
 
                 // get new secret key
                 $profileSecret = FrontendProfilesModel::getEncryptedString(
@@ -102,7 +102,7 @@ class Authentication
                     FrontendProfilesModel::getRandomString()
                 );
 
-                $profileSession->updateSecretKey(FrontendModel::getSession()->getId(), $profileSecret);
+                $Session->updateSecretKey(FrontendModel::getSession()->getId(), $profileSecret);
                 $profile->registerLogin();
                 FrontendModel::get('doctrine.orm.entity_manager')->flush();
 
@@ -148,22 +148,22 @@ class Authentication
             FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
-        $profileSessionRepository = FrontendModel::get('profile.repository.profile_session');
+        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
         $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
 
         // delete all records for this session to prevent duplicate keys (this should never happen)
-        $profileSessions = $profileSessionRepository->findBySessionId(FrontendModel::getSession()->getId());
-        foreach ($profileSessions as $profileSession) {
-            $profileSessionRepository->remove($profileSession);
+        $Sessions = $SessionRepository->findBySessionId(FrontendModel::getSession()->getId());
+        foreach ($Sessions as $Session) {
+            $SessionRepository->remove($Session);
         }
 
         // insert new session record
-        $profileSession = new ProfileSession(
+        $Session = new Session(
             FrontendModel::getSession()->getId(),
             $profile,
             $secretKey
         );
-        $profileSessionRepository->add($profileSession);
+        $SessionRepository->add($Session);
 
         // update last login
         $profile->registerLogin();
@@ -175,11 +175,11 @@ class Authentication
 
     public static function logout(): void
     {
-        $profileSessionRepository = FrontendModel::get('profile.repository.profile_session');
-        $profileSessions = $profileSessionRepository->findBySessionId(FrontendModel::getSession()->getId());
+        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
+        $Sessions = $SessionRepository->findBySessionId(FrontendModel::getSession()->getId());
 
-        foreach ($profileSessions as $profileSession) {
-            $profileSessionRepository->remove($profileSession);
+        foreach ($Sessions as $Session) {
+            $SessionRepository->remove($Session);
         }
 
         // set is_logged_in to false

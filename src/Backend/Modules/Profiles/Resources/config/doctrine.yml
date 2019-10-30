@@ -31,6 +31,6 @@ doctrine:
       profile_session:
         type: annotation
         is_bundle: false
-        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileSession"
-        alias: ProfilesProfileSession
-        prefix: Backend\Modules\Profiles\Domain\ProfileSession
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/Session"
+        alias: ProfilesSession
+        prefix: Backend\Modules\Profiles\Domain\Session

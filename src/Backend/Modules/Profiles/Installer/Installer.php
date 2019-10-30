@@ -7,7 +7,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
-use Backend\Modules\Profiles\Domain\ProfileSession\ProfileSession;
+use Backend\Modules\Profiles\Domain\Session\Session;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
@@ -420,7 +420,7 @@ class Installer extends ModuleInstaller
                 Profile::class,
                 Group::class,
                 GroupRight::class,
-                ProfileSession::class,
+                Session::class,
                 ProfileSetting::class,
             ]
         );

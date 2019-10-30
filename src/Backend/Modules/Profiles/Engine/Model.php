@@ -97,11 +97,11 @@ class Model
     {
         $profile = BackendModel::get('profile.repository.profile')->find($id);
 
-        $profileSessionRepository = BackendModel::get('profile.repository.profile_session');
+        $SessionRepository = BackendModel::get('profile.repository.profile_session');
 
-        $sessions = $profileSessionRepository->findByProfile($profile);
+        $sessions = $SessionRepository->findByProfile($profile);
         foreach ($sessions as $session) {
-            $profileSessionRepository->remove($session);
+            $SessionRepository->remove($session);
         }
     }
 

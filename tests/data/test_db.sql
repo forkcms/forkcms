@@ -2741,12 +2741,12 @@ CREATE TABLE `ProfilesGroupRight` (
 
 
 
-# Dump of table ProfilesProfileSession
+# Dump of table ProfilesSession
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ProfilesProfileSession`;
+DROP TABLE IF EXISTS `ProfilesSession`;
 
-CREATE TABLE `ProfilesProfileSession` (
+CREATE TABLE `ProfilesSession` (
   `profile_id` int(11) NOT NULL,
   `sessionId` varchar(50) CHARACTER SET utf8 NOT NULL,
   `secretKey` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

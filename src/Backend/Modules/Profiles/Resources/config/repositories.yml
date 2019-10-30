@@ -24,7 +24,7 @@ services:
       - Backend\Modules\Profiles\Domain\GroupRight\GroupRight
 
   profile.repository.profile_session:
-    class: Backend\Modules\Profiles\Domain\ProfileSession\ProfileSessionRepository
+    class: Backend\Modules\Profiles\Domain\Session\SessionRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - Backend\Modules\Profiles\Domain\ProfileSession\ProfileSession
+      - Backend\Modules\Profiles\Domain\Session\Session

@@ -13,7 +13,7 @@ class LoadProfiles
         $dateOverAMonthAgo = new DateTime('-2 months');
 
         $database->insert(
-            'ProfilesProfileSession',
+            'ProfilesSession',
             [
                 [
                     'sessionId' => '0123456789',

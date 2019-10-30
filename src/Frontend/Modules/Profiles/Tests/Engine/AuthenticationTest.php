@@ -45,11 +45,11 @@ final class AuthenticationTest extends WebTestCase
 
     public function testOldSessionCleanUp()
     {
-        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesProfileSession'));
+        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesSession'));
 
         Authentication::cleanupOldSessions();
 
-        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesProfileSession WHERE sessionId = "1234567890"'));
+        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesSession WHERE sessionId = "1234567890"'));
     }
 
     public function testGettingLoginStatusForNonExistingUser()
@@ -90,11 +90,11 @@ final class AuthenticationTest extends WebTestCase
 
     public function testLoggingInCleansUpOldSessions()
     {
-        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesProfileSession'));
+        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesSession'));
 
         Authentication::login(1);
 
-        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesProfileSession WHERE sessionId = "1234567890"'));
+        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesSession WHERE sessionId = "1234567890"'));
     }
 
     public function testLoggingInSetsASessionVariable()
@@ -112,7 +112,7 @@ final class AuthenticationTest extends WebTestCase
             '0',
             $this->database->getVar(
                 'SELECT COUNT(sessionId)
-                 FROM ProfilesProfileSession
+                 FROM ProfilesSession
                  WHERE profile_id = 2'
             )
         );
@@ -123,7 +123,7 @@ final class AuthenticationTest extends WebTestCase
             '1',
             $this->database->getVar(
                 'SELECT COUNT(sessionId)
-                 FROM ProfilesProfileSession
+                 FROM ProfilesSession
                  WHERE profile_id = 2'
             )
         );
@@ -143,7 +143,7 @@ final class AuthenticationTest extends WebTestCase
     public function testLogoutDeletesSessionFromDatabase(): void
     {
         $this->database->insert(
-            'ProfilesProfileSession',
+            'ProfilesSession',
             [
                 'sessionId' => $this->session->getId(),
                 'profile_id' => 1,
@@ -154,7 +154,7 @@ final class AuthenticationTest extends WebTestCase
 
         $this->assertTrue(
             (bool) $this->database->getVar(
-                'SELECT 1 FROM ProfilesProfileSession WHERE sessionId = ?',
+                'SELECT 1 FROM ProfilesSession WHERE sessionId = ?',
                 $this->session->getId()
             )
         );
@@ -163,7 +163,7 @@ final class AuthenticationTest extends WebTestCase
 
         $this->assertFalse(
             (bool) $this->database->getVar(
-                'SELECT 1 FROM ProfilesProfileSession WHERE sessionId = ?',
+                'SELECT 1 FROM ProfilesSession WHERE sessionId = ?',
                 $this->session->getId()
             )
         );
