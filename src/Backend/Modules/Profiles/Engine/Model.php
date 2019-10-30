@@ -626,7 +626,7 @@ class Model
 
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
+            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
         }
 
         $existingGroupRight = $profile->getRights()->filter(
@@ -638,7 +638,7 @@ class Model
         if ($existingGroupRight instanceof GroupRight) {
             $existingGroupRight->update(
                 $group,
-                DateTime::createFromFormat('U', $membership['starts_on']),
+                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
                 null
             );
 
@@ -650,7 +650,7 @@ class Model
         $groupRight = new GroupRight(
             $profile,
             $group,
-            DateTime::createFromFormat('U', $membership['starts_on']),
+            DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
             $expiresOn
         );
 
