@@ -263,7 +263,7 @@ final class ModelTest extends WebTestCase
     {
         return [
             'email' => 'test@fork-cms.com',
-            'password' => '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
+            'password' => password_hash($this->getPassword(), PASSWORD_DEFAULT),
             'status' => 'active',
             'display_name' => $this->getDisplayName(),
             'url' => 'fork-cms',

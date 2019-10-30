@@ -294,7 +294,6 @@ class Profile
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'password' => $this->password,
             'status' => (string) $this->status,
             'display_name' => $this->displayName,
             'url' => $this->url,
