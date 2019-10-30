@@ -9,18 +9,26 @@
 {% endblock %}
 
 {% block main %}
+{% set renderSection = false %}
+  {% for content in positions.main %}
+    {% if not renderSection and content.html %}
+      {% set renderSection = true %}
+    {% endif %}
+  {% endfor %}
 
+  {% if renderSection %}
   <div class="section-default">
     <div class="row">
       {# Main positions #}
       {% for content in positions.main %}
-        <div class="col-lg-offset-2 col-lg-8">
-          {% if content.html %}
+        {% if content.html %}
+          <div class="col-lg-offset-2 col-lg-8">
             {{ content.html|raw }}
-          {% endif %}
-        </div>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
+  {% endif %}
 
 {% endblock %}

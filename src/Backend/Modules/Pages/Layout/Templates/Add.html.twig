@@ -28,6 +28,11 @@
 {% endblock %}
 
 {% block content %}
+  {% if showCopyWarning %}
+    <div id="copyPageWarning" class="alert alert-warning alert-xs">
+      {{ macro.icon('exclamation-triangle') }}{{ 'msg.CopySaveWarning'|trans|raw }}
+    </div>
+  {% endif %}
   {% form add %}
   {{ hidTemplateId|raw }}
   <div class="row fork-module-content">
@@ -62,6 +67,11 @@
           <li role="presentation">
             <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
+          {% if showAuthenticationTab %}
+            <li role="presentation">
+              <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+            </li>
+          {% endif %}
           <li role="presentation">
             <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
@@ -77,8 +87,6 @@
                   {{ 'lbl.ChangeTemplate'|trans|ucfirst }}
                 </a>
               </p>
-
-              {% if formErrors %}<span class="formError text-danger">{{ formErrors }}</span>{% endif %}
 
               <div id="templateVisualFallback" style="display: none">
                 <div id="fallback" class="generalMessage singleMessage infoMessage">
@@ -172,12 +180,58 @@
               </div>
             </div>
           </div>
+          {% if showAuthenticationTab %}
+            <div role="tabpanel" class="tab-pane" id="tabAuthentication">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group last">
+                    <li class="checkbox">
+                      <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
+                    </li>
+                    {% if authGroups %}
+                      <div class="js-authentication-groups" {% if item.data.auth_required %} style="display: none;"{% endif %}>
+                        <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
+                        <ul class="list-unstyled">
+                          {% for item in authGroups %}
+                            <li class="checkbox">
+                              <label for="{{ item.id }}">{{ item.chkAuthGroups|raw }} {{ item.label }}</label>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                    <li class="checkbox hidden" data-role="remove-from-search-index">
+                      <label for="removeFromSearchIndex" class="control-label">{% form_field remove_from_search_index %} {{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
           <div role="tabpanel" class="tab-pane" id="tabImage">
             <div class="row js-page-image-tab">
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="image" class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
-                  {% form_field image %} {% form_field_error image %}
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      {% if item.data.image %}
+                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
+                      {% endif %}
+                    </div>
+                    <div class="col-lg-9">
+                      {% form_field image %} {% form_field_error image %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  {% if originalImage %}
+                    <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ originalImage }}" class="img-responsive" />
+                    <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                    {% form_field_error remove_image %}
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -321,7 +375,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.Content'|trans|capitalize }}</h4>
+          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>

@@ -77,6 +77,8 @@ class Edit extends BackendBaseActionEdit
         // assign id, name
         $this->template->assign('name', $this->record['name']);
         $this->template->assign('id', $this->record['id']);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**
@@ -113,10 +115,10 @@ class Edit extends BackendBaseActionEdit
             // name checks
             if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('AlphaNumericCharactersOnly'))) {
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
-                        $txtName->setError(BL::err('InvalidName'));
+                        $txtName->setError(BL::err('FirstLetterMustBeACapitalLetter'));
                     } else {
                         // check if exists
                         if (BackendLocaleModel::existsByName($txtName->getValue(), $this->form->getField('type')->getValue(), $this->form->getField('module')->getValue(), $this->form->getField('language')->getValue(), $this->form->getField('application')->getValue(), $this->id)) {

@@ -55,7 +55,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         $movieId = trim($this->getRequest()->request->get('id'));
 
         // Movie id not null
-        if ($movieId === null) {
+        if (empty($movieId)) {
             throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
         }
 
@@ -72,7 +72,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         $movieTitle = trim($this->getRequest()->request->get('title'));
 
         // Title not valid
-        if ($movieTitle === null) {
+        if (empty($movieTitle)) {
             throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
         }
 
@@ -99,13 +99,11 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
     {
         $movieStorageType = $this->getRequest()->request->get('storageType');
 
-        if ($movieStorageType === null
-            || !in_array(
-                (string) $movieStorageType,
-                StorageType::POSSIBLE_VALUES_FOR_MOVIE,
-                true
-            )
-        ) {
+        if ($movieStorageType === null || !in_array(
+            (string) $movieStorageType,
+            StorageType::POSSIBLE_VALUES_FOR_MOVIE,
+            true
+        )) {
             throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
         }
 

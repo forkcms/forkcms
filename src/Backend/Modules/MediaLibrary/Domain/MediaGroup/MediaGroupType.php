@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Backend\Core\Engine\Model;
@@ -53,7 +54,10 @@ class MediaGroupType extends AbstractType
                 'mediaIds',
                 HiddenType::class,
                 [
-                    'attr' => ['class' => 'mediaIds'],
+                    'attr' => [
+                        'class' => 'mediaIds',
+                        'autocomplete' => 'off',
+                    ],
                     'error_bubbling' => false,
                     'constraints' => $this->getConstraints($options),
                 ]
@@ -88,6 +92,12 @@ class MediaGroupType extends AbstractType
         if ($options['aspect_ratio'] instanceof AspectRatio) {
             $view->vars['aspectRatio'] = $options['aspect_ratio']->asFloat();
         }
+        if (\is_int($options['minimum_items'])) {
+            $view->vars['minimumItems'] = $options['minimum_items'];
+        }
+        if (\is_int($options['maximum_items'])) {
+            $view->vars['maximumItems'] = $options['maximum_items'];
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -103,10 +113,33 @@ class MediaGroupType extends AbstractType
                 'label' => Language::lbl('MediaConnected'),
                 'aspect_ratio' => null,
                 'error_bubbling' => false,
+                'minimum_items' => null,
+                'maximum_items' => null,
             ]
         );
 
         $resolver->setAllowedTypes('aspect_ratio', ['null', AspectRatio::class]);
+
+        $resolver->setNormalizer(
+            'constraints',
+            function (Options $options, $constraints = []): array {
+                if (\is_int($options['minimum_items'] ?? null) || \is_int($options['maximum_items'] ?? null)) {
+                    $countOptions = [];
+                    if (\is_int($options['minimum_items'] ?? null)) {
+                        $countOptions['min'] = $options['minimum_items'];
+                        $countOptions['minMessage'] = Language::err('MinimumConnectedItems');
+                    }
+                    if (\is_int($options['maximum_items'] ?? null)) {
+                        $countOptions['max'] = $options['maximum_items'];
+                        $countOptions['maxMessage'] = Language::err('MaximumConnectedItems');
+                    }
+
+                    $constraints[] = new Constraints\Count($countOptions);
+                }
+
+                return $constraints;
+            }
+        );
     }
 
     public function getBlockPrefix(): string
@@ -131,7 +164,7 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupReverseTransformFunction(): callable
     {
-        return function (array $mediaGroupData) : MediaGroup {
+        return function (array $mediaGroupData): MediaGroup {
             return $this->saveMediaGroup(
                 $this->getMediaGroupFromMediaGroupData($mediaGroupData),
                 $this->getMediaItemIdsFromMediaGroupData($mediaGroupData)
@@ -159,11 +192,12 @@ class MediaGroupType extends AbstractType
 
     private function getMediaGroupTransformFunction(): callable
     {
-        return function (MediaGroup $mediaGroup) {
+        return static function (MediaGroup $mediaGroup) {
             return [
                 'id' => $mediaGroup->getId(),
                 'type' => $mediaGroup->getType(),
                 'mediaIds' => implode(',', $mediaGroup->getIdsForConnectedItems()),
+                'mediaGroup' => $mediaGroup,
             ];
         };
     }

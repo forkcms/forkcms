@@ -23,3 +23,16 @@ services:
             - "@translator"
         tags:
             - { name: form.type, alias: meta}
+    Common\Form\ImageType:
+        arguments:
+            - "@validator"
+        tags:
+            - { name: form.type, alias: image}
+    Common\Form\FileType:
+        arguments:
+            - "@validator"
+        tags:
+            - { name: form.type, alias: file}
+    Common\Form\Extension\DateTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\DateType }

@@ -4,7 +4,13 @@
 #}
 
 {% block media_group_widget %}
+  {% if mediaGroup is not defined %}
+    {% set mediaGroup = form.vars.data.mediaGroup %}
+  {% endif %}
+  {{ include_once("MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig") }}
   {% import "Layout/Templates/macros.html.twig" as macro %}
+  {% import _self as mediaMacro %}
+
   <div class="row fork-module-content media-library-media-group-helper">
     <div class="col-md-12">
       <div class="panel form-group panel-default{% if not form.vars.valid %} panel-danger{% endif %}">
@@ -14,77 +20,72 @@
         <div class="panel-body">
           {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            <div class="panel-body mediaConnectedBox">
-              <ul class="mediaConnectedItems ui-sortable">
-                {% for connectedItem in mediaGroup.connectedItems %}
-                  <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
-                    <div class="mediaHolder mediaHolder{{ connectedItem.item.type|ucfirst }}">
+          <div class="panel-body mediaConnectedBox">
+            <ul class="mediaConnectedItems ui-sortable" data-fork="connectedItems">
+              {% for connectedItem in mediaGroup.connectedItems %}
+                <li id="media-{{ connectedItem.item.id }}" class="ui-state-default">
+                  {{ mediaMacro.mediaItem(connectedItem) }}
+                </li>
+              {% endfor %}
+            </ul>
 
-                      {# Audio #}
-                      {% if connectedItem.item.type.isAudio %}
-                        <div class="icon"></div>
-                        <div class="url">{{ connectedItem.item.url }}</div>
-                      {% endif %}
-
-                      {# File #}
-                      {% if connectedItem.item.type.isFile %}
-                        <div class="icon"></div>
-                        <div class="url">{{ connectedItem.item.url }}</div>
-                      {% endif %}
-
-                      {# Image #}
-                      {% if connectedItem.item.type.isImage %}
-                        <img src="{{ connectedItem.item.getWebPath('backend') }}" alt="{{ connectedItem.item.title }}" title="{{ connectedItem.item.title }}"/>
-                      {% endif %}
-
-                      {# Movie #}
-                      {% if connectedItem.item.type.isMovie %}
-                        <div class="icon"></div>
-                        <div class="url">{{ connectedItem.item.url }}</div>
-                      {% endif %}
-
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-
-              {% if not mediaGroup.connectedItems.count %}
-                <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
-              {% endif %}
-              {% if not form.vars.valid %}
-                <div class="media-group-type-errors">
-                  {{ form_errors(form.mediaIds) }}
-                </div>
-              {% endif %}
-            </div>
-            <div class="panel-footer mediaEditBox">
-              <div class="btn-toolbar">
-                <div class="btn-group pull-left" role="group">
-                  <button type="button" {% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %} data-i="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
-                    {{ macro.icon('plus-square') }}
-                    <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
-                  </button>
-                  <button type="button" data-i="{{ mediaGroup.id }}" class="disconnectMediaItemsButton btn btn-default disabled" title="{{ 'lbl.MediaDisconnect'|trans|ucfirst }}">
-                    {{ macro.icon('minus-square') }}
-                    <span class="btn-text">{{ 'lbl.MediaDisconnect'|trans|ucfirst }}</span>
-                  </button>
-                </div>
+            {% if not mediaGroup.connectedItems.count %}
+              <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
+            {% endif %}
+            {% if not form.vars.valid %}
+              <div class="media-group-type-errors">
+                {{ form_errors(form.mediaIds) }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="panel-footer mediaEditBox">
+            <div class="btn-toolbar">
+              <div class="btn-group pull-left" role="group">
+                <button type="button"{% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %}{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %} data-group-id="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
+                  {{ macro.icon('plus-square') }}
+                  <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
+                </button>
               </div>
             </div>
+          </div>
 
-            {# Add hidden required fields #}
-            {{ form_row(form.id) }}
-            {{ form_row(form.mediaIds) }}
-            {{ form_row(form.type) }}
-          </div>
+          {# Add hidden required fields #}
+          {{ form_row(form.id) }}
+          {{ form_row(form.mediaIds) }}
+          {{ form_row(form.type) }}
         </div>
-        {% if not form.vars.valid %}
-          <div class="panel-footer">
-            {{- form_errors(form) -}}
-          </div>
-        {% endif %}
       </div>
+      {% if not form.vars.valid %}
+        <div class="panel-footer">
+          {{- form_errors(form) -}}
+        </div>
+      {% endif %}
     </div>
   </div>
+  </div>
+{% endblock %}
 
-{% endblock media_group_widget %}
+{% macro mediaItem(mediaItem) %}
+  <div class="mediaHolder mediaHolder{{ mediaItem.item.type|ucfirst }}" data-fork="mediaItem" data-folder-id="{{ mediaItem.item.folder.id }}" data-media-id="{{ mediaItem.item.id }}">
+    {% if mediaItem.item.type.isAudio %}
+      {# Audio #}
+      <div class="icon"></div>
+      <div class="url">{{ mediaItem.item.url }}</div>
+    {% elseif mediaItem.item.type.isFile %}
+      {# File #}
+      <div class="icon"></div>
+      <div class="url">{{ mediaItem.item.url }}</div>
+    {% elseif mediaItem.item.type.isImage %}
+      {# Image #}
+      <img src="{{ mediaItem.item.getWebPath('backend') }}" alt="{{ mediaItem.item.title }}" title="{{ mediaItem.item.title }}" />
+    {% elseif mediaItem.item.type.isMovie %}
+      <div class="videoThumbnail" style="background-image: url('{{ mediaItem.item.thumbnail() }}')">
+        {# Movie #}
+        <div class="icon"></div>
+      </div>
+    {% endif %}
+    <button type="button" class="disconnectMediaItem" data-fork="disconnect" title="{{ 'lbl.MediaDisconnect'|trans }}">
+      {{ 'lbl.MediaDisconnect'|trans|ucfirst }}
+    </button>
+  </div>
+{% endmacro %}

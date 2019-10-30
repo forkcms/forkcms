@@ -47,6 +47,10 @@ abstract class WebTestCase extends BaseWebTestCase
             static::$kernel->shutdown();
         }
 
+        if (!array_key_exists('environment', $options)) {
+            $options['environment'] = 'test';
+        }
+
         $client = parent::createClient($options, $server);
         static::$kernel = $client->getKernel();
         BaseModel::setContainer(static::$kernel->getContainer());

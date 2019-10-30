@@ -42,6 +42,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
         // named application
         if (!defined('NAMED_APPLICATION')) {
+            // @todo This is being used to generate error URL's and this is maybe not necessary
             define('NAMED_APPLICATION', 'BackendAjax');
         }
 

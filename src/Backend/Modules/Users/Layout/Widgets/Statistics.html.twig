@@ -10,7 +10,7 @@
         <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
         <td>
           {% if authenticatedUserLastLogin %}{{ authenticatedUserLastLogin|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }} {% endif %}
-          {% if not authenticatedUserLastLogin %}{{ lbl.NoPreviousLogin }}{% endif %}
+          {% if not authenticatedUserLastLogin %}{{ 'lbl.NoPreviousLogin'|trans|ucfirst }}{% endif %}
         </td>
       </tr>
       {% if authenticatedUserLastFailedLoginAttempt %}
@@ -23,7 +23,7 @@
         <th>{{ 'lbl.LastPasswordChange'|trans|ucfirst }}:</th>
         <td>
           {% if authenticatedUserLastPasswordChange %}{{ authenticatedUserLastPasswordChange|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
-          {% if not authenticatedUserLastPasswordChange %}{{ lbl.Never }}{% endif %}
+          {% if not authenticatedUserLastPasswordChange %}{{ 'lbl.Never'|trans|ucfirst }}{% endif %}
         </td>
       </tr>
       {% if showPasswordStrength %}

@@ -3,10 +3,9 @@
 namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
+use ForkCMS\Utility\Thumbnails;
 use InvalidArgumentException;
 use RuntimeException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -153,26 +152,13 @@ class Model extends BaseModel
      *      128px, the width will be calculated based on the aspect ratio.
      *
      * @param string $path The path wherein the thumbnail-folders will be stored.
-     * @param string $sourceFile The location of the source file.
+     * @param string $sourceFile The location of the source file
+     *
+     * @deprecated Please use the service `ForkCMS\Utility\Thumbnails` instead.
      */
     public static function generateThumbnails(string $path, string $sourceFile): void
     {
-        // get folder listing
-        $folders = self::getThumbnailFolders($path);
-        $filename = basename($sourceFile);
-
-        // loop folders
-        foreach ($folders as $folder) {
-            // generate the thumbnail
-            $thumbnail = new \SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
-            $thumbnail->setAllowEnlargement(true);
-
-            // if the width & height are specified we should ignore the aspect ratio
-            if ($folder['width'] !== null && $folder['height'] !== null) {
-                $thumbnail->setForceOriginalAspectRatio(false);
-            }
-            $thumbnail->parseToFile($folder['path'] . '/' . $filename);
-        }
+        self::get(Thumbnails::class)->generate($path, $sourceFile);
     }
 
     /**
@@ -180,22 +166,12 @@ class Model extends BaseModel
      *
      * @param string $path The path wherein the thumbnail-folders exist.
      * @param string|null $thumbnail The filename to be deleted.
+     *
+     * @deprecated Please use the service `ForkCMS\Utility\Thumbnails` instead.
      */
     public static function deleteThumbnails(string $path, ?string $thumbnail): void
     {
-        // if there is no image provided we can't do anything
-        if ($thumbnail === null || $thumbnail === '') {
-            return;
-        }
-
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->directories()->in($path) as $directory) {
-            $fileName = $directory->getRealPath() . '/' . $thumbnail;
-            if (is_file($fileName)) {
-                $filesystem->remove($fileName);
-            }
-        }
+        self::get(Thumbnails::class)->delete($path, $thumbnail);
     }
 
     /**
@@ -205,45 +181,12 @@ class Model extends BaseModel
      * @param bool $includeSource Should the source-folder be included in the return-array.
      *
      * @return array
+     *
+     * @deprecated Please use the service `ForkCMS\Utility\Thumbnails` instead.
      */
     public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
-        $return = [];
-        $filesystem = new Filesystem();
-        if (!$filesystem->exists($path)) {
-            return $return;
-        }
-        $finder = new Finder();
-        $finder->name('/^([0-9]*)x([0-9]*)$/');
-        if ($includeSource) {
-            $finder->name('source');
-        }
-
-        foreach ($finder->directories()->in($path)->depth('== 0') as $directory) {
-            $chunks = explode('x', $directory->getBasename(), 2);
-            if (!$includeSource && count($chunks) !== 2) {
-                continue;
-            }
-
-            $item = [];
-            $item['dirname'] = $directory->getBasename();
-            $item['path'] = $directory->getRealPath();
-            if (mb_substr($path, 0, mb_strlen(PATH_WWW)) === PATH_WWW) {
-                $item['url'] = mb_substr($path, mb_strlen(PATH_WWW));
-            }
-
-            if ($item['dirname'] === 'source') {
-                $item['width'] = null;
-                $item['height'] = null;
-            } else {
-                $item['width'] = ($chunks[0] !== '') ? (int) $chunks[0] : null;
-                $item['height'] = ($chunks[1] !== '') ? (int) $chunks[1] : null;
-            }
-
-            $return[] = $item;
-        }
-
-        return $return;
+        return self::get(Thumbnails::class)->getFolders($path, $includeSource);
     }
 
     /**
@@ -379,5 +322,28 @@ class Model extends BaseModel
         }
 
         return self::get('fork.mock.session');
+    }
+
+    /**
+     * This method returns the filesize in a human readable format according to the value
+     *
+     * @param int $fileSize
+     * @return string
+     */
+    public static function prettyPrintFileSize(int $fileSize): string
+    {
+        if ($fileSize > 999999999) {
+            return number_format($fileSize / 1000000000, 2, ',', ' ') . ' GB';
+        }
+
+        if ($fileSize > 999999) {
+            return number_format($fileSize / 1000000, 2, ',', ' ') . ' MB';
+        }
+
+        if ($fileSize > 999) {
+            return number_format($fileSize / 1000, 2, ',', ' ') . ' KB';
+        }
+
+        return $fileSize . ' bytes';
     }
 }

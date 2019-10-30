@@ -3,6 +3,8 @@
 namespace Frontend\Modules\Location\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
@@ -29,7 +31,10 @@ class Index extends FrontendBaseBlock
         if ($apikey == null) {
             trigger_error('Please provide a Google Maps API key.');
         }
-        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
+
+        $this->addJS(
+            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . Locale::frontendLanguage()
+        );
         $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();

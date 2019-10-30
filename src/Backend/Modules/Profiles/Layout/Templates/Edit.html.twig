@@ -107,6 +107,27 @@
                 </div>
               </div>
             </div>
+            <div class="row fork-module-content">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h2>
+                      <label for="about">
+                        {{ 'lbl.About'|trans|ucfirst }}
+                      </label>
+                    </h2>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field about %}
+                  </div>
+                  {% if txtAboutError %}
+                    <div class="panel-footer">
+                      {% form_field_error about %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabGroups">
             <div class="row">

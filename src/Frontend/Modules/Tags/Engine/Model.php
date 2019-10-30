@@ -2,6 +2,10 @@
 
 namespace Frontend\Modules\Tags\Engine;
 
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
+use Backend\Modules\Tags\Domain\Tag\Tag;
+use Backend\Modules\Tags\Domain\Tag\TagRepository;
 use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -24,14 +28,14 @@ class Model
      *
      * @throws FrontendException When FrontendTagsInterface is not correctly implemented to the module model
      *
-     * @return mixed
+     * @return array|int
      */
     public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
+        if (\in_array(TagsInterface::class, class_implements($class), true)) {
             // return result
-            return call_user_func([$class, $method], $parameter);
+            return \call_user_func([$class, $method], $parameter);
         }
 
         throw new FrontendException(
@@ -44,12 +48,15 @@ class Model
 
     public static function get(string $url, Locale $locale = null): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT id, language, tag AS name, number, url
-             FROM tags
-             WHERE url = ? AND language = ?',
-            [$url, $locale ?? FrontendLocale::frontendLanguage()]
+        $tag = self::getTagRepository()->findOneBy(
+            ['url' => $url, 'locale' => $locale ?? FrontendLocale::frontendLanguage()]
         );
+
+        if ($tag instanceof Tag) {
+            return $tag->toArray();
+        }
+
+        return [];
     }
 
     /**
@@ -59,25 +66,12 @@ class Model
      */
     public static function getAll(): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url, t.number
-             FROM tags AS t
-             WHERE t.language = ? AND t.number > 0
-             ORDER BY t.tag',
-            [FrontendLocale::frontendLanguage()]
-        );
+        return self::tagsToArrays(self::getTagRepository()->findAllLinkedTags(FrontendLocale::frontendLanguage()));
     }
 
     public static function getMostUsed(int $limit): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url, t.number
-             FROM tags AS t
-             WHERE t.language = ? AND t.number > 0
-             ORDER BY t.number DESC
-             LIMIT ?',
-            [FrontendLocale::frontendLanguage(), $limit]
-        );
+        return self::tagsToArrays(self::getTagRepository()->findMostUsed(FrontendLocale::frontendLanguage(), $limit));
     }
 
     /**
@@ -89,36 +83,9 @@ class Model
      */
     public static function getForItem(string $module, int $otherId, Locale $locale = null): array
     {
-        $return = [];
-
-        // get tags
-        $linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?',
-            [$module, $otherId, $locale ?? FrontendLocale::frontendLanguage()]
+        return self::tagsToArrays(
+            self::getTagRepository()->findTags($locale ?? FrontendLocale::frontendLanguage(), $module, $otherId)
         );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
-        }
-
-        // create link
-        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
-
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
-
-            // add
-            $return[] = $row;
-        }
-
-        // return
-        return $return;
     }
 
     /**
@@ -132,70 +99,38 @@ class Model
      */
     public static function getForMultipleItems(string $module, array $otherIds, Locale $locale = null): array
     {
-        $database = FrontendModel::getContainer()->get('database');
-
-        // init var
-        $return = [];
-
-        // get tags
-        $linkedTags = (array) $database->getRecords(
-            'SELECT mt.other_id, t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND t.language = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            [$module, $locale ?? FrontendLocale::frontendLanguage()]
+        $tags = self::getTagRepository()->findTagsForMultipleItems(
+            $locale ?? FrontendLocale::frontendLanguage(),
+            $module,
+            ...$otherIds
         );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
-        }
-
-        // create link
+        $groupedTags = [];
         $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
 
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
+        foreach ($tags as $tagRecord) {
+            $tag = $tagRecord['tag']->toArray();
+            $tag['other_id'] = $tagRecord['moduleId'];
+            $tag['full_url'] = $tagLink . '/' . $tag['url'];
 
-            // add
-            $return[$row['other_id']][] = $row;
+            $groupedTags[$tagRecord['moduleId']][] = $tag;
         }
 
-        return $return;
+        return $groupedTags;
     }
 
     public static function getIdByUrl(string $url): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT id
-             FROM tags
-             WHERE url = ?',
-            [$url]
-        );
+        return self::getTagRepository()->findIdByUrl($url);
     }
 
     public static function getModulesForTag(int $tagId): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT module
-             FROM modules_tags
-             WHERE tag_id = ?
-             GROUP BY module
-             ORDER BY module ASC',
-            [$tagId]
-        );
+        return self::getModuleTagRepository()->findModulesByTagId($tagId);
     }
 
     public static function getName(int $tagId): string
     {
-        return FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT tag
-             FROM tags
-             WHERE id = ?',
-            [$tagId]
-        );
+        return self::getTagRepository()->find($tagId)->getTag();
     }
 
     /**
@@ -210,16 +145,16 @@ class Model
      */
     public static function getRelatedItemsByTags(int $id, string $module, string $otherModule, int $limit = 5): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT t2.other_id
-             FROM modules_tags AS t
-             INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND
-                (t2.module != t.module OR t2.other_id != t.other_id)
-             GROUP BY t2.other_id
-             ORDER BY COUNT(t2.tag_id) DESC
-             LIMIT ?',
-            [$id, $module, $otherModule, $limit]
+        return self::getModuleTagRepository()->findRelatedModuleIdsByTags($id, $module, $otherModule, $limit);
+    }
+
+    public static function getAllForTag(string $tag, Locale $locale = null): array
+    {
+        return array_map(
+            function (ModuleTag $moduleTag): array {
+                return $moduleTag->toArray();
+            },
+            self::getModuleTagRepository()->findByTagAndLocale($tag, $locale ?? FrontendLocale::frontendLanguage())
         );
     }
 
@@ -236,17 +171,12 @@ class Model
     public static function getItemsForTagAndModule(int $id, string $module): array
     {
         // get the ids of the items linked to the tag
-        $otherIds = (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
-            [$module, $id]
-        );
+        $moduleTags = self::getModuleTagRepository()->findByModuleAndTag($module, $id);
 
         $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
         // get the items that are linked to the tags
-        $items = (array) self::callFromInterface($module, $class, 'getForTags', $otherIds);
+        $items = (array) self::callFromInterface($module, $class, 'getForTags', \array_keys($moduleTags));
 
         if (empty($items)) {
             return $items;
@@ -257,5 +187,32 @@ class Model
             'label' => Language::lbl(\SpoonFilter::ucfirst($module)),
             'items' => $items,
         ];
+    }
+
+    private static function getTagRepository(): TagRepository
+    {
+        return FrontendModel::get(TagRepository::class);
+    }
+
+    private static function getModuleTagRepository(): ModuleTagRepository
+    {
+        return FrontendModel::get(ModuleTagRepository::class);
+    }
+
+    private static function tagsToArrays(array $tags): array
+    {
+        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
+
+        return array_values(
+            array_map(
+                function (Tag $tagEntity) use ($tagLink): array {
+                    $tag = $tagEntity->toArray();
+                    $tag['full_url'] = $tagLink . '/' . $tag['url'];
+
+                    return $tag;
+                },
+                $tags
+            )
+        );
     }
 }

@@ -5,7 +5,7 @@
   {{ block('help') }}
 {% endblock %}
 
-{% block form_label %}
+{%- block form_label -%}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
     {% if label is not same as(false) %}
       {% if label is empty %}
@@ -22,12 +22,12 @@
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
+      {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       </label>
 
     {% endif %}
   {% endif %}
-{% endblock form_label %}
+{%- endblock form_label -%}
 
 {% block checkbox_radio_label %}
   {% if widget is defined %}
@@ -48,14 +48,16 @@
       {%- endif -%}
     {% endif %}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}{% if required %}{{- block('label_asterisk') }}{% endif %}
+    {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}
     </label>
   {% endif %}
 {% endblock checkbox_radio_label %}
 
 {%- block label_asterisk -%}
-  {% import 'Layout/Templates/macros.html.twig' as macro %}
-  {{ macro.required }}
+  {% spaceless %}
+    {% import 'Layout/Templates/macros.html.twig' as macro %}
+    {{ macro.required }}
+  {% endspaceless %}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
@@ -64,7 +66,7 @@
     {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-          <li class="formError">{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+          <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}
@@ -214,24 +216,26 @@
 
 {% block fork_image_widget %}
   {% spaceless %}
-    <div class="form-group">
-      {{ form_widget(form.file) }}
-      {% if help_text_message %}
-        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+    <div class="row">
+      {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+      {% if show_preview or show_remove_image %}
+        <div class="form-group{% if show_preview and preview_url %} col-md-3 col-lg-2{% endif %}">
+          {% if show_preview and preview_url %}
+            <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+          {% endif %}
+        </div>
       {% endif %}
-      {{ form_errors(form.file) }}
-    </div>
-    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
-    {% if show_preview or show_remove_image %}
-      <div class="form-group">
-        {% if show_preview and preview_url %}
-          <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+      <div class="form-group{% if show_preview and preview_url %} col-md-9 col-lg-10{% endif %}">
+        {{ form_widget(form.file) }}
+        {% if help_text_message %}
+          <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
         {% endif %}
+        {{ form_errors(form.file) }}
         {% if show_remove_image %}
           {{ form_widget(form.remove) }}
         {% endif %}
       </div>
-    {% endif %}
+    </div>
   {% endspaceless %}
 {% endblock %}
 
@@ -249,7 +253,7 @@
     {% if show_preview or show_remove_file %}
       <div class="form-group">
         {% if show_preview and preview_url %}
-          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
+          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank" rel="noopener noreferrer">
             {{ macro.icon('eye') }}
             {{ preview_label|trans|ucfirst }}
           </a>
@@ -264,6 +268,7 @@
 
 {% block bootstrap_collection_row %}
   {% spaceless %}
+    {% import "Layout/Templates/macros.html.twig" as macro %}
     {% if prototype is defined %}
       {% set prototype_vars = {} %}
       {% if style is defined %}
@@ -271,7 +276,11 @@
       {% endif %}
       {% set prototype_html = form_widget(prototype, prototype_vars) %}
       {% if form.vars.allow_delete %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar"><div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</a></div></div>' %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar">' %}
+        {% if form.vars.allow_sequence %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
+        {% endif %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><button class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw ~ '</button></div></div>' %}
       {% endif %}
 
       {% set attr = attr|merge({'data-prototype': prototype_html }) %}
@@ -282,16 +291,25 @@
         <div class="panel-heading">
           {{ form_label(form) }}
         </div>
-        <ul class="list-group js-collection">
+        <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
           {% for field in form %}
             <li class="list-group-item">
               {{ form_widget(field) }}
               {{ form_errors(field) }}
-              {% if form.vars.allow_delete %}
+              {% if form.vars.allow_delete or form.vars.allow_sequence %}
                 <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                    <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</a>
-                  </div>
+                  {% if form.vars.allow_sequence %}
+                    <div class="btn-group pull-left">
+                      <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('reorder') }}</span>
+                      {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
+                      {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
+                    </div>
+                  {% endif %}
+                  {% if form.vars.allow_delete %}
+                    <div class="btn-group pull-right">
+                      <button class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
             </li>
@@ -300,7 +318,7 @@
         <div class="panel-footer clearfix">
           {% if form.vars.allow_add %}
             <div class="btn-group pull-right">
-              <a href="#" class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|raw }}</a>
+              <button class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
             </div>
           {% endif %}
           {{ form_errors(form) }}
@@ -314,22 +332,12 @@
   {{ form_widget(form) }}
 {% endblock %}
 
-{% block media_group_widget %}
-  {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
-{% endblock media_group_widget %}
-
 {% block form_row %}
-  <div class="panel form-group panel-default{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
-    <div class="panel-heading">
-      {{- form_label(form) -}}
-    </div>
-    <div class="panel-body">
-      {{- form_widget(form) -}}
-    </div>
+  <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{- form_label(form) -}}
+    {{- form_widget(form) -}}
     {% if (not compound or force_error|default(false)) and not valid %}
-      <div class="panel-footer">
-        {{- form_errors(form) -}}
-      </div>
+      {{- form_errors(form) -}}
     {% endif %}
   </div>
 {% endblock %}
@@ -355,3 +363,14 @@
     {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
   {% endfor %}
 {% endblock %}
+
+{%- block collection_row -%}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="panel-body">
+      {{- form_widget(form) -}}
+    </div>
+  </div>
+{%- endblock collection_row -%}

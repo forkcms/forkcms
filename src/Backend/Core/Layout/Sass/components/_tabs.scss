@@ -17,6 +17,10 @@
   }
 }
 
+div.active.tab-pane:focus {
+  outline: none;
+}
+
 .nav-tabs {
   .has-error,
   .active.has-error {
@@ -75,5 +79,13 @@
 
   &.active a {
     background-color: $white;
+  }
+}
+
+.tab-pane-collection {
+  margin: -31px -26px -56px;
+
+  & > .panel > .panel-heading {
+    display: none;
   }
 }

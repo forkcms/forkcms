@@ -29,7 +29,7 @@
                 <div class="col-xs-12 col-md-8">
                   {{ 'msg.WrittenBy'|trans|ucfirst|format(post.user_id|usersetting('nickname')) }}
                   {{ 'lbl.On'|trans }}
-                  <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\TH,i,s') }}">
+                  <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\\TH:i:s') }}">
                     {{ post.publish_on|spoondate(dateFormatLong, LANGUAGE ) }}
                   </time>
                 </div>

@@ -38,16 +38,14 @@
                   </div>
                 </div>
 
-                {# Including the MediaLibrary MediaGroup Helper #}
-                {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
-                {{ form_widget(form.mediaGroup, {'mediaGroup': mediaGroup}) }}
+                {{ form_widget(form.mediaGroup) }}
 
                 {{ form_row(form.text) }}
               </div>
               <div class="col-md-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+                    <h2 class="panel-title">{{ form_label(form.status) }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">

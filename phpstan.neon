@@ -1,0 +1,22 @@
+includes:
+  - vendor/phpstan/phpstan-symfony/extension.neon
+
+parameters:
+  level: 0
+  autoload_files:
+    - %rootDir%/../../../autoload.php
+#  autoload_directories:
+#    - %rootDir%/../../../vendor/bin/.phpunit/phpunit-5.7/src
+  excludes_analyse:
+    - %rootDir%/../../../src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder/
+    - %rootDir%/../../../src/*/Tests/*
+    - %rootDir%/../../../src/Common/WebTestCase.php
+  ignoreErrors:
+    - '#Function newrelic_name_transaction not found#'
+    - '#Service "breadcrumb" is not registered in the container.#'
+    - '#Service "header" is not registered in the container.#'
+    - '#Service "page" is not registered in the container.#'
+    - '#Service "template" is not registered in the container.#'
+    - '#Service "url" is not registered in the container.#'
+  symfony:
+    container_xml_path: %rootDir%/../../../var/cache/dev/appDevDebugProjectContainer.xml

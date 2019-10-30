@@ -49,6 +49,8 @@ class MediaGalleryDataTransferObject
         $this->mediaGalleryEntity = $mediaGallery;
 
         if (!$this->hasExistingMediaGallery()) {
+            $this->status = Status::active();
+
             return;
         }
 

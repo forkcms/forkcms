@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use ForkCMS\Utility\Thumbnails;
 use SpoonFilter;
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
@@ -59,7 +60,7 @@ class FormImage extends SpoonFormImage
         $this->moveFile($path . '/source/' . $filename);
 
         // generate the thumbnails
-        Model::generateThumbnails($path, $path . '/source/' . $filename);
+        Model::get(Thumbnails::class)->generate($path, $path . '/source/' . $filename);
     }
 
     /**
@@ -128,11 +129,10 @@ class FormImage extends SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<p class="help-block">' .
-                        sprintf(
-                            BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
-                            Form::getUploadMaxFileSize()
-                        ) . '</p>';
+            $output .= '<p class="help-block">' . sprintf(
+                BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
+                Form::getUploadMaxFileSize()
+            ) . '</p>';
         }
 
         // parse to template

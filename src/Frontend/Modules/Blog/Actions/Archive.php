@@ -4,6 +4,7 @@ namespace Frontend\Modules\Blog\Actions;
 
 use DateTimeImmutable;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Navigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -169,7 +170,7 @@ class Archive extends FrontendBaseBlock
         $this->header->setPageTitle($this->startDate->format('Y'));
         if ($this->hasMonth) {
             $this->header->setPageTitle(
-                \SpoonDate::getDate('F', $this->startDate->getTimestamp(), LANGUAGE, true)
+                \SpoonDate::getDate('F', $this->startDate->getTimestamp(), LANGUAGE)
             );
         }
     }
@@ -180,7 +181,11 @@ class Archive extends FrontendBaseBlock
         $this->breadcrumb->addElement($this->startDate->format('Y'));
         if ($this->hasMonth) {
             $this->breadcrumb->addElement(
-                \SpoonDate::getDate('F', $this->startDate->getTimestamp(), LANGUAGE, true)
+                \SpoonDate::getDate(
+                    'F',
+                    $this->startDate->getTimestamp(),
+                    LANGUAGE
+                )
             );
         }
     }

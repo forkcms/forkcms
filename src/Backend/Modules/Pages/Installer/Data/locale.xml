@@ -1,46 +1,46 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
     <Pages>
       <item type="label" name="MoveThisPage">
         <translation language="nl"><![CDATA[verplaats deze pagina]]></translation>
         <translation language="en"><![CDATA[move this page]]></translation>
-		<translation language="pl"><![CDATA[przenieś tę stronę]]></translation>
+        <translation language="pl"><![CDATA[przenieś tę stronę]]></translation>
       </item>
       <item type="label" name="MovePageTree">
         <translation language="nl"><![CDATA[navigatie boom]]></translation>
         <translation language="en"><![CDATA[navigation tree]]></translation>
-		<translation language="pl"><![CDATA[drzewo nawigacji]]></translation>
+        <translation language="pl"><![CDATA[drzewo nawigacji]]></translation>
       </item>
       <item type="label" name="MovePageReferencePage">
         <translation language="nl"><![CDATA[referentie pagina]]></translation>
         <translation language="en"><![CDATA[reference page]]></translation>
-		<translation language="pl"><![CDATA[strona odniesienia]]></translation>
+        <translation language="pl"><![CDATA[strona odniesienia]]></translation>
       </item>
       <item type="label" name="MovePageType">
         <translation language="nl"><![CDATA[actie ten opzichte van de referentie pagina]]></translation>
         <translation language="en"><![CDATA[action with respect to the reference page]]></translation>
-		<translation language="pl"><![CDATA[działanie dotyczące strony odniesienia]]></translation>
+        <translation language="pl"><![CDATA[działanie dotyczące strony odniesienia]]></translation>
       </item>
       <item type="label" name="AppendToTree">
         <translation language="nl"><![CDATA[toevoegen aan navigatie boom]]></translation>
         <translation language="en"><![CDATA[append to navigation tree]]></translation>
-		<translation language="pl"><![CDATA[dodaj do drzewa nawigacji]]></translation>
+        <translation language="pl"><![CDATA[dodaj do drzewa nawigacji]]></translation>
       </item>
       <item type="label" name="BeforePage">
         <translation language="nl"><![CDATA[voeg toe voor referentie pagina]]></translation>
         <translation language="en"><![CDATA[add before reference page]]></translation>
-		<translation language="pl"><![CDATA[dodaj przed stroną odniesienia]]></translation>
+        <translation language="pl"><![CDATA[dodaj przed stroną odniesienia]]></translation>
       </item>
       <item type="label" name="InsidePage">
         <translation language="nl"><![CDATA[voeg toe als subpagina van de referentie pagina]]></translation>
         <translation language="en"><![CDATA[add as subpage of the reference page]]></translation>
-		<translation language="pl"><![CDATA[dodaj jako podstrona strony odniesienia]]></translation>
+        <translation language="pl"><![CDATA[dodaj jako podstrona strony odniesienia]]></translation>
       </item>
       <item type="label" name="AfterPage">
         <translation language="nl"><![CDATA[voeg toe achter referentie pagina]]></translation>
         <translation language="en"><![CDATA[add after reference page]]></translation>
-		<translation language="pl"><![CDATA[dodaj po stronie odniesienia]]></translation>
+        <translation language="pl"><![CDATA[dodaj po stronie odniesienia]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>
@@ -55,7 +55,7 @@
         <translation language="uk"><![CDATA[сторінку]]></translation>
         <translation language="lt"><![CDATA[naujas]]></translation>
         <translation language="el"><![CDATA[Προσθήκη]]></translation>
-		<translation language="pl"><![CDATA[dodaj]]></translation>
+        <translation language="pl"><![CDATA[dodaj]]></translation>
       </item>
       <item type="label" name="AddPage">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
@@ -70,19 +70,19 @@
         <translation language="uk"><![CDATA[Додати сторінку]]></translation>
         <translation language="lt"><![CDATA[naujas puslapis]]></translation>
         <translation language="el"><![CDATA[Προσθήκη σελίδας]]></translation>
-		<translation language="pl"><![CDATA[dodaj stronę]]></translation>
+        <translation language="pl"><![CDATA[dodaj stronę]]></translation>
       </item>
       <item type="label" name="AddSubPage">
         <translation language="nl"><![CDATA[sub pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add sub page]]></translation>
         <translation language="fr"><![CDATA[ajouter une sous-page]]></translation>
-		<translation language="pl"><![CDATA[dodaj podstronę]]></translation>
+        <translation language="pl"><![CDATA[dodaj podstronę]]></translation>
       </item>
       <item type="label" name="ToggleAddPageDropdown">
         <translation language="nl"><![CDATA[meer opties voor pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add more options for page]]></translation>
         <translation language="fr"><![CDATA[ajouter plus d'options pour la page]]></translation>
-		<translation language="pl"><![CDATA[dodaj więcej opcji dla strony]]></translation>
+        <translation language="pl"><![CDATA[dodaj więcej opcji dla strony]]></translation>
       </item>
       <item type="label" name="ChangeTemplate">
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
@@ -97,12 +97,12 @@
         <translation language="uk"><![CDATA[Обрати шаблон]]></translation>
         <translation language="lt"><![CDATA[keisti šabloną]]></translation>
         <translation language="el"><![CDATA[Αλλαγή προτύπου]]></translation>
-		<translation language="pl"><![CDATA[Zmień szablon]]></translation>
+        <translation language="pl"><![CDATA[Zmień szablon]]></translation>
       </item>
       <item type="label" name="ChooseTemplate">
         <translation language="en"><![CDATA[choose template]]></translation>
         <translation language="nl"><![CDATA[kies template]]></translation>
-		<translation language="pl"><![CDATA[wybierz szablon]]></translation>
+        <translation language="pl"><![CDATA[wybierz szablon]]></translation>
       </item>
       <item type="label" name="DeleteBlock">
         <translation language="nl"><![CDATA[blok verwijderen]]></translation>
@@ -117,7 +117,7 @@
         <translation language="uk"><![CDATA[Видалити блок]]></translation>
         <translation language="lt"><![CDATA[trinti bloką]]></translation>
         <translation language="el"><![CDATA[Διαγραφή μπλοκ]]></translation>
-		<translation language="pl"><![CDATA[usuń blok]]></translation>
+        <translation language="pl"><![CDATA[usuń blok]]></translation>
       </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
@@ -131,7 +131,7 @@
         <translation language="es"><![CDATA[editar contenido de módulo]]></translation>
         <translation language="uk"><![CDATA[Редагувати модуль контента]]></translation>
         <translation language="el"><![CDATA[Μεταβολή περιεχομένου της ενότητας]]></translation>
-		<translation language="pl"><![CDATA[edytuj zawartość modułu]]></translation>
+        <translation language="pl"><![CDATA[edytuj zawartość modułu]]></translation>
       </item>
       <item type="label" name="ExternalLink">
         <translation language="nl"><![CDATA[externe link]]></translation>
@@ -146,7 +146,7 @@
         <translation language="uk"><![CDATA[Зовнішнє посилання]]></translation>
         <translation language="lt"><![CDATA[išorinė nuoroda]]></translation>
         <translation language="el"><![CDATA[Εξωτερικός σύνδεσμος]]></translation>
-		<translation language="pl"><![CDATA[link zewnętrzny]]></translation>
+        <translation language="pl"><![CDATA[link zewnętrzny]]></translation>
       </item>
       <item type="label" name="ExtraTypeBlock">
         <translation language="nl"><![CDATA[module]]></translation>
@@ -161,7 +161,7 @@
         <translation language="uk"><![CDATA[Модуль]]></translation>
         <translation language="lt"><![CDATA[modulis]]></translation>
         <translation language="el"><![CDATA[Ενότητα]]></translation>
-		<translation language="pl"><![CDATA[moduł]]></translation>
+        <translation language="pl"><![CDATA[moduł]]></translation>
       </item>
       <item type="label" name="ExtraTypeWidget">
         <translation language="nl"><![CDATA[widget]]></translation>
@@ -176,7 +176,7 @@
         <translation language="uk"><![CDATA[Віджет]]></translation>
         <translation language="lt"><![CDATA[programėlė]]></translation>
         <translation language="el"><![CDATA[μικροεφαρμογή]]></translation>
-		<translation language="pl"><![CDATA[widget]]></translation>
+        <translation language="pl"><![CDATA[widget]]></translation>
       </item>
       <item type="label" name="Fallback">
         <translation language="nl"><![CDATA[Niet-toegewezen blokken]]></translation>
@@ -191,7 +191,7 @@
         <translation language="uk"><![CDATA[Не розподілені блоки]]></translation>
         <translation language="lt"><![CDATA[nepriskirti blokai]]></translation>
         <translation language="el"><![CDATA[Μπλοκ που δεν έχουν ανατεθεί.]]></translation>
-		<translation language="pl"><![CDATA[nieprzypisane bloki]]></translation>
+        <translation language="pl"><![CDATA[nieprzypisane bloki]]></translation>
       </item>
       <item type="label" name="Footer">
         <translation language="nl"><![CDATA[footer navigatie]]></translation>
@@ -206,7 +206,7 @@
         <translation language="uk"><![CDATA[Навігація підвалу сторінки]]></translation>
         <translation language="lt"><![CDATA[apačios navigacija]]></translation>
         <translation language="el"><![CDATA[Πλοήγηση στο υποσέλιδο]]></translation>
-		<translation language="pl"><![CDATA[nawigacja stopki]]></translation>
+        <translation language="pl"><![CDATA[nawigacja stopki]]></translation>
       </item>
       <item type="label" name="InternalLink">
         <translation language="nl"><![CDATA[interne link]]></translation>
@@ -220,7 +220,7 @@
         <translation language="es"><![CDATA[enlace interno]]></translation>
         <translation language="uk"><![CDATA[Внутрішнє посилання]]></translation>
         <translation language="el"><![CDATA[Εσωτερικός σύνδεσμος]]></translation>
-		<translation language="pl"><![CDATA[wewnętrzny link]]></translation>
+        <translation language="pl"><![CDATA[wewnętrzny link]]></translation>
       </item>
       <item type="label" name="MainNavigation">
         <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
@@ -235,7 +235,7 @@
         <translation language="uk"><![CDATA[Головне меню]]></translation>
         <translation language="lt"><![CDATA[pagrindinė navigacija]]></translation>
         <translation language="el"><![CDATA[Κύρια πλοήγηση]]></translation>
-		<translation language="pl"><![CDATA[główna nawigacja]]></translation>
+        <translation language="pl"><![CDATA[główna nawigacja]]></translation>
       </item>
       <item type="label" name="Meta">
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
@@ -249,7 +249,7 @@
         <translation language="es"><![CDATA[meta navegación]]></translation>
         <translation language="uk"><![CDATA[Мета]]></translation>
         <translation language="el"><![CDATA[μετα-πλοήγηση]]></translation>
-		<translation language="pl"><![CDATA[meta nawigacja]]></translation>
+        <translation language="pl"><![CDATA[meta nawigacja]]></translation>
       </item>
       <item type="label" name="Navigation">
         <translation language="nl"><![CDATA[navigatie]]></translation>
@@ -258,7 +258,7 @@
         <translation language="el"><![CDATA[Πλοήγηση]]></translation>
         <translation language="zh"><![CDATA[导航]]></translation>
         <translation language="de"><![CDATA[Navigation]]></translation>
-		<translation language="pl"><![CDATA[nawigacja]]></translation>
+        <translation language="pl"><![CDATA[nawigacja]]></translation>
       </item>
       <item type="label" name="Redirect">
         <translation language="nl"><![CDATA[redirect]]></translation>
@@ -272,7 +272,7 @@
         <translation language="es"><![CDATA[redirección]]></translation>
         <translation language="uk"><![CDATA[Радірект]]></translation>
         <translation language="el"><![CDATA[Ανακατεύθυνση]]></translation>
-		<translation language="pl"><![CDATA[przekieruj]]></translation>
+        <translation language="pl"><![CDATA[przekieruj]]></translation>
       </item>
       <item type="label" name="Root">
         <translation language="nl"><![CDATA[losse pagina's]]></translation>
@@ -287,7 +287,7 @@
         <translation language="uk"><![CDATA[Окремі сторінки]]></translation>
         <translation language="lt"><![CDATA[atskiri puslapiai]]></translation>
         <translation language="el"><![CDATA[μονές σελίδες]]></translation>
-		<translation language="pl"><![CDATA[pojedyńcze strony]]></translation>
+        <translation language="pl"><![CDATA[pojedyńcze strony]]></translation>
       </item>
       <item type="label" name="SentMailings">
         <translation language="en"><![CDATA[sent mailings]]></translation>
@@ -301,12 +301,12 @@
         <translation language="es"><![CDATA[envios enviados]]></translation>
         <translation language="uk"><![CDATA[Надіслані розсилки]]></translation>
         <translation language="el"><![CDATA[απεσταλμένα μηνύματα]]></translation>
-		<translation language="pl"><![CDATA[wysłane mailingi]]></translation>
+        <translation language="pl"><![CDATA[wysłane mailingi]]></translation>
       </item>
       <item type="label" name="ShowImage">
         <translation language="en"><![CDATA[show the image]]></translation>
         <translation language="nl"><![CDATA[toon de afbeelding]]></translation>
-		<translation language="pl"><![CDATA[pokaż obrazy]]></translation>
+        <translation language="pl"><![CDATA[pokaż obrazy]]></translation>
       </item>
       <item type="label" name="SubscribeForm">
         <translation language="en"><![CDATA[subscribe form]]></translation>
@@ -320,7 +320,7 @@
         <translation language="es"><![CDATA[formulario de subscripción]]></translation>
         <translation language="uk"><![CDATA[Форма підписки]]></translation>
         <translation language="el"><![CDATA[Φόρμα εγγραφής]]></translation>
-		<translation language="pl"><![CDATA[formularz rejestracyjny]]></translation>
+        <translation language="pl"><![CDATA[formularz rejestracyjny]]></translation>
       </item>
       <item type="label" name="UnsubscribeForm">
         <translation language="en"><![CDATA[unsubscribe form]]></translation>
@@ -334,17 +334,17 @@
         <translation language="es"><![CDATA[formulario de baja]]></translation>
         <translation language="uk"><![CDATA[Форма відписки]]></translation>
         <translation language="el"><![CDATA[Φόρμα αποποίησης εγγραφής]]></translation>
-		<translation language="pl"><![CDATA[formularz wyrejestrujący]]></translation>
+        <translation language="pl"><![CDATA[formularz wyrejestrujący]]></translation>
       </item>
       <item type="label" name="UserTemplate">
         <translation language="en"><![CDATA[user template]]></translation>
         <translation language="nl"><![CDATA[user template]]></translation>
-		<translation language="pl"><![CDATA[szablon użytkownika]]></translation>
+        <translation language="pl"><![CDATA[szablon użytkownika]]></translation>
       </item>
       <item type="label" name="WhichTemplate">
         <translation language="en"><![CDATA[template]]></translation>
         <translation language="nl"><![CDATA[template]]></translation>
-		<translation language="pl"><![CDATA[szablon]]></translation>
+        <translation language="pl"><![CDATA[szablon]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>
@@ -358,12 +358,12 @@
         <translation language="es"><![CDATA[la página "%1$s" fue agregada.]]></translation>
         <translation language="uk"><![CDATA[Сторінку "%1$s" додано.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" προστέθηκε.]]></translation>
-		<translation language="pl"><![CDATA[Strona "%1$s" została dodana.]]></translation>
+        <translation language="pl"><![CDATA[Strona "%1$s" została dodana.]]></translation>
       </item>
       <item type="message" name="HelpImage">
         <translation language="en"><![CDATA[This image can be used in the template. for example as a header]]></translation>
         <translation language="nl"><![CDATA[Deze afbeelding kan worden gebruikt in de template. bijvoorbeeld als header]]></translation>
-		<translation language="pl"><![CDATA[Ten obraz może zostać użyty w szablonie. Np. jako header]]></translation>
+        <translation language="pl"><![CDATA[Ten obraz może zostać użyty w szablonie. Np. jako header]]></translation>
       </item>
       <item type="message" name="AllowChildren">
         <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
@@ -374,7 +374,7 @@
         <translation language="hu"><![CDATA[Ezen az oldalon lehetnek aloldalak.]]></translation>
         <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να έχει υποσελίδες.]]></translation>
         <translation language="zh"><![CDATA[这个页面可以有子页面]]></translation>
-		<translation language="pl"><![CDATA[Ta strona może mieć podstrony.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona może mieć podstrony.]]></translation>
       </item>
       <item type="message" name="AllowDelete">
         <translation language="nl"><![CDATA[Deze pagina mag verwijderd worden.]]></translation>
@@ -385,7 +385,7 @@
         <translation language="hu"><![CDATA[Ez az oldal törölhető.]]></translation>
         <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να διαγραφεί.]]></translation>
         <translation language="zh"><![CDATA[这个页面已被删除。]]></translation>
-		<translation language="pl"><![CDATA[Ta strona może być usunięta.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona może być usunięta.]]></translation>
       </item>
       <item type="message" name="AllowEdit">
         <translation language="nl"><![CDATA[Deze pagina mag bewerkt worden.]]></translation>
@@ -396,7 +396,7 @@
         <translation language="hu"><![CDATA[Ez az oldal szerkeszthető.]]></translation>
         <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να μεταβληθεί.]]></translation>
         <translation language="zh"><![CDATA[这个页面可以编辑。]]></translation>
-		<translation language="pl"><![CDATA[Ta strona może być edytowana.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona może być edytowana.]]></translation>
       </item>
       <item type="message" name="AllowMove">
         <translation language="nl"><![CDATA[Deze pagina mag verplaatst worden naar een andere positie.]]></translation>
@@ -407,12 +407,12 @@
         <translation language="hu"><![CDATA[A pozíció az oldalon változtatható.]]></translation>
         <translation language="el"><![CDATA[Η θέση αυτής της σελίδας μπορεί να αλλάξει.]]></translation>
         <translation language="zh"><![CDATA[这个页面的位置可以改变。]]></translation>
-		<translation language="pl"><![CDATA[Pozycja tej strony może zostać zmieniona.]]></translation>
+        <translation language="pl"><![CDATA[Pozycja tej strony może zostać zmieniona.]]></translation>
       </item>
       <item type="message" name="AllowImage">
         <translation language="nl"><![CDATA[Deze pagina mag een afbeelding hebben.]]></translation>
         <translation language="en"><![CDATA[This page can have an image.]]></translation>
-		<translation language="pl"><![CDATA[Ta strona może zawierać obraz.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona może zawierać obraz.]]></translation>
       </item>
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
@@ -426,7 +426,7 @@
         <translation language="es"><![CDATA[El módulo <strong>%1$s</strong> se adjunta a esta sección.]]></translation>
         <translation language="uk"><![CDATA[Модуль <strong>%1$s</strong> закріплений до цієї секції]]></translation>
         <translation language="el"><![CDATA[Η ενότητα <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
-		<translation language="pl"><![CDATA[Moduł <strong>%1$s</strong> jest dołączony do tej sekcji.]]></translation>
+        <translation language="pl"><![CDATA[Moduł <strong>%1$s</strong> jest dołączony do tej sekcji.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de pagina "%1$s" wil verwijderen?]]></translation>
@@ -439,7 +439,7 @@
         <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" oldalt?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar la página "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε τη σελίδα "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Czy na pewno chcesz usunąć stronę "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć stronę "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteBlock">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze blok wil verwijderen?]]></translation>
@@ -452,7 +452,7 @@
         <translation language="hu"><![CDATA[Biztos törlöd ezt a blokkot?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar este bloque?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το μπλοκ;]]></translation>
-		<translation language="pl"><![CDATA[Czy na pewno chcesz usunąć ten blok?]]></translation>
+        <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć ten blok?]]></translation>
       </item>
       <item type="message" name="ContentSaveWarning">
         <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De inhoud wordt pas aangepast nadat de pagina wordt opgeslagen.</p>]]></translation>
@@ -465,7 +465,7 @@
         <translation language="hu"><![CDATA[<p><strong>Fontos:</strong> Ez a tartalom nem frissül, míg az oldalt nem mentetted.</p>]]></translation>
         <translation language="es"><![CDATA[<p><strong>Importante:</strong> Este contenido no sera actualizado antes de que la página no sea guardada.</p>]]></translation>
         <translation language="el"><![CDATA[<p><strong>Σημαντικό:</strong> Αυτό το περιεχόμενο δεν θα ενημερωθεί μέχρι να αποθηκευτεί η σελίδα.</p>]]></translation>
-		<translation language="pl"><![CDATA[<p><strong>Uwaga:</strong> Ta treść nie zostanie zaktualizowana, dopóki strona nie zostanie zapisana.</p>]]></translation>
+        <translation language="pl"><![CDATA[<p><strong>Uwaga:</strong> Ta treść nie zostanie zaktualizowana, dopóki strona nie zostanie zapisana.</p>]]></translation>
       </item>
       <item type="message" name="CopyAdded">
         <translation language="nl"><![CDATA[Kopie toegevoegd]]></translation>
@@ -480,7 +480,7 @@
         <translation language="uk"><![CDATA[Копіювати додав]]></translation>
         <translation language="lt"><![CDATA[Kopija pridėta]]></translation>
         <translation language="el"><![CDATA[Το αντίγραφο προστέθηκε]]></translation>
-		<translation language="pl"><![CDATA[Kopia dodana]]></translation>
+        <translation language="pl"><![CDATA[Kopia dodana]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>
@@ -493,7 +493,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" oldal törölve.]]></translation>
         <translation language="es"><![CDATA[La página "%1$s" ha sido eliminada.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" διεγράφη.]]></translation>
-		<translation language="pl"><![CDATA[Strona "%1$s" została usunięta.]]></translation>
+        <translation language="pl"><![CDATA[Strona "%1$s" została usunięta.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd opgeslagen.]]></translation>
@@ -506,7 +506,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" oldal elmentve.]]></translation>
         <translation language="es"><![CDATA[La página "%1$s" ha sido guardada.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" αποθηκεύτηκε.]]></translation>
-		<translation language="pl"><![CDATA[Strona "%1$s" została zapisana.]]></translation>
+        <translation language="pl"><![CDATA[Strona "%1$s" została zapisana.]]></translation>
       </item>
       <item type="message" name="FallbackInfo">
         <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven. Standaard-blokken uit de vorige template die niet voorkomen in de huidige template worden ook hier getoond.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p><p>Deze blokken zullen vervallen bij het opslaan van de pagina of het kiezen van een andere template.</p>]]></translation>
@@ -519,7 +519,7 @@
         <translation language="hu"><![CDATA[<p><strong>Nem minden blokk adható hozzá autómatikusan az adott pozícióhoz.</strong></p><p>A hozzáadott blokk nem érhető el a sablonban, ez látható. Az előző sablon alapértelmezett blokkjai nem jelennek meg a mostani sablonban.<br />Ezeket könnyen a kívánt helyre húzhatod.</p><p>Ezek a blokkok mentés után vagy másik sablon választáskor elünnek.</p>]]></translation>
         <translation language="es"><![CDATA[<p><strong>No todos los bloques pudó asignarse a una posición automaticamente.</strong></p><p>Los bloques que fueron agregados a posiciones que no estan disponibles en esta plantilla se muestra aquí. Los bloques por defecto de la plantilla anterior que no estan presentes en esta plantilla también se muestran aquí.<br />Puedes arrastrarlos fácilmente a la posición deseada.</p><p>Estos bloques desaparecerán después de guardar esta página o seleccionar otra plantilla.</p>]]></translation>
         <translation language="el"><![CDATA[<p><strong>Μερικά μπλοκ δεν μπορούν αυτόματα να ανατεθούν σε κάποια θέση.</strong></p><p>Εδώ εμφανίζονται τα μπλοκ που ανατέθηκαν σε θέσεις που δεν είναι διαθέσιμες σε αυτό το πρότυπο. Ακόμη φαίνονται εδώ τα εξορισμού μπλοκ από το προηγούμενο πρότυπο, που δεν υπάρχουν στο τρέχον πρότυπο.<br />Μπορείτε εύκολα να τα σύρετε στην επιθυμητή θέση.</p><p>Αυτά τα μπλοκ θα εξαφανισθούν όταν αποθηκεύσετε τη σελίδα ή επιλέξετε ένα άλλο πρότυπο.</p>]]></translation>
-		<translation language="pl"><![CDATA[<p><strong>Nie każdy blok może być automatycznie przypisany do pozycji. </strong></p><p>Tutaj pokazane są bloki dodane do pozycji niedostępnych w tym szablonie. Poniżej pokazane są standardowe bloki z poprzedniego szablonu, które nie pojawiają się w bieżącym szablonie.<br />Możesz łatwo przeciągnąć je do wybranej pozycji. </p><p>Te bloki wygasną po zapisaniu strony. lub wybierając inny szablon.</p>]]></translation>
+        <translation language="pl"><![CDATA[<p><strong>Nie każdy blok może być automatycznie przypisany do pozycji. </strong></p><p>Tutaj pokazane są bloki dodane do pozycji niedostępnych w tym szablonie. Poniżej pokazane są standardowe bloki z poprzedniego szablonu, które nie pojawiają się w bieżącym szablonie.<br />Możesz łatwo przeciągnąć je do wybranej pozycji. </p><p>Te bloki wygasną po zapisaniu strony. lub wybierając inny szablon.</p>]]></translation>
       </item>
       <item type="message" name="HelpBlockContent">
         <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>
@@ -532,7 +532,7 @@
         <translation language="hu"><![CDATA[Milyen tartalmat szeretnél ide?]]></translation>
         <translation language="es"><![CDATA[¿Qué tipo de contenido desea mostrar aquí?]]></translation>
         <translation language="el"><![CDATA[Τι είδος περιεχομένου θέλετε να εμφανίζεται εδώ;]]></translation>
-		<translation language="pl"><![CDATA[Jakie treści chcesz tutaj pokazać?]]></translation>
+        <translation language="pl"><![CDATA[Jakie treści chcesz tutaj pokazać?]]></translation>
       </item>
       <item type="message" name="HelpExternalRedirect">
         <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een externe website.]]></translation>
@@ -545,7 +545,7 @@
         <translation language="hu"><![CDATA[Használd ezt, ha a menü-elemet külső linkre akarod átirányítani.]]></translation>
         <translation language="es"><![CDATA[Ua esto si tienes que redirigir un elemento del menú al un sitio web externo.]]></translation>
         <translation language="el"><![CDATA[Χρησιμοποιήστε αυτό αν θέλετε να ανακατευθύνετε μία επιλογή του μενού σε εξωτερικό ιστοχώρο.]]></translation>
-		<translation language="pl"><![CDATA[Użyj tej opcji, jeśli chcesz przekierować element menu do zewnętrznej witryny internetowej.]]></translation>
+        <translation language="pl"><![CDATA[Użyj tej opcji, jeśli chcesz przekierować element menu do zewnętrznej witryny internetowej.]]></translation>
       </item>
       <item type="message" name="HelpInternalRedirect">
         <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een andere pagina binnen de website.]]></translation>
@@ -558,7 +558,7 @@
         <translation language="hu"><![CDATA[Használd ezt, ha a menü-elemet ezen az oldalon akarod másik lapra átirányítani.]]></translation>
         <translation language="es"><![CDATA[Usa esto si tienes que redirigir un elemento de menú a otra página en este sitio web.]]></translation>
         <translation language="el"><![CDATA[Χρησιμοποιήστε αυτό αν θέλετε να ανακατευθύνετε μία επιλογή του μενού σε μιά άλλη σελίδα αυτού του ιστοχώρου.]]></translation>
-		<translation language="pl"><![CDATA[Użyj tej opcji, jeśli chcesz przekierować element menu do strony w tej witrynie internetowej.]]></translation>
+        <translation language="pl"><![CDATA[Użyj tej opcji, jeśli chcesz przekierować element menu do strony w tej witrynie internetowej.]]></translation>
       </item>
       <item type="message" name="HelpMetaNavigation">
         <translation language="nl"><![CDATA[Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.]]></translation>
@@ -571,7 +571,7 @@
         <translation language="hu"><![CDATA[Extra topnavigation (fenti/lenti menüben) minden oldalon.]]></translation>
         <translation language="es"><![CDATA[Navegación superior extra (encima/debajo del menú) en cada página.]]></translation>
         <translation language="el"><![CDATA[Επιπλέον άνω πλοήγηση (πάνω ή κάτω από το μενού), σε κάθε σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Dodatkowa nawigacja górna (ponad/pod menu) na każdej stronie.]]></translation>
+        <translation language="pl"><![CDATA[Dodatkowa nawigacja górna (ponad/pod menu) na każdej stronie.]]></translation>
       </item>
       <item type="message" name="HelpNavigationTitle">
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
@@ -584,7 +584,7 @@
         <translation language="hu"><![CDATA[A cím, amely megjelenik a menüben.]]></translation>
         <translation language="es"><![CDATA[El título que se muestra en el menú.]]></translation>
         <translation language="el"><![CDATA[Ο τίτλος ποιυ εμφανίζεται στο μενού.]]></translation>
-		<translation language="pl"><![CDATA[Tytuł wyświetlany w menu.]]></translation>
+        <translation language="pl"><![CDATA[Tytuł wyświetlany w menu.]]></translation>
       </item>
       <item type="message" name="HomeNoBlock">
         <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
@@ -597,7 +597,7 @@
         <translation language="hu"><![CDATA[A modul nem kapcsolódik a honlaphoz.]]></translation>
         <translation language="es"><![CDATA[Un módulo no puede ser vinculado a la página principal.]]></translation>
         <translation language="el"><![CDATA[Μία ενότητα δεν μπορεί να συνδεθεί με την Αρχική Σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Modułu nie można połączyć ze stroną główną.]]></translation>
+        <translation language="pl"><![CDATA[Modułu nie można połączyć ze stroną główną.]]></translation>
       </item>
       <item type="message" name="IsAction">
         <translation language="nl"><![CDATA[Gebruik deze pagina als module-actie.]]></translation>
@@ -610,7 +610,7 @@
         <translation language="hu"><![CDATA[Használd az oldalt modulként.]]></translation>
         <translation language="es"><![CDATA[Usar está página como acción del módulo.]]></translation>
         <translation language="el"><![CDATA[Χρησιμοποίησε αυτή τη σελίδα ως ενέργεια μιάς ενότητας.]]></translation>
-		<translation language="pl"><![CDATA[Użyj tej strony jako działania modułu.]]></translation>
+        <translation language="pl"><![CDATA[Użyj tej strony jako działania modułu.]]></translation>
       </item>
       <item type="message" name="MetaNavigation">
         <translation language="nl"><![CDATA[Metanavigatie inschakelen voor deze website.]]></translation>
@@ -623,7 +623,7 @@
         <translation language="hu"><![CDATA[A metanavigation engedélyezése az oldalon.]]></translation>
         <translation language="es"><![CDATA[activar meta navegación para este sitio web.]]></translation>
         <translation language="el"><![CDATA[Ενεργοποίησε τη μετα-πλοήγηση για αυτόν τον ιστοχώρο.]]></translation>
-		<translation language="pl"><![CDATA[Włącz metanawigację na tej witrynie.]]></translation>
+        <translation language="pl"><![CDATA[Włącz metanawigację na tej witrynie.]]></translation>
       </item>
       <item type="message" name="ModuleBlockAlreadyLinked">
         <translation language="nl"><![CDATA[Er werd reeds een module gekoppeld aan deze pagina.]]></translation>
@@ -636,7 +636,7 @@
         <translation language="hu"><![CDATA[A modul már kapcsolódik az oldalhoz.]]></translation>
         <translation language="es"><![CDATA[Un módulo ya ha sido vinculado a esta página.]]></translation>
         <translation language="el"><![CDATA[Μία ενότητα έχει ήδη συνδεθεί με αυτή τη σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Modułu już jest połaczony z ta stroną.]]></translation>
+        <translation language="pl"><![CDATA[Modułu już jest połaczony z ta stroną.]]></translation>
       </item>
       <item type="message" name="PageIsMoved">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verplaatst.]]></translation>
@@ -649,12 +649,12 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" oldal áthelyezve.]]></translation>
         <translation language="es"><![CDATA[La página "%1$s" ha sido movida.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα "%1$s" έχει μετακινηθεί.]]></translation>
-		<translation language="pl"><![CDATA[Strona "%1$s" została przeniesiona.]]></translation>
+        <translation language="pl"><![CDATA[Strona "%1$s" została przeniesiona.]]></translation>
       </item>
       <item type="message" name="RemoveFromSearchIndex">
         <translation language="nl"><![CDATA[Toon deze pagina en inhoud niet in de zoekresulaten.]]></translation>
         <translation language="en"><![CDATA[Do not show this page or content in the search results.]]></translation>
-		<translation language="pl"><![CDATA[Nie wyświetlaj tej strony ani treści w wynikach wyszukiwania.]]></translation>
+        <translation language="pl"><![CDATA[Nie wyświetlaj tej strony ani treści w wynikach wyszukiwania.]]></translation>
       </item>
       <item type="message" name="RichText">
         <translation language="nl"><![CDATA[Editor]]></translation>
@@ -667,7 +667,7 @@
         <translation language="hu"><![CDATA[Szerkesztő]]></translation>
         <translation language="es"><![CDATA[Editor]]></translation>
         <translation language="el"><![CDATA[Επεξεργαστής κειμένου]]></translation>
-		<translation language="pl"><![CDATA[Edytor]]></translation>
+        <translation language="pl"><![CDATA[Edytor]]></translation>
       </item>
       <item type="message" name="TemplateChangeWarning">
         <translation language="nl"><![CDATA[<strong>Let op:</strong> Het wijzigen van de template kan als gevolg hebben dat je inhoud op een andere plaats staat niet langer getoond wordt.]]></translation>
@@ -680,7 +680,7 @@
         <translation language="hu"><![CDATA[<strong>Figyelmeztetés:</strong> A megváltozott sablon másik helyre mutat vagy nem létezik.]]></translation>
         <translation language="es"><![CDATA[<strong>Atención:</strong> Cambiar la plantilla puede hacer que el contenido existente esté en otro lugar o que ya no se muestre.]]></translation>
         <translation language="el"><![CDATA[<strong>Προσοχή:</strong> Αν αλλάξετε το πρότυπο μπορεί το υπάρχον περιεχόμενο να εμφανισθεί σε άλλη περιοχή ή και να μη φαίνεται καθόλου.]]></translation>
-		<translation language="pl"><![CDATA[<strong>Uwaga:</strong> Zmiana szablonu może spowodować, że istniejąca treść znajdzie się w innym miejscu lub nie będzie już wyświetlana.]]></translation>
+        <translation language="pl"><![CDATA[<strong>Uwaga:</strong> Zmiana szablonu może spowodować, że istniejąca treść znajdzie się w innym miejscu lub nie będzie już wyświetlana.]]></translation>
       </item>
       <item type="message" name="WidgetAttached">
         <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
@@ -693,7 +693,7 @@
         <translation language="hu"><![CDATA[A(z) <strong>%1$s</strong> widget csatolva a szekcióhoz.]]></translation>
         <translation language="es"><![CDATA[El widget <strong>%1$s</strong> is attached to this section.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
-		<translation language="pl"><![CDATA[Widget <strong>%1$s</strong> jest dołączony do tej sekcji.]]></translation>
+        <translation language="pl"><![CDATA[Widget <strong>%1$s</strong> jest dołączony do tej sekcji.]]></translation>
       </item>
       <item type="message" name="AddTagsHere">
         <translation language="nl"><![CDATA[Voeg tags toe.]]></translation>
@@ -701,13 +701,13 @@
         <translation language="it"><![CDATA[Spostare pagine su dispositivi touch non è possibile.]]></translation>
         <translation language="de"><![CDATA[Aggiungere tag qui.]]></translation>
         <translation language="fr"><![CDATA[Ajouter des tags ici.]]></translation>
-		<translation language="pl"><![CDATA[Dodaj tagi tutaj.]]></translation>
+        <translation language="pl"><![CDATA[Dodaj tagi tutaj.]]></translation>
       </item>
       <item type="message" name="MovePagesNotPossible">
         <translation language="nl"><![CDATA[Het verplaatsen van pagina's is niet mogelijk op touch-apparaten. Ga naar de tab instellingen bij het bewerken van een pagina om de pagina te verplaatsen.]]></translation>
         <translation language="en"><![CDATA[Moving pages on touch devices is not possible. Go to the settings tab when editing a page to move it.]]></translation>
         <translation language="de"><![CDATA[Verschieben von Seiten auf Touch-Geräten ist nicht möglich. Wechseln Sie zum Tab Einstellungen, wenn Sie eine Seite bearbeiten, um die Seite zu verschieben.]]></translation>
-		<translation language="pl"><![CDATA[Przenoszenie stron na urządzeniach dotykowych nie jest możliwe. Przejdź do karty ustawień podczas edycji strony, aby ją przenieść.]]></translation>
+        <translation language="pl"><![CDATA[Przenoszenie stron na urządzeniach dotykowych nie jest możliwe. Przejdź do karty ustawień podczas edycji strony, aby ją przenieść.]]></translation>
       </item>
       <item type="error" name="CantAdd2Blocks">
         <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
@@ -720,7 +720,7 @@
         <translation language="hu"><![CDATA[Nem lehet összekapcsolni 2 (vagy több) modult ugyanazon az oldalon.]]></translation>
         <translation language="es"><![CDATA[No es posible enlazar 2 (o más) más modulos a la misma pagina.]]></translation>
         <translation language="el"><![CDATA[Δεν είναι δυνατόν να συνδέσετε 2 (ή περισσότερες) ενότητες με την ίδια σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Nie można połączyć 2 (lub więcej) modułów z tą samą stroną.]]></translation>
+        <translation language="pl"><![CDATA[Nie można połączyć 2 (lub więcej) modułów z tą samą stroną.]]></translation>
       </item>
       <item type="error" name="HomeCantHaveBlocks">
         <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
@@ -733,7 +733,7 @@
         <translation language="hu"><![CDATA[Nem kapcsolható össze a modul a honlappal.]]></translation>
         <translation language="es"><![CDATA[No puedes vincular un módulo a la página principal.]]></translation>
         <translation language="el"><![CDATA[Δεν επιτρέπεται να συνδέσετε μία ενότητα με την Αρχική Σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Nie można połączyć modułu ze stroną główną.]]></translation>
+        <translation language="pl"><![CDATA[Nie można połączyć modułu ze stroną główną.]]></translation>
       </item>
       <item type="message" name="AuthRequired">
         <translation language="nl"><![CDATA[Gebruikers moeten ingelogd zijn om deze pagina te bekijken.]]></translation>
@@ -746,7 +746,37 @@
         <translation language="hu"><![CDATA[A felhasználók be kell jelentkeznie az oldal megtekintéséhez.]]></translation>
         <translation language="es"><![CDATA[Los usuarios tienen que iniciar sesión para ver esta página.]]></translation>
         <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
-		<translation language="pl"><![CDATA[Użytkownicy muszą być zalogowani, aby wyświetlić tę stronę.]]></translation>
+        <translation language="pl"><![CDATA[Użytkownicy muszą być zalogowani, aby wyświetlić tę stronę.]]></translation>
+      </item>
+      <item type="label" name="CopyThisPage">
+        <translation language="nl"><![CDATA[kopieer deze pagina]]></translation>
+        <translation language="en"><![CDATA[copy this page]]></translation>
+        <translation language="fr"><![CDATA[copier cette page]]></translation>
+        <translation language="de"><![CDATA[diese Seite kopieren]]></translation>
+        <translation language="pl"><![CDATA[skopiować tę stronę]]></translation>
+        <translation language="es"><![CDATA[copiar esta página]]></translation>
+        <translation language="ru"><![CDATA[скопировать эту страницу]]></translation>
+        <translation language="it"><![CDATA[copiare questa pagina]]></translation>
+      </item>
+      <item type="message" name="CopiedTitle">
+        <translation language="nl"><![CDATA[%1$s kopie]]></translation>
+        <translation language="en"><![CDATA[%1$s copy]]></translation>
+        <translation language="fr"><![CDATA[%1$s copie]]></translation>
+        <translation language="de"><![CDATA[%1$s Kopie]]></translation>
+        <translation language="pl"><![CDATA[%1$s kopia]]></translation>
+        <translation language="es"><![CDATA[copia de 1$s]]></translation>
+        <translation language="ru"><![CDATA[%1$s копия]]></translation>
+        <translation language="it"><![CDATA[%1$s copia]]></translation>
+      </item>
+      <item type="message" name="CopySaveWarning">
+        <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De kopie is nog niet opgeslagen.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Important:</strong> The copy hasn't been saved yet.</p>]]></translation>
+        <translation language="fr"><![CDATA[<p><strong>Important:</strong> La copie n'a pas encore été sauvegardée.</p>]]></translation>
+        <translation language="de"><![CDATA[<p><strong> Wichtig:</strong> Die Kopie wurde noch nicht gespeichert.</p>]]></translation>
+        <translation language="pl"><![CDATA[<p><strong>Uwaga:</strong> Kopia nie została jeszcze zapisana.</p>]]></translation>
+        <translation language="es"><![CDATA[<p><strong>Importante:</strong> La copia aún no se ha guardado.</p>]]></translation>
+        <translation language="ru"><![CDATA[<p><strong>Важно:</strong> Копия еще не сохранена.</p>]]></translation>
+        <translation language="it"><![CDATA[<p><strong>Importante:</strong> La copia non è stata ancora salvata.</p>]]></translation>
       </item>
     </Pages>
     <Core>
@@ -761,7 +791,7 @@
         <translation language="hu"><![CDATA[Az oldalt nem lehet áthelyezni.]]></translation>
         <translation language="es"><![CDATA[La página no puede ser movida.]]></translation>
         <translation language="el"><![CDATA[Η σελίδα δεν μπορεί να μετακινηθεί.]]></translation>
-		<translation language="pl"><![CDATA[Strony nie można przenieść.]]></translation>
+        <translation language="pl"><![CDATA[Strony nie można przenieść.]]></translation>
       </item>
     </Core>
   </Backend>
@@ -771,7 +801,7 @@
         <translation language="nl"><![CDATA[ouder]]></translation>
         <translation language="en"><![CDATA[parent]]></translation>
         <translation language="ru"><![CDATA[родитель]]></translation>
-		<translation language="pl"><![CDATA[starsze]]></translation>
+        <translation language="pl"><![CDATA[starsze]]></translation>
       </item>
     </Core>
   </Frontend>

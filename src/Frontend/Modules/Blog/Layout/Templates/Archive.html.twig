@@ -41,7 +41,7 @@
             {% for item in items %}
               <tr>
                 <td class="date">
-                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
+                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
                     {{ item.publish_on|spoondate(dateFormatShort,LANGUAGE ) }}
                   </time>
                 </td>

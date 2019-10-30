@@ -26,6 +26,7 @@ class MediaBrowserImages extends MediaBrowser
         $mediaFolderId = ($this->mediaFolder instanceof MediaFolder) ? $this->mediaFolder->getId() : null;
 
         $this->template->assign('folderId', $mediaFolderId);
+        $this->template->assign('mediaType', 'image');
         $this->template->assign('tree', $this->get('media_library.manager.tree_media_browser_images')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }

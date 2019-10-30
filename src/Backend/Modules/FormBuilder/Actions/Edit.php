@@ -7,9 +7,11 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Form\Type\DeleteType;
+use Backend\Modules\FormBuilder\Engine\Autocomplete;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
@@ -50,6 +52,12 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
+        // set success type values
+        $rbtSuccesTypeValues = [
+            ['label' => ucfirst(BL::lbl('SamePageWithConfirmBox')), 'value' => 'message'],
+            ['label' => ucfirst(BL::lbl('OtherPage')), 'value' => 'page'],
+        ];
+
         $this->form = new BackendForm('edit');
         $this->form->addText('name', $this->record['name'])->makeRequired();
         $this->form->addDropdown(
@@ -73,6 +81,8 @@ class Edit extends BackendBaseActionEdit
             );
         }
         $this->form->addText('identifier', $this->record['identifier']);
+        $this->form->addRadiobutton('success_type', $rbtSuccesTypeValues, $this->record['success_type']);
+        $this->form->addDropdown('success_page', BackendPagesModel::getPagesForDropdown(), $this->record['success_page'])->setDefaultElement('');
         $this->form->addEditor('success_message', $this->record['success_message'])->makeRequired();
 
         // textfield dialog
@@ -82,6 +92,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_classname');
         $this->form->addCheckbox('textbox_required');
         $this->form->addCheckbox('textbox_reply_to');
+        $this->form->addCheckbox('textbox_mailmotor');
         $this->form->addText('textbox_required_error_message');
         $this->form->addDropdown(
             'textbox_validation',
@@ -95,6 +106,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_confirmation_mail_subject');
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
+
+        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getValuesForDropdown());
 
         // textarea dialog
         $this->form->addText('textarea_label');
@@ -158,6 +171,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
 
+        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getValuesForDropdown());
+
         // dropdown dialog
         $this->form->addText('dropdown_label');
         $this->form->addText('dropdown_values');
@@ -185,6 +200,14 @@ class Edit extends BackendBaseActionEdit
         // heading dialog
         $this->form->addText('heading');
 
+        // mailmotor dialog
+        $settings = BackendModel::get('fork.settings');
+        $this->form->addText(
+            'mailmotor_list_id',
+            $settings->get('Mailmotor', 'list_id_' . BL::getWorkingLanguage()) ?? $settings->get('Mailmotor', 'list_id')
+        );
+        $this->form->addText('mailmotor_label', BL::lbl('MailmotorSubscribeToNewsletter'));
+
         // paragraph dialog
         $this->form->addEditor('paragraph');
         $this->form->getField('paragraph')->setAttribute('cols', 30);
@@ -201,15 +224,24 @@ class Edit extends BackendBaseActionEdit
 
         $this->template->assign('id', $this->record['id']);
         $this->template->assign('name', $this->record['name']);
-        $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
-        $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+        $settings = BackendModel::get('fork.settings');
+        $recaptchaSiteKey = $settings->get('Core', 'google_recaptcha_site_key');
+        $recaptchaSecretKey = $settings->get('Core', 'google_recaptcha_secret_key');
+        $mailmotorListId = $settings->get('Mailmotor', 'list_id');
 
         if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
             $this->template->assign('recaptchaMissing', true);
         }
 
+        if (BackendModel::isModuleInstalled('Mailmotor')) {
+            $this->template->assign('showMailmotorOption', !empty($mailmotorListId));
+            $this->template->assign('mailmotorMailEngine', $settings->get('Mailmotor', 'mail_engine'));
+        }
+
         // parse error messages
         $this->parseErrorMessages();
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**
@@ -269,14 +301,21 @@ class Edit extends BackendBaseActionEdit
             $txtEmail = $this->form->getField('email');
             $txtEmailSubject = $this->form->getField('email_subject');
             $ddmMethod = $this->form->getField('method');
+            $rbtSuccessType = $this->form->getField('success_type');
             $txtSuccessMessage = $this->form->getField('success_message');
+            $ddmSuccessPage = $this->form->getField('success_page');
             $txtIdentifier = $this->form->getField('identifier');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
-            $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
+            if ($rbtSuccessType->getValue() == 'message') {
+                $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
+            }
+            if ($rbtSuccessType->getValue() == 'page') {
+                $ddmSuccessPage->isFilled(BL::getError('FieldIsRequired'));
+            }
             if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
@@ -316,7 +355,9 @@ class Edit extends BackendBaseActionEdit
                 $values['email_template'] = count($this->templates) > 1
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
+                $values['success_type'] = $rbtSuccessType->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
+                $values['success_page'] = $ddmSuccessPage->getValue();
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()

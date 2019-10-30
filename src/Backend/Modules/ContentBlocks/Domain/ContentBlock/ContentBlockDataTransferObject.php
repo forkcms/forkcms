@@ -78,19 +78,19 @@ class ContentBlockDataTransferObject
             return;
         }
 
-        $this->id = $contentBlock->getId();
-        $this->extraId = $contentBlock->getExtraId();
-        $this->isVisible = !$contentBlock->isHidden();
-        $this->title = $contentBlock->getTitle();
-        $this->text = $contentBlock->getText();
-        $this->template = $contentBlock->getTemplate();
-        $this->userId = $contentBlock->getUserId();
-        $this->locale = $contentBlock->getLocale();
-        $this->status = $contentBlock->getStatus();
-        $this->revisionId = $contentBlock->getRevisionId();
+        $this->id = $this->contentBlockEntity->getId();
+        $this->extraId = $this->contentBlockEntity->getExtraId();
+        $this->isVisible = !$this->contentBlockEntity->isHidden();
+        $this->title = $this->contentBlockEntity->getTitle();
+        $this->text = $this->contentBlockEntity->getText();
+        $this->template = $this->contentBlockEntity->getTemplate();
+        $this->userId = $this->contentBlockEntity->getUserId();
+        $this->locale = $this->contentBlockEntity->getLocale();
+        $this->status = $this->contentBlockEntity->getStatus();
+        $this->revisionId = $this->contentBlockEntity->getRevisionId();
     }
 
-    public function forOtherLocale(int $id, int $extraId, Locale $locale)
+    public function forOtherLocale(int $id, int $extraId, Locale $locale): void
     {
         $this->id = $id;
         $this->contentBlockEntity = null;

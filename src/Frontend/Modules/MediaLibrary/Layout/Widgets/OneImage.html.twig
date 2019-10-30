@@ -18,7 +18,11 @@
     {% block widget_body %}
       <div class="widget-body">
         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-          <img itemprop="thumbnail" class="img-polaroid img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_one_image_large') }}" alt="{{ mediaItem.title }}" />
+          {% if mediaItem.type == 'movie' %}
+            {{ mediaItem.getIncludeHTML()|raw }}
+          {% else %}
+            <img itemprop="thumbnail" class="img-polaroid img-responsive" src="{{ (mediaItem.getWebPath('media_library_one_image_large')) }}" alt="{{ mediaItem.title }}" />
+          {% endif %}
         </figure>
       </div>
     {% endblock %}

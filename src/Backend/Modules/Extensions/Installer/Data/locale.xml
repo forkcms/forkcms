@@ -69,7 +69,7 @@
       </item>
       <item type="message" name="ShowImageForm">
         <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
-        <translation language="en"><![CDATA[The user can upload a file.]]></translation>
+        <translation language="en"><![CDATA[Allow the user to upload an image.]]></translation>
         <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
         <translation language="es"><![CDATA[El usuario puede subir un archivo.]]></translation>
@@ -748,6 +748,10 @@
         <translation language="en"><![CDATA[The template file is missing.]]></translation>
         <translation language="pl"><![CDATA[Brakuje pliku szablonu.]]></translation>
       </item>
+      <item type="error" name="IncompatibleTheme">
+        <translation language="nl"><![CDATA[Het thema "%1$s" bevat bestanden die niet compatibel zijn met deze versie van Fork CMS.]]></translation>
+        <translation language="en"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
+      </item>
       <item type="error" name="InvalidTemplateSyntax">
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>
@@ -886,6 +890,11 @@
         <translation language="zh"><![CDATA[主题文件名和info.xml里的主题名称不匹配。]]></translation>
         <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
         <translation language="pl"><![CDATA[Nazwa folderu motywu nie jest zgodna z nazwą motywu w pliku info.xml.]]></translation>
+      </item>
+      <item type="label" name="DetailModule">
+        <translation language="nl"><![CDATA[Module details]]></translation>
+        <translation language="en"><![CDATA[Module details]]></translation>
+        <translation language="fr"><![CDATA[Détails du module]]></translation>
       </item>
     </Extensions>
   </Backend>

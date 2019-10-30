@@ -40,8 +40,8 @@ CKEDITOR.dialog.add(
                                         editor.popup(window.location.origin + jsData.MediaLibrary.browseActionImages, 800, 800);
 
                                         window.onmessage = function (event) {
-                                            if (event.data) {
-                                                this.setValueOf('tab', 'url', event.data);
+                                            if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
+                                                this.setValueOf('tab', 'url', event.data['media-url']);
                                             }
                                         }.bind(this.getDialog());
                                     },

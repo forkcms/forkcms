@@ -74,7 +74,7 @@ jsFrontend.controls = {
 
   // bind target blank
   bindTargetBlank: function () {
-    $('a.targetBlank').attr('target', '_blank')
+    $('a.targetBlank').attr('target', '_blank').attr('rel', 'noopener noreferrer')
   },
 
   toggleCollapse: function () {
@@ -208,6 +208,41 @@ jsFrontend.forms = {
     jsFrontend.forms.validation()
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
+    jsFrontend.forms.imagePreview()
+    jsFrontend.forms.requiredTooltip()
+  },
+
+  requiredTooltip: function () {
+    $(document).on('focus', '.form-control', function (event) {
+      var id = $(event.currentTarget).attr('id')
+
+      // show tooltip
+      $('label[for="' + id + '"]').find('abbr').tooltip('show')
+
+      // hide tooltip after 1 second
+      setTimeout(function () {
+        $('label[for="' + id + '"]').find('abbr').tooltip('hide')
+      }, 1000)
+    })
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      let imageField = $(this).get(0)
+      // make sure we are uploading an image by checking the data attribute
+      if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
+        // get the image preview by matching the image-preview data-id to the ImageField id
+        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          $imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL(imageField.files[0])
+      }
+    })
   },
 
   // once text has been filled add another class to it (so it's possible to style it differently)
@@ -282,6 +317,13 @@ jsFrontend.forms = {
           // Rename the original field, used to contain the display value
           $(this).attr('id', $(this).attr('id') + '-display')
           $(this).attr('name', $(this).attr('name') + '-display')
+
+          // make sure we can make the value empty
+          $(this).on('change', function (event) {
+            if ($(this).val() === '') {
+              clone.val('')
+            }
+          })
         })
 
         $inputDatefields.datepicker({
@@ -452,7 +494,7 @@ jsFrontend.gravatar = {
       // valid gravatar id
       if (gravatarId !== '') {
         // build url
-        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404'
+        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=' + encodeURI(window.location.origin + '/src/Frontend/Core/Layout/images/default_author_avatar.gif')
 
         // add size if set before
         if (size !== '') url += '&s=' + size
@@ -475,10 +517,17 @@ jsFrontend.gravatar = {
  */
 jsFrontend.locale = {
   initialized: false,
+  initializing: false,
   data: {},
 
   // init, something like a constructor
   init: function () {
+    if (typeof jsFrontend.current.language == 'undefined') {
+      return
+    }
+
+    jsFrontend.locale.initializing = true
+
     $.ajax({
       url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
       type: 'GET',
@@ -487,6 +536,7 @@ jsFrontend.locale = {
       success: function (data) {
         jsFrontend.locale.data = data
         jsFrontend.locale.initialized = true
+        jsFrontend.locale.initializing = true
       },
       error: function (jqXHR, textStatus, errorThrown) {
         throw new Error('Regenerate your locale-files.')
@@ -497,10 +547,24 @@ jsFrontend.locale = {
   // get an item from the locale
   get: function (type, key) {
     // initialize if needed
-    if (!jsFrontend.locale.initialized) jsFrontend.locale.init()
+    if (!jsFrontend.locale.initialized && !jsFrontend.locale.initializing) jsFrontend.locale.init()
+
+    if (!jsFrontend.locale.initialized) {
+      setTimeout(
+        function () {
+          return jsFrontend.locale.get(type, key)
+        },
+        30
+      )
+
+      return;
+    }
 
     // validate
-    if (typeof jsFrontend.locale.data[type][key] === 'undefined') return '{$' + type + key + '}'
+    if (typeof jsFrontend.locale.data[type] === 'undefined'
+      || typeof jsFrontend.locale.data[type][key] === 'undefined') {
+      return '{$' + type + key + '}'
+    }
 
     return jsFrontend.locale.data[type][key]
   },

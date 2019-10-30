@@ -57,45 +57,6 @@
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
                     <h2>
-                      <label for="text">
-                        {{ 'lbl.MainContent'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                    </h2>
-                  </div>
-                  <div class="panel-body">
-                    {% form_field text %}
-                  </div>
-                  {% if txtTextError %}
-                    <div class="panel-footer">
-                      {% form_field_error text %}
-                    </div>
-                  {% endif %}
-                </div>
-                {% if imageIsAllowed %}
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
-                    </div>
-                    <div class="panel-body">
-                      {% if item.image %}
-                        <div>
-                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
-                        </div>
-                        <ul class="list-unstyled">
-                          <li class="checkbox">
-                            <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
-                            {% form_field_error delete_image %}
-                          </li>
-                        </ul>
-                      {% endif %}
-                      {% form_field image %} {% form_field_error image %}
-                    </div>
-                  </div>
-                {% endif %}
-                <div class="panel panel-default panel-editor last">
-                  <div class="panel-heading">
-                    <h2>
                       <label for="introduction">
                         {{ 'lbl.Summary'|trans|ucfirst }}
                         {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
@@ -108,6 +69,51 @@
                   {% if txtIntroductionError %}
                     <div class="panel-footer">
                       {% form_field_error introduction %}
+                    </div>
+                  {% endif %}
+                </div>
+                {% if imageIsAllowed %}
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
+                    </div>
+                    <div class="panel-body">
+                      <div class="row">
+                        {% if item.image %}
+                        <div class="col-lg-3">
+                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
+                        </div>
+                        <div class="col-lg-9">
+                          {% endif %}
+                          {% form_field image %} {% form_field_error image %}
+                          {% if item.image %}
+                          <ul class="list-unstyled">
+                            <li class="checkbox">
+                              <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                              {% form_field_error delete_image %}
+                            </li>
+                          </ul>
+                        </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="panel panel-default panel-editor last">
+                  <div class="panel-heading">
+                    <h2>
+                      <label for="text">
+                        {{ 'lbl.MainContent'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                    </h2>
+                  </div>
+                  <div class="panel-body">
+                    {% form_field text %}
+                  </div>
+                  {% if txtTextError %}
+                    <div class="panel-footer">
+                      {% form_field_error text %}
                     </div>
                   {% endif %}
                 </div>
@@ -130,7 +136,7 @@
                     <div class="form-group last">
                       <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
                       {% form_field publish_on_date %} {% form_field_error publish_on_date %}
-                      <label for="publishOnTime" class="control-label">{{ lbl.At }}</label>
+                      <label for="publishOnTime" class="control-label">{{ 'lbl.At'|trans }}</label>
                       {% form_field publish_on_time %} {% form_field_error publish_on_time %}
                     </div>
                   </div>

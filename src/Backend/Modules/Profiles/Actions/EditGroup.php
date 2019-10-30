@@ -58,6 +58,8 @@ class EditGroup extends BackendBaseActionEdit
 
         // assign the active record and additional variables
         $this->template->assign('group', $this->group);
+
+        $this->header->appendDetailToBreadcrumbs($this->group['name']);
     }
 
     private function validateForm(): void

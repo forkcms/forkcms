@@ -23,7 +23,7 @@
           <div class="col-xs-12">
             {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
             {{ 'lbl.On'|trans }}
-            <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
+            <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
               {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
             </time>
           </div>
@@ -104,7 +104,7 @@
 
   {% block block_article_comments %}
     {% if comments or item.allow_comments %}
-      <section id="{{ act.Comments }}" class="block-blog-article-comments">
+      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments">
         <header role="banner" class="block-blog-article-comments-heading">
           <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
         </header>
@@ -145,12 +145,12 @@
                   </a>
                   {% endif %}
                   {{ 'lbl.Wrote'|trans }}
-                  <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">
+                  <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\\TH:i:s.vP' ) }}">
                     {{ comment.created_on|timeago|raw }}
                   </time>
                 </div>
                 <div class="commentText block-blog-article-comments-comment-content" itemprop="commentText">
-                  {{ comment.text|raw }}
+                  {{ comment.text }}
                 </div>
               </div>
             </div>
@@ -162,7 +162,7 @@
 
   {% if item.allow_comments %}
     {% block block_article_comment_form %}
-      <section id="{{ act.Comment }}" class="block-blog-article-comment-form">
+      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form">
         <header class="block-blog-article-comment-form-heading" role="banner">
           <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>
         </header>
@@ -187,7 +187,7 @@
                 <label class="control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error message %} {% form_field message %}
+                  {% form_field message %} {% form_field_error message %}
                 </div>
               </div>
             </div>
@@ -196,20 +196,20 @@
                 <label class="control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error author %} {% form_field author %}
+                  {% form_field author %} {% form_field_error author %}
                 </div>
               </div>
               <div class="control-group {% if txtEmailError %}error{% endif %}">
                 <label class="control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
-                  {% form_field_error email %} {% form_field email %}
+                  {% form_field email %} {% form_field_error email %}
                 </div>
               </div>
               <div class="control-group {% if txtWebsiteError %}error{% endif %}">
                 <label class="control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
                 <div class="controls">
-                  {% form_field_error website %} {% form_field website %}
+                  {% form_field website %} {% form_field_error website %}
                 </div>
               </div>
             </div>

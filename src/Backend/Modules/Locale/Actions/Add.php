@@ -39,31 +39,52 @@ class Add extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
+        $originalTranslation = null;
+
         if ($this->getRequest()->query->getInt('id') !== 0) {
             // get the translation
-            $translation = BackendLocaleModel::get($this->getRequest()->query->getInt('id'));
+            $originalTranslation = BackendLocaleModel::get($this->getRequest()->query->getInt('id'));
 
-            // if not empty, set the filter
-            if (!empty($translation)) {
-                // we are copying the given translation
-                $isCopy = true;
-            } else {
+            if (empty($originalTranslation)) {
                 $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing' . $this->filterQuery);
             }
-        } else {
-            $isCopy = false;
         }
 
         // create form
         $this->form = new BackendForm('add', BackendModel::createUrlForAction() . $this->filterQuery);
 
         // create and add elements
-        $this->form->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $isCopy ? $translation['application'] : $this->filter['application']);
-        $this->form->addDropdown('module', BackendModel::getModulesForDropDown(), $isCopy ? $translation['module'] : $this->filter['module']);
-        $this->form->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
-        $this->form->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
-        $this->form->addTextarea('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, true);
-        $this->form->addDropdown('language', BL::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
+        $this->form->addDropdown(
+            'application',
+            ['Backend' => 'Backend', 'Frontend' => 'Frontend'],
+            $originalTranslation ? $originalTranslation['application'] : $this->filter['application']
+        );
+        $this->form->addDropdown(
+            'module',
+            BackendModel::getModulesForDropDown(),
+            $originalTranslation ? $originalTranslation['module'] : $this->filter['module']
+        );
+        $this->form->addDropdown(
+            'type',
+            BackendLocaleModel::getTypesForDropDown(),
+            $originalTranslation ? $originalTranslation['type'] : $this->filter['type'][0]
+        );
+        $this->form->addText(
+            'name',
+            $originalTranslation ? $originalTranslation['name'] : $this->filter['name']
+        );
+        $this->form->addTextarea(
+            'value',
+            $originalTranslation ? $originalTranslation['value'] : $this->filter['value'],
+            null,
+            null,
+            true
+        );
+        $this->form->addDropdown(
+            'language',
+            BL::getWorkingLanguages(),
+            $originalTranslation ? $originalTranslation['language'] : $this->filter['language'][0]
+        );
     }
 
     protected function parse(): void
@@ -110,10 +131,10 @@ class Add extends BackendBaseActionAdd
             // name checks
             if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('AlphaNumericCharactersOnly'))) {
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
-                        $txtName->setError(BL::err('InvalidName'));
+                        $txtName->setError(BL::err('FirstLetterMustBeACapitalLetter'));
                     } else {
                         // this name already exists in this language
                         if (BackendLocaleModel::existsByName(

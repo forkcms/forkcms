@@ -3023,22 +3023,6 @@
         <translation language="el"><![CDATA[Με τιμή,<br/><br/>η ομάδα του Fork CMS]]></translation>
         <translation language="pl"><![CDATA[Z poważaniem,<br /><br />Zespół Fork CMS]]></translation>
       </item>
-      <item type="message" name="RegisterIsSuccess">
-        <translation language="nl"><![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Ondertussen kan je de website al gebruiken, zij het iets gelimiteerder.]]></translation>
-        <translation language="en"><![CDATA[Welcome! In less than ten minutes you will receive an activation mail. In the mean while you can use the website in a limited form.]]></translation>
-        <translation language="fr"><![CDATA[Bienvenue! Vous allez recevoir, dans moins de dix minutes, vous recevrez un e-mail vous permettant d'activer votre profile.]]></translation>
-        <translation language="it"><![CDATA[Benvenuto! Entro dieci minuti riceverai una mail di attivazione. Nel frattempo puoi usare il sito in forma limitata.]]></translation>
-        <translation language="hu"><![CDATA[Üdvözlünk! Kevesebb mint tíz percen belül kapni fogsz egy akcivációs levelet. Ez azt jelenti, hogy addig korlátozottan tudod használni a honlapot.]]></translation>
-        <translation language="ru"><![CDATA[Добро пожаловать! В ближайшие 10 минут вы получите сообщение с ссылкой на активацию профиля. В то же время, вы можете пользоваться сайтом без активации, но с ограничениями.]]></translation>
-        <translation language="zh"><![CDATA[欢迎！你将会在十分钟内受到一封激活邮件。与此同时，网站已经可以使用了，只是在正式激活前，部分功能会受到限制。]]></translation>
-        <translation language="de"><![CDATA[Willkommen! In weniger als zehn Minuten wirst du eine Aktivierungs-Mail erhalten. Bis dahin kannst du die Website in eingeschränkter Weise benutzen.]]></translation>
-        <translation language="es"><![CDATA[¡Bienvenido! En menos de 10 minutos recibiras un mail para activar tu cuenta. Mientras puedes acceder a la web de manera limitada.]]></translation>
-        <translation language="lt"><![CDATA[Sveiki! Per artimiausias 10 min. jus gausite pranešimą su nuorodą profilio aktyvacijai. Iki tol jus galėsite naršyti tinklpayję, bet su tam tikrais apribojimais.]]></translation>
-        <translation language="uk"><![CDATA[Ласкаво просимо! В найближчі 10 хвилин на Ваш e-mail Ви отримаєте повідомлення із посиланням на активацію профілю]]></translation>
-        <translation language="sv"><![CDATA[Välkommen! Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande. Under tiden kan du besöka en begränsad version av webbplatsen.]]></translation>
-        <translation language="el"><![CDATA[Καλωσήλθατε! Σε λίγη ώρα θα λάβετε ένα email ενεργοποίησης. Στο μεταξύ μπορείτε να χρησιμοποιήσετε τον ιστοχώρο, αλλά με κάποιους περιορισμούς.]]></translation>
-        <translation language="pl"><![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny. W międzyczasie możesz korzystac z witryny w formie ograniczonej.]]></translation>
-      </item>
       <item type="message" name="RegisterSalutation">
         <translation language="nl"><![CDATA[Beste,]]></translation>
         <translation language="en"><![CDATA[Dear,]]></translation>
@@ -7989,7 +7973,7 @@
         <translation language="sv"><![CDATA[personer]]></translation>
         <translation language="el"><![CDATA[Άνθρωποι]]></translation>
         <translation language="tr"><![CDATA[Kişiler]]></translation>
-        <translation language="pl"><![CDATA[osoby]]></translation>		
+        <translation language="pl"><![CDATA[osoby]]></translation>
       </item>
       <item type="label" name="PerVisit">
         <translation language="nl"><![CDATA[per bezoek]]></translation>
@@ -8106,7 +8090,7 @@
         <translation language="sv"><![CDATA[förhandsvisa]]></translation>
         <translation language="el"><![CDATA[προεπισκόπιση]]></translation>
         <translation language="tr"><![CDATA[önizleme]]></translation>
-        <translation language="pl"><![CDATA[podgląd]]></translation> 
+        <translation language="pl"><![CDATA[podgląd]]></translation>
       </item>
       <item type="label" name="Previous">
         <translation language="nl"><![CDATA[vorige]]></translation>
@@ -10013,7 +9997,7 @@
         <translation language="sv"><![CDATA[vikt]]></translation>
         <translation language="el"><![CDATA[βάρος]]></translation>
         <translation language="pl"><![CDATA[szerokość]]></translation>
-        <translation language="tr"><![CDATA[ağırlık]]></translation> 
+        <translation language="tr"><![CDATA[ağırlık]]></translation>
       </item>
       <item type="label" name="WhichModule">
         <translation language="nl"><![CDATA[welke module]]></translation>
@@ -10605,7 +10589,7 @@
         <translation language="pl"><![CDATA[Kategoria "%1$s" została zapisana.]]></translation>
       </item>
       <item type="message" name="EditorImagesWithoutAlt">
-        <translation language="nl"><![CDATA[Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank">lees meer</a>)</small>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank" rel="noopener noreferrer">lees meer</a>)</small>.]]></translation>
         <translation language="en"><![CDATA[There are images without an alt-attribute.]]></translation>
         <translation language="hu"><![CDATA[Vannak képek alt-attribútum nélkül.]]></translation>
         <translation language="it"><![CDATA[Ci sono delle immagini senza l'attributo alt]]></translation>
@@ -11686,6 +11670,10 @@
         <translation language="el"><![CDATA[Οι αλλαγές θα χαθούν.]]></translation>
         <translation language="pl"><![CDATA[Zmiany zostaną utracone]]></translation>
       </item>
+      <item type="message" name="SessionTimeoutWarning">
+        <translation language="nl"><![CDATA[Je sessie gaat verlopen, we raden je aan uw wijzigingen (tijdelijk) op te slaan]]></translation>
+        <translation language="en"><![CDATA[Your session will expire, we recommend you to save your changes (temporarily)]]></translation>
+      </item>
       <item type="error" name="ActionNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze actie.]]></translation>
         <translation language="en"><![CDATA[You have insufficient rights for this action.]]></translation>
@@ -11730,6 +11718,12 @@
         <translation language="sv"><![CDATA[Lägg till taggen innan du skickar.]]></translation>
         <translation language="el"><![CDATA[Προσθήκη της ετικέτας πριν την υποβολή.]]></translation>
         <translation language="pl"><![CDATA[Najpierw dodaj tag.]]></translation>
+      </item>
+      <item type="error" name="AddTextBeforeSubmitting">
+        <translation language="nl"><![CDATA[Voeg de text eerst toe voordat u opslaat.]]></translation>
+        <translation language="en"><![CDATA[Add the text before submitting.]]></translation>
+        <translation language="fr"><![CDATA[Veuillez ajouter le texte avant de valider.]]></translation>
+        <translation language="de"><![CDATA[Füge das Text hinzu, bevor du den Eintrag speicherst.]]></translation>
       </item>
       <item type="error" name="AkismetKey">
         <translation language="nl"><![CDATA[Akismet API-key werd nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>

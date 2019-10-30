@@ -1,6 +1,10 @@
 imports:
     - { resource: config_install.yml }
 
+parameters:
+    site.multilanguage: true
+    site.default_language: en
+
 framework:
     test: ~
     session:
@@ -9,3 +13,8 @@ framework:
         collect: false
     router:
         resource: "%kernel.project_dir%/app/config/routing_install.yml"
+
+monolog:
+    handlers:
+        main:
+            type: 'null'

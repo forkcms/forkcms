@@ -1,7 +1,11 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
     <Profiles>
+      <item type="label" name="About">
+        <translation language="nl"><![CDATA[over]]></translation>
+        <translation language="en"><![CDATA[about]]></translation>
+      </item>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
         <translation language="en"><![CDATA[active]]></translation>
@@ -15,17 +19,17 @@
         <translation language="uk"><![CDATA[Активний]]></translation>
         <translation language="lt"><![CDATA[aktyvus]]></translation>
         <translation language="el"><![CDATA[Ενεργή]]></translation>
-		<translation language="pl"><![CDATA[Aktywny]]></translation>
+        <translation language="pl"><![CDATA[Aktywny]]></translation>
       </item>
       <item type="label" name="FilterProfiles">
         <translation language="nl"><![CDATA[filter profielen]]></translation>
         <translation language="en"><![CDATA[filter profiles]]></translation>
-		<translation language="pl"><![CDATA[filtruj profile]]></translation>
+        <translation language="pl"><![CDATA[filtruj profile]]></translation>
       </item>
       <item type="label" name="FilterGroups">
         <translation language="nl"><![CDATA[filter groepen]]></translation>
         <translation language="en"><![CDATA[filter groups]]></translation>
-		<translation language="pl"><![CDATA[filtruj grupy]]></translation>
+        <translation language="pl"><![CDATA[filtruj grupy]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
@@ -40,7 +44,7 @@
         <translation language="uk"><![CDATA[Додати групу]]></translation>
         <translation language="lt"><![CDATA[nauja grupė]]></translation>
         <translation language="el"><![CDATA[Προσθήκη ομάδας]]></translation>
-		<translation language="pl"><![CDATA[Dodaj grupę]]></translation>
+        <translation language="pl"><![CDATA[Dodaj grupę]]></translation>
       </item>
       <item type="label" name="AddMembership">
         <translation language="nl"><![CDATA[lidmaatschap toevoegen]]></translation>
@@ -55,7 +59,7 @@
         <translation language="uk"><![CDATA[Додати членство]]></translation>
         <translation language="lt"><![CDATA[nauja narystė]]></translation>
         <translation language="el"><![CDATA[Προσθήκη συμμετοχής στην ομάδα]]></translation>
-		<translation language="pl"><![CDATA[Dodaj członkostwo]]></translation>
+        <translation language="pl"><![CDATA[Dodaj członkostwo]]></translation>
       </item>
       <item type="label" name="AddToGroup">
         <translation language="nl"><![CDATA[toevoegen aan een groep]]></translation>
@@ -70,7 +74,7 @@
         <translation language="uk"><![CDATA[Додати групу]]></translation>
         <translation language="lt"><![CDATA[priskirti grupei]]></translation>
         <translation language="el"><![CDATA[Προσθήκη σε μία ομάδα]]></translation>
-		<translation language="pl"><![CDATA[Dodaj do grupy]]></translation>
+        <translation language="pl"><![CDATA[Dodaj do grupy]]></translation>
       </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
@@ -85,7 +89,7 @@
         <translation language="uk"><![CDATA[Дата народження]]></translation>
         <translation language="lt"><![CDATA[gimimo data]]></translation>
         <translation language="el"><![CDATA[Ημερομηνία γέννησης]]></translation>
-		<translation language="pl"><![CDATA[Data urodzenia]]></translation>
+        <translation language="pl"><![CDATA[Data urodzenia]]></translation>
       </item>
       <item type="label" name="Blocked">
         <translation language="nl"><![CDATA[geblokkeerd]]></translation>
@@ -100,7 +104,7 @@
         <translation language="uk"><![CDATA[Заблоковано]]></translation>
         <translation language="lt"><![CDATA[blokuotas]]></translation>
         <translation language="el"><![CDATA[Μπλοκαρισμένο]]></translation>
-		<translation language="pl"><![CDATA[Zablokowany]]></translation>
+        <translation language="pl"><![CDATA[Zablokowany]]></translation>
       </item>
       <item type="label" name="City">
         <translation language="nl"><![CDATA[stad]]></translation>
@@ -115,7 +119,7 @@
         <translation language="uk"><![CDATA[Місто]]></translation>
         <translation language="lt"><![CDATA[miestas]]></translation>
         <translation language="el"><![CDATA[Πόλη]]></translation>
-		<translation language="pl"><![CDATA[miejscowość]]></translation>
+        <translation language="pl"><![CDATA[miejscowość]]></translation>
       </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
@@ -130,7 +134,7 @@
         <translation language="uk"><![CDATA[Країна]]></translation>
         <translation language="lt"><![CDATA[šalis]]></translation>
         <translation language="el"><![CDATA[Χώρα]]></translation>
-		<translation language="pl"><![CDATA[kraj]]></translation>
+        <translation language="pl"><![CDATA[kraj]]></translation>
       </item>
       <item type="label" name="Deleted">
         <translation language="nl"><![CDATA[verwijderd]]></translation>
@@ -145,7 +149,7 @@
         <translation language="uk"><![CDATA[Видалено]]></translation>
         <translation language="lt"><![CDATA[ištrintas]]></translation>
         <translation language="el"><![CDATA[Διαγραμμένο]]></translation>
-		<translation language="pl"><![CDATA[usunięty]]></translation>
+        <translation language="pl"><![CDATA[usunięty]]></translation>
       </item>
       <item type="label" name="DisplayName">
         <translation language="nl"><![CDATA[weergave naam]]></translation>
@@ -160,7 +164,7 @@
         <translation language="uk"><![CDATA[Відображуване І'мя]]></translation>
         <translation language="lt"><![CDATA[rodomas pavadinimas]]></translation>
         <translation language="el"><![CDATA[Όνομα εμφάνισης στην οθόνη]]></translation>
-		<translation language="pl"><![CDATA[wyświetlana nazwa]]></translation>
+        <translation language="pl"><![CDATA[wyświetlana nazwa]]></translation>
       </item>
       <item type="label" name="EditGroup">
         <translation language="nl"><![CDATA[groep aanpassen]]></translation>
@@ -174,7 +178,7 @@
         <translation language="es"><![CDATA[editar grupo]]></translation>
         <translation language="uk"><![CDATA[Редагувати групу]]></translation>
         <translation language="el"><![CDATA[Μεταβολή ομάδας]]></translation>
-		<translation language="pl"><![CDATA[edytuj grupę]]></translation>
+        <translation language="pl"><![CDATA[edytuj grupę]]></translation>
       </item>
       <item type="label" name="EditMembership">
         <translation language="nl"><![CDATA[lidmaatschap aanpassen]]></translation>
@@ -188,12 +192,12 @@
         <translation language="es"><![CDATA[editar miembro]]></translation>
         <translation language="uk"><![CDATA[Редагувати членство]]></translation>
         <translation language="el"><![CDATA[Μεταβολή μέλους]]></translation>
-		<translation language="pl"><![CDATA[edytuj członkostwo]]></translation>
+        <translation language="pl"><![CDATA[edytuj członkostwo]]></translation>
       </item>
       <item type="error" name="EmailMatchesPrevious">
         <translation language="nl"><![CDATA[Gelieve een nieuw e-mailadres in te geven.]]></translation>
         <translation language="en"><![CDATA[Please add a new mail address.]]></translation>
-		<translation language="pl"><![CDATA[Proszę podać nowy adres mailowy.]]></translation>
+        <translation language="pl"><![CDATA[Proszę podać nowy adres mailowy.]]></translation>
       </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>
@@ -207,12 +211,12 @@
         <translation language="es"><![CDATA[expira en]]></translation>
         <translation language="uk"><![CDATA[Збігає]]></translation>
         <translation language="el"><![CDATA[Λήξει στις]]></translation>
-		<translation language="pl"><![CDATA[Wygasa]]></translation>
+        <translation language="pl"><![CDATA[Wygasa]]></translation>
       </item>
       <item type="label" name="ExportTemplate">
         <translation language="nl"><![CDATA[import template downloaden]]></translation>
         <translation language="en"><![CDATA[download import template]]></translation>
-		<translation language="pl"><![CDATA[pobierz szablon importu]]></translation>
+        <translation language="pl"><![CDATA[pobierz szablon importu]]></translation>
       </item>
       <item type="label" name="Female">
         <translation language="nl"><![CDATA[vrouw]]></translation>
@@ -227,7 +231,7 @@
         <translation language="uk"><![CDATA[Жінка]]></translation>
         <translation language="lt"><![CDATA[moteris]]></translation>
         <translation language="el"><![CDATA[Θήλυ]]></translation>
-		<translation language="pl"><![CDATA[kobieta]]></translation>
+        <translation language="pl"><![CDATA[kobieta]]></translation>
       </item>
       <item type="label" name="FirstName">
         <translation language="nl"><![CDATA[voornaam]]></translation>
@@ -242,7 +246,7 @@
         <translation language="uk"><![CDATA[І'мя]]></translation>
         <translation language="lt"><![CDATA[Vardas]]></translation>
         <translation language="el"><![CDATA[Όνομα]]></translation>
-		<translation language="pl"><![CDATA[imię]]></translation>
+        <translation language="pl"><![CDATA[imię]]></translation>
       </item>
       <item type="label" name="Gender">
         <translation language="nl"><![CDATA[geslacht]]></translation>
@@ -257,7 +261,7 @@
         <translation language="uk"><![CDATA[Стать]]></translation>
         <translation language="lt"><![CDATA[lytis]]></translation>
         <translation language="el"><![CDATA[Φύλο]]></translation>
-		<translation language="pl"><![CDATA[płeć]]></translation>
+        <translation language="pl"><![CDATA[płeć]]></translation>
       </item>
       <item type="label" name="GroupName">
         <translation language="nl"><![CDATA[groep naam]]></translation>
@@ -272,7 +276,7 @@
         <translation language="uk"><![CDATA[Назва групи]]></translation>
         <translation language="lt"><![CDATA[grupės pavadinimas]]></translation>
         <translation language="el"><![CDATA[Όνομα ομάδας]]></translation>
-		<translation language="pl"><![CDATA[nazwa grupy]]></translation>
+        <translation language="pl"><![CDATA[nazwa grupy]]></translation>
       </item>
       <item type="label" name="Groups">
         <translation language="nl"><![CDATA[groepen]]></translation>
@@ -287,7 +291,7 @@
         <translation language="uk"><![CDATA[Групи]]></translation>
         <translation language="lt"><![CDATA[grupės]]></translation>
         <translation language="el"><![CDATA[Ομάδες]]></translation>
-		<translation language="pl"><![CDATA[grupy]]></translation>
+        <translation language="pl"><![CDATA[grupy]]></translation>
       </item>
       <item type="label" name="Inactive">
         <translation language="nl"><![CDATA[inactief]]></translation>
@@ -302,7 +306,7 @@
         <translation language="uk"><![CDATA[Не активний]]></translation>
         <translation language="lt"><![CDATA[neaktyvus]]></translation>
         <translation language="el"><![CDATA[Ανενεργή]]></translation>
-		<translation language="pl"><![CDATA[nieaktywny]]></translation>
+        <translation language="pl"><![CDATA[nieaktywny]]></translation>
       </item>
       <item type="label" name="LastName">
         <translation language="nl"><![CDATA[achternaam]]></translation>
@@ -316,7 +320,7 @@
         <translation language="es"><![CDATA[apellido]]></translation>
         <translation language="uk"><![CDATA[Прізвище]]></translation>
         <translation language="el"><![CDATA[Επώνυμο]]></translation>
-		<translation language="pl"><![CDATA[nazwisko]]></translation>
+        <translation language="pl"><![CDATA[nazwisko]]></translation>
       </item>
       <item type="label" name="LoginBox">
         <translation language="nl"><![CDATA[login box]]></translation>
@@ -325,14 +329,14 @@
         <translation language="el"><![CDATA[Χώρος Σύνδεσης]]></translation>
         <translation language="zh"><![CDATA[登录框]]></translation>
         <translation language="de"><![CDATA[Login-Box]]></translation>
-		<translation language="pl"><![CDATA[pole logowania ]]></translation>
+        <translation language="pl"><![CDATA[pole logowania ]]></translation>
       </item>
       <item type="label" name="LoginLink">
         <translation language="nl"><![CDATA[login link]]></translation>
         <translation language="en"><![CDATA[login link]]></translation>
         <translation language="ru"><![CDATA[войдите ссылку]]></translation>
         <translation language="de"><![CDATA[Login-Link]]></translation>
-		<translation language="pl"><![CDATA[link logowania]]></translation>
+        <translation language="pl"><![CDATA[link logowania]]></translation>
       </item>
       <item type="label" name="Male">
         <translation language="nl"><![CDATA[man]]></translation>
@@ -346,7 +350,7 @@
         <translation language="es"><![CDATA[hombre]]></translation>
         <translation language="uk"><![CDATA[Чеоловік]]></translation>
         <translation language="el"><![CDATA[Άρρεν]]></translation>
-		<translation language="pl"><![CDATA[mężczyzna]]></translation>
+        <translation language="pl"><![CDATA[mężczyzna]]></translation>
       </item>
       <item type="label" name="MembersCount">
         <translation language="nl"><![CDATA[leden aantal]]></translation>
@@ -360,40 +364,43 @@
         <translation language="es"><![CDATA[números de miembros]]></translation>
         <translation language="uk"><![CDATA[К-ть користувачів]]></translation>
         <translation language="el"><![CDATA[Πλήθος μελών]]></translation>
-		<translation language="pl"><![CDATA[liczba członków]]></translation>
+        <translation language="pl"><![CDATA[liczba członków]]></translation>
       </item>
       <item type="label" name="NotificationNewProfileToAdmin">
         <translation language="nl"><![CDATA[Nieuw profiel voor %1$s is toegevoegd.]]></translation>
         <translation language="en"><![CDATA[New profile for %1$s has been created.]]></translation>
         <translation language="fr"><![CDATA[Nouveau profil pour %1$s a été créé.]]></translation>
-		<translation language="pl"><![CDATA[Nowy profil dla %1$s został utworzony.]]></translation>
+        <translation language="pl"><![CDATA[Nowy profil dla %1$s został utworzony.]]></translation>
       </item>
       <item type="label" name="NotificationNewProfileToProfile">
         <translation language="nl"><![CDATA[Uw profiel is aangemaakt.]]></translation>
         <translation language="en"><![CDATA[Your profile has been added.]]></translation>
         <translation language="fr"><![CDATA[Votre profil a été créé.]]></translation>
-		<translation language="pl"><![CDATA[Twój profil został dodany.]]></translation>
+        <translation language="pl"><![CDATA[Twój profil został dodany.]]></translation>
       </item>
       <item type="label" name="NotificationUpdatedProfileToProfile">
         <translation language="nl"><![CDATA[Uw profiel is gewijzigd.]]></translation>
         <translation language="en"><![CDATA[Your profile has been edited.]]></translation>
         <translation language="fr"><![CDATA[Votre profil est modifié.]]></translation>
-		<translation language="pl"><![CDATA[Twój profil został zmodyfikowany. ]]></translation>
+        <translation language="pl"><![CDATA[Twój profil został zmodyfikowany. ]]></translation>
       </item>
       <item type="label" name="OverwriteProfileNotificationEmail">
         <translation language="nl"><![CDATA[Gebruik een aangepast e-mailadres.]]></translation>
         <translation language="en"><![CDATA[Use a custom mail address.]]></translation>
-		<translation language="pl"><![CDATA[Użyj niestandardowego adresu e-mail.]]></translation>
+        <translation language="pl"><![CDATA[Użyj niestandardowego adresu e-mail.]]></translation>
       </item>
       <item type="label" name="UpdateEmail">
         <translation language="nl"><![CDATA[wijzig e-mail]]></translation>
         <translation language="en"><![CDATA[update e-mail]]></translation>
-		<translation language="pl"><![CDATA[aktualizuj adres e-mail]]></translation>
+        <translation language="pl"><![CDATA[aktualizuj adres e-mail]]></translation>
       </item>
       <item type="label" name="NewProfileWillBeNotified">
-        <translation language="nl"><![CDATA[Bij het opslaan zal dit nieuw profiel een e-mail ontvangen met de logingegevens.]]></translation>
-        <translation language="en"><![CDATA[When saving, this new profile will receive an e-mail with the login credentials.]]></translation>
-		<translation language="pl"><![CDATA[Podczas zapisywania ten nowy profil otrzyma wiadomość e-mail z danymi logowania.]]></translation>
+        <translation language="nl">
+          <![CDATA[Bij het opslaan zal dit nieuw profiel een e-mail ontvangen met de logingegevens.]]></translation>
+        <translation language="en">
+          <![CDATA[When saving, this new profile will receive an e-mail with the login credentials.]]></translation>
+        <translation language="pl">
+          <![CDATA[Podczas zapisywania ten nowy profil otrzyma wiadomość e-mail z danymi logowania.]]></translation>
       </item>
       <item type="label" name="RegisteredOn">
         <translation language="nl"><![CDATA[geregistreerd op]]></translation>
@@ -407,17 +414,21 @@
         <translation language="es"><![CDATA[registrado en]]></translation>
         <translation language="uk"><![CDATA[Дата реєстрації]]></translation>
         <translation language="el"><![CDATA[Ενεγράφη στις]]></translation>
-		<translation language="pl"><![CDATA[zarejestrowany dn.]]></translation>
+        <translation language="pl"><![CDATA[zarejestrowany dn.]]></translation>
       </item>
       <item type="label" name="SendNewProfileAdminMail">
-        <translation language="nl"><![CDATA[Verzend mail naar administrator als een nieuw profiel toegevoegd is.]]></translation>
+        <translation language="nl">
+          <![CDATA[Verzend mail naar administrator als een nieuw profiel toegevoegd is.]]></translation>
         <translation language="en"><![CDATA[Send mail to administrator on new profile.]]></translation>
-		<translation language="pl"><![CDATA[Wyślij wiadomość do administratora o nowym profilu.]]></translation>
+        <translation language="pl"><![CDATA[Wyślij wiadomość do administratora o nowym profilu.]]></translation>
       </item>
       <item type="label" name="SendNewProfileMail">
-        <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
-        <translation language="en"><![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
-		<translation language="pl"><![CDATA[Wyślij wiadomość do nowego profilu podczas tworzenia lub po zmianie adresu e-mail lub hasła.]]></translation>
+        <translation language="nl">
+          <![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
+        <translation language="en">
+          <![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
+        <translation language="pl">
+          <![CDATA[Wyślij wiadomość do nowego profilu podczas tworzenia lub po zmianie adresu e-mail lub hasła.]]></translation>
       </item>
       <item type="label" name="Time">
         <translation language="nl"><![CDATA[tijd]]></translation>
@@ -432,7 +443,7 @@
         <translation language="uk"><![CDATA[час]]></translation>
         <translation language="sv"><![CDATA[tid]]></translation>
         <translation language="el"><![CDATA[ώρα]]></translation>
-		<translation language="pl"><![CDATA[czas]]></translation>
+        <translation language="pl"><![CDATA[czas]]></translation>
       </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -446,7 +457,7 @@
         <translation language="es"><![CDATA[desbloquear]]></translation>
         <translation language="uk"><![CDATA[Розблокувати]]></translation>
         <translation language="el"><![CDATA[Ξεμπλοκάρισμα]]></translation>
-		<translation language="pl"><![CDATA[odblokuj]]></translation>
+        <translation language="pl"><![CDATA[odblokuj]]></translation>
       </item>
       <item type="label" name="Undelete">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -460,22 +471,27 @@
         <translation language="es"><![CDATA[rescuperar]]></translation>
         <translation language="uk"><![CDATA[Поновити]]></translation>
         <translation language="el"><![CDATA[Επαναφορά από διαγραφή]]></translation>
-		<translation language="pl"><![CDATA[przywróć]]></translation>
+        <translation language="pl"><![CDATA[przywróć]]></translation>
       </item>
       <item type="label" name="UpdatedProfileWillBeNotified">
-        <translation language="nl"><![CDATA[Indien het e-mailadres of wachtwoord gewijzigd wordt, dan ontvangt dit profiel een e-mail met de nieuwe logingegevens.]]></translation>
-        <translation language="en"><![CDATA[When you change the mail address or password, this profile will receive an e-mail with the new login credentials.]]></translation>
-		<translation language="pl"><![CDATA[Po zmianie adresu e-mail lub hasła profil ten otrzyma wiadomość e-mail z nowymi danymi logowania.]]></translation>
+        <translation language="nl">
+          <![CDATA[Indien het e-mailadres of wachtwoord gewijzigd wordt, dan ontvangt dit profiel een e-mail met de nieuwe logingegevens.]]></translation>
+        <translation language="en">
+          <![CDATA[When you change the mail address or password, this profile will receive an e-mail with the new login credentials.]]></translation>
+        <translation language="pl">
+          <![CDATA[Po zmianie adresu e-mail lub hasła profil ten otrzyma wiadomość e-mail z nowymi danymi logowania.]]></translation>
       </item>
       <item type="label" name="YourExistingPassword">
         <translation language="nl"><![CDATA[uw bestaand wachtwoord]]></translation>
         <translation language="en"><![CDATA[your existing password]]></translation>
-		<translation language="pl"><![CDATA[twoje obecne hasło]]></translation>
+        <translation language="pl"><![CDATA[twoje obecne hasło]]></translation>
       </item>
       <item type="message" name="AutoGeneratedPasswordIfEmpty">
-        <translation language="nl"><![CDATA[Indien niet ingevuld, wordt er automatisch een wachtwoord gegenereerd.]]></translation>
+        <translation language="nl">
+          <![CDATA[Indien niet ingevuld, wordt er automatisch een wachtwoord gegenereerd.]]></translation>
         <translation language="en"><![CDATA[If empty, a password will automatically be generated.]]></translation>
-		<translation language="pl"><![CDATA[Jeśli jest puste, hasło zostanie wygenerowane automatycznie.]]></translation>
+        <translation language="pl">
+          <![CDATA[Jeśli jest puste, hasło zostanie wygenerowane automatycznie.]]></translation>
       </item>
       <item type="message" name="ConfirmBlock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
@@ -488,7 +504,7 @@
         <translation language="hu"><![CDATA[Biztos hogy ki akarod tiltani "%1$s"-(o)t?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres bloquear a "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να μπλοκάρετε το "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz zablokować "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz zablokować "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil verwijderen?]]></translation>
@@ -501,7 +517,7 @@
         <translation language="hu"><![CDATA[Biztos hogy törölni akarod "%1$s"-(o)t?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar a "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteGroup">
         <translation language="nl"><![CDATA[Ben je zeker dat je de group "%1$s" wil verwijderen?]]></translation>
@@ -514,33 +530,49 @@
         <translation language="hu"><![CDATA[Biztos hogy törölni akarod a csoportból "%1$s"-(o)t?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres elimnar el grupo "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε την ομάδα "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć grupę "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć grupę "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmMassAddToGroup">
-        <translation language="nl"><![CDATA[Ben je zeker dat je deze profielen aan volgende groep wil toevoegen?]]></translation>
-        <translation language="en"><![CDATA[Are you sure you want to add these profiles to the following group?]]></translation>
-        <translation language="it"><![CDATA[Sei sicuro di voler aggiungere questi profili al seguente gruppo?]]></translation>
+        <translation language="nl">
+          <![CDATA[Ben je zeker dat je deze profielen aan volgende groep wil toevoegen?]]></translation>
+        <translation language="en">
+          <![CDATA[Are you sure you want to add these profiles to the following group?]]></translation>
+        <translation language="it">
+          <![CDATA[Sei sicuro di voler aggiungere questi profili al seguente gruppo?]]></translation>
         <translation language="ru"><![CDATA[Добавить пользователя в эту группу?]]></translation>
         <translation language="zh"><![CDATA[你确定要将这些用户资料添加到以下用户组吗？]]></translation>
-        <translation language="de"><![CDATA[Sollen diese Profile wirklich zur folgenden Gruppe hinzugefügt werden?]]></translation>
-        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir ajouter ces profils aux groupes suivants?]]></translation>
-        <translation language="hu"><![CDATA[Biztos hogy hozzá akarod adni ezt a profilt a kiválasztott csoporthoz?]]></translation>
-        <translation language="es"><![CDATA[¿Estás seguro de que quieres agregar estos perfiles al siguiente grupo?]]></translation>
-        <translation language="el"><![CDATA[Σίγουρα θέλετε να προσθέσετε αυτά τα προφίλ στην ακόλουθη ομάδα;]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz dodać te profile do tej grupy?]]></translation>
+        <translation language="de">
+          <![CDATA[Sollen diese Profile wirklich zur folgenden Gruppe hinzugefügt werden?]]></translation>
+        <translation language="fr">
+          <![CDATA[Etes-vous sûr de vouloir ajouter ces profils aux groupes suivants?]]></translation>
+        <translation language="hu">
+          <![CDATA[Biztos hogy hozzá akarod adni ezt a profilt a kiválasztott csoporthoz?]]></translation>
+        <translation language="es">
+          <![CDATA[¿Estás seguro de que quieres agregar estos perfiles al siguiente grupo?]]></translation>
+        <translation language="el">
+          <![CDATA[Σίγουρα θέλετε να προσθέσετε αυτά τα προφίλ στην ακόλουθη ομάδα;]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz dodać te profile do tej grupy?]]></translation>
       </item>
       <item type="message" name="ConfirmProfileGroupDelete">
-        <translation language="nl"><![CDATA[Ben je zeker dat je dit profiel uit de groep "%1$s" wil verwijderen?]]></translation>
-        <translation language="en"><![CDATA[Are you sure you want to delete this profile from the group "%1$s"?]]></translation>
-        <translation language="it"><![CDATA[Sei sicuro di voler eliminare questo profilo dal gruppo "%1$s"?]]></translation>
+        <translation language="nl">
+          <![CDATA[Ben je zeker dat je dit profiel uit de groep "%1$s" wil verwijderen?]]></translation>
+        <translation language="en">
+          <![CDATA[Are you sure you want to delete this profile from the group "%1$s"?]]></translation>
+        <translation language="it">
+          <![CDATA[Sei sicuro di voler eliminare questo profilo dal gruppo "%1$s"?]]></translation>
         <translation language="ru"><![CDATA[Удалить профиль из группы "%1$s"?]]></translation>
         <translation language="zh"><![CDATA[你确定要从用户组“%1$s”中删除这个帐户资料吗？]]></translation>
-        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer ce profil du groupe "%1$s"?]]></translation>
-        <translation language="de"><![CDATA[Soll dieses Profil wirklich aus der Gruppe "%1$s" entfernen willst?]]></translation>
-        <translation language="hu"><![CDATA[Biztos hogy törölni akarod ezt a profilt a(z) "%1$s" csoportból?]]></translation>
-        <translation language="es"><![CDATA[¿Estás seguro de querer borrar este perfil del grupo "%1$s"?]]></translation>
-        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το προφίλ από την ομάδα "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąc ten profil z grupy "%1$s"?]]></translation>
+        <translation language="fr">
+          <![CDATA[Etes-vous sûr de vouloir effacer ce profil du groupe "%1$s"?]]></translation>
+        <translation language="de">
+          <![CDATA[Soll dieses Profil wirklich aus der Gruppe "%1$s" entfernen willst?]]></translation>
+        <translation language="hu">
+          <![CDATA[Biztos hogy törölni akarod ezt a profilt a(z) "%1$s" csoportból?]]></translation>
+        <translation language="es">
+          <![CDATA[¿Estás seguro de querer borrar este perfil del grupo "%1$s"?]]></translation>
+        <translation language="el">
+          <![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το προφίλ από την ομάδα "%1$s";]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąc ten profil z grupy "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmUnblock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
@@ -553,7 +585,7 @@
         <translation language="hu"><![CDATA[Biztos hogy fel akarod oldani "%1$s" tiltását?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres desbloquear a "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να ξεμπλοκάρετε το "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz odblokować "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz odblokować "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmUndelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
@@ -562,21 +594,22 @@
         <translation language="ru"><![CDATA[Восстановить "%1$s"?]]></translation>
         <translation language="zh"><![CDATA[你确定要恢复“%1$s”吗？]]></translation>
         <translation language="de"><![CDATA[Soll "%1$s" wirklich wiederhergestellt werden?]]></translation>
-        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir revenir sur l'effacement de "%1$s"?]]></translation>
+        <translation language="fr">
+          <![CDATA[Etes-vous sûr de vouloir revenir sur l'effacement de "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy vissza akarod állítani "%1$s"-(o)t?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres recuperar a "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να επαναφέτε από διαγραφή το "%1$s";]]></translation>
-		<translation language="pl"><![CDATA[Jesteś pewien że chcesz przywrócić "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz przywrócić "%1$s"?]]></translation>
       </item>
       <item type="message" name="EmailIsRequired">
         <translation language="nl"><![CDATA[Gelieve een geldig e-mailadres in te geven.]]></translation>
         <translation language="en"><![CDATA[Please fill in a valid mail address.]]></translation>
-		<translation language="pl"><![CDATA[Prosze podać poprawny adres e-mail.?]]></translation>
+        <translation language="pl"><![CDATA[Prosze podać poprawny adres e-mail.?]]></translation>
       </item>
       <item type="message" name="EditProfile">
         <translation language="nl"><![CDATA[profiel wijzigen van "%1$s"]]></translation>
         <translation language="en"><![CDATA[editing profile from "%1$s"]]></translation>
-		<translation language="pl"><![CDATA[edycja profilu z "%1$s"?]]></translation>
+        <translation language="pl"><![CDATA[edycja profilu z "%1$s"?]]></translation>
       </item>
       <item type="message" name="GroupAdded">
         <translation language="nl"><![CDATA[De groep werd toegevoegd.]]></translation>
@@ -589,7 +622,7 @@
         <translation language="hu"><![CDATA[A csoport hozzáadva.]]></translation>
         <translation language="es"><![CDATA[El grupo fue agregado.]]></translation>
         <translation language="el"><![CDATA[Η ομάδα προστέθηκε.]]></translation>
-		<translation language="pl"><![CDATA[Grupa została dodana.]]></translation>
+        <translation language="pl"><![CDATA[Grupa została dodana.]]></translation>
       </item>
       <item type="message" name="GroupSaved">
         <translation language="nl"><![CDATA[De groep werd opgeslagen.]]></translation>
@@ -602,7 +635,7 @@
         <translation language="hu"><![CDATA[A csoport elmentve.]]></translation>
         <translation language="es"><![CDATA[El grupo fue guardado.]]></translation>
         <translation language="el"><![CDATA[Η ομάδα αποθηκεύτηκε.]]></translation>
-		<translation language="pl"><![CDATA[Grupa została zapisana.]]></translation>
+        <translation language="pl"><![CDATA[Grupa została zapisana.]]></translation>
       </item>
       <item type="message" name="MembershipAdded">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd toegevoegd.]]></translation>
@@ -615,7 +648,7 @@
         <translation language="hu"><![CDATA[A csoport tagsága hozzáadva.]]></translation>
         <translation language="es"><![CDATA[La pertenencia al grupo se añadió.]]></translation>
         <translation language="el"><![CDATA[Η συμμετοχή στην ομάδα προστέθηκε.]]></translation>
-		<translation language="pl"><![CDATA[Członkostwo grupy zostało dodane.]]></translation>
+        <translation language="pl"><![CDATA[Członkostwo grupy zostało dodane.]]></translation>
       </item>
       <item type="message" name="MembershipDeleted">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd verwijderd.]]></translation>
@@ -628,7 +661,7 @@
         <translation language="hu"><![CDATA[A csoport tagsága törölve.]]></translation>
         <translation language="es"><![CDATA[La pertenencia al grupo fue eliminada.]]></translation>
         <translation language="el"><![CDATA[Η συμμετοχή στην ομάδα διεγράφη.]]></translation>
-		<translation language="pl"><![CDATA[Członkostwo grupy zostało usunięte.]]></translation>
+        <translation language="pl"><![CDATA[Członkostwo grupy zostało usunięte.]]></translation>
       </item>
       <item type="message" name="MembershipSaved">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd aangepast.]]></translation>
@@ -641,7 +674,7 @@
         <translation language="hu"><![CDATA[A csoport tagsága elmentve.]]></translation>
         <translation language="es"><![CDATA[La pertenencia al grupo fue guardada.]]></translation>
         <translation language="el"><![CDATA[Η συμμετοχή στην ομάδα αποθηκεύτηκε.]]></translation>
-		<translation language="pl"><![CDATA[Członkostwo grupy zostało zapisane.]]></translation>
+        <translation language="pl"><![CDATA[Członkostwo grupy zostało zapisane.]]></translation>
       </item>
       <item type="message" name="NoGroups">
         <translation language="nl"><![CDATA[Er zijn nog geen groepen.]]></translation>
@@ -654,30 +687,38 @@
         <translation language="hu"><![CDATA[Nincsen már csoport.]]></translation>
         <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ομάδες.]]></translation>
-		<translation language="pl"><![CDATA[Brak jeszcze grup.]]></translation>
+        <translation language="pl"><![CDATA[Brak jeszcze grup.]]></translation>
       </item>
       <item type="message" name="NoGroupsForThisProfile">
         <translation language="nl"><![CDATA[Dit profiel zit in geen enkele groep]]></translation>
         <translation language="en"><![CDATA[This profile is not in any group]]></translation>
         <translation language="fr"><![CDATA[Ce profil n'appartient à aucun groupe]]></translation>
-		<translation language="pl"><![CDATA[Ten profil nie należy do żadnej grupy]]></translation>
+        <translation language="pl"><![CDATA[Ten profil nie należy do żadnej grupy]]></translation>
       </item>
       <item type="message" name="NotificationNewProfileLoginCredentials">
-        <translation language="nl"><![CDATA[<p>Beste,</p><p>vanaf heden kan u inloggen op onze website met volgende gegevens:</p><p>Email: %1$s<br/>Wachtwoord: %2$s</p><p>Log in op <a href="%3$s/nl">%3$s</a></p>]]></translation>
-        <translation language="en"><![CDATA[<p>Dear,</p><p>from now on you can log in to our website with the following information: </p><p>Email: %1$s<br/>Password: %2$s</p><p>Log in on <a href="%3$s/fr">%3$s</a></p>]]></translation>
-        <translation language="fr"><![CDATA[<p>Bonjour,</p><p>Vous pouvez désormais vous connecter à notre site Web avec les informations suivantes: </p><p>E-mail: %1$s<br/>Mot de passe: %2$s</p><p>Connectez-vous sur <a href="%3$s/fr">%3$s</a></p>]]></translation>
-		<translation language="pl"><![CDATA[<p>Użytkowniku, </p>od teraz możesz logować się na naszej stronie za pomocą następujących danych:</p><p>Email: %1$s<br/>Hasło: %2$s</p><p>Zaloguj się na <a href="%3$s/fr">%3$s</a></p>]]></translation>
+        <translation language="nl">
+          <![CDATA[<p>Beste,</p><p>vanaf heden kan u inloggen op onze website met volgende gegevens:</p><p>Email: %1$s<br/>Wachtwoord: %2$s</p><p>Log in op <a href="%3$s/nl">%3$s</a></p>]]></translation>
+        <translation language="en">
+          <![CDATA[<p>Dear,</p><p>from now on you can log in to our website with the following information: </p><p>Email: %1$s<br/>Password: %2$s</p><p>Log in on <a href="%3$s/fr">%3$s</a></p>]]></translation>
+        <translation language="fr">
+          <![CDATA[<p>Bonjour,</p><p>Vous pouvez désormais vous connecter à notre site Web avec les informations suivantes: </p><p>E-mail: %1$s<br/>Mot de passe: %2$s</p><p>Connectez-vous sur <a href="%3$s/fr">%3$s</a></p>]]></translation>
+        <translation language="pl">
+          <![CDATA[<p>Użytkowniku, </p>od teraz możesz logować się na naszej stronie za pomocą następujących danych:</p><p>Email: %1$s<br/>Hasło: %2$s</p><p>Zaloguj się na <a href="%3$s/fr">%3$s</a></p>]]></translation>
       </item>
       <item type="message" name="NotificationNewProfileToAdmin">
-        <translation language="nl"><![CDATA[Beste,<br/><br/>er is een nieuw profiel toevoegd:<br/><a href="%3$s" title="Klik om te wijzigen">%1$s - %2$s</a>]]></translation>
-        <translation language="en"><![CDATA[Dear,<br/><br/>a new profile has been added:<br/><a href="%3$s" title="Click to edit">%1$s - %2$s</a>]]></translation>
-        <translation language="fr"><![CDATA[Cher,<br/><br/>il ya un nouveau profil ajoute:<br/><a href="%3$s" title="Cliquez pour modifier">%1$s - %2$s</a>]]></translation>
-		<translation language="pl"><![CDATA[Użytkowniku,<br/><br/>nowy profil został utworzony:<br/><a href="%3$s" title="Kliknij aby edytować">%1$s - %2$s</a>]]></translation>
+        <translation language="nl">
+          <![CDATA[Beste,<br/><br/>er is een nieuw profiel toevoegd:<br/><a href="%3$s" title="Klik om te wijzigen">%1$s - %2$s</a>]]></translation>
+        <translation language="en">
+          <![CDATA[Dear,<br/><br/>a new profile has been added:<br/><a href="%3$s" title="Click to edit">%1$s - %2$s</a>]]></translation>
+        <translation language="fr">
+          <![CDATA[Cher,<br/><br/>il ya un nouveau profil ajoute:<br/><a href="%3$s" title="Cliquez pour modifier">%1$s - %2$s</a>]]></translation>
+        <translation language="pl">
+          <![CDATA[Użytkowniku,<br/><br/>nowy profil został utworzony:<br/><a href="%3$s" title="Kliknij aby edytować">%1$s - %2$s</a>]]></translation>
       </item>
       <item type="message" name="OverwriteExisting">
         <translation language="nl"><![CDATA[Bestaande profielen overschrijven?]]></translation>
         <translation language="en"><![CDATA[Overwrite existing profiles?]]></translation>
-		<translation language="pl"><![CDATA[Zastąpić istniejące profile?]]></translation>
+        <translation language="pl"><![CDATA[Zastąpić istniejące profile?]]></translation>
       </item>
       <item type="message" name="ProfileAddedToGroup">
         <translation language="nl"><![CDATA[Het profiel werd toegevoegd aan de groep.]]></translation>
@@ -690,7 +731,7 @@
         <translation language="hu"><![CDATA[A profil hozzáadva a csoporthoz.]]></translation>
         <translation language="es"><![CDATA[El perfil fue agregado al grupo.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ προστέθηκε στην ομάδα.]]></translation>
-		<translation language="pl"><![CDATA[Profil został dodany do grupy.]]></translation>
+        <translation language="pl"><![CDATA[Profil został dodany do grupy.]]></translation>
       </item>
       <item type="message" name="ProfileBlocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd geblokkeerd.]]></translation>
@@ -703,7 +744,7 @@
         <translation language="hu"><![CDATA[A "%1$s" profil kitiltva.]]></translation>
         <translation language="es"><![CDATA[El perfil "%1$s" fue bloqueado.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ "%1$s" μπλοκαρίστηκε.]]></translation>
-		<translation language="pl"><![CDATA[Profil "%1$s" został zablokowany.]]></translation>
+        <translation language="pl"><![CDATA[Profil "%1$s" został zablokowany.]]></translation>
       </item>
       <item type="message" name="ProfileDeleted">
         <translation language="nl"><![CDATA[Het profiel werd verwijderd.]]></translation>
@@ -716,7 +757,7 @@
         <translation language="hu"><![CDATA[A profil törölve.]]></translation>
         <translation language="es"><![CDATA[El perfil fue eliminado.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ διεγράφη.]]></translation>
-		<translation language="pl"><![CDATA[Profil został usunięty.]]></translation>
+        <translation language="pl"><![CDATA[Profil został usunięty.]]></translation>
       </item>
       <item type="message" name="ProfilesAddedToGroup">
         <translation language="nl"><![CDATA[De profielen zijn toegevoegd aan de groep.]]></translation>
@@ -729,17 +770,23 @@
         <translation language="hu"><![CDATA[A profilok hozzáadva a csoporthoz.]]></translation>
         <translation language="es"><![CDATA[Los perfiles fueron agregados al grupo.]]></translation>
         <translation language="el"><![CDATA[Τα προφίλ προστέθηκαν στην ομάδα.]]></translation>
-		<translation language="pl"><![CDATA[Profile zostału dodane do grupy.]]></translation>
+        <translation language="pl"><![CDATA[Profile zostału dodane do grupy.]]></translation>
       </item>
       <item type="message" name="ProfilesImported">
-        <translation language="nl"><![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn niet ge-updated.]]></translation>
-        <translation language="en"><![CDATA[There have been added %1$s profiles, %2$s already existed and are not updated.]]></translation>
-		<translation language="pl"><![CDATA[Profile %1$s został dodane, profile %2$s juz istniały i nie zostały uaktualniione.]]></translation>
+        <translation language="nl">
+          <![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn niet ge-updated.]]></translation>
+        <translation language="en">
+          <![CDATA[There have been added %1$s profiles, %2$s already existed and are not updated.]]></translation>
+        <translation language="pl">
+          <![CDATA[Profile %1$s został dodane, profile %2$s juz istniały i nie zostały uaktualniione.]]></translation>
       </item>
       <item type="message" name="ProfilesImportedAndUpdated">
-        <translation language="nl"><![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn ge-updated.]]></translation>
-        <translation language="en"><![CDATA[There have been added %1$s profiles, %2$s already existed and are updated.]]></translation>
-		<translation language="pl"><![CDATA[Profile %1$s został dodane, profile %2$s juz istniały i zostały uaktualniione.]]></translation>
+        <translation language="nl">
+          <![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn ge-updated.]]></translation>
+        <translation language="en">
+          <![CDATA[There have been added %1$s profiles, %2$s already existed and are updated.]]></translation>
+        <translation language="pl">
+          <![CDATA[Profile %1$s został dodane, profile %2$s juz istniały i zostały uaktualniione.]]></translation>
       </item>
       <item type="message" name="ProfileUnblocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
@@ -752,7 +799,7 @@
         <translation language="hu"><![CDATA[A "%1$s" profil tiltása feloldva.]]></translation>
         <translation language="es"><![CDATA[El perfil "%1$s" fue desbloqueado.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ "%1$s" ξεμπλοκαρίστηκε.]]></translation>
-		<translation language="pl"><![CDATA[Profil "%1$s" został odblokowany.]]></translation>
+        <translation language="pl"><![CDATA[Profil "%1$s" został odblokowany.]]></translation>
       </item>
       <item type="message" name="ProfileUndeleted">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
@@ -765,7 +812,7 @@
         <translation language="hu"><![CDATA[A "%1$s" profil visszaállítva.]]></translation>
         <translation language="es"><![CDATA[El perfil "%1$s" fue recuperado.]]></translation>
         <translation language="el"><![CDATA[Έγινε επαναφορά από διαγραφή του προφίλ "%1$s".]]></translation>
-		<translation language="pl"><![CDATA[Profil "%1$s" został przywrócony.]]></translation>
+        <translation language="pl"><![CDATA[Profil "%1$s" został przywrócony.]]></translation>
       </item>
       <item type="message" name="Saved">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen.]]></translation>
@@ -778,18 +825,18 @@
         <translation language="hu"><![CDATA[A "%1$s" profil elmentve.]]></translation>
         <translation language="es"><![CDATA[El perfil "%1$s" fue guardado.]]></translation>
         <translation language="el"><![CDATA[Το προφίλ "%1$s" αποθηκεύτηκε.]]></translation>
-		<translation language="pl"><![CDATA[Profil "%1$s" został zaoisany.]]></translation>
+        <translation language="pl"><![CDATA[Profil "%1$s" został zaoisany.]]></translation>
       </item>
       <item type="message" name="SavedAndNotified">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen en verwittigd per mail.]]></translation>
         <translation language="en"><![CDATA[The profile "%1$s" was saved and notified by mail.]]></translation>
         <translation language="fr"><![CDATA[Le profil "%1$s" a été enregistré et notifié par courrier.]]></translation>
-		<translation language="pl"><![CDATA[Profil "%1$s" został zapisany i powiadomiony mailowo.]]></translation>
+        <translation language="pl"><![CDATA[Profil "%1$s" został zapisany i powiadomiony mailowo.]]></translation>
       </item>
       <item type="message" name="SavedSettings">
         <translation language="nl"><![CDATA[Profiel instellingen werden opgeslagen.]]></translation>
         <translation language="en"><![CDATA[Profile settings were saved.]]></translation>
-		<translation language="pl"><![CDATA[Ustawienia profilu zostały zapisane.]]></translation>
+        <translation language="pl"><![CDATA[Ustawienia profilu zostały zapisane.]]></translation>
       </item>
       <item type="error" name="DisplayNameExists">
         <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
@@ -802,7 +849,7 @@
         <translation language="hu"><![CDATA[Ez a becenév már használatban van.]]></translation>
         <translation language="es"><![CDATA[Este nombre para mostrar está en uso.]]></translation>
         <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι σε χρήση.]]></translation>
-		<translation language="pl"><![CDATA[Ta nazwa jest już wykorzystana.]]></translation>
+        <translation language="pl"><![CDATA[Ta nazwa jest już wykorzystana.]]></translation>
       </item>
       <item type="error" name="DisplayNameIsRequired">
         <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
@@ -815,7 +862,7 @@
         <translation language="hu"><![CDATA[A becenév mező kötelező.]]></translation>
         <translation language="es"><![CDATA[Nombre para mostrar es un campo requerido.]]></translation>
         <translation language="el"><![CDATA[Το όνομα οθόνης είναι υποχρεωτικό πεδίο.]]></translation>
-		<translation language="pl"><![CDATA[Nazwa jest polem wymaganym.]]></translation>
+        <translation language="pl"><![CDATA[Nazwa jest polem wymaganym.]]></translation>
       </item>
       <item type="error" name="EmailExists">
         <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
@@ -828,7 +875,7 @@
         <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
         <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι σε χρήση.]]></translation>
-		<translation language="pl"><![CDATA[Ten adres email jest już wykorzystany.]]></translation>
+        <translation language="pl"><![CDATA[Ten adres email jest już wykorzystany.]]></translation>
       </item>
       <item type="error" name="GroupIsRequired">
         <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
@@ -841,7 +888,7 @@
         <translation language="hu"><![CDATA[A csoport mező kötelező.]]></translation>
         <translation language="es"><![CDATA[Grupo es un campo requerido.]]></translation>
         <translation language="el"><![CDATA[Η Ομάδα είναι ένα υποχρεωτικό πεδίο.]]></translation>
-		<translation language="pl"><![CDATA[Grupa jest polem wymaganym.]]></translation>
+        <translation language="pl"><![CDATA[Grupa jest polem wymaganym.]]></translation>
       </item>
       <item type="error" name="GroupNameExists">
         <translation language="nl"><![CDATA[Deze groep naam is al in gebruik.]]></translation>
@@ -854,33 +901,42 @@
         <translation language="hu"><![CDATA[Ez a csoport név már használatban van.]]></translation>
         <translation language="es"><![CDATA[Este nombre de grupo está en uso.]]></translation>
         <translation language="el"><![CDATA[Το όνομα αυτής της ομάδας είναι σε χρήση.]]></translation>
-		<translation language="pl"><![CDATA[Nazwa grupy jest już wykorzystana.]]></translation>
+        <translation language="pl"><![CDATA[Nazwa grupy jest już wykorzystana.]]></translation>
       </item>
       <item type="error" name="NoGroupSelected">
         <translation language="nl"><![CDATA[Je moet een groep selecteren om deze actie te ondergaan.]]></translation>
         <translation language="en"><![CDATA[You must select a group to perfom this action.]]></translation>
-        <translation language="it"><![CDATA[Devi selezionare un gruppo per portare a termine questa azione.]]></translation>
+        <translation language="it">
+          <![CDATA[Devi selezionare un gruppo per portare a termine questa azione.]]></translation>
         <translation language="ru"><![CDATA[Вы должны выбрать группу.]]></translation>
         <translation language="zh"><![CDATA[你必须选择一个群组来实现这个操作。]]></translation>
         <translation language="de"><![CDATA[Du musst eine Gruppe auswählen um diese Aktion auszuführen.]]></translation>
-        <translation language="fr"><![CDATA[Vous devez sélectionner unb groupe pour accomplir cette action.]]></translation>
+        <translation language="fr">
+          <![CDATA[Vous devez sélectionner unb groupe pour accomplir cette action.]]></translation>
         <translation language="hu"><![CDATA[A művelethez ki kell választani egy csoportot.]]></translation>
         <translation language="es"><![CDATA[Debes seleccionar un grupo para realizar esta acción.]]></translation>
-        <translation language="el"><![CDATA[Γιά να εκτελέσετε αυτή την ενέργεια πρέπει να επιλέξετε μία ομάδα.]]></translation>
-		<translation language="pl"><![CDATA[Musisz wybrać grupę, aby wykonać te działanie.]]></translation>
+        <translation language="el">
+          <![CDATA[Γιά να εκτελέσετε αυτή την ενέργεια πρέπει να επιλέξετε μία ομάδα.]]></translation>
+        <translation language="pl"><![CDATA[Musisz wybrać grupę, aby wykonać te działanie.]]></translation>
       </item>
       <item type="error" name="NoProfilesSelected">
-        <translation language="nl"><![CDATA[Je moet minstens 1 profiel selecteren om deze actie te ondergaan.]]></translation>
+        <translation language="nl">
+          <![CDATA[Je moet minstens 1 profiel selecteren om deze actie te ondergaan.]]></translation>
         <translation language="en"><![CDATA[You must select minimum 1 profile to perfom this action.]]></translation>
-        <translation language="it"><![CDATA[Devi selezionare almeno un profilo per portare a termine questa azione.]]></translation>
+        <translation language="it">
+          <![CDATA[Devi selezionare almeno un profilo per portare a termine questa azione.]]></translation>
         <translation language="ru"><![CDATA[Вы должны выбрать как минимум 1 профиль.]]></translation>
         <translation language="zh"><![CDATA[你必须选择至少一个用户资料来实现这个操作。]]></translation>
-        <translation language="de"><![CDATA[Du musst mindestens 1 Profil auswählen um diese Aktion auszuführen.]]></translation>
-        <translation language="fr"><![CDATA[Vous devez sélectionner au moins un profil pour accomplir cette action.]]></translation>
+        <translation language="de">
+          <![CDATA[Du musst mindestens 1 Profil auswählen um diese Aktion auszuführen.]]></translation>
+        <translation language="fr">
+          <![CDATA[Vous devez sélectionner au moins un profil pour accomplir cette action.]]></translation>
         <translation language="hu"><![CDATA[A művelethez minimum 1 profilt ki kell választani.]]></translation>
-        <translation language="es"><![CDATA[Debes seleccionar minimo 1 perfil para realizar esta acción.]]></translation>
-        <translation language="el"><![CDATA[Γιά να εκτελέσετε αυτή την ενέργεια πρέπει να επιλέξετε τουλάχιστον 1 προφίλ.]]></translation>
-		<translation language="pl"><![CDATA[Musisz wybrać minimum 1 profil, aby wykonać te działanie.]]></translation>
+        <translation language="es">
+          <![CDATA[Debes seleccionar minimo 1 perfil para realizar esta acción.]]></translation>
+        <translation language="el">
+          <![CDATA[Γιά να εκτελέσετε αυτή την ενέργεια πρέπει να επιλέξετε τουλάχιστον 1 προφίλ.]]></translation>
+        <translation language="pl"><![CDATA[Musisz wybrać minimum 1 profil, aby wykonać te działanie.]]></translation>
       </item>
       <item type="error" name="UnknownAction">
         <translation language="nl"><![CDATA[Onbekende actie.]]></translation>
@@ -893,7 +949,7 @@
         <translation language="hu"><![CDATA[Ismeretlen művelet.]]></translation>
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
         <translation language="el"><![CDATA[Άγνωστη ενέργεια.]]></translation>
-		<translation language="pl"><![CDATA[Nieznane działanie.]]></translation>
+        <translation language="pl"><![CDATA[Nieznane działanie.]]></translation>
       </item>
     </Profiles>
     <Core>
@@ -901,37 +957,69 @@
         <translation language="nl"><![CDATA[login box]]></translation>
         <translation language="en"><![CDATA[login box]]></translation>
         <translation language="ru"><![CDATA[окно авторизации]]></translation>
-		<translation language="pl"><![CDATA[pole logowania]]></translation>
+        <translation language="pl"><![CDATA[pole logowania]]></translation>
       </item>
       <item type="label" name="LoginLink">
         <translation language="nl"><![CDATA[login link]]></translation>
         <translation language="en"><![CDATA[login link]]></translation>
         <translation language="ru"><![CDATA[войдите ссылку]]></translation>
         <translation language="de"><![CDATA[Login-Link]]></translation>
-		<translation language="pl"><![CDATA[link logowania]]></translation>
+        <translation language="pl"><![CDATA[link logowania]]></translation>
       </item>
       <item type="label" name="SecurePage">
         <translation language="nl"><![CDATA[beveiligde pagina]]></translation>
         <translation language="en"><![CDATA[secure page]]></translation>
         <translation language="fr"><![CDATA[page sécurisée]]></translation>
         <translation language="de"><![CDATA[sichere Seite]]></translation>
-		<translation language="pl"><![CDATA[bezpieczna strona]]></translation>
+        <translation language="pl"><![CDATA[bezpieczna strona]]></translation>
       </item>
     </Core>
   </Backend>
   <Frontend>
     <Core>
+      <item type="label" name="About">
+        <translation language="nl"><![CDATA[over]]></translation>
+        <translation language="en"><![CDATA[about]]></translation>
+      </item>
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
         <translation language="ru"><![CDATA[настройки]]></translation>
-		<translation language="pl"><![CDATA[ustawienia]]></translation>
+        <translation language="pl"><![CDATA[ustawienia]]></translation>
       </item>
       <item type="message" name="ProfilesLoggedInAs">
         <translation language="nl"><![CDATA[Je bent aangemeld als <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="en"><![CDATA[You are logged on as <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="ru"><![CDATA[Вы вошли как <a href="%2$s">%1$s</a>.]]></translation>
-		<translation language="pl"><![CDATA[Jesteś zalogowany jako <a href="%2$s">%1$s</a>.]]></translation>
+        <translation language="pl"><![CDATA[Jesteś zalogowany jako <a href="%2$s">%1$s</a>.]]></translation>
+      </item>
+      <item type="message" name="RegisterIsSuccess">
+        <translation language="nl">
+          <![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Na het activatieproces kan u zich inloggen.]]></translation>
+        <translation language="en">
+          <![CDATA[Welcome! In less than ten minutes you will receive an activation mail. You can log in after the activation process.]]></translation>
+        <translation language="fr">
+          <![CDATA[Bienvenue! Vous allez recevoir, dans moins de dix minutes, vous recevrez un e-mail vous permettant d'activer votre profile.]]></translation>
+        <translation language="it">
+          <![CDATA[Benvenuto! Entro dieci minuti riceverai una mail di attivazione.]]></translation>
+        <translation language="hu">
+          <![CDATA[Üdvözlünk! Kevesebb mint tíz percen belül kapni fogsz egy akcivációs levelet.]]></translation>
+        <translation language="ru">
+          <![CDATA[Добро пожаловать! В ближайшие 10 минут вы получите сообщение с ссылкой на активацию профиля.]]></translation>
+        <translation language="zh"><![CDATA[欢迎！ 您将在十分钟内收到激活电子邮件。]]></translation>
+        <translation language="de">
+          <![CDATA[Willkommen! In weniger als zehn Minuten wirst du eine Aktivierungs-Mail erhalten.]]></translation>
+        <translation language="es">
+          <![CDATA[¡Bienvenido! En menos de 10 minutos recibiras un mail para activar tu cuenta.]]></translation>
+        <translation language="lt">
+          <![CDATA[Sveiki! Per artimiausias 10 min. jus gausite pranešimą su nuorodą profilio aktyvacijai.]]></translation>
+        <translation language="uk">
+          <![CDATA[Ласкаво просимо! В найближчі 10 хвилин на Ваш e-mail Ви отримаєте повідомлення із посиланням на активацію профілю]]></translation>
+        <translation language="sv">
+          <![CDATA[Välkommen! Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande.]]></translation>
+        <translation language="el"><![CDATA[Καλωσήλθατε! Σε λίγη ώρα θα λάβετε ένα email ενεργοποίησης.]]></translation>
+        <translation language="pl">
+          <![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny.]]></translation>
       </item>
     </Core>
   </Frontend>

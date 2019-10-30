@@ -2,6 +2,7 @@
 
 namespace Common\Form;
 
+use Common\Core\Model;
 use Common\Doctrine\ValueObject\AbstractFile;
 use stdClass;
 use Symfony\Component\Form\AbstractType;
@@ -15,12 +16,26 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FileType extends AbstractType
 {
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_file']) {
@@ -133,7 +148,9 @@ class FileType extends AbstractType
                 'constraints' => array(new Valid()),
                 'error_bubbling' => false,
                 'help_text_message' => 'msg.HelpMaxFileSize',
-                'help_text_argument' => $this->getUploadMaxFileSize(),
+                'help_text_argument' => function (Options $options) {
+                    return $this->getUploadMaxFileSize($options['file_class']);
+                },
             ]
         );
     }
@@ -173,33 +190,83 @@ class FileType extends AbstractType
         );
     }
 
-    private function getUploadMaxFileSize(): ?string
+    private function getMaxFileSizeServerValue(): ?int
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
+
         if ($uploadMaxFileSize === false) {
             return null;
         }
 
         // reformat if defined as an integer
         if (is_numeric($uploadMaxFileSize)) {
-            return $uploadMaxFileSize / 1024 . 'MB';
+            return $uploadMaxFileSize;
         }
 
         // reformat if specified in kB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'K') {
-            return mb_substr($uploadMaxFileSize, 0, -1) . 'kB';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000;
         }
 
         // reformat if specified in MB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'M') {
-            return $uploadMaxFileSize . 'B';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000 * 1000;
         }
 
         // reformat if specified in GB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'G') {
-            return $uploadMaxFileSize . 'B';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000 * 1000 * 1000;
         }
 
-        return $uploadMaxFileSize;
+        return null;
+    }
+
+    private function getMaxFileSizeConstraintValue(string $fileClass): ?int
+    {
+        // use the metaData to find the file data
+        /** @var ClassMetadata $metaData */
+        $metaData = $this->validator->getMetadataFor($fileClass);
+        $members = $metaData->getPropertyMetadata('file');
+
+        // the constraints can be found in the property meta data members
+        foreach ($members as $member) {
+            $constraints = $member->getConstraints();
+
+            if (count($constraints) === 1) {
+                /** @var File $fileConstraint */
+                $fileConstraint = $constraints[0];
+
+                if ($fileConstraint instanceof File) {
+                    return $fileConstraint->maxSize;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function getUploadMaxFileSize(string $fileClass): ?string
+    {
+        $constraintValue = $this->getMaxFileSizeConstraintValue($fileClass);
+        $serverValue = $this->getMaxFileSizeServerValue();
+
+        if (!is_numeric($constraintValue) && !is_numeric($serverValue)) {
+            return null;
+        }
+
+        // return the server value if the constraint value is to high
+        if (is_numeric($constraintValue) && is_numeric($serverValue)) {
+            if ($constraintValue < $serverValue) {
+                return Model::prettyPrintFileSize($constraintValue);
+            }
+
+            return Model::prettyPrintFileSize($serverValue);
+        }
+
+        if (is_numeric($constraintValue)) {
+            return Model::prettyPrintFileSize($constraintValue);
+        }
+
+        return Model::prettyPrintFileSize($serverValue);
     }
 }

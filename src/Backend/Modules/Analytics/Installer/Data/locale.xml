@@ -205,7 +205,7 @@
           <p>De Analytics API inschakelen</p>
           <p>
             <ol>
-              <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank" rel="noopener noreferrer">Google Developers Console</a>.</li>
               <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
               <li>Kies een project in de header of maak een nieuw aan.</li>
               <li>Klik op <strong>Bibliotheek</strong> in de zijbalk.</li>
@@ -232,7 +232,7 @@
           <p>Enable the Analytics API</p>
           <p>
             <ol>
-              <li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Go to the <a href="https://console.developers.google.com/" target="_blank" rel="noopener noreferrer">Google Developers Console</a>.</li>
               <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
               <li>Select a project in the header, or create a new one.</li>
               <li>Click on <strong>Library</strong> in the sidebar on the left.</li>

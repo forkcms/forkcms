@@ -1,14 +1,18 @@
 <span class="sr-only">{{ 'lbl.YouAreHere'|trans }}</span>
-<ul class="breadcrumb" itemprop="breadcrumb" role="navigation">
+<ul class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList" role="navigation">
   {% for breadcrumb in breadcrumb %}
-    <li{% if loop.last %} class="active"{% endif %}>
-      {% if breadcrumb.url %}
-        <a href="{{ breadcrumb.url }}" title="{{ breadcrumb.title }}">
-          {{ breadcrumb.title }}
+    <li{% if loop.last %} class="active"{% endif %} itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+      {% if breadcrumb.url and not loop.last %}
+        {# set the full url or the item link will not validate #}
+        <a href="{{ SITE_URL }}{{ breadcrumb.url }}" title="{{ breadcrumb.title }}" itemtype="http://schema.org/Thing"
+          itemprop="item">
+          <span itemprop="name">{{ breadcrumb.title }}</span>
         </a>
       {% else %}
-        {{ breadcrumb.title }}
+        <span itemprop="name">{{ breadcrumb.title }}</span>
       {% endif %}
+      <meta itemprop="position" content="{{ loop.index }}" />
     </li>
   {% endfor %}
 </ul>

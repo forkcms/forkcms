@@ -227,7 +227,7 @@ class MediaGroup implements JsonSerializable, Countable
      */
     public function onPrePersist()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
         $this->setNumberOfConnectedItems();
     }
 
@@ -236,7 +236,7 @@ class MediaGroup implements JsonSerializable, Countable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
         $this->setNumberOfConnectedItems();
     }
 

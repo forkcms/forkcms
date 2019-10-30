@@ -1,25 +1,27 @@
-{% macro buttonIcon(url, icon, label, buttonType, extra) %}
+{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false) %}
   {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
     <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
-      {{ macro.icon(icon) }}
+      {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
       <span class="btn-text">{{ label }}</span>
+      {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
     </a>
   {% else %}
     {% if extra['data-toggle'] is defined and extra['type'] is not defined %}
       {% set extra = extra|merge({'type' : 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
-      {{ macro.icon(icon) }}
+      {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
       <span class="btn-text">{{ label }}</span>
+      {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
     </button>
   {% endif %}
 {% endmacro %}
 
-{% macro required() %}
+{%- macro required() -%}
   <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
-{% endmacro %}
+{%- endmacro -%}
 
 {% macro icon(icon) %}
   <span class="fa fa-{{ icon }}" aria-hidden="true"></span>

@@ -461,6 +461,18 @@ class MediaItem implements JsonSerializable
         return $storage->getWebPathWithFilter($this, $liipImagineBundleFilter);
     }
 
+    public function getThumbnail(string $liipImagineBundleFilter = null): string
+    {
+        /** @var StorageProviderInterface $storage */
+        $storage = Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
+
+        if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $liipImagineBundleFilter === null) {
+            return $storage->getThumbnail($this);
+        }
+
+        return $storage->getWebPathWithFilter($this, $liipImagineBundleFilter);
+    }
+
     private function refreshAspectRatio(): void
     {
         if ($this->height === null || $this->width === null) {
@@ -477,7 +489,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \Datetime();
+        $this->createdOn = $this->editedOn = new \DateTime();
 
         $this->refreshAspectRatio();
     }
@@ -487,7 +499,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
 
         $this->refreshAspectRatio();
     }

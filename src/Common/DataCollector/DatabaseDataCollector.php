@@ -49,7 +49,7 @@ class DatabaseDataCollector extends DataCollector
         return 'database';
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }

@@ -273,7 +273,7 @@ jsBackend.pages.extras = {
     }
     blockHTML += '<div class="btn-group buttonHolder">' +
       '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank" rel="noopener noreferrer"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
       '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
@@ -615,6 +615,9 @@ jsBackend.pages.extras = {
 
     var templateUrl
 
+    // Set the title of the modal to the title of the user template
+    $('[data-fork-cms-role=user-template-title]').text(jsBackend.pages.template.userTemplates[userTemplateId].title)
+
     // if there already was content, use this.
     if (previousContent !== '') {
       $('#userTemplateHiddenPlaceholder').html(previousContent)
@@ -750,7 +753,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />'
+    html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text.trim() + '" />'
     html += '</div>'
 
     html += '</div>'
@@ -761,7 +764,7 @@ jsBackend.pages.extras = {
   },
 
   /**
-   * Creates the html for an editor
+   * Creates the html for a text area
    */
   getTextAreaFieldHtml: function (text, label, key) {
     var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
@@ -773,7 +776,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>'
+    html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -796,7 +799,7 @@ jsBackend.pages.extras = {
     html += '<div class="panel-body">'
 
     html += '<div class="form-group last">'
-    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>'
+    html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor form-control">' + text.trim() + '</textarea>'
     html += '</div>'
 
     html += '</div>'
@@ -1006,10 +1009,12 @@ jsBackend.pages.extras = {
     }
 
     // replace editor
-    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
+    if ($element.is('[data-ft-type="editor"]')) {
       $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key))
 
-      jsBackend.ckeditor.load()
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        jsBackend.ckeditor.load()
+      }
     }
   },
 
@@ -1088,15 +1093,17 @@ jsBackend.pages.extras = {
       return
     }
 
-    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
+    if ($element.is('[data-ft-type="editor"]')) {
       $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]')
 
       $element.html($textarea.val())
 
-      // destroy the editor
-      var editor = CKEDITOR.instances['user-template-cke-' + key]
-      if (editor) {
-        editor.destroy(true)
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        // destroy the editor
+        var editor = CKEDITOR.instances['user-template-cke-' + key]
+        if (editor) {
+          editor.destroy(true)
+        }
       }
     }
   },
@@ -1430,7 +1437,7 @@ jsBackend.pages.tree = {
         onmove: jsBackend.pages.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
       }
     }
 
@@ -1555,13 +1562,17 @@ jsBackend.pages.tree = {
 
       if (collapsed) {
         $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
-        $.tree.reference('#tree div').close_all()
+        $.each($('#tree div'), function (index, element) {
+          $.tree.reference($(element).attr('id')).close_all()
+        })
 
         return
       }
 
       $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
-      $.tree.reference('#tree div').open_all()
+      $.each($('#tree div'), function (index, element) {
+        $.tree.reference($(element).attr('id')).open_all()
+      })
     })
   }
 }

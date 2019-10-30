@@ -19,7 +19,11 @@
     <div class="widget-body">
       {% for mediaItem in mediaItems %}
       <div itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-        <img itemprop="thumbnail" class="img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_slider_pano') }}" alt="{{ mediaItem.title }}" />
+        {% if mediaItem.type == 'movie' %}
+          {{ mediaItem.getIncludeHTML()|raw }}
+        {% else %}
+          <img itemprop="thumbnail" class="img-responsive" src="{{ (mediaItem.getWebPath('media_library_slider_pano')) }}" alt="{{ mediaItem.title }}" />
+        {% endif %}
       </div>
       {% endfor %}
     </div>

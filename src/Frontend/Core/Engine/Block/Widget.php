@@ -257,4 +257,9 @@ class Widget extends KernelLoader implements ModuleExtraInterface
             $kernel->getContainer()->get('database')->getVar($query, $parameters)
         );
     }
+
+    public function getTemplatePath(): string
+    {
+        return $this->template->getPath($this->getCustomTemplate() ?? $this->object->templatePath ?? '');
+    }
 }

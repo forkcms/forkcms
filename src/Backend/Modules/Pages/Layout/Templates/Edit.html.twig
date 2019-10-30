@@ -26,7 +26,7 @@
         {% if appendRevision %}
           {% set url = (url ~ '?page_revision=' ~ item.revision_id) %}
         {% endif %}
-        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank" }) }}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
 
       {% endif %}
 
@@ -48,6 +48,7 @@
           <ul class="dropdown-menu">
             <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
             <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
+            <li><a href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a></li>
           </ul>
         </div>
       {% endif %}
@@ -111,10 +112,6 @@
                   {{ 'lbl.ChangeTemplate'|trans|ucfirst }}
                 </a>
               </p>
-
-              {% if formErrors %}
-                <span class="formError text-danger">{{ formErrors }}</span>
-              {% endif %}
 
               <div id="templateVisualFallback" style="display: none">
                 <div id="fallback" class="generalMessage singleMessage infoMessage">
@@ -311,14 +308,20 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="image" class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
-                  {% form_field image %} {% form_field_error image %}
                 </div>
                 <div class="form-group">
-                  {% if item.data.image %}
-                    <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive" />
-                    <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
-                    {% form_field_error remove_image %}
-                  {% endif %}
+                  <div class="row">
+                    <div class="col-lg-3">
+                      {% if item.data.image %}
+                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
+                      {% endif %}
+                    </div>
+                    <div class="col-lg-9">
+                      {% form_field image %} {% form_field_error image %}
+                      <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                      {% form_field_error remove_image %}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -471,7 +474,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.Content'|trans|capitalize }}</h4>
+          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>

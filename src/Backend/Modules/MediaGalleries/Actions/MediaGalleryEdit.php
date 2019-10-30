@@ -45,7 +45,9 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             $this->template->assign('form', $form->createView());
             $this->template->assign('backLink', $this->getBackLink());
             $this->template->assign('mediaGallery', $mediaGallery);
-            $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
+            $this->template->assign('mediaGroup', $form->getData()->mediaGroup); // @deprecated not needed anymore from Fork 5.7
+
+            $this->header->appendDetailToBreadcrumbs($mediaGallery->getTitle());
 
             // Call parent
             $this->parse();

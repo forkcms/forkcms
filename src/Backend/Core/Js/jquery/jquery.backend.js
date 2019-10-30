@@ -492,13 +492,17 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.keyValueWrapper').append('<span style="display: none;" id="errorMessage-' + id + '" class="text-danger">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
 
           // we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
           timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+
+          $('html, body').animate({
+            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+          },500);
         }
 
         return !blockSubmit
@@ -763,13 +767,17 @@
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError text-danger">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
 
           // we need the timeout otherwise the error is show every time the user presses enter in the tagbox
           timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+
+          $('html, body').animate({
+            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+          },500);
         }
 
         return !blockSubmit
@@ -777,13 +785,15 @@
 
       // build replace html
       var html = '<div class="form-inline tagsWrapper">' +
-        '    <div class="form-group input-group">' +
-        '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '       <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
-        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
-        '           <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
-        '       </button></span>' +
-        '   </div>' +
+        '    <div class="form-group">' +
+        '        <div class="input-group">' +
+        '           <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+        '           <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
+        '               <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '               <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '           </button></span>' +
+        '        </div>' +
+        '    </div>' +
         '    <div id="elementList-' + id + '" class="form-group tagList">' +
         '    </div>' +
         '</div>'
@@ -1211,6 +1221,7 @@
       emptyMessage: '',
       addLabel: 'add',
       removeLabel: 'delete',
+      errorMessage: 'Add the item before submitting',
       params: {},
       canAddNew: false,
       showIconOnly: false,
@@ -1226,11 +1237,29 @@
       var id = $(this).attr('id')
       var elements = get()
       var blockSubmit = false
+      var timer = null
 
       $('label[for="' + id + '"]').attr('for', 'addValue-' + id)
 
       // bind submit
       $(this.form).submit(function () {
+        // hide before..
+        $('#errorMessage-' + id).remove()
+
+        if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
+          // show warning
+          $('#addValue-' + id).parents('.form-group').append('<span style="display: none;" id="errorMessage-' + id + '" class="formError">' + options.errorMessage + '</span>')
+
+          // clear other timers
+          clearTimeout(timer)
+
+          // we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
+          timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
+          $('html, body').animate({
+            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+          },500);
+        }
+
         return !blockSubmit
       })
 
@@ -1244,12 +1273,14 @@
         '<div class="multipleTextWrapper">' +
         '<div id="elementList-' + id + '" class="multipleTextList">' +
         '</div>' +
+        '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
         '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
         '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></span>' +
+        '</div>' +
         '</div>' +
         '</div>'
 
@@ -1386,6 +1417,9 @@
           $('#addButton-' + id).addClass('disabledButton')
         }
 
+        // remove error message
+        $('#errorMessage-' + id).remove()
+
         var values = value.split(options.splitChar)
         for (var e in values) {
           value = values[e]
@@ -1426,8 +1460,8 @@
           // loop elements
           for (var i in elements) {
             html += '    <li class="list-group-item"><div class="input-group">' +
-              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
-              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace('"', '&quot;') + '" />' +
+              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
               '           <span class="fa fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
               '        </button></span>' +
@@ -1462,10 +1496,7 @@
       }
 
       // remove an item
-      function remove (value) {
-        // get index for element
-        var index = $.inArray(value, elements)
-
+      function remove (index) {
         // remove element
         if (index > -1) elements.splice(index, 1)
 
@@ -1485,11 +1516,64 @@
 (function ($) {
   var addField = '[data-addfield="collection"]'
   var removeField = '[data-removefield="collection"]'
+  var sequenceField = '[data-role="sequence"]'
   var CollectionAdd = function (el) {
     $(el).on('click', addField, this.addField)
   }
   var CollectionRemove = function (el) {
     $(el).on('click', removeField, this.removeField)
+  }
+  var CollectionSequence = {
+    init: function () {
+      CollectionSequence.initSequence()
+    },
+
+    initSequence: function () {
+      var $sequenceInstances = $('[data-role=collection-sequence]')
+
+      if ($sequenceInstances.length === 0) {
+        return
+      }
+
+      $.each($sequenceInstances, function (index, element) {
+        var $sequenceBody = $(element)
+
+        $sequenceBody.sortable(
+          {
+            items: '.list-group-item',
+            handle: '[data-role="sequence-handle"]',
+            placeholder: 'dragAndDropPlaceholder',
+            forcePlaceholderSize: true,
+            stop: function (e, ui) {
+              CollectionSequence.saveNewSequence($(this).closest('[data-role=collection-sequence]'))
+            }
+          }
+        )
+
+        $sequenceBody.on('click.fork.order-move', '[data-role="order-move"]', function (e) {
+          var $this = $(this)
+          var $row = $this.closest('.list-group-item')
+          var direction = $this.data('direction')
+
+          if (direction === 'up') {
+            $row.prev().insertAfter($row)
+          }
+          else if (direction === 'down') {
+            $row.next().insertBefore($row)
+          }
+
+          CollectionSequence.saveNewSequence($(this).closest('[data-role=collection-sequence]'))
+        })
+      })
+    },
+
+    saveNewSequence: function ($sequenceBody) {
+      var $counter = 0
+      $.each($sequenceBody.find(sequenceField), function (index, element) {
+        $(element).val($counter)
+        $counter++
+      })
+    }
   }
 
   CollectionAdd.prototype.addField = function (e) {
@@ -1516,7 +1600,8 @@
     newWidget = newWidget.replace(/__id__/g, newName[1].replace(re, count))
     var newLi = $('<li class="list-group-item"></li>').html(newWidget)
     newLi.appendTo(list)
-    $this.trigger('collection-field-added')
+    CollectionSequence.saveNewSequence(newLi.closest(list))
+    $this.trigger('collection-field-added', newLi)
   }
 
   CollectionRemove.prototype.removeField = function (e) {
@@ -1578,4 +1663,6 @@
 
   $(document).on('click.addfield.data-api', addField, CollectionAdd.prototype.addField)
   $(document).on('click.removefield.data-api', removeField, CollectionRemove.prototype.removeField)
+
+  $(CollectionSequence.init)
 })(jQuery)

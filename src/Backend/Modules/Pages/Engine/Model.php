@@ -292,7 +292,7 @@ class Model
     }
 
     /**
-     * @deprecated We don't use this method anymore apparently
+     * @deprecated Will become private since it is only used in this class
      */
     public static function createHtml(
         string $navigationType = 'page',
@@ -516,11 +516,10 @@ class Model
     {
         // get the items
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.title AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN pages AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
+            'SELECT i.id AS url, i.title AS name, mt.moduleName AS module
+             FROM TagsModuleTag AS mt
+             INNER JOIN TagsTag AS t ON mt.tag_id = t.id AND mt.moduleName = ? AND mt.tag_id = ?
+             INNER JOIN pages AS i ON mt.moduleId = i.id AND i.status = ?',
             ['pages', $tagId, 'active']
         );
 
@@ -839,13 +838,12 @@ class Model
                 $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '    <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '    <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -937,13 +935,12 @@ class Model
 
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
-        $html .= '            <a href="' .
-                 BackendModel::createUrlForAction(
-                     'Edit',
-                     null,
-                     null,
-                     ['id' => BackendModel::HOME_PAGE_ID]
-                 ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
+        $html .= '            <a href="' . BackendModel::createUrlForAction(
+            'Edit',
+            null,
+            null,
+            ['id' => BackendModel::HOME_PAGE_ID]
+        ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
@@ -968,13 +965,12 @@ class Model
                     $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                     // insert link
-                    $html .= '            <a href="' .
-                             BackendModel::createUrlForAction(
-                                 'Edit',
-                                 null,
-                                 null,
-                                 ['id' => $page['page_id']]
-                             ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    $html .= '            <a href="' . BackendModel::createUrlForAction(
+                        'Edit',
+                        null,
+                        null,
+                        ['id' => $page['page_id']]
+                    ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1004,13 +1000,12 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1039,13 +1034,12 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1238,20 +1232,24 @@ class Model
      *
      * @param array $blocks The blocks to insert.
      */
-    public static function insertBlocks(array $blocks)
+    public static function insertBlocks(array $blocks): void
     {
+        if (empty($blocks)) {
+            return;
+        }
+
         // get database
         $database = BackendModel::getContainer()->get('database');
 
         // loop blocks
-        foreach ($blocks as $block) {
+        foreach ($blocks as $key => $block) {
             if ($block['extra_type'] === 'usertemplate') {
-                $block['extra_id'] = null;
+                $blocks[$key]['extra_id'] = null;
             }
-
-            // insert blocks
-            $database->insert('pages_blocks', $block);
         }
+
+        // insert blocks
+        $database->insert('pages_blocks', $blocks);
     }
 
     public static function loadUserTemplates(): array

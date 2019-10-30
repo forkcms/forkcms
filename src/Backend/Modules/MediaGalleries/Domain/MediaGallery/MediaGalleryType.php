@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Backend\Core\Engine\Authentication;
+use Common\Form\TitleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,10 +22,7 @@ class MediaGalleryType extends AbstractType
         $builder
             ->add(
                 'title',
-                TextType::class,
-                [
-                    'label' => 'lbl.Title',
-                ]
+                TitleType::class
             )
             ->add(
                 'text',
@@ -71,6 +69,7 @@ class MediaGalleryType extends AbstractType
                     'choice_value' => function (Status $status = null) {
                         return (string) $status;
                     },
+                    'expanded' => true,
                 ]
             )
             ->add(
