@@ -675,7 +675,7 @@ class Model extends \Common\Core\Model
             $sequence = $moduleExtraRepository->getNextSequenceByModule($module);
         }
 
-        $moduleExtra = new ModuleExtra($module, $type, $label ?? $module, $action ?? null, $data, $hidden, $sequence);
+        $moduleExtra = new ModuleExtra($module, new ModuleExtraType($type), $label ?? $module, $action ?? null, $data, $hidden, $sequence);
         $moduleExtraRepository->add($moduleExtra);
         $moduleExtraRepository->save($moduleExtra);
 

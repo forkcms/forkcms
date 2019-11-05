@@ -1,6 +1,7 @@
 doctrine:
     dbal:
-        types: ~
+        types:
+            module_extra_type: Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraDBALType
     orm:
         mappings:
             module_extra:

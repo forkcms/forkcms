@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
+use Common\ModuleExtraType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,7 +38,7 @@ class ModuleExtra
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="type")
+     * @ORM\Column(type="module_extra_type", name="type")
      */
     private $type;
 
@@ -91,7 +92,7 @@ class ModuleExtra
 
     public function __construct(
         string $module,
-        string $type,
+        ModuleExtraType $type,
         string $label,
         ?string $action,
         $data,
@@ -109,7 +110,7 @@ class ModuleExtra
 
     public function update(
         string $module,
-        string $type,
+        ModuleExtraType $type,
         string $label,
         ?string $action,
         $data,
@@ -135,7 +136,7 @@ class ModuleExtra
         return $this->module;
     }
 
-    public function getType(): string
+    public function getType(): ModuleExtraType
     {
         return $this->type;
     }
