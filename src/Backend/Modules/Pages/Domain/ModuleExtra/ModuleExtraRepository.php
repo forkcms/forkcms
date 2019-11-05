@@ -47,7 +47,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->andWhere('me.hidden = :hidden')
             ->setParameters(
                 [
-                    'type' => (string) ModuleExtraType::widget(),
+                    'type' => ModuleExtraType::widget(),
                     'hidden' => false,
                 ]
             )
@@ -66,7 +66,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->andWhere('me.hidden = :hidden')
             ->setParameters(
                 [
-                    'type' => (string) ModuleExtraType::block(),
+                    'type' => ModuleExtraType::block(),
                     'hidden' => false,
                 ]
             )
@@ -87,7 +87,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->setParameters(
                 [
                     'module' => $module,
-                    'type' => (string) ModuleExtraType::widget(),
+                    'type' => ModuleExtraType::widget(),
                     'action' => $action,
                 ]
             )
@@ -107,7 +107,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->setParameters(
                 [
                     'module' => $module,
-                    'type' => (string) ModuleExtraType::widget(),
+                    'type' => ModuleExtraType::widget(),
                     'action' => $action,
                     'id' => '%s:2:"id";i:' . $id . ';%',
                 ]
@@ -132,7 +132,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->andWhere('em.type = :type')
             ->andWhere('em.action = :action')
             ->setParameter('module', $module)
-            ->setParameter('type', (string) ModuleExtraType::widget())
+            ->setParameter('type', ModuleExtraType::widget())
             ->setParameter('action', $action);
 
         if ($isDataNull === true) {
@@ -168,7 +168,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
         $moduleExtra = $this->findOneBy(
             [
                 'module' => $module,
-                'type' => 'widget',
+                'type' => ModuleExtraType::widget(),
                 'sequence' => $sequence,
             ]
         );
