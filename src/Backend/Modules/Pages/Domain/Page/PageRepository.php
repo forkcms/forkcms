@@ -126,6 +126,24 @@ class PageRepository extends ServiceEntityRepository
         return $this->processFields($results[0]);
     }
 
+    public function getLatest(int $id, string $language = null): ?Page
+    {
+        $qb = $this->buildGetQuery($id, null, $language);
+        $qb
+            ->select('p, m, b, e')
+            ->orderBy('p.revisionId', 'DESC')
+            ->setMaxResults(1);
+
+        // @todo This wil not be necessary when we can return the entities instead of arrays
+        $results = $qb->getQuery()->getResult();
+
+        if (count($results) === 0) {
+            return null;
+        }
+
+        return $results[0];
+    }
+
     public function getLatestVersion(int $id, string $language): ?int
     {
         $qb = $this->createQueryBuilder('p');
