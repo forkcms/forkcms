@@ -24,7 +24,6 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             ModuleExtraType::widget()
         );
 
-        /** @var ModuleExtra $currentWidget */
         foreach ($currentWidgets as $currentWidget) {
             $data = $currentWidget->getData();
 
