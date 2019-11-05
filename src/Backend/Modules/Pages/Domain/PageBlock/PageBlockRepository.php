@@ -62,6 +62,9 @@ class PageBlockRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    /**
+     * @return PageBlock[]
+     */
     public function getBlocksForPage(int $pageId, int $revisionId, string $language): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

@@ -36,6 +36,9 @@ class ModuleExtraRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($moduleExtra);
     }
 
+    /**
+     * @return ModuleExtra[]
+     */
     public function getWidgets(): array
     {
         return $this
@@ -52,6 +55,9 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return ModuleExtra[]
+     */
     public function getBlocks(): array
     {
         return $this
@@ -68,6 +74,9 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return ModuleExtra[]
+     */
     public function findWidgetsByModuleAndAction(string $module, string $action): array
     {
         return $this
