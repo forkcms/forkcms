@@ -181,7 +181,7 @@ class Installer extends ModuleInstaller
         // get sequence for widget
         /** @var ModuleExtraRepository $moduleExtraRepository */
         $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
-        $sequenceExtra = $moduleExtraRepository->getNextSequenceByModule('faq');
+        $sequenceExtra = $moduleExtraRepository->getNextSequenceByModule('Faq');
 
         $moduleExtra = new ModuleExtra(
             $this->getModule(),
