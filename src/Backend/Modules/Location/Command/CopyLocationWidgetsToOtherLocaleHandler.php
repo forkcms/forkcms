@@ -4,6 +4,7 @@ namespace Backend\Modules\Location\Command;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Common\ModuleExtraType;
 
 final class CopyLocationWidgetsToOtherLocaleHandler
 {
@@ -17,7 +18,11 @@ final class CopyLocationWidgetsToOtherLocaleHandler
 
     public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
     {
-        $currentWidgets = $this->moduleExtraRepository->findWidgetsByModuleAndAction('Location', 'Location');
+        $currentWidgets = $this->moduleExtraRepository->findModuleExtra(
+            'Location',
+            'Location',
+            ModuleExtraType::widget()
+        );
 
         /** @var ModuleExtra $currentWidget */
         foreach ($currentWidgets as $currentWidget) {

@@ -78,7 +78,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
     /**
      * @return ModuleExtra[]
      */
-    public function findWidgetsByModuleAndAction(string $module, string $action): array
+    public function findModuleExtra(string $module, string $action, ModuleExtraType $moduleExtraType): array
     {
         return $this
             ->createQueryBuilder('me', 'me.id')
@@ -88,7 +88,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->setParameters(
                 [
                     'module' => $module,
-                    'type' => ModuleExtraType::widget(),
+                    'type' => $moduleExtraType,
                     'action' => $action,
                 ]
             )
