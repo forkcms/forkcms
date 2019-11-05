@@ -743,11 +743,10 @@ class Model
                 $item['data']['names'][] = $position['name'];
                 $item['data']['default_extras'][$position['name']] = [];
 
+                $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
                 // add default widgets
                 foreach ($position['widgets'] as $widget) {
                     // fetch extra_id for this extra
-                    $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
-
                     $extraId = $moduleExtraRepository->getModuleExtraId(
                         $widget['module'],
                         $widget['action'],
