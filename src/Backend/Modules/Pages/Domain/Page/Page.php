@@ -243,9 +243,6 @@ class Page
         $this->hidden = $hidden;
         $this->status = $status;
         $this->data = $data;
-        if ($data !== null) {
-            $this->data = serialize($data);
-        }
         $this->allowMove = $allowMove;
         $this->allowChildren = $allowChildren;
         $this->allowEdit = $allowEdit;
@@ -294,9 +291,6 @@ class Page
         $this->hidden = $hidden;
         $this->status = $status;
         $this->data = $data;
-        if ($data !== null) {
-            $this->data = serialize($data);
-        }
         $this->allowMove = $allowMove;
         $this->allowChildren = $allowChildren;
         $this->allowEdit = $allowEdit;
@@ -410,7 +404,7 @@ class Page
 
     public function getData()
     {
-        return unserialize($this->data, ['allowed_classes' => false]);
+        return $this->data;
     }
 
     /**
@@ -428,6 +422,32 @@ class Page
     public function setEditedOn(): void
     {
         $this->editedOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function serialiseData(): void
+    {
+        if (!empty($this->data)) {
+            $this->data = serialize($this->data);
+            return;
+        }
+        $this->data = null;
+    }
+    /**
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
+     * @ORM\PostLoad
+     */
+    public function unserialiseData(): void
+    {
+        if ($this->data === null) {
+            $this->data = [];
+            return;
+        }
+        $this->data = unserialize($this->data, ['allowed_classes' => false]);
     }
 
     public function archive(): void

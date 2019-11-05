@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository")
  * @ORM\Table(name="modules_extras")
+ * @ORM\HasLifecycleCallbacks()
  */
 class ModuleExtra
 {
@@ -103,7 +104,7 @@ class ModuleExtra
         $this->type = $type;
         $this->label = $label;
         $this->action = $action;
-        $this->data = serialize($data);
+        $this->data = $data;
         $this->hidden = $hidden;
         $this->sequence = $sequence;
     }
@@ -121,7 +122,7 @@ class ModuleExtra
         $this->type = $type;
         $this->label = $label;
         $this->action = $action;
-        $this->data = serialize($data);
+        $this->data = $data;
         $this->hidden = $hidden;
         $this->sequence = $sequence;
     }
@@ -156,11 +157,7 @@ class ModuleExtra
      */
     public function getData()
     {
-        if ($this->data === null) {
-            return null;
-        }
-
-        return unserialize($this->data);
+        return $this->data;
     }
 
     public function isHidden(): bool
@@ -171,5 +168,31 @@ class ModuleExtra
     public function getSequence(): int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function serialiseData()
+    {
+        if (!empty($this->data)) {
+            $this->data = serialize($this->data);
+            return;
+        }
+        $this->data = null;
+    }
+    /**
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
+     * @ORM\PostLoad
+     */
+    public function unserialiseData()
+    {
+        if ($this->data === null) {
+            $this->data = [];
+            return;
+        }
+        $this->data = unserialize($this->data, ['allowed_classes' => false]);
     }
 }
