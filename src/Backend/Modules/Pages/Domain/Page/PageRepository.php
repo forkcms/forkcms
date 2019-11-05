@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\Page;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Common\Doctrine\Entity\Meta;
+use Common\ModuleExtraType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\AbstractQuery;
@@ -417,7 +418,7 @@ class PageRepository extends ServiceEntityRepository
         ;
 
         $parameters = [
-            'type' => 'block',
+            'type' => (string) ModuleExtraType::block(),
             'id' => $pageId,
         ];
 
