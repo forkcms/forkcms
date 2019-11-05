@@ -27,7 +27,6 @@ class PageRepository extends ServiceEntityRepository
 
     public function add(Page $page): void
     {
-        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($page);
     }
 

@@ -22,7 +22,6 @@ class PageBlockRepository extends ServiceEntityRepository
 
     public function add(PageBlock $pageBlock): void
     {
-        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($pageBlock);
     }
 

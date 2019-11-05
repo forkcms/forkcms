@@ -22,7 +22,6 @@ class ModuleExtraRepository extends ServiceEntityRepository
 
     public function add(ModuleExtra $moduleExtra): void
     {
-        // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->persist($moduleExtra);
     }
 
