@@ -377,7 +377,7 @@ class Installer extends ModuleInstaller
     {
         /** @var ModuleExtraRepository $moduleExtraRepository */
         $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
-        $widgetId = $moduleExtraRepository->getWidgetId('Search', 'Form');
+        $widgetId = $moduleExtraRepository->getModuleExtraId('Search', 'Form', ModuleExtraType::widget());
 
         if ($widgetId === null) {
             throw new \RuntimeException('Could not find Search Widget');

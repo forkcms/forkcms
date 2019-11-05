@@ -124,17 +124,19 @@ class ModuleExtraRepository extends ServiceEntityRepository
         return $results[0]['data'];
     }
 
-    public function getWidgetId(string $module, string $action, bool $isDataNull = null, bool $isHidden = null): ?int
+    public function getModuleExtraId(string $module, string $action, ModuleExtraType $moduleExtraType, bool $isDataNull = null, bool $isHidden = null): ?int
     {
-        /** @var ModuleExtra|null $moduleExtra */
         $qb = $this
             ->createQueryBuilder('em')
+            ->select('em.id')
             ->where('em.module = :module')
             ->andWhere('em.type = :type')
             ->andWhere('em.action = :action')
-            ->setParameter('module', $module)
-            ->setParameter('type', ModuleExtraType::widget())
-            ->setParameter('action', $action);
+            ->setParameters([
+                'module' => $module,
+                'action' => $action,
+                'type' => $moduleExtraType,
+            ]);
 
         if ($isDataNull === true) {
             $qb
@@ -152,16 +154,10 @@ class ModuleExtraRepository extends ServiceEntityRepository
                 ->setParameter('isHidden', $isHidden);
         }
 
-        $moduleExtra = $qb
+        return $qb
             ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
-
-        if (!$moduleExtra instanceof ModuleExtra) {
-            return null;
-        }
-
-        return $moduleExtra->getId();
+            ->getSingleScalarResult();
     }
 
     public function updateWidgetDataByModuleAndSequence(string $module, string $sequence, $data): void

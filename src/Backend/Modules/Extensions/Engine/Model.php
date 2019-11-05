@@ -10,6 +10,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Common\ModuleExtraType;
 use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -747,9 +748,10 @@ class Model
                     // fetch extra_id for this extra
                     $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
-                    $extraId = $moduleExtraRepository->getWidgetId(
+                    $extraId = $moduleExtraRepository->getModuleExtraId(
                         $widget['module'],
                         $widget['action'],
+                        ModuleExtraType::widget(),
                         true,
                         false
                     );
