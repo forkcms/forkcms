@@ -554,15 +554,16 @@ class Model
         /** @var ModuleExtraRepository $moduleExtraRepository */
         $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
 
-        $moduleExtraRepository->updateWidgetDataByModuleAndSequence(
+        $moduleExtraRepository->updateModuleExtraDataByModuleAndSequence(
             'FormBuilder',
-            '400' . $id,
+            (int) '400' . $id,
             [
                 'language' => BL::getWorkingLanguage(),
                 'extra_label' => $values['name'],
                 'id' => $id,
                 'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
-            ]
+            ],
+            ModuleExtraType::widget()
         );
 
         return $id;

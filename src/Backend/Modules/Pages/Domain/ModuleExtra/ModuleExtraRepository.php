@@ -124,8 +124,13 @@ class ModuleExtraRepository extends ServiceEntityRepository
         return $results[0]['data'];
     }
 
-    public function getModuleExtraId(string $module, string $action, ModuleExtraType $moduleExtraType, bool $isDataNull = null, bool $isHidden = null): ?int
-    {
+    public function getModuleExtraId(
+        string $module,
+        string $action,
+        ModuleExtraType $moduleExtraType,
+        bool $isDataNull = null,
+        bool $isHidden = null
+    ): ?int {
         $qb = $this
             ->createQueryBuilder('em')
             ->select('em.id')
@@ -160,12 +165,16 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function updateWidgetDataByModuleAndSequence(string $module, string $sequence, $data): void
-    {
+    public function updateModuleExtraDataByModuleAndSequence(
+        string $module,
+        int $sequence,
+        $data,
+        ModuleExtraType $moduleExtraType
+    ): void {
         $moduleExtra = $this->findOneBy(
             [
                 'module' => $module,
-                'type' => ModuleExtraType::widget(),
+                'type' => $moduleExtraType,
                 'sequence' => $sequence,
             ]
         );
