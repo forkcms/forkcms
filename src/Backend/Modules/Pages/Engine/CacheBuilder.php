@@ -3,9 +3,10 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Doctrine\ORM\NoResultException;
 use Psr\Cache\CacheItemPoolInterface;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -261,15 +262,11 @@ class CacheBuilder
 
     protected function getSitemapId(): int
     {
-        if (empty($this->sitemapId)) {
-            $widgets = $this->moduleExtraRepository->getWidgets();
-
-            // search sitemap
-            foreach ($widgets as $moduleExtra) {
-                if ($moduleExtra->getAction() === 'Sitemap') {
-                    $this->sitemapId = $moduleExtra->getId();
-                    break;
-                }
+        if ($this->sitemapId === null) {
+            try {
+                $this->sitemapId = $this->moduleExtraRepository->findIdForModuleAndAction('Pages', 'Sitemap');
+            } catch (NoResultException $e) {
+                throw new RuntimeException('Sitemap action of the Pages module not found');
             }
         }
 

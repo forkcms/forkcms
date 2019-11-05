@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\ModuleExtra;
 use Common\ModuleExtraType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NoResultException;
 use RuntimeException;
 
 /**
@@ -211,5 +212,26 @@ class ModuleExtraRepository extends ServiceEntityRepository
         return (int) $qb
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NoResultException
+     */
+    public function findIdForModuleAndAction(string $module, string $action): int
+    {
+        $id = $this
+            ->createQueryBuilder('me')
+            ->select('me.id')
+            ->where('me.module = :module AND me.action = :action')
+            ->setParameter('module', $module)
+            ->setParameter('action', $action)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ($id === null) {
+            throw new NoResultException;
+        }
+
+        return (int) $id;
     }
 }
