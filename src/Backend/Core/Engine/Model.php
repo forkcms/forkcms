@@ -128,11 +128,14 @@ class Model extends \Common\Core\Model
      * Data is a key/value array. Example: array(id => 23, language => nl);
      *
      * @param string $module The module wherefore the extra exists.
-     * @param string $type The type of extra, possible values are block, homepage, widget.
+     * @param string $moduleExtraType The type of extra, possible values are block, homepage, widget.
      * @param array $data Extra data that exists.
      */
-    public static function deleteExtra(string $module = null, string $type = null, array $data = null): void
-    {
+    public static function deleteExtra(
+        string $module = null,
+        ModuleExtraType $moduleExtraType = null,
+        array $data = null
+    ): void {
         $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
 
         $parameters = [];
@@ -141,8 +144,8 @@ class Model extends \Common\Core\Model
             $parameters['module'] = $module;
         }
 
-        if ($type !== null) {
-            $parameters['type'] = $type;
+        if ($moduleExtraType !== null) {
+            $parameters['type'] = $moduleExtraType;
         }
 
         // get extras

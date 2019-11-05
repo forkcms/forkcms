@@ -132,7 +132,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('FormBuilder', 'widget', ['id' => $id]);
+        BackendModel::deleteExtra('FormBuilder', ModuleExtraType::widget(), ['id' => $id]);
 
         // delete form
         $database->delete('forms', 'id = ?', $id);
