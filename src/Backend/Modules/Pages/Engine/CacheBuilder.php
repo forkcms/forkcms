@@ -265,7 +265,6 @@ class CacheBuilder
             $widgets = $this->moduleExtraRepository->getWidgets();
 
             // search sitemap
-            /** @var ModuleExtra $moduleExtra */
             foreach ($widgets as $moduleExtra) {
                 if ($moduleExtra->getAction() === 'Sitemap') {
                     $this->sitemapId = $moduleExtra->getId();
