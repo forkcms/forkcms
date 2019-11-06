@@ -418,7 +418,7 @@ jsBackend.ckeditor = {
   },
 
   loadEditorsInCollections: function () {
-    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
+    $('[data-addfield="collection"]').on('collection-field-added', function (event, formCollectionItem) {
       jsBackend.ckeditor.prepare()
       $(formCollectionItem).find('textarea.inputEditor, textarea.inputEditorError').ckeditor(
         jsBackend.ckeditor.callback,
@@ -591,7 +591,7 @@ jsBackend.blockEditor = {
   },
 
   loadEditorsInCollections: function () {
-    $('[data-addfield=collection]').on('collection-field-added', function () {
+    $('[data-addfield="collection"]').on('collection-field-added', function () {
       jsBackend.blockEditor.createEditor($(this))
     })
   }
