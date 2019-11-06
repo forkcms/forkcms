@@ -7,12 +7,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractBlock
 {
-    /** @var ContainerInterface */
-    private $container;
+    /** @var TwigTemplate */
+    private $templating;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(TwigTemplate $templating)
     {
-        $this->container = $container;
+        $this->templating = $templating;
     }
 
     final public function getName(): string
@@ -43,9 +43,6 @@ abstract class AbstractBlock
 
     final protected function parseWithTwig(string $template, array $data): string
     {
-        /** @var TwigTemplate $templating */
-        $templating = $this->container->get('templating');
-
-        return $templating->render($template, ['editorBlock' => $data]);
+        return $this->templating->render($template, ['editorBlock' => $data]);
     }
 }
