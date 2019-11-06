@@ -98,11 +98,11 @@ class Profile
      * Get a profile setting by name.
      *
      * @param string $name Setting name.
-     * @param string $defaultValue Default value is used when the setting does not exist.
+     * @param mixed $defaultValue Default value is used when the setting does not exist.
      *
      * @return mixed
      */
-    public function getSetting(string $name, string $defaultValue = null)
+    public function getSetting(string $name, $defaultValue = null)
     {
         // if settings array does not exist then get it first
         if (empty($this->settings)) {
