@@ -3,7 +3,6 @@
 namespace Common\BlockEditor\Blocks;
 
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
-use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class MediaLibraryImageBlock extends AbstractBlock
@@ -11,9 +10,9 @@ final class MediaLibraryImageBlock extends AbstractBlock
     /** @var MediaItemRepository */
     private $mediaItemRepository;
 
-    public function __construct(MediaItemRepository $mediaItemRepository, TwigTemplate $templating)
+    public function __construct(MediaItemRepository $mediaItemRepository, ContainerInterface $container)
     {
-        parent::__construct($templating);
+        parent::__construct($container);
 
         $this->mediaItemRepository = $mediaItemRepository;
     }
