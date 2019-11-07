@@ -3,6 +3,7 @@
 namespace Frontend\Core\Engine\Block;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Common\ModuleExtraType;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
@@ -251,7 +252,12 @@ class Widget extends KernelLoader implements ModuleExtraInterface
             $kernel,
             $module,
             $action,
-            $moduleExtraRepository->getWidgetDataByModuleAndActionAndItemId($module, $action, $id)
+            $moduleExtraRepository->getModuleExtraDataByModuleAndActionAndItemId(
+                ModuleExtraType::widget(),
+                $module,
+                $action,
+                $id
+            )
         );
     }
 

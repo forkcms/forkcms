@@ -96,8 +96,12 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getWidgetDataByModuleAndActionAndItemId(string $module, string $action, ?int $id): ?string
-    {
+    public function getModuleExtraDataByModuleAndActionAndItemId(
+        ModuleExtraType $type,
+        string $module,
+        string $action,
+        ?int $id
+    ): ?string {
         $results = $this
             ->createQueryBuilder('me')
             ->select('me.data')
@@ -108,7 +112,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->setParameters(
                 [
                     'module' => $module,
-                    'type' => ModuleExtraType::widget(),
+                    'type' => $type,
                     'action' => $action,
                     'id' => '%s:2:"id";i:' . $id . ';%',
                 ]
