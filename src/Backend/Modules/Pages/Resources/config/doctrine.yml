@@ -9,7 +9,7 @@ doctrine:
                 type: annotation
                 is_bundle: false
                 dir: "%kernel.project_dir%/src/Backend/Modules/Pages/Domain/ModuleExtra"
-                alias: PageModuleExtra
+                alias: PagesModuleExtra
                 prefix: Backend\Modules\Pages\Domain\ModuleExtra
             page_block:
                 type: annotation
