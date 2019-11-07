@@ -5,6 +5,8 @@ namespace Backend\Modules\Search\Installer;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 
@@ -89,12 +91,14 @@ class Installer extends ModuleInstaller
     {
         $this->makeSearchable('Pages');
 
-        foreach ($this->getActivePages() as $page) {
-            $this->insertSearchIndexForPage($page['id'], $page['language'], $page['title']);
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        foreach ($pageRepository->findActivePages() as $page) {
+            $this->insertSearchIndexForPage($page->getId(), $page->getLanguage(), $page->getTitle());
             $this->insertSearchIndexForPage(
-                $page['id'],
-                $page['language'],
-                $this->getContentFromBlocksForPageRevision($page['revision_id'])
+                $page->getId(),
+                $page->getLanguage(),
+                $this->getContentFromBlocksForPageRevision($page->getRevisionId())
             );
         }
     }
@@ -103,17 +107,6 @@ class Installer extends ModuleInstaller
     {
         $this->setSetting($this->getModule(), 'overview_num_items', 10);
         $this->setSetting($this->getModule(), 'validate_search', true);
-    }
-
-    private function getActivePages(): array
-    {
-        // @todo: Replace with a PageRepository method when it exists.
-        return (array) $this->getDatabase()->getRecords(
-            'SELECT id, revision_id, language, title
-             FROM pages
-             WHERE status = ?',
-            ['active']
-        );
     }
 
     private function getContentFromBlocksForPageRevision(int $pageRevisionId): string

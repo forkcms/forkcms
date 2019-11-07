@@ -335,6 +335,19 @@ class PageRepository extends ServiceEntityRepository
         return array_column($result, 'revisionId');
     }
 
+    /**
+     * @return Page[]
+     */
+    public function findActivePages(): array
+    {
+        return $this
+            ->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->setParameter('status', Status::active())
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findOneByParentsAndUrlAndStatusAndLanguage(
         array $parentIds,
         string $url,
