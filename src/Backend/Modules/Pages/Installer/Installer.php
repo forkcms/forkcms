@@ -22,8 +22,6 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Pages');
-        // @todo Remove install.sql
-//        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureEntities();
         $this->configureBackendNavigation();
