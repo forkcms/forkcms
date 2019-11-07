@@ -188,7 +188,7 @@ class Model
             /** @var Meta $originalMeta */
             $originalMeta = $metaRepository->find($sourceData['meta_id']);
 
-            $meta = Meta::copy($originalMeta);
+            $meta = clone $originalMeta;
 
             // Insert new meta
             $metaRepository->add($meta);
