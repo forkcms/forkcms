@@ -206,7 +206,7 @@ class Model extends \Common\Core\Model
             'SELECT pe.id AS extra_id, pb.html, pb.position,
              pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
              FROM PagesPageBlock AS pb
-             INNER JOIN pages AS p ON p.revision_id = pb.revision_id
+             INNER JOIN PagesPage AS p ON p.revision_id = pb.revision_id
              LEFT OUTER JOIN PagesModuleExtra AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
              WHERE ' . $where . '
              ORDER BY pb.position, pb.sequence',
