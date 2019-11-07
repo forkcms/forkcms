@@ -1149,28 +1149,20 @@ class Model
 
         // loop blocks
         foreach ($blocks as $block) {
-            $revisionId = $block['revision_id'];
-            $position = $block['position'];
             $extraId = $block['extra_id'];
-            $extraType = $block['extra_type'];
-            $extraData = $block['extra_data'];
-            $html = $block['html'];
-            $visible = $block['visible'];
-            $sequence = $block['sequence'];
-
-            if ($block['extra_type'] === 'usertemplate') {
+            if ($block['extra_type'] === (string) PageBlockType::userTemplate()) {
                 $extraId = null;
             }
 
             $pageBlock = new PageBlock(
-                $revisionId,
-                $position,
+                $block['revision_id'],
+                $block['position'],
                 $extraId,
-                new PageBlockType($extraType),
-                $extraData,
-                $html,
-                $visible,
-                $sequence
+                new PageBlockType($block['extra_type']),
+                $block['extra_data'],
+                $block['html'],
+                $block['visible'],
+                $block['sequence']
             );
 
             $pageBlockRepository->add($pageBlock);
