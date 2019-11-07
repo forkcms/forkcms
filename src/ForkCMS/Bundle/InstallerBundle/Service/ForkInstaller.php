@@ -207,6 +207,9 @@ class ForkInstaller
 
     protected function installExtras(): void
     {
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = Model::get(PageBlockRepository::class);
+
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
             // get pages without this extra
@@ -222,8 +225,6 @@ class ForkInstaller
                 [$extra['id']]
             );
 
-            /** @var PageBlockRepository $pageBlockRepository */
-            $pageBlockRepository = Model::get(PageBlockRepository::class);
             foreach ($revisionIds as $revisionId) {
                 $pageBlock = new PageBlock(
                     $revisionId,
