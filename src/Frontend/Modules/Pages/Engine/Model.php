@@ -126,10 +126,11 @@ class Model implements FrontendTagsInterface
             'id'
         );
 
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = FrontendModel::get(PageBlockRepository::class);
+
         // prepare items for search
         foreach ($items as &$item) {
-            /** @var PageBlockRepository $pageBlockRepository */
-            $pageBlockRepository = FrontendModel::get(PageBlockRepository::class);
             $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $item['text']]);
 
             $item['text'] = implode(' ', (array) $pageBlock->getHtml());
