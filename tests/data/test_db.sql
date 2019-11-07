@@ -2551,9 +2551,9 @@ CREATE TABLE `modules_tags` (
 # Dump of table pages
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages`;
+DROP TABLE IF EXISTS `PagesPage`;
 
-CREATE TABLE `pages` (
+CREATE TABLE `PagesPage` (
   `id` int(11) NOT NULL COMMENT 'the real page_id',
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT 'which user has created this page?',
@@ -2580,10 +2580,10 @@ CREATE TABLE `pages` (
   KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+LOCK TABLES `PagesPage` WRITE;
+/*!40000 ALTER TABLE `PagesPage` DISABLE KEYS */;
 
-INSERT INTO `pages` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
+INSERT INTO `PagesPage` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
 VALUES
 	(1,1,1,0,4,1,'en','page','Home','Home',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
 	(2,2,1,0,3,2,'en','footer','Sitemap','Sitemap',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
@@ -2609,7 +2609,7 @@ VALUES
 	(422,22,1,420,3,24,'en','page','Change email','Change email',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
 	(423,23,1,420,3,25,'en','page','Change password','Change password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,2);
 
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPage` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
