@@ -4,7 +4,7 @@ namespace Backend\Modules\Location\Command;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 final class CopyLocationWidgetsToOtherLocaleHandler
 {

@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine\Block;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;

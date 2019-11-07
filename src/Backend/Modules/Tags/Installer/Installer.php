@@ -5,7 +5,7 @@ namespace Backend\Modules\Tags\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 /**
  * Installer for the tags module

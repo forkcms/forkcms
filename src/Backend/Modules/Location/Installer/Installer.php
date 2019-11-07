@@ -3,7 +3,7 @@
 namespace Backend\Modules\Location\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 /**
  * Installer for the location module

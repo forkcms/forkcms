@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
 use Common\Exception\InvalidModuleExtraType;
 

@@ -4,7 +4,6 @@ namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
-use Common\ModuleExtraType;
 
 final class ModuleExtraDBALType extends StringType
 {

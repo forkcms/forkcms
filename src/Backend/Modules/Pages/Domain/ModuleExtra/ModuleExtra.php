@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
-use Common\ModuleExtraType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

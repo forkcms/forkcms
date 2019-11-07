@@ -4,11 +4,10 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
-use Common\ModuleExtraType;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Installer for the profiles module.

@@ -6,10 +6,10 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModuleExtraType;
 
 /**
  * Installer for the pages module

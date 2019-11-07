@@ -8,12 +8,11 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraNotFountException;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModuleExtraType;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
-use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 

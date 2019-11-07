@@ -2,11 +2,11 @@
 
 namespace Backend\Modules\Faq\Engine;
 
-use Common\ModuleExtraType;
-use Common\Uri as CommonUri;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Uri as CommonUri;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module

@@ -2,11 +2,9 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
-use Common\ModuleExtraType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NoResultException;
-use RuntimeException;
 
 /**
  * @method ModuleExtra|null find($id, $lockMode = null, $lockVersion = null)
