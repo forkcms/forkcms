@@ -1,0 +1,10 @@
+{% if editorBlock.style == 'ordered' %}
+  {% set listElement = 'ol' %}
+{% else %}
+  {% set listElement = 'ul' %}
+{% endif %}
+<{{ listElement }}>
+{% for item in editorBlock.items %}
+  <li>{{ item|raw }}</li>
+{% endfor %}
+</{{ listElement }}>

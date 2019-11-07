@@ -7,6 +7,14 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@editorjs/editorjs": "^2.15.1",
+    "@editorjs/embed": "^2.2.1",
+    "@editorjs/header": "^2.3.1",
+    "@editorjs/list": "^1.4.0",
+    "@editorjs/paragraph": "^2.6.0",
+    "babel-loader": "^8.0.6",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": ">=3.4.1",
@@ -27,7 +35,9 @@
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "test": "standard"

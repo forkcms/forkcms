@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdb8dda762e6fb13ea164f49c2f6d1d5",
+    "content-hash": "ee545bfbff76520ffa9532412ad1c421",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -245,6 +245,47 @@
                 "monitor"
             ],
             "time": "2018-04-20T23:24:11+00:00"
+        },
+        {
+            "name": "codex-team/editor.js",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/editor-js/editorjs-php.git",
+                "reference": "330ee3ddd6e32e7c7b19616bcfc39ce3e34281a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/editor-js/editorjs-php/zipball/330ee3ddd6e32e7c7b19616bcfc39ce3e34281a2",
+                "reference": "330ee3ddd6e32e7c7b19616bcfc39ce3e34281a2",
+                "shasum": ""
+            },
+            "require": {
+                "ezyang/htmlpurifier": "^4.8",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phpunit/phpunit": "5.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EditorJS\\": "EditorJS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CodeX Team",
+                    "email": "team@ifmo.su"
+                }
+            ],
+            "description": "PHP backend implementation for the Editor.js",
+            "time": "2019-05-07T15:37:35+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1356,6 +1397,53 @@
                 "validator"
             ],
             "time": "2019-08-13T17:33:27+00:00"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
+                "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "dev-master#72de02a7b80c6bb8864ef9bf66d41d2f58f826bd"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "time": "2019-07-14T18:58:38+00:00"
         },
         {
             "name": "fig/link-util",
@@ -2690,9 +2778,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in CampaignMonitor as a service. So you can subscribe/unsubscribe members to CampaignMonitor.",
@@ -2737,9 +2825,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony2 bundle loads in MailChimp as a service. So you can subscribe/unsubscribe members to MailChimp.",
