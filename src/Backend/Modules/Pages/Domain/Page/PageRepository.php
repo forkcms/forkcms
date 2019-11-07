@@ -41,6 +41,23 @@ class PageRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($page);
     }
 
+    public function archive(int $id, string $language): void
+    {
+        $this
+            ->createQueryBuilder('p')
+            ->set('p.status', Status::archive())
+            ->where('p.id = :id')
+            ->andWhere('p.language = :language')
+            ->setParameters(
+                [
+                    'id' => $id,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->execute();
+    }
+
     public function deleteByRevisionIds(array $ids): void
     {
         $qb = $this->createQueryBuilder('p');
@@ -161,7 +178,7 @@ class PageRepository extends ServiceEntityRepository
         return $max;
     }
 
-    public function getMaximumSequence(int $parentId, string $language): int
+    public function getMaximumSequence(int $parentId, string $language, string $type = null): int
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -170,12 +187,17 @@ class PageRepository extends ServiceEntityRepository
             ->where('p.language = :language')
             ->andWhere('p.parentId = :parentId');
 
-        $qb->setParameters(
-            [
-                'language' => $language,
-                'parentId' => $parentId
-            ]
-        );
+        $parameters = [
+            'language' => $language,
+            'parentId' => $parentId,
+        ];
+
+        if ($type !== null) {
+            $qb->andWhere('p.type = :type');
+            $parameters['type'] = $type;
+        }
+
+        $qb->setParameters($parameters);
 
         return (int) $qb->getQuery()->getSingleScalarResult();
     }

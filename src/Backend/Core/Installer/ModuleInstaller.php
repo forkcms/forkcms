@@ -581,30 +581,23 @@ class ModuleInstaller
      */
     private function getNextPageIdForLanguage(string $language): int
     {
-        $maximumPageId = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(id) FROM PagesPage WHERE language = ?',
-            [$language]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        $maximumPageId =  $pageRepository->getMaximumPageId($language, true);
 
         return ++$maximumPageId;
     }
 
     private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
-        $this->getDatabase()->update(
-            'PagesPage',
-            ['status' => (string) Status::archive()],
-            'id = ? AND language = ?',
-            [$pageId, $language]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $pageRepository->archive($pageId, $language);
     }
 
     private function getNextPageSequence(string $language, int $parentId, string $type): int
     {
-        $maximumPageSequence = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(sequence) FROM PagesPage WHERE language = ? AND parent_id = ? AND type = ?',
-            [$language, $parentId, $type]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, $language, $type);
 
         return ++$maximumPageSequence;
     }
