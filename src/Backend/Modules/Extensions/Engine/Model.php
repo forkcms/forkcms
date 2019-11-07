@@ -291,7 +291,7 @@ class Model
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
+             FROM PagesModuleExtra AS i
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
@@ -340,7 +340,7 @@ class Model
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
+             FROM PagesModuleExtra AS i
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',

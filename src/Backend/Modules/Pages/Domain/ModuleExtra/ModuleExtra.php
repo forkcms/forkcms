@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository")
- * @ORM\Table(name="modules_extras")
+ * @ORM\Table(name="PagesModuleExtra")
  * @ORM\HasLifecycleCallbacks()
  */
 class ModuleExtra

@@ -226,7 +226,7 @@ class Model extends \Common\Core\Model
         // we have extras
         if (!empty($ids)) {
             // delete extras
-            self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+            self::getContainer()->get('database')->delete('PagesModuleExtra', 'id IN (' . implode(',', $ids) . ')');
         }
     }
 
@@ -336,7 +336,7 @@ class Model extends \Common\Core\Model
     public static function getExtrasForData(string $module, string $key, string $value, string $action = null): array
     {
         $query = 'SELECT i.id, i.data
-                 FROM modules_extras AS i
+                 FROM PagesModuleExtra AS i
                  WHERE i.module = ? AND i.data != ?';
         $parameters = [$module, 'NULL'];
 

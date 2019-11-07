@@ -2379,12 +2379,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table modules_extras
+# Dump of table PagesModuleExtra
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `modules_extras`;
+DROP TABLE IF EXISTS `PagesModuleExtra`;
 
-CREATE TABLE `modules_extras` (
+CREATE TABLE `PagesModuleExtra` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
   `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2396,10 +2396,10 @@ CREATE TABLE `modules_extras` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras';
 
-LOCK TABLES `modules_extras` WRITE;
-/*!40000 ALTER TABLE `modules_extras` DISABLE KEYS */;
+LOCK TABLES `PagesModuleExtra` WRITE;
+/*!40000 ALTER TABLE `PagesModuleExtra` DISABLE KEYS */;
 
-INSERT INTO `modules_extras` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
+INSERT INTO `PagesModuleExtra` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
 VALUES
 	(1,'Search','widget','SearchForm','Form',NULL,0,2001),
 	(2,'Search','block','Search',NULL,NULL,0,2000),
@@ -2438,7 +2438,7 @@ VALUES
 	(37,'Profiles','widget','LoginBox','LoginBox',NULL,0,5010),
 	(38,'Profiles','widget','LoginLink','LoginLink',NULL,0,5011);
 
-/*!40000 ALTER TABLE `modules_extras` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesModuleExtra` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
