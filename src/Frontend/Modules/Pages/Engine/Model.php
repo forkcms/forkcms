@@ -2,11 +2,14 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockNotFound;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use RuntimeException;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module
@@ -133,7 +136,11 @@ class Model implements FrontendTagsInterface
         foreach ($items as &$item) {
             $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $item['text']]);
 
-            $item['text'] = implode(' ', (array) $pageBlock->getHtml());
+            if (!$pageBlock instanceof PageBlock) {
+                throw new PageBlockNotFound();
+            }
+
+            $item['text'] = $pageBlock->getHtml();
 
             $item['full_url'] = FrontendNavigation::getUrl($item['id']);
         }
