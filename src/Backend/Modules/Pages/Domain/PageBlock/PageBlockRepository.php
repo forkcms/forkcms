@@ -58,6 +58,7 @@ class PageBlockRepository extends ServiceEntityRepository
             ->createQueryBuilder('em')
             ->where('em.extraId = :extraId')
             ->set('em.extraId', null)
+            ->setParameter('extraId', $extraId)
             ->getQuery()
             ->execute();
     }
