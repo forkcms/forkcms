@@ -15,7 +15,7 @@ doctrine:
                 type: annotation
                 is_bundle: false
                 dir: "%kernel.project_dir%/src/Backend/Modules/Pages/Domain/PageBlock"
-                alias: PageBlock
+                alias: PagesPageBlock
                 prefix: Backend\Modules\Pages\Domain\PageBlock
             page:
                 type: annotation
