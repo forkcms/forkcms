@@ -47,7 +47,7 @@ class PageBlock
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="extra_type", options={"default": "rich_text"})
+     * @ORM\Column(type="page_block_type", name="extra_type", options={"default": "rich_text"})
      */
     private $extraType;
 
@@ -103,7 +103,7 @@ class PageBlock
         int $revisionId,
         string $position,
         ?int $extraId,
-        ?string $extraType,
+        ?PageBlockType $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
@@ -112,7 +112,7 @@ class PageBlock
         $this->revisionId = $revisionId;
         $this->position = $position;
         $this->extraId = $extraId;
-        $this->extraType = $extraType ?? 'rich_text';
+        $this->extraType = $extraType ?? PageBlockType::richText();
         $this->extraData = $extraData;
         $this->html = $html;
         $this->visible = $visible;
@@ -123,7 +123,7 @@ class PageBlock
         int $revisionId,
         string $position,
         ?int $extraId,
-        string $extraType,
+        PageBlockType $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
@@ -171,7 +171,7 @@ class PageBlock
         return $this->extraId;
     }
 
-    public function getExtraType(): string
+    public function getExtraType(): PageBlockType
     {
         return $this->extraType;
     }

@@ -8,6 +8,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\DependencyInjection\Container;
@@ -224,7 +225,16 @@ class ForkInstaller
             /** @var PageBlockRepository $pageBlockRepository */
             $pageBlockRepository = Model::get(PageBlockRepository::class);
             foreach ($revisionIds as $revisionId) {
-                $pageBlock = new PageBlock($revisionId, $extra['position'], $extra['id'], '', null, null, true, 0);
+                $pageBlock = new PageBlock(
+                    $revisionId,
+                    $extra['position'],
+                    $extra['id'],
+                    PageBlockType::richText(),
+                    null,
+                    null,
+                    true,
+                    0
+                );
 
                 $pageBlockRepository->add($pageBlock);
                 $pageBlockRepository->save($pageBlock);

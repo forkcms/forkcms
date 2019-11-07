@@ -14,6 +14,7 @@ use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
@@ -1165,7 +1166,7 @@ class Model
                 $revisionId,
                 $position,
                 $extraId,
-                $extraType,
+                new PageBlockType($extraType),
                 $extraData,
                 $html,
                 $visible,
