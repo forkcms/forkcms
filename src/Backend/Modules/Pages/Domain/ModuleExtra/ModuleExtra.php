@@ -177,6 +177,7 @@ class ModuleExtra
     {
         if (!empty($this->data)) {
             $this->data = serialize($this->data);
+
             return;
         }
         $this->data = null;
