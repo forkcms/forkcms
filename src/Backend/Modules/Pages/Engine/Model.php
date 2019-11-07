@@ -1525,7 +1525,7 @@ class Model
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
             $newSequence = $pageRepository->getNewSequenceForMove($newParent, $language);
 
-            $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Page::ACTIVE]);
+            $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
             foreach ($pages as $page) {
                 $page->move($newParent, $newSequence, $newType);
