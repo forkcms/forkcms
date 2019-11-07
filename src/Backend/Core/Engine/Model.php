@@ -553,9 +553,9 @@ class Model extends \Common\Core\Model
                     /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra->getModule() === $module &&
-                            $extra->getAction() === $action &&
-                            $extra->getAction() !== null) {
+                        if ($extra->getModule() === $module
+                            && $extra->getAction() === $action
+                            && $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
                             if ($data !== null && $extra->getData()
                                 && array_intersect_assoc($data, (array) $extra->getData()) !== $data
