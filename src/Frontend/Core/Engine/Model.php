@@ -127,7 +127,6 @@ class Model extends \Common\Core\Model
      */
     public static function getPage(int $pageId): array
     {
-
         $pageRepository = Model::getContainer()->get(PageRepository::class);
         $revisionId = $pageRepository->getRevisionId($pageId, Status::active(), LANGUAGE);
 
