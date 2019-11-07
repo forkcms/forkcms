@@ -477,14 +477,7 @@ class PageRepository extends ServiceEntityRepository
         foreach ($result as $key => $value) {
             if (strpos($key, $prefix) === 0) {
                 unset($result[$key]);
-                $key = substr($key, 2);
-
-                preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
-                $ret = $matches[0];
-                foreach ($ret as &$match) {
-                    $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
-                }
-                $key = implode('_', $ret);
+                $key = self::convertToSnakeCase(substr($key, 2));
             }
 
             if (is_bool($value)) {
@@ -499,5 +492,18 @@ class PageRepository extends ServiceEntityRepository
         }
 
         return $result;
+    }
+
+    private static function convertToSnakeCase(string $key): string
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = ($match === strtoupper($match) ? strtolower($match) : lcfirst($match));
+        }
+        unset($match);
+        $key = implode('_', $ret);
+
+        return $key;
     }
 }
