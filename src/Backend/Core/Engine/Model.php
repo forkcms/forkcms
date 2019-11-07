@@ -137,7 +137,7 @@ class Model extends \Common\Core\Model
         ModuleExtraType $moduleExtraType = null,
         array $data = null
     ): void {
-        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
 
         $parameters = [];
 
@@ -183,7 +183,7 @@ class Model extends \Common\Core\Model
     public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
         /** @var ModuleExtraRepository $moduleExtraRepository */
-        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
 
         $moduleExtra = $moduleExtraRepository->find($id);
 
@@ -673,7 +673,7 @@ class Model extends \Common\Core\Model
         int $sequence = null
     ): int {
         /** @var ModuleExtraRepository $moduleExtraRepository */
-        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
 
         if ($sequence === null) {
             $sequence = $moduleExtraRepository->getNextSequenceByModule($module);
