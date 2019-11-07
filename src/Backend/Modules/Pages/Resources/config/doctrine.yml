@@ -22,5 +22,5 @@ doctrine:
                 type: annotation
                 is_bundle: false
                 dir: "%kernel.project_dir%/src/Backend/Modules/Pages/Domain/Page"
-                alias: Page
+                alias: PagesPage
                 prefix: Backend\Modules\Pages\Domain\Page
