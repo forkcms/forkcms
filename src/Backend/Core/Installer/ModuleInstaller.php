@@ -9,6 +9,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
@@ -740,7 +741,7 @@ class ModuleInstaller
             $revision['sequence'],
             $revision['navigation_title_overwrite'],
             $revision['hidden'],
-            $revision['status'],
+            new Status($revision['status']),
             $revision['type'],
             $revision['data'],
             $revision['allow_move'],

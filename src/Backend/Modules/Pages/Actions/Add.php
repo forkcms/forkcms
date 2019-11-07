@@ -12,6 +12,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -612,7 +613,7 @@ class Add extends BackendBaseActionAdd
                     BackendPagesModel::getMaximumSequence($parentId) + 1,
                     $this->form->getField('navigation_title_overwrite')->isChecked(),
                     $this->form->getField('hidden')->getValue(),
-                    $status,
+                    new Status($status),
                     $parentPage ? 'page' : 'root',
                     $data,
                     $allowMove,

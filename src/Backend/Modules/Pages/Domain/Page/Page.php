@@ -129,12 +129,13 @@ class Page
      * @ORM\Column(type="boolean", name="hidden")
      */
     private $hidden;
+
     /**
      * Is this the active, archive or draft version
      *
-     * @var string
+     * @var Status
      *
-     * @ORM\Column(type="string", length=243)
+     * @ORM\Column(type="page_status", length=243)
      */
     private $status;
 
@@ -214,7 +215,7 @@ class Page
         int $sequence,
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
-        string $status = self::ACTIVE,
+        Status $status = null,
         string $type = 'root',
         $data = null,
         bool $allowMove = true,
@@ -242,6 +243,9 @@ class Page
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
         $this->status = $status;
+        if ($this->status === null) {
+            $this->status = Status::active();
+        }
         $this->data = $data;
         $this->allowMove = $allowMove;
         $this->allowChildren = $allowChildren;
@@ -262,7 +266,7 @@ class Page
         int $sequence,
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
-        string $status = self::ACTIVE,
+        Status $status = null,
         string $type = 'root',
         $data = null,
         bool $allowMove = true,
@@ -289,7 +293,9 @@ class Page
         $this->type = $type;
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
-        $this->status = $status;
+        if ($this->status !== null) {
+            $this->status = $status;
+        }
         $this->data = $data;
         $this->allowMove = $allowMove;
         $this->allowChildren = $allowChildren;

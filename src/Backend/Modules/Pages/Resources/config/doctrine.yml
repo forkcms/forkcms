@@ -3,6 +3,7 @@ doctrine:
         types:
             module_extra_type: Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraDBALType
             page_block_type: Backend\Modules\Pages\Domain\PageBlock\PageBlockDBALType
+            page_status: Backend\Modules\Pages\Domain\Page\StatusDBALType
     orm:
         mappings:
             module_extra:
