@@ -434,7 +434,7 @@ class PageRepository extends ServiceEntityRepository
         ;
 
         $parameters = [
-            'type' => (string) ModuleExtraType::block(),
+            'type' => ModuleExtraType::block(),
             'id' => $pageId,
         ];
 
