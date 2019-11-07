@@ -311,6 +311,26 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function getRevisionId(int $id, Status $status, string $language): int
+    {
+        return (int) $this
+            ->createQueryBuilder('p')
+            ->select('p.revisionId')
+            ->where('p.id = :id')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.language = :language')
+            ->setParameters(
+                [
+                    'id' => $id,
+                    'status' => $status,
+                    'language' => $language,
+                ]
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function getRevisionIdsToKeep(int $id, int $rowsToKeep): array
     {
         $result = $this

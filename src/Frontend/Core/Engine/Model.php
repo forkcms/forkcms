@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -125,14 +127,9 @@ class Model extends \Common\Core\Model
      */
     public static function getPage(int $pageId): array
     {
-        // get data
-        $revisionId = (int) self::getContainer()->get('database')->getVar(
-            'SELECT p.revision_id
-             FROM PagesPage AS p
-             WHERE p.id = ? AND p.status = ? AND p.language = ?
-             LIMIT 1',
-            [$pageId, 'active', LANGUAGE]
-        );
+
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
+        $revisionId = $pageRepository->getRevisionId($pageId, Status::active(), LANGUAGE);
 
         // No page found
         if ($revisionId === 0) {
