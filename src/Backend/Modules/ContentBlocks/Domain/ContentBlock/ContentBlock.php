@@ -4,6 +4,7 @@ namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraNotFountException;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Locale;
 use DateTime;
@@ -239,7 +240,7 @@ class ContentBlock
         $moduleExtra = $moduleExtraRepository->find($this->extraId);
 
         if (!$moduleExtra instanceof ModuleExtra) {
-            throw new \RuntimeException('ModuleExtra with id = ' . $this->extraId . ' not found');
+            throw new ModuleExtraNotFountException();
         }
 
         $data = [

@@ -6,6 +6,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraNotFountException;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
@@ -187,7 +188,7 @@ class Model extends \Common\Core\Model
         $moduleExtra = $moduleExtraRepository->find($id);
 
         if (!$moduleExtra instanceof ModuleExtra) {
-            throw new RuntimeException('Could not find extra with id = ' . $id);
+            throw new ModuleExtraNotFountException();
         }
 
         $moduleExtraRepository->delete($moduleExtra);
@@ -858,7 +859,7 @@ class Model extends \Common\Core\Model
         $moduleExtra = $moduleExtraRepository->find($id);
 
         if (!$moduleExtra instanceof ModuleExtra) {
-            throw new \RuntimeException('ModuleExtra with id = ' . $id . ' not found');
+            throw new ModuleExtraNotFountException();
         }
 
         $module = $moduleExtra->getModule();

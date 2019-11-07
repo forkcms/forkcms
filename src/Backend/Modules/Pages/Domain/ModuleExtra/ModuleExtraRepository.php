@@ -184,7 +184,7 @@ class ModuleExtraRepository extends ServiceEntityRepository
         );
 
         if (!$moduleExtra instanceof ModuleExtra) {
-            throw new RuntimeException('Widget not found');
+            throw new ModuleExtraNotFountException();
         }
 
         $moduleExtra->update(
