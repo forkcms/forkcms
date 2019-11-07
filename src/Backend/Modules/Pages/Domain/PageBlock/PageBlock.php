@@ -31,7 +31,8 @@ class PageBlock
      *
      * @ORM\Id
      * @ORM\Column(type="string", name="position", length=33)
-     * @ todo Position size must be limited due to limitation in mysql 5.5 regarding index size
+     *
+     * @todo Position size must be limited due to limitation in mysql 5.5 regarding index size
      */
     private $position;
 
