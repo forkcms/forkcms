@@ -7,6 +7,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Core\Language\Language;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -387,29 +388,15 @@ class Installer extends ModuleInstaller
 
     private function hasPageWithProfilesBlock(string $language): bool
     {
-        // @todo: Replace this with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-             INNER JOIN modules_extras AS e ON e.id = b.extra_id
-             WHERE e.module = ? AND p.language = ?
-             LIMIT 1',
-            ['Profiles', $language]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        return $pageRepository->pageExistsWithModuleBlockForLanguage('Profiles', $language);
     }
 
     private function hasPageWithProfilesAction(string $language, string $action): bool
     {
-        // @todo: Replace this with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-             INNER JOIN modules_extras AS e ON e.id = b.extra_id
-             WHERE e.module = ? AND p.language = ? AND e.action = ?
-             LIMIT 1',
-            [$this->getModule(), $language, $action]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        return $pageRepository->pageExistsWithModuleActionForLanguage('Profiles', $action, $language);
     }
 }

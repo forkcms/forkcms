@@ -413,6 +413,56 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function pageExistsWithModuleBlockForLanguage(string $module, string $language): bool
+    {
+        $results = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('1')
+            ->from(Page::class, 'p')
+            ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
+            ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
+            ->where('e.module = :module')
+            ->andWhere('p.language = :language')
+            ->setMaxResults(1)
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->getScalarResult();
+
+        return count($results) === 1;
+    }
+
+    public function pageExistsWithModuleActionForLanguage(string $module, string $action, string $language): bool
+    {
+        $results = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('1')
+            ->from(Page::class, 'p')
+            ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
+            ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
+            ->where('e.module = :module')
+            ->andWhere('e.action = :action')
+            ->andWhere('p.language = :language')
+            ->setMaxResults(1)
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'action' => $action,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->getScalarResult();
+
+        return count($results) === 1;
+    }
+
     private function buildGetQuery(int $pageId, ?int $revisionId, ?string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
