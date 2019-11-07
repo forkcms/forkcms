@@ -215,7 +215,7 @@ class ForkInstaller
             // get pages without this extra
             $revisionIds = $this->container->get('database')->getColumn(
                 'SELECT i.revision_id
-                 FROM pages AS i
+                 FROM PagesPage AS i
                  WHERE i.revision_id NOT IN (
                      SELECT DISTINCT b.revision_id
                      FROM PagesPageBlock AS b

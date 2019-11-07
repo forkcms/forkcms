@@ -92,7 +92,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with a PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',

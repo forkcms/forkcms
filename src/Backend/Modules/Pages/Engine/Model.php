@@ -46,18 +46,18 @@ class Model
 
     const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM pages AS i
+         FROM PagesPage AS i
          WHERE i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
     const QUERY_DATAGRID_BROWSE_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM pages AS i
+         FROM PagesPage AS i
          INNER JOIN
          (
              SELECT MAX(i.revision_id) AS revision_id
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.status = ? AND i.user_id = ? AND i.language = ?
              GROUP BY i.id
          ) AS p
@@ -65,13 +65,13 @@ class Model
 
     const QUERY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM pages AS i
+         FROM PagesPage AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
     const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM pages AS i
+         FROM PagesPage AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
@@ -483,7 +483,7 @@ class Model
             'SELECT i.id AS url, i.title AS name, mt.module
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN pages AS i ON mt.other_id = i.id
+             INNER JOIN PagesPage AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
             ['pages', $tagId, 'active']
         );

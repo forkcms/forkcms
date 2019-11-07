@@ -511,7 +511,7 @@ class Installer extends ModuleInstaller
     {
         // @todo: Replace with PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
-            'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
+            'SELECT 1 FROM PagesPage WHERE language = ? AND id > ? LIMIT 1',
             [$language, BackendModel::ERROR_PAGE_ID]
         );
     }

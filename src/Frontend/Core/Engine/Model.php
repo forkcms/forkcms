@@ -128,7 +128,7 @@ class Model extends \Common\Core\Model
         // get data
         $revisionId = (int) self::getContainer()->get('database')->getVar(
             'SELECT p.revision_id
-             FROM pages AS p
+             FROM PagesPage AS p
              WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
             [$pageId, 'active', LANGUAGE]
@@ -162,7 +162,7 @@ class Model extends \Common\Core\Model
                  m.url, m.url_overwrite,
                  m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index,
                  t.path AS template_path, t.data AS template_data
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?

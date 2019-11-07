@@ -317,7 +317,7 @@ class CacheBuilder
         // init var
         $cachedTitles = (array) $this->database->getPairs(
             'SELECT i.id, i.navigation_title
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
              AND i.language = ? AND i.status = ?',
             [$language, 'active']

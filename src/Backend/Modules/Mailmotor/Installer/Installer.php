@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
@@ -106,7 +106,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
@@ -119,7 +119,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with PageRepository method when it exists.
         $pageId = (int) $this->getDatabase()->getVar(
             'SELECT p.id
-             FROM pages AS p
+             FROM PagesPage AS p
              WHERE p.title = ? AND p.language = ?
              LIMIT 1',
             ['Newsletters', $language]

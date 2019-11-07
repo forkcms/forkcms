@@ -28,7 +28,7 @@ class Model implements FrontendTagsInterface
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.title
-             FROM pages AS i
+             FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
@@ -73,7 +73,7 @@ class Model implements FrontendTagsInterface
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.title, m.description, i.parent_id, i.data
-             FROM pages AS i
+             FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
@@ -120,7 +120,7 @@ class Model implements FrontendTagsInterface
         // get items
         $items = (array) $database->getRecords(
             'SELECT p.id, p.title, m.url, p.revision_id AS text
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .

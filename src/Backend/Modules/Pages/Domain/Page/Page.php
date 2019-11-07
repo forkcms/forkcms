@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\Page\PageRepository")
  * @ORM\Table(
- *     name="pages",
+ *     name="PagesPage",
  *     indexes={
  *      @ORM\Index(name="idx_id_status_hidden_language", columns={"id", "status", "language"})
  *     }

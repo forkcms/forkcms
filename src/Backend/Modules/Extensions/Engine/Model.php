@@ -229,14 +229,14 @@ class Model
         $database->delete('themes_templates', 'id = ?', $id);
         $ids = (array) $database->getColumn(
             'SELECT i.revision_id
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.template_id = ? AND i.status != ?',
             [$id, 'active']
         );
 
         if (!empty($ids)) {
             // delete those pages and the linked blocks
-            $database->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('PagesPage', 'revision_id IN(' . implode(',', $ids) . ')');
 
             /** @var PageBlockRepository $pageBlockRepository */
             $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
@@ -794,7 +794,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.template_id = ? AND i.status = ?
              LIMIT 1',
             [$templateId, 'active']
