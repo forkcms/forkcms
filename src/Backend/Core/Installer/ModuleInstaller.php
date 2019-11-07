@@ -469,10 +469,7 @@ class ModuleInstaller
 
     private function getNextSequenceForModule(string $module): int
     {
-        /** @var ModuleExtraRepository $moduleExtraRepository */
-        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
-
-        return $moduleExtraRepository->getNextSequenceByModule($module);
+        return BackendModel::getContainer()->get(ModuleExtraRepository::class)->getNextSequenceByModule($module);
     }
 
     /**
