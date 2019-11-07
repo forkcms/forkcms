@@ -136,7 +136,7 @@ class Model
         // get all old pages
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Page::ACTIVE]);
+        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
 
         // delete existing pages
         /** @var Page $page */
@@ -176,7 +176,7 @@ class Model
         $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
-        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Page::ACTIVE]);
+        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
 
         // loop
         /** @var Page $activePage */
@@ -406,7 +406,7 @@ class Model
             [
                 'id' => $pageId,
                 'language' => BL::getWorkingLanguage(),
-                'status' => [Page::ACTIVE, Page::DRAFT],
+                'status' => [Status::active(), Status::draft()],
             ]
         );
 
@@ -509,7 +509,7 @@ class Model
     {
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $page = $pageRepository->getFirstChild($parentId, Page::ACTIVE, BL::getWorkingLanguage());
+        $page = $pageRepository->getFirstChild($parentId, Status::active(), BL::getWorkingLanguage());
 
         if ($page instanceof Page) {
             return $page->getId();
@@ -1056,7 +1056,7 @@ class Model
             $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguage(
                 $parentIds,
                 $url,
-                Page::ACTIVE,
+                Status::active(),
                 BL::getWorkingLanguage()
             );
 
@@ -1074,7 +1074,7 @@ class Model
             $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
                 $parentIds,
                 $url,
-                Page::ACTIVE,
+                Status::active(),
                 BL::getWorkingLanguage(),
                 $id
             );
@@ -1280,7 +1280,7 @@ class Model
         }
 
         // update old revisions
-        if ($page['status'] !== Page::DRAFT) {
+        if ($page['status'] !== (string) Status::draft()) {
             $pageEntities = $pageRepository->findBy(['id' => $page['id'], 'language' => $page['language']]);
 
             foreach ($pageEntities as $pageEntity) {
@@ -1291,7 +1291,7 @@ class Model
             $pageRepository->deleteByIdAndUserIdAndStatusAndLanguage(
                 (int) $page['id'],
                 BackendAuthentication::getUser()->getUserId(),
-                Page::DRAFT,
+                Status::draft(),
                 $page['language']
             );
         }
@@ -1336,7 +1336,7 @@ class Model
             $revisionsToDelete = $pageRepository
                 ->getRevisionIdsToDelete(
                     $page['id'],
-                    Page::ARCHIVE,
+                    Status::archive(),
                     $revisionIdsToKeep
                 );
 
@@ -1398,7 +1398,7 @@ class Model
                     'sequence' => $page->getSequence(),
                     'navigation_title_overwrite' => $page->isNavigationTitleOverwrite(),
                     'hidden' => $page->isHidden(),
-                    'status' => $page->getStatus(),
+                    'status' => (string) $page->getStatus(),
                     'type' => $page->getType(),
                     'data' => $page->getData(),
                     'allow_move' => $page->isAllowMove(),
@@ -1540,7 +1540,7 @@ class Model
                 [
                     'id' => $droppedOnPageId,
                     'language' => $language,
-                    'status' => Page::ACTIVE,
+                    'status' => Status::active(),
                 ]
             );
 
@@ -1556,7 +1556,7 @@ class Model
         // increment all pages with a sequence that is higher than the new sequence;
         $pageRepository->incrementSequence($newParent, $language, $newSequence);
 
-        $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Page::ACTIVE]);
+        $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
         foreach ($pages as $page) {
             $page->move($newParent, $newSequence, $newType);

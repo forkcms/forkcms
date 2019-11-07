@@ -19,10 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Page
 {
-    public const ACTIVE = 'active';
-    public const ARCHIVE = 'archive';
-    public const DRAFT = 'draft';
-
     /**
      * The real page id although revision id is the real one... (legacy stuff here)
      * @todo Fix this legacy stuff with the multiple ids.
@@ -363,7 +359,7 @@ class Page
         return $this->hidden;
     }
 
-    public function getStatus(): string
+    public function getStatus(): Status
     {
         return $this->status;
     }
@@ -458,7 +454,7 @@ class Page
 
     public function archive(): void
     {
-        $this->status = self::ARCHIVE;
+        $this->status = Status::archive();
     }
 
     /**

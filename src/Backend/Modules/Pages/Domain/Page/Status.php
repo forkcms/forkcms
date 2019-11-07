@@ -50,4 +50,14 @@ final class Status
     {
         return $this->type;
     }
+
+    public function isActive(): bool
+    {
+        return $this->type === self::ACTIVE;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->type === self::DRAFT;
+    }
 }

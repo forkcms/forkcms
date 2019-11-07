@@ -57,7 +57,7 @@ class PageRepository extends ServiceEntityRepository
     public function deleteByIdAndUserIdAndStatusAndLanguage(
         int $id,
         int $userId,
-        string $status,
+        Status $status,
         string $language
     ): void {
         $qb = $this
@@ -123,7 +123,7 @@ class PageRepository extends ServiceEntityRepository
             [
                 'id' => $id,
                 'language' => $language,
-                'status' => Page::ARCHIVE,
+                'status' => Status::archive(),
             ]
         );
 
@@ -192,7 +192,7 @@ class PageRepository extends ServiceEntityRepository
                 [
                     'parentId' => $parentId,
                     'language' => $language,
-                    'status' => Page::ACTIVE,
+                    'status' => Status::active(),
                 ]
             )
             ->getQuery()
@@ -259,7 +259,7 @@ class PageRepository extends ServiceEntityRepository
                 'hidden' => 'N',
                 'language' => $language,
                 'parentIds' => $parentIds,
-                'status' => Page::ACTIVE,
+                'status' => Status::active(),
                 'type' => 'block',
             ]
         );
@@ -269,7 +269,7 @@ class PageRepository extends ServiceEntityRepository
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
-    public function getFirstChild(int $pageId, string $status, string $language): ?Page
+    public function getFirstChild(int $pageId, Status $status, string $language): ?Page
     {
         return $this
             ->createQueryBuilder('p')
@@ -301,7 +301,7 @@ class PageRepository extends ServiceEntityRepository
             ->setParameters(
                 [
                     'id' => $id,
-                    'status' => Page::ARCHIVE,
+                    'status' => Status::archive(),
                 ]
             )
             ->getQuery()
@@ -338,7 +338,7 @@ class PageRepository extends ServiceEntityRepository
     public function findOneByParentsAndUrlAndStatusAndLanguage(
         array $parentIds,
         string $url,
-        string $status,
+        Status $status,
         string $language
     ): ?Page {
         $qb = $this
@@ -369,7 +369,7 @@ class PageRepository extends ServiceEntityRepository
     public function findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
         array $parentIds,
         string $url,
-        string $status,
+        Status $status,
         string $language,
         int $excludedId
     ): ?Page {

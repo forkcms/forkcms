@@ -656,7 +656,7 @@ class Add extends BackendBaseActionAdd
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
                 // active
-                if ($page->getStatus() === Page::ACTIVE) {
+                if ($page->getStatus()->isActive()) {
                     $this->saveSearchIndex($data['remove_from_search_index'] || $redirectValue !== 'none', $page);
 
                     // everything is saved, so redirect to the overview
@@ -667,7 +667,7 @@ class Add extends BackendBaseActionAdd
                             $page->getTitle()
                         ) . '&highlight=row-' . $page->getId()
                     );
-                } elseif ($page->getStatus() === Page::DRAFT) {
+                } elseif ($page->getStatus()->isDraft()) {
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
                         BackendModel::createUrlForAction(
