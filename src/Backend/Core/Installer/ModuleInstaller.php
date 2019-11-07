@@ -499,7 +499,7 @@ class ModuleInstaller
         $moduleExtra = $moduleExtraRepository->findOneBy(
             [
                 'module' => $module,
-                'type' => (string) $type,
+                'type' => $type,
                 'label' => $label,
                 'data' => $data,
             ]
