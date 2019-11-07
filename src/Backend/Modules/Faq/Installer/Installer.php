@@ -197,12 +197,13 @@ class Installer extends ModuleInstaller
         $moduleExtraRepository->save($moduleExtra);
 
         // build array
-        $item = [];
-        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $moduleExtra->getId();
-        $item['language'] = $language;
-        $item['title'] = $title;
-        $item['sequence'] = 1;
+        $item = [
+            'meta_id' => $this->insertMeta($title, $title, $title, $url),
+            'extra_id' => $moduleExtra->getId(),
+            'language' => $language,
+            'title' => $title,
+            'sequence' => 1,
+        ];
 
         // insert category
         $item['id'] = (int) $database->insert('faq_categories', $item);
