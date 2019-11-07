@@ -39,6 +39,8 @@ class PageBlockRepository extends ServiceEntityRepository
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
+
+        $this->getEntityManager()->clear(PageBlock::class);
     }
 
     public function deleteByExtraId(int $extraId): void
@@ -50,6 +52,8 @@ class PageBlockRepository extends ServiceEntityRepository
             ->setParameter('extraId', $extraId)
             ->getQuery()
             ->execute();
+
+        $this->getEntityManager()->clear(PageBlock::class);
     }
 
     public function clearExtraId(int $extraId): void

@@ -50,6 +50,8 @@ class PageRepository extends ServiceEntityRepository
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
+
+        $this->getEntityManager()->clear(Page::class);
     }
 
     public function deleteByIdAndUserIdAndStatusAndLanguage(
@@ -75,6 +77,8 @@ class PageRepository extends ServiceEntityRepository
             )
             ->getQuery()
             ->execute();
+
+        $this->getEntityManager()->clear(PageBlock::class);
     }
 
     public function get(int $id, int $revisionId = null, string $language = null): array
