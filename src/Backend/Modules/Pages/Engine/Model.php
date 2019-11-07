@@ -1370,7 +1370,7 @@ class Model
         // fetch all pages
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $pages = $pageRepository->findBy(['templateId' => $oldTemplateId, 'status' => [Page::ACTIVE, Page::DRAFT]]);
+        $pages = $pageRepository->findBy(['templateId' => $oldTemplateId, 'status' => [Status::active(), Status::draft()]]);
 
         // there is no active/draft page with the old template id
         if (count($pages) === 0) {
