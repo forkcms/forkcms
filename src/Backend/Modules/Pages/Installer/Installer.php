@@ -520,7 +520,6 @@ class Installer extends ModuleInstaller
     {
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [
-                ModuleExtra::class,
                 PageBlock::class,
                 Page::class,
             ]
