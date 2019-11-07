@@ -218,7 +218,7 @@ class ForkInstaller
                  FROM pages AS i
                  WHERE i.revision_id NOT IN (
                      SELECT DISTINCT b.revision_id
-                     FROM pages_blocks AS b
+                     FROM PagesPageBlock AS b
                      WHERE b.extra_id = ?
                     GROUP BY b.revision_id
                  )',

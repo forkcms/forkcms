@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
- * @ORM\Table(name="pages_blocks")
+ * @ORM\Table(name="PagesPageBlock")
  *
  * @ORM\HasLifecycleCallbacks()
  */

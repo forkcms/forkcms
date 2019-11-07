@@ -94,7 +94,7 @@ class Installer extends ModuleInstaller
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->subscribeBlockId, $language]
@@ -107,7 +107,7 @@ class Installer extends ModuleInstaller
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->unsubscribeBlockId, $language]

@@ -2613,12 +2613,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table pages_blocks
+# Dump of table PagesPageBlock
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages_blocks`;
+DROP TABLE IF EXISTS `PagesPageBlock`;
 
-CREATE TABLE `pages_blocks` (
+CREATE TABLE `PagesPageBlock` (
   `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
   `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
@@ -2632,10 +2632,10 @@ CREATE TABLE `pages_blocks` (
   KEY `idx_rev_status` (`revision_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages_blocks` WRITE;
-/*!40000 ALTER TABLE `pages_blocks` DISABLE KEYS */;
+LOCK TABLES `PagesPageBlock` WRITE;
+/*!40000 ALTER TABLE `PagesPageBlock` DISABLE KEYS */;
 
-INSERT INTO `pages_blocks` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
+INSERT INTO `PagesPageBlock` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
 VALUES
 	(1,'main',NULL,'rich_text',NULL,'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
 	(1,'top',1,'rich_text',NULL,'','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
@@ -2685,7 +2685,7 @@ VALUES
 	(23,'main',32,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0),
 	(23,'top',1,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0);
 
-/*!40000 ALTER TABLE `pages_blocks` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPageBlock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
