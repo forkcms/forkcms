@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use RuntimeException;
 
-final class InvalidPageBlockType extends RuntimeException
+final class InvalidPageBlockTypeException extends RuntimeException
 {
     public static function withType(string $type)
     {

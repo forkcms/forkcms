@@ -22,12 +22,12 @@ final class PageBlockType
     /**
      * @param string $type
      *
-     * @throws InvalidPageBlockType
+     * @throws InvalidPageBlockTypeException
      */
     public function __construct(string $type)
     {
         if (!in_array($type, self::POSSIBLE_TYPES, true)) {
-            throw InvalidPageBlockType::withType($type);
+            throw InvalidPageBlockTypeException::withType($type);
         }
 
         $this->type = $type;
