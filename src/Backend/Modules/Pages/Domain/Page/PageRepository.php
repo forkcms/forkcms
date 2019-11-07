@@ -310,7 +310,7 @@ class PageRepository extends ServiceEntityRepository
         return array_column($result, 'revisionId');
     }
 
-    public function getRevisionIdsToDelete(int $id, string $status, array $revisionsToKeep): array
+    public function getRevisionIdsToDelete(int $id, Status $status, array $revisionsToKeep): array
     {
         $qb = $this
             ->createQueryBuilder('p')
