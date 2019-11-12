@@ -293,8 +293,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         $templateFile = $this->getContainer()->getParameter('site.path_www');
         // check if the template file exists
-        $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue(
-            ) . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
+        $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue()
+                         . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
         if (!is_file($templateFile)) {
             $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
         }
@@ -415,11 +415,10 @@ class EditThemeTemplate extends BackendBaseActionEdit
         BackendExtensionsModel::updateTemplate($item);
 
         // set default template
-        if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get(
-                'Core',
-                'theme',
-                'Fork'
-            )) {
+        if (
+            $this->form->getField('default')->getChecked()
+            && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')
+        ) {
             $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
         }
 

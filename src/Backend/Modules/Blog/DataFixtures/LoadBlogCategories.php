@@ -15,7 +15,7 @@ class LoadBlogCategories
                 'description' => 'BlogCategory for tests',
                 'title' => 'BlogCategory for tests',
                 'url' => 'blogcategory-for-tests',
-            ]
+            ]EditThemeTemplate
         );
 
         $database->insert(
