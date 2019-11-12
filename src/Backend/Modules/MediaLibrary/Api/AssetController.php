@@ -2,9 +2,12 @@
 
 namespace Backend\Modules\MediaLibrary\Api;
 
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class AssetController
@@ -29,5 +32,35 @@ final class AssetController
         return JsonResponse::fromJsonString(
             $this->serializer->serialize($this->mediaItemRepository->find($uuid), 'json')
         );
+    }
+
+    /**
+     * @Rest\Get("/medialibrary/asset/{uuid}/download")
+     */
+    public function downloadAssetAction(string $uuid)
+    {
+        $mediaItem = $this->mediaItemRepository->find($uuid);
+
+        if (!$mediaItem instanceof MediaItem) {
+            throw new NotFoundHttpException();
+        }
+
+        $response = new Response();
+
+        // Set headers
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($mediaItem->getAbsolutePath()));
+        $response->headers->set(
+            'Content-Disposition',
+            'attachment; filename="' . basename($mediaItem->getAbsolutePath()) . '";'
+        );
+        $response->headers->set('Content-length', filesize($mediaItem->getAbsolutePath()));
+
+        // Send headers before outputting anything
+        $response->sendHeaders();
+
+        $response->setContent(file_get_contents($mediaItem->getAbsolutePath()));
+
+        return $response;
     }
 }
