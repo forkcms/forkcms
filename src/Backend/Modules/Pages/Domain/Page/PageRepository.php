@@ -77,7 +77,7 @@ class PageRepository extends ServiceEntityRepository
         Status $status,
         string $language
     ): void {
-        $qb = $this
+        $this
             ->createQueryBuilder('p')
             ->delete()
             ->where('p.id = :id')
