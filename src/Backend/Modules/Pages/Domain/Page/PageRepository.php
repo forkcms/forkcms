@@ -77,7 +77,7 @@ class PageRepository extends ServiceEntityRepository
         Status $status,
         string $language
     ): void {
-        $qb = $this
+        $this
             ->createQueryBuilder('p')
             ->delete()
             ->where('p.id = :id')
@@ -240,7 +240,7 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function getPageTree(array $parentIds, string $language, array $data = null, int $level = 1): array
+    public function getPageTree(array $parentIds, string $language): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -266,7 +266,13 @@ class PageRepository extends ServiceEntityRepository
             ->innerJoin(Meta::class, 'm', Join::WITH, 'p.meta = m.id')
             ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId')
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
-            ->leftJoin(Page::class, 'p2', Join::WITH, 'p2.parentId = p.id AND p2.status = :active AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.language = :language')
+            ->leftJoin(
+                Page::class,
+                'p2',
+                Join::WITH,
+                'p2.parentId = p.id AND p2.status = :active ' .
+                'AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.language = :language'
+            )
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
             ->andWhere('p.language = :language')
