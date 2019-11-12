@@ -3,7 +3,10 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Doctrine\ORM\NoResultException;
 use Psr\Cache\CacheItemPoolInterface;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -21,13 +24,22 @@ class CacheBuilder
      */
     protected $cache;
 
+    /**
+     * @var ModuleExtraRepository
+     */
+    private $moduleExtraRepository;
+
     protected $blocks;
     protected $sitemapId;
 
-    public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
-    {
+    public function __construct(
+        \SpoonDatabase $database,
+        CacheItemPoolInterface $cache,
+        ModuleExtraRepository $moduleExtraRepository
+    ) {
         $this->database = $database;
         $this->cache = $cache;
+        $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
     public function buildCache(string $language): void
@@ -242,26 +254,7 @@ class CacheBuilder
     protected function getBlocks(): array
     {
         if (empty($this->blocks)) {
-            $this->blocks = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action, i.data
-                 FROM modules_extras AS i
-                 WHERE i.type = ? AND i.hidden = ?',
-                ['block', false],
-                'id'
-            );
-
-            $this->blocks = array_map(
-                function (array $block) {
-                    if ($block['data'] === null) {
-                        return $block;
-                    }
-
-                    $block['data'] = unserialize($block['data']);
-
-                    return $block;
-                },
-                $this->blocks
-            );
+            $this->blocks = $this->moduleExtraRepository->getBlocks();
         }
 
         return $this->blocks;
@@ -269,25 +262,15 @@ class CacheBuilder
 
     protected function getSitemapId(): int
     {
-        if (empty($this->sitemapId)) {
-            $widgets = (array) $this->database->getRecords(
-                'SELECT i.id, i.module, i.action
-                 FROM modules_extras AS i
-                 WHERE i.type = ? AND i.hidden = ?',
-                ['widget', false],
-                'id'
-            );
-
-            // search sitemap
-            foreach ($widgets as $id => $row) {
-                if ($row['action'] == 'Sitemap') {
-                    $this->sitemapId = $id;
-                    break;
-                }
+        if ($this->sitemapId === null) {
+            try {
+                $this->sitemapId = $this->moduleExtraRepository->findIdForModuleAndAction('Pages', 'Sitemap');
+            } catch (NoResultException $e) {
+                throw new RuntimeException('Sitemap action of the Pages module not found');
             }
         }
 
-        return (int) $this->sitemapId;
+        return $this->sitemapId;
     }
 
     protected function getOrder(
@@ -334,7 +317,7 @@ class CacheBuilder
         // init var
         $cachedTitles = (array) $this->database->getPairs(
             'SELECT i.id, i.navigation_title
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
              AND i.language = ? AND i.status = ?',
             [$language, 'active']

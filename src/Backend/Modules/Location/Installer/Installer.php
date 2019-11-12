@@ -4,9 +4,9 @@ namespace Backend\Modules\Location\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Location\Domain\Location\Location;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
-use Common\ModuleExtraType;
 
 /**
  * Installer for the location module

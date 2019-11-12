@@ -1543,14 +1543,15 @@ jsBackend.mediaLibraryHelper.modalSelection = {
   },
 
   selectItemAndSendToParent: function () {
-    var directUrl = $(this).data('directUrl')
-
-    window.opener.postMessage({'media-url': directUrl}, '*')
+    var $this = $(this)
+    var directUrl = $this.data('directUrl')
+    window.opener.postMessage({'media-url': directUrl, 'id': $this.closest('tr').attr('id').replace('row-', '')}, '*')
     window.close()
   },
 
   sendToParent: function () {
-    window.opener.postMessage({'media-url': $(this).data('directUrl')}, '*')
+    var $this = $(this)
+    window.opener.postMessage({'media-url': $this.data('directUrl'), 'id': $this.closest('[data-media-id]').data('mediaId')}, '*')
     window.close()
   }
 };

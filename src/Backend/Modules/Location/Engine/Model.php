@@ -8,7 +8,7 @@ use Backend\Modules\Location\Domain\Location\Location;
 use Backend\Modules\Location\Domain\Location\LocationRepository;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use ForkCMS\Utility\Geolocation;
 use InvalidArgumentException;
 use SpoonFilter;

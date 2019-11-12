@@ -5,9 +5,9 @@ namespace Backend\Modules\Blog\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
-use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 /**
  * Installer for the blog module
@@ -185,12 +185,15 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
+        $widgetId = $moduleExtraRepository->getModuleExtraId('Search', 'Form', ModuleExtraType::widget());
+
+        if ($widgetId === null) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 
     private function hasPageWithBlogBlock(string $language): bool
@@ -198,8 +201,8 @@ class Installer extends ModuleInstaller
         // @todo: Replace with a PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             FROM PagesPage AS p
+             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->blogBlockId, $language]

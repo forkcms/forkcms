@@ -44,7 +44,9 @@
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "friendsofsymfony/rest-bundle": "^2.5",
-        "jms/serializer-bundle": "^2.4"
+        "jms/serializer-bundle": "^2.4",
+        "codex-team/editor.js": "^2.0",
+        "beberlei/doctrineextensions": "^1.2"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",

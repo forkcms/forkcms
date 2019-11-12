@@ -45,6 +45,7 @@
             <exclude>src/Backend/Modules/Groups/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Locale/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Location/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Mailmotor/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Profiles/Tests/Actions</exclude>

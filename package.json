@@ -7,6 +7,14 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@editorjs/editorjs": "^2.15.1",
+    "@editorjs/embed": "^2.2.1",
+    "@editorjs/header": "^2.3.1",
+    "@editorjs/list": "^1.4.0",
+    "@editorjs/paragraph": "^2.6.0",
+    "babel-loader": "^8.0.6",
     "bootstrap": "^4.3.1",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.9.0",
@@ -29,7 +37,10 @@
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.6.7",
     "slick-carousel": "^1.6.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "popper.js": "^1.16.0"
   },
   "scripts": {
     "test": "standard"
@@ -52,8 +63,5 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
-  },
-  "dependencies": {
-    "popper.js": "^1.16.0"
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Backend related objects
  */
-/* global CKEDITOR, Bloodhound, linkList */
+/* global CKEDITOR, Bloodhound, linkList, BlockEditor */
 
 var jsBackend =
   {
@@ -48,7 +48,11 @@ var jsBackend =
       jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
-      if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
+      if (jsData.Core.preferred_editor === 'ck-editor') {
+        jsBackend.ckeditor.init()
+      } else if (jsData.Core.preferred_editor === 'block-editor') {
+        jsBackend.blockEditor.init()
+      }
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
       jsBackend.session.init()
@@ -413,7 +417,7 @@ jsBackend.ckeditor = {
   },
 
   loadEditorsInCollections: function () {
-    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
+    $('[data-addfield="collection"]').on('collection-field-added', function (event, formCollectionItem) {
       jsBackend.ckeditor.prepare()
       $(formCollectionItem).find('textarea.inputEditor, textarea.inputEditorError').ckeditor(
         jsBackend.ckeditor.callback,
@@ -561,6 +565,34 @@ jsBackend.ckeditor = {
         }
       })
     }
+  }
+}
+
+/**
+ * Block editor related objects
+ */
+jsBackend.blockEditor = {
+
+  // initialize the editor
+  init: function () {
+    var editors = $('textarea.inputBlockEditor')
+    if (editors.length > 0) {
+      editors.each(function () {
+        jsBackend.blockEditor.createEditor($(this))
+      })
+    }
+
+    jsBackend.blockEditor.loadEditorsInCollections()
+  },
+
+  createEditor: function ($element) {
+    BlockEditor.editor.fromJson($element, $element.attr('fork-block-editor-config'))
+  },
+
+  loadEditorsInCollections: function () {
+    $('[data-addfield="collection"]').on('collection-field-added', function () {
+      jsBackend.blockEditor.createEditor($(this))
+    })
   }
 }
 

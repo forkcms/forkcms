@@ -2,7 +2,7 @@
 
 namespace Common\Exception;
 
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Exception;
 
 final class InvalidModuleExtraType extends Exception
