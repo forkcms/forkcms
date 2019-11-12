@@ -6,6 +6,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Common\Doctrine\Entity\Meta;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\AbstractQuery;
@@ -200,6 +201,39 @@ class PageRepository extends ServiceEntityRepository
         $result['extras'] = $qb->getQuery()->getArrayResult();
 
         return $result;
+    }
+
+    public function getSubPagesForApi(int $parentId, string $language): array
+    {
+        $subPageIds = $this
+            ->createQueryBuilder('p')
+            ->select('p.id')
+            ->distinct()
+            ->where('p.parentId = :parentId')
+            ->andWhere('p.status = :active')
+            ->andWhere('p.hidden = :false')
+            ->andWhere('p.language = :language')
+            ->andWhere('p.publishOn <= :now')
+            ->setParameters(
+                [
+                    'parentId' => $parentId,
+                    'active' => Status::active(),
+                    'false' => false,
+                    'language' => $language,
+                    'now' => new DateTime(),
+                ]
+            )
+            ->orderBy('p.sequence', 'ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+
+        $subPages = [];
+        foreach ($subPageIds as $subPageIdArray) {
+            $subPages[] = $this->getLatestForApi($subPageIdArray['id'], $language);
+        }
+
+        return $subPages;
     }
 
     public function getLatestVersion(int $id, string $language): ?int

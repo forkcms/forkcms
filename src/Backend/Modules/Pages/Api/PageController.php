@@ -31,4 +31,14 @@ final class PageController
 
         return JsonResponse::create($latest);
     }
+
+    /**
+     * @Rest\Get("/pages/{language}/{id}/subpages")
+     */
+    public function getSubPagesAction(string $language, int $id): JsonResponse
+    {
+        $subPages = $this->pageRepository->getSubPagesForApi($id, $language);
+
+        return JsonResponse::create($subPages);
+    }
 }
