@@ -9,16 +9,16 @@
   "devDependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-accessibility-plugin": "^1.0.5",
-    "bootstrap-datepicker": "^1.7.0",
+    "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
-    "ckeditor": "^4.11.4",
+    "ckeditor": "^4.12.1",
     "cropper": "^3.0.0-rc.2",
     "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^3.1.1",
-    "gulp-livereload": "^4.0.1",
+    "gulp-livereload": "^4.0.2",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.9.1",
@@ -27,7 +27,7 @@
     "jquery-ui-dist": "~1.12",
     "jstree": "^3.3.8",
     "photoswipe": "^4.1.1",
-    "simple-ajax-uploader": "^2.5.5",
+    "simple-ajax-uploader": "^2.6.7",
     "slick-carousel": "^1.6.0",
     "standard": "^10.0.3"
   },
@@ -52,5 +52,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "dependencies": {
+    "popper.js": "^1.16.0"
   }
 }
