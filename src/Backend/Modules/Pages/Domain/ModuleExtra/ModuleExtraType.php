@@ -3,8 +3,9 @@
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
 use Common\Exception\InvalidModuleExtraType;
+use JsonSerializable;
 
-final class ModuleExtraType
+final class ModuleExtraType implements JsonSerializable
 {
     private const BLOCK = 'block';
     private const HOMEPAGE = 'homepage';
@@ -50,5 +51,10 @@ final class ModuleExtraType
     public function __toString(): string
     {
         return $this->type;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 }

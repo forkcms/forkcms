@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
-final class PageBlockType
+use JsonSerializable;
+
+final class PageBlockType implements JsonSerializable
 {
     private const RICH_TEXT = 'rich_text';
     private const BLOCK = 'block';
@@ -56,5 +58,10 @@ final class PageBlockType
     public function __toString(): string
     {
         return $this->type;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 }

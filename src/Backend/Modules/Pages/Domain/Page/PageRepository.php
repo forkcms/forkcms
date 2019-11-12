@@ -126,6 +126,82 @@ class PageRepository extends ServiceEntityRepository
         return $this->processFields($results[0]);
     }
 
+    public function getLatestForApi(int $id, string $language = null): ?array
+    {
+        $qb = $this->buildGetQuery($id, null, $language);
+        $qb
+            ->select('p, m')
+            ->andWhere('p.status = :active')
+            ->setParameter('active', Status::active())
+            ->addOrderBy('p.revisionId', 'DESC')
+            ->setMaxResults(1);
+
+        $results = $qb->getQuery()->getArrayResult();
+
+        if (count($results) === 0) {
+            return null;
+        }
+
+        $result = [];
+
+        foreach ($results[0] as $pageItemKey => $pageItemValue) {
+            $result[$pageItemKey] = $pageItemValue;
+        }
+
+        $result['meta'] = $results[1];
+
+        // Unserialize data
+        if (array_key_exists('data', $results)) {
+            $result['data'] = unserialize($result['data'], ['allowed_classes' => false]);
+        }
+
+        $qb = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b')
+            ->from(PageBlock::class, 'b')
+            ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
+            ->where('p.id = :pageId')
+            ->andWhere('p.revisionId = :revisionId')
+            ->andWhere('p.language = :language')
+            ->orderBy('b.sequence', 'ASC');
+
+        $qb->setParameters(
+            [
+                'pageId' => $id,
+                'revisionId' => $result['revisionId'],
+                'language' => $language,
+            ]
+        );
+
+        $blocks = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        $result['blocks'] = $blocks;
+
+        $qb = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('e')
+            ->from(ModuleExtra::class, 'e')
+            ->where('e.id IN (:extraIds)')
+            ->setParameters(
+                [
+                    'extraIds' => array_map(
+                        function (array $block) {
+                            return $block['extraId'];
+                        },
+                        $blocks
+                    ),
+                ]
+            );
+
+        $result['extras'] = $qb->getQuery()->getArrayResult();
+
+        return $result;
+    }
+
     public function getLatestVersion(int $id, string $language): ?int
     {
         $qb = $this->createQueryBuilder('p');
