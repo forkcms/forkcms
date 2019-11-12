@@ -240,7 +240,7 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function getPageTree(array $parentIds, string $language, array $data = null, int $level = 1): array
+    public function getPageTree(array $parentIds, string $language): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
