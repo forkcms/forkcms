@@ -1,4 +1,4 @@
 pages_api:
     type:     rest
     prefix:   /api
-    resource: Backend\Modules\Pages\Api\ApiController
+    resource: Backend\Modules\Pages\Api\PageController
