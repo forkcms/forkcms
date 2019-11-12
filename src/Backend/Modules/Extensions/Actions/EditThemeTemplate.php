@@ -9,6 +9,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Common\Uri;
 
 /**
  * This is the edit-action, it will display a form to edit an item
@@ -111,6 +112,10 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->form->addCheckbox('default', ($this->record['id'] == $defaultId));
         $this->form->addCheckbox('overwrite', false);
         $this->form->addCheckbox('image', $this->record['data']['image']);
+        $this->form->addImage('default_image');
+        if ($this->record['default_image'] !== null) {
+            $this->form->addCheckbox('remove_default_image');
+        }
 
         // if this is the default template we can't alter the active/default state
         if (($this->record['id'] == $defaultId)) {
@@ -346,6 +351,25 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 // if the template is in use we can't de-activate it
                 if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
                     $item['active'] = true;
+                }
+
+                $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
+
+                $templateHasDefaultImage = $this->record['default_image'] !== null;
+                $shouldRemoveDefaultImage = $this->form->getField('remove_default_image')->isChecked();
+                $defaultImageField = $this->form->getField('default_image');
+                $hasSubmittedDefaultImage = $defaultImageField->isFilled();
+                if ($templateHasDefaultImage && ($shouldRemoveDefaultImage || $hasSubmittedDefaultImage)) {
+                    BackendModel::deleteThumbnails($imagePath, $this->record['default_image']);
+                    $item['default_image'] = null;
+                }
+
+                if ($defaultImageField->isFilled()) {
+                    $imageFilename = Uri::getUrl($item['label']) . '_' . time();
+                    $imageFilename .= '.' . $defaultImageField->getExtension();
+
+                    $defaultImageField->generateThumbnails($imagePath, $imageFilename);
+                    $item['default_image'] = $imageFilename;
                 }
 
                 // insert the item

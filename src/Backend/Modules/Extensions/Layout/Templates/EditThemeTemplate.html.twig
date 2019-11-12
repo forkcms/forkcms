@@ -30,8 +30,20 @@
           <div class="form-check">
             {% form_field image %}
             <label class="form-check-label" for="image">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+            {% form_field_error image %}
           </div>
-          {% form_field_error image %}
+          <div class="form-group">
+            <label for="label" class="control-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+            {% form_field default_image %} {% form_field_error default_image %}
+          </div>
+          {% if chkRemoveDefaultImage %}
+            <div>
+              <img src="{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}" alt="{{ template.label }}" />
+            </div>
+            <div class="form-check">
+              <label for="removeDefaultImage" class="form-check-label">{% form_field remove_default_image %} {% form_field_error remove_default_image %} {{ 'msg.RemoveDefaultImage'|trans|ucfirst }}</label>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>

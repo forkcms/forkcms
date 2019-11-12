@@ -900,6 +900,14 @@
         <translation language="en"><![CDATA[Module details]]></translation>
         <translation language="fr"><![CDATA[Détails du module]]></translation>
       </item>
+      <item type="label" name="DefaultImage">
+        <translation language="nl"><![CDATA[standaard afbeelding]]></translation>
+        <translation language="en"><![CDATA[default image]]></translation>
+      </item>
+      <item type="message" name="RemoveDefaultImage">
+        <translation language="nl"><![CDATA[verwijder standaard afbeelding]]></translation>
+        <translation language="en"><![CDATA[delete default image]]></translation>
+      </item>
     </Extensions>
   </Backend>
 </locale>

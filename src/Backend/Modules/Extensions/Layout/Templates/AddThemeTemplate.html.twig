@@ -30,6 +30,10 @@
             {% form_field image %} {% form_field_error image %}
             <label for="image" class="form-check-label">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
           </div>
+          <div class="form-group">
+            <label for="label" class="control-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+            {% form_field default_image %} {% form_field_error default_image %}
+          </div>
         </div>
       </div>
     </div>

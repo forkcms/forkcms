@@ -519,8 +519,9 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     ];
                 }
-                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
-                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                $template = $this->templates[$templateId];
+                if (array_key_exists('image', $template['data'])) {
+                    $data['image'] = $this->getImage($template['data']['image'], $template['default_image']);
                 }
 
                 $data['auth_required'] = false;
@@ -667,32 +668,33 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    private function getImage(bool $allowImage): ?string
+    private function getImage(bool $allowImage, string $defaultImage = null): ?string
     {
+        $imageField = $this->form->getField('image');
         if (!$allowImage
-            || (!$this->form->getField('image')->isFilled() && $this->originalImage === null)
+            || (!$imageField->isFilled() && $this->originalImage === null && $defaultImage === null)
             || ($this->originalImage !== null && $this->form->getField('remove_image')->isChecked())) {
             return null;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
-        if ($this->originalImage !== null && !$this->form->getField('image')->isFilled()) {
-            $originalImagePath = $imagePath . '/source/' . $this->originalImage;
-            $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
-            $newImagePath = $imagePath . '/source/' . $imageFilename;
-
-            // make sure we have a separate image for the copy in case the original image gets removed
-            (new Filesystem())->copy($originalImagePath, $newImagePath);
-            $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
+        if ($imageField->isFilled()) {
+            $imageFilename = $this->getImageFilenameForExtension($imageField->getExtension());
+            $imageField->generateThumbnails($imagePath, $imageFilename);
 
             return $imageFilename;
         }
 
-        $imageFilename = $this->getImageFilenameForExtension($this->form->getField('image')->getExtension());
-        $this->form->getField('image')->generateThumbnails($imagePath, $imageFilename);
+        if ($this->originalImage !== null) {
+            return $this->copyImage($imagePath . '/source/' . $this->originalImage);
+        }
 
-        return $imageFilename;
+        if ($defaultImage !== null) {
+            return $this->copyImage(FRONTEND_FILES_PATH . '/Templates/images/source/' . $defaultImage);
+        }
+
+        return null;
     }
 
     private function getImageFilenameForExtension(string $extension): string
@@ -758,5 +760,18 @@ class Add extends BackendBaseActionAdd
             $page['id'],
             ['title' => $page['title'], 'text' => $searchText]
         );
+    }
+
+    private function copyImage(string $originalImagePath): string
+    {
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
+        $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
+        $newImagePath = $imagePath . '/source/' . $imageFilename;
+
+        // make sure we have a separate image for the copy in case the original image gets removed
+        (new Filesystem())->copy($originalImagePath, $newImagePath);
+        $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
+
+        return $imageFilename;
     }
 }
