@@ -136,10 +136,10 @@ class FormImage extends SpoonFormImage
             $this->attributes['aria-describedby'] = 'help' . ucfirst($this->attributes['id']);
 
             $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">'
-                . sprintf(
-                    BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
-                    Form::getUploadMaxFileSize()
-                ) . '</small>';
+            . sprintf(
+                BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
+                Form::getUploadMaxFileSize()
+            ) . '</small>';
         }
 
         // parse to template
