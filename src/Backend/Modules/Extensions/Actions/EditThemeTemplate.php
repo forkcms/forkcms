@@ -415,8 +415,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         BackendExtensionsModel::updateTemplate($item);
 
         // set default template
-        if (
-            $this->form->getField('default')->getChecked()
+        if ($this->form->getField('default')->getChecked()
             && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')
         ) {
             $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
