@@ -62,15 +62,15 @@ class FormFile extends \SpoonFormFile
 
             if (isset($this->attributes['extension'])) {
                 $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">'
-                           . sprintf(
-                               BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
-                               $this->attributes['extension'],
-                               Form::getUploadMaxFileSize()
-                           ) . '</small>';
+                    . sprintf(
+                        BackendLanguage::getMessage('HelpFileFieldWithMaxFileSize', 'Core'),
+                        $this->attributes['extension'],
+                        Form::getUploadMaxFileSize()
+                    ) . '</small>';
             } else {
                 $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">'
-                           . sprintf(BackendLanguage::getMessage('HelpMaxFileSize'), Form::getUploadMaxFileSize())
-                           . '</small>';
+                    . sprintf(BackendLanguage::getMessage('HelpMaxFileSize'), Form::getUploadMaxFileSize())
+                    . '</small>';
             }
         }
 
