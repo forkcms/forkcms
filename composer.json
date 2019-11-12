@@ -14,6 +14,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
+        "ext-fileinfo": "*",
         "ext-json": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
