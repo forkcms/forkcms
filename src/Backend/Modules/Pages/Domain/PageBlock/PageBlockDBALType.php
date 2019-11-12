@@ -16,6 +16,9 @@ final class PageBlockDBALType extends StringType
 
     public function convertToPHPValue($value, AbstractPlatform $platform): PageBlockType
     {
+        if ($value === null) {
+            return null;
+        }
         return new PageBlockType($value);
     }
 

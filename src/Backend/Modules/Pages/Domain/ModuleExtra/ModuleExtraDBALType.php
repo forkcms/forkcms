@@ -14,8 +14,12 @@ final class ModuleExtraDBALType extends StringType
         return self::NAME;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ModuleExtraType
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?ModuleExtraType
     {
+        if ($value === null) {
+            return null;
+        }
+
         return new ModuleExtraType($value);
     }
 
