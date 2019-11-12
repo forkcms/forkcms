@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
-final class Status
+use JsonSerializable;
+
+final class Status implements JsonSerializable
 {
     public const ACTIVE = 'active';
     public const ARCHIVE = 'archive';
@@ -59,5 +61,10 @@ final class Status
     public function isDraft(): bool
     {
         return $this->type === self::DRAFT;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return (string) $this;
     }
 }
