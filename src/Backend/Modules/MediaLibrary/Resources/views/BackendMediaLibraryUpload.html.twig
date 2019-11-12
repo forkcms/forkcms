@@ -84,7 +84,7 @@
 <div data-role="uploadMediaStep1">
   {# Choose type #}
   <div class="row fork-module-content">
-    <div class="col-md-6 d-flex {% if mediaType is defined %} hidden{% endif %}" id="uploadMediaTypeBox">
+    <div class="col-md-6 d-flex {% if mediaType is defined %} d-none{% endif %}" id="uploadMediaTypeBox">
       <div class="card card-default w-100">
         <div class="card-heading">
           <h2 class="card-title">{{ 'lbl.MediaUploadThisType'|trans|ucfirst }}</h2>
@@ -141,7 +141,7 @@
   <div id="uploadMediaBox" class="row fork-module-content">
     <div class="col-12">
       <div class="options">
-        <div class="alert alert-warning hidden" data-role="fork-media-count-error"></div>
+        <div class="alert alert-warning d-none" data-role="fork-media-count-error"></div>
       </div>
       <div class="card card-default">
         <div class="card-heading">

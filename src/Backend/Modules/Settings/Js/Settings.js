@@ -125,7 +125,7 @@ jsBackend.settings = {
           // stop the dot animation
           jsBackend.settings.stopDotAnimation(dotAnimation)
           // hide the status
-          $statusAlert.toggleClass('hidden')
+          $statusAlert.toggleClass('d-none')
           // reset the button
           $clearCacheButton.on('click', jsBackend.settings.clearCache)
           $clearCacheButton.attr('disabled', false)

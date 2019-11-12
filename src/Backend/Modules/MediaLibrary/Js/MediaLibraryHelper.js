@@ -726,20 +726,20 @@ jsBackend.mediaLibraryHelper.group = {
     var $submitButton = $('#addMediaSubmit')
 
     if (maximumMediaItemsCount !== false && totalMediaCount > maximumMediaItemsCount) {
-      $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('hidden')
+      $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
     if (minimumMediaItemsCount !== false && totalMediaCount < minimumMediaItemsCount) {
-      $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('hidden')
+      $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
-    $minimumCountError.html('').addClass('hidden')
+    $minimumCountError.html('').addClass('d-none')
     $submitButton.removeClass('disabled').attr('disabled', false)
   }
 }
