@@ -27,23 +27,27 @@
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
-          <div class="form-check">
-            {% form_field image %}
-            <label class="form-check-label" for="image">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
-            {% form_field_error image %}
-          </div>
           <div class="form-group">
-            <label for="label" class="control-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
-            {% form_field default_image %} {% form_field_error default_image %}
+            <div class="row">
+              <div class="col-lg-3">
+                <img src="{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}" class="img-thumbnail{% if not template.default_image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('default_image').attributes.id }}" />
+              </div>
+              <div class="col-lg-9">
+                <div class="custom-file">
+                  {% form_field default_image %}
+                  <label class="custom-file-label" for="customFile">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+                  {% form_field_error default_image %}
+                </div>
+                {% if chkRemoveDefaultImage %}
+                  <div class="form-check">
+                    {% form_field remove_default_image %}
+                    <label for="removeDefaultImage" class="form-check-label">{{ 'msg.RemoveDefaultImage'|trans|ucfirst }}</label>
+                  </div>
+                  {% form_field_error remove_default_image %}
+                {% endif %}
+              </div>
+            </div>
           </div>
-          {% if chkRemoveDefaultImage %}
-            <div>
-              <img src="{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}" alt="{{ template.label }}" />
-            </div>
-            <div class="form-check">
-              <label for="removeDefaultImage" class="form-check-label">{% form_field remove_default_image %} {% form_field_error remove_default_image %} {{ 'msg.RemoveDefaultImage'|trans|ucfirst }}</label>
-            </div>
-          {% endif %}
         </div>
       </div>
     </div>

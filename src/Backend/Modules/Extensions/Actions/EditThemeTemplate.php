@@ -10,6 +10,7 @@ use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\Uri;
+use ForkCMS\Utility\Thumbnails;
 
 /**
  * This is the edit-action, it will display a form to edit an item
@@ -141,9 +142,13 @@ class EditThemeTemplate extends BackendBaseActionEdit
                     $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
                 }
             } elseif ($item['type'] == 'widget') {
-                $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                $widgets[$item['id']] = \SpoonFilter::ucfirst(
+                    BL::lbl(\SpoonFilter::toCamelCase($item['module']))
+                ) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
                 if (isset($item['data']['extra_label'])) {
-                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                    $widgets[$item['id']] = \SpoonFilter::ucfirst(
+                        BL::lbl(\SpoonFilter::toCamelCase($item['module']))
+                    ) . ': ' . $item['data']['extra_label'];
                 }
             }
         }
@@ -161,8 +166,21 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create default position field
         $position = [];
         $position['i'] = 0;
-        $position['formElements']['txtPosition'] = $this->form->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
-        $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
+        $position['formElements']['txtPosition'] = $this->form->addText(
+            'position_' . $position['i'],
+            null,
+            255,
+            'form-control positionName',
+            'form-control danger positionName'
+        );
+        $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown(
+            'type_' . $position['i'] . '_' . 0,
+            $defaultExtras,
+            null,
+            false,
+            'form-control positionBlock',
+            'form-control positionBlockError'
+        );
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the database-fetched content
@@ -223,11 +241,24 @@ class EditThemeTemplate extends BackendBaseActionEdit
             // create default position field
             $position = [];
             $position['i'] = $i + 1;
-            $position['formElements']['txtPosition'] = $this->form->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
+            $position['formElements']['txtPosition'] = $this->form->addText(
+                'position_' . $position['i'],
+                $name,
+                255,
+                'form-control positionName',
+                'form-control danger positionName'
+            );
 
             if (isset($this->extras[$name])) {
                 foreach ($this->extras[$name] as $y => $extra) {
-                    $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control positionBlockError');
+                    $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown(
+                        'type_' . $position['i'] . '_' . $y,
+                        $defaultExtras,
+                        $extra,
+                        false,
+                        'form-control positionBlock',
+                        'form-control positionBlockError'
+                    );
                 }
             }
 
@@ -251,144 +282,164 @@ class EditThemeTemplate extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->form->isSubmitted()) {
-            // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->form->cleanupFields();
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
 
-            // required fields
-            $this->form->getField('file')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('label')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('format')->isFilled(BL::err('FieldIsRequired'));
+        // required fields
+        $this->form->getField('file')->isFilled(BL::err('FieldIsRequired'));
+        $this->form->getField('label')->isFilled(BL::err('FieldIsRequired'));
+        $this->form->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
-            $templateFile = $this->getContainer()->getParameter('site.path_www');
-            // check if the template file exists
-            $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue() . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
-            if (!is_file($templateFile)) {
-                $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
-            }
+        $templateFile = $this->getContainer()->getParameter('site.path_www');
+        // check if the template file exists
+        $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue(
+            ) . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
+        if (!is_file($templateFile)) {
+            $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
+        }
 
-            // validate syntax
-            $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
+        // validate syntax
+        $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
 
-            // init var
-            $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
+        // init var
+        $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
-            // validate the syntax
-            if (empty($table)) {
-                $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
-            } else {
-                $html = BackendExtensionsModel::buildTemplateHTML($syntax);
-                $cellCount = 0;
-                $first = true;
-                $errors = [];
+        // validate the syntax
+        if (empty($table)) {
+            $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+        } else {
+            $html = BackendExtensionsModel::buildTemplateHTML($syntax);
+            $cellCount = 0;
+            $first = true;
+            $errors = [];
 
-                // loop rows
-                foreach ($table as $row) {
-                    // first row defines the cellcount
-                    if ($first) {
-                        $cellCount = count($row);
-                    }
+            // loop rows
+            foreach ($table as $row) {
+                // first row defines the cellcount
+                if ($first) {
+                    $cellCount = count($row);
+                }
 
-                    // not same number of cells
-                    if (count($row) != $cellCount) {
-                        // add error
-                        $errors[] = BL::err('InvalidTemplateSyntax');
+                // not same number of cells
+                if (count($row) != $cellCount) {
+                    // add error
+                    $errors[] = BL::err('InvalidTemplateSyntax');
 
-                        // stop
-                        break;
-                    }
+                    // stop
+                    break;
+                }
 
-                    // double check position names
-                    foreach ($row as $cell) {
-                        // ignore unavailable space
-                        if ($cell != '/') {
-                            // not alphanumeric -> error
-                            if (!in_array($cell, $this->names)) {
-                                $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
-                            } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
-                                // can't build proper html -> error
-                                $errors[] = BL::err('InvalidTemplateSyntax');
-                            }
+                // double check position names
+                foreach ($row as $cell) {
+                    // ignore unavailable space
+                    if ($cell != '/') {
+                        // not alphanumeric -> error
+                        if (!in_array($cell, $this->names)) {
+                            $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+                        } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
+                            // can't build proper html -> error
+                            $errors[] = BL::err('InvalidTemplateSyntax');
                         }
                     }
-
-                    // reset
-                    $first = false;
                 }
 
-                // add errors
-                if (!empty($errors)) {
-                    $this->form->getField('format')->addError(implode('<br />', array_unique($errors)));
-                }
+                // reset
+                $first = false;
             }
 
-            // no errors?
-            if ($this->form->isCorrect()) {
-                // build array
-                $item = [];
-                $item['id'] = $this->id;
-                $item['theme'] = $this->form->getField('theme')->getValue();
-                $item['label'] = $this->form->getField('label')->getValue();
-                $item['path'] = 'Core/Layout/Templates/' . $this->form->getField('file')->getValue();
-                $item['active'] = $this->form->getField('active')->isChecked();
-
-                // copy data from previous version, otherwise default_extras from other languages are overwritten
-                $item['data'] = $this->record['data'];
-                $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
-                $item['data']['names'] = $this->names;
-                $item['data']['default_extras'] = $this->extras;
-                $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
-                $item['data']['image'] = $this->form->getField('image')->isChecked();
-
-                // serialize
-                $item['data'] = serialize($item['data']);
-
-                // if this is the default template make the template active
-                if ($this->get('fork.settings')->get('Pages', 'default_template') == $this->record['id']) {
-                    $item['active'] = true;
-                }
-
-                // if the template is in use we can't de-activate it
-                if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
-                    $item['active'] = true;
-                }
-
-                $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
-
-                $templateHasDefaultImage = $this->record['default_image'] !== null;
-                $shouldRemoveDefaultImage = $this->form->getField('remove_default_image')->isChecked();
-                $defaultImageField = $this->form->getField('default_image');
-                $hasSubmittedDefaultImage = $defaultImageField->isFilled();
-                if ($templateHasDefaultImage && ($shouldRemoveDefaultImage || $hasSubmittedDefaultImage)) {
-                    BackendModel::deleteThumbnails($imagePath, $this->record['default_image']);
-                    $item['default_image'] = null;
-                }
-
-                if ($defaultImageField->isFilled()) {
-                    $imageFilename = Uri::getUrl($item['label']) . '_' . time();
-                    $imageFilename .= '.' . $defaultImageField->getExtension();
-
-                    $defaultImageField->generateThumbnails($imagePath, $imageFilename);
-                    $item['default_image'] = $imageFilename;
-                }
-
-                // insert the item
-                BackendExtensionsModel::updateTemplate($item);
-
-                // set default template
-                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
-                    $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
-                }
-
-                // update all existing pages using this template to add the newly inserted block(s)
-                if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
-                    BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->form->getField('overwrite')->getChecked());
-                }
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createUrlForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
+            // add errors
+            if (!empty($errors)) {
+                $this->form->getField('format')->addError(implode('<br />', array_unique($errors)));
             }
         }
+
+        // no errors?
+        if (!$this->form->isCorrect()) {
+            return;
+        }
+
+        // build array
+        $item = [];
+        $item['id'] = $this->id;
+        $item['theme'] = $this->form->getField('theme')->getValue();
+        $item['label'] = $this->form->getField('label')->getValue();
+        $item['path'] = 'Core/Layout/Templates/' . $this->form->getField('file')->getValue();
+        $item['active'] = $this->form->getField('active')->isChecked();
+
+        // copy data from previous version, otherwise default_extras from other languages are overwritten
+        $item['data'] = $this->record['data'];
+        $item['data']['format'] = trim(
+            str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue())
+        );
+        $item['data']['names'] = $this->names;
+        $item['data']['default_extras'] = $this->extras;
+        $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
+        $item['data']['image'] = $this->form->getField('image')->isChecked();
+
+        // serialize
+        $item['data'] = serialize($item['data']);
+
+        // if this is the default template make the template active
+        if ($this->get('fork.settings')->get('Pages', 'default_template') == $this->record['id']) {
+            $item['active'] = true;
+        }
+
+        // if the template is in use we can't de-activate it
+        if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
+            $item['active'] = true;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
+
+        $templateHasDefaultImage = $this->record['default_image'] !== null;
+        $shouldRemoveDefaultImage = $this->form->existsField('remove_default_image')
+                                    && $this->form->getField('remove_default_image')->isChecked();
+        $defaultImageField = $this->form->getField('default_image');
+        $hasSubmittedDefaultImage = $defaultImageField->isFilled();
+
+        if ($templateHasDefaultImage && ($shouldRemoveDefaultImage || $hasSubmittedDefaultImage)) {
+            $this->get(Thumbnails::class)->delete($imagePath, $this->record['default_image']);
+            $item['default_image'] = null;
+        }
+
+        if ($defaultImageField->isFilled()) {
+            $imageFilename = Uri::getUrl($item['label']) . '_' . time();
+            $imageFilename .= '.' . $defaultImageField->getExtension();
+
+            $defaultImageField->generateThumbnails($imagePath, $imageFilename);
+            $item['default_image'] = $imageFilename;
+        }
+
+        // insert the item
+        BackendExtensionsModel::updateTemplate($item);
+
+        // set default template
+        if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get(
+                'Core',
+                'theme',
+                'Fork'
+            )) {
+            $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
+        }
+
+        // update all existing pages using this template to add the newly inserted block(s)
+        if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
+            BackendPagesModel::updatePagesTemplates(
+                $item['id'],
+                $item['id'],
+                $this->form->getField('overwrite')->getChecked()
+            );
+        }
+
+        // everything is saved, so redirect to the overview
+        $this->redirect(
+            BackendModel::createUrlForAction(
+                'ThemeTemplates'
+            ) . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode(
+                $item['label']
+            ) . '&highlight=row-' . $item['id']
+        );
     }
 
     private function loadDeleteForm(): void
