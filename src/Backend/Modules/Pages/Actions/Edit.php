@@ -82,9 +82,7 @@ class Edit extends BackendBaseActionEdit
         $this->loadData();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
 
         // get the templates
@@ -251,7 +249,7 @@ class Edit extends BackendBaseActionEdit
         $chkMovePage->setAttribute('data-role', 'move-page-toggle');
         if (!(bool) $this->record['allow_move']) {
             $chkMovePage->setAttribute('disabled');
-            $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
+            $chkMovePage->setAttribute('class', 'form-check-input disabled');
         }
 
         $movePageTreeOptions = [

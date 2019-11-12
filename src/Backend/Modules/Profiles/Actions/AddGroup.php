@@ -25,7 +25,7 @@ class AddGroup extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('addGroup');
-        $this->form->addText('name')->makeRequired();
+        $this->form->addText('name', null, null, 'form-control title', 'form-control danger title')->makeRequired();
     }
 
     private function validateForm(): void

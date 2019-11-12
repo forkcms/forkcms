@@ -1,24 +1,35 @@
 .breadcrumb {
   margin-bottom: 0;
-  padding: 12px 0 8px;
+  padding: 9px 0;
 
   li + li {
-    &:before {
-      content: '\f105';
-      font-family: FontAwesome;
-      font-size: $font-size-small;
-      padding: 0 5px 0 2px;
-    }
+    padding-left: 13px;
+    position: relative;
   }
 
-  li a {
-    color: $gray;
-    font-size: $font-size-base;
+  li {
+    font-size: $font-size-sm;
 
-    &:hover,
-    &:focus {
-      border-bottom: 1px solid $gray-light;
-      text-decoration: none;
+    span {
+      display: inline-block;
+    }
+
+    a {
+      display: inline-block;
+      color: $gray-700;
+
+      @include hover-focus {
+        border-bottom: 1px solid $gray-550;
+        text-decoration: none;
+      }
+    }
+
+    .svg-inline--fa {
+      color: $gray-550;
+      position: absolute;
+      left: 4px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 }

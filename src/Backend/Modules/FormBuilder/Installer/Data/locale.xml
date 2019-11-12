@@ -35,20 +35,20 @@
         <translation language="pl"><![CDATA[dodaj pole]]></translation>
       </item>
       <item type="label" name="BackToData">
-        <translation language="nl"><![CDATA[terug naar inzendingen]]></translation>
-        <translation language="en"><![CDATA[back to submissions]]></translation>
-        <translation language="it"><![CDATA[torna alle richieste]]></translation>
-        <translation language="ru"><![CDATA[Вернуться к аргументам]]></translation>
-        <translation language="zh"><![CDATA[返回提交结果]]></translation>
-        <translation language="fr"><![CDATA[retour aux soumissions]]></translation>
-        <translation language="hu"><![CDATA[back to submissions]]></translation>
-        <translation language="de"><![CDATA[zurück zu den Einsendungen]]></translation>
-        <translation language="es"><![CDATA[volver a envios]]></translation>
-        <translation language="uk"><![CDATA[Повернутися до даних]]></translation>
-        <translation language="lt"><![CDATA[grįžti į pateikimą]]></translation>
-        <translation language="sv"><![CDATA[tillbaka till inskick]]></translation>
-        <translation language="el"><![CDATA[Πίσω στις υποβολές]]></translation>
-        <translation language="pl"><![CDATA[powrót do zgłoszeń]]></translation>
+        <translation language="nl"><![CDATA[overzicht inzendingen]]></translation>
+        <translation language="en"><![CDATA[overview submissions]]></translation>
+        <translation language="it"><![CDATA[presentazioni di panoramica]]></translation>
+        <translation language="ru"><![CDATA[обзорные материалы]]></translation>
+        <translation language="zh"><![CDATA[概述提交]]></translation>
+        <translation language="fr"><![CDATA[aperçu des soumissions]]></translation>
+        <translation language="hu"><![CDATA[áttekintő beadványok]]></translation>
+        <translation language="de"><![CDATA[Übersicht Einreichungen]]></translation>
+        <translation language="es"><![CDATA[presentaciones generales]]></translation>
+        <translation language="uk"><![CDATA[оглядові подання]]></translation>
+        <translation language="lt"><![CDATA[apžvalgos pateikimas]]></translation>
+        <translation language="sv"><![CDATA[prehľady]]></translation>
+        <translation language="el"><![CDATA[υποβολές επισκόπησης]]></translation>
+        <translation language="pl"><![CDATA[wnioski przeglądowe]]></translation>
       </item>
       <item type="label" name="Basic">
         <translation language="nl"><![CDATA[basis]]></translation>
@@ -880,6 +880,14 @@
         <translation language="sv"><![CDATA[år]]></translation>
         <translation language="el"><![CDATA[έτος]]></translation>
         <translation language="pl"><![CDATA[rok]]></translation>
+      </item>
+      <item type="label" name="Data">
+        <translation language="nl"><![CDATA[gegevens]]></translation>
+        <translation language="en"><![CDATA[data]]></translation>
+      </item>
+      <item type="label" name="DataDetails">
+        <translation language="nl"><![CDATA[gegevens detail]]></translation>
+        <translation language="en"><![CDATA[data detail]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>

@@ -6,6 +6,10 @@ body {
   -webkit-transform: none;
 }
 
+img {
+  max-width: 100%;
+}
+
 .main-wrapper {
   position: relative;
   width: 100%;
@@ -32,7 +36,7 @@ body {
   }
 }
 
-@media screen and (min-width: $screen-sm) {
+@include media-breakpoint-up(md) {
 
   .main-wrapper {
     min-height: 100%;
@@ -120,7 +124,7 @@ body {
       transition: width 250ms;
 
       .main-navigation {
-        background: $brand-primary-dark;
+        background: $blue-dark;
         min-height: 100%;
         position: absolute;
         top: 0;
@@ -135,7 +139,7 @@ body {
 
       .sub-navigation {
         background: $white;
-        border-right: 1px solid $gray-lighter;
+        border-right: 1px solid $gray-200;
         height: 100%;
         position: absolute;
         left: 240px;

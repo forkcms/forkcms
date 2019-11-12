@@ -429,6 +429,10 @@
         <translation language="en"><![CDATA[add theme template]]></translation>
         <translation language="pl"><![CDATA[dodaj szablon motywu]]></translation>
       </item>
+      <item type="label" name="DetailTheme">
+        <translation language="nl"><![CDATA[theme detail]]></translation>
+        <translation language="en"><![CDATA[theme detail]]></translation>
+      </item>
       <item type="label" name="Authors">
         <translation language="nl"><![CDATA[auteurs]]></translation>
         <translation language="en"><![CDATA[authors]]></translation>

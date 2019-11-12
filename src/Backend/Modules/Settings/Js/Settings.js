@@ -92,7 +92,7 @@ jsBackend.settings = {
 
     // display the status alert
     var $statusAlert = $('[data-role="fork-clear-cache-status"]')
-    $statusAlert.toggleClass('hidden')
+    $statusAlert.toggleClass('d-none')
 
     // start the dot animation
     var dotAnimation = jsBackend.settings.startDotAnimation()

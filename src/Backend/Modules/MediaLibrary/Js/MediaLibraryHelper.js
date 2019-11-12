@@ -646,31 +646,31 @@ jsBackend.mediaLibraryHelper.group = {
     }
 
     // Enable all because we can switch between different groups on the same page
-    $tabs.children('li').removeClass('disabled, active').children('a').attr('data-toggle', 'tab')
+    $tabs.children('.nav-link').removeClass('disabled, active')
 
     var disabled = ''
-    var enabled = 'li:eq(0)'
+    var enabled = '.nav-item:eq(0)'
 
     // we have an image group
     if (mediaGroups[currentMediaGroupId].type === 'image') {
-      disabled = 'li:gt(0)'
+      disabled = '.nav-item:gt(0)'
     } else if (mediaGroups[currentMediaGroupId].type === 'file') {
-      disabled = 'li:eq(0), li:eq(2), li:eq(3)'
-      enabled = 'li:eq(1)'
+      disabled = '.nav-item:eq(0), .nav-item:eq(2), .nav-item:eq(3)'
+      enabled = '.nav-item:eq(1)'
     } else if (mediaGroups[currentMediaGroupId].type === 'movie') {
-      disabled = 'li:eq(0), li:eq(1), li:eq(3)'
-      enabled = 'li:eq(2)'
+      disabled = '.nav-item:eq(0), .nav-item:eq(1), .nav-item:eq(3)'
+      enabled = '.nav-item:eq(2)'
     } else if (mediaGroups[currentMediaGroupId].type === 'audio') {
-      disabled = 'li:lt(3)'
-      enabled = 'li:eq(3)'
+      disabled = '.nav-item:lt(3)'
+      enabled = '.nav-item:eq(3)'
     } else if (mediaGroups[currentMediaGroupId].type === 'image-file') {
-      disabled = 'li:eq(2), li:eq(3)'
+      disabled = '.nav-item:eq(2), .nav-item:eq(3)'
     } else if (mediaGroups[currentMediaGroupId].type === 'image-movie') {
-      disabled = 'li:eq(1), li:eq(3)'
+      disabled = '.nav-item:eq(1), .nav-item:eq(3)'
     }
 
     if (disabled !== '') {
-      $tabs.children(disabled).addClass('disabled').children('a').removeAttr('data-toggle')
+      $tabs.children(disabled).find('.nav-link').addClass('disabled')
     }
     $tabs.children(enabled).children('a').attr('data-toggle', 'tab').first().tab('show')
 
@@ -870,8 +870,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       return
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').removeClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').addClass('d-none')
   },
 
   switchToCropperModal: function ($dialog) {
@@ -883,8 +883,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       $dialog.modal('show')
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').addClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').addClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('d-none')
   },
 
   getCloseEventFunction: function ($dialog, resizeInfo, reject) {
@@ -1103,14 +1103,14 @@ jsBackend.mediaLibraryHelper.upload = {
 
     if (currentAspectRatio === false) {
       $formGroup.removeClass('has-warning')
-      $warning.addClass('hidden')
+      $warning.addClass('d-none')
       $checkbox.removeClass('disabled').attr('disabled', false).attr('checked', false)
 
       return
     }
 
     $formGroup.addClass('has-warning')
-    $warning.removeClass('hidden')
+    $warning.removeClass('d-none')
     $checkbox.addClass('disabled').attr('disabled', true).attr('checked', true)
   },
 
@@ -1156,7 +1156,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' +
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' +
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
@@ -1288,7 +1288,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
@@ -1522,11 +1522,11 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
       // is file, movie or audio
     } else {
-      html += '<div class="icon"></div>'
+      html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 
-    html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-block" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
     html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
     html += '</button>'
@@ -1539,7 +1539,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
 jsBackend.mediaLibraryHelper.modalSelection = {
   init: function () {
-    $('tr[data-direct-url] a').on('click', this.selectItemAndSendToParent)
+    $('button[data-direct-url]').on('click', this.selectItemAndSendToParent)
   },
 
   selectItemAndSendToParent: function () {

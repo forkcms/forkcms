@@ -116,6 +116,9 @@ class FormImage extends SpoonFormImage
             throw new \SpoonFormException('A name is required for a file field. Please provide a name.');
         }
 
+        // each image field should have fork data role for image preview
+        $this->attributes['data-fork-cms-role'] = 'image-field';
+
         // start html generation
         $output = '<input type="file"';
 
@@ -129,10 +132,14 @@ class FormImage extends SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<p class="help-block">' . sprintf(
-                BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
-                Form::getUploadMaxFileSize()
-            ) . '</p>';
+            // set aria describedby to link the help text with the field
+            $this->attributes['aria-describedby'] = 'help' . ucfirst($this->attributes['id']);
+
+            $output .= '<small class="form-text text-muted" id="help' . ucfirst($this->attributes['id']) . '">'
+                       . sprintf(
+                           BackendLanguage::getMessage('HelpImageFieldWithMaxFileSize', 'Core'),
+                           Form::getUploadMaxFileSize()
+                       ) . '</small>';
         }
 
         // parse to template
@@ -140,7 +147,7 @@ class FormImage extends SpoonFormImage
             $template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
             $template->assign(
                 'file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error',
-                ($this->errors != '') ? '<span class="formError text-danger">' . $this->errors . '</span>' : ''
+                ($this->errors != '') ? '<span class="invalid-feedback">' . $this->errors . '</span>' : ''
             );
         }
 

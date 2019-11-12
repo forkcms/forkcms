@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
 
@@ -11,18 +11,18 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabName">
+          <div role="tabpanel" class="tab-pane show active" id="tabName" aria-labelledby="name-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabDashboard">
+          <div role="tabpanel" class="tab-pane" id="tabDashboard" aria-labelledby="dashboard-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="content-block">
@@ -50,21 +50,21 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabPermissions">
+          <div role="tabpanel" class="tab-pane" id="tabPermissions" aria-labelledby="permissions-tab">
             <div class="row">
               <div class="col-md-12">
-                <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
+                <div class="card-group card-group-column" id="permissions" role="tablist" aria-multiselectable="true">
                   {% for permission in permissions %}
-                    <div class="panel panel-transparent jsGroupsPermissionsModule">
-                      <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                        <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
-                          <h4 class="panel-title">
-                            {{ permission.chk|raw }}
-                            {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
-                          </h4>
-                        </div>
+                    <div class="card card-transparent jsGroupsPermissionsModule">
+                      <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
+                        {{ permission.chk|raw }}
+                        <h4 class="card-title mb-0">
+                          <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                            {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
+                          </a>
+                        </h4>
                       </div>
-                      <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
+                      <div id="permission-list-{{ permission.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
                         {{ permission.actions.dataGrid|raw }}
                       </div>
                     </div>
@@ -79,8 +79,8 @@
   </div>
   <div id="pageButtons" class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"addButton", "name":"add"}) }}
         </div>
       </div>
