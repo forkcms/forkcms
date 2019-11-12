@@ -25,6 +25,10 @@ framework:
                 adapter: cache.app
                 public: true
                 default_lifetime: 3600
+            cache.block_editor:
+                adapter: cache.app
+                public: true
+                default_lifetime: 31622400 # one year
 
 # Assetic Configuration
 assetic:
@@ -149,6 +153,10 @@ services:
         class: League\Flysystem\Adapter\Local
         arguments:
             - "%kernel.cache_dir%"
+    cache.array.adapter:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        arguments:
+            - "%kernel.cache_dir%"
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
@@ -221,6 +229,12 @@ services:
 
     Common\Core\Twig\Extensions\IncludeOnceExtension:
         public: false
+        tags:
+            - { name: twig.extension }
+
+    Common\BlockEditor\Twig\ParseBlocksExtension:
+        public: false
+        autowire: true
         tags:
             - { name: twig.extension }
 

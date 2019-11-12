@@ -770,13 +770,12 @@ class Model
                 $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '    <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '    <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -846,13 +845,12 @@ class Model
 
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
-        $html .= '            <a href="' .
-                 BackendModel::createUrlForAction(
-                     'Edit',
-                     null,
-                     null,
-                     ['id' => BackendModel::HOME_PAGE_ID]
-                 ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
+        $html .= '            <a href="' . BackendModel::createUrlForAction(
+            'Edit',
+            null,
+            null,
+            ['id' => BackendModel::HOME_PAGE_ID]
+        ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
@@ -877,13 +875,12 @@ class Model
                     $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                     // insert link
-                    $html .= '            <a href="' .
-                             BackendModel::createUrlForAction(
-                                 'Edit',
-                                 null,
-                                 null,
-                                 ['id' => $page['page_id']]
-                             ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    $html .= '            <a href="' . BackendModel::createUrlForAction(
+                        'Edit',
+                        null,
+                        null,
+                        ['id' => $page['page_id']]
+                    ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -913,13 +910,12 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -948,13 +944,12 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' .
-                         BackendModel::createUrlForAction(
-                             'Edit',
-                             null,
-                             null,
-                             ['id' => $page['page_id']]
-                         ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                    'Edit',
+                    null,
+                    null,
+                    ['id' => $page['page_id']]
+                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);

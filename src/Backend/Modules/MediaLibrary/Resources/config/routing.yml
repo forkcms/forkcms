@@ -1,0 +1,4 @@
+media_library_api:
+    type:     rest
+    prefix:   /api
+    resource: Backend\Modules\MediaLibrary\Api\AssetController
