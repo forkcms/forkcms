@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -125,14 +127,8 @@ class Model extends \Common\Core\Model
      */
     public static function getPage(int $pageId): array
     {
-        // get data
-        $revisionId = (int) self::getContainer()->get('database')->getVar(
-            'SELECT p.revision_id
-             FROM pages AS p
-             WHERE p.id = ? AND p.status = ? AND p.language = ?
-             LIMIT 1',
-            [$pageId, 'active', LANGUAGE]
-        );
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
+        $revisionId = $pageRepository->getRevisionId($pageId, Status::active(), LANGUAGE);
 
         // No page found
         if ($revisionId === 0) {
@@ -162,7 +158,7 @@ class Model extends \Common\Core\Model
                  m.url, m.url_overwrite,
                  m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index,
                  t.path AS template_path, t.data AS template_data
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
@@ -208,9 +204,9 @@ class Model extends \Common\Core\Model
         $blocks = (array) self::getContainer()->get('database')->getRecords(
             'SELECT pe.id AS extra_id, pb.html, pb.position,
              pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-             FROM pages_blocks AS pb
-             INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-             LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+             FROM PagesPageBlock AS pb
+             INNER JOIN PagesPage AS p ON p.revision_id = pb.revision_id
+             LEFT OUTER JOIN PagesModuleExtra AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
              WHERE ' . $where . '
              ORDER BY pb.position, pb.sequence',
             $parameters

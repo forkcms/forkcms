@@ -4,10 +4,17 @@ namespace Common\Doctrine\Repository;
 
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model;
+use Common\Doctrine\Entity\Meta;
 use Common\Uri;
 use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
 
+/**
+ * @method Meta|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Meta|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Meta[]    findAll()
+ * @method Meta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class MetaRepository extends EntityRepository
 {
     /**
@@ -51,5 +58,21 @@ class MetaRepository extends EntityRepository
 
         // get the real url
         return call_user_func_array([$class, $method], $actualParameters);
+    }
+
+    public function add(Meta $meta): void
+    {
+        $this->getEntityManager()->persist($meta);
+    }
+
+    public function save(Meta $meta): void
+    {
+        $this->getEntityManager()->flush($meta);
+    }
+
+    public function remove(Meta $meta): void
+    {
+        $this->getEntityManager()->remove($meta);
+        $this->getEntityManager()->flush($meta);
     }
 }

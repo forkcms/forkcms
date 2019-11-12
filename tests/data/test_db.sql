@@ -2379,12 +2379,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table modules_extras
+# Dump of table PagesModuleExtra
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `modules_extras`;
+DROP TABLE IF EXISTS `PagesModuleExtra`;
 
-CREATE TABLE `modules_extras` (
+CREATE TABLE `PagesModuleExtra` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
   `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2396,10 +2396,10 @@ CREATE TABLE `modules_extras` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras';
 
-LOCK TABLES `modules_extras` WRITE;
-/*!40000 ALTER TABLE `modules_extras` DISABLE KEYS */;
+LOCK TABLES `PagesModuleExtra` WRITE;
+/*!40000 ALTER TABLE `PagesModuleExtra` DISABLE KEYS */;
 
-INSERT INTO `modules_extras` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
+INSERT INTO `PagesModuleExtra` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
 VALUES
 	(1,'Search','widget','SearchForm','Form',NULL,0,2001),
 	(2,'Search','block','Search',NULL,NULL,0,2000),
@@ -2438,7 +2438,7 @@ VALUES
 	(37,'Profiles','widget','LoginBox','LoginBox',NULL,0,5010),
 	(38,'Profiles','widget','LoginLink','LoginLink',NULL,0,5011);
 
-/*!40000 ALTER TABLE `modules_extras` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesModuleExtra` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -2551,9 +2551,9 @@ CREATE TABLE `modules_tags` (
 # Dump of table pages
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages`;
+DROP TABLE IF EXISTS `PagesPage`;
 
-CREATE TABLE `pages` (
+CREATE TABLE `PagesPage` (
   `id` int(11) NOT NULL COMMENT 'the real page_id',
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT 'which user has created this page?',
@@ -2580,10 +2580,10 @@ CREATE TABLE `pages` (
   KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+LOCK TABLES `PagesPage` WRITE;
+/*!40000 ALTER TABLE `PagesPage` DISABLE KEYS */;
 
-INSERT INTO `pages` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
+INSERT INTO `PagesPage` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
 VALUES
 	(1,1,1,0,4,1,'en','page','Home','Home',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
 	(2,2,1,0,3,2,'en','footer','Sitemap','Sitemap',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
@@ -2609,16 +2609,16 @@ VALUES
 	(422,22,1,420,3,24,'en','page','Change email','Change email',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
 	(423,23,1,420,3,25,'en','page','Change password','Change password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,2);
 
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPage` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table pages_blocks
+# Dump of table PagesPageBlock
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages_blocks`;
+DROP TABLE IF EXISTS `PagesPageBlock`;
 
-CREATE TABLE `pages_blocks` (
+CREATE TABLE `PagesPageBlock` (
   `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
   `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
@@ -2632,10 +2632,10 @@ CREATE TABLE `pages_blocks` (
   KEY `idx_rev_status` (`revision_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages_blocks` WRITE;
-/*!40000 ALTER TABLE `pages_blocks` DISABLE KEYS */;
+LOCK TABLES `PagesPageBlock` WRITE;
+/*!40000 ALTER TABLE `PagesPageBlock` DISABLE KEYS */;
 
-INSERT INTO `pages_blocks` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
+INSERT INTO `PagesPageBlock` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
 VALUES
 	(1,'main',NULL,'rich_text',NULL,'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
 	(1,'top',1,'rich_text',NULL,'','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
@@ -2685,7 +2685,7 @@ VALUES
 	(23,'main',32,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0),
 	(23,'top',1,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0);
 
-/*!40000 ALTER TABLE `pages_blocks` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPageBlock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

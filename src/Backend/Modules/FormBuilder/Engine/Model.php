@@ -2,9 +2,10 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\ModuleExtraType;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Frontend\Core\Language\Language as FL;
 use Symfony\Component\Finder\Finder;
 
@@ -131,7 +132,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('FormBuilder', 'widget', ['id' => $id]);
+        BackendModel::deleteExtra('FormBuilder', ModuleExtraType::widget(), ['id' => $id]);
 
         // delete form
         $database->delete('forms', 'id = ?', $id);
@@ -549,24 +550,20 @@ class Model
         // update item
         $database->update('forms', $values, 'id = ?', $id);
 
-        // build array
-        $extra = [
-            'data' => serialize(
-                [
-                    'language' => BL::getWorkingLanguage(),
-                    'extra_label' => $values['name'],
-                    'id' => $id,
-                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
-                ]
-            ),
-        ];
+        // @todo this should be handled in a message handler
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
 
-        // update extra
-        $database->update(
-            'modules_extras',
-            $extra,
-            'module = ? AND type = ? AND sequence = ?',
-            ['FormBuilder', 'widget', '400' . $id]
+        $moduleExtraRepository->updateModuleExtraDataByModuleAndSequence(
+            'FormBuilder',
+            (int) '400' . $id,
+            [
+                'language' => BL::getWorkingLanguage(),
+                'extra_label' => $values['name'],
+                'id' => $id,
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
+            ],
+            ModuleExtraType::widget()
         );
 
         return $id;

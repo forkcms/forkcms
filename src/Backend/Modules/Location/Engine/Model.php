@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Location\Engine;
 
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\ModuleExtraType;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use ForkCMS\Utility\Geolocation;
 
 /**
