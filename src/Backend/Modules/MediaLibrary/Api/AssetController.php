@@ -37,7 +37,7 @@ final class AssetController
     /**
      * @Rest\Get("/medialibrary/asset/{uuid}/download")
      */
-    public function downloadAssetAction(string $uuid)
+    public function downloadAssetAction(string $uuid): Response
     {
         $mediaItem = $this->mediaItemRepository->find($uuid);
 
