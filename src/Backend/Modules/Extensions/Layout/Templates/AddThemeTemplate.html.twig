@@ -26,6 +26,20 @@
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-3">
+                <img src="#" class="img-thumbnail d-none" data-fork-cms-role="image-preview" data-id="{{ form_add.field('default_image').attributes.id }}" />
+              </div>
+              <div class="col-lg-9">
+                <div class="custom-file">
+                  {% form_field default_image %}
+                  <label for="label" class="custom-file-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+                </div>
+                {% form_field_error default_image %}
+              </div>
+            </div>
+          </div>
           <div class="form-check">
             {% form_field image %} {% form_field_error image %}
             <label for="image" class="form-check-label">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
