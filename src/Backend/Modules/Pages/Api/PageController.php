@@ -7,7 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class ApiController
+final class PageController
 {
     /** @var PageRepository */
     private $pageRepository;
