@@ -155,7 +155,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
@@ -167,7 +167,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
