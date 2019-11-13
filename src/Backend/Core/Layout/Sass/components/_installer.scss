@@ -19,6 +19,11 @@
     }
   }
 
+  .card-heading .card-title {
+    line-height: $line-height-lg;
+    margin: 0;
+  }
+
   .installer-navigation-wrapper {
     background: $blue-dark;
 
