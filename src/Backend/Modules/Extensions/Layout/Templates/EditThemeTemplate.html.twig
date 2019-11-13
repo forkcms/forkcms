@@ -48,10 +48,13 @@
               </div>
             </div>
           </div>
+          <div class="form-check">
+            {% form_field image %} {% form_field_error image %}
+            <label for="image" class="form-check-label">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+          </div>
         </div>
       </div>
     </div>
-
   </div>
   <div class="row fork-module-content">
     <div class="col-12">
