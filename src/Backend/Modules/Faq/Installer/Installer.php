@@ -203,7 +203,7 @@ class Installer extends ModuleInstaller
         // build array
         $item = [
             'meta_id' => $this->insertMeta($title, $title, $title, $url),
-            'extra_id' => $moduleExtra->getId(),
+            'extraId' => $moduleExtra->getId(),
             'locale' => $language,
             'title' => $title,
             'sequence' => 1,
