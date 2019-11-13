@@ -35,11 +35,10 @@
       li {
         color: $white;
         -webkit-font-smoothing: antialiased;
-        float: left;
-        padding: 13px 0;
+        padding: 0;
+        line-height: 2.8em;
         position: relative;
         text-align: center;
-        width: 16.667%;
 
         &.active {
           background: $primary;
