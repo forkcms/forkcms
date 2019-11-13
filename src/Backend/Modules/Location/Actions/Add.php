@@ -68,8 +68,8 @@ class Add extends BackendBaseActionAdd
                 );
 
                 // define latitude and longitude
-                $item['lat'] = $coordinates['latitude'];
-                $item['lng'] = $coordinates['longitude'];
+                $item['lat'] = (float) $coordinates['latitude'];
+                $item['lng'] = (float) $coordinates['longitude'];
 
                 // insert the item
                 $item['id'] = BackendLocationModel::insert($item);
