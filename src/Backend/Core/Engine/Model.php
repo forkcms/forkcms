@@ -2,6 +2,9 @@
 
 namespace Backend\Core\Engine;
 
+use InvalidArgumentException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
@@ -12,9 +15,6 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Language\Language as FrontendLanguage;
-use InvalidArgumentException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.

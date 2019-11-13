@@ -200,7 +200,7 @@
 {% block form_errors -%}
   {% if errors|length > 0 -%}
     {% if form.parent %}<span class="help-block errorMessage">{% else %}<div class="alert alert-danger errorMessage">{% endif %}
-    <ul class="list-unstyled">
+    <ul class="list-unstyled mb-0">
 {%- for error in errors -%}
   <li><span class="fa fa-exclamation-circle" aria-hidden="true"></span> {{ error.message }}</li>
 {%- endfor -%}

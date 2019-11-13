@@ -2,13 +2,18 @@
 
 namespace Backend\Modules\Profiles\Installer;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Group\Group;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
+use Backend\Modules\Profiles\Domain\Session\Session;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
+use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Installer for the profiles module.
@@ -21,8 +26,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Profiles');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -376,7 +381,7 @@ class Installer extends ModuleInstaller
     private function getSearchWidgetId(): int
     {
         /** @var ModuleExtraRepository $moduleExtraRepository */
-        $moduleExtraRepository = BackendModel::get(ModuleExtraRepository::class);
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
         $widgetId = $moduleExtraRepository->getModuleExtraId('Search', 'Form', ModuleExtraType::widget());
 
         if ($widgetId === null) {
@@ -388,15 +393,28 @@ class Installer extends ModuleInstaller
 
     private function hasPageWithProfilesBlock(string $language): bool
     {
-        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
 
         return $pageRepository->pageExistsWithModuleBlockForLanguage('Profiles', $language);
     }
 
     private function hasPageWithProfilesAction(string $language, string $action): bool
     {
-        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
 
         return $pageRepository->pageExistsWithModuleActionForLanguage('Profiles', $action, $language);
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Profile::class,
+                Group::class,
+                GroupRight::class,
+                Session::class,
+                Setting::class,
+            ]
+        );
     }
 }

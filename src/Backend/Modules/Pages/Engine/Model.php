@@ -480,11 +480,10 @@ class Model
     {
         // get the items
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.title AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN PagesPage AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
+            'SELECT i.id AS url, i.title AS name, mt.moduleName AS module
+             FROM TagsModuleTag AS mt
+             INNER JOIN TagsTag AS t ON mt.tag_id = t.id AND mt.moduleName = ? AND mt.tag_id = ?
+             INNER JOIN PagesPage AS i ON mt.moduleId = i.id AND i.status = ?',
             ['pages', $tagId, 'active']
         );
 
@@ -767,7 +766,7 @@ class Model
             // loop pages
             foreach ($navigation['page'][$parentId] as $page) {
                 // start
-                $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '    <a href="' . BackendModel::createUrlForAction(
@@ -777,7 +776,7 @@ class Model
                     ['id' => $page['page_id']]
                 ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
-                // get childs
+                // get children
                 $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
@@ -841,7 +840,7 @@ class Model
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home">';
+        $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home" ' . 'data-jstree=\'{"opened": true, "type":"home"}\'' . '>';
 
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
@@ -872,7 +871,7 @@ class Model
                 // loop the items
                 foreach ($navigation['meta'][0] as $page) {
                     // start
-                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                     // insert link
                     $html .= '            <a href="' . BackendModel::createUrlForAction(
@@ -907,7 +906,7 @@ class Model
             // loop the items
             foreach ($navigation['footer'][0] as $page) {
                 // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '            <a href="' . BackendModel::createUrlForAction(
@@ -941,7 +940,7 @@ class Model
             // loop the items
             foreach ($navigation['root'][0] as $page) {
                 // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '            <a href="' . BackendModel::createUrlForAction(

@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
 
@@ -8,25 +8,25 @@
 {% block content %}
   {% form add %}
   <div class="row fork-module-content">
-    <div class="col-md-12">
+    <div class="col-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab" aria-selected="false" id="extra-tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
+          <div role="tabpanel" class="tab-pane active show" id="tabGeneral" aria-labelledby="general-tab">
             <div class="row">
               <div class="col-lg-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <label for="name" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
@@ -64,30 +64,61 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <label for="successPage" class="control-label">
+                      {{ 'lbl.SuccessPage'|trans|ucfirst }}
+                    </label>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group last">
+                      <ul class="list-unstyled">
+                        {% for option in success_type %}
+                          <li class="radio">
+                            <label for="{{ option.id }}">{{ option.rbtSuccessType|raw }} {{ option.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-default card-editor js-success-message">
+                  <div class="card-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
                       {{ macro.required }}<br>
                     </label>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group last">
                       {% form_field success_message %}
                     </div>
                   </div>
                   {% if txtSuccessMessageError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error success_message %}
                     </div>
                   {% endif %}
                 </div>
+                <div class="card card-default hide js-success-page">
+                  <div class="card-heading">
+                    <label for="successPage" class="control-label">
+                      {{ 'lbl.SuccessPage'|trans|ucfirst }}
+                    </label>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group last">
+                      <label for="successPage" class="control-label">{{ 'lbl.SelectConfirmationPage'|trans|ucfirst }}</label>
+                      {% form_field success_page %}{% form_field_error success_page %}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabExtra">
+          <div role="tabpanel" class="tab-pane" id="tabExtra" aria-labelledby="extra-tab">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
                   {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
@@ -101,12 +132,12 @@
     </div>
   </div>
   <div class="row fork-module-actions">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
         </div>
       </div>

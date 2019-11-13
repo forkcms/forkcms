@@ -4,6 +4,7 @@ namespace Frontend\Core\Engine;
 
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -127,7 +128,7 @@ class Model extends \Common\Core\Model
      */
     public static function getPage(int $pageId): array
     {
-        $pageRepository = Model::getContainer()->get(PageRepository::class);
+        $pageRepository = self::get(PageRepository::class);
         $revisionId = $pageRepository->getRevisionId($pageId, Status::active(), LANGUAGE);
 
         // No page found

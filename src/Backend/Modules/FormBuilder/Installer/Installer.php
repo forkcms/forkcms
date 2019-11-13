@@ -71,6 +71,7 @@ class Installer extends ModuleInstaller
             $form['name'] = \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend'));
             $form['method'] = 'database_email';
             $form['email'] = serialize([$this->getVariable('email')]);
+            $form['success_type'] = 'message';
             $form['success_message'] = $this->getLocale('ContactMessageSent', 'Core', $language, 'msg', 'Frontend');
             $form['identifier'] = 'contact-' . $language;
             $form['created_on'] = gmdate('Y-m-d H:i:s');

@@ -155,7 +155,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
@@ -167,7 +167,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
@@ -552,7 +552,7 @@ class Model
         );
 
         $templates = (array) $database->getRecords(
-            'SELECT i.id, i.label, i.path, i.data
+            'SELECT i.id, i.label, i.path, i.data, i.default_image
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',
@@ -864,11 +864,11 @@ class Model
 
             // build cronjob information
             $item = [];
-            $item['minute'] = (isset($attributes['minute'])) ? $attributes['minute'] : '*';
-            $item['hour'] = (isset($attributes['hour'])) ? $attributes['hour'] : '*';
-            $item['day-of-month'] = (isset($attributes['day-of-month'])) ? $attributes['day-of-month'] : '*';
-            $item['month'] = (isset($attributes['month'])) ? $attributes['month'] : '*';
-            $item['day-of-week'] = (isset($attributes['day-of-week'])) ? $attributes['day-of-week'] : '*';
+            $item['minute'] = $attributes['minute'] ?? '*';
+            $item['hour'] = $attributes['hour'] ?? '*';
+            $item['day-of-month'] = $attributes['day-of-month'] ?? '*';
+            $item['month'] = $attributes['month'] ?? '*';
+            $item['day-of-week'] = $attributes['day-of-week'] ?? '*';
             $item['action'] = $attributes['action'];
             $item['description'] = $cronjob[0];
 
@@ -885,8 +885,8 @@ class Model
 
             // build event information and add it to the list
             $information['events'][] = [
-                'application' => (isset($attributes['application'])) ? $attributes['application'] : '',
-                'name' => (isset($attributes['name'])) ? $attributes['name'] : '',
+                'application' => $attributes['application'] ?? '',
+                'name' => $attributes['name'] ?? '',
                 'description' => $event[0],
             ];
         }

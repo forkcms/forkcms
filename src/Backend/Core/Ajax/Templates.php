@@ -18,7 +18,7 @@ class Templates extends AjaxAction
     {
         $this->templates = [];
         $theme = $this->get('fork.settings')->get('Core', 'theme');
-        $files = [BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js'];
+        $files = [BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.json'];
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
 
         if (is_file($themePath)) {

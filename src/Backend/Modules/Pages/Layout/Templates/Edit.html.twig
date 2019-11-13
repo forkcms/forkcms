@@ -1,15 +1,19 @@
 {% extends 'Layout/Templates/pages.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation hidden-xs">
+  <div class="sub-navigation d-none d-sm-block">
     <div class="pages-tree">
-      <div class="alert alert-warning visible-sm">
+      <div class="alert alert-warning d-md-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
       <div id="tree">
         {{ tree|raw }}
       </div>
@@ -18,7 +22,7 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if not item.is_hidden %}
 
@@ -34,24 +38,24 @@
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
-    </div>
       {% if showPagesAdd %}
         <div class="btn-group">
           <a type="button" href="{{ geturl('add') }}" class="btn btn-default pull-left">
             {{ macro.icon('plus-square') }}
             <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
           </a>
-          <button type="button" class="btn btn-default dropdown-toggle pull-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
           </button>
-          <ul class="dropdown-menu">
-            <li><a href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a></li>
-            <li><a href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a></li>
-            <li><a href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a></li>
-          </ul>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+          </div>
         </div>
       {% endif %}
+    </div>
   </div>
 {% endblock %}
 
@@ -71,39 +75,38 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
-          <li role="presentation" class="active mr-auto">
-            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+        <ul class="nav nav-tabs justify-content-end" role="tablist">
+          <li class="nav-item mr-auto">
+            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="js-page-image-tab" role="presentation">
-            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+          <li class="nav-item js-page-image-tab">
+            <a class="nav-link" href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           {% if showTags %}
-            <li role="presentation">
-              <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
           {% if showAuthenticationTab %}
-            <li role="presentation">
-              <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="setting-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabContent">
+          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
             <div id="editTemplate">
               {# Do not change the ID! #}
               <p class="current-template">{{ 'lbl.Template'|trans|ucfirst }}:
@@ -129,11 +132,11 @@
                           <tr>
                             <td data-position="fallback" id="templatePosition-fallback"
                               colspan="1" class="box">
-                              <div class="panel panel-default panel-pages-block">
-                                <div class="panel-heading">
-                                  <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
+                              <div class="card card-default card-pages-block">
+                                <div class="card-heading">
+                                  <h2 class="card-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                                 </div>
-                                <div class="panel-body">
+                                <div class="card-body">
                                   <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
                                 </div>
                               </div>
@@ -150,7 +153,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabVersions">
+          <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
             {% if drafts %}
               <div class="row">
                 <div class="col-md-12">
@@ -187,123 +190,113 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabSettings">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    {% for _itr_22 in hidden %}
-                      <li class="radio">
-                        <label for="{{ _itr_22.id }}">{{ _itr_22.rbtHidden|raw }} {{ _itr_22.label|ucfirst }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
+          <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="setting-tab">
+            <div class="form-group">
+              {% for _itr_22 in hidden %}
+                <div class="form-check">
+                  {{ _itr_22.rbtHidden|raw }}
+                  <label class="form-check-label" for="{{ _itr_22.id }}">{{ _itr_22.label|ucfirst }}</label>
                 </div>
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    <li class="checkbox">
-                      <label for="isAction" class="control-label">{% form_field is_action %} {{ 'msg.IsAction'|trans|ucfirst }}</label>
-                    </li>
-                  </ul>
-                </div>
-                {% if isGod %}
-                  <div class="form-group">
-                    <ul class="list-unstyled">
-                      {% for _itr_23 in allow %}
-                        <li class="checkbox">
-                          <label for="{{ _itr_23.id }}">{{ _itr_23.chkAllow|raw }} {{ _itr_23.label }}</label>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                {% form_field is_action %}
+                <label for="isAction" class="form-check-label">{{ 'msg.IsAction'|trans|ucfirst }}</label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="panel panel-default jsCheckboxDropdownCombo last" data-multiple="true">
-                  <div class="panel-heading">
-                    <label for="movePage">{% form_field move_page %} {{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+            {% if isGod %}
+              <div class="form-group">
+                {% for _itr_23 in allow %}
+                  <div class="form-check">
+                    {{ _itr_23.chkAllow|raw }}
+                    <label class="form-check-label" for="{{ _itr_23.id }}">{{ _itr_23.label }}</label>
                   </div>
-                  <div class="panel-body">
-                    <div class="form-group">
-                      <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
-                      {% form_field move_page_tree %}
-                      {% form_field_error move_page_tree %}
-                    </div>
-                    <div class="form-group">
-                      <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
-                      {% form_field move_page_reference_page %}
-                      {% form_field_error move_page_reference_page %}
-                    </div>
-                    <div class="form-group last">
-                      <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
-                      {% form_field move_page_type %}
-                      {% form_field_error move_page_type %}
-                    </div>
-                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="card card-default jsCheckboxDropdownCombo last" data-multiple="true">
+              <div class="card-heading">
+                <div class="form-check">
+                  {% form_field move_page %}
+                  <label class="form-check-label" for="movePage">{{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
+                  {% form_field move_page_tree %}
+                  {% form_field_error move_page_tree %}
+                </div>
+                <div class="form-group">
+                  <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
+                  {% form_field move_page_reference_page %}
+                  {% form_field_error move_page_reference_page %}
+                </div>
+                <div class="form-group last">
+                  <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
+                  {% form_field move_page_type %}
+                  {% form_field_error move_page_type %}
                 </div>
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabRedirect">
-            <div class="row">
-              <div class="col-md-12">
-                {% if rbtRedirectError %}
-                  <div class="alert alert-danger">{{ rbtRedirectError }}</div>
-                {% endif %}
+          <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
+            {% if rbtRedirectError %}
+              <div class="alert alert-danger">{{ rbtRedirectError }}</div>
+            {% endif %}
 
-                <ul class="list-unstyled radiobuttonFieldCombo">
-                  {% for _itr_24 in redirect %}
-                    <li class="radio">
-                      <div class="form-group">
-                        <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
-                        {% if _itr_24.isInternal %}
-                          <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field internal_redirect %} {% form_field_error internal_redirect %}
-                        {% endif %}
-                        {% if _itr_24.isExternal %}
+            <div class="radiobuttonFieldCombo">
+              {% for _itr_24 in redirect %}
+                <div class="form-group">
+                  <div class="form-check">
+                    {{ _itr_24.rbtRedirect|raw }}
+                    <label class="form-check-label" for="{{ _itr_24.id }}">{{ _itr_24.label }}</label>
+                  </div>
+                  {% if _itr_24.isInternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field internal_redirect %} {% form_field_error internal_redirect %}
+                  {% endif %}
 
-                          <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field external_redirect %} {% form_field_error external_redirect %}
-                        {% endif %}
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-
-              </div>
+                  {% if _itr_24.isExternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field external_redirect %} {% form_field_error external_redirect %}
+                  {% endif %}
+                </div>
+              {% endfor %}
             </div>
           </div>
           {% if showAuthenticationTab %}
-          <div role="tabpanel" class="tab-pane" id="tabAuthentication">
+          <div role="tabpanel" class="tab-pane" id="tabAuthentication" aria-labelledby="authentication-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
-                  <li class="checkbox">
-                    <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
-                  </li>
+                  <div class="form-check">
+                    {% form_field auth_required %}
+                    <label for="authRequired" class="form-check-label">{{ 'msg.AuthRequired'|trans|ucfirst }}</label>
+                  </div>
                   {% if authGroups %}
                   <div class="js-authentication-groups" {% if item.data.auth_required %} style="display: none;"{% endif %}>
                     <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
-                    <ul class="list-unstyled">
-                      {% for item in authGroups %}
-                        <li class="checkbox">
-                          <label for="{{ item.id }}">{{ item.chkAuthGroups|raw }} {{ item.label }}</label>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
+                    {% for item in authGroups %}
+                      <div class="form-check">
+                        {{ item.chkAuthGroups|raw }}
+                        <label class="form-check-label" for="{{ item.id }}">{{ item.label }}</label>
+                      </div>
+                    {% endfor %}
+                    </div>
                   {% endif %}
-                  <li class="checkbox hidden" data-role="remove-from-search-index">
-                    <label for="removeFromSearchIndex" class="control-label">{% form_field remove_from_search_index %} {{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
-                  </li>
+                  <div class="form-check d-none" data-role="remove-from-search-index">
+                    {% form_field remove_from_search_index %}
+                    <label for="removeFromSearchIndex" class="form-check-label">{{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabImage">
+          <div role="tabpanel" class="tab-pane" id="tabImage" aria-labelledby="image-tab">
             <div class="row js-page-image-tab">
               <div class="col-md-12">
                 <div class="form-group">
@@ -312,13 +305,18 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-lg-3">
-                      {% if item.data.image %}
-                        <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive img-thumbnail" />
-                      {% endif %}
+                      <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-thumbnail{% if not item.data.image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" />
                     </div>
                     <div class="col-lg-9">
-                      {% form_field image %} {% form_field_error image %}
-                      <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
+                      <div class="custom-file">
+                        {% form_field image %}
+                        <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                        {% form_field_error image %}
+                      </div>
+                      <div class="form-check">
+                        {% form_field remove_image %}
+                        <label for="removeImage">{{ 'lbl.Delete'|trans|ucfirst }}</label>
+                      </div>
                       {% form_field_error remove_image %}
                     </div>
                   </div>
@@ -327,60 +325,53 @@
             </div>
           </div>
           {% if showTags %}
-            <div role="tabpanel" class="tab-pane" id="tabTags">
-              <div class="row">
-                <div class="col-md-12">
-                  <label for="tags">{{ 'msg.AddTagsHere'|trans }}</label>
-                  {% form_field tags %} {% form_field_error tags %}
-                  <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
-                </div>
+            <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
+              <div class="form-group last">
+                <label for="tags">{{ 'msg.AddTagsHere'|trans }}</label>
+                {% form_field tags %} {% form_field_error tags %}
+                <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
               </div>
             </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabSEO">
+          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
             {% if hreflangFields %}
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+              <fieldset class="last">
+                <legend>{{ 'lbl.Languages'|trans|ucfirst }}</legend>
+                <div class="row">
+                  {% for language, field in hreflangFields %}
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
+                        {{ field.field_hreflang|raw }}
+                      </div>
                     </div>
-                    <div class="panel-body">
-                      {% for language, field in hreflangFields %}
-                        <div class="form-group{% if loop.last %} last{% endif %}">
-                          <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
-                          {{ field.field_hreflang|raw }}
-                        </div>
-                      {% endfor %}
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
-              </div>
+              </fieldset>
             {% endif %}
           </div>
         </div>
-      </div>
     </div>
   </div>
   <div id="pageButtons" class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group" role="group">
           {% if showPagesDelete and allowPagesDelete %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" }) }}
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
+        <div class="btn-group ml-auto" role="group">
+          {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" }) }}
+          {{ macro.buttonIcon('', 'save', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
         </div>
       </div>
     </div>
   </div>
   {# This is the HTML content, hidden #}
-  <div class="hidden" id="editContent">
+  <div class="d-none" id="editContent">
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
@@ -420,9 +411,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="addBlockTitle">{{ 'lbl.ChooseContent'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addBlockTitle">{{ 'lbl.ChooseContent'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
@@ -471,10 +462,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.UserTemplate'|trans|capitalize }}: <span data-fork-cms-role="user-template-title"></span></h4>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
@@ -493,9 +484,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
@@ -555,10 +546,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
+          <h4 class="modal-title" id="blockHtmlTitle">{{ 'lbl.Editor'|trans|ucfirst }}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="blockHtmlTitle">{{ 'lbl.Editor'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">

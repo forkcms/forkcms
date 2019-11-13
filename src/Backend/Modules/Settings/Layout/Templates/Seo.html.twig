@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
 
@@ -9,27 +9,32 @@
   {% form settingsSeo %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.SEO'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
+          <div class="form-group">
+            <div class="form-check">
+              {% form_field seo_noodp %}
+              <label for="seoNoodp" class="form-check-label">{{ 'lbl.NOODP'|trans|upper }}</label>
+            </div>
+            <small class="form-text text-muted">{{ 'msg.HelpSEONoodp'|trans|ucfirst|raw }}</small>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              {% form_field seo_noydir %}
+              <label for="seoNoydir" class="form-check-label">{{ 'lbl.NOYDIR'|trans|upper }}</label>
+            </div>
+            <small class="form-text text-muted">{{ 'msg.HelpSEONoydir'|trans|ucfirst }}</small>
+          </div>
           <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="seoNoodp" class="control-label">{% form_field seo_noodp %} NOODP</label>
-                <p class="help-block">{{ 'msg.HelpSEONoodp'|trans|ucfirst|raw }}</p>
-              </li>
-              <li class="checkbox">
-                <label for="seoNoydir" class="control-label">{% form_field seo_noydir %} NOYDIR</label>
-                <p class="help-block">{{ 'msg.HelpSEONoydir'|trans|ucfirst }}</p>
-              </li>
-              <li class="checkbox">
-                <label for="seoNofollowInComments" class="control-label">{% form_field seo_nofollow_in_comments %} {{ 'msg.SEONoFollowInComments'|trans|ucfirst|raw }}</label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field seo_nofollow_in_comments %}
+              <label for="seoNofollowInComments" class="form-check-label">{{ 'msg.SEONoFollowInComments'|trans|ucfirst|raw }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -38,8 +43,8 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
+        <div class="btn-group ml-auto" role="group">
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>
     </div>

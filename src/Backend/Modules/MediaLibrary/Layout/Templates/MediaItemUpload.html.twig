@@ -1,15 +1,19 @@
 {% extends 'Layout/Templates/pages.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block pagesTree %}
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
-      <div class="alert alert-warning visible-xs visible-sm">
+      <div class="alert alert-warning d-lg-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
+      </div>
       <div id="tree">
         {{ tree|raw }}
       </div>
@@ -18,14 +22,14 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if showMediaLibraryMediaItemIndex %}
         {% if folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'list', 'lbl.Overview'|trans|ucfirst) }}
         {% endif %}
         {% if not folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}
         {% endif %}
       {% endif %}
     </div>

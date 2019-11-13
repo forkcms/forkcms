@@ -32,14 +32,6 @@ CREATE TABLE IF NOT EXISTS `modules_settings` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `modules_tags` (
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`module`,`tag_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,

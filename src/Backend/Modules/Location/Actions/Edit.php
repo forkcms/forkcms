@@ -84,7 +84,7 @@ class Edit extends BackendBaseActionEdit
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
-            $this->settings['map_style'] = isset($settings['map_style_widget']) ? $settings['map_style_widget'] : 'standard';
+            $this->settings['map_style'] = $settings['map_style_widget'] ?? 'standard';
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->record['lat'];
             $this->settings['center']['lng'] = $this->record['lng'];
@@ -96,8 +96,8 @@ class Edit extends BackendBaseActionEdit
             $this->settings['center']['lng'] = $this->record['lng'];
         }
 
-        $this->settings['full_url'] = (isset($this->settings['full_url'])) ? ($this->settings['full_url']) : false;
-        $this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
+        $this->settings['full_url'] = $this->settings['full_url'] ?? false;
+        $this->settings['directions'] = $this->settings['directions'] ?? false;
     }
 
     private function loadForm(): void

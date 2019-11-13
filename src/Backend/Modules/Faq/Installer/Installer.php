@@ -2,8 +2,12 @@
 
 namespace Backend\Modules\Faq\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Question\Question;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
@@ -23,8 +27,8 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Faq');
         $this->makeSearchable($this->getModule());
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -159,8 +163,8 @@ class Installer extends ModuleInstaller
     {
         return (int) $this->getDatabase()->getVar(
             'SELECT id
-             FROM faq_categories
-             WHERE language = ?',
+             FROM FaqCategory
+             WHERE locale = ?',
             [$language]
         );
     }
@@ -199,14 +203,14 @@ class Installer extends ModuleInstaller
         // build array
         $item = [
             'meta_id' => $this->insertMeta($title, $title, $title, $url),
-            'extra_id' => $moduleExtra->getId(),
-            'language' => $language,
+            'extraId' => $moduleExtra->getId(),
+            'locale' => $language,
             'title' => $title,
             'sequence' => 1,
         ];
 
         // insert category
-        $item['id'] = (int) $database->insert('faq_categories', $item);
+        $item['id'] = (int) $database->insert('FaqCategory', $item);
 
         // Update data with the
         $moduleExtra->update(
@@ -217,7 +221,7 @@ class Installer extends ModuleInstaller
             [
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
-                'language' => $item['language'],
+                    'language' => $item['locale'],
                 'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
             ],
             false,
@@ -227,5 +231,16 @@ class Installer extends ModuleInstaller
         $moduleExtraRepository->save($moduleExtra);
 
         return $item['id'];
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Category::class,
+                Question::class,
+                Feedback::class,
+            ]
+        );
     }
 }

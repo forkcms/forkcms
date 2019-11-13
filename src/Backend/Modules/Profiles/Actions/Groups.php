@@ -50,9 +50,9 @@ class Groups extends BackendBaseActionIndex
          */
         $query =
             'SELECT pg.id, pg.name, COUNT(gr.id) AS members_count
-             FROM profiles_groups AS pg
-             LEFT OUTER JOIN profiles_groups_rights AS gr ON gr.group_id = pg.id AND
-                (gr.expires_on IS NULL OR gr.expires_on > NOW())
+             FROM ProfilesGroup AS pg
+             LEFT OUTER JOIN ProfilesGroupRight AS gr ON gr.group_id = pg.id AND
+                (gr.expiresOn IS NULL OR gr.expiresOn > NOW())
              GROUP BY pg.id
              HAVING 1';
 

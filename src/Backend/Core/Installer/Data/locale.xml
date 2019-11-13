@@ -5121,6 +5121,10 @@
         <translation language="tr"><![CDATA[içerik seç]]></translation>
         <translation language="pl"><![CDATA[wybierz treść]]></translation>
       </item>
+      <item type="label" name="ChooseFile">
+        <translation language="nl"><![CDATA[kies bestand]]></translation>
+        <translation language="en"><![CDATA[choose file]]></translation>
+      </item>
       <item type="label" name="City">
         <translation language="nl"><![CDATA[stad]]></translation>
         <translation language="en"><![CDATA[city]]></translation>
@@ -11720,7 +11724,7 @@
         <translation language="pl"><![CDATA[Najpierw dodaj tag.]]></translation>
       </item>
       <item type="error" name="AddTextBeforeSubmitting">
-        <translation language="nl"><![CDATA[Voeg de text eerst toe voordat u opslaat.]]></translation>
+        <translation language="nl"><![CDATA[Voeg de tekst eerst toe voordat u opslaat.]]></translation>
         <translation language="en"><![CDATA[Add the text before submitting.]]></translation>
         <translation language="fr"><![CDATA[Veuillez ajouter le texte avant de valider.]]></translation>
         <translation language="de"><![CDATA[Füge das Text hinzu, bevor du den Eintrag speicherst.]]></translation>
@@ -12630,6 +12634,14 @@
       <item type="label" name="EditContent">
         <translation language="nl"><![CDATA[inhoud bewerekn]]></translation>
         <translation language="en"><![CDATA[edit content]]></translation>
+      </item>
+      <item type="label" name="PageNotAllowedToMove">
+        <translation language="nl"><![CDATA[Het is niet toegestaan deze pagina te veplaatsen]]></translation>
+        <translation language="en"><![CDATA[It's not allowed to change the position of this page]]></translation>
+      </item>
+      <item type="label" name="PageNotAllowedToHaveChildren">
+        <translation language="nl"><![CDATA[Deze pagina kan geen subpagina's bevatten]]></translation>
+        <translation language="en"><![CDATA[This page can not have subpages]]></translation>
       </item>
     </Core>
   </Backend>

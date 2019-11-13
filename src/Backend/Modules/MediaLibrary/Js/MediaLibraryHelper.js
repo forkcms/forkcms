@@ -2,6 +2,7 @@
  * Interaction for the connection of media to the media module.
  * global jsBackend
  * global utils
+ * global Image
  */
 jsBackend.mediaLibraryHelper = {
   init: function () {
@@ -465,6 +466,22 @@ jsBackend.mediaLibraryHelper.group = {
     })
   },
 
+  getMediaItemForId: function(mediaItemId) {
+    var foundMediaItem = false
+
+    $.each(media, function(index, mediaFolder) {
+      $.each(mediaFolder, function(index, mediaItem) {
+        if (mediaItem.id === mediaItemId) {
+          foundMediaItem = mediaItem
+
+          return false
+        }
+      })
+    })
+
+    return foundMediaItem
+  },
+
   updateFolderSelected: function () {
     // select the current media folder
     $('#mediaFolders').val(mediaFolderId)
@@ -629,31 +646,31 @@ jsBackend.mediaLibraryHelper.group = {
     }
 
     // Enable all because we can switch between different groups on the same page
-    $tabs.children('li').removeClass('disabled, active').children('a').attr('data-toggle', 'tab')
+    $tabs.children('.nav-link').removeClass('disabled, active')
 
     var disabled = ''
-    var enabled = 'li:eq(0)'
+    var enabled = '.nav-item:eq(0)'
 
     // we have an image group
     if (mediaGroups[currentMediaGroupId].type === 'image') {
-      disabled = 'li:gt(0)'
+      disabled = '.nav-item:gt(0)'
     } else if (mediaGroups[currentMediaGroupId].type === 'file') {
-      disabled = 'li:eq(0), li:eq(2), li:eq(3)'
-      enabled = 'li:eq(1)'
+      disabled = '.nav-item:eq(0), .nav-item:eq(2), .nav-item:eq(3)'
+      enabled = '.nav-item:eq(1)'
     } else if (mediaGroups[currentMediaGroupId].type === 'movie') {
-      disabled = 'li:eq(0), li:eq(1), li:eq(3)'
-      enabled = 'li:eq(2)'
+      disabled = '.nav-item:eq(0), .nav-item:eq(1), .nav-item:eq(3)'
+      enabled = '.nav-item:eq(2)'
     } else if (mediaGroups[currentMediaGroupId].type === 'audio') {
-      disabled = 'li:lt(3)'
-      enabled = 'li:eq(3)'
+      disabled = '.nav-item:lt(3)'
+      enabled = '.nav-item:eq(3)'
     } else if (mediaGroups[currentMediaGroupId].type === 'image-file') {
-      disabled = 'li:eq(2), li:eq(3)'
+      disabled = '.nav-item:eq(2), .nav-item:eq(3)'
     } else if (mediaGroups[currentMediaGroupId].type === 'image-movie') {
-      disabled = 'li:eq(1), li:eq(3)'
+      disabled = '.nav-item:eq(1), .nav-item:eq(3)'
     }
 
     if (disabled !== '') {
-      $tabs.children(disabled).addClass('disabled').children('a').removeAttr('data-toggle')
+      $tabs.children(disabled).find('.nav-link').addClass('disabled')
     }
     $tabs.children(enabled).children('a').attr('data-toggle', 'tab').first().tab('show')
 
@@ -687,6 +704,12 @@ jsBackend.mediaLibraryHelper.group = {
       jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
     })
 
+    // bind click to duplicate media item
+    $('[data-role=media-library-duplicate-and-crop]').on('click', function () {
+      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-item-id'))
+      jsBackend.mediaLibraryHelper.duplicator.init(mediaItemToDuplicate)
+    })
+
     // select the correct folder
     jsBackend.mediaLibraryHelper.group.updateFolderSelected()
 
@@ -703,20 +726,20 @@ jsBackend.mediaLibraryHelper.group = {
     var $submitButton = $('#addMediaSubmit')
 
     if (maximumMediaItemsCount !== false && totalMediaCount > maximumMediaItemsCount) {
-      $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('hidden')
+      $minimumCountError.html(jsBackend.locale.err('MaximumConnectedItems').replace('{{ limit }}', maximumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
     if (minimumMediaItemsCount !== false && totalMediaCount < minimumMediaItemsCount) {
-      $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('hidden')
+      $minimumCountError.html(jsBackend.locale.err('MinimumConnectedItems').replace('{{ limit }}', minimumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
-    $minimumCountError.html('').addClass('hidden')
+    $minimumCountError.html('').addClass('d-none')
     $submitButton.removeClass('disabled').attr('disabled', false)
   }
 }
@@ -789,6 +812,10 @@ jsBackend.mediaLibraryHelper.cropper = {
     jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo, readyCallback)
   },
 
+  enableCropper: function () {
+    $('[data-role="enable-cropper-checkbox"]').attr('checked', true)
+  },
+
   initSourceAndTargetCanvas: function ($dialog, sourceCanvas, targetCanvas) {
     // set the initial height and width on the target canvas
     targetCanvas.height = sourceCanvas.height
@@ -843,8 +870,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       return
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').removeClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').addClass('d-none')
   },
 
   switchToCropperModal: function ($dialog) {
@@ -856,8 +883,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       $dialog.modal('show')
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').addClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').addClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('d-none')
   },
 
   getCloseEventFunction: function ($dialog, resizeInfo, reject) {
@@ -1003,6 +1030,46 @@ jsBackend.mediaLibraryHelper.cropper = {
 }
 
 /**
+ * All methods related to duplicating an existing media item
+ * which also show the crop tool in the process
+ * global: jsBackend
+ */
+jsBackend.mediaLibraryHelper.duplicator = {
+  init: function(mediaItemToDuplicate) {
+    if (!mediaItemToDuplicate) {
+      return
+    }
+
+    // create canvas
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('2d')
+    canvas.height = mediaItemToDuplicate.height
+    canvas.width = mediaItemToDuplicate.width
+
+    // create image
+    var image = new Image()
+    image.onload = function () {
+      context.drawImage(this, 0, 0)
+
+      // enable cropper
+      jsBackend.mediaLibraryHelper.cropper.enableCropper()
+
+      // switch from "library"-tab to "upload"-tab
+      $('.nav-tabs a[href="#tabUploadMedia"]').tab('show')
+
+      // let FineUploader handle the file
+      var splittedUrl = mediaItemToDuplicate.url.split('.')
+      $('#fine-uploader-gallery').fineUploader('addFiles', [{
+        'canvas': canvas,
+        'name': splittedUrl[0] + '-2.' + splittedUrl[1],
+        'mime': mediaItemToDuplicate.mime
+      }])
+    }
+    image.src = mediaItemToDuplicate.source
+  }
+}
+
+/**
  * All methods related to the upload
  * global: jsBackend
  */
@@ -1036,14 +1103,14 @@ jsBackend.mediaLibraryHelper.upload = {
 
     if (currentAspectRatio === false) {
       $formGroup.removeClass('has-warning')
-      $warning.addClass('hidden')
+      $warning.addClass('d-none')
       $checkbox.removeClass('disabled').attr('disabled', false).attr('checked', false)
 
       return
     }
 
     $formGroup.addClass('has-warning')
-    $warning.removeClass('hidden')
+    $warning.removeClass('d-none')
     $checkbox.addClass('disabled').attr('disabled', true).attr('checked', true)
   },
 
@@ -1089,7 +1156,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' +
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' +
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
@@ -1221,7 +1288,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
@@ -1424,6 +1491,13 @@ jsBackend.mediaLibraryHelper.templates = {
 
     html += '<td class="url"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.url + '</label></td>'
     html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.title + '</label></td>'
+    if (mediaItem.type === 'image') {
+      html += '<td class="duplicate">'
+      html += '<button type="button" data-media-item-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary" title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaItemDuplicate')) + '">'
+      html += '<span class="fa fa-copy" aria-hidden="true"></span>'
+      html += '</button>'
+      html += '</td>'
+    }
     html += '</tr>'
 
     return html
@@ -1448,11 +1522,11 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
       // is file, movie or audio
     } else {
-      html += '<div class="icon"></div>'
+      html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 
-    html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-block" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
     html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
     html += '</button>'
@@ -1465,7 +1539,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
 jsBackend.mediaLibraryHelper.modalSelection = {
   init: function () {
-    $('tr[data-direct-url] a').on('click', this.selectItemAndSendToParent)
+    $('button[data-direct-url]').on('click', this.selectItemAndSendToParent)
   },
 
   selectItemAndSendToParent: function () {

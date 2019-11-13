@@ -157,7 +157,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         // our JS needs to know an id, so we can highlight it
         $attributes = [
             'id' => 'row-[id]',
-            'data-direct-url' => '[directUrl]',
         ];
         $this->setRowAttributes($attributes);
     }
@@ -193,7 +192,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                 );
         }
 
-        return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
-            ucfirst(Language::lbl('Select')) . '</a>';
+        return '<button class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
+            ucfirst(Language::lbl('Select')) . '</button>';
     }
 }

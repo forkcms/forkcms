@@ -31,10 +31,17 @@ services:
     media_library.twig_extension:
         class: Frontend\Modules\MediaLibrary\Twig\Extensions\FrontendHelperExtensions
         public: false
+        tags:
+            - { name: twig.extension }
+
+    # lazy load
+    media_library.twig_runtime:
+        class: Frontend\Modules\MediaLibrary\Twig\AppRuntime
+        public: false
         arguments:
             - "@media_library.helper.frontend"
         tags:
-            - { name: twig.extension }
+            - { name: twig.runtime }
 
     Backend\Modules\MediaLibrary\Api\:
         resource: '../../Api/*'

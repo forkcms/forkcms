@@ -1,11 +1,11 @@
-<div id="widgetFaqFeedback" class="panel panel-default">
-  <div class="panel-heading">
-    <h2 class="panel-title">
+<div id="widgetFaqFeedback" class="card card-default">
+  <div class="card-heading">
+    <h2 class="card-title">
       <a href="{{ geturl('index','faq') }}">{{ 'lbl.Faq'|trans|ucfirst }}: {{ 'lbl.Feedback'|trans|ucfirst }}</a>
     </h2>
   </div>
   {% if faqFeedback %}
-    <div class="panel-body">
+    <div class="card-body">
       <table class="table table-striped dataGrid">
         <tbody>
           {% for _itr_12 in faqFeedback %}
@@ -18,11 +18,11 @@
     </div>
   {% endif %}
   {% if not faqFeedback %}
-    <div class="panel-body">
+    <div class="card-body">
       <p>{{ 'msg.NoFeedback'|trans }}</p>
     </div>
   {% endif %}
-  <div class="panel-footer">
+  <div class="card-footer">
     <a href="{{ geturl('index','faq') }}"><span>{{ 'lbl.AllQuestions'|trans|ucfirst }}</span></a>
   </div>
 </div>

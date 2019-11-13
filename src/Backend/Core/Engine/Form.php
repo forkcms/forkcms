@@ -78,7 +78,6 @@ class Form extends \Common\Core\Form
         // we add JS because we need CKEditor
         $this->header->addJS('ckeditor/ckeditor.js', 'Core', false);
         $this->header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
-        $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
@@ -111,7 +110,7 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'fork-form-file');
+        $class = (string) ($class ?? 'custom-file-input');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element
@@ -132,7 +131,7 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'fork-form-image');
+        $class = (string) ($class ?? 'custom-file-input');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element

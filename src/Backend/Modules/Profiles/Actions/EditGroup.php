@@ -49,7 +49,7 @@ class EditGroup extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('editGroup');
-        $this->form->addText('name', $this->group['name'])->makeRequired();
+        $this->form->addText('name', $this->group['name'], null, 'form-control title', 'form-control danger title')->makeRequired();
     }
 
     protected function parse(): void
