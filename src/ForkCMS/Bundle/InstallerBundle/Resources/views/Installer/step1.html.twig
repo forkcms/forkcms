@@ -28,14 +28,18 @@
           <div class="panel-body">
             <div id="requirementsInformation">
               {% for requirementCategory in checker.requirementCategories %}
-                <h3>{{ requirementCategory.name }}</h3>
-                <div class="list-group">
-                  {% for requirement in requirementCategory.requirements %}
-                    <div class="list-group-item list-group-item-{{ requirement.status }}">
-                      <h4 class="list-group-item-heading">{{ requirement.name }}</h4>
-                      <p class="list-group-item-text">{{ requirement.message|raw }}</p>
-                    </div>
-                  {% endfor %}
+                <div class="card mb-3">
+                  <div class="card-header bg-primary text-white">
+                    {{ requirementCategory.name }}
+                  </div>
+                  <div class="list-group list-group-flush">
+                    {% for requirement in requirementCategory.requirements %}
+                      <div class="list-group-item list-group-item-{{ requirement.status }}">
+                        <h4 class="list-group-item-heading">{{ requirement.name }}</h4>
+                        <p class="list-group-item-text">{{ requirement.message|raw }}</p>
+                      </div>
+                    {% endfor %}
+                  </div>
                 </div>
               {% endfor %}
             </div>
@@ -45,7 +49,7 @@
               <div class="btn-toolbar">
                 <div class="btn-group pull-right" role="group">
                   <a href="{{ path('install_step2') }}" id="installerButton" class="btn btn-primary">
-                    <span class="fa fa-download" aria-hidden="true"></span> Install anyway
+                    <span class="fas fa-download" aria-hidden="true"></span> Install anyway
                   </a>
                 </div>
               </div>
