@@ -668,6 +668,23 @@ class PageRepository extends ServiceEntityRepository
         return count($results) === 1;
     }
 
+    public function hasPageWithBlogBlock(int $blogBlockId, string $language): bool
+    {
+        $results = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('1')
+            ->from(Page::class, 'p')
+            ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
+            ->where('b.extraId = :extraId')
+            ->andWhere('p.language = :language')
+            ->setParameters(['extraId' => $blogBlockId, 'language' => $language])
+            ->getQuery()
+            ->getScalarResult();
+
+        return count($results) !== 0;
+    }
+
     private function buildGetQuery(int $pageId, ?int $revisionId, ?string $language): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

@@ -8,6 +8,7 @@ use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 
 /**
  * Installer for the blog module
@@ -198,15 +199,9 @@ class Installer extends ModuleInstaller
 
     private function hasPageWithBlogBlock(string $language): bool
     {
-        // @todo: Replace with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM PagesPage AS p
-             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
-             WHERE b.extra_id = ? AND p.language = ?
-             LIMIT 1',
-            [$this->blogBlockId, $language]
-        );
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
+
+        return $pageRepository->hasPageWithBlogBlock($this->blogBlockId, $language);
     }
 
     /**
