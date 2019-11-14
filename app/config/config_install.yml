@@ -52,3 +52,7 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    Backend\Modules\Locale\Engine\CacheBuilder:
+        arguments:
+            - "@database"
