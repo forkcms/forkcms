@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="FaqFeedback")
  * @ORM\HasLifecycleCallbacks
  */
-final class Feedback
+class Feedback
 {
     /**
      * @var int
