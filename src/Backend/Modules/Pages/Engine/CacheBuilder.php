@@ -83,6 +83,11 @@ class CacheBuilder
 
         $navigation = $this->getData($language)[1];
         $item->set($navigation);
+
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cacheExpirationDate = $pageRepository->getCacheExpirationDate();
+        $item->expiresAt($cacheExpirationDate);
+
         $this->cache->save($item);
 
         return $navigation;

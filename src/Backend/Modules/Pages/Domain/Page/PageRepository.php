@@ -516,6 +516,37 @@ class PageRepository extends ServiceEntityRepository
         return array_combine(array_column($results, 'id'), array_column($results, 'navigationTitle'));
     }
 
+    public function getCacheExpirationDate(): ?DateTime
+    {
+        $result = $this
+            ->createQueryBuilder('p')
+            ->select('min(least(coalesce(p.publishOn, :now), coalesce(p.publishUntil, :future))) as min')
+            ->where('p.status = :active')
+            ->andWhere('p.publishOn > :now')
+            ->setParameters(
+                [
+                    'now' => new DateTime(),
+                    'future' => new DateTime('2099-12-31 23:59'),
+                    'active' => Status::active(),
+                ]
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getScalarResult();
+
+        if (count($result) !== 1) {
+            return null;
+        }
+
+        $min = array_column($result, 'min')[0];
+
+        if ($min === null) {
+            return null;
+        }
+
+        return new DateTime($min);
+    }
+
     /**
      * @return Page[]
      */
