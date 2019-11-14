@@ -67,7 +67,7 @@ class Language
      */
     public static function buildCache(string $language, string $application): void
     {
-        $cacheBuilder = Model::getContainer()->get(CacheBuilder::class);
+        $cacheBuilder = Model::get(CacheBuilder::class);
         $cacheBuilder->buildCache($language, $application);
     }
 
