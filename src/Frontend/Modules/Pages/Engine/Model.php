@@ -29,10 +29,20 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title
              FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
-            implode(',', $ids) . ')
+             WHERE i.status = ?
+               AND i.hidden = ?
+               AND i.language = ?
+               AND i.publish_on <= ?
+               AND (i.publish_until IS NULL OR i.publish_until >= ?)
+               AND i.id IN (' . implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            ['active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
+            [
+                'active',
+                false,
+                LANGUAGE,
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            ]
         );
 
         // has items
@@ -75,9 +85,16 @@ class Model implements FrontendTagsInterface
              FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
-             AND i.language = ? AND i.publish_on <= ?
+             AND i.language = ? AND i.publish_on <= ? AND (i.publish_until IS NULL OR i.publish_until >= ?)
              ORDER BY i.sequence ASC',
-            [$id, 'active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
+            [
+                $id,
+                'active',
+                false,
+                LANGUAGE,
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            ]
         );
 
         // has items

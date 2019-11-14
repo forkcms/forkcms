@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
-use Doctrine\ORM\EntityManager;
+use DateTime;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -149,6 +149,8 @@ class Model extends \Common\Core\Model
      */
     public static function getPageRevision(int $revisionId, bool $allowHidden = true): array
     {
+        $currentDateTime = (new DateTime())->format('Y-m-d H:i:00');
+
         $pageRevision = (array) self::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
                  p.navigation_title_overwrite, p.data, p.hidden,
@@ -162,9 +164,17 @@ class Model extends \Common\Core\Model
              FROM PagesPage AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.revision_id = ? AND p.language = ?
+             WHERE p.revision_id = ?
+                AND p.language = ?
+                AND p.publish_on <= ?
+                AND (p.publish_until IS NULL OR p.publish_until >= ?)
              LIMIT 1',
-            [$revisionId, LANGUAGE]
+            [
+                $revisionId,
+                LANGUAGE,
+                $currentDateTime,
+                $currentDateTime,
+            ]
         );
 
         if (empty($pageRevision)) {
