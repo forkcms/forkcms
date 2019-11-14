@@ -9,7 +9,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use RuntimeException;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module

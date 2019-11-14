@@ -6,6 +6,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
@@ -212,18 +213,8 @@ class ForkInstaller
 
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
-            // get pages without this extra
-            $revisionIds = $this->container->get('database')->getColumn(
-                'SELECT i.revision_id
-                 FROM PagesPage AS i
-                 WHERE i.revision_id NOT IN (
-                     SELECT DISTINCT b.revision_id
-                     FROM PagesPageBlock AS b
-                     WHERE b.extra_id = ?
-                    GROUP BY b.revision_id
-                 )',
-                [$extra['id']]
-            );
+            $pageRepository = Model::getContainer()->get(PageRepository::class);
+            $revisionIds = $pageRepository->findPagesWithoutExtra($extra['id']);
 
             foreach ($revisionIds as $revisionId) {
                 $pageBlock = new PageBlock(

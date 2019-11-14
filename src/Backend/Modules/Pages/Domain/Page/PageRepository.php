@@ -594,6 +594,30 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findPagesWithoutExtra(int $extraId): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $subQuery = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->from(PageBlock::class, 'b')
+            ->where('b.extraId = :extraId')
+            ->groupBy('b.revisionId')
+        ;
+
+        $qb
+            ->select('p.revisionId')
+            ->where($qb->expr()->notIn('p.revisionId', $subQuery->getDQL()))
+            ->setParameters(['extraId' => $extraId]);
+
+        $results = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($results, 'revisionId');
+    }
+
     public function pageExistsWithModuleBlockForLanguage(string $module, string $language): bool
     {
         $results = $this
