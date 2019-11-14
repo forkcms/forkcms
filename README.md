@@ -60,9 +60,9 @@ Running only the unit tests or the functional tests
 The backend uses [Bootstrap](http://www.getbootstrap.com) in combination with Sass. To make changes, you should make
 the changes into the scss-files, and regenerate the real css with `gulp build`.
 
-## Yarn
+## npm
 
-We use [yarn](https://yarnpkg.com/) to install our dependencies. For now we have a `gulp`-script that moves everything to
+We use [npm](https://www.npmjs.com) to install our dependencies. For now we have a `gulp`-script that moves everything to
 the correct directories. So if you change the dependencies, make sure you run `gulp build`.
 
 ## Discussion
