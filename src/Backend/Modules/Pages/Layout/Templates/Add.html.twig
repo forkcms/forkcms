@@ -55,7 +55,7 @@
       <div>
         <ul class="nav nav-tabs justify-content-end" role="tablist">
           <li class="nav-item mr-auto">
-            <a class="active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item js-page-image-tab">
             <a class="nav-link" href="#tabImage" aria-controls="image" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
@@ -72,8 +72,8 @@
             <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
           {% if showAuthenticationTab %}
-            <li role="presentation">
-              <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
             </li>
           {% endif %}
           <li class="nav-item">
