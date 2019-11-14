@@ -4,6 +4,8 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Doctrine\ORM\NoResultException;
 use Psr\Cache\CacheItemPoolInterface;
 use RuntimeException;
@@ -314,14 +316,8 @@ class CacheBuilder
         // init var
         $links = [];
 
-        // init var
-        $cachedTitles = (array) $this->database->getPairs(
-            'SELECT i.id, i.navigation_title
-             FROM PagesPage AS i
-             WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
-             AND i.language = ? AND i.status = ?',
-            [$language, 'active']
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cachedTitles = $pageRepository->getNavigationTitles(array_keys($keys), $language, Status::active());
 
         // loop the types in the order we want them to appear
         foreach (['page', 'meta', 'footer', 'root'] as $type) {

@@ -493,6 +493,29 @@ class PageRepository extends ServiceEntityRepository
         return array_column($result, 'revisionId');
     }
 
+    public function getNavigationTitles(array $pageIds, string $language, Status $status): array
+    {
+        $qb = $this->createQueryBuilder('p', 'p.id');
+
+        $results = $qb
+            ->select('p.id')
+            ->addSelect('p.navigationTitle')
+            ->where($qb->expr()->in('p.id', ':pageIds'))
+            ->andWhere('p.language = :language')
+            ->andWhere('p.status = :status')
+            ->setParameters(
+                [
+                    'pageIds' => $pageIds,
+                    'status' => $status,
+                    'language' => $language,
+                ]
+            )
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_combine(array_column($results, 'id'), array_column($results, 'navigationTitle'));
+    }
+
     /**
      * @return Page[]
      */
