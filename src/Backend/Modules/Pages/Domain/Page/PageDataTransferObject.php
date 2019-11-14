@@ -52,6 +52,9 @@ class PageDataTransferObject
     /** @var DateTime */
     public $publishOn;
 
+    /** @var DateTime|null */
+    private $publishUntil;
+
     /** @var mixed|null */
     public $data;
 
@@ -98,6 +101,7 @@ class PageDataTransferObject
         $this->hidden = $page->isHidden();
         $this->status = $page->getStatus();
         $this->publishOn = $page->getPublishOn();
+        $this->publishUntil = $page->getPublishUntil();
         $this->data = $page->getData();
         $this->createdOn = $page->getCreatedOn();
         $this->editedOn = $page->getEditedOn();

@@ -731,6 +731,7 @@ class ModuleInstaller
             $revision['title'],
             $revision['navigation_title'],
             new DateTime($revision['publish_on']),
+            null,
             $revision['sequence'],
             $revision['navigation_title_overwrite'],
             $revision['hidden'],

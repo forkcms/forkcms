@@ -17,6 +17,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use DateTime;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 
@@ -744,8 +745,8 @@ class Edit extends BackendBaseActionEdit
             'navigation_title_overwrite' => $this->form->getField('navigation_title_overwrite')->isChecked(),
             'hidden' => $this->form->getField('hidden')->getValue(),
             'status' => $status,
-            'publish_on' => BackendModel::getUTCDate(null, $this->record['publish_on']),
-            'created_on' => BackendModel::getUTCDate(null, $this->record['created_on']),
+            'publish_on' => new DateTime(BackendModel::getUTCDate(null, $this->record['publish_on'])),
+            'created_on' => new DateTime(BackendModel::getUTCDate(null, $this->record['created_on'])),
             'edited_on' => BackendModel::getUTCDate(),
             'allow_move' => $this->record['allow_move'],
             'allow_children' => $this->record['allow_children'],

@@ -609,6 +609,7 @@ class Add extends BackendBaseActionAdd
                     $title,
                     $navigationTitle,
                     new DateTime(),
+                    null,
                     BackendPagesModel::getMaximumSequence($parentId) + 1,
                     $this->form->getField('navigation_title_overwrite')->isChecked(),
                     $this->form->getField('hidden')->getValue(),
