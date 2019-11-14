@@ -20,6 +20,10 @@ services:
         arguments:
             - "@translator.selector"
 
+    Backend\Modules\Locale\Engine\CacheBuilder:
+        arguments:
+            - "@database"
+
 fos_rest:
     routing_loader:
         default_format: json

@@ -24,7 +24,7 @@ class Model
 
     public static function buildCache(string $language, string $application): void
     {
-        $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
+        $cacheBuilder = BackendModel::getContainer()->get(CacheBuilder::class);
         $cacheBuilder->buildCache($language, $application);
     }
 
