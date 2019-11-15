@@ -2565,7 +2565,8 @@ CREATE TABLE `PagesPage` (
   `navigation_title_overwrite` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'should we override the navigation title',
   `hidden` tinyint(1) NOT NULL DEFAULT '1',
   `status` varchar(243) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
-  `publish_on` datetime NOT NULL,
+  `publish_on` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+  `publish_until` datetime DEFAULT NULL COMMENT '(DC2Type:datetime)',
   `data` text COLLATE utf8mb4_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
@@ -2581,31 +2582,31 @@ CREATE TABLE `PagesPage` (
 LOCK TABLES `PagesPage` WRITE;
 /*!40000 ALTER TABLE `PagesPage` DISABLE KEYS */;
 
-INSERT INTO `PagesPage` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
+INSERT INTO `PagesPage` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `publish_until`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
 VALUES
-  (1,1,1,0,4,1,'en','page','Home','Home',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
-  (2,2,1,0,3,2,'en','footer','Sitemap','Sitemap',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
-  (3,3,1,0,3,3,'en','footer','Disclaimer','Disclaimer',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
-  (404,4,1,0,3,4,'en','root','404','404',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
-  (405,5,1,0,3,5,'en','root','Search','Search',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
-  (406,6,1,0,3,6,'en','root','Tags','Tags',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,2),
-  (407,7,1,1,3,8,'en','page','Blog','Blog',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
-  (408,8,1,1,3,10,'en','page','FAQ','FAQ',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
-  (409,9,1,1,3,11,'en','page','Contact','Contact',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,2),
-  (410,10,1,0,3,12,'en','root','Sent mailings','Sent mailings',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,3),
-  (411,11,1,410,3,13,'en','page','Subscribe','Subscribe',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,0),
-  (412,12,1,410,3,14,'en','page','Unsubscribe','Unsubscribe',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
-  (413,13,1,0,3,15,'en','root','Activate','Activate',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,4),
-  (414,14,1,0,3,16,'en','root','Forgot password','Forgot password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,5),
-  (415,15,1,0,3,17,'en','root','Reset password','Reset password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,6),
-  (416,16,1,0,3,18,'en','root','Resend activation e-mail','Resend activation e-mail',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,7),
-  (417,17,1,0,3,19,'en','root','Login','Login',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,8),
-  (418,18,1,0,3,20,'en','root','Register','Register',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,9),
-  (419,19,1,0,3,21,'en','root','Logout','Logout',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,10),
-  (420,20,1,0,3,22,'en','root','Profile','Profile',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,11),
-  (421,21,1,420,3,23,'en','page','Profile settings','Profile settings',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,0),
-  (422,22,1,420,3,24,'en','page','Change email','Change email',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
-  (423,23,1,420,3,25,'en','page','Change password','Change password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,2);
+  (1,1,1,0,4,1,'en','page','Home','Home',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
+  (2,2,1,0,3,2,'en','footer','Sitemap','Sitemap',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
+  (3,3,1,0,3,3,'en','footer','Disclaimer','Disclaimer',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
+  (404,4,1,0,3,4,'en','root','404','404',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
+  (405,5,1,0,3,5,'en','root','Search','Search',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
+  (406,6,1,0,3,6,'en','root','Tags','Tags',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,2),
+  (407,7,1,1,3,8,'en','page','Blog','Blog',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
+  (408,8,1,1,3,10,'en','page','FAQ','FAQ',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,1),
+  (409,9,1,1,3,11,'en','page','Contact','Contact',0,0,'active','2015-02-23 19:48:53',NULL,NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,2),
+  (410,10,1,0,3,12,'en','root','Sent mailings','Sent mailings',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,3),
+  (411,11,1,410,3,13,'en','page','Subscribe','Subscribe',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,0),
+  (412,12,1,410,3,14,'en','page','Unsubscribe','Unsubscribe',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
+  (413,13,1,0,3,15,'en','root','Activate','Activate',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,4),
+  (414,14,1,0,3,16,'en','root','Forgot password','Forgot password',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,5),
+  (415,15,1,0,3,17,'en','root','Reset password','Reset password',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,6),
+  (416,16,1,0,3,18,'en','root','Resend activation e-mail','Resend activation e-mail',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,7),
+  (417,17,1,0,3,19,'en','root','Login','Login',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,8),
+  (418,18,1,0,3,20,'en','root','Register','Register',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,9),
+  (419,19,1,0,3,21,'en','root','Logout','Logout',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,10),
+  (420,20,1,0,3,22,'en','root','Profile','Profile',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,11),
+  (421,21,1,420,3,23,'en','page','Profile settings','Profile settings',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,0),
+  (422,22,1,420,3,24,'en','page','Change email','Change email',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
+  (423,23,1,420,3,25,'en','page','Change password','Change password',0,0,'active','2015-02-23 19:48:54',NULL,NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,2);
 
 /*!40000 ALTER TABLE `PagesPage` ENABLE KEYS */;
 UNLOCK TABLES;
