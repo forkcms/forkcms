@@ -38,6 +38,10 @@ services:
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
 
+    Backend\Modules\Locale\Engine\CacheBuilder:
+        arguments:
+            - "@database"
+
 monolog:
     handlers:
         main:
