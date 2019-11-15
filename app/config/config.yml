@@ -25,7 +25,7 @@ services:
         arguments:
             - "@translator.selector"
 
-    Backend\Modules\Pages\Engine\CacheBuilder: ~
+    Backend\Modules\Locale\Engine\CacheBuilder: ~
 
 fos_rest:
     routing_loader:
