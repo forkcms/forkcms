@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Language;
 
-use Backend\Modules\Pages\Engine\CacheBuilder;
+use Backend\Modules\Locale\Engine\CacheBuilder;
 use Common\Core\Model;
 use Frontend\Core\Engine\Exception;
 use Symfony\Component\Filesystem\Filesystem;
