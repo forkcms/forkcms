@@ -238,6 +238,10 @@ services:
         tags:
             - { name: twig.extension }
 
+    Backend\Modules\Locale\Engine\CacheBuilder:
+        public: true
+        autowire: true
+
 fos_rest:
     routing_loader:
         default_format: json

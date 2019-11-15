@@ -6,11 +6,6 @@ parameters:
     fork.is_installed: true
 
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: true
-
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true
@@ -24,8 +19,6 @@ services:
         public: true
         arguments:
             - "@translator.selector"
-
-    Backend\Modules\Locale\Engine\CacheBuilder: ~
 
 fos_rest:
     routing_loader:
