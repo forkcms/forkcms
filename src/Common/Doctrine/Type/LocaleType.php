@@ -18,7 +18,7 @@ class LocaleType extends TextType
     }
 
     /**
-     * @param string $locale
+     * @param string|null $locale
      * @param AbstractPlatform $platform
      *
      * @return Locale|null
