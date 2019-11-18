@@ -260,8 +260,8 @@
       {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
-      <div class="panel panel-default">
-        <div class="panel-heading">
+      <div class="card card-default">
+        <div class="card-heading">
           {{ form_label(form) }}
         </div>
         <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
@@ -288,7 +288,7 @@
             </li>
           {% endfor %}
         </ul>
-        <div class="panel-footer clearfix">
+        <div class="card-footer clearfix">
           {% if form.vars.allow_add %}
             <div class="btn-group pull-right">
               <button class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
@@ -316,7 +316,7 @@
 {% endblock %}
 
 {% block editor_row %}
-  <div class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
+  <div class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} card-danger{% endif %}">
     <div class="card-heading">
       {{- form_label(form) -}}
     </div>
@@ -338,11 +338,11 @@
 {% endblock %}
 
 {%- block collection_row -%}
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="card card-default">
+    <div class="card-heading">
       {{- form_label(form) -}}
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       {{- form_widget(form) -}}
     </div>
   </div>

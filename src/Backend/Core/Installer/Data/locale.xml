@@ -7817,7 +7817,7 @@
       </item>
       <item type="label" name="PageTitle">
         <translation language="nl"><![CDATA[paginatitel]]></translation>
-        <translation language="en"><![CDATA[pagetitle]]></translation>
+        <translation language="en"><![CDATA[page title]]></translation>
         <translation language="hu"><![CDATA[oldalcím]]></translation>
         <translation language="ru"><![CDATA[Заголовок]]></translation>
         <translation language="it"><![CDATA[titolo di pagina]]></translation>
