@@ -31,7 +31,7 @@ class BlockEditor {
 
   static create ($element, tools) {
     $element.hide()
-    let editorId = $element.id + '-block-editor'
+    let editorId = $element.attr('id') + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
 
     let data = {}
