@@ -61,7 +61,7 @@ class ModuleExtra
     private $action;
 
     /**
-     * @var string|null
+     * @var mixed
      *
      * @ORM\Column(
      *     type="text",
