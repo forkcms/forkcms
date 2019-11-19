@@ -2,15 +2,21 @@
 
 namespace Backend\Modules\Pages\Domain\Page\Command;
 
-use SimpleBus\Message\Bus\MessageBus;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
+use Common\Doctrine\Entity\Meta;
+use Common\Doctrine\Repository\MetaRepository;
+use DateTime;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
 
 final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
@@ -19,12 +25,16 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         // get database
         $database = BackendModel::getContainer()->get('database');
 
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+
         $toLanguage = (string) $command->getToLocale();
         $fromLanguage = (string) $command->getFromLocale();
         $previousResults = $command->getPreviousResults();
 
         // Get already copied ContentBlock ids
         $hasContentBlocks = $previousResults->hasModule('ContentBlocks');
+        $contentBlockIds = [];
         if ($hasContentBlocks) {
             $contentBlockIds = $previousResults->getModuleExtraIds('ContentBlocks');
             $contentBlockOldIds = array_keys($contentBlockIds);
@@ -32,59 +42,48 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
 
         // Get already copied Location ids
         $hasLocations = $previousResults->hasModule('Location');
+        $locationWidgetIds = false;
         if ($hasLocations) {
             $locationWidgetIds = $previousResults->getModuleExtraIds('Location');
             $locationWidgetOldIds = array_keys($locationWidgetIds);
         }
 
         // get all old pages
-        $ids = $database->getColumn(
-            'SELECT id
-             FROM pages AS i
-             WHERE i.language = ? AND i.status = ?',
-            [$toLanguage, 'active']
-        );
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
 
-        // any old pages
-        if (!empty($ids)) {
-            // delete existing pages
-            foreach ($ids as $id) {
-                // redefine
-                $id = (int) $id;
+        // delete existing pages
+        /** @var Page $page */
+        foreach ($pages as $page) {
+            // redefine
+            $activePage = $page->getId();
 
-                // get revision ids
-                $revisionIDs = (array) $database->getColumn(
-                    'SELECT i.revision_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ?',
-                    [$id, $toLanguage]
-                );
+            // get revision ids
+            $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
+            $revisionIDs = array_map(
+                function (Page $page) {
+                    return $page->getRevisionId();
+                },
+                $pagesById
+            );
 
-                // get meta ids
-                $metaIDs = (array) $database->getColumn(
-                    'SELECT i.meta_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ?',
-                    [$id, $toLanguage]
-                );
+            /** @var Page $item */
+            foreach ($pagesById as $item) {
+                $metaRepository->remove($item->getMeta());
+            }
 
-                // delete meta records
-                if (!empty($metaIDs)) {
-                    $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
-                }
+            // delete blocks and their revisions
+            if (!empty($revisionIDs)) {
+                /** @var PageBlockRepository $pageBlockRepository */
+                $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+                $pageBlockRepository->deleteByRevisionIds($revisionIDs);
+            }
 
-                // delete blocks and their revisions
-                if (!empty($revisionIDs)) {
-                    $database->delete(
-                        'pages_blocks',
-                        'revision_id IN (' . implode(',', $revisionIDs) . ')'
-                    );
-                }
-
-                // delete page and the revisions
-                if (!empty($revisionIDs)) {
-                    $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
-                }
+            // delete page and the revisions
+            /** @var Page $item */
+            foreach ($pagesById as $item) {
+                $pageRepository->remove($item);
             }
         }
 
@@ -92,62 +91,57 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
-        $ids = $database->getColumn(
-            'SELECT id
-             FROM pages AS i
-             WHERE i.language = ? AND i.status = ?',
-            [$fromLanguage, 'active']
-        );
+        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
 
         // loop
-        foreach ($ids as $id) {
+        /** @var Page $activePage */
+        foreach ($activePages as $activePage) {
             // get data
-            $sourceData = BackendPagesModel::get($id, null, $fromLanguage);
+            $sourceData = BackendPagesModel::get($activePage->getId(), null, $fromLanguage);
 
             // get and build meta
-            $meta = $database->getRecord(
-                'SELECT *
-                 FROM meta
-                 WHERE id = ?',
-                [$sourceData['meta_id']]
-            );
+            /** @var Meta $originalMeta */
+            $originalMeta = $metaRepository->find($sourceData['meta_id']);
 
-            // remove id
-            unset($meta['id']);
+            $meta = clone $originalMeta;
 
-            // init page
-            $page = [];
+            // Insert new meta
+            $metaRepository->add($meta);
+            $metaRepository->save($meta);
 
             // build page
-            $page['id'] = $sourceData['id'];
-            $page['user_id'] = $sourceData['user_id'];
-            $page['parent_id'] = $sourceData['parent_id'];
-            $page['template_id'] = $sourceData['template_id'];
-            $page['meta_id'] = (int) $database->insert('meta', $meta);
-            $page['language'] = $toLanguage;
-            $page['type'] = $sourceData['type'];
-            $page['title'] = $sourceData['title'];
-            $page['navigation_title'] = $sourceData['navigation_title'];
-            $page['navigation_title_overwrite'] = $sourceData['navigation_title_overwrite'];
-            $page['hidden'] = $sourceData['hidden'];
-            $page['status'] = 'active';
-            $page['publish_on'] = BackendModel::getUTCDate();
-            $page['created_on'] = BackendModel::getUTCDate();
-            $page['edited_on'] = BackendModel::getUTCDate();
-            $page['allow_move'] = $sourceData['allow_move'];
-            $page['allow_children'] = $sourceData['allow_children'];
-            $page['allow_edit'] = $sourceData['allow_edit'];
-            $page['allow_delete'] = $sourceData['allow_delete'];
-            $page['sequence'] = $sourceData['sequence'];
-            $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
+            $page = new Page(
+                $sourceData['id'],
+                BackendAuthentication::getUser()->getUserId(),
+                $sourceData['parent_id'],
+                $sourceData['template_id'],
+                $meta,
+                $toLanguage,
+                $sourceData['type'],
+                $sourceData['title'],
+                new DateTime(),
+                $sourceData['sequence'],
+                $sourceData['navigation_title_overwrite'],
+                $sourceData['hidden'],
+                Status::active(),
+                $sourceData['type'],
+                $sourceData['data'],
+                $sourceData['allow_move'],
+                $sourceData['allow_children'],
+                $sourceData['allow_edit'],
+                $sourceData['allow_delete']
+            );
 
             // insert page, store the id, we need it when building the blocks
-            $revisionId = BackendPagesModel::insert($page);
+            $pageRepository->add($page);
+            $pageRepository->save($page);
+
+            $revisionId = $page->getRevisionId();
 
             $blocks = [];
 
             // get the blocks
-            $sourceBlocks = BackendPagesModel::getBlocks($id, null, $fromLanguage);
+            $sourceBlocks = BackendPagesModel::getBlocks($activePage->getId(), null, $fromLanguage);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -159,14 +153,14 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
 
                 if ($hasContentBlocks) {
                     // Overwrite the extra_id of the old content block with the id of the new one
-                    if (in_array($block['extra_id'], $contentBlockOldIds)) {
+                    if (in_array($block['extra_id'], $contentBlockOldIds, true)) {
                         $block['extra_id'] = $contentBlockIds[$block['extra_id']];
                     }
                 }
 
                 if ($hasLocations) {
                     // Overwrite the extra_id of the old location widget with the id of the new one
-                    if (in_array($block['extra_id'], $locationWidgetOldIds)) {
+                    if (in_array($block['extra_id'], $locationWidgetOldIds, true)) {
                         $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
                     }
                 }
@@ -188,16 +182,16 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             // add
             BackendSearchModel::saveIndex(
                 'Pages',
-                (int) $page['id'],
-                ['title' => $page['title'], 'text' => $text],
+                (int) $page->getId(),
+                ['title' => $page->getTitle(), 'text' => $text],
                 $toLanguage
             );
 
             // get tags
-            $tags = BackendTagsModel::getTags('pages', $id, 'string', $fromLanguage);
+            $tags = BackendTagsModel::getTags('pages', $activePage->getId(), 'string', $fromLanguage);
 
             // save tags
-            if ($tags != '') {
+            if ($tags !== '') {
                 $saveWorkingLanguage = BL::getWorkingLanguage();
 
                 // If we don't set the working language to the target language,
@@ -206,7 +200,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
                 // tags.url
                 BL::setWorkingLanguage($toLanguage);
 
-                BackendTagsModel::saveTags($page['id'], $tags, 'pages', $toLanguage);
+                BackendTagsModel::saveTags($page->getId(), $tags, 'pages', $toLanguage);
                 BL::setWorkingLanguage($saveWorkingLanguage);
             }
         }
