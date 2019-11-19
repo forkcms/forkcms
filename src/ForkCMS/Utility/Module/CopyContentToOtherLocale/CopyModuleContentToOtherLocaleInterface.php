@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Exception;
 
@@ -35,9 +36,12 @@ interface CopyModuleContentToOtherLocaleInterface
 
     public function getToLocale(): Locale;
 
+    public function getPageToCopy(): ?Page;
+
     public function prepareForCopy(
         Locale $fromLocale,
         Locale $toLocale,
+        ?Page $pageToCopy,
         Results $previousResults
     ): void;
 

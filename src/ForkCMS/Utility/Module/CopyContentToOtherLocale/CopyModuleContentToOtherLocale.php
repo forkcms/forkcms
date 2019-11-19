@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Exception;
 
@@ -30,9 +31,13 @@ abstract class CopyModuleContentToOtherLocale implements CopyModuleContentToOthe
     /** @var int */
     private $priority = 10;
 
+    /** @var Page|null */
+    private $pageToCopy;
+
     public function prepareForCopy(
         Locale $fromLocale,
         Locale $toLocale,
+        ?Page $pageToCopy,
         Results $previousResults
     ): void {
         $this->fromLocale = $fromLocale;
@@ -40,6 +45,7 @@ abstract class CopyModuleContentToOtherLocale implements CopyModuleContentToOthe
         $this->previousResults = $previousResults;
         $this->idMap = [];
         $this->moduleExtraIdMap = [];
+        $this->pageToCopy = $pageToCopy;
     }
 
     public function getFromLocale(): Locale
@@ -123,5 +129,10 @@ abstract class CopyModuleContentToOtherLocale implements CopyModuleContentToOthe
     public function setPriority(int $priority): void
     {
         $this->priority = $priority;
+    }
+
+    public function getPageToCopy(): ?Page
+    {
+        return $this->pageToCopy;
     }
 }

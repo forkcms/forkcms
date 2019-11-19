@@ -54,7 +54,7 @@ class CopyLocaleCommand extends Command
         $fromLocale = $this->askFromLocale();
         $toLocale = $this->askToLocale($fromLocale);
 
-        $this->copyContentFromModulesToOtherLocaleManager->copy($fromLocale, $toLocale);
+        $this->copyContentFromModulesToOtherLocaleManager->copy($fromLocale, $toLocale, null);
         $this->formatter->success('All supported modules are copied from "' . $fromLocale . '" to "' . $toLocale . '".');
     }
 

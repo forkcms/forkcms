@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 
@@ -23,7 +24,7 @@ final class CopyContentFromModulesToOtherLocaleManager
         $this->copyContentFromModulesToOtherLocaleCommands[] = $moduleCommand;
     }
 
-    public function copy(Locale $fromLocale, Locale $toLocale): void
+    public function copy(Locale $fromLocale, Locale $toLocale, ?Page $pageToCopy): void
     {
         $results = new Results();
         $copyContentFromModulesToOtherLocaleCommands = $this->getModuleCommandsOrderedByPriority();
@@ -31,7 +32,7 @@ final class CopyContentFromModulesToOtherLocaleManager
         /** @var CopyModuleContentToOtherLocaleInterface $moduleCommand */
         foreach ($copyContentFromModulesToOtherLocaleCommands as $moduleCommand) {
             // We set the previous results, so they are accessible.
-            $moduleCommand->prepareForCopy($fromLocale, $toLocale, $results);
+            $moduleCommand->prepareForCopy($fromLocale, $toLocale, $pageToCopy, $results);
 
             // Execute the command
             $this->commandBus->handle($moduleCommand);

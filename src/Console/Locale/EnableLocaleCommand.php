@@ -237,7 +237,7 @@ class EnableLocaleCommand extends Command
         $this->installWorkingLocale();
 
         $this->formatter->writeln('<info>Copying pages from the default locale to the current locale</info>');
-        BackendPagesModel::copy($this->defaultEnabledLocale, $this->workingLocale);
+        BackendPagesModel::copy($this->defaultEnabledLocale, $this->workingLocale, null);
 
         return true;
     }
