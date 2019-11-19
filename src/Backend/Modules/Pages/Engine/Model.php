@@ -1339,7 +1339,7 @@ class Model
             $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
             foreach ($pages as $page) {
-                $page->move($newParent, $newSequence, $newType);
+                $page->move((int) $newParent, $newSequence, $newType);
                 $pageRepository->save($page);
             }
 
@@ -1370,7 +1370,7 @@ class Model
         $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
         foreach ($pages as $page) {
-            $page->move($newParent, $newSequence, $newType);
+            $page->move((int) $newParent, $newSequence, $newType);
             $pageRepository->save($page);
         }
     }
