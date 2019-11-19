@@ -71,12 +71,6 @@ class Model
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QUERY_BROWSE_TEMPLATES =
-        'SELECT i.id, i.label AS title
-         FROM pages_templates AS i
-         WHERE i.theme = ?
-         ORDER BY i.label ASC';
-
     public static function getCacheBuilder(): CacheBuilder
     {
         static $cacheBuilder = null;
