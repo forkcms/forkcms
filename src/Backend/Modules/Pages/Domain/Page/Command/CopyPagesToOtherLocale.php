@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\Page\Command;
 
-use ForkCMS\Utility\Module\CopyModuleContentToOtherLocale;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocale;
 
 final class CopyPagesToOtherLocale extends CopyModuleContentToOtherLocale
 {
