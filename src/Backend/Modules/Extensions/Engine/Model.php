@@ -2,15 +2,18 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\ModulesSettings;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Exception;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Common\ModulesSettings;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
@@ -152,7 +155,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
@@ -164,7 +167,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createUrlForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings') . '#settingsApiKeys'
                 ),
             ];
         }
@@ -226,15 +229,18 @@ class Model
         $database->delete('themes_templates', 'id = ?', $id);
         $ids = (array) $database->getColumn(
             'SELECT i.revision_id
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.template_id = ? AND i.status != ?',
             [$id, 'active']
         );
 
         if (!empty($ids)) {
             // delete those pages and the linked blocks
-            $database->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
-            $database->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('PagesPage', 'revision_id IN(' . implode(',', $ids) . ')');
+
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByRevisionIds($ids);
         }
 
         return true;
@@ -285,7 +291,7 @@ class Model
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
+             FROM PagesModuleExtra AS i
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
@@ -334,7 +340,7 @@ class Model
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
+             FROM PagesModuleExtra AS i
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
@@ -546,7 +552,7 @@ class Model
         );
 
         $templates = (array) $database->getRecords(
-            'SELECT i.id, i.label, i.path, i.data
+            'SELECT i.id, i.label, i.path, i.data, i.default_image
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',
@@ -737,14 +743,16 @@ class Model
                 $item['data']['names'][] = $position['name'];
                 $item['data']['default_extras'][$position['name']] = [];
 
+                $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
                 // add default widgets
                 foreach ($position['widgets'] as $widget) {
                     // fetch extra_id for this extra
-                    $extraId = (int) BackendModel::getContainer()->get('database')->getVar(
-                        'SELECT i.id
-                         FROM modules_extras AS i
-                         WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-                        ['widget', $widget['module'], $widget['action'], false]
+                    $extraId = $moduleExtraRepository->getModuleExtraId(
+                        $widget['module'],
+                        $widget['action'],
+                        ModuleExtraType::widget(),
+                        true,
+                        false
                     );
 
                     // add extra to defaults
@@ -786,7 +794,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM pages AS i
+             FROM PagesPage AS i
              WHERE i.template_id = ? AND i.status = ?
              LIMIT 1',
             [$templateId, 'active']

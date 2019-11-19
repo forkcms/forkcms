@@ -3,19 +3,20 @@
 namespace Backend\Modules\Location\Domain\Location\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\CopyLocationWidgetsToOtherLocaleException;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
-use SpoonDatabase;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
-    /** @var SpoonDatabase */
-    private $database;
+    /** @var ModuleExtraRepository */
+    private $moduleExtraRepository;
 
-    public function __construct(SpoonDatabase $database)
+    public function __construct(ModuleExtraRepository $moduleExtraRepository)
     {
-        $this->database = $database;
+        $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
     public function handle(CopyModuleContentToOtherLocaleInterface $command): void
@@ -24,21 +25,14 @@ final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleContent
             CopyLocationWidgetsToOtherLocaleException::forWrongCommand();
         }
 
-        $currentWidgets = $this->database->getRecords(
-            'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            [
-                'Location',
-                ModuleExtraType::widget(),
-                'Location'
-            ]
+        $currentWidgets = $this->moduleExtraRepository->findModuleExtra(
+            'Location',
+            'Location',
+            ModuleExtraType::widget()
         );
 
-        if (empty($currentWidgets)) {
-            return;
-        }
-
         foreach ($currentWidgets as $currentWidget) {
-            $data = unserialize($currentWidget['data']);
+            $data = $currentWidget->getData();
 
             if (!is_array($data)
                 || !isset($data['language'])
@@ -50,19 +44,26 @@ final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleContent
 
             // Replace the language of our widget
             $data['language'] = $command->getToLocale()->getLocale();
-            $currentWidget['data'] = serialize($data);
 
             // Save the old ID
-            $oldId = $currentWidget['id'];
+            $oldId = $currentWidget->getId();
 
-            // Unset the ID so we get a new one
-            unset($currentWidget['id']);
+            $newWidget = new ModuleExtra(
+                $currentWidget->getModule(),
+                $currentWidget->getType(),
+                $currentWidget->getLabel(),
+                $currentWidget->getAction(),
+                $data,
+                $currentWidget->isHidden(),
+                $currentWidget->getSequence()
+            );
 
             // Insert the new widget and save the id
-            $newId = $this->database->insert('modules_extras', $currentWidget);
+            $this->moduleExtraRepository->add($newWidget);
+            $this->moduleExtraRepository->save($newWidget);
 
             // Map the new ID
-            $command->setModuleExtraId($oldId, $newId);
+            $command->setModuleExtraId($oldId, $newWidget->getId());
         }
     }
 }

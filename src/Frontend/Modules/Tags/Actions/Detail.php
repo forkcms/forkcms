@@ -56,6 +56,7 @@ class Detail extends FrontendBaseBlock
 
     private function parse(): void
     {
+        $this->header->setPageTitle($this->tag['name']);
         $this->template->assign('tag', $this->tag);
         $this->template->assign('tagsModules', $this->tagsModules);
         $this->breadcrumb->addElement($this->tag['name']);

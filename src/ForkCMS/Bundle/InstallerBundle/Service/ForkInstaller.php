@@ -2,15 +2,18 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Service;
 
-use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\Container;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
+use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This service installs fork
@@ -204,36 +207,39 @@ class ForkInstaller
 
     protected function installExtras(): void
     {
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = Model::get(PageBlockRepository::class);
+
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
             // get pages without this extra
             $revisionIds = $this->container->get('database')->getColumn(
                 'SELECT i.revision_id
-                 FROM pages AS i
+                 FROM PagesPage AS i
                  WHERE i.revision_id NOT IN (
                      SELECT DISTINCT b.revision_id
-                     FROM pages_blocks AS b
+                     FROM PagesPageBlock AS b
                      WHERE b.extra_id = ?
                     GROUP BY b.revision_id
                  )',
                 [$extra['id']]
             );
 
-            // build insert array for this extra
-            $insertExtras = [];
             foreach ($revisionIds as $revisionId) {
-                $insertExtras[] = [
-                    'revision_id' => $revisionId,
-                    'position' => $extra['position'],
-                    'extra_id' => $extra['id'],
-                    'created_on' => gmdate('Y-m-d H:i:s'),
-                    'edited_on' => gmdate('Y-m-d H:i:s'),
-                    'visible' => true,
-                ];
-            }
+                $pageBlock = new PageBlock(
+                    $revisionId,
+                    $extra['position'],
+                    $extra['id'],
+                    PageBlockType::richText(),
+                    null,
+                    null,
+                    true,
+                    0
+                );
 
-            // insert block
-            $this->container->get('database')->insert('pages_blocks', $insertExtras);
+                $pageBlockRepository->add($pageBlock);
+                $pageBlockRepository->save($pageBlock);
+            }
         }
     }
 

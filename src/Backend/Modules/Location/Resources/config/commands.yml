@@ -3,6 +3,6 @@ services:
         class: Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocaleHandler
         public: true
         arguments:
-            - "@database"
+            - '@Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'
         tags:
             - { name: command_handler, handles: Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocale }

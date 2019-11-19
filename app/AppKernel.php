@@ -33,6 +33,8 @@ class AppKernel extends Kernel
             new \MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
             new \MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
             new \Liip\ImagineBundle\LiipImagineBundle(),
+            new \FOS\RestBundle\FOSRestBundle(),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {
@@ -46,9 +48,6 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $fs = new Filesystem();
-        if ($fs->exists(__DIR__ . '/config/parameters.yml')) {
-            $loader->load(__DIR__ . '/config/config.yml');
-        }
 
         if ($fs->exists(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml')) {
             $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');

@@ -28,7 +28,7 @@
     {% block block_body %}
       <div class="block-body">
         <table class="table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
-          <thead class="hidden">
+          <thead class="d-none">
             <tr>
               <th class="date">{{ 'lbl.Date'|trans|ucfirst }}</th>
               <th class="title">{{ 'lbl.Title'|trans|ucfirst }}</th>
@@ -41,7 +41,7 @@
             {% for item in items %}
               <tr>
                 <td class="date">
-                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP' ) }}">
+                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
                     {{ item.publish_on|spoondate(dateFormatShort,LANGUAGE ) }}
                   </time>
                 </td>

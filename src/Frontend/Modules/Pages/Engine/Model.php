@@ -2,10 +2,14 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockNotFound;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use RuntimeException;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module
@@ -24,7 +28,7 @@ class Model implements FrontendTagsInterface
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.title
-             FROM pages AS i
+             FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
@@ -69,7 +73,7 @@ class Model implements FrontendTagsInterface
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.title, m.description, i.parent_id, i.data
-             FROM pages AS i
+             FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
@@ -116,7 +120,7 @@ class Model implements FrontendTagsInterface
         // get items
         $items = (array) $database->getRecords(
             'SELECT p.id, p.title, m.url, p.revision_id AS text
-             FROM pages AS p
+             FROM PagesPage AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
@@ -125,17 +129,18 @@ class Model implements FrontendTagsInterface
             'id'
         );
 
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = FrontendModel::get(PageBlockRepository::class);
+
         // prepare items for search
         foreach ($items as &$item) {
-            $item['text'] = implode(
-                ' ',
-                (array) $database->getColumn(
-                    'SELECT pb.html
-                     FROM pages_blocks AS pb
-                     WHERE pb.revision_id = ?',
-                    [$item['text']]
-                )
-            );
+            $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $item['text']]);
+
+            if (!$pageBlock instanceof PageBlock) {
+                throw new PageBlockNotFound();
+            }
+
+            $item['text'] = $pageBlock->getHtml();
 
             $item['full_url'] = FrontendNavigation::getUrl($item['id']);
         }

@@ -1,12 +1,12 @@
-<div id="widgetBlogComments" class="panel panel-default">
-  <div class="panel-heading">
-    <h2 class="panel-title">
+<div id="widgetBlogComments" class="card card-default">
+  <div class="card-heading">
+    <h2 class="card-title">
       <a href="{{ geturl('comments','blog') }}">{{ 'lbl.Blog'|trans|ucfirst }}: {{ 'lbl.LatestComments'|trans|ucfirst }}</a>
     </h2>
   </div>
-  <div class="panel-body">
+  <div class="card-body">
     {% if blogNumCommentsToModerate %}
-      <div class="panel-body">
+      <div class="card-body">
         <div class="pull-left">
           {{ 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate)|raw }}
         </div>
@@ -28,12 +28,12 @@
       </table>
     {% endif %}
     {% if not blogComments %}
-      <div class="panel-body">
+      <div class="card-body">
         <p>{{ 'msg.NoPublishedComments'|trans }}</p>
       </div>
     {% endif %}
   </div>
-  <div class="panel-footer">
+  <div class="card-footer">
     <a href="{{ geturl('comments','blog') }}"><span>{{ 'lbl.AllComments'|trans|ucfirst }}</span></a>
   </div>
 </div>

@@ -10,8 +10,9 @@ parameters:
 
     fork.debug_email:       ''
     fork.debug_message:     'Internal error.'
-    fork.version:           '5.5.2'
+    fork.version:           '5.7.0'
 
+    session.cookie_secure:  false
     site.protocol:          http
     site.domain:            fork.local
     site.default_title:     Fork CMS

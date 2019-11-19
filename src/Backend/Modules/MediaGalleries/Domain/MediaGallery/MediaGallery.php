@@ -2,11 +2,10 @@
 
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use Ramsey\Uuid\Uuid;
-use Doctrine\ORM\Mapping as ORM;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository")

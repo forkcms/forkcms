@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 final class CreateContentBlockHandler
 {

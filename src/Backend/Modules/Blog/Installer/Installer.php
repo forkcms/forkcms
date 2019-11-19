@@ -5,9 +5,9 @@ namespace Backend\Modules\Blog\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
-use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 /**
  * Installer for the blog module
@@ -120,6 +120,7 @@ class Installer extends ModuleInstaller
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RelatedArticles', 'RelatedArticles');
     }
 
     private function configureFrontendPages(): void
@@ -184,12 +185,15 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
+        $widgetId = $moduleExtraRepository->getModuleExtraId('Search', 'Form', ModuleExtraType::widget());
+
+        if ($widgetId === null) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 
     private function hasPageWithBlogBlock(string $language): bool
@@ -197,8 +201,8 @@ class Installer extends ModuleInstaller
         // @todo: Replace with a PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             FROM PagesPage AS p
+             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->blogBlockId, $language]
@@ -226,6 +230,11 @@ class Installer extends ModuleInstaller
         return (int) $this->getDatabase()->insert('blog_categories', $item);
     }
 
+    private function getNextBlogPostId(): int
+    {
+        return 1 + (int) $this->getDatabase()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
+    }
+
     /**
      * @todo: this method should be rewritten to use DataFixtures.
      */
@@ -244,10 +253,11 @@ class Installer extends ModuleInstaller
         )
         ) {
             // insert sample blogpost 1
+            $firstBlogPostId = $this->getNextBlogPostId();
             $database->insert(
                 'blog_posts',
                 [
-                    'id' => 1,
+                    'id' => $firstBlogPostId,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta(
@@ -277,7 +287,7 @@ class Installer extends ModuleInstaller
             // add Search index blogpost 1
             $this->addSearchIndex(
                 $this->getModule(),
-                1,
+                $firstBlogPostId,
                 [
                     'title' => 'Nunc sediam est',
                     'text' => file_get_contents(
@@ -288,10 +298,11 @@ class Installer extends ModuleInstaller
             );
 
             // insert sample blogpost 2
+            $secondBlogPostId = $this->getNextBlogPostId();
             $database->insert(
                 'blog_posts',
                 [
-                    'id' => 2,
+                    'id' => $secondBlogPostId,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
@@ -316,7 +327,7 @@ class Installer extends ModuleInstaller
             // add Search index blogpost 2
             $this->addSearchIndex(
                 $this->getModule(),
-                2,
+                $secondBlogPostId,
                 [
                     'title' => 'Lorem ipsum',
                     'text' => file_get_contents(
@@ -330,7 +341,7 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'postId' => 1,
+                    'postId' => $firstBlogPostId,
                     'locale' => $language,
                     'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
@@ -347,7 +358,7 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'postId' => 1,
+                    'postId' => $firstBlogPostId,
                     'locale' => $language,
                     'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',

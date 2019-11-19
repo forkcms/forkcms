@@ -2,6 +2,9 @@
 
 namespace Backend\Core\Installer;
 
+use Backend\Core\Engine\Model;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+
 /**
  * Installer for the core
  */
@@ -28,6 +31,8 @@ class CoreInstaller extends ModuleInstaller
 
         // import SQL
         $this->importSQL(__DIR__ . '/Data/install.sql');
+
+        $this->configureEntities();
 
         // add core modules
         $this->addModule('Core');
@@ -200,6 +205,15 @@ class CoreInstaller extends ModuleInstaller
             'Core',
             'show_cookie_bar',
             date_default_timezone_get() && strpos(mb_strtolower(date_default_timezone_get()), 'europe') === 0
+        );
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                ModuleExtra::class,
+            ]
         );
     }
 }

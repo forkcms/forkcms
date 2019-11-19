@@ -115,11 +115,7 @@ class EditProfileGroup extends BackendBaseActionEdit
 
                 // only format date if not empty
                 if ($txtExpirationDate->isFilled() && $txtExpirationTime->isFilled()) {
-                    // format date
-                    $values['expires_on'] = BackendModel::getUTCDate(
-                        null,
-                        BackendModel::getUTCTimestamp($txtExpirationDate, $txtExpirationTime)
-                    );
+                    $values['expires_on'] = BackendModel::getUTCTimestamp($txtExpirationDate, $txtExpirationTime);
                 } else {
                     // reset expiration date
                     $values['expires_on'] = null;

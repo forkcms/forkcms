@@ -1631,7 +1631,7 @@ VALUES
   (919, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstall', 'Are you sure you want to install the module \"%1$s\"?', '2017-08-31 14:28:21'),
   (920, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstallDefault', 'Are you sure you want to install the module?', '2017-08-31 14:28:21'),
   (921, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmThemeInstall', 'Are you sure you want to install this theme?', '2017-08-31 14:28:21'),
-  (922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'The user can upload a file.', '2017-08-31 14:28:21'),
+  (922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'Allow the user to upload an image.', '2017-08-31 14:28:21'),
   (923, 1, 'en', 'Backend', 'Extensions', 'msg', 'DeletedTemplate', 'The template \"%1$s\" was deleted.', '2017-08-31 14:28:21'),
   (924, 1, 'en', 'Backend', 'Extensions', 'msg', 'EditedTemplate', 'The template \"%1$s\" was saved.', '2017-08-31 14:28:21'),
   (925, 1, 'en', 'Backend', 'Extensions', 'msg', 'HelpInstallableThemes', 'Click a theme to install it.', '2017-08-31 14:28:21'),
@@ -2239,7 +2239,10 @@ VALUES
   (1528, 1, 'en', 'Backend', 'Pages', 'lbl', 'AppendToTree', 'append to navigation tree', '2017-08-31 14:28:26'),
   (1529, 1, 'en', 'Backend', 'Pages', 'lbl', 'BeforePage', 'add before reference page', '2017-08-31 14:28:26'),
   (1530, 1, 'en', 'Backend', 'Pages', 'lbl', 'InsidePage', 'add as subpage of the reference page', '2017-08-31 14:28:26'),
-  (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
+  (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopyThisPage', 'copy this page', '2017-08-31 14:28:26'),
+  (1532, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopiedTitle', '%1$s copy', '2017-08-31 14:28:26'),
+  (1533, 1, 'en', 'Backend', 'Pages', 'msg', 'CopySaveWarning', '<p><strong>Important:</strong> The copy hasn''t been saved yet.</p>', '2017-08-31 14:28:26'),
+  (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2389,12 +2392,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table modules_extras
+# Dump of table PagesModuleExtra
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `modules_extras`;
+DROP TABLE IF EXISTS `PagesModuleExtra`;
 
-CREATE TABLE `modules_extras` (
+CREATE TABLE `PagesModuleExtra` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
   `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2406,10 +2409,10 @@ CREATE TABLE `modules_extras` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras';
 
-LOCK TABLES `modules_extras` WRITE;
-/*!40000 ALTER TABLE `modules_extras` DISABLE KEYS */;
+LOCK TABLES `PagesModuleExtra` WRITE;
+/*!40000 ALTER TABLE `PagesModuleExtra` DISABLE KEYS */;
 
-INSERT INTO `modules_extras` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
+INSERT INTO `PagesModuleExtra` (`id`, `module`, `type`, `label`, `action`, `data`, `hidden`, `sequence`)
 VALUES
   (1,'Search','widget','SearchForm','Form',NULL,0,2001),
   (2,'Search','block','Search',NULL,NULL,0,2000),
@@ -2448,7 +2451,7 @@ VALUES
   (37,'Profiles','widget','LoginBox','LoginBox',NULL,0,5010),
   (38,'Profiles','widget','LoginLink','LoginLink',NULL,0,5011);
 
-/*!40000 ALTER TABLE `modules_extras` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesModuleExtra` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -2546,9 +2549,9 @@ UNLOCK TABLES;
 # Dump of table pages
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages`;
+DROP TABLE IF EXISTS `PagesPage`;
 
-CREATE TABLE `pages` (
+CREATE TABLE `PagesPage` (
   `id` int(11) NOT NULL COMMENT 'the real page_id',
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT 'which user has created this page?',
@@ -2575,10 +2578,10 @@ CREATE TABLE `pages` (
   KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+LOCK TABLES `PagesPage` WRITE;
+/*!40000 ALTER TABLE `PagesPage` DISABLE KEYS */;
 
-INSERT INTO `pages` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
+INSERT INTO `PagesPage` (`id`, `revision_id`, `user_id`, `parent_id`, `template_id`, `meta_id`, `language`, `type`, `title`, `navigation_title`, `navigation_title_overwrite`, `hidden`, `status`, `publish_on`, `data`, `created_on`, `edited_on`, `allow_move`, `allow_children`, `allow_edit`, `allow_delete`, `sequence`)
 VALUES
   (1,1,1,0,4,1,'en','page','Home','Home',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',0,1,1,0,0),
   (2,2,1,0,3,2,'en','footer','Sitemap','Sitemap',0,0,'active','2015-02-23 19:48:53',NULL,'2015-02-23 19:48:53','2015-02-23 19:48:53',1,1,1,1,0),
@@ -2604,16 +2607,16 @@ VALUES
   (422,22,1,420,3,24,'en','page','Change email','Change email',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,1),
   (423,23,1,420,3,25,'en','page','Change password','Change password',0,0,'active','2015-02-23 19:48:54',NULL,'2015-02-23 19:48:54','2015-02-23 19:48:54',1,1,1,1,2);
 
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPage` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table pages_blocks
+# Dump of table PagesPageBlock
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pages_blocks`;
+DROP TABLE IF EXISTS `PagesPageBlock`;
 
-CREATE TABLE `pages_blocks` (
+CREATE TABLE `PagesPageBlock` (
   `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
   `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
@@ -2627,10 +2630,10 @@ CREATE TABLE `pages_blocks` (
   KEY `idx_rev_status` (`revision_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `pages_blocks` WRITE;
-/*!40000 ALTER TABLE `pages_blocks` DISABLE KEYS */;
+LOCK TABLES `PagesPageBlock` WRITE;
+/*!40000 ALTER TABLE `PagesPageBlock` DISABLE KEYS */;
 
-INSERT INTO `pages_blocks` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
+INSERT INTO `PagesPageBlock` (`revision_id`, `position`, `extra_id`, `extra_type`, `extra_data`, `html`, `created_on`, `edited_on`, `visible`, `sequence`)
 VALUES
   (1,'main',NULL,'rich_text',NULL,'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
   (1,'top',1,'rich_text',NULL,'','2015-02-23 19:48:53','2015-02-23 19:48:53',1,0),
@@ -2680,84 +2683,91 @@ VALUES
   (23,'main',32,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0),
   (23,'top',1,'rich_text',NULL,'','2015-02-23 19:48:54','2015-02-23 19:48:54',1,0);
 
-/*!40000 ALTER TABLE `pages_blocks` ENABLE KEYS */;
+/*!40000 ALTER TABLE `PagesPageBlock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
-# Dump of table profiles
+# Dump of table ProfilesProfile
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles`;
+DROP TABLE IF EXISTS `ProfilesProfile`;
 
-CREATE TABLE `profiles` (
+CREATE TABLE `ProfilesProfile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `displayName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registered_on` datetime NOT NULL,
-  `last_login` datetime NOT NULL,
+  `registeredOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
+  `lastLogin` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups
+# Dump of table ProfilesGroup
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups`;
+DROP TABLE IF EXISTS `ProfilesGroup`;
 
-CREATE TABLE `profiles_groups` (
+CREATE TABLE `ProfilesGroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups_rights
+# Dump of table ProfilesGroupRight
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups_rights`;
+DROP TABLE IF EXISTS `ProfilesGroupRight`;
 
-CREATE TABLE `profiles_groups_rights` (
+CREATE TABLE `ProfilesGroupRight` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  `starts_on` datetime DEFAULT NULL,
-  `expires_on` datetime DEFAULT NULL,
+  `startsOn` datetime DEFAULT NULL,
+  `expiresOn` datetime DEFAULT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expires_on`)
+  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expiresOn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_sessions
+# Dump of table ProfilesSession
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_sessions`;
+DROP TABLE IF EXISTS `ProfilesSession`;
 
-CREATE TABLE `profiles_sessions` (
-  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
+CREATE TABLE `ProfilesSession` (
   `profile_id` int(11) NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sessionId` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `secretKey` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
-  PRIMARY KEY (`session_id`,`profile_id`),
+  PRIMARY KEY (`sessionId`,`profile_id`),
   KEY `fk_profiles_sessions_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_settings
+# Dump of table ProfilesSetting
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_settings`;
+DROP TABLE IF EXISTS `ProfilesSetting`;
 
-CREATE TABLE `profiles_settings` (
+CREATE TABLE `ProfilesSetting` (
+  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2894,6 +2904,7 @@ CREATE TABLE `themes_templates` (
   `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Filename for the template.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Is this template active (as in: will it be used).',
   `data` text COLLATE utf8mb4_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
+  `default_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible templates';
 

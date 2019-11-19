@@ -9,6 +9,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the add-action, it will display a form to create a new item.
@@ -34,6 +35,12 @@ class Add extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
+        // set success type values
+        $rbtSuccesTypeValues = [
+            ['label' => ucfirst(BL::lbl('SamePageWithConfirmBox')), 'value' => 'message'],
+            ['label' => ucfirst(BL::lbl('OtherPage')), 'value' => 'page'],
+        ];
+
         $this->form = new BackendForm('add');
         $this->form->addText('name')->makeRequired();
         $this->form->addDropdown(
@@ -48,6 +55,8 @@ class Add extends BackendBaseActionAdd
         $this->form->addText('email');
         $this->form->addText('email_subject');
         $this->form->addText('identifier', BackendFormBuilderModel::createIdentifier());
+        $this->form->addRadiobutton('success_type', $rbtSuccesTypeValues, 'message');
+        $this->form->addDropdown('success_page', BackendPagesModel::getPagesForDropdown())->setDefaultElement('');
         $this->form->addEditor('success_message')->makeRequired();
 
         // if we have multiple templates, add a dropdown to select them
@@ -66,14 +75,21 @@ class Add extends BackendBaseActionAdd
             $txtEmail = $this->form->getField('email');
             $txtEmailSubject = $this->form->getField('email_subject');
             $ddmMethod = $this->form->getField('method');
+            $rbtSuccessType = $this->form->getField('success_type');
             $txtSuccessMessage = $this->form->getField('success_message');
+            $ddmSuccessPage = $this->form->getField('success_page');
             $txtIdentifier = $this->form->getField('identifier');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
-            $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
+            if ($rbtSuccessType->getValue() == 'message') {
+                $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
+            }
+            if ($rbtSuccessType->getValue() == 'page') {
+                $ddmSuccessPage->isFilled(BL::getError('FieldIsRequired'));
+            }
             if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
@@ -116,7 +132,9 @@ class Add extends BackendBaseActionAdd
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['email_template'] = count($this->templates) > 1
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
+                $values['success_type'] = $rbtSuccessType->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
+                $values['success_page'] = $ddmSuccessPage->getValue();
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()

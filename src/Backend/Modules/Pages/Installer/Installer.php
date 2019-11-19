@@ -2,10 +2,14 @@
 
 namespace Backend\Modules\Pages\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModuleExtraType;
 
 /**
  * Installer for the pages module
@@ -18,8 +22,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Pages');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
         $this->configureFrontendExtras();
@@ -78,6 +82,12 @@ class Installer extends ModuleInstaller
             ModuleExtraType::widget(),
             'RecentArticlesFull',
             'RecentArticlesFull'
+        );
+        $extras['blog_widget_related_articles'] = $this->insertExtra(
+            'Blog',
+            ModuleExtraType::widget(),
+            'RelatedArticles',
+            'RelatedArticles'
         );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
             'Blog',
@@ -501,8 +511,18 @@ class Installer extends ModuleInstaller
     {
         // @todo: Replace with PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
-            'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
+            'SELECT 1 FROM PagesPage WHERE language = ? AND id > ? LIMIT 1',
             [$language, BackendModel::ERROR_PAGE_ID]
+        );
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                PageBlock::class,
+                Page::class,
+            ]
         );
     }
 }

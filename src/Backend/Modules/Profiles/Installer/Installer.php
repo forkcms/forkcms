@@ -2,10 +2,18 @@
 
 namespace Backend\Modules\Profiles\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Group\Group;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
+use Backend\Modules\Profiles\Domain\Session\Session;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 
 /**
  * Installer for the profiles module.
@@ -18,8 +26,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Profiles');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -372,38 +380,41 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
-        // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
-            ['Search', 'Form']
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = Model::get(ModuleExtraRepository::class);
+        $widgetId = $moduleExtraRepository->getModuleExtraId('Search', 'Form', ModuleExtraType::widget());
+
+        if ($widgetId === null) {
+            throw new \RuntimeException('Could not find Search Widget');
+        }
+
+        return $widgetId;
     }
 
     private function hasPageWithProfilesBlock(string $language): bool
     {
-        // @todo: Replace this with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-             INNER JOIN modules_extras AS e ON e.id = b.extra_id
-             WHERE e.module = ? AND p.language = ?
-             LIMIT 1',
-            ['Profiles', $language]
-        );
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
+
+        return $pageRepository->pageExistsWithModuleBlockForLanguage('Profiles', $language);
     }
 
     private function hasPageWithProfilesAction(string $language, string $action): bool
     {
-        // @todo: Replace this with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-             INNER JOIN modules_extras AS e ON e.id = b.extra_id
-             WHERE e.module = ? AND p.language = ? AND e.action = ?
-             LIMIT 1',
-            [$this->getModule(), $language, $action]
+        $pageRepository = Model::getContainer()->get(PageRepository::class);
+
+        return $pageRepository->pageExistsWithModuleActionForLanguage('Profiles', $action, $language);
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Profile::class,
+                Group::class,
+                GroupRight::class,
+                Session::class,
+                Setting::class,
+            ]
         );
     }
 }

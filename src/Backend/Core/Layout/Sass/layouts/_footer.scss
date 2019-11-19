@@ -7,9 +7,19 @@
 
 .footer-inner {
   margin-top: 20px;
+  text-align: center;
 }
 
-@media screen and (min-width: $screen-sm) {
+@include media-breakpoint-up(md) {
+
+  .logo-footer {
+    margin: 0 auto;
+  }
+
+  .footer-inner {
+    margin-top: 0;
+  }
+
   html,
   body {
     height: 100%;
@@ -33,8 +43,10 @@
   }
 
   #footer {
+    align-items: center;
     bottom: 0;
     clear: both;
+    display: flex;
     height: $footer-height;
     margin-left: -430px;
     padding-left: 430px;

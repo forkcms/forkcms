@@ -323,4 +323,27 @@ class Model extends BaseModel
 
         return self::get('fork.mock.session');
     }
+
+    /**
+     * This method returns the filesize in a human readable format according to the value
+     *
+     * @param int $fileSize
+     * @return string
+     */
+    public static function prettyPrintFileSize(int $fileSize): string
+    {
+        if ($fileSize > 999999999) {
+            return number_format($fileSize / 1000000000, 2, ',', ' ') . ' GB';
+        }
+
+        if ($fileSize > 999999) {
+            return number_format($fileSize / 1000000, 2, ',', ' ') . ' MB';
+        }
+
+        if ($fileSize > 999) {
+            return number_format($fileSize / 1000, 2, ',', ' ') . ' KB';
+        }
+
+        return $fileSize . ' bytes';
+    }
 }

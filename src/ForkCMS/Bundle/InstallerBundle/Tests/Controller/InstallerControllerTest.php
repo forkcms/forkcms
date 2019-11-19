@@ -170,7 +170,7 @@ class InstallerControllerTest extends WebTestCase
         );
         self::assertGreaterThan(
             0,
-            $crawler->filter('h2:contains("Installation complete")')->count()
+            $crawler->filter('h3:contains("Installation complete")')->count()
         );
 
         return $crawler;

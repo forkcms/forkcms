@@ -13,3 +13,8 @@ framework:
         collect: false
     router:
         resource: "%kernel.project_dir%/app/config/routing_install.yml"
+
+monolog:
+    handlers:
+        main:
+            type: 'null'

@@ -28,9 +28,7 @@ class Index extends BackendBaseActionIndex
         parent::execute();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
 
         // load the dgRecentlyEdited
         $this->loadDataGrids();
@@ -86,7 +84,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // add edit column
-            $this->dgDrafts->addColumn(
+            $this->dgDrafts->addColumnAction(
                 'edit',
                 null,
                 BL::lbl('Edit'),
@@ -130,6 +128,16 @@ class Index extends BackendBaseActionIndex
             ]
         );
 
+        if (BackendAuthentication::isAllowedAction('Add', $this->getModule())) {
+            $this->dgRecentlyEdited->addColumnAction(
+                'copy',
+                null,
+                BL::lbl('Copy'),
+                BackendModel::createUrlForAction('Add') . '&amp;copy=[id]',
+                BL::lbl('Copy')
+            );
+        }
+
         // check if allowed to edit
         if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URL
@@ -140,7 +148,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // add column
-            $this->dgRecentlyEdited->addColumn(
+            $this->dgRecentlyEdited->addColumnAction(
                 'edit',
                 null,
                 BL::lbl('Edit'),

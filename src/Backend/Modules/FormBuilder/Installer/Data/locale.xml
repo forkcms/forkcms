@@ -35,20 +35,20 @@
         <translation language="pl"><![CDATA[dodaj pole]]></translation>
       </item>
       <item type="label" name="BackToData">
-        <translation language="nl"><![CDATA[terug naar inzendingen]]></translation>
-        <translation language="en"><![CDATA[back to submissions]]></translation>
-        <translation language="it"><![CDATA[torna alle richieste]]></translation>
-        <translation language="ru"><![CDATA[Вернуться к аргументам]]></translation>
-        <translation language="zh"><![CDATA[返回提交结果]]></translation>
-        <translation language="fr"><![CDATA[retour aux soumissions]]></translation>
-        <translation language="hu"><![CDATA[back to submissions]]></translation>
-        <translation language="de"><![CDATA[zurück zu den Einsendungen]]></translation>
-        <translation language="es"><![CDATA[volver a envios]]></translation>
-        <translation language="uk"><![CDATA[Повернутися до даних]]></translation>
-        <translation language="lt"><![CDATA[grįžti į pateikimą]]></translation>
-        <translation language="sv"><![CDATA[tillbaka till inskick]]></translation>
-        <translation language="el"><![CDATA[Πίσω στις υποβολές]]></translation>
-        <translation language="pl"><![CDATA[powrót do zgłoszeń]]></translation>
+        <translation language="nl"><![CDATA[overzicht inzendingen]]></translation>
+        <translation language="en"><![CDATA[overview submissions]]></translation>
+        <translation language="it"><![CDATA[presentazioni di panoramica]]></translation>
+        <translation language="ru"><![CDATA[обзорные материалы]]></translation>
+        <translation language="zh"><![CDATA[概述提交]]></translation>
+        <translation language="fr"><![CDATA[aperçu des soumissions]]></translation>
+        <translation language="hu"><![CDATA[áttekintő beadványok]]></translation>
+        <translation language="de"><![CDATA[Übersicht Einreichungen]]></translation>
+        <translation language="es"><![CDATA[presentaciones generales]]></translation>
+        <translation language="uk"><![CDATA[оглядові подання]]></translation>
+        <translation language="lt"><![CDATA[apžvalgos pateikimas]]></translation>
+        <translation language="sv"><![CDATA[prehľady]]></translation>
+        <translation language="el"><![CDATA[υποβολές επισκόπησης]]></translation>
+        <translation language="pl"><![CDATA[wnioski przeglądowe]]></translation>
       </item>
       <item type="label" name="Basic">
         <translation language="nl"><![CDATA[basis]]></translation>
@@ -315,6 +315,48 @@
         <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
         <translation language="pl"><![CDATA[zapisz w bazie danych i wyślij email]]></translation>
       </item>
+      <item type="label" name="MailmotorListId">
+        <translation language="de"><![CDATA[list id]]></translation>
+        <translation language="el"><![CDATA[κατάλογος id]]></translation>
+        <translation language="en"><![CDATA[list id]]></translation>
+        <translation language="es"><![CDATA[ID de la lista]]></translation>
+        <translation language="fr"><![CDATA[list id]]></translation>
+        <translation language="hu"><![CDATA[lista id]]></translation>
+        <translation language="it"><![CDATA[lista id]]></translation>
+        <translation language="lt"><![CDATA[sąrašas ID]]></translation>
+        <translation language="nl"><![CDATA[list id]]></translation>
+        <translation language="ru"><![CDATA[список идентификаторов]]></translation>
+        <translation language="sv"><![CDATA[lista id]]></translation>
+        <translation language="uk"><![CDATA[список ідентифікаторів]]></translation>
+        <translation language="zh"><![CDATA[列表ID]]></translation>
+        <translation language="pl"><![CDATA[ID listy]]></translation>
+      </item>
+      <item type="label" name="MailmotorSubscribeToNewsletter">
+        <translation language="de"><![CDATA[Newsletter abonnieren]]></translation>
+        <translation language="el"><![CDATA[Εγγραφή στο Newsletter]]></translation>
+        <translation language="en"><![CDATA[subscribe to newsletter]]></translation>
+        <translation language="es"><![CDATA[Suscríbete al boletín]]></translation>
+        <translation language="fr"><![CDATA[s'inscrire à la Newsletter]]></translation>
+        <translation language="hu"><![CDATA[Feliratkozás a hírlevélre]]></translation>
+        <translation language="it"><![CDATA[Iscriviti alla Newsletter]]></translation>
+        <translation language="lt"><![CDATA[Prenumeruoti naujienas]]></translation>
+        <translation language="nl"><![CDATA[inschrijven op nieuwsbrief]]></translation>
+        <translation language="ru"><![CDATA[Подписаться на новостную рассылку]]></translation>
+        <translation language="sv"><![CDATA[Prenumerera på nyhetsbrev]]></translation>
+        <translation language="uk"><![CDATA[Підписатися на Розсилку]]></translation>
+        <translation language="zh"><![CDATA[订阅通讯]]></translation>
+        <translation language="pl"><![CDATA[Zapisz się do newslettera]]></translation>
+      </item>
+      <item type="message" name="HelpMailmotor">
+        <translation language="de"><![CDATA[Verwenden Sie diese E-Mail-Adresse, um sich bei mailmotor anzumelden.]]></translation>
+        <translation language="en"><![CDATA[Use this email address to subscribe with mailmotor.]]></translation>
+        <translation language="es"><![CDATA[Utilice esta dirección de correo electrónico para suscribirse con mailmotor.]]></translation>
+        <translation language="fr"><![CDATA[Utilisez cette adresse email pour vous abonner à mailmotor.]]></translation>
+        <translation language="it"><![CDATA[Usa questo indirizzo e-mail per iscriverti con Mailmotor.]]></translation>
+        <translation language="nl"><![CDATA[Gebruik dit e-mailadres om u in te schrijven bij mailmotor.]]></translation>
+        <translation language="ru"><![CDATA[Используйте этот адрес электронной почты для подписки на рассылку с помощью mailmotor.]]></translation>
+        <translation language="pl"><![CDATA[Użyj tego adresu e-mail, aby zapisać się do programu Mailmotor.]]></translation>
+      </item>
       <item type="label" name="MethodEmail">
         <translation language="nl"><![CDATA[email verzenden]]></translation>
         <translation language="en"><![CDATA[send email]]></translation>
@@ -385,6 +427,11 @@
         <translation language="sv"><![CDATA[1 sekund sen]]></translation>
         <translation language="el"><![CDATA[Πριν 1 δευτερόλεπτο]]></translation>
         <translation language="pl"><![CDATA[1 sekundę temu]]></translation>
+      </item>
+      <item type="label" name="OtherPage">
+        <translation language="nl"><![CDATA[andere pagina]]></translation>
+        <translation language="fr"><![CDATA[autre page]]></translation>
+        <translation language="en"><![CDATA[other page]]></translation>
       </item>
       <item type="label" name="Paragraph">
         <translation language="nl"><![CDATA[paragraaf]]></translation>
@@ -534,6 +581,11 @@
         <translation language="el"><![CDATA[Απαιτείται]]></translation>
         <translation language="pl"><![CDATA[wymagane]]></translation>
       </item>
+      <item type="label" name="SamePageWithConfirmBox">
+        <translation language="nl"><![CDATA[Huidige pagina met bevestigingsboodschap]]></translation>
+        <translation language="fr"><![CDATA[Page actuelle avec message de confirmation]]></translation>
+        <translation language="en"><![CDATA[Current page with confirmation message]]></translation>
+      </item>
       <item type="label" name="SecondsAgo">
         <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
         <translation language="en"><![CDATA[%1$s seconds ago]]></translation>
@@ -548,6 +600,11 @@
         <translation language="sv"><![CDATA[%1$s sekunder sen]]></translation>
         <translation language="el"><![CDATA[Πριν από %1$s δευτερόλεπτα]]></translation>
         <translation language="pl"><![CDATA[%1$s sekund temu]]></translation>
+      </item>
+      <item type="label" name="SelectConfirmationPage">
+        <translation language="nl"><![CDATA[selecteer bevestigingspagina]]></translation>
+        <translation language="fr"><![CDATA[sélectionner la page de confirmation]]></translation>
+        <translation language="en"><![CDATA[select confirmation page]]></translation>
       </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>
@@ -623,6 +680,11 @@
         <translation language="sv"><![CDATA[lyckat meddelande]]></translation>
         <translation language="el"><![CDATA[Μήνυμα επιτυχίας]]></translation>
         <translation language="pl"><![CDATA[wiadomość powodzenia]]></translation>
+      </item>
+      <item type="label" name="SuccessPage">
+        <translation language="nl"><![CDATA[succes pagina]]></translation>
+        <translation language="en"><![CDATA[success page]]></translation>
+        <translation language="fr"><![CDATA[page de réussite]]></translation>
       </item>
       <item type="label" name="Textarea">
         <translation language="nl"><![CDATA[tekstgebied]]></translation>
@@ -818,6 +880,14 @@
         <translation language="sv"><![CDATA[år]]></translation>
         <translation language="el"><![CDATA[έτος]]></translation>
         <translation language="pl"><![CDATA[rok]]></translation>
+      </item>
+      <item type="label" name="Data">
+        <translation language="nl"><![CDATA[gegevens]]></translation>
+        <translation language="en"><![CDATA[data]]></translation>
+      </item>
+      <item type="label" name="DataDetails">
+        <translation language="nl"><![CDATA[gegevens detail]]></translation>
+        <translation language="en"><![CDATA[data detail]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>
@@ -1029,7 +1099,7 @@
         <translation language="pl"><![CDATA[1 zgłoszenie]]></translation>
       </item>
       <item type="message" name="RecaptchaKeysMissing">
-        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Één of beide reCAPTCHA keys ontbreken. Voeg ze toe op de <a href="%1$s">installingen pagina</a>]]></translation>
+        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Één of beide reCAPTCHA keys ontbreken. Voeg ze toe op de <a href="%1$s">instellingen pagina</a>]]></translation>
         <translation language="en"><![CDATA[<strong>Important</strong>: One or both reCAPTCHA keys are missing. Add them on the <a href="%1$s">settings page</a>]]></translation>
         <translation language="pl"><![CDATA[<strong> Ważne </strong>: brakuje jednego lub obu kluczy reCAPTCHA. Dodaj je do <a href="%1$s"> strony z instalacjami</a>]]></translation>
       </item>
@@ -1177,6 +1247,538 @@
         <translation language="nl"><![CDATA[onderwerp bevestigingsmail]]></translation>
         <translation language="en"><![CDATA[subject confirmation mail]]></translation>
         <translation language="pl"><![CDATA[temat emaila z potwierdzeniem]]></translation>
+      </item>
+      <item type="label" name="Autocomplete">
+        <translation language="nl"><![CDATA[Autocomplete waarde]]></translation>
+        <translation language="en"><![CDATA[Autocomplete value]]></translation>
+        <translation language="it"><![CDATA[Valore di completamento automatico]]></translation>
+        <translation language="ru"><![CDATA[Valoarea de completare automată]]></translation>
+        <translation language="zh"><![CDATA[自動填充值]]></translation>
+        <translation language="fr"><![CDATA[Valeur de saisie semi-automatique]]></translation>
+        <translation language="hu"><![CDATA[Automatikus kiegészítés érték]]></translation>
+        <translation language="de"><![CDATA[Autocomplete-Wert]]></translation>
+        <translation language="es"><![CDATA[Valor de autocompletar]]></translation>
+        <translation language="uk"><![CDATA[Значення автозаповнення]]></translation>
+        <translation language="sv"><![CDATA[Autofullständigt värde]]></translation>
+        <translation language="el"><![CDATA[Τιμή αυτόματης συμπλήρωσης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteName">
+        <translation language="nl"><![CDATA[Volledige naam]]></translation>
+        <translation language="en"><![CDATA[Full name]]></translation>
+        <translation language="it"><![CDATA[Nome e cognome]]></translation>
+        <translation language="ru"><![CDATA[Numele complet]]></translation>
+        <translation language="zh"><![CDATA[全名]]></translation>
+        <translation language="fr"><![CDATA[Nom complet]]></translation>
+        <translation language="hu"><![CDATA[Teljes név]]></translation>
+        <translation language="de"><![CDATA[Vollständiger Name]]></translation>
+        <translation language="es"><![CDATA[Nombre completo]]></translation>
+        <translation language="uk"><![CDATA[Повне ім'я]]></translation>
+        <translation language="sv"><![CDATA[Fullständiga namn]]></translation>
+        <translation language="el"><![CDATA[Πλήρες όνομα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteHonorificPrefix">
+        <translation language="nl"><![CDATA[Het voorvoegsel of de titel, zoals "Mrs.", "Mr."]]></translation>
+        <translation language="en"><![CDATA[The prefix or title, such as "Mrs.", "Mr."]]></translation>
+        <translation language="it"><![CDATA[Il prefisso o il titolo, come "Mrs.", "Mr."]]></translation>
+        <translation language="ru"><![CDATA[Prefixul sau titlul, cum ar fi "doamna", "domnul"]]></translation>
+        <translation language="zh"><![CDATA[前缀或标题]]></translation>
+        <translation language="fr"><![CDATA[Le préfixe ou le titre, tel que "Mme", "M."]]></translation>
+        <translation language="hu"><![CDATA[Az előtag vagy cím, például "Mrs.", "Mr."]]></translation>
+        <translation language="de"><![CDATA[Das Präfix oder der Titel]]></translation>
+        <translation language="es"><![CDATA[El prefijo o título]]></translation>
+        <translation language="uk"><![CDATA[Префікс або заголовок]]></translation>
+        <translation language="sv"><![CDATA[Prefixet eller titeln]]></translation>
+        <translation language="el"><![CDATA[Το πρόθεμα ή ο τίτλος]]></translation>
+      </item>
+      <item type="label" name="AutocompleteGivenName">
+        <translation language="nl"><![CDATA[Voornaam]]></translation>
+        <translation language="en"><![CDATA[First name]]></translation>
+        <translation language="it"><![CDATA[nome]]></translation>
+        <translation language="ru"><![CDATA[Имя]]></translation>
+        <translation language="zh"><![CDATA[名]]></translation>
+        <translation language="de"><![CDATA[Vorname]]></translation>
+        <translation language="fr"><![CDATA[prénom]]></translation>
+        <translation language="hu"><![CDATA[keresztnév]]></translation>
+        <translation language="es"><![CDATA[primer nombre]]></translation>
+        <translation language="uk"><![CDATA[І'мя]]></translation>
+        <translation language="lt"><![CDATA[Vardas]]></translation>
+        <translation language="el"><![CDATA[Όνομα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteAdditionalName">
+        <translation language="nl"><![CDATA[Midden naam]]></translation>
+        <translation language="en"><![CDATA[Middle name]]></translation>
+        <translation language="it"><![CDATA[Secondo nome]]></translation>
+        <translation language="ru"><![CDATA[Al doilea nume]]></translation>
+        <translation language="zh"><![CDATA[中间名字]]></translation>
+        <translation language="fr"><![CDATA[Deuxième nom]]></translation>
+        <translation language="hu"><![CDATA[Középső név]]></translation>
+        <translation language="de"><![CDATA[Zweiter Vorname]]></translation>
+        <translation language="es"><![CDATA[Segundo nombre]]></translation>
+        <translation language="uk"><![CDATA[Середнє ім'я]]></translation>
+        <translation language="sv"><![CDATA[Mellannamn]]></translation>
+        <translation language="el"><![CDATA[Μεσαίο όνομα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteFamilyName">
+        <translation language="nl"><![CDATA[Achternaam]]></translation>
+        <translation language="en"><![CDATA[Last name]]></translation>
+        <translation language="it"><![CDATA[cognome]]></translation>
+        <translation language="ru"><![CDATA[Фамилия]]></translation>
+        <translation language="zh"><![CDATA[姓]]></translation>
+        <translation language="fr"><![CDATA[nom]]></translation>
+        <translation language="hu"><![CDATA[vezetéknév]]></translation>
+        <translation language="de"><![CDATA[Nachname]]></translation>
+        <translation language="es"><![CDATA[apellido]]></translation>
+        <translation language="uk"><![CDATA[Прізвище]]></translation>
+        <translation language="sv"><![CDATA[Efternamn]]></translation>
+        <translation language="el"><![CDATA[Επώνυμο]]></translation>
+      </item>
+      <item type="label" name="AutocompleteNickname">
+        <translation language="nl"><![CDATA[Nickname]]></translation>
+        <translation language="en"><![CDATA[Nickname]]></translation>
+        <translation language="it"><![CDATA[Soprannome]]></translation>
+        <translation language="ru"><![CDATA[Poreclă]]></translation>
+        <translation language="zh"><![CDATA[昵称]]></translation>
+        <translation language="fr"><![CDATA[Surnom]]></translation>
+        <translation language="hu"><![CDATA[Becenév]]></translation>
+        <translation language="de"><![CDATA[Spitzname]]></translation>
+        <translation language="es"><![CDATA[Apodo]]></translation>
+        <translation language="uk"><![CDATA[Псевдонім]]></translation>
+        <translation language="sv"><![CDATA[smeknamn]]></translation>
+        <translation language="el"><![CDATA[Παρατσούκλι]]></translation>
+      </item>
+      <item type="label" name="AutocompleteEmail">
+        <translation language="nl"><![CDATA[E-mail]]></translation>
+        <translation language="en"><![CDATA[E-mail]]></translation>
+        <translation language="hu"><![CDATA[E-mail]]></translation>
+        <translation language="it"><![CDATA[E-mail]]></translation>
+        <translation language="fr"><![CDATA[E-mail]]></translation>
+        <translation language="ru"><![CDATA[E-mail]]></translation>
+        <translation language="zh"><![CDATA[E-mail]]></translation>
+        <translation language="de"><![CDATA[E-Mail]]></translation>
+        <translation language="es"><![CDATA[E-mail]]></translation>
+        <translation language="uk"><![CDATA[E-mail]]></translation>
+        <translation language="sv"><![CDATA[E-post]]></translation>
+        <translation language="el"><![CDATA[E-mail]]></translation>
+      </item>
+      <item type="label" name="AutocompleteUsername">
+        <translation language="nl"><![CDATA[Een gebruikersnaam of accountnaam]]></translation>
+        <translation language="en"><![CDATA[A username or account name]]></translation>
+        <translation language="it"><![CDATA[Un nome utente o nome account]]></translation>
+        <translation language="ru"><![CDATA[Un nume de utilizator sau un nume de cont]]></translation>
+        <translation language="zh"><![CDATA[用户名或帐户名称]]></translation>
+        <translation language="fr"><![CDATA[Un nom d'utilisateur ou un nom de compte]]></translation>
+        <translation language="hu"><![CDATA[Felhasználónév vagy fiók neve]]></translation>
+        <translation language="de"><![CDATA[Ein Benutzername oder ein Kontoname]]></translation>
+        <translation language="es"><![CDATA[Un nombre de usuario o nombre de cuenta]]></translation>
+        <translation language="uk"><![CDATA[Ім'я користувача або ім'я облікового запису]]></translation>
+        <translation language="sv"><![CDATA[Ett användarnamn eller kontonamn]]></translation>
+        <translation language="el"><![CDATA[Όνομα χρήστη ή όνομα λογαριασμού]]></translation>
+      </item>
+      <item type="label" name="AutocompleteNewPassword">
+        <translation language="nl"><![CDATA[Nieuw paswoord veld]]></translation>
+        <translation language="en"><![CDATA[New password field]]></translation>
+        <translation language="it"><![CDATA[Nuovo campo password]]></translation>
+        <translation language="ru"><![CDATA[Câmp de parolă nouă]]></translation>
+        <translation language="zh"><![CDATA[新密码字段]]></translation>
+        <translation language="fr"><![CDATA[Nouveau champ de mot de passe]]></translation>
+        <translation language="hu"><![CDATA[Új jelszó mező]]></translation>
+        <translation language="de"><![CDATA[Neues Passwortfeld]]></translation>
+        <translation language="es"><![CDATA[Nuevo campo de contraseña]]></translation>
+        <translation language="uk"><![CDATA[Поле нового пароля]]></translation>
+        <translation language="sv"><![CDATA[Nytt lösenordsfält]]></translation>
+        <translation language="el"><![CDATA[Νέο πεδίο κωδικού πρόσβασης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCurrentPassword">
+        <translation language="nl"><![CDATA[Huidig wachtwoord]]></translation>
+        <translation language="en"><![CDATA[Current password]]></translation>
+        <translation language="it"><![CDATA[Password attuale]]></translation>
+        <translation language="ru"><![CDATA[Parola actuală]]></translation>
+        <translation language="zh"><![CDATA[当前密码]]></translation>
+        <translation language="fr"><![CDATA[Mot de passe actuel]]></translation>
+        <translation language="hu"><![CDATA[Jelenlegi jelszó]]></translation>
+        <translation language="de"><![CDATA[Derzeitiges Passwort]]></translation>
+        <translation language="es"><![CDATA[Contraseña actual]]></translation>
+        <translation language="uk"><![CDATA[Поточний пароль]]></translation>
+        <translation language="sv"><![CDATA[Nuvarande lösenord]]></translation>
+        <translation language="el"><![CDATA[Τρέχων κωδικός πρόσβασης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteOrganizationTitle">
+        <translation language="nl"><![CDATA[Functie benaming]]></translation>
+        <translation language="en"><![CDATA[A job title]]></translation>
+        <translation language="it"><![CDATA[Un titolo di lavoro]]></translation>
+        <translation language="ru"><![CDATA[Titlul postului]]></translation>
+        <translation language="zh"><![CDATA[职称]]></translation>
+        <translation language="fr"><![CDATA[Un titre d'emploi]]></translation>
+        <translation language="hu"><![CDATA[A munkahely címe]]></translation>
+        <translation language="de"><![CDATA[Eine Berufsbezeichnung]]></translation>
+        <translation language="es"><![CDATA[Un titulo de trabajo]]></translation>
+        <translation language="uk"><![CDATA[Посада]]></translation>
+        <translation language="sv"><![CDATA[En jobbtitel]]></translation>
+        <translation language="el"><![CDATA[Ένας τίτλος θέσης εργασίας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteOrganization">
+        <translation language="nl"><![CDATA[De naam van een bedrijf of organisatie]]></translation>
+        <translation language="en"><![CDATA[A company or organization name]]></translation>
+        <translation language="it"><![CDATA[Un nome di azienda o organizzazione]]></translation>
+        <translation language="ru"><![CDATA[Numele unei companii sau al unei organizații]]></translation>
+        <translation language="zh"><![CDATA[公司或组织名称]]></translation>
+        <translation language="fr"><![CDATA[Un nom de société ou d'organisation]]></translation>
+        <translation language="hu"><![CDATA[Vállalat vagy szervezet neve]]></translation>
+        <translation language="de"><![CDATA[Name einer Firma oder Organisation]]></translation>
+        <translation language="es"><![CDATA[Un nombre de empresa u organización]]></translation>
+        <translation language="uk"><![CDATA[Назва компанії або організації]]></translation>
+        <translation language="sv"><![CDATA[Ett företags- eller organisationsnamn]]></translation>
+        <translation language="el"><![CDATA[Όνομα επιχείρησης ή οργανισμού]]></translation>
+      </item>
+      <item type="label" name="AutocompleteStreetAddress">
+        <translation language="nl"><![CDATA[Een straat adres]]></translation>
+        <translation language="en"><![CDATA[A street address]]></translation>
+        <translation language="it"><![CDATA[Un indirizzo]]></translation>
+        <translation language="ru"><![CDATA[O adresă stradală]]></translation>
+        <translation language="zh"><![CDATA[街道地址]]></translation>
+        <translation language="fr"><![CDATA[Une adresse]]></translation>
+        <translation language="hu"><![CDATA[Utcai cím]]></translation>
+        <translation language="de"><![CDATA[Eine Adresse]]></translation>
+        <translation language="es"><![CDATA[Una direccion]]></translation>
+        <translation language="uk"><![CDATA[Адреса]]></translation>
+        <translation language="sv"><![CDATA[En gatuadress]]></translation>
+        <translation language="el"><![CDATA[Μια διεύθυνση δρόμου]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCountry">
+        <translation language="nl"><![CDATA[Een land code]]></translation>
+        <translation language="en"><![CDATA[A country code]]></translation>
+        <translation language="it"><![CDATA[Un codice paese]]></translation>
+        <translation language="ru"><![CDATA[Un cod de țară]]></translation>
+        <translation language="zh"><![CDATA[国家代码]]></translation>
+        <translation language="fr"><![CDATA[Un code pays]]></translation>
+        <translation language="hu"><![CDATA[Országkód]]></translation>
+        <translation language="de"><![CDATA[Ein Ländercode]]></translation>
+        <translation language="es"><![CDATA[Un código de país]]></translation>
+        <translation language="uk"><![CDATA[Код країни]]></translation>
+        <translation language="sv"><![CDATA[En landskod]]></translation>
+        <translation language="el"><![CDATA[Ένας κωδικός χώρας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCountryName">
+        <translation language="nl"><![CDATA[Een land naam]]></translation>
+        <translation language="en"><![CDATA[A country name]]></translation>
+        <translation language="it"><![CDATA[Un nome di paese]]></translation>
+        <translation language="ru"><![CDATA[Numele unei țări]]></translation>
+        <translation language="zh"><![CDATA[国名]]></translation>
+        <translation language="fr"><![CDATA[Un nom de pays]]></translation>
+        <translation language="hu"><![CDATA[Egy ország neve]]></translation>
+        <translation language="de"><![CDATA[Ein land name]]></translation>
+        <translation language="es"><![CDATA[Un nombre de pais]]></translation>
+        <translation language="uk"><![CDATA[Назва країни]]></translation>
+        <translation language="sv"><![CDATA[Ett lands namn]]></translation>
+        <translation language="el"><![CDATA[Όνομα χώρας]]></translation>
+      </item>
+      <item type="label" name="AutocompletePostalCode">
+        <translation language="nl"><![CDATA[Een postcode]]></translation>
+        <translation language="en"><![CDATA[A postal code]]></translation>
+        <translation language="it"><![CDATA[Un codice postale]]></translation>
+        <translation language="ru"><![CDATA[Un cod poștal]]></translation>
+        <translation language="zh"><![CDATA[邮政编码]]></translation>
+        <translation language="fr"><![CDATA[Un code postal]]></translation>
+        <translation language="hu"><![CDATA[Postai irányítószám]]></translation>
+        <translation language="de"><![CDATA[Eine Postleitzahl]]></translation>
+        <translation language="es"><![CDATA[Un código postal]]></translation>
+        <translation language="uk"><![CDATA[Поштовий індекс]]></translation>
+        <translation language="sv"><![CDATA[En postnummer]]></translation>
+        <translation language="el"><![CDATA[Ένας ταχυδρομικός κώδικας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcName">
+        <translation language="nl"><![CDATA[De volledige naam zoals opgegeven op een creditcard]]></translation>
+        <translation language="en"><![CDATA[The full name as given on a credit card]]></translation>
+        <translation language="it"><![CDATA[Il nome completo come indicato su una carta di credito]]></translation>
+        <translation language="ru"><![CDATA[Numele complet așa cum este indicat pe un card de credit]]></translation>
+        <translation language="zh"><![CDATA[信用卡上的全名]]></translation>
+        <translation language="fr"><![CDATA[Le nom complet tel qu’indiqué sur une carte de crédit]]></translation>
+        <translation language="hu"><![CDATA[A hitelkártyán megadott teljes név]]></translation>
+        <translation language="de"><![CDATA[Der vollständige Name wie auf einer Kreditkarte angegeben]]></translation>
+        <translation language="es"><![CDATA[El nombre completo que figura en una tarjeta de crédito.]]></translation>
+        <translation language="uk"><![CDATA[Повне ім'я, вказане на кредитній картці]]></translation>
+        <translation language="sv"><![CDATA[Det fullständiga namnet som anges på ett kreditkort]]></translation>
+        <translation language="el"><![CDATA[Το πλήρες όνομα όπως αναγράφεται στην πιστωτική κάρτα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcGivenName">
+        <translation language="nl"><![CDATA[De voornaam zoals opgegeven op een creditcard]]></translation>
+        <translation language="en"><![CDATA[A first name as given on a credit card]]></translation>
+        <translation language="it"><![CDATA[Un nome come indicato su una carta di credito]]></translation>
+        <translation language="ru"><![CDATA[Un prim nume așa cum este indicat pe un card de credit]]></translation>
+        <translation language="zh"><![CDATA[信用卡上的第一个名字]]></translation>
+        <translation language="fr"><![CDATA[Un prénom tel que donné sur une carte de crédit]]></translation>
+        <translation language="hu"><![CDATA[A hitelkártyán megadott név]]></translation>
+        <translation language="de"><![CDATA[Ein Vorname wie auf einer Kreditkarte angegeben]]></translation>
+        <translation language="es"><![CDATA[Un primer nombre como se da en una tarjeta de crédito]]></translation>
+        <translation language="uk"><![CDATA[Ім'я, вказане на кредитній картці]]></translation>
+        <translation language="sv"><![CDATA[Ett förnamn som anges på ett kreditkort]]></translation>
+        <translation language="el"><![CDATA[Ένα πρώτο όνομα όπως αναφέρεται σε μια πιστωτική κάρτα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcAdditionalName">
+        <translation language="nl"><![CDATA[Een midden naam zoals opgegeven op een creditcard]]></translation>
+        <translation language="en"><![CDATA[A middle name as given on a credit card]]></translation>
+        <translation language="it"><![CDATA[Un secondo nome come indicato su una carta di credito]]></translation>
+        <translation language="ru"><![CDATA[Un nume de mijloc așa cum este indicat pe un card de credit]]></translation>
+        <translation language="zh"><![CDATA[信用卡上给出的中间名]]></translation>
+        <translation language="fr"><![CDATA[Un deuxième prénom tel qu’indiqué sur une carte de crédit]]></translation>
+        <translation language="hu"><![CDATA[A hitelkártyán megadott közepes név]]></translation>
+        <translation language="de"><![CDATA[Ein zweiter Vorname, wie auf einer Kreditkarte angegeben]]></translation>
+        <translation language="es"><![CDATA[Un segundo nombre como se da en una tarjeta de crédito]]></translation>
+        <translation language="uk"><![CDATA[Прізвище, вказане на кредитній картці]]></translation>
+        <translation language="sv"><![CDATA[Ett mellannamn som anges på ett kreditkort]]></translation>
+        <translation language="el"><![CDATA[Ένα μεσαίο όνομα όπως αναγράφεται στην πιστωτική κάρτα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcFamilyName">
+        <translation language="nl"><![CDATA[Een familienaam zoals opgegeven op een creditcard]]></translation>
+        <translation language="en"><![CDATA[A family name as given on a credit card]]></translation>
+        <translation language="it"><![CDATA[Un nome di famiglia come indicato su una carta di credito]]></translation>
+        <translation language="ru"><![CDATA[Un nume de familie așa cum este dat pe un card de credit]]></translation>
+        <translation language="zh"><![CDATA[信用卡上的姓氏]]></translation>
+        <translation language="fr"><![CDATA[Un nom de famille tel qu'il apparaît sur une carte de crédit]]></translation>
+        <translation language="hu"><![CDATA[A hitelkártyán megadott családi név]]></translation>
+        <translation language="de"><![CDATA[Ein Familienname wie auf einer Kreditkarte angegeben]]></translation>
+        <translation language="es"><![CDATA[Un nombre de familia como se indica en una tarjeta de crédito]]></translation>
+        <translation language="uk"><![CDATA[Прізвище, вказане на кредитній картці]]></translation>
+        <translation language="sv"><![CDATA[Ett efternamn som anges på ett kreditkort]]></translation>
+        <translation language="el"><![CDATA[Ένα οικογενειακό όνομα όπως αναγράφεται στην πιστωτική κάρτα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcNumber">
+        <translation language="nl"><![CDATA[Een creditcardnummer]]></translation>
+        <translation language="en"><![CDATA[A credit card number]]></translation>
+        <translation language="it"><![CDATA[Un numero di carta di credito]]></translation>
+        <translation language="ru"><![CDATA[Un număr de card de credit]]></translation>
+        <translation language="zh"><![CDATA[信用卡号码]]></translation>
+        <translation language="fr"><![CDATA[Un numéro de carte de crédit]]></translation>
+        <translation language="hu"><![CDATA[Hitelkártyaszám]]></translation>
+        <translation language="de"><![CDATA[Eine Kreditkartennummer]]></translation>
+        <translation language="es"><![CDATA[Un numero de tarjeta de credito]]></translation>
+        <translation language="uk"><![CDATA[Номер кредитної картки]]></translation>
+        <translation language="sv"><![CDATA[Ett kreditkortsnummer]]></translation>
+        <translation language="el"><![CDATA[Ένας αριθμός πιστωτικής κάρτας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcExp">
+        <translation language="nl"><![CDATA[Vervaldatum van een betaalmethode]]></translation>
+        <translation language="en"><![CDATA[A payment method expiration date]]></translation>
+        <translation language="it"><![CDATA[Una data di scadenza del metodo di pagamento]]></translation>
+        <translation language="ru"><![CDATA[O dată de expirare a metodei de plată]]></translation>
+        <translation language="zh"><![CDATA[付款方式到期日]]></translation>
+        <translation language="fr"><![CDATA[Une date d'expiration du moyen de paiement]]></translation>
+        <translation language="hu"><![CDATA[Fizetési mód lejárati dátuma]]></translation>
+        <translation language="de"><![CDATA[Ein Ablaufdatum für eine Zahlungsmethode]]></translation>
+        <translation language="es"><![CDATA[Una fecha de vencimiento del método de pago.]]></translation>
+        <translation language="uk"><![CDATA[Дата закінчення строку дії способу оплати]]></translation>
+        <translation language="sv"><![CDATA[Ett betalningsmetods utgångsdatum]]></translation>
+        <translation language="el"><![CDATA[Ημερομηνία λήξης της μεθόδου πληρωμής]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcExpMonth">
+        <translation language="nl"><![CDATA[De maand waarin de betaalmethode verloopt]]></translation>
+        <translation language="en"><![CDATA[The month in which the payment method expires]]></translation>
+        <translation language="it"><![CDATA[Il mese in cui scade il metodo di pagamento]]></translation>
+        <translation language="ru"><![CDATA[Luna în care expiră metoda de plată]]></translation>
+        <translation language="zh"><![CDATA[付款方式到期的月份]]></translation>
+        <translation language="fr"><![CDATA[Le mois où le mode de paiement expire]]></translation>
+        <translation language="hu"><![CDATA[A fizetési mód lejártának hónapja]]></translation>
+        <translation language="de"><![CDATA[Der Monat, in dem die Zahlungsmethode abläuft]]></translation>
+        <translation language="es"><![CDATA[El mes en que expira el método de pago.]]></translation>
+        <translation language="uk"><![CDATA[Місяць, у якому закінчується термін оплати]]></translation>
+        <translation language="sv"><![CDATA[Den månad då betalningsmetoden löper ut]]></translation>
+        <translation language="el"><![CDATA[Ο μήνας κατά τον οποίο λήγει ο τρόπος πληρωμής]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcExpYear">
+        <translation language="nl"><![CDATA[Het jaar waarin de betaalmethode verloopt]]></translation>
+        <translation language="en"><![CDATA[The year in which the payment method expires]]></translation>
+        <translation language="it"><![CDATA[L'anno in cui scade il metodo di pagamento]]></translation>
+        <translation language="ru"><![CDATA[Anul în care expiră metoda de plată]]></translation>
+        <translation language="zh"><![CDATA[付款方式到期的年份]]></translation>
+        <translation language="fr"><![CDATA[L'année dans laquelle le mode de paiement expire]]></translation>
+        <translation language="hu"><![CDATA[Az a év, amikor a fizetési mód lejár]]></translation>
+        <translation language="de"><![CDATA[Das Jahr, in dem die Zahlungsmethode abläuft]]></translation>
+        <translation language="es"><![CDATA[El año en que expira el método de pago.]]></translation>
+        <translation language="uk"><![CDATA[Рік закінчення терміну дії способу оплати]]></translation>
+        <translation language="sv"><![CDATA[Det år då betalningsmetoden löper ut]]></translation>
+        <translation language="el"><![CDATA[Το έτος κατά το οποίο λήγει ο τρόπος πληρωμής]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcCsc">
+        <translation language="nl"><![CDATA[De beveiligingscode voor de creditcard, dit is het 3-cijferige verificatienummer op de achterkant van de kaart]]></translation>
+        <translation language="en"><![CDATA[The security code for the credit card, this is the 3-digit verification number on the back of the card]]></translation>
+        <translation language="it"><![CDATA[Il codice di sicurezza per la carta di credito, questo è il numero di verifica a 3 cifre sul retro della carta]]></translation>
+        <translation language="ru"><![CDATA[Codul de securitate al cardului de credit, acesta este numărul de verificare din 3 cifre de pe spatele cardului]]></translation>
+        <translation language="zh"><![CDATA[信用卡的安全代码，这是卡背面的3位数验证码]]></translation>
+        <translation language="fr"><![CDATA[Le code de sécurité de la carte de crédit, il s’agit du numéro de vérification à 3 chiffres situé au dos de la carte.]]></translation>
+        <translation language="hu"><![CDATA[A hitelkártya biztonsági kódja, ez a 3-jegyű hitelesítési szám a kártya hátoldalán]]></translation>
+        <translation language="de"><![CDATA[Der Sicherheitscode für die Kreditkarte ist die dreistellige Prüfnummer auf der Rückseite der Karte]]></translation>
+        <translation language="es"><![CDATA[El código de seguridad para la tarjeta de crédito, este es el número de verificación de 3 dígitos en el reverso de la tarjeta]]></translation>
+        <translation language="uk"><![CDATA[Код захисту для кредитної картки - це тризначний контрольний номер на зворотній стороні картки]]></translation>
+        <translation language="sv"><![CDATA[Säkerhetskoden för kreditkortet, det här är det 3-siffriga verifieringsnumret på baksidan av kortet]]></translation>
+        <translation language="el"><![CDATA[Ο κωδικός ασφαλείας για την πιστωτική κάρτα, αυτός είναι ο τριψήφιος αριθμός επαλήθευσης στο πίσω μέρος της κάρτας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteCcType">
+        <translation language="nl"><![CDATA[Het type betaalinstrument (zoals "Visa" of "Master Card")]]></translation>
+        <translation language="en"><![CDATA[The type of payment instrument (such as "Visa" or "Master Card")]]></translation>
+        <translation language="it"><![CDATA[Il tipo di strumento di pagamento (come "Visa" o "Master Card")]]></translation>
+        <translation language="ru"><![CDATA[Tipul de instrument de plată (cum ar fi "Visa" sau "Master Card")]]></translation>
+        <translation language="zh"><![CDATA[支付工具的类型（如“签证”或“万事达卡”）]]></translation>
+        <translation language="fr"><![CDATA[Le type d'instrument de paiement (tel que "Visa" ou "Master Card")]]></translation>
+        <translation language="hu"><![CDATA[A fizetési eszköz típusa (például "Visa" vagy "Master Card")]]></translation>
+        <translation language="de"><![CDATA[Die Art des Zahlungsinstruments (wie "Visa" oder "Master Card")]]></translation>
+        <translation language="es"><![CDATA[El tipo de instrumento de pago (como "Visa" o "Master Card")]]></translation>
+        <translation language="uk"><![CDATA[Тип платіжного інструменту (наприклад, "Visa" або "Master Card")]]></translation>
+        <translation language="sv"><![CDATA[Typ av betalningsinstrument (till exempel "Visa" eller "Master Card")]]></translation>
+        <translation language="el"><![CDATA[Ο τύπος του μέσου πληρωμής (όπως "Visa" ή "Master Card")]]></translation>
+      </item>
+      <item type="label" name="AutocompleteTransactionCurrency">
+        <translation language="nl"><![CDATA[De valuta van de transactie]]></translation>
+        <translation language="en"><![CDATA[The currency of the transaction]]></translation>
+        <translation language="it"><![CDATA[La valuta della transazione]]></translation>
+        <translation language="ru"><![CDATA[Moneda tranzacției]]></translation>
+        <translation language="zh"><![CDATA[交易的货币]]></translation>
+        <translation language="fr"><![CDATA[La devise de la transaction]]></translation>
+        <translation language="hu"><![CDATA[A tranzakció pénzneme]]></translation>
+        <translation language="de"><![CDATA[Die Währung der Transaktion]]></translation>
+        <translation language="es"><![CDATA[La moneda de la transacción.]]></translation>
+        <translation language="uk"><![CDATA[Валюта угоди]]></translation>
+        <translation language="sv"><![CDATA[Transaktionsvaluta]]></translation>
+        <translation language="el"><![CDATA[Το νόμισμα της συναλλαγής]]></translation>
+      </item>
+      <item type="label" name="AutocompleteTransactionAmount">
+        <translation language="nl"><![CDATA[Het bedrag van de transactie]]></translation>
+        <translation language="en"><![CDATA[The amount of the transaction]]></translation>
+        <translation language="it"><![CDATA[L'importo della transazione]]></translation>
+        <translation language="ru"><![CDATA[Valoarea tranzacției]]></translation>
+        <translation language="zh"><![CDATA[交易金额]]></translation>
+        <translation language="fr"><![CDATA[Le montant de la transaction]]></translation>
+        <translation language="hu"><![CDATA[A tranzakció összege]]></translation>
+        <translation language="de"><![CDATA[Der Betrag der Transaktion]]></translation>
+        <translation language="es"><![CDATA[El importe de la transacción.]]></translation>
+        <translation language="uk"><![CDATA[Сума операції]]></translation>
+        <translation language="sv"><![CDATA[Transaktionsbeloppet]]></translation>
+        <translation language="el"><![CDATA[Το ποσό της συναλλαγής]]></translation>
+      </item>
+      <item type="label" name="AutocompleteLanguage">
+        <translation language="nl"><![CDATA[Een voorkeurstaal]]></translation>
+        <translation language="en"><![CDATA[A preferred language]]></translation>
+        <translation language="it"><![CDATA[Una lingua preferita]]></translation>
+        <translation language="ru"><![CDATA[O limbă preferată]]></translation>
+        <translation language="zh"><![CDATA[首选语言]]></translation>
+        <translation language="fr"><![CDATA[Une langue préférée]]></translation>
+        <translation language="hu"><![CDATA[Előnyben részesített nyelv]]></translation>
+        <translation language="de"><![CDATA[Eine bevorzugte Sprache]]></translation>
+        <translation language="es"><![CDATA[Un idioma preferido]]></translation>
+        <translation language="uk"><![CDATA[Бажана мова]]></translation>
+        <translation language="sv"><![CDATA[Ett föredraget språk]]></translation>
+        <translation language="el"><![CDATA[Μια προτιμώμενη γλώσσα]]></translation>
+      </item>
+      <item type="label" name="AutocompleteBday">
+        <translation language="nl"><![CDATA[Een geboortedatum, als een volledige datum]]></translation>
+        <translation language="en"><![CDATA[A birth date, as a full date]]></translation>
+        <translation language="it"><![CDATA[Una data di nascita, come una data completa]]></translation>
+        <translation language="ru"><![CDATA[Data nașterii, ca dată completă]]></translation>
+        <translation language="zh"><![CDATA[出生日期，作为完整日期]]></translation>
+        <translation language="fr"><![CDATA[Une date de naissance, en tant que date complète]]></translation>
+        <translation language="hu"><![CDATA[Születési dátum, teljes dátum]]></translation>
+        <translation language="de"><![CDATA[Ein Geburtsdatum als volles Datum]]></translation>
+        <translation language="es"><![CDATA[Una fecha de nacimiento, como una fecha completa.]]></translation>
+        <translation language="uk"><![CDATA[Дата народження, як повна дата]]></translation>
+        <translation language="sv"><![CDATA[Ett födelsedatum, som ett fullständigt datum]]></translation>
+        <translation language="el"><![CDATA[Ημερομηνία γέννησης, ως πλήρης ημερομηνία]]></translation>
+      </item>
+      <item type="label" name="AutocompleteBdayDay">
+        <translation language="nl"><![CDATA[De dag van de maand van een geboortedatum]]></translation>
+        <translation language="en"><![CDATA[The day of the month of a birth date]]></translation>
+        <translation language="it"><![CDATA[Il giorno del mese di una data di nascita]]></translation>
+        <translation language="ru"><![CDATA[Ziua lunii de naștere]]></translation>
+        <translation language="zh"><![CDATA[出生日期的某一天]]></translation>
+        <translation language="fr"><![CDATA[Le jour du mois d'une date de naissance]]></translation>
+        <translation language="hu"><![CDATA[A születési hónap hónapjának napja]]></translation>
+        <translation language="de"><![CDATA[Der Tag des Monats eines Geburtsdatums]]></translation>
+        <translation language="es"><![CDATA[El día del mes de la fecha de nacimiento.]]></translation>
+        <translation language="uk"><![CDATA[День місяця дати народження]]></translation>
+        <translation language="sv"><![CDATA[Månadens födelsedatum]]></translation>
+        <translation language="el"><![CDATA[Την ημέρα του μήνα της ημερομηνίας γέννησης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteBdayMonth">
+        <translation language="nl"><![CDATA[De maand van een geboortedatum]]></translation>
+        <translation language="en"><![CDATA[The month of a birth date]]></translation>
+        <translation language="it"><![CDATA[Il mese di una data di nascita]]></translation>
+        <translation language="ru"><![CDATA[Luna de la data nașterii]]></translation>
+        <translation language="zh"><![CDATA[出生日期的月份]]></translation>
+        <translation language="fr"><![CDATA[Le mois d'une date de naissance]]></translation>
+        <translation language="hu"><![CDATA[A születési hónap hónapja]]></translation>
+        <translation language="de"><![CDATA[Der Monat eines Geburtsdatums]]></translation>
+        <translation language="es"><![CDATA[El mes de la fecha de nacimiento.]]></translation>
+        <translation language="uk"><![CDATA[Місяць дати народження]]></translation>
+        <translation language="sv"><![CDATA[Månadens födelsedatum]]></translation>
+        <translation language="el"><![CDATA[Ο μήνας της ημερομηνίας γέννησης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteBdayYear">
+        <translation language="nl"><![CDATA[Het jaar van een geboortedatum]]></translation>
+        <translation language="en"><![CDATA[The year of a birth date]]></translation>
+        <translation language="it"><![CDATA[L'anno di una data di nascita]]></translation>
+        <translation language="ru"><![CDATA[Anul datei de naștere]]></translation>
+        <translation language="zh"><![CDATA[出生日期]]></translation>
+        <translation language="fr"><![CDATA[L'année d'une date de naissance]]></translation>
+        <translation language="hu"><![CDATA[A születési év éve]]></translation>
+        <translation language="de"><![CDATA[Das Jahr eines Geburtsdatums]]></translation>
+        <translation language="es"><![CDATA[El año de la fecha de nacimiento.]]></translation>
+        <translation language="uk"><![CDATA[Рік дати народження]]></translation>
+        <translation language="sv"><![CDATA[Födelsedatumets år]]></translation>
+        <translation language="el"><![CDATA[Το έτος της ημερομηνίας γέννησης]]></translation>
+      </item>
+      <item type="label" name="AutocompleteSex">
+        <translation language="nl"><![CDATA[Een genderidentiteit als tekst zonder nieuwe regels]]></translation>
+        <translation language="en"><![CDATA[A gender identity as text without newlines]]></translation>
+        <translation language="it"><![CDATA[Un'identità di genere come testo senza newline]]></translation>
+        <translation language="ru"><![CDATA[O identitate de gen ca text fără linii noi]]></translation>
+        <translation language="zh"><![CDATA[性别标识为没有换行符的文本]]></translation>
+        <translation language="fr"><![CDATA[Une identité de genre en tant que texte sans nouvelles lignes]]></translation>
+        <translation language="hu"><![CDATA[A nemi identitás szövegként új vonalak nélkül]]></translation>
+        <translation language="de"><![CDATA[Eine geschlechtliche Identität als Text ohne Zeilenumbrüche]]></translation>
+        <translation language="es"><![CDATA[Una identidad de género como texto sin nuevas líneas.]]></translation>
+        <translation language="uk"><![CDATA[Гендерна ідентичність як текст без рядків]]></translation>
+        <translation language="sv"><![CDATA[En könsidentitet som text utan nya linjer]]></translation>
+        <translation language="el"><![CDATA[Μια ταυτότητα φύλου ως κείμενο χωρίς νέες γραμμές]]></translation>
+      </item>
+      <item type="label" name="AutocompleteTel">
+        <translation language="nl"><![CDATA[Een volledig telefoonnummer, inclusief de landcode]]></translation>
+        <translation language="en"><![CDATA[A full telephone number, including the country code]]></translation>
+        <translation language="it"><![CDATA[Un numero di telefono completo, incluso il prefisso internazionale]]></translation>
+        <translation language="ru"><![CDATA[Un număr de telefon complet, inclusiv codul țării]]></translation>
+        <translation language="zh"><![CDATA[一个完整的电话号码，包括国家代码]]></translation>
+        <translation language="fr"><![CDATA[Un numéro de téléphone complet, y compris l'indicatif du pays]]></translation>
+        <translation language="hu"><![CDATA[Teljes telefonszám, az országkóddal együtt]]></translation>
+        <translation language="de"><![CDATA[Eine vollständige Telefonnummer einschließlich der Landesvorwahl]]></translation>
+        <translation language="es"><![CDATA[Un número de teléfono completo, incluido el código del país]]></translation>
+        <translation language="uk"><![CDATA[Повний номер телефону, включаючи код країни]]></translation>
+        <translation language="sv"><![CDATA[Ett fullständigt telefonnummer, inklusive landskoden]]></translation>
+        <translation language="el"><![CDATA[Ένας πλήρης αριθμός τηλεφώνου, συμπεριλαμβανομένου του κωδικού χώρας]]></translation>
+      </item>
+      <item type="label" name="AutocompleteUrl">
+        <translation language="nl"><![CDATA[Een URL]]></translation>
+        <translation language="en"><![CDATA[A URL]]></translation>
+        <translation language="it"><![CDATA[Un URL]]></translation>
+        <translation language="ru"><![CDATA[O adresă URL]]></translation>
+        <translation language="zh"><![CDATA[一个URL]]></translation>
+        <translation language="fr"><![CDATA[Une URL]]></translation>
+        <translation language="hu"><![CDATA[URL]]></translation>
+        <translation language="de"><![CDATA[Eine URL]]></translation>
+        <translation language="es"><![CDATA[Una URL]]></translation>
+        <translation language="uk"><![CDATA[URL]]></translation>
+        <translation language="sv"><![CDATA[En URL]]></translation>
+        <translation language="el"><![CDATA[Μια διεύθυνση URL]]></translation>
+      </item>
+      <item type="label" name="AutocompletePhoto">
+        <translation language="nl"><![CDATA[De URL van een afbeelding]]></translation>
+        <translation language="en"><![CDATA[The URL of an image]]></translation>
+        <translation language="it"><![CDATA[L'URL di un'immagine]]></translation>
+        <translation language="ru"><![CDATA[Adresa URL a unei imagini]]></translation>
+        <translation language="zh"><![CDATA[图像的URL]]></translation>
+        <translation language="fr"><![CDATA[L'URL d'une image]]></translation>
+        <translation language="hu"><![CDATA[A kép URL-je]]></translation>
+        <translation language="de"><![CDATA[Die URL eines Bildes]]></translation>
+        <translation language="es"><![CDATA[La URL de una imagen.]]></translation>
+        <translation language="uk"><![CDATA[URL-адреса зображення]]></translation>
+        <translation language="sv"><![CDATA[URL: en av en bild]]></translation>
+        <translation language="el"><![CDATA[Η διεύθυνση URL μιας εικόνας]]></translation>
       </item>
     </FormBuilder>
   </Backend>

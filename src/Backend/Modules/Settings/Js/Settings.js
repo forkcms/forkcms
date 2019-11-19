@@ -6,6 +6,7 @@ jsBackend.settings = {
     $('#facebookAdminIds').multipleTextbox(
       {
         emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
+        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
         addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
         removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
         canAddNew: true
@@ -91,7 +92,7 @@ jsBackend.settings = {
 
     // display the status alert
     var $statusAlert = $('[data-role="fork-clear-cache-status"]')
-    $statusAlert.toggleClass('hidden')
+    $statusAlert.toggleClass('d-none')
 
     // start the dot animation
     var dotAnimation = jsBackend.settings.startDotAnimation()
@@ -124,7 +125,7 @@ jsBackend.settings = {
           // stop the dot animation
           jsBackend.settings.stopDotAnimation(dotAnimation)
           // hide the status
-          $statusAlert.toggleClass('hidden')
+          $statusAlert.toggleClass('d-none')
           // reset the button
           $clearCacheButton.on('click', jsBackend.settings.clearCache)
           $clearCacheButton.attr('disabled', false)

@@ -1,0 +1,127 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+  {% if collector.hasData %}
+    {% set icon %}
+      {{ include('views/Icon/context.svg') }}
+      <span class="sf-toolbar-value sf-toolbar-info-piece-additional">{{ collector.pageTitle }}</span>
+    {% endset %}
+    {% set text %}
+      <div class="sf-toolbar-info-piece">
+        <b>Page ID</b>
+        <span>{{ collector.pageId }}</span>
+      </div>
+      <div class="sf-toolbar-info-piece">
+        <b>Page title</b>
+        <span>{{ collector.pageTitle }}</span>
+      </div>
+      <div class="sf-toolbar-info-piece">
+        <b>Theme</b>
+        <span>{{ collector.theme }}</span>
+      </div>
+      {% if collector.hasBlock %}
+        <div class="sf-toolbar-info-piece">
+          <b>Module</b>
+          <span>{{ collector.blockModule }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+          <b>Action</b>
+          <span>{{ collector.blockAction }}</span>
+        </div>
+      {% endif %}
+      {% if collector.widgets %}
+        <div class="sf-toolbar-info-piece">
+          <b>Widgets</b>
+          <span class="sf-toolbar-status">{{ collector.widgets|length }}</span>
+        </div>
+      {% endif %}
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+  {% endif %}
+{% endblock %}
+
+{% block menu %}
+  <span class="label{% if not collector.hasData %} disabled{% endif %}">
+    <span class="icon">
+      {{ include('views/Icon/context.svg') }}
+    </span>
+    <strong>Page Context</strong>
+  </span>
+{% endblock %}
+
+{% block panel %}
+  <h2>Page Context</h2>
+  {% if collector.hasData %}
+    <div class="metrics">
+      <div class="metric">
+        <span class="value">{{ collector.theme }}</span>
+        <span class="label">Theme</span>
+      </div>
+      <div class="metric">
+        <span class="value">{{ collector.pageId }}</span>
+        <span class="label">Page ID</span>
+      </div>
+      <div class="metric">
+        <span class="value">{{ collector.pageTitle }}</span>
+        <span class="label">Page title</span>
+      </div>
+      <div class="metric">
+        <span class="value">{{ collector.pageTemplate }}</span>
+        <span class="label">Page template</span>
+      </div>
+    </div>
+
+    <h3>Block</h3>
+    {% if collector.hasBlock %}
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Action</th>
+            <th>Template</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="nowrap">{{ collector.blockModule }}</td>
+            <td class="nowrap">{{ collector.blockAction }}</td>
+            <td class="nowrap">{{ collector.blockTemplate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">
+        <p>No module connected to this page.</p>
+      </div>
+    {% endif %}
+    <h3>Widgets</h3>
+    {% if collector.widgets %}
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Action</th>
+            <th>Template</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for widget in collector.widgets %}
+          <tr>
+            <td class="nowrap">{{ widget.module }}</td>
+            <td class="nowrap">{{ widget.action }}</td>
+            <td class="nowrap">{{ widget.template }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">
+        <p>No widgets connected to this page.</p>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="empty">
+      <p>No data available for this page.</p>
+    </div>
+  {% endif %}
+{% endblock %}

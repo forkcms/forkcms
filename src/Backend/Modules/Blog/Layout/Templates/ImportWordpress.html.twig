@@ -1,38 +1,30 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
-{% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.Import'|trans|ucfirst }}</h2>
-    </div>
-    <div class="col-md-6">
-
-    </div>
-  </div>
-{% endblock %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block content %}
   {% form import %}
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="wordpress" class="control-label">{{ 'lbl.File'|trans|ucfirst }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpress'|trans|ucfirst }}</p>
-        {% form_field wordpress %} {% form_field_error wordpress %}
+        <div class="custom-file">
+          <label for="wordpress" class="custom-file-label">{{ 'lbl.File'|trans|ucfirst }}</label>
+          {% form_field wordpress %}
+        </div>
+        {% form_field_error wordpress %}
+        <small class="form-text text-muted">{{ 'msg.HelpWordpress'|trans|ucfirst }}</small>
       </div>
       <div class="form-group">
         <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|ucfirst }}</label>
-        <p class="help-block">{{ 'msg.HelpWordpressFilter'|ucfirst }}</p>
-        {% form_field filter %} {% form_field_error filter %}
+        {% form_field filter %}
+        {% form_field_error filter %}
+        <small class="form-text text-muted">{{ 'msg.HelpWordpressFilter'|trans|ucfirst }}</small>
       </div>
     </div>
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', '', 'lbl.Import'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"save", "id":"importButton"}) }}
-        </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar d-flex">
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'file-import', 'lbl.Import'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"save", "id":"importButton"}) }}
       </div>
     </div>
   </div>

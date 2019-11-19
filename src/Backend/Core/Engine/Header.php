@@ -92,7 +92,7 @@ final class Header extends KernelLoader
         $this->addJS('/js/vendors/jquery.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap.bundle.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true, true, Priority::core());
         $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
@@ -221,6 +221,7 @@ final class Header extends KernelLoader
 
         $this->jsData->add('site', 'domain', SITE_DOMAIN);
         $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
+        $this->jsData->add('Core', 'session_timeout', $this->getFirstPossibleSessionTimeout());
 
         if (!empty($this->get('fork.settings')->get('Core', 'theme'))) {
             $this->jsData->add('theme', 'theme', $this->get('fork.settings')->get('Core', 'theme'));
@@ -230,6 +231,18 @@ final class Header extends KernelLoader
             $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));
         }
         $this->template->assign('jsData', $this->jsData);
+    }
+
+    private function getFirstPossibleSessionTimeout(): int
+    {
+        $garbageCollectionMaxLifeTime = (int) ini_get('session.gc_maxlifetime');
+        $cookieLifetime = (int) ini_get('session.cookie_lifetime');
+
+        if ($cookieLifetime === 0 || $cookieLifetime < $garbageCollectionMaxLifeTime) {
+            return $garbageCollectionMaxLifeTime;
+        }
+
+        return $cookieLifetime;
     }
 
     /**

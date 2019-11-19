@@ -3,6 +3,7 @@
 namespace Frontend\Modules\Profiles\Actions;
 
 use ForkCMS\Utility\Thumbnails;
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Model;
@@ -10,7 +11,6 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Frontend\Modules\Profiles\Engine\Profile;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
@@ -96,6 +96,7 @@ class Settings extends FrontendBaseBlock
         $this->form->addDropdown('month', $months, $birthMonth)->setDefaultElement('');
         $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear)->setDefaultElement('');
         $this->form->addImage('avatar');
+        $this->form->addTextarea('about', $this->profile->getSetting('about'));
     }
 
     private function parse(): void
@@ -165,14 +166,11 @@ class Settings extends FrontendBaseBlock
             return false;
         }
 
-        $this->profile->setDisplayName($txtDisplayName->getValue());
-        $this->profile->setUrl(FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId()));
-
         FrontendProfilesModel::update(
             $this->profile->getId(),
             [
-                'display_name' => $this->profile->getDisplayName(),
-                'url' => $this->profile->getUrl(),
+                'display_name' => $txtDisplayName->getValue(),
+                'url' => FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId()),
             ]
         );
 
@@ -206,8 +204,10 @@ class Settings extends FrontendBaseBlock
                 'gender' => $this->form->getField('gender')->getValue(),
                 'birth_date' => $this->getSubmittedBirthDate(),
                 'avatar' => $this->getAvatar(),
+                'about' => $this->form->getField('about')->getValue(),
             ]
         );
+        Model::get('doctrine.orm.entity_manager')->flush();
 
         $this->redirect(
             FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction()) . '?settingsUpdated=true'

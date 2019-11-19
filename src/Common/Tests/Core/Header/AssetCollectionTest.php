@@ -6,8 +6,9 @@ use Common\Core\Header\Asset;
 use Common\Core\Header\AssetCollection;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
+use PHPUnit\Framework\TestCase;
 
-class AssetCollectionTest extends \PHPUnit_Framework_TestCase
+class AssetCollectionTest extends TestCase
 {
     public function testAddAssetToCollection(): void
     {

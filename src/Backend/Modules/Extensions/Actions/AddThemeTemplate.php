@@ -7,6 +7,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Common\Uri;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -85,6 +86,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->form->addCheckbox('active', true);
         $this->form->addCheckbox('default');
         $this->form->addCheckbox('image');
+        $this->form->addImage('default_image');
 
         $positions = [];
         $blocks = [];
@@ -290,6 +292,17 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
                 // serialize the data
                 $item['data'] = serialize($item['data']);
+
+                $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
+
+                $defaultImageField = $this->form->getField('default_image');
+                if ($defaultImageField->isFilled()) {
+                    $imageFilename = Uri::getUrl($item['label']) . '_' . time();
+                    $imageFilename .= '.' . $defaultImageField->getExtension();
+
+                    $defaultImageField->generateThumbnails($imagePath, $imageFilename);
+                    $item['default_image'] = $imageFilename;
+                }
 
                 // insert the item
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);

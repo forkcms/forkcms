@@ -111,7 +111,7 @@
 
               // add html
               html += '<li class="shareMenuDelicious">' +
-                '    <a href="' + url + '" target="_blank">' +
+                '    <a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
                 '        <span class="icon"></span>' +
                 '        <span class="textWrapper">' + options.delicious.label + '</span>' +
                 '    </a>' +
@@ -126,7 +126,7 @@
 
               // add html
               html += '<li class="shareMenuDigg">' +
-                '    <a href="' + url + '" target="_blank">' +
+                '    <a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
                 '        <span class="icon"></span>' +
                 '        <span class="textWrapper">' + options.digg.label + '</span>' +
                 '    </a>' +

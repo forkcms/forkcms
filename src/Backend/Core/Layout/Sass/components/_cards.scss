@@ -1,0 +1,191 @@
+.card {
+  margin-bottom: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  .card-heading {
+    border-top-left-radius: $card-border-radius;
+    border-top-right-radius: $card-border-radius;
+    padding: 8px 15px 10px;
+  }
+
+  .card-body {
+    border-spacing: 0;
+  }
+
+  &.last {
+    margin-bottom: 0;
+  }
+
+  .nav-tabs a {
+    text-decoration: none;
+  }
+}
+
+.card-default {
+  background-color: $white;
+  margin-bottom: 20px;
+
+  .card-heading {
+    background: $gray-100;
+    border-bottom: 1px solid $gray-200;
+
+    label,
+    p,
+    h2,
+    h3,
+    .card-title {
+      color: $black;
+      font-size: $font-size-base;
+      font-weight: 600;
+      margin-bottom: 0;
+      margin-top: 0;
+
+      a {
+        color: $black;
+      }
+    }
+  }
+
+  &.card-pages-block {
+    background-color: $gray-100;
+    border: 0;
+    margin-bottom: 0;
+
+    .card-heading {
+      border-color: $border-color;
+      padding: 8px 20px 10px;
+    }
+
+    .card-body {
+      padding: 0 20px 20px;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .card-footer {
+    .btn {
+      text-decoration: none;
+    }
+  }
+}
+
+.card-editor {
+
+  .card-body {
+    padding: 0;
+  }
+}
+
+.card-title a {
+  border: 0;
+  text-decoration: none;
+
+  &:hover {
+    border: 0;
+    text-decoration: none;
+  }
+}
+
+.card-transparent {
+  background: $gray-100;
+  border: 1px solid $gray-300;
+
+  .card-heading {
+    border-bottom: 1px solid $gray-300;
+    margin-bottom: -1px;
+  }
+}
+
+// Panel caret behavior
+.card .collapsed .fa-caret-down {
+  transform: rotate(-90deg);
+  transition: transform 250ms;
+}
+
+.card-group {
+  margin-bottom: 0;
+
+  .card-heading {
+
+    a {
+      .card-title {
+        color: $body-color;
+      }
+
+      @include hover-focus {
+        text-decoration: none;
+
+        .card-title {
+          color: $black;
+        }
+      }
+    }
+
+    .card-title a {
+      color: $body-color;
+    }
+
+    .inputCheckbox  + .card-title {
+      display: inline-block;
+    }
+  }
+
+  .card {
+    border-radius: 0;
+
+    + .card {
+      margin-top: 5px;
+    }
+  }
+
+  &.card-group-column {
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .card {
+
+      + .card {
+        border-left: 1px solid $card-border-color;
+      }
+    }
+  }
+}
+
+.card-select label {
+  margin-bottom: 0;
+  width: 100%;
+
+  .card-body {
+    padding: 20px 15px 13px;
+  }
+}
+
+.card-primary {
+  background-color: $white;
+  border-color: $primary;
+
+  .card-heading {
+    background-color: $primary;
+
+    .card-title {
+      color: $white;
+    }
+  }
+}
+
+.card-default label .card-heading {
+  border-bottom: 1px solid $gray-200;
+}
+
+.card-collapse table {
+  border: 0;
+}
+
+.fork-dashboard-column .card-default .card-body {
+  padding: 20px 15px 13px;
+}

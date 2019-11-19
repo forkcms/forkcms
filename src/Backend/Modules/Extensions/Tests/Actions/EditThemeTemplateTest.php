@@ -28,7 +28,7 @@ class EditThemeTemplateTest extends WebTestCase
 
         $client->request('GET', '/private/en/extensions/edit_theme_template?token=68ozixmy4j&id=3');
         self::assertContains(
-            'The user can upload a file.',
+            'Allow the user to upload an image.',
             $client->getResponse()->getContent()
         );
         self::assertContains(

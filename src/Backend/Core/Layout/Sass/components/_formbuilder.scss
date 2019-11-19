@@ -1,11 +1,13 @@
 #fieldsHolder {
   .btn-toolbar .btn {
     padding: 6px 7px 7px;
+    margin-bottom: 0;
+    margin-top: 0;
   }
 
   .field {
-    border-bottom: 1px solid $gray-lighter;
-    border-radius: $border-radius-small;
+    border-bottom: 1px solid $gray-200;
+    border-radius: $border-radius-sm;
     background-color: $white;
     padding: 25px;
     margin: 0;
@@ -28,11 +30,11 @@
 #formElements {
 
   h5 {
-    color: $gray;
+    color: $gray-700;
     margin-top: 0;
   }
 
-  .panel-body {
+  .card-body {
     padding: 0;
   }
 
@@ -42,19 +44,20 @@
 
     .list-group-item {
       border: 0;
-      border-top: 1px solid $gray-lightest;
-      padding: 11px 0 12px;
+      border-top: 1px solid $gray-200;
       color: $formbuilder-blue;
+      cursor: pointer;
+      padding: 11px 0 12px;
+      text-align: left;
 
-      &:hover,
-      &:focus {
+      @include hover-focus {
         color: darken($formbuilder-blue, 15%);
         text-decoration: underline;
         background: transparent;
       }
 
-      .fa {
-        color: $gray-light;
+      .svg-inline--fa {
+        color: $gray-550;
         margin-right: 5px;
       }
 
@@ -65,7 +68,7 @@
     }
 
     &.first {
-      border-bottom: 1px solid $gray-lighter;
+      border-bottom: 1px solid $gray-200;
     }
   }
 }

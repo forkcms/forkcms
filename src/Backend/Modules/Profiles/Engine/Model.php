@@ -2,12 +2,18 @@
 
 namespace Backend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\Status;
+use Backend\Modules\Profiles\Domain\Group\Group;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
+use DateTime;
 
 /**
  * In this file we store all generic functions that we will be using in the profiles module.
@@ -38,10 +44,10 @@ class Model
      * @var string
      */
     const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
-        'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on,
-          IF(gr.expires_on IS NOT NULL AND gr.expires_on <= NOW(), 1, 0) AS hidden
-         FROM profiles_groups AS g
-         INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
+        'SELECT gr.id, g.name AS group_name, IF(gr.expiresOn IS NULL, 0, UNIX_TIMESTAMP(gr.expiresOn)) AS expires_on,
+          IF(gr.expiresOn IS NOT NULL AND gr.expiresOn <= NOW(), 1, 0) AS hidden
+         FROM ProfilesGroup AS g
+         INNER JOIN ProfilesGroupRight AS gr ON gr.group_id = g.id
          WHERE gr.profile_id = ?';
 
     /**
@@ -51,32 +57,28 @@ class Model
      */
     public static function delete($ids): void
     {
-        // init database
-        $database = BackendModel::getContainer()->get('database');
-
         // redefine
         $ids = (array) $ids;
 
+        $profileRepository = BackendModel::get('profile.repository.profile');
+
         // delete profiles
         foreach ($ids as $id) {
-            // redefine
-            $id = (int) $id;
+            $profile = $profileRepository->find($id);
 
-            // delete sessions
-            $database->delete('profiles_sessions', 'profile_id = ?', $id);
+            self::deleteSession($id);
 
-            // set profile status to deleted
-            self::update($id, ['status' => 'deleted']);
+            $profile->delete();
         }
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
     }
 
     public static function deleteGroup(int $groupId): void
     {
-        // delete rights
-        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'group_id = ?', $groupId);
+        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
 
-        // delete group
-        BackendModel::getContainer()->get('database')->delete('profiles_groups', 'id = ?', $groupId);
+        BackendModel::get('profile.repository.profile_group')->remove($group);
     }
 
     /**
@@ -84,90 +86,66 @@ class Model
      *
      * @param int $membershipId Id of the membership.
      */
-    public static function deleteProfileGroup(int $membershipId)
+    public static function deleteProfileGroup(int $membershipId): void
     {
-        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'id = ?', $membershipId);
+        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+
+        BackendModel::get('profile.repository.profile_group_right')->remove($groupRight);
     }
 
     public static function deleteSession(int $id): void
     {
-        BackendModel::getContainer()->get('database')->delete('profiles_sessions', 'profile_id = ?', $id);
+        $profile = BackendModel::get('profile.repository.profile')->find($id);
+
+        $SessionRepository = BackendModel::get('profile.repository.profile_session');
+
+        $sessions = $SessionRepository->findByProfile($profile);
+        foreach ($sessions as $session) {
+            $SessionRepository->remove($session);
+        }
     }
 
     public static function exists(int $profileId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.id = ?
-             LIMIT 1',
-            $profileId
-        );
+        return BackendModel::get('profile.repository.profile')->find($profileId) instanceof Profile;
     }
 
     public static function existsByEmail(string $email, int $excludedProfileId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.email = ? AND p.id != ?
-             LIMIT 1',
-            [$email, $excludedProfileId]
-        );
+        return BackendModel::get('profile.repository.profile')->existsByEmail($email, $excludedProfileId);
     }
 
     public static function existsDisplayName(string $displayName, int $excludedProfileId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.display_name = ? AND p.id != ?
-             LIMIT 1',
-            [$displayName, $excludedProfileId]
-        );
+        return BackendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedProfileId);
     }
 
     public static function existsGroup(int $groupId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles_groups AS pg
-             WHERE pg.id = ?
-             LIMIT 1',
-            $groupId
-        );
+        return BackendModel::get('profile.repository.profile_group')->find($groupId) instanceof Group;
     }
 
     public static function existsGroupName(string $groupName, int $excludedGroupId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles_groups AS pg
-             WHERE pg.name = ? AND pg.id != ?
-             LIMIT 1',
-            [$groupName, $excludedGroupId]
-        );
+        return BackendModel::get('profile.repository.profile_group')->existsByName($groupName, $excludedGroupId);
     }
 
     public static function existsProfileGroup(int $membershipId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles_groups_rights AS gr
-             WHERE gr.id = ?
-             LIMIT 1',
-            $membershipId
-        );
+        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+
+        return $groupRight instanceof GroupRight;
     }
 
     public static function get(int $profileId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT p.id, p.email, p.status, p.display_name, p.url
-             FROM profiles AS p
-             WHERE p.id = ?',
-            $profileId
-        );
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        if (!$profile instanceof Profile) {
+            return [];
+        }
+
+        return $profile->toArray();
     }
 
     /**
@@ -227,12 +205,13 @@ class Model
 
     public static function getByEmail(string $email): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT p.id, p.email, p.status, p.display_name, p.url
-             FROM profiles AS p
-             WHERE p.email = ?',
-            $email
-        );
+        $profile = BackendModel::get('profile.repository.profile')->findOneByEmail($email);
+
+        if (!$profile instanceof Profile) {
+            return [];
+        }
+
+        return $profile->toArray();
     }
 
     /**
@@ -262,12 +241,13 @@ class Model
 
     public static function getGroup(int $groupId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT pg.id, pg.name
-             FROM profiles_groups AS pg
-             WHERE pg.id = ?',
-            $groupId
-        );
+        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
+
+        if (!$group instanceof Group) {
+            return [];
+        }
+
+        return $group->toArray();
     }
 
     /**
@@ -277,9 +257,13 @@ class Model
      */
     public static function getGroups(): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT id, name FROM profiles_groups ORDER BY name'
-        );
+        $groupsArray = [];
+        $groups = BackendModel::get('profile.repository.profile_group')->findBy([], ['name' => 'ASC']);
+        foreach ($groups as $group) {
+            $groupsArray[$group->getId()] = $group->getName();
+        }
+
+        return $groupsArray;
     }
 
     /**
@@ -292,32 +276,25 @@ class Model
      */
     public static function getGroupsForDropDown(int $profileId, int $includeId = null): array
     {
-        // init database
-        $database = BackendModel::getContainer()->get('database');
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
 
-        // get groups already linked but don't include the includeId
-        if ($includeId !== null) {
-            $groupIds = (array) $database->getColumn(
-                'SELECT group_id
-                 FROM profiles_groups_rights
-                 WHERE profile_id = ? AND id != ?',
-                [$profileId, $includeId]
-            );
-        } else {
-            $groupIds = (array) $database->getColumn(
-                'SELECT group_id
-                 FROM profiles_groups_rights
-                 WHERE profile_id = ?',
-                (int) $profileId
-            );
+        $linkedGroups = BackendModel::get('profile.repository.profile_group_right')
+            ->findLinkedToProfile($profile, $includeId);
+        $excludeGroupIds = array_map(
+            function (GroupRight $groupRight) {
+                return $groupRight->getGroup()->getId();
+            },
+            $linkedGroups
+        );
+
+        $groups = BackendModel::get('profile.repository.profile_group')->findWithExcludedIds($excludeGroupIds);
+
+        $groupsArray = [];
+        foreach ($groups as $group) {
+            $groupsArray[$group->getId()] = $group->getName();
         }
 
-        // get groups not yet linked
-        return (array) $database->getPairs(
-            'SELECT id, name
-             FROM profiles_groups
-             WHERE id NOT IN(\'' . implode('\',\'', $groupIds) . '\')'
-        );
+        return $groupsArray;
     }
 
     /**
@@ -329,13 +306,13 @@ class Model
      */
     public static function getProfileGroup(int $membershipId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT gr.id, gr.profile_id, g.id AS group_id, g.name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
-             FROM profiles_groups_rights AS gr
-             INNER JOIN profiles_groups AS g ON g.id = gr.group_id
-             WHERE gr.id = ?',
-            $membershipId
-        );
+        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+
+        if (!$groupRight instanceof GroupRight) {
+            return [];
+        }
+
+        return $groupRight->toArray();
     }
 
     /**
@@ -347,12 +324,19 @@ class Model
      */
     public static function getProfileGroups(int $profileId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT gr.id, gr.group_id, g.name AS group_name, gr.expires_on
-             FROM profiles_groups AS g
-             INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
-             WHERE gr.profile_id = ?',
-            $profileId
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $groupRights = BackendModel::get('profile.repository.profile_group_right')->findByProfile($profile);
+
+        return array_map(
+            function (GroupRight $groupRight) {
+                return [
+                    'id' => $groupRight->getId(),
+                    'group_id' => $groupRight->getGroup()->getId(),
+                    'group_name' => $groupRight->getGroup()->getName(),
+                    'expires_on' => $groupRight->getExpiryDate()->getTimestamp(),
+                ];
+            },
+            $groupRights
         );
     }
 
@@ -408,14 +392,19 @@ class Model
 
     public static function getSetting(int $profileId, string $name): ?string
     {
-        return unserialize(
-            (string) BackendModel::getContainer()->get('database')->getVar(
-                'SELECT ps.value
-                 FROM profiles_settings AS ps
-                 WHERE ps.profile_id = ? AND ps.name = ?',
-                [$profileId, $name]
-            )
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $setting = BackendModel::get('profile.repository.profile_setting')->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if (!$setting instanceof Setting) {
+            return null;
+        }
+
+        return $setting->getValue();
     }
 
     public static function getStatusForDropDown(): array
@@ -447,50 +436,10 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // new item
-        if ($excludedProfileId === null) {
-            // get number of profiles with this URL
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ?
-                 LIMIT 1',
-                $url
-            );
-
-            // already exists
-            if ($number != 0) {
-                // add number
-                $url = BackendModel::addNumber($url);
-
-                // try again
-                return self::getUrl($url);
-            }
-        } else {
-            // get number of profiles with this URL
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ? AND p.id != ?
-                 LIMIT 1',
-                [$url, $excludedProfileId]
-            );
-
-            // already exists
-            if ($number != 0) {
-                // add number
-                $url = BackendModel::addNumber($url);
-
-                // try again
-                return self::getUrl($url, $excludedProfileId);
-            }
-        }
-
-        // cough up new url
-        return $url;
+        return BackendModel::get('profile.repository.profile')->getUrl(
+            $url,
+            $excludedProfileId
+        );
     }
 
     /**
@@ -521,22 +470,20 @@ class Model
         $html = '<div class="dataGridAvatar">' . "\n";
         $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
-            $html .= '      <a href="' .
-                     BackendModel::createUrlForAction(
-                         'Edit',
-                         'Profiles'
-                     ) . '&amp;id=' . $id . '">' . "\n";
+            $html .= '      <a href="' . BackendModel::createUrlForAction(
+                'Edit',
+                'Profiles'
+            ) . '&amp;id=' . $id . '">' . "\n";
         }
         $html .= '          <img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
         if ($allowed) {
             $html .= '      </a>' . "\n";
         }
         $html .= '  </div>';
-        $html .= '  <p><a href="' .
-                 BackendModel::createUrlForAction(
-                     'Edit',
-                     'Profiles'
-                 ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+        $html .= '  <p><a href="' . BackendModel::createUrlForAction(
+            'Edit',
+            'Profiles'
+        ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
         $html .= '</div>';
 
         return $html;
@@ -622,7 +569,7 @@ class Model
                 // build item
                 $values['profile_id'] = $id;
                 $values['group_id'] = $groupId;
-                $values['starts_on'] = BackendModel::getUTCDate();
+                $values['starts_on'] = time();
 
                 // insert values
                 self::insertProfileGroup($values);
@@ -634,12 +581,35 @@ class Model
 
     public static function insert(array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles', $profile);
+        $password = '';
+        if (array_key_exists('password', $profile)) {
+            $password = $profile['password'];
+        }
+        $status = Status::active();
+        if (array_key_exists('status', $profile)) {
+            $status = Status::fromString($profile['status']);
+        }
+
+        $profile = new Profile(
+            $profile['email'],
+            $password,
+            $status,
+            $profile['display_name'],
+            $profile['url']
+        );
+
+        BackendModel::get('profile.repository.profile')->add($profile);
+
+        return $profile->getId();
     }
 
     public static function insertGroup(array $group): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups', $group);
+        $group = new Group($group['name']);
+
+        BackendModel::get('profile.repository.profile_group')->add($group);
+
+        return $group->getId();
     }
 
     /**
@@ -651,7 +621,42 @@ class Model
      */
     public static function insertProfileGroup(array $membership): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $membership);
+        $profile = BackendModel::get('profile.repository.profile')->find($membership['profile_id']);
+        $group = BackendModel::get('profile.repository.profile_group')->find($membership['group_id']);
+
+        $expiresOn = null;
+        if (array_key_exists('expires_on', $membership)) {
+            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+        }
+
+        $existingGroupRight = $profile->getRights()->filter(
+            function (GroupRight $groupRight) use ($group) {
+                return $groupRight->getGroup()->getId() === $group->getId();
+            }
+        )->first();
+
+        if ($existingGroupRight instanceof GroupRight) {
+            $existingGroupRight->update(
+                $group,
+                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+                null
+            );
+
+            BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+            return $existingGroupRight->getId();
+        }
+
+        $groupRight = new GroupRight(
+            $profile,
+            $group,
+            DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+            $expiresOn
+        );
+
+        BackendModel::get('profile.repository.profile_group_right')->add($groupRight);
+
+        return $groupRight->getId();
     }
 
     /**
@@ -782,12 +787,27 @@ class Model
      */
     public static function setSetting(int $profileId, string $name, $value): void
     {
-        BackendModel::getContainer()->get('database')->execute(
-            'INSERT INTO profiles_settings(profile_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            [$profileId, $name, serialize($value), serialize($value)]
+        $SettingRepository = BackendModel::get('profile.repository.profile_setting');
+
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        $existingSetting = $SettingRepository->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if ($existingSetting instanceof Setting) {
+            $existingSetting->update($value);
+
+            BackendModel::get('doctrine.orm.default_entity_manager')->flush();
+
+            return;
+        }
+
+        $setting = new Setting($profile, $name, $value);
+        $SettingRepository->add($setting);
     }
 
     /**
@@ -800,17 +820,59 @@ class Model
      */
     public static function update(int $profileId, array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
+        $profileEntity = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        if (!$profileEntity instanceof Profile) {
+            return $profileId;
+        }
+
+        $email = $profileEntity->getEmail();
+        if (array_key_exists('email', $profile)) {
+            $email = $profile['email'];
+        }
+        $password = $profileEntity->getPassword();
+        if (array_key_exists('password', $profile)) {
+            $password = $profile['password'];
+        }
+        $status = $profileEntity->getStatus();
+        if (array_key_exists('status', $profile)) {
+            $status = Status::fromString($profile['status']);
+        }
+        $displayName = $profileEntity->getDisplayName();
+        if (array_key_exists('display_name', $profile)) {
+            $displayName = $profile['display_name'];
+        }
+        $url = $profileEntity->getUrl();
+        if (array_key_exists('url', $profile)) {
+            $url = $profile['url'];
+        }
+
+        $profileEntity->update(
+            $email,
+            $password,
+            $status,
+            $displayName,
+            $url
+        );
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $profileId;
     }
 
-    public static function updateGroup(int $profileId, array $group): int
+    public static function updateGroup(int $groupId, array $group): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update(
-            'profiles_groups',
-            $group,
-            'id = ?',
-            $profileId
-        );
+        $groupEntity = BackendModel::get('profile.repository.profile_group')->find($groupId);
+
+        if (!$groupEntity instanceof Group) {
+            return $groupId;
+        }
+
+        $groupEntity->update($group['name']);
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $groupId;
     }
 
     /**
@@ -823,11 +885,29 @@ class Model
      */
     public static function updateProfileGroup(int $membershipId, array $membership): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update(
-            'profiles_groups_rights',
-            $membership,
-            'id = ?',
-            $membershipId
-        );
+        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+
+        if (!$groupRight instanceof GroupRight) {
+            return $membershipId;
+        }
+
+        $group = $groupRight->getGroup();
+        if (array_key_exists('group_id', $membership)) {
+            $group = BackendModel::get('profile.repository.profile_group')->find($membership['group_id']);
+        }
+        $expiresOn = $groupRight->getExpiryDate();
+        if (array_key_exists('expires_on', $membership)) {
+            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
+        }
+        $startsOn = $groupRight->getStartDate();
+        if (array_key_exists('starts_on', $membership)) {
+            $expiresOn = DateTime::createFromFormat('U', $membership['starts_on']);
+        }
+
+        $groupRight->update($group, $startsOn, $expiresOn);
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $membershipId;
     }
 }

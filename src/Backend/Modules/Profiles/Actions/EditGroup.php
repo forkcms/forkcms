@@ -49,7 +49,7 @@ class EditGroup extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('editGroup');
-        $this->form->addText('name', $this->group['name'])->makeRequired();
+        $this->form->addText('name', $this->group['name'], null, 'form-control title', 'form-control danger title')->makeRequired();
     }
 
     protected function parse(): void
@@ -87,7 +87,7 @@ class EditGroup extends BackendBaseActionEdit
                 $values = ['name' => $txtName->getValue()];
 
                 // update values
-                BackendProfilesModel::updateGroup($this->id, ['name' => $values]);
+                BackendProfilesModel::updateGroup($this->id, $values);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

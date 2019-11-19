@@ -4,6 +4,6 @@
 #}
 {% if widgetContentBlocks.text %}
   <div class="module-content-blocks widget-content-blocks-default contentBlock{{ widgetContentBlocks.id }}">
-    {{ widgetContentBlocks.text|raw }}
+    {{ widgetContentBlocks.text|parse_blocks }}
   </div>
 {% endif %}

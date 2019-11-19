@@ -45,9 +45,6 @@ class ForkController extends Controller
      */
     public function backendController(): Response
     {
-        defined('APPLICATION') || define('APPLICATION', 'Backend');
-        defined('NAMED_APPLICATION') || define('NAMED_APPLICATION', 'private');
-
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->container->get('kernel'));
 
@@ -59,8 +56,6 @@ class ForkController extends Controller
      */
     public function backendAjaxController(): Response
     {
-        defined('APPLICATION') || define('APPLICATION', 'Backend');
-
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
 
@@ -72,8 +67,6 @@ class ForkController extends Controller
      */
     public function frontendController(): Response
     {
-        defined('APPLICATION') || define('APPLICATION', 'Frontend');
-
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->container->get('kernel'));
 
@@ -85,8 +78,6 @@ class ForkController extends Controller
      */
     public function frontendAjaxController(): Response
     {
-        defined('APPLICATION') || define('APPLICATION', 'Frontend');
-
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
 

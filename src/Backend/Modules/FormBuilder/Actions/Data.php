@@ -215,7 +215,7 @@ class Data extends BackendBaseActionIndex
         }
 
         $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
-        $this->form->addText('id', $this->id, 255, 'hidden');
+        $this->form->addText('id', $this->id, 255, 'd-none');
         $this->form->addDate('start_date', $startDate);
         $this->form->addDate('end_date', $endDate);
 

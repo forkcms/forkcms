@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
 
@@ -8,7 +8,7 @@
 {% block content %}
   {% if noAccounts %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="alert alert-info" role="alert">
           {{ 'msg.NoAccounts'|trans|format(email)|raw }}
         </div>
@@ -18,18 +18,20 @@
   {% form settings %}
   {% if fileCertificate %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.Certificate'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
-              <p class="help-block">
-                {{ 'msg.CertificateHelp'|trans|raw }}
-              </p>
+             <p>
+               <small class="form-text text-muted">
+                 {{ 'msg.CertificateHelp'|trans|raw }}
+               </small>
+             </p>
               {% form_field certificate %} {% form_field_error certificate %}
               <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
               {% form_field email %} {% form_field_error email %}
@@ -41,14 +43,14 @@
   {% endif %}
   {% if ddmAccount %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.ChooseThisAccount'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               {% form_field account %}
             </div>
@@ -59,14 +61,14 @@
   {% endif %}
   {% if ddmWebPropertyId %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               {% form_field web_property_id %}
             </div>
@@ -75,54 +77,54 @@
       </div>
     </div>
   {% endif %}
-  {% if web_property_id %}
-    <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
-              {{ 'lbl.LinkedProfile'|trans|ucfirst }}
-            </h2>
-          </div>
-          <div class="panel-body">
-            <div class="form-group last">
-              <strong>{{ web_property_id }}</strong>{% if profile %}: ga:profile{% endif %}
+
+
+  {% if ddmProfile or web_property_id %}
+    <div class="row">
+      {% if ddmProfile %}
+        <div class="col-lg-6">
+          <div class="card card-default w-100">
+            <div class="card-heading">
+              <h2 class="card-title">
+                {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="form-group last">
+                {% form_field profile %}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  {% endif %}
-  {% if ddmProfile %}
-    <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
-              {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
-            </h2>
-          </div>
-          <div class="panel-body">
-            <div class="form-group last">
-              {% form_field profile %}
+      {% endif %}
+      {% if web_property_id %}
+        <div class="col-lg-6 d-flex">
+          <div class="card card-default w-100">
+            <div class="card-heading">
+              <h2 class="card-title">
+                {{ 'lbl.LinkedProfile'|trans|ucfirst }}
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="form-group last">
+                <strong>{{ web_property_id }}</strong>{% if profile %}: ga:profile{% endif %}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      {% endif %}
     </div>
   {% endif %}
 
   <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
+    <div class="col-12">
+      <div class="btn-toolbar align-items-center">
         {% if showAnalyticsReset and fileCertificate is not defined %}
-          <div class="btn-group" role="group">
-            <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
-          </div>
+          <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
         {% endif %}
         {% if not profile and (noAccounts == false or noAccounts is not defined) %}
-          <div class="btn-group pull-right" role="group">
-            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
+          <div class="btn-group ml-auto" role="group">
+            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
           </div>
         {% endif %}
       </div>

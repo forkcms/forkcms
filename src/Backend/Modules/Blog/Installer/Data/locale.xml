@@ -16,12 +16,22 @@
         <translation language="lt"><![CDATA[naujas įrašas]]></translation>
         <translation language="sv"><![CDATA[lägg till artikel]]></translation>
         <translation language="el"><![CDATA[Προσθήκη άρθρου]]></translation>
-		<translation language="pl"><![CDATA[dodaj artykuł]]></translation>
+		    <translation language="pl"><![CDATA[dodaj artykuł]]></translation>
       </item>
       <item type="label" name="WordpressFilter">
         <translation language="nl"><![CDATA[filter]]></translation>
         <translation language="en"><![CDATA[filter]]></translation>
-		<translation language="pl"><![CDATA[filtr]]></translation>
+		    <translation language="pl"><![CDATA[filtr]]></translation>
+      </item>
+      <item type="label" name="EditCategory">
+        <translation language="nl"><![CDATA[category aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit category]]></translation>
+        <translation language="pl"><![CDATA[edytuj kategorię]]></translation>
+        <translation language="ru"><![CDATA[редактировать категорию]]></translation>
+      </item>
+      <item type="label" name="ImportWordpress">
+        <translation language="nl"><![CDATA[wordpress import]]></translation>
+        <translation language="en"><![CDATA[wordpress import]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
@@ -418,5 +428,31 @@
 		<translation language="pl"><![CDATA[Można przesyłać tylko pliki XML.]]></translation>
       </item>
     </Blog>
+    <Core>
+      <item type="label" name="RelatedArticles">
+        <translation language="nl"><![CDATA[gerelateerde artikelen]]></translation>
+        <translation language="en"><![CDATA[related articles]]></translation>
+        <translation language="fr"><![CDATA[articles connexes]]></translation>
+        <translation language="de"><![CDATA[ähnliche Artikel]]></translation>
+        <translation language="pl"><![CDATA[artykuły pokrewne]]></translation>
+        <translation language="es"><![CDATA[artículos relacionados]]></translation>
+        <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
+        <translation language="it"><![CDATA[articoli correlati]]></translation>
+      </item>
+    </Core>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="label" name="RelatedArticles">
+        <translation language="nl"><![CDATA[gerelateerde artikelen]]></translation>
+        <translation language="en"><![CDATA[related articles]]></translation>
+        <translation language="fr"><![CDATA[articles connexes]]></translation>
+        <translation language="de"><![CDATA[ähnliche Artikel]]></translation>
+        <translation language="pl"><![CDATA[artykuły pokrewne]]></translation>
+        <translation language="es"><![CDATA[artículos relacionados]]></translation>
+        <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
+        <translation language="it"><![CDATA[articoli correlati]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>

@@ -6,13 +6,14 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Table(name="meta", indexes={@ORM\Index(name="idx_url", columns={"url"})})
  * @ORM\Entity(repositoryClass="Common\Doctrine\Repository\MetaRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Meta
+class Meta implements JsonSerializable
 {
     /**
      * @var int
@@ -326,5 +327,24 @@ class Meta
         }
 
         return $this->seoFollow;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'keywords' => $this->getKeywords(),
+            'keywordsOverwrite' => $this->isKeywordsOverwrite(),
+            'description' => $this->getDescription(),
+            'descriptionOverwrite' => $this->isDescriptionOverwrite(),
+            'title' => $this->getTitle(),
+            'titleOverwrite' => $this->isTitleOverwrite(),
+            'data' => $this->getData(),
+            'url' => $this->getUrl(),
+            'urlOverwrite' => $this->isUrlOverwrite(),
+            'custom' => $this->getCustom(),
+            'seoFollow' => $this->getSEOFollow(),
+            'seoIndex' => $this->getSEOIndex(),
+        ];
     }
 }

@@ -29,7 +29,9 @@ final class TreeManager
         $navigationItems = $this->mediaFolderCache->get();
 
         $html = '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
+        $html .= '<div data-tree="main">' . "\n";
         $html .= $this->buildNavigationTree($navigationItems);
+        $html .= '</div>' . "\n";
 
         return $html;
     }
@@ -37,8 +39,7 @@ final class TreeManager
     private function buildNavigationTree(array $navigationItems): string
     {
         // start
-        $html = '<div class="clearfix">' . "\n";
-        $html .= '  <ul>' . "\n";
+        $html = '  <ul>' . "\n";
 
         /** @var MediaFolderCacheItem $cacheItem */
         foreach ($navigationItems as $cacheItem) {
@@ -47,7 +48,6 @@ final class TreeManager
 
         // end
         $html .= '  </ul>' . "\n";
-        $html .= '</div>' . "\n";
 
         return $html;
     }
@@ -58,7 +58,7 @@ final class TreeManager
         $url = $this->getLink(['folder' => $cacheItem->id]);
 
         // start
-        $html = '<li id="folder-' . $cacheItem->id . '" rel="folder">' . "\n";
+        $html = '<li id="folder-' . $cacheItem->id . '" rel="folder" data-jstree=\'{"type":"' . 'folder' . '"}\'">' . "\n";
 
         // insert link
         $html .= '<a href="' . $url . '"><ins>&#160;</ins>' . $cacheItem->name . ' (' . $cacheItem->numberOfMediaItems . ')</a>' . "\n";
