@@ -195,4 +195,9 @@ class ModuleExtra
         }
         $this->data = unserialize($this->data, ['allowed_classes' => false]);
     }
+
+    public function setData(string $key, $value): void
+    {
+        $this->data[$key] = $value;
+    }
 }

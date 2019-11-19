@@ -8,6 +8,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -47,7 +48,11 @@ class Copy extends BackendBaseActionIndex
         }
 
         // copy pages
-        BackendPagesModel::copy($from, $to, $page);
+        try {
+            BackendPagesModel::copy($from, $to, $page);
+        } catch (Exception $e) {
+            throw new NotFoundHttpException();
+        }
 
         // redirect
         $this->redirect(BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($to));

@@ -86,4 +86,12 @@ class ContentBlockRepository extends EntityRepository
             (array) $this->findBy(['id' => $id, 'locale' => $locale])
         );
     }
+
+    /**
+     * @return array|ContentBlock[]
+     */
+    public function findAllActiveForLocale(string $locale): array
+    {
+        return $this->findBy(['locale' => $locale, 'status' => Status::active()]);
+    }
 }
