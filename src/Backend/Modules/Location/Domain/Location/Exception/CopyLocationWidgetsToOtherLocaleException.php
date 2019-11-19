@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception;
+namespace Backend\Modules\Location\Domain\Location\Exception;
 
 use Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocale;
 

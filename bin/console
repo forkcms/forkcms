@@ -52,7 +52,7 @@ if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
         new CopyLocaleCommand(
             $kernel->getContainer()->get('fork.settings'),
-            $kernel->getContainer()->get('fork.manager.copy_modules_to_other_locale')
+            $kernel->getContainer()->get(ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager::class)
         )
     );
     $application->add(

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Location\Domain\Location\Command;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\CopyLocationWidgetsToOtherLocaleException;
+use Backend\Modules\Location\Domain\Location\Exception\CopyLocationWidgetsToOtherLocaleException;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;

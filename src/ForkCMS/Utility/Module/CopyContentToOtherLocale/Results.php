@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
-use ForkCMS\Utility\Module\Exception\CopiedModuleContentToOtherLocaleNotFound;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\Exception\CopiedModuleContentToOtherLocaleNotFound;
 
 final class Results
 {

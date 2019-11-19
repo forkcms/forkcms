@@ -19,6 +19,7 @@ use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use DateTime;
 use ForkCMS\App\ForkController;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use RuntimeException;
@@ -93,7 +94,7 @@ class Model
 
     public static function copy(string $fromLanguage, string $toLanguage): void
     {
-        BackendModel::get('fork.manager.copy_modules_to_other_locale')->copy(
+        BackendModel::get(CopyContentFromModulesToOtherLocaleManager::class)->copy(
             Locale::fromString($fromLanguage),
             Locale::fromString($toLanguage)
         );

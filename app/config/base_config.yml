@@ -212,8 +212,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
 
-    fork.manager.copy_modules_to_other_locale:
-        class: ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager
+    ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager:
         public: true
         arguments:
             - "@command_bus"

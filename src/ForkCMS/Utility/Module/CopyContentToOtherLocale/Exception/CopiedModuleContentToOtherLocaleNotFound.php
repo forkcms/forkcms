@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Utility\Module\Exception;
+namespace ForkCMS\Utility\Module\CopyContentToOtherLocale\Exception;
 
 class CopiedModuleContentToOtherLocaleNotFound extends \Exception
 {
