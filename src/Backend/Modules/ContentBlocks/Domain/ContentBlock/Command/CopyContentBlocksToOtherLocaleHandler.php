@@ -6,10 +6,12 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
-use Common\Locale;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Common\Locale;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
+use RuntimeException;
 
 final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
@@ -24,10 +26,10 @@ final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleContentTo
     public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
         if (!$command instanceof CopyContentBlocksToOtherLocale) {
-            throw new \Exception('The class should be ' . CopyContentBlocksToOtherLocale::class);
+            throw new RuntimeException('The class should be ' . CopyContentBlocksToOtherLocale::class);
         }
 
-        $contentBlocksToCopy = $this->getContentBlocksToCopy($command->getFromLocale());
+        $contentBlocksToCopy = $this->getContentBlocksToCopy($command->getFromLocale(), $command->getPageToCopy());
         $id = $this->contentBlockRepository->getNextIdForLanguage($command->getToLocale());
 
         array_map(
@@ -48,14 +50,18 @@ final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleContentTo
         );
     }
 
-    private function getContentBlocksToCopy(Locale $locale): array
+    private function getContentBlocksToCopy(Locale $locale, ?Page $filterByPage): array
     {
-        return (array) $this->contentBlockRepository->findBy(
-            [
-                'locale' => $locale,
-                'status' => Status::active()
-            ]
-        );
+        $filter = [
+            'locale' => $locale,
+            'status' => Status::active(),
+        ];
+
+        if ($filterByPage instanceof Page) {
+            $filter['revisionId'] = $filterByPage->getRevisionId();
+        }
+
+        return $this->contentBlockRepository->findBy($filter);
     }
 
     private function getNewExtraId(): int

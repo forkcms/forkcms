@@ -17,12 +17,14 @@ use Common\Doctrine\Repository\MetaRepository;
 use DateTime;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
+use SpoonDatabase;
 
 final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
     public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
         // get database
+        /** @var SpoonDatabase $database */
         $database = BackendModel::getContainer()->get('database');
 
         /** @var MetaRepository $metaRepository */
@@ -48,56 +50,35 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $locationWidgetOldIds = array_keys($locationWidgetIds);
         }
 
-        // get all old pages
         /** @var PageRepository $pageRepository */
-        $pageRepository = BackendModel::get(PageRepository::class);
-        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
 
-        // delete existing pages
-        /** @var Page $page */
-        foreach ($pages as $page) {
-            // redefine
-            $activePage = $page->getId();
-
-            // get revision ids
-            $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
-            $revisionIDs = array_map(
-                function (Page $page) {
-                    return $page->getRevisionId();
-                },
-                $pagesById
+        if ($command->getPageToCopy() instanceof Page) {
+            $oldPagesToRemove = $pageRepository->findBy(
+                [
+                    'id' => $command->getPageToCopy()->getId(),
+                    'language' => $command->getToLocale(),
+                    'status' => Status::active(),
+                ]
             );
-
-            /** @var Page $item */
-            foreach ($pagesById as $item) {
-                $metaRepository->remove($item->getMeta());
-            }
-
-            // delete blocks and their revisions
-            if (!empty($revisionIDs)) {
-                /** @var PageBlockRepository $pageBlockRepository */
-                $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
-                $pageBlockRepository->deleteByRevisionIds($revisionIDs);
-            }
-
-            // delete page and the revisions
-            /** @var Page $item */
-            foreach ($pagesById as $item) {
-                $pageRepository->remove($item);
-            }
+            $activePagesToCopy = [$command->getPageToCopy()];
+        } else {
+            $oldPagesToRemove = $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
+            $activePagesToCopy = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
         }
 
-        // delete search indexes
-        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
+        // delete existing pages
+        foreach ($oldPagesToRemove as $page) {
+            $this->deletePage($page, $pageRepository, $toLanguage, $metaRepository);
+        }
 
-        // get all active pages
-        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
+        $this->deleteSearchIndexes($database, $toLanguage);
 
         // loop
-        /** @var Page $activePage */
-        foreach ($activePages as $activePage) {
+        /** @var Page $activePageToCopy */
+        foreach ($activePagesToCopy as $activePageToCopy) {
             // get data
-            $sourceData = BackendPagesModel::get($activePage->getId(), null, $fromLanguage);
+            $sourceData = BackendPagesModel::get($activePageToCopy->getId(), null, $fromLanguage);
 
             // get and build meta
             /** @var Meta $originalMeta */
@@ -141,7 +122,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $blocks = [];
 
             // get the blocks
-            $sourceBlocks = BackendPagesModel::getBlocks($activePage->getId(), null, $fromLanguage);
+            $sourceBlocks = BackendPagesModel::getBlocks($activePageToCopy->getId(), null, $fromLanguage);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -188,7 +169,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             );
 
             // get tags
-            $tags = BackendTagsModel::getTags('pages', $activePage->getId(), 'string', $fromLanguage);
+            $tags = BackendTagsModel::getTags('pages', $activePageToCopy->getId(), 'string', $fromLanguage);
 
             // save tags
             if ($tags !== '') {
@@ -207,5 +188,50 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
 
         // build cache
         BackendPagesModel::buildCache($toLanguage);
+    }
+
+    private function deletePage(
+        Page $page,
+        PageRepository $pageRepository,
+        string $toLanguage,
+        MetaRepository $metaRepository
+    ): void {
+        // redefine
+        $activePage = $page->getId();
+
+        // get revision ids
+        $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
+        $revisionIDs = array_map(
+            function (Page $page) {
+                return $page->getRevisionId();
+            },
+            $pagesById
+        );
+
+        /** @var Page $item */
+        foreach ($pagesById as $item) {
+            $metaRepository->remove($item->getMeta());
+        }
+
+        // delete blocks and their revisions
+        if (count($revisionIDs) !== 0) {
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByRevisionIds($revisionIDs);
+        }
+
+        // delete page and the revisions
+        /** @var Page $item */
+        foreach ($pagesById as $item) {
+            $pageRepository->remove($item);
+        }
+    }
+
+    /**
+     * @throws \SpoonDatabaseException
+     */
+    private function deleteSearchIndexes(SpoonDatabase $database, string $toLanguage): void
+    {
+        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
     }
 }
