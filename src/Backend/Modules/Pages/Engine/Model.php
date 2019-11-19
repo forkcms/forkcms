@@ -1334,7 +1334,7 @@ class Model
 
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
-            $newSequence = $pageRepository->getNewSequenceForMove($newParent, $language);
+            $newSequence = $pageRepository->getNewSequenceForMove((int) $newParent, $language);
 
             $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
