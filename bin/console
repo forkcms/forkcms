@@ -16,6 +16,7 @@ use Console\Locale\ImportLocaleCommand;
 use Console\Thumbnails\GenerateThumbnailsCommand;
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -46,7 +47,7 @@ $backend->initialize('Console');
 
 $application = new Application($kernel);
 $application->add(new ImportLocaleCommand());
-$application->add(new GenerateThumbnailsCommand());
+$application->add(new GenerateThumbnailsCommand($kernel->getContainer()->get(Thumbnails::class)));
 if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
         new CopyLocaleCommand(
