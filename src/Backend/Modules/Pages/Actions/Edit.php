@@ -3,20 +3,25 @@
 namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
+use Backend\Modules\Pages\Domain\Page\Form\CopyPageType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 
@@ -218,6 +223,18 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
+        /** @var PageRepository $pageRepository */
+        $pageRepository = $this->get(PageRepository::class);
+        $page = $pageRepository->findOneBy(['id' => $this->record['id'], 'revisionId' => $this->record['revision_id']]);
+
+        if ($page instanceof Page) {
+            $copyForm = $this->createForm(
+                CopyPageType::class,
+                new CopyPageDataTransferObject(Locale::workingLocale(), $page)
+            );
+            $this->template->assign('copy_form', $copyForm->createView());
+        }
+
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
 
