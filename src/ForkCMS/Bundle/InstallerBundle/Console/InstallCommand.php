@@ -13,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -63,6 +64,8 @@ class InstallCommand extends Command
         $this
             ->setName('forkcms:install:install')
             ->setDescription('Install fork')
+            ->addOption('email', 'u', InputOption::VALUE_REQUIRED, 'The email address of the backend user')
+            ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'The password of the backend user')
             ->setHidden($this->forkIsInstalled);
     }
 
@@ -73,7 +76,7 @@ class InstallCommand extends Command
         $this->formatter = new SymfonyStyle($input, $output);
 
         if (!$this->isReadyForInstall()) {
-
+            return;
         }
 
         try {
@@ -104,7 +107,7 @@ class InstallCommand extends Command
 
     private function getInstallationData(): InstallationData
     {
-        $config = Yaml::parse(file_get_contents($this->installConfigPath))['config'] ?? [];
+        $config = $this->getInstallationConfig();
         $installationData = new InstallationData();
 
         $this->setLanguageConfig($config['language'] ?? [], $installationData);
@@ -237,7 +240,7 @@ class InstallCommand extends Command
     {
         if ($this->forkIsInstalled
             && $this->prepareForReinstallCommand->run(
-                $this->input,
+                new ArrayInput([]),
                 $this->output
             ) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
             $this->formatter->error('Fork CMS is already installed');
@@ -260,5 +263,19 @@ class InstallCommand extends Command
         }
 
         return true;
+    }
+
+    private function getInstallationConfig(): array
+    {
+        $config = Yaml::parse(file_get_contents($this->installConfigPath))['config'] ?? [];
+
+        if ($this->input->hasOption('email')) {
+            $config['user']['email'] = $this->input->getOption('email');
+        }
+        if ($this->input->hasOption('password')) {
+            $config['user']['password'] = $this->input->getOption('password');
+        }
+
+        return $config;
     }
 }
