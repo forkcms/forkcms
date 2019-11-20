@@ -3,6 +3,8 @@
 namespace ForkCMS\Bundle\InstallerBundle\Console;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -89,9 +91,27 @@ class InstallCommand extends Command
         $config = Yaml::parse(file_get_contents($this->installConfigPath))['config'] ?? [];
         $installationData = new InstallationData();
 
+        $this->setLanguageConfig($config['language'] ?? [], $installationData);
         $this->setDatabaseConfig($config['database'] ?? [], $installationData);
 
         return $installationData;
+    }
+
+    private function setLanguageConfig(array $config, InstallationData $installationData): void
+    {
+        if (!$this->isConfigComplete($config, ['multiLanguage', 'defaultLanguage', 'defaultInterfaceLanguage'])) {
+            $this->formatter->error('Language config is not complete');
+
+            return;
+        }
+        $installationData->setLanguageType($config['multiLanguage'] ? 'multiple' : 'single');
+        $installationData->setDefaultLanguage($config['defaultLanguage']);
+        $installationData->setDefaultInterfaceLanguage($config['defaultInterfaceLanguage']);
+
+        $installationData->setLanguages($config['languages'] ?? []);
+        $installationData->setInterfaceLanguages($config['interfaceLanguages'] ?? []);
+
+        (new LanguagesHandler())->processInstallationData($installationData);
     }
 
     private function setDatabaseConfig(array $config, InstallationData $installationData): void
@@ -110,6 +130,8 @@ class InstallCommand extends Command
         if (array_key_exists('port', $config) && $config['port'] !== null) {
             $installationData->setDatabasePort($config['port']);
         }
+
+        (new DatabaseHandler())->processInstallationData($installationData);
     }
 
     private function isConfigComplete(array $config, array $required): bool
