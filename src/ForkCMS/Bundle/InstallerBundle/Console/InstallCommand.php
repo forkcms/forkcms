@@ -3,15 +3,13 @@
 namespace ForkCMS\Bundle\InstallerBundle\Console;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
-use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement;
-use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
-use ForkCMS\Bundle\InstallerBundle\Service\RequirementsChecker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * This command will run the requirements checks of fork
@@ -30,11 +28,14 @@ class InstallCommand extends Command
     /** @var ForkInstaller */
     private $installer;
 
-    public function __construct(ForkInstaller $installer)
+    /** @var string */
+    private $installConfigPath;
+
+    public function __construct(ForkInstaller $installer, string $projectDirectory)
     {
         parent::__construct();
-
         $this->installer = $installer;
+        $this->installConfigPath = $projectDirectory . '/app/config/cli-install.yml';
     }
 
     protected function configure(): void
@@ -52,9 +53,19 @@ class InstallCommand extends Command
 
         if (!$this->serverMeetsRequirements()) {
             $this->formatter->error('This server is not compatible with Fork CMS');
+
+            return;
         }
 
-        if ($this->installer->install(new InstallationData())) {
+        if (!is_file($this->installConfigPath)) {
+            $this->formatter->error(
+                'Please add your app/config/cli-install.yml based on app/config/cli-install.yml.dist'
+            );
+
+            return;
+        }
+
+        if ($this->installer->install($this->getInstallationData())) {
             $this->formatter->success('Fork CMS is installed');
 
             return;
@@ -71,5 +82,38 @@ class InstallCommand extends Command
 
         return $checkRequirementsResult === CheckRequirementsCommand::RETURN_SERVER_MEETS_REQUIREMENTS
                || $checkRequirementsResult === CheckRequirementsCommand::RETURN_SERVER_MEETS_REQUIREMENTS_BUT_HAS_WARNINGS;
+    }
+
+    private function getInstallationData(): InstallationData
+    {
+        $config = Yaml::parse(file_get_contents($this->installConfigPath))['config'] ?? [];
+        $installationData = new InstallationData();
+
+        $this->setDatabaseConfig($config['database'] ?? [], $installationData);
+
+        return $installationData;
+    }
+
+    private function setDatabaseConfig(array $config, InstallationData $installationData): void
+    {
+        if (!$this->isConfigComplete($config, ['hostname', 'username', 'password', 'name'])) {
+            $this->formatter->error('Database config is not complete');
+
+            return;
+        }
+
+        $installationData->setDatabaseHostname($config['hostname']);
+        $installationData->setDatabaseUsername($config['username']);
+        $installationData->setDatabasePassword($config['password']);
+        $installationData->setDatabaseName($config['name']);
+
+        if (array_key_exists('port', $config) && $config['port'] !== null) {
+            $installationData->setDatabasePort($config['port']);
+        }
+    }
+
+    private function isConfigComplete(array $config, array $required): bool
+    {
+        return count(array_intersect_key(array_flip($required), $config)) === count($required);
     }
 }

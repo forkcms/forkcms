@@ -1,5 +1,6 @@
 # Configuration
 /app/config/parameters.yml
+/app/config/cli-install.yml
 
 # Libraries
 /vendor/*

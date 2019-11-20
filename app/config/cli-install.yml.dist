@@ -1,0 +1,21 @@
+config:
+    database:
+        hostname: # string
+        username: # string
+        password: # string
+        name:  # string
+        port: # optional int
+    language:
+        multiLanguage: # boolean
+        languages: # string[]
+        defaultLanguage: # string
+        interfaceLanguages: # optional string[]
+        defaultInterfaceLanguage: # optional string
+    modules:
+        install: # string[] of all modules that aren't required by default
+        exampleData: # boolean
+    debug:
+        email: # optional string
+    user:
+        email: # string
+        password: # string
