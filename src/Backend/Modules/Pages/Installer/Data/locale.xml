@@ -778,6 +778,18 @@
         <translation language="ru"><![CDATA[<p><strong>Важно:</strong> Копия еще не сохранена.</p>]]></translation>
         <translation language="it"><![CDATA[<p><strong>Importante:</strong> La copia non è stata ancora salvata.</p>]]></translation>
       </item>
+      <item type="error" name="ErrorCopy">
+        <translation language="en"><![CDATA[An error occurred while copying the requested page.]]></translation>
+        <translation language="nl"><![CDATA[Een fout is opgetreden tijdens het kopieeren van de pagina.]]></translation>
+      </item>
+      <item type="label" name="CopyPageToAnotherLanguage">
+        <translation language="en"><![CDATA[Copy page to another language]]></translation>
+        <translation language="nl"><![CDATA[Kopieer deze pagina naar een andere taal]]></translation>
+      </item>
+      <item type="label" name="ToLanguage">
+        <translation language="en"><![CDATA[Select language]]></translation>
+        <translation language="nl"><![CDATA[Selecteer taal]]></translation>
+      </item>
     </Pages>
     <Core>
       <item type="error" name="CantBeMoved">
