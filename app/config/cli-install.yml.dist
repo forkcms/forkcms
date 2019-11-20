@@ -12,8 +12,8 @@ config:
         interfaceLanguages: # optional string[] only fill this in when it needs to be different from the languages
         defaultInterfaceLanguage: # needs to be in the languages array as well
     modules:
-        install: # string[] of all modules that aren't required by default
-        exampleData: # boolean
+        install: # optional string[] of all modules that aren't required by default
+        exampleData: # optional boolean
     debug:
         email: # optional string
     user:

@@ -5,6 +5,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Console;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -92,6 +93,7 @@ class InstallCommand extends Command
         $installationData = new InstallationData();
 
         $this->setLanguageConfig($config['language'] ?? [], $installationData);
+        $this->setModulesConfig($config['modules'] ?? [], $installationData);
         $this->setDatabaseConfig($config['database'] ?? [], $installationData);
 
         return $installationData;
@@ -112,6 +114,17 @@ class InstallCommand extends Command
         $installationData->setInterfaceLanguages($config['interfaceLanguages'] ?? []);
 
         (new LanguagesHandler())->processInstallationData($installationData);
+    }
+
+    private function setModulesConfig(array $config, InstallationData $installationData): void
+    {
+        $installationData->setExampleData($config['exampleData'] ?? false);
+
+        foreach ($config['modules'] ?? [] as $module) {
+            $installationData->addModule($module);
+        }
+
+        (new ModulesHandler())->processInstallationData($installationData);
     }
 
     private function setDatabaseConfig(array $config, InstallationData $installationData): void
