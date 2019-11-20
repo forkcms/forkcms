@@ -10,7 +10,7 @@ config:
         languages: # string[] required when multiLanguage is true
         defaultLanguage: # string
         interfaceLanguages: # optional string[] only fill this in when it needs to be different from the languages
-        defaultInterfaceLanguage: # needs to be in the languages array as well
+        defaultInterfaceLanguage: # optional string defaults to the defaultLanguage and needs to be in the languages array
     modules:
         install: # optional string[] of all modules that aren't required by default
         exampleData: # optional boolean

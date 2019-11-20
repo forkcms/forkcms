@@ -106,14 +106,14 @@ class InstallCommand extends Command
 
     private function setLanguageConfig(array $config, InstallationData $installationData): void
     {
-        if (!$this->isConfigComplete($config, ['multiLanguage', 'defaultLanguage', 'defaultInterfaceLanguage'])) {
+        if (!$this->isConfigComplete($config, ['multiLanguage', 'defaultLanguage'])) {
             $this->formatter->error('Language config is not complete');
 
             return;
         }
         $installationData->setLanguageType($config['multiLanguage'] ? 'multiple' : 'single');
         $installationData->setDefaultLanguage($config['defaultLanguage']);
-        $installationData->setDefaultInterfaceLanguage($config['defaultInterfaceLanguage']);
+        $installationData->setDefaultInterfaceLanguage($config['defaultInterfaceLanguage'] ?? $config['defaultLanguage']);
 
         $installationData->setLanguages($config['languages'] ?? []);
         $installationData->setInterfaceLanguages($config['interfaceLanguages'] ?? []);
