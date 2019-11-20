@@ -72,25 +72,8 @@ class InstallCommand extends Command
         $this->output = $output;
         $this->formatter = new SymfonyStyle($input, $output);
 
-        if ($this->forkIsInstalled
-            && $this->prepareForReinstallCommand->run($input, $output) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
-            $this->formatter->error('Fork CMS is already installed');
+        if (!$this->isReadyForInstall()) {
 
-            return;
-        }
-
-        if (!$this->serverMeetsRequirements()) {
-            $this->formatter->error('This server is not compatible with Fork CMS');
-
-            return;
-        }
-
-        if (!is_file($this->installConfigPath)) {
-            $this->formatter->error(
-                'Please add your app/config/cli-install.yml based on app/config/cli-install.yml.dist'
-            );
-
-            return;
         }
 
         try {
@@ -248,5 +231,34 @@ class InstallCommand extends Command
         $question->setHidden(true);
 
         return $question;
+    }
+
+    private function isReadyForInstall(): bool
+    {
+        if ($this->forkIsInstalled
+            && $this->prepareForReinstallCommand->run(
+                $this->input,
+                $this->output
+            ) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
+            $this->formatter->error('Fork CMS is already installed');
+
+            return false;
+        }
+
+        if (!$this->serverMeetsRequirements()) {
+            $this->formatter->error('This server is not compatible with Fork CMS');
+
+            return false;
+        }
+
+        if (!is_file($this->installConfigPath)) {
+            $this->formatter->error(
+                'Please add your app/config/cli-install.yml based on app/config/cli-install.yml.dist'
+            );
+
+            return false;
+        }
+
+        return true;
     }
 }
