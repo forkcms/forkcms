@@ -94,6 +94,7 @@ class InstallCommand extends Command
 
         $this->setLanguageConfig($config['language'] ?? [], $installationData);
         $this->setModulesConfig($config['modules'] ?? [], $installationData);
+        $this->setDebugConfig($config['debug'] ?? [], $installationData);
         $this->setDatabaseConfig($config['database'] ?? [], $installationData);
 
         return $installationData;
@@ -125,6 +126,15 @@ class InstallCommand extends Command
         }
 
         (new ModulesHandler())->processInstallationData($installationData);
+    }
+
+    private function setDebugConfig(array $config, InstallationData $installationData): void
+    {
+        $installationData->setDifferentDebugEmail(array_key_exists('email', $config) && $config['email'] !== null);
+
+        if ($installationData->hasDifferentDebugEmail()) {
+            $installationData->setDebugEmail($config['email']);
+        }
     }
 
     private function setDatabaseConfig(array $config, InstallationData $installationData): void
