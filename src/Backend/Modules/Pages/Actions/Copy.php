@@ -5,11 +5,10 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Domain\Page\Page;
-use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
+use Backend\Modules\Pages\Domain\Page\Form\CopyPageType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Exception;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * BackendPagesCopy
@@ -23,38 +22,39 @@ class Copy extends BackendBaseActionIndex
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get parameters
-        $from = $this->getRequest()->query->get('from');
-        $to = $this->getRequest()->query->get('to');
-        $pageId = $this->getRequest()->query->get('id');
+        $form = $this->createForm(CopyPageType::class, new CopyPageDataTransferObject());
+        $form->handleRequest($this->getRequest());
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=error-copy');
+        }
+
+        /** @var CopyPageDataTransferObject $data */
+        $data = $form->getData();
 
         // validate
-        if ($from === null) {
-            throw new BackendException('Specify a from-parameter.');
+        if ($data->from === null) {
+            throw new BackendException('Specify a from parameter.');
         }
-        if ($to === null) {
-            throw new BackendException('Specify a to-parameter.');
-        }
-
-        $page = null;
-        if ($pageId !== null) {
-            /** @var PageRepository $pageRepository */
-            $pageRepository = $this->get(PageRepository::class);
-            $page = $pageRepository->findOneBy(['id' => $pageId]);
-
-            if (!$page instanceof Page) {
-                throw new NotFoundHttpException();
-            }
+        if ($data->to === null) {
+            throw new BackendException('Specify a to parameter.');
         }
 
         // copy pages
         try {
-            BackendPagesModel::copy($from, $to, $page);
+            BackendPagesModel::copy($data->from, $data->to, $data->pageToCopy);
         } catch (Exception $e) {
-            throw new NotFoundHttpException();
+            $this->redirect(
+                BackendModel::createUrlForAction('Edit')
+                . '&id='
+                . $data->pageToCopy->getRevisionId()
+                . '&error=error-copy'
+            );
         }
 
         // redirect
-        $this->redirect(BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($to));
+        $this->redirect(
+            BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($data->to)
+        );
     }
 }
