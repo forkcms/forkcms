@@ -8,6 +8,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -16,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 
 /**
  * This command will run the requirements checks of fork
@@ -71,8 +73,15 @@ class InstallCommand extends Command
             return;
         }
 
-        if ($this->installer->install($this->getInstallationData())) {
-            $this->formatter->success('Fork CMS is installed');
+        try {
+            if ($this->installer->install($this->getInstallationData())) {
+                $this->formatter->success('Fork CMS is installed');
+
+                return;
+            }
+        } catch (Throwable $throwable) {
+            // There was a validation error
+            $this->formatter->error($throwable->getMessage());
 
             return;
         }
@@ -107,9 +116,7 @@ class InstallCommand extends Command
     private function setLanguageConfig(array $config, InstallationData $installationData): void
     {
         if (!$this->isConfigComplete($config, ['multiLanguage', 'defaultLanguage'])) {
-            $this->formatter->error('Language config is not complete');
-
-            return;
+            throw new RuntimeException('Language config is not complete');
         }
         $installationData->setLanguageType($config['multiLanguage'] ? 'multiple' : 'single');
         $installationData->setDefaultLanguage($config['defaultLanguage']);
@@ -128,6 +135,12 @@ class InstallCommand extends Command
         foreach ($config['modules'] ?? [] as $module) {
             $installationData->addModule($module);
         }
+        foreach (ForkInstaller::getRequiredModules() as $module) {
+            $installationData->addModule($module);
+        }
+        foreach (ForkInstaller::getHiddenModules() as $module) {
+            $installationData->addModule($module);
+        }
 
         (new ModulesHandler())->processInstallationData($installationData);
     }
@@ -144,9 +157,7 @@ class InstallCommand extends Command
     private function setDatabaseConfig(array $config, InstallationData $installationData): void
     {
         if (!$this->isConfigComplete($config, ['hostname', 'username', 'password', 'name'])) {
-            $this->formatter->error('Database config is not complete');
-
-            return;
+            throw new RuntimeException('Database config is not complete');
         }
 
         $installationData->setDatabaseHostname($config['hostname']);
@@ -177,7 +188,7 @@ class InstallCommand extends Command
 
     private function isConfigComplete(array $config, array $required): bool
     {
-        return count(array_intersect_key(array_flip($required), $config)) === count($required);
+        return count(array_intersect_key(array_flip($required), array_filter($config))) === count($required);
     }
 
     private function getAskEmailQuestion(): Question
