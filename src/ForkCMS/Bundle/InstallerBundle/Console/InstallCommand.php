@@ -39,18 +39,23 @@ class InstallCommand extends Command
     /** @var string */
     private $installConfigPath;
 
-    public function __construct(ForkInstaller $installer, string $projectDirectory)
+    /** @var bool */
+    private $forkIsInstalled;
+
+    public function __construct(ForkInstaller $installer, string $projectDirectory, bool $forkIsInstalled)
     {
         parent::__construct();
         $this->installer = $installer;
         $this->installConfigPath = $projectDirectory . '/app/config/cli-install.yml';
+        $this->forkIsInstalled = $forkIsInstalled;
     }
 
     protected function configure(): void
     {
         $this
             ->setName('forkcms:install:install')
-            ->setDescription('Install fork');
+            ->setDescription('Install fork')
+            ->setHidden($this->forkIsInstalled);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
