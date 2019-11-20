@@ -17,5 +17,5 @@ config:
     debug:
         email: # optional string
     user:
-        email: # string
-        password: # string
+        email: # optional string will be asked in the cli if missing
+        password: # optional string will be asked in the cli if missing

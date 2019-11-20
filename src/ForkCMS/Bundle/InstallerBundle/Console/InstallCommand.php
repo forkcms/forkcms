@@ -5,12 +5,15 @@ namespace ForkCMS\Bundle\InstallerBundle\Console;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
@@ -96,6 +99,7 @@ class InstallCommand extends Command
         $this->setModulesConfig($config['modules'] ?? [], $installationData);
         $this->setDebugConfig($config['debug'] ?? [], $installationData);
         $this->setDatabaseConfig($config['database'] ?? [], $installationData);
+        $this->setUserConfig($config['user'] ?? [], $installationData);
 
         return $installationData;
     }
@@ -157,8 +161,59 @@ class InstallCommand extends Command
         (new DatabaseHandler())->processInstallationData($installationData);
     }
 
+    private function setUserConfig(array $config, InstallationData $installationData): void
+    {
+        if (!array_key_exists('email', $config) || $config['email'] === null) {
+            $config['email'] = $this->formatter->askQuestion($this->getAskEmailQuestion());
+        }
+        $installationData->setEmail($config['email']);
+        if (!array_key_exists('password', $config) || $config['password'] === null) {
+            $config['password'] = $this->formatter->askQuestion($this->getAskPasswordQuestion());
+        }
+        $installationData->setPassword($config['password']);
+
+        (new LoginHandler())->processInstallationData($installationData);
+    }
+
     private function isConfigComplete(array $config, array $required): bool
     {
         return count(array_intersect_key(array_flip($required), $config)) === count($required);
+    }
+
+    private function getAskEmailQuestion(): Question
+    {
+        $question = new Question('What is the email of the main backend user?');
+        $question->setValidator(
+            static function ($email) {
+                if ('' === trim($email)) {
+                    throw new InvalidArgumentException('The email must not be empty.');
+                }
+
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    throw new InvalidArgumentException('Please enter a valid email address.');
+                }
+
+                return $email;
+            }
+        );
+
+        return $question;
+    }
+
+    private function getAskPasswordQuestion(): Question
+    {
+        $question = new Question('What is the password of the main backend user?');
+        $question->setValidator(
+            static function ($password) {
+                if ('' === trim($password)) {
+                    throw new InvalidArgumentException('The password must not be empty.');
+                }
+
+                return $password;
+            }
+        );
+        $question->setHidden(true);
+
+        return $question;
     }
 }
