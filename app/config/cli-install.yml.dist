@@ -7,10 +7,10 @@ config:
         port: # optional int
     language:
         multiLanguage: # boolean
-        languages: # string[]
+        languages: # string[] required when multiLanguage is true
         defaultLanguage: # string
-        interfaceLanguages: # optional string[]
-        defaultInterfaceLanguage: # optional string
+        interfaceLanguages: # optional string[] only fill this in when it needs to be different from the languages
+        defaultInterfaceLanguage: # needs to be in the languages array as well
     modules:
         install: # string[] of all modules that aren't required by default
         exampleData: # boolean
