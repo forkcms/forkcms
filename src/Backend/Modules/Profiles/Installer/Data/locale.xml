@@ -76,6 +76,18 @@
         <translation language="el"><![CDATA[Προσθήκη σε μία ομάδα]]></translation>
         <translation language="pl"><![CDATA[Dodaj do grupy]]></translation>
       </item>
+      <item type="label" name="AddProfileGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[добавить группу]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar grupo]]></translation>
+        <translation language="uk"><![CDATA[додати групу]]></translation>
+        <translation language="pl"><![CDATA[dodaj grupę]]></translation>
+      </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
         <translation language="en"><![CDATA[birth date]]></translation>
@@ -198,6 +210,14 @@
         <translation language="nl"><![CDATA[Gelieve een nieuw e-mailadres in te geven.]]></translation>
         <translation language="en"><![CDATA[Please add a new mail address.]]></translation>
         <translation language="pl"><![CDATA[Proszę podać nowy adres mailowy.]]></translation>
+      </item>
+      <item type="label" name="AddProfileGroup">
+        <translation language="nl"><![CDATA[voeg profiel toe aan groep]]></translation>
+        <translation language="en"><![CDATA[add profile to group]]></translation>
+      </item>
+      <item type="label" name="EditProfileGroup">
+        <translation language="nl"><![CDATA[bewerk profiel groep]]></translation>
+        <translation language="en"><![CDATA[edit profile group]]></translation>
       </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>

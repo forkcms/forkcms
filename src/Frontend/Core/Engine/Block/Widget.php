@@ -2,13 +2,16 @@
 
 namespace Frontend\Core\Engine\Block;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use ForkCMS\App\KernelLoader;
-use Frontend\Core\Engine\TwigTemplate;
-use Frontend\Core\Engine\Url;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will handle all stuff related to widgets
@@ -237,24 +240,24 @@ class Widget extends KernelLoader implements ModuleExtraInterface
      *
      * @return self
      */
-    public static function getForId(KernelInterface $kernel, string $module, string $action, int $id = null): self
-    {
-        $query = 'SELECT data FROM modules_extras WHERE type = :widget AND module = :module AND action = :action';
-        $parameters = [
-            'widget' => 'widget',
-            'module' => $module,
-            'action' => $action,
-        ];
-        if (is_numeric($id)) {
-            $query .= ' AND data LIKE :data';
-            $parameters['data'] = '%s:2:"id";i:' . $id . ';%';
-        }
+    public static function getForId(
+        KernelInterface $kernel,
+        string $module,
+        string $action,
+        int $id = null
+    ): self {
+        $moduleExtraRepository = FrontendModel::getContainer()->get(ModuleExtraRepository::class);
 
         return new self(
             $kernel,
             $module,
             $action,
-            $kernel->getContainer()->get('database')->getVar($query, $parameters)
+            $moduleExtraRepository->getModuleExtraDataByModuleAndActionAndItemId(
+                ModuleExtraType::widget(),
+                $module,
+                $action,
+                $id
+            )
         );
     }
 

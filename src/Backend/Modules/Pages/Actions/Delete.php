@@ -41,7 +41,7 @@ class Delete extends BackendBaseActionDelete
         parent::execute();
 
         // cannot have children
-        if (BackendPagesModel::getFirstChildId($this->id) !== false) {
+        if (BackendPagesModel::getFirstChildId($this->id) !== null) {
             $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;

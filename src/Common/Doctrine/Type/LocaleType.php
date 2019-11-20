@@ -18,13 +18,17 @@ class LocaleType extends TextType
     }
 
     /**
-     * @param string $locale
+     * @param string|null $locale
      * @param AbstractPlatform $platform
      *
-     * @return Locale
+     * @return Locale|null
      */
-    public function convertToPHPValue($locale, AbstractPlatform $platform): Locale
+    public function convertToPHPValue($locale, AbstractPlatform $platform): ?Locale
     {
+        if ($locale === null) {
+            return null;
+        }
+
         if (APPLICATION === 'Frontend') {
             return FrontendLocale::fromString($locale);
         }

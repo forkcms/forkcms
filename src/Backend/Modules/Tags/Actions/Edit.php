@@ -93,7 +93,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('edit');
-        $this->form->addText('name', $this->record['name']);
+        $this->form->addText('name', $this->record['name'], null, 'form-control title', 'form-control title is-invalid');
     }
 
     protected function parse(): void

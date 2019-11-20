@@ -67,19 +67,19 @@
         <translation language="pl"><![CDATA[wybierz te konto]]></translation>
       </item>
       <item type="label" name="ChooseWebsiteProfile">
-        <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
-        <translation language="en"><![CDATA[Choose an Analytics website profile...]]></translation>
+        <translation language="nl"><![CDATA[Kies een Analytics website profiel]]></translation>
+        <translation language="en"><![CDATA[Choose an Analytics website profile]]></translation>
         <translation language="it"><![CDATA[Scegli un profilo Analytics]]></translation>
         <translation language="ru"><![CDATA[Выберите профиль Аналитики.]]></translation>
-        <translation language="zh"><![CDATA[选择一个分析网站档案...]]></translation>
-        <translation language="hu"><![CDATA[Analytics weboldal profil választás...]]></translation>
-        <translation language="fr"><![CDATA[Choisissez un profil de site Analytics...]]></translation>
-        <translation language="de"><![CDATA[Wähle ein Analytics-Website-Profil ...]]></translation>
-        <translation language="es"><![CDATA[Elegir un perfil de sitio web Analytics...]]></translation>
+        <translation language="zh"><![CDATA[选择一个分析网站档案]]></translation>
+        <translation language="hu"><![CDATA[Analytics weboldal profil választás]]></translation>
+        <translation language="fr"><![CDATA[Choisissez un profil de site Analytics]]></translation>
+        <translation language="de"><![CDATA[Wähle ein Analytics-Website-Profil ]]></translation>
+        <translation language="es"><![CDATA[Elegir un perfil de sitio web Analytics]]></translation>
         <translation language="uk"><![CDATA[Виберіть профіль G.Analitycs]]></translation>
-        <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
-        <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
-        <translation language="pl"><![CDATA[Wybierz profil witryny Analytics ...]]></translation>
+        <translation language="sv"><![CDATA[Välj en Analytics webbplats profil]]></translation>
+        <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics]]></translation>
+        <translation language="pl"><![CDATA[Wybierz profil witryny Analytics ]]></translation>
       </item>
       <item type="label" name="GaPagePath">
         <translation language="nl"><![CDATA[pagina]]></translation>

@@ -2,8 +2,11 @@
 
 namespace Backend\Modules\Location\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Location\Domain\Location\Location;
+use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 
 /**
  * Installer for the location module
@@ -13,12 +16,22 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Location');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
         $this->configureFrontendExtras();
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Location::class,
+                LocationSetting::class,
+            ]
+        );
     }
 
     private function configureBackendNavigation(): void

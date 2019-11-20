@@ -28,7 +28,7 @@ class AddThemeTemplateTest extends WebTestCase
 
         $client->request('GET', '/private/en/extensions/add_theme_template');
         self::assertContains(
-            'The user can upload a file.',
+            'Allow the user to upload an image.',
             $client->getResponse()->getContent()
         );
         self::assertContains(

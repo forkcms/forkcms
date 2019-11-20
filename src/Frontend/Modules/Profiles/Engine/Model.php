@@ -2,11 +2,13 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\Status;
+use Backend\Modules\Profiles\Domain\Setting\Setting;
 use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * In this file we store all generic functions that we will be using with profiles.
@@ -22,54 +24,34 @@ class Model
      */
     private static $avatars = [];
 
-    public static function deleteSetting(int $profileId, string $name): int
+    public static function deleteSetting(int $profileId, string $name): void
     {
-        return (int) FrontendModel::getContainer()->get('database')->delete(
-            'profiles_settings',
-            'profile_id = ? AND name = ?',
-            [$profileId, $name]
+        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
+
+        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+        $Setting = $SettingRepository->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        $SettingRepository->remove($Setting);
     }
 
-    public static function existsByEmail(string $email, int $excludedId = null): bool
+    public static function existsByEmail(string $email, int $excludedId = 0): bool
     {
-        $where = 'p.email = :email';
-        $parameters = ['email' => $email];
-
-        if ($excludedId !== null) {
-            $where .= ' AND p.id != :excludedId';
-            $parameters['excludedId'] = $excludedId;
-        }
-
-        return (bool) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE ' . $where . ' LIMIT 1',
-            $parameters
-        );
+        return FrontendModel::get('profile.repository.profile')->existsByEmail($email, $excludedId);
     }
 
-    public static function existsDisplayName(string $displayName, int $excludedId = null): bool
+    public static function existsDisplayName(string $displayName, int $excludedId = 0): bool
     {
-        $where = 'p.display_name = :displayName';
-        $parameters = ['displayName' => $displayName];
-
-        if ($excludedId !== null) {
-            $where .= ' AND p.id != :excludedId';
-            $parameters['excludedId'] = $excludedId;
-        }
-
-        return (bool) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE ' . $where . ' LIMIT 1',
-            $parameters
-        );
+        return FrontendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedId);
     }
 
-    public static function get(int $profileId): FrontendProfilesProfile
+    public static function get(int $profileId): Profile
     {
-        return new FrontendProfilesProfile($profileId);
+        return FrontendModel::get('profile.repository.profile')->find($profileId);
     }
 
     /**
@@ -166,10 +148,9 @@ class Model
 
     public static function getIdByEmail(string $email): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT p.id FROM profiles AS p WHERE p.email = ?',
-            $email
-        );
+        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+
+        return $profile->getId();
     }
 
     /**
@@ -178,14 +159,20 @@ class Model
      *
      * @return int
      */
-    public static function getIdBySetting(string $name, $value): int
+    public static function getIdBySetting(string $name, $value): ?int
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT ps.profile_id
-             FROM profiles_settings AS ps
-             WHERE ps.name = ? AND ps.value = ?',
-            [$name, serialize($value)]
+        $Setting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
+            [
+                'name' => $name,
+                'value' => $value,
+            ]
         );
+
+        if (!$Setting instanceof Setting) {
+            return null;
+        }
+
+        return $Setting->getProfile()->getId();
     }
 
     /**
@@ -235,42 +222,33 @@ class Model
         return $string;
     }
 
-    /**
-     * Get a setting for a profile.
-     *
-     * @param int $id Profile id.
-     * @param string $name Setting name.
-     *
-     * @return mixed
-     */
-    public static function getSetting(int $id, string $name)
+    public static function getSetting(int $id, string $name): ?string
     {
-        return unserialize(
-            (string) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT ps.value
-                 FROM profiles_settings AS ps
-                 WHERE ps.profile_id = ? AND ps.name = ?',
-                [$id, $name]
-            )
+        $profile = FrontendModel::get('profile.repository.profile')->find($id);
+        $setting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if (!$setting instanceof Setting) {
+            return null;
+        }
+
+        return $setting->getValue();
     }
 
     public static function getSettings(int $profileId): array
     {
-        // get settings
-        $settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
-            'SELECT ps.name, ps.value
-             FROM profiles_settings AS ps
-             WHERE ps.profile_id = ?',
-            $profileId
-        );
+        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+        $Settings = $profile->getSettings();
 
-        // unserialize values
-        foreach ($settings as &$value) {
-            $value = unserialize($value);
+        $settings = [];
+        foreach ($Settings as $Setting) {
+            $settings[$Setting->getName()] = $Setting->getValue();
         }
 
-        // return
         return $settings;
     }
 
@@ -290,57 +268,25 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get database
-        $database = FrontendModel::getContainer()->get('database');
-
-        // new item
-        if ($excludedId === null) {
-            // get number of profiles with this URL
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ?
-                 LIMIT 1',
-                (string) $url
-            );
-
-            // already exists
-            if ($number !== 0) {
-                // add number
-                $url = FrontendModel::addNumber($url);
-
-                // try again
-                return self::getUrl($url);
-            }
-
-            return $url;
-        }
-
-        // current profile should be excluded
-        // get number of profiles with this URL
-        $number = (int) $database->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.url = ? AND p.id != ?
-             LIMIT 1',
-            [$url, $excludedId]
+        return FrontendModel::get('profile.repository.profile')->getUrl(
+            $url,
+            $excludedId
         );
-
-        // already exists
-        if ($number !== 0) {
-            // add number
-            $url = FrontendModel::addNumber($url);
-
-            // try again
-            return self::getUrl($url, $excludedId);
-        }
-
-        return $url;
     }
 
     public static function insert(array $profile): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $profile);
+        $profileEntity = new Profile(
+            $profile['email'],
+            $profile['password'],
+            Status::fromString($profile['status']),
+            $profile['display_name'],
+            $profile['url']
+        );
+
+        FrontendModel::get('profile.repository.profile')->add($profileEntity);
+
+        return $profileEntity->getId();
     }
 
     /**
@@ -407,13 +353,28 @@ class Model
      */
     public static function setSetting(int $id, string $name, $value): void
     {
-        // insert or update
-        FrontendModel::getContainer()->get('database')->execute(
-            'INSERT INTO profiles_settings(profile_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            [$id, $name, serialize($value), serialize($value)]
+        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
+
+        $profile = FrontendModel::get('profile.repository.profile')->find($id);
+
+        $existingSetting = $SettingRepository->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if ($existingSetting instanceof Setting) {
+            $existingSetting->update($value);
+
+            FrontendModel::get('doctrine.orm.default_entity_manager')->flush();
+
+            return;
+        }
+
+        $setting = new Setting($profile, $name, $value);
+        $profile->addSetting($setting);
+        $SettingRepository->add($setting);
     }
 
     /**
@@ -424,21 +385,9 @@ class Model
      */
     public static function setSettings(int $id, array $values): void
     {
-        // build parameters
-        $parameters = [];
-        foreach ($values as $key => $value) {
-            $parameters[] = $id;
-            $parameters[] = $key;
-            $parameters[] = serialize($value);
+        foreach ($values as $name => $value) {
+            self::setSetting($id, $name, $value);
         }
-
-        // build the query
-        $query = 'INSERT INTO profiles_settings(profile_id, name, value)
-                  VALUES';
-        $query .= rtrim(str_repeat('(?, ?, ?), ', count($values)), ', ') . ' ';
-        $query .= 'ON DUPLICATE KEY UPDATE value = VALUES(value)';
-
-        FrontendModel::getContainer()->get('database')->execute($query, $parameters);
     }
 
     /**
@@ -449,7 +398,44 @@ class Model
      */
     public static function update(int $id, array $values): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', $id);
+        $profile = FrontendModel::get('profile.repository.profile')->find($id);
+
+        if (!$profile instanceof Profile) {
+            return $id;
+        }
+
+        $email = $profile->getEmail();
+        if (array_key_exists('email', $values)) {
+            $email = $values['email'];
+        }
+        $password = $profile->getPassword();
+        if (array_key_exists('password', $values)) {
+            $password = $values['password'];
+        }
+        $status = $profile->getStatus();
+        if (array_key_exists('status', $values)) {
+            $status = Status::fromString($values['status']);
+        }
+        $displayName = $profile->getDisplayName();
+        if (array_key_exists('display_name', $values)) {
+            $displayName = $values['display_name'];
+        }
+        $url = $profile->getUrl();
+        if (array_key_exists('url', $values)) {
+            $url = $values['url'];
+        }
+
+        $profile->update(
+            $email,
+            $password,
+            $status,
+            $displayName,
+            $url
+        );
+
+        FrontendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $id;
     }
 
     /**
@@ -461,11 +447,12 @@ class Model
      */
     public static function getEncryptedPassword(string $email): ?string
     {
-        return FrontendModel::get('database')->getVar(
-            'SELECT password
-             FROM profiles
-             WHERE email = :email',
-            ['email' => $email]
-        );
+        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+
+        if (!$profile instanceof Profile) {
+            return null;
+        }
+
+        return $profile->getPassword();
     }
 }

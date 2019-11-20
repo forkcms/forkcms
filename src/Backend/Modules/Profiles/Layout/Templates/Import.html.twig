@@ -1,8 +1,8 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import "Layout/Templates/macros.html.twig" as macro %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if showProfilesIndex %}
         {{ macro.buttonIcon(geturl('index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}

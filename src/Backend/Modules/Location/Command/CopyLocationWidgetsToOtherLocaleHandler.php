@@ -2,32 +2,30 @@
 
 namespace Backend\Modules\Location\Command;
 
-use Common\ModuleExtraType;
-use SpoonDatabase;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
 final class CopyLocationWidgetsToOtherLocaleHandler
 {
-    /** @var SpoonDatabase */
-    private $database;
+    /** @var ModuleExtraRepository */
+    private $moduleExtraRepository;
 
-    public function __construct(SpoonDatabase $database)
+    public function __construct(ModuleExtraRepository $moduleExtraRepository)
     {
-        $this->database = $database;
+        $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
     public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
     {
-        $currentWidgets = $this->database->getRecords(
-            'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            [
-                'Location',
-                ModuleExtraType::widget(),
-                'Location'
-            ]
+        $currentWidgets = $this->moduleExtraRepository->findModuleExtra(
+            'Location',
+            'Location',
+            ModuleExtraType::widget()
         );
 
         foreach ($currentWidgets as $currentWidget) {
-            $data = unserialize($currentWidget['data']);
+            $data = $currentWidget->getData();
 
             if (!is_array($data)
                 || !isset($data['language'])
@@ -39,19 +37,26 @@ final class CopyLocationWidgetsToOtherLocaleHandler
 
             // Replace the language of our widget
             $data['language'] = $copyLocationWidgetsToOtherLocale->toLocale->getLocale();
-            $currentWidget['data'] = serialize($data);
 
             // Save the old ID
-            $oldId = $currentWidget['id'];
+            $oldId = $currentWidget->getId();
 
-            // Unset the ID so we get a new one
-            unset($currentWidget['id']);
+            $newWidget = new ModuleExtra(
+                $currentWidget->getModule(),
+                $currentWidget->getType(),
+                $currentWidget->getLabel(),
+                $currentWidget->getAction(),
+                $data,
+                $currentWidget->isHidden(),
+                $currentWidget->getSequence()
+            );
 
             // Insert the new widget and save the id
-            $newId = $this->database->insert('modules_extras', $currentWidget);
+            $this->moduleExtraRepository->add($newWidget);
+            $this->moduleExtraRepository->save($newWidget);
 
             // Map the new ID
-            $copyLocationWidgetsToOtherLocale->extraIdMap[$oldId] = $newId;
+            $copyLocationWidgetsToOtherLocale->extraIdMap[$oldId] = $newWidget->getId();
         }
     }
 }

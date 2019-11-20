@@ -3,10 +3,14 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use Doctrine\ORM\EntityRepository;
 
 /**
+ * @method MediaItem|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MediaItem|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MediaItem[]    findAll()
+ * @method MediaItem[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @method MediaItem|null findOneByUrl(string $url)
  */
 final class MediaItemRepository extends EntityRepository

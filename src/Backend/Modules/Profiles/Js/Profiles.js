@@ -42,8 +42,10 @@ jsBackend.Profiles = {
     toggleBox: function () {
       var $item = $('#newEmail')
       var checked = ($item.attr('checked') === 'checked')
+      var $box = $('#newEmailBox')
 
-      $('#newEmailBox').toggle(checked)
+      $box.toggle(checked)
+      $box.find('input#email').focus()
     }
   },
 
@@ -61,8 +63,10 @@ jsBackend.Profiles = {
     toggleBox: function () {
       var $item = $('#newPassword')
       var checked = ($item.attr('checked') === 'checked')
+      var $box = $('#newPasswordBox')
 
-      $('#newPasswordBox').toggle(checked)
+      $box.toggle(checked)
+      $box.find('input#password').focus()
     }
   },
 

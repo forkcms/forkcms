@@ -100,7 +100,7 @@ jsBackend.mediaLibrary.library = {
   dataGrids: function () {
     if (window.location.hash === '') {
       // select first tab
-      $('#library .nav-tabs a:first').tab('show')
+      $('#library .nav-tabs .nav-item:first .nav-link').tab('show')
     }
 
     // When mass action button is clicked
@@ -130,114 +130,73 @@ jsBackend.mediaLibrary.tree = {
   pageID: null,
   // init, something like a constructor
   init: function () {
-    var $treeHolder = $('#tree div')
+    if ($('#tree').find('> [data-tree]').length === 0) return false
 
-    if ($treeHolder.length === 0) {
-      return false
-    }
-
-    // add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
-    if (!jQuery.support.opacity) {
-      $('#tree ul li[rel="hidden"]').addClass('treeHidden')
-    }
-
-    // set the item selected
-    if (jsBackend.data.get('MediaLibrary.openedFolderId')) {
-      $('#folder-' + jsBackend.data.get('MediaLibrary.openedFolderId')).addClass('selected')
-      jsBackend.mediaLibrary.tree.pageID = jsBackend.data.get('MediaLibrary.openedFolderId')
-    }
-
-    var openedIds = []
-    if (typeof jsBackend.mediaLibrary.tree.pageID !== 'undefined') {
-      // get parents
-      var parents = $('#folder-' + jsBackend.mediaLibrary.tree.pageID).parents('li')
-
-      // init var
-      openedIds = ['folder-' + jsBackend.mediaLibrary.tree.pageID]
-
-      // add parents
-      for (var i = 0; i < parents.length; i++) {
-        openedIds.push($(parents[i]).prop('id'))
-      }
-    }
-
-    // add home if needed
-    if (!utils.array.inArray('folder-1', openedIds)) {
-      openedIds.push('folder-1')
-    }
-
+    // jsTree options
     var options = {
-      ui: {theme_name: 'fork'},
-      opened: openedIds,
-      rules: {
+      core: {
+        animation: 0,
+        themes: {
+          name: 'proton',
+          responsive: true
+        },
         multiple: false,
-        multitree: 'all',
-        drag_copy: false
+        check_callback: true
       },
-      lang: {loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading'))},
-      callback: {
-        beforemove: jsBackend.mediaLibrary.tree.beforeMove,
-        onselect: jsBackend.mediaLibrary.tree.onSelect,
-        onmove: jsBackend.mediaLibrary.tree.onMove
+      types: {
+        default: {
+          icon: 'far fa-folder'
+        },
+        folder: {
+          icon: 'far fa-folder'
+        }
       },
-      plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
-      }
+      search: {
+        show_only_matches: true
+      },
+      dnd: {
+        inside_pos: 'last'
+      },
+      plugins: ['dnd', 'types', 'state', 'search']
     }
 
-    // create tree
-    $treeHolder.tree(options)
+    // Init folder tree
+    var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
-    // layout fix for the tree
-    $('.tree li.open').each(function () {
-      // if the so-called open-element doesn't have any childs we should replace the open-class.
-      if ($(this).find('ul').length === 0) {
-        $(this).removeClass('open').addClass('leaf')
-      }
+    jsTreeInstance.on('move_node.jstree', function (event, data) {
+      jsBackend.mediaLibrary.tree.onMove(event, data, jsTreeInstance)
     })
 
-    jsBackend.mediaLibrary.tree.toggleJsTreeCollapse()
-  },
+    // Search through folders
+    var searchThroughPages = function () {
+      var v = $('.js-tree-search').val()
+      $('#tree').find('> [data-tree]').each(function () {
+        $(this).jstree(true).search(v)
+      })
+    }
+    $('.js-tree-search').bind('keyup input', utils.events.debounce(searchThroughPages, 150))
 
-  // before an item will be moved we have to do some checks
-  beforeMove: function (node, refNode, type, tree) {
-    // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('folder-', '')
+    // To prevent FOUC, we only show the jsTree when it's done loading.
+    jsTreeInstance.on('ready.jstree', function (e, data) {
+      $('#tree').show()
+    })
 
-    // init var
-    var result = false
+    // On selecting a node in the tree, visit the anchor.
+    jsTreeInstance.on('select_node.jstree', function (e, data, jsTreeInstance) {
+      if (data && data.node && data.event) {
+        // Get current and new URL
+        var node = data.node
+        var currentPageURL = window.location.pathname + window.location.search
+        var newPageURL = node.a_attr.href
 
-    // make the call
-    $.ajax({
-      async: false, // important that this isn't asynchronous
-      data: {
-        fork: {action: 'MediaFolderInfo'},
-        id: currentPageID
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        if (jsBackend.debug) {
-          window.alert(textStatus)
-        }
-        result = false
-      },
-      success: function (json, textStatus) {
-        if (json.code !== 200) {
-          if (jsBackend.debug) {
-            window.alert(textStatus)
-          }
-          result = false
-
-          return
-        }
-
-        if (json.data.allow_move) {
-          result = true
+        // Only redirect if destination isn't the current one.
+        if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
+          window.location = newPageURL
         }
       }
     })
 
-    // return
-    return result
+    jsBackend.mediaLibrary.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
   // when an item is selected
@@ -253,17 +212,70 @@ jsBackend.mediaLibrary.tree = {
   },
 
   // when an item is moved
-  onMove: function (node, refNode, type, tree, rollback) {
-    // get the tree
-    tree = tree.container.data('tree')
+  onMove: function (event, data, jsTreeInstance) {
+    var tree = data.new_instance.element.first().data('tree')
 
-    // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('folder-', '')
+    // get folderID that has to be moved
+    var currentPageID = data.node.id.replace('folder-', '')
 
-    // get pageID wheron the page has been dropped
-    var droppedOnPageID = jsBackend.mediaLibrary.tree.getDroppedOnPageID(refNode)
+    // set the default type of moving
+    var type = 'before'
 
-    // make the call
+    // init allowMove
+    var allowMove = false
+
+    // get the position where the folder is dropped
+    var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+
+    // when node is dropped on the last position, we can not add it before the last one -> we need after
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined) {
+      droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
+      type = 'after'
+    }
+
+    // when node is dropped on another node to move it inside
+    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === data.node.id) {
+      type = 'inside'
+      droppedOnElement = $('#' + data.parent)
+    }
+
+    // get folderID wheron the folder has been dropped
+    var droppedOnPageID = droppedOnElement.prop('id').replace('folder-', '')
+
+    // before an item will be moved we have to do some checks
+    $.ajax({
+      async: false, // important that this isn't asynchronous
+      data: {
+        fork: {action: 'MediaFolderInfo'},
+        id: currentPageID,
+        dropped_on: droppedOnPageID
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        if (jsBackend.debug) window.alert(textStatus)
+        allowMove = false
+      },
+      success: function (json, textStatus) {
+        if (json.code !== 200) {
+          if (jsBackend.debug) window.alert(textStatus)
+          allowMove = false
+        } else {
+          // is page allowed to move
+          if (json.data.allow_move) {
+            allowMove = true
+          } else {
+            jsTreeInstance.jstree('refresh')
+            jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
+            allowMove = false
+          }
+        }
+      }
+    })
+
+    if (!allowMove) {
+      return
+    }
+
+    // move the folder
     $.ajax({
       data: {
         fork: {action: 'MediaFolderMove'},
@@ -273,35 +285,23 @@ jsBackend.mediaLibrary.tree = {
         tree: tree
       },
       success: function (json, textStatus) {
-        if (json.code === 200) {
+        if (json.code !== 200) {
+          if (jsBackend.debug) window.alert(textStatus)
+
+          // show message
+          jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
+
+          // rollback
+          jsTreeInstance.jstree('refresh')
+        } else {
           // show message
           jsBackend.messages.add('success', json.message)
-
-          return
         }
-
-        if (jsBackend.debug) {
-          window.alert(textStatus)
-        }
-
-        // show message
-        jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
-
-        // rollback
-        $.tree.rollback(rollback)
       }
     })
   },
 
-  getDroppedOnPageID: function (refNode) {
-    if (typeof refNode === 'undefined') {
-      return 0
-    }
-
-    return $(refNode).prop('id').replace('folder-', '')
-  },
-
-  toggleJsTreeCollapse: function () {
+  toggleJsTreeCollapse: function (jsTreeInstance) {
     $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
       var $this = $(this)
       $this.toggleClass('tree-collapsed')
@@ -310,13 +310,13 @@ jsBackend.mediaLibrary.tree = {
 
       if (collapsed) {
         $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
-        $.tree.reference('#tree div').close_all()
+        jsTreeInstance.jstree('close_all')
 
         return
       }
 
       $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
-      $.tree.reference('#tree div').open_all()
+      jsTreeInstance.jstree('open_all')
     })
   }
 }

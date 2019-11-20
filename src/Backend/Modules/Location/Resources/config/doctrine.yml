@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    mappings:
+      location:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Location/Domain"
+        alias: LocationLocation
+        prefix: Backend\Modules\Location\Domain

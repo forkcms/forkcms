@@ -2,88 +2,61 @@
 
 namespace Backend\Modules\Location\Engine;
 
-use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\ModuleExtraType;
+use Backend\Modules\Location\Domain\Location\Location;
+use Backend\Modules\Location\Domain\Location\LocationRepository;
+use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
+use Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use ForkCMS\Utility\Geolocation;
+use InvalidArgumentException;
+use SpoonFilter;
 
-/**
- * In this file we store all generic functions that we will be using in the location module
- */
 class Model
 {
     const QUERY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
          FROM location
-         WHERE language = ?';
+         WHERE locale = ?';
 
-    /**
-     * Delete an item
-     *
-     * @param int $id The id of the record to delete.
-     */
     public static function delete(int $id): void
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $locationRepository = self::getLocationRepository();
+        $location = $locationRepository->find($id);
 
-        // get item
-        $item = self::get($id);
+        if ($location instanceof Location) {
+            BackendModel::deleteExtraById($location->getExtraId());
 
-        BackendModel::deleteExtraById($item['extra_id']);
-
-        // delete location and its settings
-        $database->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
-        $database->delete('location_settings', 'map_id = ?', [$id]);
+            $locationRepository->remove($location);
+        }
     }
 
-    /**
-     * Check if an item exists
-     *
-     * @param int $id The id of the record to look for.
-     *
-     * @return bool
-     */
     public static function exists(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM location AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            [$id, BL::getWorkingLanguage()]
-        );
+        return self::getLocationRepository()->find($id) instanceof Location;
     }
 
-    /**
-     * Fetch a record from the database
-     *
-     * @param int $id The id of the record to fetch.
-     *
-     * @return array
-     */
     public static function get(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.id = ? AND i.language = ?',
-            [$id, BL::getWorkingLanguage()]
-        );
+        $location = self::getLocationRepository()->find($id);
+
+        if ($location instanceof Location) {
+            return $location->toArray();
+        }
+
+        return [];
     }
 
-    /**
-     * Fetch a record from the database
-     *
-     * @return array
-     */
     public static function getAll(): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.language = ? AND i.show_overview = ?',
-            [BL::getWorkingLanguage(), true]
+        $locations = self::getLocationRepository()->findAll();
+
+        return array_map(
+            function (Location $location) {
+                return $location->toArray();
+            },
+            $locations
         );
     }
 
@@ -116,142 +89,162 @@ class Model
         );
     }
 
-    /**
-     * Retrieve a map setting
-     *
-     * @param int $mapId
-     * @param string $name
-     *
-     * @return mixed
-     */
-    public static function getMapSetting(int $mapId, string $name)
+    public static function getMapSetting(int $locationId, string $name)
     {
-        $serializedData = (string) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ? AND s.name = ?',
-            [$mapId, $name]
-        );
-
-        if (!empty($serializedData)) {
-            return unserialize($serializedData);
-        }
-
-        return false;
+        return self::getMapSettings($locationId)[$name] ?? false;
     }
 
-    /**
-     * Fetch all the settings for a specific map
-     *
-     * @param int $mapId
-     *
-     * @return array
-     */
-    public static function getMapSettings(int $mapId): array
+    public static function getMapSettings(int $locationId): array
     {
-        $mapSettings = (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT s.name, s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ?',
-            [$mapId]
-        );
+        /** @var Location|null $location */
+        $location = self::getLocationRepository()->find($locationId);
 
-        foreach ($mapSettings as $key => $value) {
-            $mapSettings[$key] = unserialize($value);
+        if (!$location instanceof Location) {
+            return [];
         }
 
-        return $mapSettings;
+        return array_reduce(
+            $location->getSettings()->toArray(),
+            function (array $carry, LocationSetting $setting) {
+                $carry[$setting->getName()] = $setting->getValue();
+
+                return $carry;
+            },
+            []
+        );
     }
 
-    /**
-     * Insert an item
-     *
-     * @param array $item The data of the record to insert.
-     *
-     * @return int
-     */
     public static function insert(array $item): int
     {
-        $database = BackendModel::getContainer()->get('database');
+        $location = Location::fromArray($item);
+        $locationRepository = self::getLocationRepository();
 
         // insert extra
-        $item['extra_id'] = BackendModel::insertExtra(
+        $extraId = BackendModel::insertExtra(
             ModuleExtraType::widget(),
             'Location',
             'Location'
         );
 
-        // insert new location
-        $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
-        $item['id'] = $database->insert('location', $item);
+        $location->setExtraId($extraId);
+        /**
+         * @TODO: Make this obsolete by creating a ModuleExtra entity
+         *
+         * We use the entity manager to persist for now because we need it's ID to create an extra
+         * We can't flush it yet because the entity is invalid without an extra ID
+         */
+        BackendModel::get('doctrine.orm.entity_manager')->persist($location);
+
+        $locationRepository->save($location);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $extraId,
             'data',
             [
-                'id' => $item['id'],
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
-                'language' => $item['language'],
-                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                'id' => $location->getId(),
+                'extra_label' => SpoonFilter::ucfirst(Language::lbl('Location', 'Core'))
+                    . ': '
+                    . $location->getTitle(),
+                'language' => $location->getLocale()->getLocale(),
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                    . '&id='
+                    . $location->getId(),
             ]
         );
 
-        return $item['id'];
+        return $location->getId();
     }
 
-    /**
-     * Save the map settings
-     *
-     * @param int $mapId
-     * @param string $key
-     * @param mixed $value
-     */
-    public static function setMapSetting(int $mapId, string $key, $value): void
+    public static function setMapSetting(int $locationId, string $name, $value): void
     {
-        $value = serialize($value);
+        $locationRepository = self::getLocationRepository();
+        $locationSettingRepository = self::getLocationSettingRepository();
 
-        BackendModel::getContainer()->get('database')->execute(
-            'INSERT INTO location_settings(map_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            [$mapId, $key, $value, $value]
-        );
-    }
+        /** @var Location|null $location */
+        $location = $locationRepository->find($locationId);
 
-    /**
-     * Update an item
-     *
-     * @param array $item The data of the record to update.
-     *
-     * @return int
-     */
-    public static function update(array $item): int
-    {
-        // redefine edited on date
-        $item['edited_on'] = BackendModel::getUTCDate();
-
-        // we have an extra_id
-        if (isset($item['extra_id'])) {
-            // update extra
-            BackendModel::updateExtra(
-                $item['extra_id'],
-                'data',
-                [
-                    'id' => $item['id'],
-                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
-                ]
-            );
+        if (!$location instanceof Location) {
+            throw new InvalidArgumentException('Location with id ' . $locationId . ' doesn\'t exist');
         }
 
-        // update item
-        return BackendModel::get('database')->update(
-            'location',
-            $item,
-            'id = ? AND language = ?',
-            [$item['id'], $item['language']]
+        $setting = $locationSettingRepository->findOneBy(
+            [
+                'location' => $location,
+                'name' => $name
+            ]
         );
+
+        if ($setting instanceof LocationSetting) {
+            $setting->update($value);
+
+            $locationSettingRepository->save($setting);
+
+            return;
+        }
+
+        $location->addSetting(
+            new LocationSetting(
+                $location,
+                $name,
+                $value
+            )
+        );
+
+        $locationRepository->save($location);
+    }
+
+    public static function update(array $item): int
+    {
+        $locationRepository = self::getLocationRepository();
+        $currentLocation = $locationRepository->find($item['id']);
+
+        if (!$currentLocation instanceof Location) {
+            return 0;
+        }
+
+        $updatedLocation = Location::fromArray($item);
+
+        $currentLocation->update(
+            $updatedLocation->getTitle(),
+            $updatedLocation->getStreet(),
+            $updatedLocation->getNumber(),
+            $updatedLocation->getZip(),
+            $updatedLocation->getCity(),
+            $updatedLocation->getCountry(),
+            $updatedLocation->getLatitude(),
+            $updatedLocation->getLongitude(),
+            $updatedLocation->isShowInOverview()
+        );
+
+        $locationRepository->save($currentLocation);
+
+        // update extra
+        BackendModel::updateExtra(
+            $currentLocation->getExtraId(),
+            'data',
+            [
+                'id' => $currentLocation->getId(),
+                'extra_label' => SpoonFilter::ucfirst(Language::lbl('Location', 'Core'))
+                    . ': '
+                    . $currentLocation->getTitle(),
+                'language' => $currentLocation->getLocale()->getLocale(),
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                    . '&id='
+                    . $currentLocation->getId(),
+            ]
+        );
+
+        return $currentLocation->getId();
+    }
+
+    private static function getLocationRepository(): LocationRepository
+    {
+        return BackendModel::get('location.repository.location');
+    }
+
+    private static function getLocationSettingRepository(): LocationSettingRepository
+    {
+        return BackendModel::get('location.repository.location_setting');
     }
 }

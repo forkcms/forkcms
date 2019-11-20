@@ -9,11 +9,11 @@
             <div class="fork-widget sortableWidget" data-module="{{ widget.module }}" data-widget="{{ widget.widget }}" data-title="{{ widget.title }}"{% if widget.hidden %} style="display: none;"{% endif %}>
               <a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
               {% if widget.hidden %}
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ widget.title }}</h2>
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ widget.title }}</h2>
                   </div>
-                  <div class="panel-body" style="display: none;">
+                  <div class="card-body" style="display: none;">
                     {{ 'msg.WillBeEnabledOnSave'|trans }}
                   </div>
                 </div>

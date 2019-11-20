@@ -3,14 +3,25 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\Doctrine\Entity\Meta;
+use Common\Doctrine\Repository\MetaRepository;
+use Common\Uri as CommonUri;
+use DateTime;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Common\Uri as CommonUri;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\ModuleExtraType;
 
 /**
  * The base-class for the installer
@@ -459,20 +470,7 @@ class ModuleInstaller
 
     private function getNextSequenceForModule(string $module): int
     {
-        // set next sequence number for this module
-        $sequence = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
-            [$module]
-        );
-
-        // this is the first extra for this module: generate new 1000-series
-        if ($sequence > 0) {
-            return $sequence;
-        }
-
-        return (int) $this->getDatabase()->getVar(
-            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
-        );
+        return BackendModel::getContainer()->get(ModuleExtraRepository::class)->getNextSequenceByModule($module);
     }
 
     /**
@@ -497,9 +495,19 @@ class ModuleInstaller
         bool $hidden = false,
         int $sequence = null
     ): int {
-        $extraId = $this->findModuleExtraId($module, $type, $label, $data);
-        if ($extraId !== 0) {
-            return $extraId;
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = BackendModel::getContainer()->get(ModuleExtraRepository::class);
+        $moduleExtra = $moduleExtraRepository->findOneBy(
+            [
+                'module' => $module,
+                'type' => $type,
+                'label' => $label,
+                'data' => $data,
+            ]
+        );
+
+        if ($moduleExtra instanceof ModuleExtra) {
+            return $moduleExtra->getId();
         }
 
         return Model::insertExtra(
@@ -511,33 +519,6 @@ class ModuleInstaller
             $hidden,
             $sequence ?? $this->getNextSequenceForModule($module)
         );
-    }
-
-    /**
-     * @param string $module
-     * @param ModuleExtraType $type
-     * @param string $label
-     * @param array|null $data
-     *
-     * @return int
-     */
-    private function findModuleExtraId(string $module, ModuleExtraType $type, string $label, array $data = null): int
-    {
-        // build query
-        $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
-        $parameters = [$module, $type, $label];
-
-        if ($data === null) {
-            $query .= ' AND data IS NULL';
-
-            return (int) $this->getDatabase()->getVar($query, $parameters);
-        }
-
-        $query .= ' AND data = ?';
-        $parameters[] = serialize($data);
-
-        // get id (if it already exists)
-        return (int) $this->getDatabase()->getVar($query, $parameters);
     }
 
     /**
@@ -600,30 +581,23 @@ class ModuleInstaller
      */
     private function getNextPageIdForLanguage(string $language): int
     {
-        $maximumPageId = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(id) FROM pages WHERE language = ?',
-            [$language]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        $maximumPageId =  $pageRepository->getMaximumPageId($language, true);
 
         return ++$maximumPageId;
     }
 
     private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
-        $this->getDatabase()->update(
-            'pages',
-            ['status' => 'archive'],
-            'id = ? AND language = ?',
-            [$pageId, $language]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $pageRepository->archive($pageId, $language);
     }
 
     private function getNextPageSequence(string $language, int $parentId, string $type): int
     {
-        $maximumPageSequence = (int) $this->getDatabase()->getVar(
-            'SELECT MAX(sequence) FROM pages WHERE language = ? AND parent_id = ? AND type = ?',
-            [$language, $parentId, $type]
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, $language, $type);
 
         return ++$maximumPageSequence;
     }
@@ -709,9 +683,6 @@ class ModuleInstaller
         if (!isset($revision['data']['image']) && $this->installExample()) {
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }
-        if ($revision['data'] !== null) {
-            $revision['data'] = serialize($revision['data']);
-        }
 
         return $revision;
     }
@@ -744,53 +715,86 @@ class ModuleInstaller
 
         $revision = $this->completePageRevisionRecord($revision, (array) $meta);
 
+        /** @var MetaRepository $metaRepository */
+        $metaRepository = BackendModel::get('fork.repository.meta');
+        /** @var Meta $meta */
+        $meta = $metaRepository->find($revision['meta_id']);
+
         // insert page
-        $revision['revision_id'] = $this->getDatabase()->insert('pages', $revision);
-
-        if (empty($blocks)) {
-            return $revision['id'];
-        }
-
-        $this->getDatabase()->insert(
-            'pages_blocks',
-            $this->completePageBlockRecords($blocks, $revision['revision_id'])
+        $page = new Page(
+            $revision['id'],
+            $revision['user_id'],
+            $revision['parent_id'],
+            $revision['template_id'],
+            $meta,
+            $revision['language'],
+            $revision['title'],
+            $revision['navigation_title'],
+            new DateTime($revision['publish_on']),
+            $revision['sequence'],
+            $revision['navigation_title_overwrite'],
+            $revision['hidden'],
+            new Status($revision['status']),
+            $revision['type'],
+            $revision['data'],
+            $revision['allow_move'],
+            $revision['allow_children'],
+            $revision['allow_edit'],
+            $revision['allow_delete']
         );
 
-        // return page id
-        return $revision['id'];
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $pageRepository->add($page);
+        $pageRepository->save($page);
+
+        if (empty($blocks)) {
+            return $page->getId();
+        }
+
+        $this->completeAndSavePageBlocks($blocks, $page->getRevisionId());
+
+        return $page->getId();
     }
 
-    private function completePageBlockRecords(array $blocks, int $defaultRevisionId): array
+    private function completeAndSavePageBlocks(array $blocks, int $defaultRevisionId): void
     {
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+
         // array of positions and linked blocks (will be used to automatically set block sequence)
         $positions = [];
 
-        return array_map(
-            function (array $block) use (&$positions, $defaultRevisionId) {
-                $block['position'] = $block['position'] ?? 'main';
-                $positions[$block['position']][] = $block;
-                $block['revision_id'] = $block['revision_id'] ?? $defaultRevisionId;
-                $block['created_on'] = $block['created_on'] ?? gmdate('Y-m-d H:i:s');
-                $block['edited_on'] = $block['edited_on'] ?? gmdate('Y-m-d H:i:s');
-                $block['extra_id'] = $block['extra_id'] ?? null;
-                $block['visible'] = $block['visible'] ?? true;
-                $block['sequence'] = $block['sequence'] ?? count($positions[$block['position']]) - 1;
-                $block['html'] = $block['html'] ?? '';
+        foreach ($blocks as $block) {
+            $position = $block['position'] ?? 'main';
 
-                // get the html from the template file if it is defined
-                if (!empty($block['html'])) {
-                    $block['html'] = file_get_contents($block['html']);
-                }
+            $positions[$position][] = $block;
 
-                // sort array by its keys, so the array is always the same for SpoonDatabase::insert,
-                // when you don't provide an array with arrays sorted in the same order, the fields get
-                // mixed into different columns
-                ksort($block);
+            $revisionId = $block['revision_id'] ?? $defaultRevisionId;
+            $extraId = $block['extra_id'] ?? null;
+            $visible = $block['visible'] ?? true;
+            $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
+            $html = $block['html'] ?? '';
 
-                return $block;
-            },
-            $blocks
-        );
+            // get the html from the template file if it is defined
+            if ($html !== null && $html !== '') {
+                $html = file_get_contents($block['html']);
+            }
+
+            $pageBlock = new PageBlock(
+                $revisionId,
+                $position,
+                $extraId,
+                null,
+                null,
+                $html,
+                $visible,
+                $sequence
+            );
+
+            $pageBlockRepository->add($pageBlock);
+            $pageBlockRepository->save($pageBlock);
+        }
     }
 
     /**

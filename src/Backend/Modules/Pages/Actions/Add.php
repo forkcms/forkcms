@@ -3,17 +3,22 @@
 namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Common\Doctrine\Repository\MetaRepository;
+use DateTime;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 use Symfony\Component\Filesystem\Filesystem;
@@ -78,9 +83,7 @@ class Add extends BackendBaseActionAdd
         parent::execute();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
 
         // get the templates
@@ -521,8 +524,9 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     ];
                 }
-                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
-                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                $template = $this->templates[$templateId];
+                if (array_key_exists('image', $template['data'])) {
+                    $data['image'] = $this->getImage($template['data']['image'], $template['default_image']);
                 }
 
                 $data['auth_required'] = false;
@@ -553,70 +557,77 @@ class Add extends BackendBaseActionAdd
                     }
                 }
 
-                // build page record
-                $page = [];
-                $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
-                $page['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $page['parent_id'] = $parentId;
-                $page['template_id'] = $templateId;
-                $page['meta_id'] = (int) $this->meta->save();
-                $page['language'] = BL::getWorkingLanguage();
-                $page['type'] = $parentPage ? 'page' : 'root';
-                $page['title'] = $this->form->getField('title')->getValue();
-                $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue(
-                ) != '') ? $this->form->getField('navigation_title')->getValue() : $this->form->getField(
-                    'title'
-                )->getValue();
-                $page['navigation_title_overwrite'] = $this->form->getField(
-                    'navigation_title_overwrite'
-                )->isChecked();
-                $page['hidden'] = $this->form->getField('hidden')->getValue();
-                $page['status'] = $status;
-                $page['publish_on'] = BackendModel::getUTCDate();
-                $page['created_on'] = BackendModel::getUTCDate();
-                $page['edited_on'] = BackendModel::getUTCDate();
-                $page['allow_move'] = true;
-                $page['allow_children'] = true;
-                $page['allow_edit'] = true;
-                $page['allow_delete'] = true;
-                $page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
-                $page['data'] = ($data !== null) ? serialize($data) : null;
+                // Persist page
+                $allowMove = true;
+                $allowChildren = true;
+                $allowEdit = true;
+                $allowDelete = true;
 
                 if ($this->isGod) {
-                    $page['allow_move'] = in_array(
+                    $allowMove = in_array(
                         'move',
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
-                    $page['allow_children'] = in_array(
+                    $allowChildren = in_array(
                         'children',
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
-                    $page['allow_edit'] = in_array(
+                    $allowEdit = in_array(
                         'edit',
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
-                    $page['allow_delete'] = in_array(
+                    $allowDelete = in_array(
                         'delete',
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
                 }
 
-                // set navigation title
-                if ($page['navigation_title'] == '') {
-                    $page['navigation_title'] = $page['title'];
+                $title = $this->form->getField('title')->getValue();
+                $navigationTitle = $this->form->getField('navigation_title')->getValue();
+                if ($navigationTitle === '') {
+                    $navigationTitle = $title;
                 }
 
-                // insert page, store the id, we need it when building the blocks
-                $page['revision_id'] = BackendPagesModel::insert($page);
+                /** @var PageRepository $pageRepository */
+                $pageRepository = BackendModel::get(PageRepository::class);
+                /** @var MetaRepository $metaRepository */
+                $metaRepository = BackendModel::get('fork.repository.meta');
+
+                $meta = $metaRepository->find($this->meta->save());
+
+                $page = new Page(
+                    BackendPagesModel::getMaximumPageId() + 1,
+                    BackendAuthentication::getUser()->getUserId(),
+                    $parentId,
+                    $templateId,
+                    $meta,
+                    BL::getWorkingLanguage(),
+                    $title,
+                    $navigationTitle,
+                    new DateTime(),
+                    BackendPagesModel::getMaximumSequence($parentId) + 1,
+                    $this->form->getField('navigation_title_overwrite')->isChecked(),
+                    $this->form->getField('hidden')->getValue(),
+                    new Status($status),
+                    $parentPage ? 'page' : 'root',
+                    $data,
+                    $allowMove,
+                    $allowChildren,
+                    $allowEdit,
+                    $allowDelete
+                );
+
+                $pageRepository->add($page);
+                $pageRepository->save($page);
 
                 // loop blocks
                 foreach ($this->blocksContent as $i => $block) {
                     // add page revision id to blocks
-                    $this->blocksContent[$i]['revision_id'] = $page['revision_id'];
+                    $this->blocksContent[$i]['revision_id'] = $page->getRevisionId();
 
                     // validate blocks, only save blocks for valid positions
                     if (!in_array(
@@ -634,7 +645,7 @@ class Add extends BackendBaseActionAdd
                 if ($this->showTags()) {
                     // save tags
                     BackendTagsModel::saveTags(
-                        $page['id'],
+                        $page->getId(),
                         $this->form->getField('tags')->getValue(),
                         $this->url->getModule()
                     );
@@ -644,57 +655,58 @@ class Add extends BackendBaseActionAdd
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
                 // active
-                if ($page['status'] === 'active') {
+                if ($page->getStatus()->isActive()) {
                     $this->saveSearchIndex($data['remove_from_search_index'] || $redirectValue !== 'none', $page);
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
                         BackendModel::createUrlForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=added&var=' . rawurlencode(
-                            $page['title']
-                        ) . '&highlight=row-' . $page['id']
+                        ) . '&id=' . $page->getId() . '&report=added&var=' . rawurlencode(
+                            $page->getTitle()
+                        ) . '&highlight=row-' . $page->getId()
                     );
-                } elseif ($page['status'] === 'draft') {
+                } elseif ($page->getStatus()->isDraft()) {
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
                         BackendModel::createUrlForAction(
                             'Edit'
-                        ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
-                            $page['title']
-                        ) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']
+                        ) . '&id=' . $page->getId() . '&report=saved-as-draft&var=' . rawurlencode(
+                            $page->getTitle()
+                        ) . '&highlight=row-' . $page->getRevisionId() . '&draft=' . $page->getRevisionId()
                     );
                 }
             }
         }
     }
 
-    private function getImage(bool $allowImage): ?string
+    private function getImage(bool $allowImage, string $defaultImage = null): ?string
     {
+        $imageField = $this->form->getField('image');
         if (!$allowImage
-            || (!$this->form->getField('image')->isFilled() && $this->originalImage === null)
+            || (!$imageField->isFilled() && $this->originalImage === null && $defaultImage === null)
             || ($this->originalImage !== null && $this->form->getField('remove_image')->isChecked())) {
             return null;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
-        if ($this->originalImage !== null && !$this->form->getField('image')->isFilled()) {
-            $originalImagePath = $imagePath . '/source/' . $this->originalImage;
-            $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
-            $newImagePath = $imagePath . '/source/' . $imageFilename;
-
-            // make sure we have a separate image for the copy in case the original image gets removed
-            (new Filesystem())->copy($originalImagePath, $newImagePath);
-            $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
+        if ($imageField->isFilled()) {
+            $imageFilename = $this->getImageFilenameForExtension($imageField->getExtension());
+            $imageField->generateThumbnails($imagePath, $imageFilename);
 
             return $imageFilename;
         }
 
-        $imageFilename = $this->getImageFilenameForExtension($this->form->getField('image')->getExtension());
-        $this->form->getField('image')->generateThumbnails($imagePath, $imageFilename);
+        if ($this->originalImage !== null) {
+            return $this->copyImage($imagePath . '/source/' . $this->originalImage);
+        }
 
-        return $imageFilename;
+        if ($defaultImage !== null) {
+            return $this->copyImage(FRONTEND_FILES_PATH . '/Templates/images/source/' . $defaultImage);
+        }
+
+        return null;
     }
 
     private function getImageFilenameForExtension(string $extension): string
@@ -739,12 +751,12 @@ class Add extends BackendBaseActionAdd
         return $originalPage;
     }
 
-    private function saveSearchIndex(bool $removeFromSearchIndex, array $page): void
+    private function saveSearchIndex(bool $removeFromSearchIndex, Page $page): void
     {
         if ($removeFromSearchIndex) {
             BackendSearchModel::removeIndex(
                 $this->getModule(),
-                $page['id']
+                $page->getId()
             );
 
             return;
@@ -757,8 +769,21 @@ class Add extends BackendBaseActionAdd
 
         BackendSearchModel::saveIndex(
             $this->getModule(),
-            $page['id'],
-            ['title' => $page['title'], 'text' => $searchText]
+            $page->getId(),
+            ['title' => $page->getTitle(), 'text' => $searchText]
         );
+    }
+
+    private function copyImage(string $originalImagePath): string
+    {
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
+        $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
+        $newImagePath = $imagePath . '/source/' . $imageFilename;
+
+        // make sure we have a separate image for the copy in case the original image gets removed
+        (new Filesystem())->copy($originalImagePath, $newImagePath);
+        $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
+
+        return $imageFilename;
     }
 }

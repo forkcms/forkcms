@@ -2,8 +2,13 @@
 
 namespace Backend\Modules\Search\Installer;
 
-use Common\ModuleExtraType;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 
 /**
  * Installer for the search module
@@ -86,12 +91,14 @@ class Installer extends ModuleInstaller
     {
         $this->makeSearchable('Pages');
 
-        foreach ($this->getActivePages() as $page) {
-            $this->insertSearchIndexForPage($page['id'], $page['language'], $page['title']);
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+
+        foreach ($pageRepository->findActivePages() as $page) {
+            $this->insertSearchIndexForPage($page->getId(), $page->getLanguage(), $page->getTitle());
             $this->insertSearchIndexForPage(
-                $page['id'],
-                $page['language'],
-                $this->getContentFromBlocksForPageRevision($page['revision_id'])
+                $page->getId(),
+                $page->getLanguage(),
+                $this->getContentFromBlocksForPageRevision($page->getRevisionId())
             );
         }
     }
@@ -102,26 +109,28 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'validate_search', true);
     }
 
-    private function getActivePages(): array
-    {
-        // @todo: Replace with a PageRepository method when it exists.
-        return (array) $this->getDatabase()->getRecords(
-            'SELECT id, revision_id, language, title
-             FROM pages
-             WHERE status = ?',
-            ['active']
-        );
-    }
-
     private function getContentFromBlocksForPageRevision(int $pageRevisionId): string
     {
-        // @todo: Replace with a PageBlockRepository method when it exists.
-        $blocks = (array) $this->getDatabase()->getColumn(
-            'SELECT html FROM pages_blocks WHERE revision_id = ?',
-            [$pageRevisionId]
-        );
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::getContainer()->get(PageBlockRepository::class);
 
-        return empty($blocks) ? '' : strip_tags(implode(' ', $blocks));
+        $pageBlocks = $pageBlockRepository->findBy(['revisionId' => $pageRevisionId]);
+
+        if (count($pageBlocks) === 0) {
+            return '';
+        }
+
+        return strip_tags(
+            implode(
+                ' ',
+                array_map(
+                    function (PageBlock $pageBlock) {
+                        return $pageBlock->getHtml();
+                    },
+                    $pageBlocks
+                )
+            )
+        );
     }
 
     private function hasExistingSearchIndex(string $language): bool
@@ -129,8 +138,8 @@ class Installer extends ModuleInstaller
         // @todo: Replace with a PageBlockRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1
-             FROM pages AS p
-             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             FROM PagesPage AS p
+             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->searchBlockId, $language]

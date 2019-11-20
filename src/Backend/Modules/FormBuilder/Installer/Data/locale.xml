@@ -35,20 +35,20 @@
         <translation language="pl"><![CDATA[dodaj pole]]></translation>
       </item>
       <item type="label" name="BackToData">
-        <translation language="nl"><![CDATA[terug naar inzendingen]]></translation>
-        <translation language="en"><![CDATA[back to submissions]]></translation>
-        <translation language="it"><![CDATA[torna alle richieste]]></translation>
-        <translation language="ru"><![CDATA[Вернуться к аргументам]]></translation>
-        <translation language="zh"><![CDATA[返回提交结果]]></translation>
-        <translation language="fr"><![CDATA[retour aux soumissions]]></translation>
-        <translation language="hu"><![CDATA[back to submissions]]></translation>
-        <translation language="de"><![CDATA[zurück zu den Einsendungen]]></translation>
-        <translation language="es"><![CDATA[volver a envios]]></translation>
-        <translation language="uk"><![CDATA[Повернутися до даних]]></translation>
-        <translation language="lt"><![CDATA[grįžti į pateikimą]]></translation>
-        <translation language="sv"><![CDATA[tillbaka till inskick]]></translation>
-        <translation language="el"><![CDATA[Πίσω στις υποβολές]]></translation>
-        <translation language="pl"><![CDATA[powrót do zgłoszeń]]></translation>
+        <translation language="nl"><![CDATA[overzicht inzendingen]]></translation>
+        <translation language="en"><![CDATA[overview submissions]]></translation>
+        <translation language="it"><![CDATA[presentazioni di panoramica]]></translation>
+        <translation language="ru"><![CDATA[обзорные материалы]]></translation>
+        <translation language="zh"><![CDATA[概述提交]]></translation>
+        <translation language="fr"><![CDATA[aperçu des soumissions]]></translation>
+        <translation language="hu"><![CDATA[áttekintő beadványok]]></translation>
+        <translation language="de"><![CDATA[Übersicht Einreichungen]]></translation>
+        <translation language="es"><![CDATA[presentaciones generales]]></translation>
+        <translation language="uk"><![CDATA[оглядові подання]]></translation>
+        <translation language="lt"><![CDATA[apžvalgos pateikimas]]></translation>
+        <translation language="sv"><![CDATA[prehľady]]></translation>
+        <translation language="el"><![CDATA[υποβολές επισκόπησης]]></translation>
+        <translation language="pl"><![CDATA[wnioski przeglądowe]]></translation>
       </item>
       <item type="label" name="Basic">
         <translation language="nl"><![CDATA[basis]]></translation>
@@ -428,6 +428,11 @@
         <translation language="el"><![CDATA[Πριν 1 δευτερόλεπτο]]></translation>
         <translation language="pl"><![CDATA[1 sekundę temu]]></translation>
       </item>
+      <item type="label" name="OtherPage">
+        <translation language="nl"><![CDATA[andere pagina]]></translation>
+        <translation language="fr"><![CDATA[autre page]]></translation>
+        <translation language="en"><![CDATA[other page]]></translation>
+      </item>
       <item type="label" name="Paragraph">
         <translation language="nl"><![CDATA[paragraaf]]></translation>
         <translation language="en"><![CDATA[paragraph]]></translation>
@@ -576,6 +581,11 @@
         <translation language="el"><![CDATA[Απαιτείται]]></translation>
         <translation language="pl"><![CDATA[wymagane]]></translation>
       </item>
+      <item type="label" name="SamePageWithConfirmBox">
+        <translation language="nl"><![CDATA[Huidige pagina met bevestigingsboodschap]]></translation>
+        <translation language="fr"><![CDATA[Page actuelle avec message de confirmation]]></translation>
+        <translation language="en"><![CDATA[Current page with confirmation message]]></translation>
+      </item>
       <item type="label" name="SecondsAgo">
         <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
         <translation language="en"><![CDATA[%1$s seconds ago]]></translation>
@@ -590,6 +600,11 @@
         <translation language="sv"><![CDATA[%1$s sekunder sen]]></translation>
         <translation language="el"><![CDATA[Πριν από %1$s δευτερόλεπτα]]></translation>
         <translation language="pl"><![CDATA[%1$s sekund temu]]></translation>
+      </item>
+      <item type="label" name="SelectConfirmationPage">
+        <translation language="nl"><![CDATA[selecteer bevestigingspagina]]></translation>
+        <translation language="fr"><![CDATA[sélectionner la page de confirmation]]></translation>
+        <translation language="en"><![CDATA[select confirmation page]]></translation>
       </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>
@@ -665,6 +680,11 @@
         <translation language="sv"><![CDATA[lyckat meddelande]]></translation>
         <translation language="el"><![CDATA[Μήνυμα επιτυχίας]]></translation>
         <translation language="pl"><![CDATA[wiadomość powodzenia]]></translation>
+      </item>
+      <item type="label" name="SuccessPage">
+        <translation language="nl"><![CDATA[succes pagina]]></translation>
+        <translation language="en"><![CDATA[success page]]></translation>
+        <translation language="fr"><![CDATA[page de réussite]]></translation>
       </item>
       <item type="label" name="Textarea">
         <translation language="nl"><![CDATA[tekstgebied]]></translation>
@@ -860,6 +880,14 @@
         <translation language="sv"><![CDATA[år]]></translation>
         <translation language="el"><![CDATA[έτος]]></translation>
         <translation language="pl"><![CDATA[rok]]></translation>
+      </item>
+      <item type="label" name="Data">
+        <translation language="nl"><![CDATA[gegevens]]></translation>
+        <translation language="en"><![CDATA[data]]></translation>
+      </item>
+      <item type="label" name="DataDetails">
+        <translation language="nl"><![CDATA[gegevens detail]]></translation>
+        <translation language="en"><![CDATA[data detail]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>

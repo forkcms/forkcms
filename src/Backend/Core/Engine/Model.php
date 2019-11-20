@@ -2,15 +2,19 @@
 
 namespace Backend\Core\Engine;
 
-use Common\ModuleExtraType;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Language\Language as FrontendLanguage;
 use Backend\Core\Language\Language as BackendLanguage;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraNotFountException;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -124,41 +128,38 @@ class Model extends \Common\Core\Model
      * Data is a key/value array. Example: array(id => 23, language => nl);
      *
      * @param string $module The module wherefore the extra exists.
-     * @param string $type The type of extra, possible values are block, homepage, widget.
+     * @param string $moduleExtraType The type of extra, possible values are block, homepage, widget.
      * @param array $data Extra data that exists.
      */
-    public static function deleteExtra(string $module = null, string $type = null, array $data = null): void
-    {
-        // init
-        $query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
+    public static function deleteExtra(
+        string $module = null,
+        ModuleExtraType $moduleExtraType = null,
+        array $data = null
+    ): void {
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
+
         $parameters = [];
 
-        // module
         if ($module !== null) {
-            $query .= ' AND i.module = ?';
-            $parameters[] = $module;
+            $parameters['module'] = $module;
         }
 
-        // type
-        if ($type !== null) {
-            $query .= ' AND i.type = ?';
-            $parameters[] = $type;
+        if ($moduleExtraType !== null) {
+            $parameters['type'] = $moduleExtraType;
         }
 
         // get extras
-        $extras = (array) self::getContainer()->get('database')->getRecords($query, $parameters);
+        $extras = $moduleExtraRepository->findBy($parameters);
 
-        // loop found extras
+        /** @var ModuleExtra $extra */
         foreach ($extras as $extra) {
-            // get extra data
-            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
-
+            $extraData = $extra->getData();
             // if we have $data parameter set and $extraData not null we should not delete such extra
             if ($data !== null && $extraData === null) {
                 continue;
             }
 
-            if ($data !== null && $extraData !== null) {
+            if ($data !== null && $extraData !== null && is_array($extraData)) {
                 foreach ($data as $dataKey => $dataValue) {
                     if (isset($extraData[$dataKey]) && $dataValue !== $extraData[$dataKey]) {
                         continue 2;
@@ -166,7 +167,7 @@ class Model extends \Common\Core\Model
                 }
             }
 
-            self::deleteExtraById($extra['id']);
+            $moduleExtraRepository->delete($extra);
         }
     }
 
@@ -175,23 +176,33 @@ class Model extends \Common\Core\Model
      *
      * @param int $id The id of the extra to delete.
      * @param bool $deleteBlock Should the block be deleted? Default is false.
+     *
+     * @deprecated Use \Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository instead
      */
     public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
-        self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
+
+        $moduleExtra = $moduleExtraRepository->find($id);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new ModuleExtraNotFountException();
+        }
+
+        $moduleExtraRepository->delete($moduleExtra);
 
         if ($deleteBlock) {
-            self::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
+            /** @var PageBlockRepository $pageBlockRepository */
+            $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+            $pageBlockRepository->deleteByExtraId($id);
 
             return;
         }
 
-        self::getContainer()->get('database')->update(
-            'pages_blocks',
-            ['extra_id' => null],
-            'extra_id = ?',
-            $id
-        );
+        /** @var PageBlockRepository $pageBlockRepository */
+        $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
+        $pageBlockRepository->clearExtraId($id);
     }
 
     /**
@@ -201,6 +212,8 @@ class Model extends \Common\Core\Model
      * @param string $field The field of the data you want to check the value for.
      * @param string $value The value to check the field for.
      * @param string $action In case you want to search for a certain action.
+     *
+     * @deprecated Not in use
      */
     public static function deleteExtrasForData(
         string $module,
@@ -213,7 +226,7 @@ class Model extends \Common\Core\Model
         // we have extras
         if (!empty($ids)) {
             // delete extras
-            self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+            self::getContainer()->get('database')->delete('PagesModuleExtra', 'id IN (' . implode(',', $ids) . ')');
         }
     }
 
@@ -308,25 +321,6 @@ class Model extends \Common\Core\Model
         return $possibleFormats;
     }
 
-    public static function getExtras(array $ids): array
-    {
-        // get database
-        $database = self::getContainer()->get('database');
-
-        array_walk($ids, 'intval');
-
-        // create an array with an equal amount of question marks as ids provided
-        $extraIdPlaceHolders = array_fill(0, count($ids), '?');
-
-        // get extras
-        return (array) $database->getRecords(
-            'SELECT i.*
-             FROM modules_extras AS i
-             WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
-            $ids
-        );
-    }
-
     /**
      * Get extras for data
      *
@@ -336,11 +330,13 @@ class Model extends \Common\Core\Model
      * @param string $action In case you want to search for a certain action.
      *
      * @return array The ids for the extras.
+     *
+     * @deprecated Not in use
      */
     public static function getExtrasForData(string $module, string $key, string $value, string $action = null): array
     {
         $query = 'SELECT i.id, i.data
-                 FROM modules_extras AS i
+                 FROM PagesModuleExtra AS i
                  WHERE i.module = ? AND i.data != ?';
         $parameters = [$module, 'NULL'];
 
@@ -553,12 +549,15 @@ class Model extends \Common\Core\Model
                     }
 
                     // loop extras
+                    /** @var ModuleExtra $extra */
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] === $module && $extra['action'] === $action && $extra['action'] !== null) {
+                        if ($extra->getModule() === $module
+                            && $extra->getAction() === $action
+                            && $extra->getAction() !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])
-                                && array_intersect_assoc($data, (array) $extra['data']) !== $data
+                            if ($data !== null && $extra->getData()
+                                && array_intersect_assoc($data, (array) $extra->getData()) !== $data
                             ) {
                                 // It is the correct action but has the wrong data
                                 continue;
@@ -568,10 +567,10 @@ class Model extends \Common\Core\Model
                             return self::getUrl($properties['page_id'], $language);
                         }
 
-                        if ($extra['module'] === $module && $extra['action'] === null) {
+                        if ($extra->getModule() === $module && $extra->getAction() === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if ($data !== null && isset($extra['data'])) {
-                                if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if ($data !== null && $extra->getData() !== null) {
+                                if (array_intersect_assoc($data, (array) $extra->getData()) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
                                 }
@@ -580,7 +579,7 @@ class Model extends \Common\Core\Model
                                 $dataMatch = true;
                             }
 
-                            if ($data === null && $extra['data'] === null) {
+                            if ($data === null && $extra->getData() === null) {
                                 $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
@@ -672,19 +671,18 @@ class Model extends \Common\Core\Model
         bool $hidden = false,
         int $sequence = null
     ): int {
-        // return id for inserted extra
-        return self::get('database')->insert(
-            'modules_extras',
-            [
-                'module' => $module,
-                'type' => $type,
-                'label' => $label ?? $module, // if label is empty, fallback to module
-                'action' => $action ?? null,
-                'data' => $data === null ? null : serialize($data),
-                'hidden' => $hidden,
-                'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
-            ]
-        );
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
+
+        if ($sequence === null) {
+            $sequence = $moduleExtraRepository->getNextSequenceByModule($module);
+        }
+
+        $moduleExtra = new ModuleExtra($module, new ModuleExtraType($type), $label ?? $module, $action ?? null, $data, $hidden, $sequence);
+        $moduleExtraRepository->add($moduleExtra);
+        $moduleExtraRepository->save($moduleExtra);
+
+        return $moduleExtra->getId();
     }
 
     /**
@@ -701,30 +699,6 @@ class Model extends \Common\Core\Model
         }
 
         return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return int
-     */
-    private static function getNextModuleExtraSequenceForModule(string $module): int
-    {
-        $database = self::get('database');
-        // set next sequence number for this module
-        $sequence = (int) $database->getVar(
-            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
-            [$module]
-        );
-
-        // this is the first extra for this module: generate new 1000-series
-        if ($sequence > 0) {
-            return $sequence;
-        }
-
-        return (int) $database->getVar(
-            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
-        );
     }
 
     /**
@@ -879,35 +853,27 @@ class Model extends \Common\Core\Model
             throw new Exception('The key ' . $key . ' can\'t be updated.');
         }
 
-        // key is 'data' and value is not serialized
-        if ($key === 'data' && is_array($value)) {
-            // serialize value
-            $value = $value === null ? null : serialize($value);
+        /** @var ModuleExtraRepository $moduleExtraRepository */
+        $moduleExtraRepository = self::get(ModuleExtraRepository::class);
+        $moduleExtra = $moduleExtraRepository->find($id);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            throw new ModuleExtraNotFountException();
         }
 
-        self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', [$id]);
-    }
+        $module = $moduleExtra->getModule();
+        $label = $moduleExtra->getLabel();
+        $type = $moduleExtra->getType();
+        $action = $moduleExtra->getAction();
+        $data = $moduleExtra->getData();
+        $hidden = $moduleExtra->isHidden();
+        $sequence = $moduleExtra->getSequence();
 
-    /**
-     * Update extra data
-     *
-     * @param int $id The id for the extra.
-     * @param string $key The key in the data you want to update.
-     * @param string|array $value The new value.
-     */
-    public static function updateExtraData(int $id, string $key, $value): void
-    {
-        $database = self::getContainer()->get('database');
+        // Set the value dynamically
+        $$key = $value;
 
-        $serializedData = (string) $database->getVar(
-            'SELECT i.data
-             FROM modules_extras AS i
-             WHERE i.id = ?',
-            [$id]
-        );
+        $moduleExtra->update($module, $type, $label, $action, $data, $hidden, $sequence);
 
-        $data = empty($serializedData) ? [] : unserialize($serializedData);
-        $data[$key] = $value;
-        $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
+        $moduleExtraRepository->save($moduleExtra);
     }
 }

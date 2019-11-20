@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Tags\Widgets;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
@@ -49,13 +50,7 @@ class Related extends FrontendBaseWidget
         // loop tags
         foreach ($this->tags as $tag) {
             // fetch entries
-            $items = (array) $this->get('database')->getRecords(
-                'SELECT mt.module, mt.other_id
-                 FROM modules_tags AS mt
-                 INNER JOIN tags AS t ON t.id = mt.tag_id
-                 WHERE t.language = ? AND t.tag = ?',
-                [LANGUAGE, $tag]
-            );
+            $items = FrontendTagsModel::getAllForTag($tag);
 
             // loop items
             foreach ($items as $item) {
@@ -121,19 +116,23 @@ class Related extends FrontendBaseWidget
         }
 
         $record = (array) FrontendNavigation::getPageInfo($pageId);
+
+        /** @var ModuleExtra $block */
         foreach ((array) $record['extra_blocks'] as $block) {
-            $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
+            $blockModule = $block->getModule();
+
+            $class = 'Frontend\\Modules\\' . $blockModule . '\\Engine\\Model';
 
             if (is_callable([$class, 'getIdForTags'])) {
-                $itemId = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->url);
+                $itemId = FrontendTagsModel::callFromInterface($blockModule, $class, 'getIdForTags', $this->url);
 
                 if (!$itemId) {
                     continue;
                 }
 
-                $this->exclude[] = ['module' => $block['module'], 'other_id' => $itemId];
+                $this->exclude[] = ['module' => $blockModule, 'other_id' => $itemId];
 
-                $tags = (array) FrontendTagsModel::getForItem($block['module'], $itemId);
+                $tags = (array) FrontendTagsModel::getForItem($blockModule, $itemId);
                 foreach ($tags as $tag) {
                     $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
                 }

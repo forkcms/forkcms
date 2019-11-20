@@ -1,42 +1,40 @@
 .btn {
+  font-size: $font-size-base * 0.875;
+  -webkit-appearance: none;
   border-radius: 3px;
   padding: 9px 9px 10px;
 
-  .fa {
-    margin: 0 3px;
+  .svg-inline--fa {
+    margin: 0 3px 0 0;
   }
 
   .btn-text {
     display: block;
-    font-size: $font-size-extra-small;
+    font-size: $font-size-xs;
     margin: 0 3px;
-  }
-
-  @media screen and (min-width: $screen-sm) {
-    .btn-text {
-      display: inline-block;
-      font-size: $font-size-base;
-      margin: 0;
-    }
   }
 
   &.ui-sortable-handle {
     cursor: move;
   }
 
-  &.btn-xs {
-    padding: 2px 8px;
+  &.btn-sm {
+    font-size: $font-size-sm;
   }
 
   &.btn-md {
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     padding: 4px 15px 5px;
   }
 }
 
 .btn-icon-only {
-  .fa {
+  font-size: $font-size-base;
+  padding: 6px 12px 6px;
+
+  .svg-inline--fa {
     padding-right: 0;
+    margin-left: 0;
     margin-right: 0;
   }
 }
@@ -48,6 +46,7 @@
     float: none;
     margin: 1px 0;
 
+    + .btn-group,
     + .btn {
       margin-left: 2px;
     }
@@ -57,19 +56,6 @@
     }
   }
 
-  @media screen and (min-width: $screen-lg) {
-
-    .btn {
-      float: none;
-      margin: 6px 0;
-
-      + .btn {
-        margin-left: 6px;
-      }
-    }
-  }
-
-
   .btn:first-child:not(:last-child):not(.dropdown-toggle),
   .btn:last-child:not(:first-child),
   .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
@@ -77,20 +63,30 @@
   }
 }
 
-.btn-second {
-  color: $brand-primary-dark;
+.btn-default {
+  background: $gray-200;
+  border-color: $gray-200;
+  color: $gray-700;
 
-  &:hover,
-  &:focus {
-    color: $brand-primary;
+  @include hover-focus {
+    background: darken($gray-200, 15%);
+    border-color: darken($gray-200, 15%);
+  }
+}
+
+.btn-secondary {
+  color: $blue-dark;
+
+  @include hover-focus {
+    color: $primary;
   }
 }
 
 .input-group-addon {
-  color: $text-color;
+  color: $body-color;
 
   &.btn {
-    color: $brand-primary;
+    color: $primary;
 
     &:hover {
       color: $white;
@@ -102,12 +98,24 @@ a.btn {
   text-decoration: none;
 }
 
-.btn-toolbar .btn-group {
-  .btn {
-    margin-bottom: 6px;
-  }
+@include media-breakpoint-up(sm) {
 
-  & + .btn-group {
-    margin-left: 1em;
+  .btn .btn-text {
+    display: inline-block;
+    font-size: $font-size-base * 0.875;
+    margin: 0;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+
+  .btn-group .btn {
+    float: none;
+    margin: 6px 0;
+
+    + .btn-group,
+    + .btn {
+      margin-left: 6px;
+    }
   }
 }

@@ -1,0 +1,30 @@
+services:
+  profile.repository.profile:
+    class: Backend\Modules\Profiles\Domain\Profile\ProfileRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\Profile\Profile
+
+  profile.repository.profile_setting:
+    class: Backend\Modules\Profiles\Domain\Setting\SettingRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\Setting\Setting
+
+  profile.repository.profile_group:
+    class: Backend\Modules\Profiles\Domain\Group\GroupRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\Group\Group
+
+  profile.repository.profile_group_right:
+    class: Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\GroupRight\GroupRight
+
+  profile.repository.profile_session:
+    class: Backend\Modules\Profiles\Domain\Session\SessionRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\Session\Session

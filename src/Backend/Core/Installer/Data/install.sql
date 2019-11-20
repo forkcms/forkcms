@@ -24,32 +24,11 @@ CREATE TABLE IF NOT EXISTS `modules` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `modules_extras` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
-  `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'A serialized value with the optional parameters',
-  `hidden` tinyint(1) NOT NULL DEFAULT '0',
-  `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras' AUTO_INCREMENT=1 ;
-
-
 CREATE TABLE IF NOT EXISTS `modules_settings` (
   `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'name of the module',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'name of the setting',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY (`module`(25),`name`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-CREATE TABLE IF NOT EXISTS `modules_tags` (
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`module`,`tag_id`,`other_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

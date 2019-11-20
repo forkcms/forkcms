@@ -17,6 +17,36 @@
         <translation language="el"><![CDATA[ID του Διαχειριστή]]></translation>
         <translation language="pl"><![CDATA[ID administratora]]></translation>
       </item>
+      <item type="label" name="NOODP">
+        <translation language="nl"><![CDATA[NOODP]]></translation>
+        <translation language="en"><![CDATA[NOODP]]></translation>
+        <translation language="it"><![CDATA[NOODP]]></translation>
+        <translation language="ru"><![CDATA[NOODP]]></translation>
+        <translation language="zh"><![CDATA[NOODP]]></translation>
+        <translation language="fr"><![CDATA[NOODP]]></translation>
+        <translation language="de"><![CDATA[NOODP]]></translation>
+        <translation language="hu"><![CDATA[NOODP]]></translation>
+        <translation language="es"><![CDATA[NOODP]]></translation>
+        <translation language="uk"><![CDATA[NOODP]]></translation>
+        <translation language="lt"><![CDATA[NOODP]]></translation>
+        <translation language="el"><![CDATA[NOODP]]></translation>
+        <translation language="pl"><![CDATA[NOODP]]></translation>
+      </item>
+      <item type="label" name="NOYDIR">
+        <translation language="nl"><![CDATA[NOYDIR]]></translation>
+        <translation language="en"><![CDATA[NOYDIR]]></translation>
+        <translation language="it"><![CDATA[NOYDIR]]></translation>
+        <translation language="ru"><![CDATA[NOYDIR]]></translation>
+        <translation language="zh"><![CDATA[NOYDIR]]></translation>
+        <translation language="fr"><![CDATA[NOYDIR]]></translation>
+        <translation language="de"><![CDATA[NOYDIR]]></translation>
+        <translation language="hu"><![CDATA[NOYDIR]]></translation>
+        <translation language="es"><![CDATA[NOYDIR]]></translation>
+        <translation language="uk"><![CDATA[NOYDIR]]></translation>
+        <translation language="lt"><![CDATA[NOYDIR]]></translation>
+        <translation language="el"><![CDATA[NOYDIR]]></translation>
+        <translation language="pl"><![CDATA[NOYDIR]]></translation>
+      </item>
       <item type="label" name="ApplicationId">
         <translation language="nl"><![CDATA[toepassings-id]]></translation>
         <translation language="en"><![CDATA[application id]]></translation>
@@ -157,14 +187,77 @@
         <translation language="it"><![CDATA[facebook]]></translation>
         <translation language="pl"><![CDATA[facebook]]></translation>
       </item>
-      <item type="label" name="CkFinder">
-        <translation language="nl"><![CDATA[ckfinder]]></translation>
-        <translation language="en"><![CDATA[ckfinder]]></translation>
-        <translation language="de"><![CDATA[ckfinder]]></translation>
-        <translation language="fr"><![CDATA[ckfinder]]></translation>
-        <translation language="es"><![CDATA[ckfinder]]></translation>
-        <translation language="it"><![CDATA[ckfinder]]></translation>
-        <translation language="pl"><![CDATA[ckfinder]]></translation>
+      <item type="label" name="GoogleMapsKey">
+        <translation language="nl"><![CDATA[Google Maps key]]></translation>
+        <translation language="en"><![CDATA[Google Maps key]]></translation>
+        <translation language="de"><![CDATA[Google Maps key]]></translation>
+        <translation language="fr"><![CDATA[Google Maps key]]></translation>
+        <translation language="es"><![CDATA[Google Maps key]]></translation>
+        <translation language="it"><![CDATA[Google Maps key]]></translation>
+        <translation language="pl"><![CDATA[Google Maps key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSiteKey">
+        <translation language="nl"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="en"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="de"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="fr"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="es"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="it"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="pl"><![CDATA[reCAPTCHA site key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSectretKey">
+        <translation language="nl"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="en"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="de"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="fr"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="es"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="it"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="pl"><![CDATA[reCAPTCHA secret key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSecretUrl">
+        <translation language="nl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="en"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="de"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="fr"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="es"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="it"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="pl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSiteUrl">
+        <translation language="nl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="en"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="de"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="fr"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="es"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="it"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="pl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+      </item>
+      <item type="label" name="GoogleMapsApiUrl">
+        <translation language="nl"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="en"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="de"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="fr"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="es"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="it"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="pl"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+      </item>
+      <item type="label" name="AskimetApiKey">
+        <translation language="nl"><![CDATA[Askimet Key]]></translation>
+        <translation language="en"><![CDATA[Askimet Key]]></translation>
+        <translation language="de"><![CDATA[Askimet Key]]></translation>
+        <translation language="fr"><![CDATA[Askimet Key]]></translation>
+        <translation language="es"><![CDATA[Askimet Key]]></translation>
+        <translation language="it"><![CDATA[Askimet Key]]></translation>
+        <translation language="pl"><![CDATA[Askimet Key]]></translation>
+      </item>
+      <item type="label" name="AskimetApiKeyUrl">
+        <translation language="nl"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="en"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="de"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="fr"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="es"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="it"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="pl"><![CDATA[http://akismet.com/personal]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
@@ -191,28 +284,6 @@
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
         <translation language="el"><![CDATA[Κωδικοί πρόσβασης γιά υπηρεσίες web.]]></translation>
         <translation language="pl"><![CDATA[Kody dostępu do usług sieciowych.]]></translation>
-      </item>
-      <item type="message" name="HelpCkfinderMaximumHeight">
-        <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum height (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Укажите максимальную высоту (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
-        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Höhe (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
-        <translation language="es"><![CDATA[Configure la altura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
-        <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
-        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο ύψος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
-        <translation language="zh"><![CDATA[配置上载的图像的最大高度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
-        <translation language="pl"><![CDATA[Skonfiguruj maksymalną wysokość (w pikselach) przesłanych obrazów. Jeśli przesłany obraz jest większy, zostanie proporcjonalnie zmniejszony. Ustaw na 0, aby wyłączyć tę funkcję.]]></translation>
-      </item>
-      <item type="message" name="HelpCkfinderMaximumWidth">
-        <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum width (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Укажите максимальную ширину (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
-        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Breite (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
-        <translation language="es"><![CDATA[Configure la anchura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
-        <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
-        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο πλάτος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
-        <translation language="zh"><![CDATA[配置上载的图像的最大宽度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
-        <translation language="pl"><![CDATA[Skonfiguruj maksymalną szerokość (w pikselach) przesłanych obrazów. Jeśli przesłany obraz jest większy, zostanie proporcjonalnie zmniejszony. Ustaw na 0, aby wyłączyć tę funkcję.]]></translation>
       </item>
       <item type="message" name="HelpCookies">
         <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht. Met deze cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>

@@ -314,7 +314,7 @@ class UploadHandler
 
         $pathinfo = pathinfo($filename);
         $base = $pathinfo['filename'];
-        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
+        $ext = $pathinfo['extension'] ?? '';
         $ext = $ext === '' ? $ext : '.' . $ext;
 
         $unique = $base;

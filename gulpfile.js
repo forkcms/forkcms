@@ -15,7 +15,7 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css',
     'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css',
     'node_modules/cropper/dist/cropper.css',
-    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
+    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css',
   ])
   .pipe(gulp.dest('./css/vendors'))
 })
@@ -89,13 +89,14 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/jquery-migrate/dist/jquery-migrate.min.js',
     'node_modules/jquery-ui-dist/jquery-ui.min.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
     'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js',
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
     'node_modules/cropper/dist/cropper.js',
-    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
+    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js',
+    'node_modules/jstree/dist/jstree.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })
@@ -122,24 +123,20 @@ gulp.task('build:backend:sass:generate-css', function () {
   .pipe(livereload())
 })
 
-gulp.task('build:backend', function () {
-  gulp.start(
-    'build:backend:assets:copy-css-vendors',
-    'build:backend:assets:copy-fonts-vendors',
-    'build:backend:assets:copy-js-vendors',
-    'build:backend:assets:copy-fine-uploader-css-and-images',
-    'build:backend:sass:generate-css',
-    'build:backend:assets:copy-ckeditor'
-  )
-})
+const buildBackend = gulp.parallel(
+  'build:backend:assets:copy-css-vendors',
+  'build:backend:assets:copy-fonts-vendors',
+  'build:backend:assets:copy-js-vendors',
+  'build:backend:assets:copy-fine-uploader-css-and-images',
+  'build:backend:sass:generate-css',
+  'build:backend:assets:copy-ckeditor'
+)
 
 gulp.task('serve:backend', function () {
   livereload.listen()
   gulp.watch(
-    [
-      'src/Backend/Core/Layout/Sass/**/*.scss'
-    ],
-    ['build:backend:sass:generate-css']
+    'src/Backend/Core/Layout/Sass/**/*.scss',
+    gulp.parallel('build:backend:sass:generate-css')
   )
 })
 
@@ -167,7 +164,7 @@ gulp.task('build:frontend:assets:copy-photoswipe-css-and-images', function () {
     'node_modules/photoswipe/dist/photoswipe.css',
     'node_modules/photoswipe/dist/default-skin/*.{png,svg,gif,jpg,css}'
   ])
-    .pipe(gulp.dest('css/vendors/photoswipe'))
+  .pipe(gulp.dest('css/vendors/photoswipe'))
 })
 
 gulp.task('build:frontend:sass:generate-css', function () {
@@ -215,15 +212,12 @@ gulp.task('build:frontend:sass:generate-module-css', function () {
   .pipe(livereload())
 })
 
-gulp.task('build:frontend', function () {
-  gulp.start(
-    'build:frontend:assets:copy-images-vendors',
-    'build:frontend:assets:copy-js-vendors',
-    'build:frontend:assets:copy-photoswipe-css-and-images',
-    'build:frontend:sass:generate-css',
-    'build:frontend:sass:generate-module-css'
-  )
-})
+const buildFrontend = gulp.parallel(
+  'build:frontend:assets:copy-js-vendors',
+  'build:frontend:assets:copy-photoswipe-css-and-images',
+  'build:frontend:sass:generate-css',
+  'build:frontend:sass:generate-module-css'
+)
 
 gulp.task('serve:frontend', function () {
   livereload.listen()
@@ -231,7 +225,7 @@ gulp.task('serve:frontend', function () {
     [
       'src/Frontend/Modules/**/Layout/Sass/*.scss'
     ],
-    ['build:frontend:sass:generate-module-css']
+    gulp.parallel('build:frontend:sass:generate-module-css')
   )
   gulp.watch(
     [
@@ -239,7 +233,7 @@ gulp.task('serve:frontend', function () {
       'src/Frontend/Core/Layout/Sass/editor_content.scss',
       'src/Frontend/Core/Layout/Sass/screen.scss'
     ],
-    ['build:frontend:sass:generate-css']
+    gulp.parallel('build:frontend:sass:generate-css')
   )
 })
 
@@ -265,11 +259,9 @@ gulp.task('build:theme-fork:sass:generate-css', function () {
   .pipe(livereload())
 })
 
-gulp.task('build:theme-fork', function () {
-  gulp.start(
-    'build:theme-fork:sass:generate-css'
-  )
-})
+const buildThemeFork = gulp.parallel(
+  'build:theme-fork:sass:generate-css'
+)
 
 gulp.task('serve:theme-fork', function () {
   livereload.listen()
@@ -277,27 +269,21 @@ gulp.task('serve:theme-fork', function () {
     [
       'src/Frontend/Themes/Fork/Core/Layout/Sass/**/*.scss'
     ],
-    ['build:theme-fork:sass:generate-css']
+    gulp.parallel('build:theme-fork:sass:generate-css')
   )
 })
 
 // public tasks
-gulp.task('default', function () {
-  gulp.start('build')
-})
+gulp.task('serve', gulp.parallel(
+  'serve:backend',
+  'serve:frontend',
+  'serve:theme-fork'
+))
 
-gulp.task('serve', function () {
-  gulp.start(
-    'serve:backend',
-    'serve:frontend',
-    'serve:theme-fork'
-  )
-})
+gulp.task('build', gulp.series(
+  buildBackend,
+  buildFrontend,
+  buildThemeFork
+))
 
-gulp.task('build', function () {
-  gulp.start(
-    'build:backend',
-    'build:frontend',
-    'build:theme-fork'
-  )
-})
+gulp.task('default', gulp.series('build'))

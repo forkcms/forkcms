@@ -5,27 +5,31 @@
 {% endblock %}
 
 {% block content %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="card card-default">
+    <div class="card-heading">
       <h2>{{ 'lbl.Statistics'|trans|ucfirst }} {{ 'lbl.From'|trans }} {{ startTimestamp|date('m/d/Y') }} {{ 'lbl.Till'|trans }} {{ endTimestamp|date('m/d/Y') }}</h2>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       <div class="change-periode content-block">
         {% form date_range %}
-        <div class="form-inline">
-          <div class="form-group">
-            <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|ucfirst }}</label>
-            {% form_field start_date %}
-            {% form_field_error start_date %}
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|ucfirst }}</label>
+              {% form_field start_date %}
+              {% form_field_error start_date %}
+            </div>
           </div>
-          <div class="form-group">
-            <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|ucfirst }}</label>
-            {% form_field end_date %}
-            {% form_field_error end_date %}
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|ucfirst }}</label>
+              {% form_field end_date %}
+              {% form_field_error end_date %}
+            </div>
           </div>
-          <div class="form-group">
-            <input id="update" class="btn btn-primary" type="submit" name="update" value="{{ 'lbl.ChangePeriod'|trans|ucfirst }}" />
-          </div>
+        </div>
+        <div class="form-group">
+          <input id="update" class="btn btn-primary" type="submit" name="update" value="{{ 'lbl.ChangePeriod'|trans|ucfirst }}" />
         </div>
         {% endform %}
       </div>
@@ -53,13 +57,13 @@
   <div class="analytics-charts content-block">
     <div class="row">
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.RecentVisits'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             {% if visitors_graph_data %}
-              <div id="dataChartDoubleMetricPerDay" class="hidden">
+              <div id="dataChartDoubleMetricPerDay" class="d-none">
                 <span id="maxYAxis">{{ maxYAxis }}</span>
                 <span id="tickInterval">{{ tickInterval }}</span>
                 <span id="yAxisTitle">{{ 'lbl.Visits'|trans|ucfirst }}</span>
@@ -96,13 +100,13 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.PageviewsByTrafficSources'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             {% if source_graph_data %}
-              <div id="dataChartPieChart" class="hidden">
+              <div id="dataChartPieChart" class="d-none">
                 <ul class="data">
                   {% for source in source_graph_data %}
                     <li>
@@ -121,12 +125,12 @@
 
   <div class="analytics-grid content-block">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.MostViewedPages'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="dataGridHolder">
               {{ dataGridMostViewedPages|raw }}
             </div>
