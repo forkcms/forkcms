@@ -13,13 +13,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class PrepareForReinstallCommand extends ContainerAwareCommand
 {
-    const RETURN_SUCCESS = 0;
-    const RETURN_DID_NOT_REINSTALL = 1;
-    const RETURN_DID_NOT_CLEAR_DATABASE = 2;
+    public const RETURN_SUCCESS = 0;
+    public const RETURN_DID_NOT_REINSTALL = 1;
+    public const RETURN_DID_NOT_CLEAR_DATABASE = 2;
 
     protected function configure(): void
     {
-        $this->setName('forkcms:install:prepare-for-reinstall')
+        $this
+            ->setName('forkcms:install:prepare-for-reinstall')
             ->setDescription('Revert Fork CMS to an uninstalled state, prompting the install wizard.');
     }
 

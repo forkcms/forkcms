@@ -42,12 +42,20 @@ class InstallCommand extends Command
     /** @var bool */
     private $forkIsInstalled;
 
-    public function __construct(ForkInstaller $installer, string $projectDirectory, bool $forkIsInstalled)
-    {
+    /** @var PrepareForReinstallCommand */
+    private $prepareForReinstallCommand;
+
+    public function __construct(
+        ForkInstaller $installer,
+        string $projectDirectory,
+        bool $forkIsInstalled,
+        PrepareForReinstallCommand $prepareForReinstallCommand
+    ) {
         parent::__construct();
         $this->installer = $installer;
         $this->installConfigPath = $projectDirectory . '/app/config/cli-install.yml';
         $this->forkIsInstalled = $forkIsInstalled;
+        $this->prepareForReinstallCommand = $prepareForReinstallCommand;
     }
 
     protected function configure(): void
@@ -63,6 +71,13 @@ class InstallCommand extends Command
         $this->input = $input;
         $this->output = $output;
         $this->formatter = new SymfonyStyle($input, $output);
+
+        if ($this->forkIsInstalled
+            && $this->prepareForReinstallCommand->run($input, $output) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
+            $this->formatter->error('Fork CMS is already installed');
+
+            return;
+        }
 
         if (!$this->serverMeetsRequirements()) {
             $this->formatter->error('This server is not compatible with Fork CMS');
@@ -125,7 +140,9 @@ class InstallCommand extends Command
         }
         $installationData->setLanguageType($config['multiLanguage'] ? 'multiple' : 'single');
         $installationData->setDefaultLanguage($config['defaultLanguage']);
-        $installationData->setDefaultInterfaceLanguage($config['defaultInterfaceLanguage'] ?? $config['defaultLanguage']);
+        $installationData->setDefaultInterfaceLanguage(
+            $config['defaultInterfaceLanguage'] ?? $config['defaultLanguage']
+        );
 
         $installationData->setLanguages($config['languages'] ?? []);
         $installationData->setInterfaceLanguages($config['interfaceLanguages'] ?? []);

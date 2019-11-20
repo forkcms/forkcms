@@ -23,8 +23,9 @@
         <service id="forkcms.console.installer.install" class="ForkCMS\Bundle\InstallerBundle\Console\InstallCommand">
             <argument type="service" id="forkcms.installer"/>
             <argument>%kernel.project_dir%</argument>
-            <argument>%fork.is_installed%"</argument>
-            <tag name="console.command" />
+            <argument>%fork.is_installed%</argument>
+            <argument type="service" id="forkcms.console.installer.prepare_for_reinstall"/>
+          <tag name="console.command" />
         </service>
     </services>
 </container>
