@@ -66,7 +66,7 @@ final class CopyContentFromModulesToOtherLocaleManager
                 CopyModuleContentToOtherLocaleInterface $moduleCommand1,
                 CopyModuleContentToOtherLocaleInterface $moduleCommand2
             ) {
-                return $moduleCommand1->getPriority() > $moduleCommand2->getPriority();
+                return $moduleCommand1->getPriority() <=> $moduleCommand2->getPriority();
             }
         );
 
