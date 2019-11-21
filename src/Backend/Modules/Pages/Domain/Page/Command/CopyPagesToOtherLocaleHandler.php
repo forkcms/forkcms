@@ -23,10 +23,6 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
 {
     public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
-        // get database
-        /** @var SpoonDatabase $database */
-        $database = BackendModel::getContainer()->get('database');
-
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
