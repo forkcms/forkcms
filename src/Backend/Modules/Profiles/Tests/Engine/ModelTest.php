@@ -8,6 +8,9 @@ use DateTime;
 
 final class ModelTest extends WebTestCase
 {
+    /** @var int */
+    private $expiresOnTimestamp;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -18,6 +21,7 @@ final class ModelTest extends WebTestCase
 
         $client = self::createClient();
         $this->loadFixtures($client);
+        $this->expiresOnTimestamp = time() + 60 * 60;
     }
 
     public function testPasswordGetsEncrypted(): void
@@ -285,7 +289,7 @@ final class ModelTest extends WebTestCase
             'profile_id' => $profileId,
             'group_id' => $groupId,
             'starts_on' => date('Y-m-d H:i:s', time()),
-            'expires_on' => date('Y-m-d H:i:s', time() + 60 * 60),
+            'expires_on' => date('Y-m-d H:i:s', $this->expiresOnTimestamp),
         ];
     }
 
@@ -314,7 +318,7 @@ final class ModelTest extends WebTestCase
         return [
             'profile_id' => 1,
             'group_id' => 1,
-            'expires_on' => time() + 60 * 60,
+            'expires_on' => $this->expiresOnTimestamp,
         ];
     }
 }
