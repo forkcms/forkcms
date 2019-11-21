@@ -52,10 +52,7 @@ final class CopyPageType extends AbstractType
                 'label' => 'lbl.ToLanguage',
             ]
         );
-        $builder->add(
-            'from',
-            HiddenType::class
-        );
+        $builder->add('from', HiddenType::class);
         $builder->add('pageToCopy', HiddenType::class);
 
         $pageRepository = $this->pageRepository;
