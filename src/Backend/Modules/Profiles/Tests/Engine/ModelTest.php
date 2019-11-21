@@ -8,6 +8,9 @@ use DateTime;
 
 final class ModelTest extends WebTestCase
 {
+    /** @var int */
+    private $expiresOnTimestamp;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -18,6 +21,7 @@ final class ModelTest extends WebTestCase
 
         $client = self::createClient();
         $this->loadFixtures($client);
+        $this->expiresOnTimestamp = time() + 60 * 60;
     }
 
     public function testPasswordGetsEncrypted(): void
@@ -166,14 +170,14 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupId, $addedProfileGroup['id']);
         $this->assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
         $this->assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
-        $this->assertEquals($profileGroupData['expires_on'], strtotime($addedProfileGroup['expires_on']));
+        $this->assertEquals(strtotime($profileGroupData['expires_on'].'.UTC'), $addedProfileGroup['expires_on']);
 
         $this->assertContains(
             [
                 'id' => $profileId,
                 'group_id' => $groupId,
                 'group_name' => 'My Fork CMS group',
-                'expires_on' => strtotime($profileGroupData['expires_on']),
+                'expires_on' => $profileGroupData['expires_on'],
             ],
             Model::getProfileGroups(1)
         );
@@ -193,7 +197,7 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupId, $updatedProfileGroup['id']);
         $this->assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
         $this->assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
-        $this->assertEquals($updatedProfileGroupData['expires_on'], $updatedProfileGroup['expires_on']);
+        $this->assertEquals(strtotime($updatedProfileGroupData['expires_on'] . '.UTC'), $updatedProfileGroup['expires_on']);
     }
 
     public function testIfProfileGroupExists(): void
@@ -285,7 +289,7 @@ final class ModelTest extends WebTestCase
             'profile_id' => $profileId,
             'group_id' => $groupId,
             'starts_on' => date('Y-m-d H:i:s', time()),
-            'expires_on' =>  date('Y-m-d H:i:s', time() + 60 * 60),
+            'expires_on' => date('Y-m-d H:i:s', $this->expiresOnTimestamp),
         ];
     }
 
@@ -314,7 +318,7 @@ final class ModelTest extends WebTestCase
         return [
             'profile_id' => 1,
             'group_id' => 1,
-            'expires_on' => date('Y-m-d H:i:s', time() + 60 * 60),
+            'expires_on' => date('Y-m-d H:i:s', $this->expiresOnTimestamp + 2),
         ];
     }
 }
