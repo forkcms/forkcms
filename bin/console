@@ -46,8 +46,6 @@ $backend = new BackendInit($kernel);
 $backend->initialize('Console');
 
 $application = new Application($kernel);
-$application->add(new ImportLocaleCommand());
-$application->add(new GenerateThumbnailsCommand($kernel->getContainer()->get(Thumbnails::class)));
 if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
         new CopyLocaleCommand(

@@ -243,6 +243,18 @@ services:
         tags:
             - { name: twig.extension }
 
+    Console\Locale\ImportLocaleCommand:
+        public: false
+        autowire: true
+        tags:
+            - { name: console.command }
+
+    Console\Thumbnails\GenerateThumbnailsCommand:
+        public: false
+        autowire: true
+        tags:
+            - { name: console.command }
+
 fos_rest:
     routing_loader:
         default_format: json
