@@ -5,6 +5,7 @@ namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Exception;
+use RuntimeException;
 
 interface CopyModuleContentToOtherLocaleInterface
 {
@@ -20,11 +21,9 @@ interface CopyModuleContentToOtherLocaleInterface
     public function getIdMap(): array;
 
     /**
-     * @param mixed $oldModuleExtraId
-     * @return mixed - New ModuleExtra id
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public function getModuleExtraId($oldModuleExtraId);
+    public function getModuleExtraId(int $oldModuleExtraId): ?int;
 
     public function getModuleExtraIdMap(): array;
 

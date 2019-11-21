@@ -5,6 +5,7 @@ namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Exception;
+use RuntimeException;
 
 /**
  * The following things are mandatory when extending this class.
@@ -73,17 +74,19 @@ abstract class CopyModuleContentToOtherLocale implements CopyModuleContentToOthe
     }
 
     /**
-     * @param mixed $oldModuleExtraId
-     * @return mixed - New ModuleExtra id
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getModuleExtraId($oldModuleExtraId)
+    public function getModuleExtraId(int $oldModuleExtraId): ?int
     {
         if (!array_key_exists($oldModuleExtraId, $this->moduleExtraIdMap)) {
-            throw new Exception('No new extra id found for the given old extra id.');
+            throw new RuntimeException('No new extra id found for the given old extra id.');
         }
 
-        return $this->moduleExtraIdMap[$oldModuleExtraId];
+        if ($this->moduleExtraIdMap[$oldModuleExtraId] === null) {
+            return null;
+        }
+
+        return (int) $this->moduleExtraIdMap[$oldModuleExtraId];
     }
 
     public function getModuleExtraIdMap(): array
