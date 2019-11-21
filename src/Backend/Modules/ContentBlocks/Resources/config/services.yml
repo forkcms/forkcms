@@ -9,3 +9,8 @@ services:
         public: true
 
     Backend\Modules\ContentBlocks\Api\ApiController: ~
+
+    content_blocks.copy:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale
+        tags:
+            - { name: fork.copy_module_to_other_locale }

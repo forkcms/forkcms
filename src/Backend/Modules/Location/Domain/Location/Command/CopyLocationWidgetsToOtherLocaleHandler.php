@@ -1,12 +1,15 @@
 <?php
 
-namespace Backend\Modules\Location\Command;
+namespace Backend\Modules\Location\Domain\Location\Command;
 
+use Backend\Modules\Location\Domain\Location\Exception\CopyLocationWidgetsToOtherLocaleException;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 
-final class CopyLocationWidgetsToOtherLocaleHandler
+final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
     /** @var ModuleExtraRepository */
     private $moduleExtraRepository;
@@ -16,8 +19,12 @@ final class CopyLocationWidgetsToOtherLocaleHandler
         $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
-    public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
+    public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
+        if (!$command instanceof CopyLocationWidgetsToOtherLocale) {
+            CopyLocationWidgetsToOtherLocaleException::forWrongCommand();
+        }
+
         $currentWidgets = $this->moduleExtraRepository->findModuleExtra(
             'Location',
             'Location',
@@ -29,14 +36,14 @@ final class CopyLocationWidgetsToOtherLocaleHandler
 
             if (!is_array($data)
                 || !isset($data['language'])
-                || $data['language'] !== $copyLocationWidgetsToOtherLocale->fromLocale->getLocale()
+                || $data['language'] !== $command->getFromLocale()->getLocale()
             ) {
                 // This is not a widget we want to duplicate
                 continue;
             }
 
             // Replace the language of our widget
-            $data['language'] = $copyLocationWidgetsToOtherLocale->toLocale->getLocale();
+            $data['language'] = $command->getToLocale()->getLocale();
 
             // Save the old ID
             $oldId = $currentWidget->getId();
@@ -56,7 +63,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             $this->moduleExtraRepository->save($newWidget);
 
             // Map the new ID
-            $copyLocationWidgetsToOtherLocale->extraIdMap[$oldId] = $newWidget->getId();
+            $command->setModuleExtraId($oldId, $newWidget->getId());
         }
     }
 }

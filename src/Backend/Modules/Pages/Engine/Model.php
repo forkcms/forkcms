@@ -6,9 +6,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
@@ -16,16 +14,15 @@ use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use DateTime;
 use ForkCMS\App\ForkController;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use RuntimeException;
-use SimpleBus\Message\Bus\MessageBus;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -75,12 +72,6 @@ class Model
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QUERY_BROWSE_TEMPLATES =
-        'SELECT i.id, i.label AS title
-         FROM pages_templates AS i
-         WHERE i.theme = ?
-         ORDER BY i.label ASC';
-
     public static function getCacheBuilder(): CacheBuilder
     {
         static $cacheBuilder = null;
@@ -99,197 +90,6 @@ class Model
     {
         $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
-    }
-
-    public static function copy(string $fromLanguage, string $toLanguage): void
-    {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        /** @var MessageBus $commanBus */
-        $commandBus = BackendModel::get('command_bus');
-
-        /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
-
-        $toLocale = Locale::fromString($toLanguage);
-        $fromLocale = Locale::fromString($fromLanguage);
-
-        // copy contentBlocks and get copied contentBlockIds
-        $copyContentBlocks = new CopyContentBlocksToOtherLocale($toLocale, $fromLocale);
-        $commandBus->handle($copyContentBlocks);
-        $contentBlockIds = $copyContentBlocks->extraIdMap;
-
-        // define old block ids
-        $contentBlockOldIds = array_keys($contentBlockIds);
-
-        if (BackendModel::isModuleInstalled('Location')) {
-            // copy location widgets and get copied widget ids
-            $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
-            $commandBus->handle($copyLocationWidgets);
-            $locationWidgetIds = $copyLocationWidgets->extraIdMap;
-
-            // define old block ids
-            $locationWidgetOldIds = array_keys($locationWidgetIds);
-        }
-
-        // get all old pages
-        /** @var PageRepository $pageRepository */
-        $pageRepository = BackendModel::get(PageRepository::class);
-        $pages = $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
-
-        // delete existing pages
-        /** @var Page $page */
-        foreach ($pages as $page) {
-            // redefine
-            $activePage = $page->getId();
-
-            // get revision ids
-            $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
-            $revisionIDs = array_map(
-                function (Page $page) {
-                    return $page->getRevisionId();
-                },
-                $pagesById
-            );
-
-            /** @var Page $item */
-            foreach ($pagesById as $item) {
-                $metaRepository->remove($item->getMeta());
-            }
-
-            // delete blocks and their revisions
-            if (!empty($revisionIDs)) {
-                /** @var PageBlockRepository $pageBlockRepository */
-                $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
-                $pageBlockRepository->deleteByRevisionIds($revisionIDs);
-            }
-
-            // delete page and the revisions
-            /** @var Page $item */
-            foreach ($pagesById as $item) {
-                $pageRepository->remove($item);
-            }
-        }
-
-        // delete search indexes
-        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
-
-        // get all active pages
-        $activePages = $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
-
-        // loop
-        /** @var Page $activePage */
-        foreach ($activePages as $activePage) {
-            // get data
-            $sourceData = self::get($activePage->getId(), null, $fromLanguage);
-
-            // get and build meta
-            /** @var Meta $originalMeta */
-            $originalMeta = $metaRepository->find($sourceData['meta_id']);
-
-            $meta = clone $originalMeta;
-
-            // Insert new meta
-            $metaRepository->add($meta);
-            $metaRepository->save($meta);
-
-            // build page
-            $page = new Page(
-                $sourceData['id'],
-                BackendAuthentication::getUser()->getUserId(),
-                $sourceData['parent_id'],
-                $sourceData['template_id'],
-                $meta,
-                $toLanguage,
-                $sourceData['type'],
-                $sourceData['title'],
-                new DateTime(),
-                $sourceData['sequence'],
-                $sourceData['navigation_title_overwrite'],
-                $sourceData['hidden'],
-                Status::active(),
-                $sourceData['type'],
-                $sourceData['data'],
-                $sourceData['allow_move'],
-                $sourceData['allow_children'],
-                $sourceData['allow_edit'],
-                $sourceData['allow_delete']
-            );
-
-            // insert page, store the id, we need it when building the blocks
-            $pageRepository->add($page);
-            $pageRepository->save($page);
-
-            $revisionId = $page->getRevisionId();
-
-            $blocks = [];
-
-            // get the blocks
-            $sourceBlocks = self::getBlocks($activePage->getId(), null, $fromLanguage);
-
-            // loop blocks
-            foreach ($sourceBlocks as $sourceBlock) {
-                // build block
-                $block = $sourceBlock;
-                $block['revision_id'] = $revisionId;
-                $block['created_on'] = BackendModel::getUTCDate();
-                $block['edited_on'] = BackendModel::getUTCDate();
-
-                // Overwrite the extra_id of the old content block with the id of the new one
-                if (in_array($block['extra_id'], $contentBlockOldIds)) {
-                    $block['extra_id'] = $contentBlockIds[$block['extra_id']];
-                }
-
-                if (BackendModel::isModuleInstalled('Location')) {
-                    // Overwrite the extra_id of the old location widget with the id of the new one
-                    if (in_array($block['extra_id'], $locationWidgetOldIds)) {
-                        $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
-                    }
-                }
-
-                // add block
-                $blocks[] = $block;
-            }
-
-            // insert the blocks
-            self::insertBlocks($blocks);
-
-            $text = '';
-
-            // build search-text
-            foreach ($blocks as $block) {
-                $text .= ' ' . $block['html'];
-            }
-
-            // add
-            BackendSearchModel::saveIndex(
-                'Pages',
-                (int) $page->getId(),
-                ['title' => $page->getTitle(), 'text' => $text],
-                $toLanguage
-            );
-
-            // get tags
-            $tags = BackendTagsModel::getTags('pages', $activePage->getId(), 'string', $fromLanguage);
-
-            // save tags
-            if ($tags !== '') {
-                $saveWorkingLanguage = BL::getWorkingLanguage();
-
-                // If we don't set the working language to the target language,
-                // BackendTagsModel::getUrl() will use the current working
-                // language, possibly causing unnecessary '-2' suffixes in
-                // tags.url
-                BL::setWorkingLanguage($toLanguage);
-
-                BackendTagsModel::saveTags($page->getId(), $tags, 'pages', $toLanguage);
-                BL::setWorkingLanguage($saveWorkingLanguage);
-            }
-        }
-
-        // build cache
-        self::buildCache($toLanguage);
     }
 
     /**
@@ -769,12 +569,15 @@ class Model
                 $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
-                $html .= '    <a href="' . BackendModel::createUrlForAction(
+                $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,
-                    ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    [
+                        'id' => $page['page_id'],
+                    ]
+                );
+                $html .= '    <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get children
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -844,12 +647,13 @@ class Model
 
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
-        $html .= '            <a href="' . BackendModel::createUrlForAction(
+        $urlForAction = BackendModel::createUrlForAction(
             'Edit',
             null,
             null,
             ['id' => BackendModel::HOME_PAGE_ID]
-        ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
+        );
+        $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
@@ -874,12 +678,13 @@ class Model
                     $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                     // insert link
-                    $html .= '            <a href="' . BackendModel::createUrlForAction(
+                    $urlForAction = BackendModel::createUrlForAction(
                         'Edit',
                         null,
                         null,
                         ['id' => $page['page_id']]
-                    ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    );
+                    $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -909,12 +714,13 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                );
+                $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -943,12 +749,13 @@ class Model
                 $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
-                $html .= '            <a href="' . BackendModel::createUrlForAction(
+                $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                );
+                $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1364,7 +1171,9 @@ class Model
         // fetch all pages
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $pages = $pageRepository->findBy(['templateId' => $oldTemplateId, 'status' => [Status::active(), Status::draft()]]);
+        $pages = $pageRepository->findBy(
+            ['templateId' => $oldTemplateId, 'status' => [Status::active(), Status::draft()]]
+        );
 
         // there is no active/draft page with the old template id
         if (count($pages) === 0) {
@@ -1517,12 +1326,12 @@ class Model
 
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
-            $newSequence = $pageRepository->getNewSequenceForMove($newParent, $language);
+            $newSequence = $pageRepository->getNewSequenceForMove((int) $newParent, $language);
 
             $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
             foreach ($pages as $page) {
-                $page->move($newParent, $newSequence, $newType);
+                $page->move((int) $newParent, $newSequence, $newType);
                 $pageRepository->save($page);
             }
 
@@ -1553,7 +1362,7 @@ class Model
         $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
 
         foreach ($pages as $page) {
-            $page->move($newParent, $newSequence, $newType);
+            $page->move((int) $newParent, $newSequence, $newType);
             $pageRepository->save($page);
         }
     }

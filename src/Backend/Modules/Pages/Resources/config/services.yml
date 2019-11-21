@@ -1,3 +1,6 @@
+imports:
+  - { resource: commands.yml }
+
 services:
     _defaults:
         autowire: true
@@ -6,6 +9,12 @@ services:
 
     Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
     Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository: ~
+    Backend\Modules\Pages\Domain\Page\Form\:
+        resource: '../../Domain/Page/Form/*'
     Backend\Modules\Pages\Domain\Page\PageRepository: ~
     Backend\Modules\Pages\Api\:
         resource: '../../Api/*'
+
+    Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale:
+        tags:
+            - { name: fork.copy_module_to_other_locale }

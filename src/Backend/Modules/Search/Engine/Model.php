@@ -2,10 +2,9 @@
 
 namespace Backend\Modules\Search\Engine;
 
-use Psr\Cache\CacheItemPoolInterface;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Backend\Core\Language\Language as BL;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
@@ -189,6 +188,15 @@ class Model
 
         // invalidate the cache for search
         self::invalidateCache();
+    }
+
+    public static function removeIndexByModuleAndLanguage(string $module, string $language): void
+    {
+        BackendModel::getContainer()->get('database')->delete(
+            'search_index',
+            'module = ? AND language = ?',
+            [$module, $language]
+        );
     }
 
     /**

@@ -94,6 +94,39 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOneModuleExtra(
+        string $module,
+        string $action,
+        ModuleExtraType $moduleExtraType,
+        ?int $contentBlockId
+    ): ?ModuleExtra {
+        $parameters = [
+            'module' => $module,
+            'type' => $moduleExtraType,
+            'action' => $action,
+        ];
+
+        $qb = $this
+            ->createQueryBuilder('me', 'me.id');
+
+        $qb
+            ->where('me.module = :module')
+            ->andWhere('me.type = :type')
+            ->andWhere('me.action = :action');
+
+        if ($contentBlockId !== null) {
+            $qb
+                ->andWhere('me.data LIKE :id');
+            $parameters['contentBlockId'] = '%s:2:"id";i:' . $contentBlockId . ';%';
+        }
+
+        $qb->setParameters($parameters);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getModuleExtraDataByModuleAndActionAndItemId(
         ModuleExtraType $type,
         string $module,

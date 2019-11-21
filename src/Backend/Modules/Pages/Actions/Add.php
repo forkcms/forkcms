@@ -17,9 +17,11 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use DateTime;
 use ForkCMS\Utility\Thumbnails;
+use RuntimeException;
 use SpoonFormHidden;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -598,6 +600,10 @@ class Add extends BackendBaseActionAdd
                 $metaRepository = BackendModel::get('fork.repository.meta');
 
                 $meta = $metaRepository->find($this->meta->save());
+
+                if (!$meta instanceof Meta) {
+                    throw new RuntimeException('Meta object not correctly persisted.');
+                }
 
                 $page = new Page(
                     BackendPagesModel::getMaximumPageId() + 1,

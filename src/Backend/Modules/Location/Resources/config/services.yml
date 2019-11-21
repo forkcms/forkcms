@@ -1,3 +1,8 @@
 imports:
   - { resource: commands.yml }
   - { resource: repositories.yml }
+
+services:
+    Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocale:
+        tags:
+            - { name: fork.copy_module_to_other_locale }

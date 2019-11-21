@@ -5,7 +5,12 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
+use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
+use Backend\Modules\Pages\Domain\Page\Form\CopyPageType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Exception;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 
 /**
  * BackendPagesCopy
@@ -14,35 +19,50 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
  */
 class Copy extends BackendBaseActionIndex
 {
-    /**
-     * The languages
-     *
-     * @var string
-     */
-    private $from;
-    private $to;
-
     public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get parameters
-        $this->from = $this->getRequest()->query->get('from', '');
-        $this->to = $this->getRequest()->query->get('to', '');
+        $form = $this->createForm(CopyPageType::class, new CopyPageDataTransferObject());
+        $form->handleRequest($this->getRequest());
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=error-copy');
+        }
+
+        /** @var CopyPageDataTransferObject $data */
+        $data = $form->getData();
 
         // validate
-        if ($this->from === '') {
-            throw new BackendException('Specify a from-parameter.');
+        if ($data->from === null) {
+            throw new BackendException('Specify a from parameter.');
         }
-        if ($this->to === '') {
-            throw new BackendException('Specify a to-parameter.');
+        if ($data->to === null) {
+            throw new BackendException('Specify a to parameter.');
         }
 
         // copy pages
-        BackendPagesModel::copy($this->from, $this->to);
+        try {
+            BackendModel::getContainer()
+                ->get(CopyContentFromModulesToOtherLocaleManager::class)
+                ->copyOne(
+                    $data->pageToCopy,
+                    Locale::fromString($data->from),
+                    Locale::fromString($data->to)
+                );
+        } catch (Exception $e) {
+            $this->redirect(
+                BackendModel::createUrlForAction('Edit')
+                . '&id='
+                . $data->pageToCopy->getRevisionId()
+                . '&error=error-copy'
+            );
+        }
 
         // redirect
-        $this->redirect(BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($this->to));
+        $this->redirect(
+            BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($data->to)
+        );
     }
 }
