@@ -72,7 +72,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $this->deletePage($page, $pageRepository, $toLanguage, $metaRepository);
         }
 
-        $this->deleteSearchIndexes($database, $toLanguage);
+        BackendSearchModel::removeIndexByModuleAndLanguage('pages', $toLanguage);
 
         // loop
         /** @var Page $activePageToCopy */
@@ -225,13 +225,5 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         foreach ($pagesById as $item) {
             $pageRepository->remove($item);
         }
-    }
-
-    /**
-     * @throws \SpoonDatabaseException
-     */
-    private function deleteSearchIndexes(SpoonDatabase $database, string $toLanguage): void
-    {
-        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
     }
 }
