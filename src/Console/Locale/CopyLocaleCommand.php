@@ -43,7 +43,7 @@ class CopyLocaleCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('forkcms:locale:copy')
+        $this->setName('forkcms:pages:copy-to-locale')
             ->setDescription('Copy the content across modules from one locale to another.');
     }
 
