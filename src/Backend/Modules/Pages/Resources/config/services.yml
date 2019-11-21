@@ -15,7 +15,6 @@ services:
     Backend\Modules\Pages\Api\:
         resource: '../../Api/*'
 
-    pages.copy:
-        class: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale
+    Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale:
         tags:
             - { name: fork.copy_module_to_other_locale }
