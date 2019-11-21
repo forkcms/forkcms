@@ -66,7 +66,7 @@ final class CopyPageType extends AbstractType
                     return $page->getRevisionId();
                 },
                 static function (?string $page) use ($pageRepository) {
-                    if (!is_string($page)) {
+                    if ($page === null) {
                         return null;
                     }
 
