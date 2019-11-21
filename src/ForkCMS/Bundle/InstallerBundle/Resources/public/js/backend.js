@@ -21,33 +21,32 @@ jsBackend.controls = {
 
   bindPasswordStrengthMeter: function () {
     // variables
-    var $passwordStrength = $('.passwordStrength')
+    var $passwordStrength = $('[data-role="password-strength-meter"]')
 
     if ($passwordStrength.length > 0) {
       $passwordStrength.each(function () {
         // grab id
         var id = $(this).data('id')
-        var wrapperId = $(this).attr('id')
 
         // hide all
-        $('#' + wrapperId + ' p.strength').hide()
+        $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-role="password-strength"]').hide()
 
         // execute function directly
-        var classToShow = jsBackend.controls.checkPassword($('#' + id).val())
+        var strength = jsBackend.controls.checkPassword($('#' + id).val())
 
         // show
-        $('#' + wrapperId + ' p.' + classToShow).show()
+        $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-strength="' + strength + '"]').show()
 
-        // bind key press
+        // bind keypress
         $(document).on('keyup', '#' + id, function () {
           // hide all
-          $('#' + wrapperId + ' p.strength').hide()
+          $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-role="password-strength"]').hide()
 
           // execute function directly
-          var classToShow = jsBackend.controls.checkPassword($('#' + id).val())
+          var strength = jsBackend.controls.checkPassword($('#' + id).val())
 
           // show
-          $('#' + wrapperId + ' p.' + classToShow).show()
+          $('[data-role="password-strength-meter"][data-id="' + id + '"] [data-strength="' + strength + '"]').show()
         })
       })
     }

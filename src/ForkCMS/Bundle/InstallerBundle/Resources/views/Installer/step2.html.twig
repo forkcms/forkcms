@@ -1,7 +1,6 @@
 {% extends 'ForkCMSInstallerBundle:Installer:base.html.twig' %}
 {% import 'ForkCMSInstallerBundle:Installer:navigation.html.twig' as macro %}
 
-{% form_theme form 'ForkCMSInstallerBundle:Installer:form_theme.html.twig' %}
 
 {% block navigation %}
   {{ macro.navigation('step-2') }}
@@ -19,40 +18,42 @@
         <h3 class="card-title">Settings</h3>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <h3>Languages</h3>
-          <p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
-          {{ form_widget(form.language_type) }}
+        <fieldset>
+          <legend>
+            Languages
+            <small class="text-muted form-text">
+              Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.
+            </small>
+          </legend>
+          <div class="form-group">
+            {{ form_widget(form.language_type) }}
+          </div>
           <ul id="languages" class="list-unstyled" style="display: none;">
             {{ form_widget(form.languages) }}
           </ul>
-          <div>
-            <p>What is the default language we should use for the website?</p>
-            <p>
-              {{ form_widget(form.default_language, { 'attr' : { 'class' : 'form-control' }}) }}
-            </p>
+          <div class="form-group">
+            <label for="install_languages_default_language">What is the default language we should use for the website?</label>
+            {{ form_widget(form.default_language, { 'attr' : { 'class' : 'form-control' }}) }}
           </div>
-        </div>
-        <div class="form-group last">
-          <h3>CMS interface languages</h3>
-          <p>What languages do you plan to use in the CMS interface?</p>
-          <ul class="list-unstyled">
-            <li class="checkbox">
-              {{ form_widget(form.same_interface_language) }}
-              {{ form_label(form.same_interface_language) }}
-              <p id="interfaceLanguagesExplanation" style="display: none;">Select the language(s) you would like to use use in the CMS interface.</p>
-              <ul id="interfaceLanguages" class="list-unstyled" style="display: none;">
-                {{ form_widget(form.interface_languages) }}
-              </ul>
-            </li>
-          </ul>
-          <div id="defaultInterfaceLanguageContainer">
-            <p>What is the default language we should use for the CMS interface?</p>
-            <p>
-              {{ form_widget(form.default_interface_language, { 'attr' : { 'class' : 'form-control' }}) }}
-            </p>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            CMS interface languages
+            <small class="text-muted form-text">What languages do you plan to use in the CMS interface?</small>
+          </legend>
+          <div class="form-group">
+            {{ form_widget(form.same_interface_language) }}
           </div>
-        </div>
+          {{ form_label(form.same_interface_language) }}
+          <label id="interfaceLanguagesExplanation" style="display: none;">Select the language(s) you would like to use use in the CMS interface.</label>
+          <div id="interfaceLanguages" class="form-group" style="display: none;">
+            {{ form_widget(form.interface_languages) }}
+          </div>
+          <div class="form-group" id="defaultInterfaceLanguageContainer">
+            <label for="install_languages_default_interface_language">What is the default language we should use for the CMS interface?</label>
+            {{ form_widget(form.default_interface_language, { 'attr' : { 'class' : 'form-control' }}) }}
+          </div>
+        </fieldset>
       </div>
       <div class="card-footer">
         <div class="btn-toolbar justify-content-end">
