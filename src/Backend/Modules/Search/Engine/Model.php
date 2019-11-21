@@ -190,7 +190,7 @@ class Model
         self::invalidateCache();
     }
 
-    publics static function removeIndexByModuleAndLanguage(string $module, string $language): void
+    public static function removeIndexByModuleAndLanguage(string $module, string $language): void
     {
         BackendModel::getContainer()->get('database')->delete(
             'search_index',
