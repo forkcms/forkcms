@@ -92,16 +92,9 @@ class Model
         $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
     }
 
-    public static function copy(string $fromLanguage, string $toLanguage, ?Page $page): void
+    public static function copy(string $fromLanguage, string $toLanguage, Page $individualPage): void
     {
-        /** @noinspection NullPointerExceptionInspection */
-        BackendModel::getContainer()
-            ->get(CopyContentFromModulesToOtherLocaleManager::class)
-            ->copy(
-                Locale::fromString($fromLanguage),
-                Locale::fromString($toLanguage),
-                $page
-            );
+
     }
 
     /**

@@ -5,10 +5,12 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\Form\CopyPageType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Exception;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 
 /**
  * BackendPagesCopy
@@ -42,7 +44,13 @@ class Copy extends BackendBaseActionIndex
 
         // copy pages
         try {
-            BackendPagesModel::copy($data->from, $data->to, $data->pageToCopy);
+            BackendModel::getContainer()
+                ->get(CopyContentFromModulesToOtherLocaleManager::class)
+                ->copyOne(
+                    $data->pageToCopy,
+                    Locale::fromString($data->from),
+                    Locale::fromString($data->to)
+                );
         } catch (Exception $e) {
             $this->redirect(
                 BackendModel::createUrlForAction('Edit')

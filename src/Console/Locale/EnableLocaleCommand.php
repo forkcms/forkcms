@@ -3,9 +3,11 @@
 namespace Console\Locale;
 
 use Backend\Core\Engine\Authentication;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
 use Common\ModulesSettings;
 use Exception;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -237,7 +239,13 @@ class EnableLocaleCommand extends Command
         $this->installWorkingLocale();
 
         $this->formatter->writeln('<info>Copying pages from the default locale to the current locale</info>');
-        BackendPagesModel::copy($this->defaultEnabledLocale, $this->workingLocale, null);
+
+        BackendModel::getContainer()
+            ->get(CopyContentFromModulesToOtherLocaleManager::class)
+            ->copyAll(
+                Locale::fromString($this->defaultEnabledLocale),
+                Locale::fromString($this->workingLocale)
+            );
 
         return true;
     }
