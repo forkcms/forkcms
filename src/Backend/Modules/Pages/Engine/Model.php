@@ -92,11 +92,6 @@ class Model
         $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
     }
 
-    public static function copy(string $fromLanguage, string $toLanguage, Page $individualPage): void
-    {
-
-    }
-
     /**
      * @deprecated Will become private since it is only used in this class
      */
