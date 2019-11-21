@@ -73,6 +73,7 @@ deny from env=stayout
     RewriteRule \.env - [F]
     RewriteRule \.env.dist - [F]
     RewriteRule phpstan\.neon - [F]
+    RewriteRule \.php-version - [F]
 
     # redirect all traffic to https
     # <IfModule headers_module>
