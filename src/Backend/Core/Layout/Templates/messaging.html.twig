@@ -1,10 +1,9 @@
-<div id="messaging">
+{% import '/Layout/Templates/macros.html.twig' as macro %}
+
+<div id="messaging" class="alerts-messaging-wrapper">
   <noscript>
-    <div class="formMessage alert alert-danger alert-main active">
-      <p>{{ 'err.JavascriptNotEnabled'|trans|ucfirst }}</p>
-    </div>
+    {{ macro.alert('warning', 'err.JavascriptNotEnabled'|trans|ucfirst) }}
   </noscript>
-  <div id="noCookies" class="formMessage alert alert-danger alert-main" style="display: none">
-    <p>{{ 'err.CookiesNotEnabled'|trans|ucfirst }}</p>
-  </div>
+
+  {{ macro.alert('danger', 'err.CookiesNotEnabled'|trans|ucfirst, null, 'noCookies', [], false) }}
 </div>

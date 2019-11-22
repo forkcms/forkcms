@@ -794,7 +794,7 @@ $alert-border-radius:               $border-radius;
 $alert-link-font-weight:            $font-weight-bold;
 $alert-border-width:                $border-width;
 
-$alert-bg-level:                    -10;
+$alert-bg-level:                    -11;
 $alert-border-level:                -9;
 $alert-color-level:                 6;
 
@@ -890,9 +890,9 @@ $carousel-transition:               transform .6s ease;
 
 // Close
 
-$close-font-size:                   $font-size-base * 1.5;
+$close-font-size:                   $font-size-base * 0.85;
 $close-font-weight:                 $font-weight-bold;
-$close-color:                       $black;
+$close-color:                       $gray-700;
 $close-text-shadow:                 0 1px 0 $white;
 
 // Code

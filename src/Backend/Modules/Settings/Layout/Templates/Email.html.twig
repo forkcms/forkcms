@@ -36,8 +36,8 @@
                 <span class="sr-only">{{ 'lbl.Loading' }}</span>
               </span>
             </div>
-            <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
-            <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
+            {{ macro.alert('danger', 'err.ErrorWhileSendingEmail'|trans, null, 'testEmailConnectionError', {'class': 'd-md-none'}, false) }}
+            {{ macro.alert('success', 'msg.TestWasSent'|trans, null, 'testEmailConnectionSuccess', {'class': 'd-md-none'}, false) }}
           </fieldset>
           {% endif %}
           <fieldset>

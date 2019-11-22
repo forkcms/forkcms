@@ -7,13 +7,7 @@
 
 {% block content %}
   {% if noAccounts %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        <div class="alert alert-info" role="alert">
-          {{ 'msg.NoAccounts'|trans|format(email)|raw }}
-        </div>
-      </div>
-    </div>
+    {{ macro.alert('info', 'msg.NoAccounts'|trans|format(email)|raw) }}
   {% endif %}
   {% form settings %}
   {% if fileCertificate %}

@@ -141,7 +141,7 @@
   <div id="uploadMediaBox" class="row fork-module-content">
     <div class="col-12">
       <div class="options">
-        <div class="alert alert-warning d-none" data-role="fork-media-count-error"></div>
+        {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
       </div>
       <div class="card card-default">
         <div class="card-heading">

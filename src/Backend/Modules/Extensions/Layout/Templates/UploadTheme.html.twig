@@ -7,22 +7,10 @@
 
 {% block content %}
   {% if zlibIsMissing %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        <div class="alert alert-danger" role="alert">
-          {{ 'msg.ZlibIsMissing'|trans }}
-        </div>
-      </div>
-    </div>
+    {{ macro.alert('danger', 'msg.ZlibIsMissing'|trans) }}
   {% endif %}
   {% if notWritable %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        <div class="alert alert-danger" role="alert">
-          {{ 'msg.ThemesNotWritable'|trans }}
-        </div>
-      </div>
-    </div>
+    {{ macro.alert('danger', 'msg.ThemesNotWritable'|trans) }}
   {% endif %}
   {% if not zlibIsMissing %}
     {% form upload %}

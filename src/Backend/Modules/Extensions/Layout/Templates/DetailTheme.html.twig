@@ -10,9 +10,7 @@
       <div class="col-12">
         {% for warning in warnings %}
           <div class="content-block content-block-pb">
-            <div class="alert alert-warning" role="alert">
-              {{ macro.icon('exclamation-triangle') }}{{ warning.message }}
-            </div>
+            {{ macro.alert('warning', warning.message|raw) }}
           </div>
         {% endfor %}
       </div>

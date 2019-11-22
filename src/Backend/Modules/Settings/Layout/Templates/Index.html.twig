@@ -5,25 +5,19 @@
 
 {% endblock %}
 
+{% block warning %}
+  <strong>{{ 'msg.ConfigurationError'|trans|ucfirst }}</strong>
+  <ul class="mb-0">
+    {% for warning in warnings %}
+      <li>{{ warning.message|raw }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
 {% block content %}
   {% form settingsIndex %}
   {% if warnings %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        <div class="alert alert-warning" role="alert">
-          <p>
-            <strong>
-              {{ macro.icon('exclamation-triangle') }}{{ 'msg.ConfigurationError'|trans|ucfirst }}
-            </strong>
-          </p>
-          <ul>
-            {% for warning in warnings %}
-              <li>{{ warning.message|raw }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </div>
+    {{ macro.alert('warning', block('warning'), null, null, {'class': 'mb-3'}) }}
   {% endif %}
   <div class="row fork-module-content">
     <div class="col-12">

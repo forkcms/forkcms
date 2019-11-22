@@ -31,9 +31,7 @@
                   {{ detailURL }}/<span id="generatedUrl"></span>
                 </a>      {% endif %}
               {% if not detailURL %}
-                <p class="alert alert-warning alert-xs">
-                  {{ macro.icon('exclamation-triangle') }}{{ 'err.NoModuleLinked'|trans|ucfirst }}
-                </p>
+                {{ macro.alert('warning', 'err.NoModuleLinked'|trans|ucfirst, null, null, {'class': 'alert-xs'}) }}
               {% endif %}
             </div>
           </div>

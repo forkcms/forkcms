@@ -4,9 +4,7 @@
 {% block pagesTree %}
   <div class="sub-navigation d-none d-sm-block">
     <div class="pages-tree">
-      <div class="alert alert-warning d-md-none">
-        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
-      </div>
+      {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans, null, null, {'class': 'd-md-none'}) }}
       <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
@@ -33,9 +31,7 @@
 
 {% block content %}
   {% if showCopyWarning %}
-    <div id="copyPageWarning" class="alert alert-warning alert-xs">
-      {{ macro.icon('exclamation-triangle') }}{{ 'msg.CopySaveWarning'|trans|raw }}
-    </div>
+    {{ macro.alert('warning', 'msg.CopySaveWarning'|trans|raw, null, 'copyPageWarning', {'class': 'alert-xs'}) }}
   {% endif %}
   {% form add %}
   {{ hidTemplateId|raw }}
@@ -152,7 +148,7 @@
           </div>
           <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
             {% if rbtRedirectError %}
-              <div class="alert alert-danger">{{ rbtRedirectError }}</div>
+              {{ macro.alert('danger', rbtRedirectError) }}
             {% endif %}
 
             <div class="radiobuttonFieldCombo">
@@ -283,9 +279,7 @@
   <div class="fade d-none" id="editContent">
     {% for position in positions %}
       {% for block in position.blocks %}
-        <div class="alert alert-warning">
-          {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans }}
-        </div>
+        {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans) }}
         <div class="box contentBlock" style="margin: 0;">
           <div class="blockContent HTML optionsRTE">
             <fieldset>
@@ -327,10 +321,10 @@
 
           <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
-          <div id="extraWarningAlreadyBlock" class="alert alert-warning">
-            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
-          <div id="extraWarningHomeNoBlock" class="alert alert-warning">
-            {{ macro.icon('exclamation-triangle') }}{{ 'msg.HomeNoBlock'|trans }}</div>
+          {{ macro.alert('warning', 'msg.ModuleBlockAlreadyLinked'|trans, null, 'extraWarningAlreadyBlock') }}
+
+          {{ macro.alert('warning', 'msg.HomeNoBlock'|trans, null, 'extraWarningHomeNoBlock') }}
+
           <div class="form-group">
             <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
             {% form_field extra_type %}
@@ -392,8 +386,7 @@
             <span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
-          <div class="alert alert-warning">
-            {{ macro.icon('exclamation-triangle') }}{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
+          {{ macro.alert('warning', 'msg.TemplateChangeWarning'|trans|raw) }}
           <div id="templateList">
             <div class="row">
               {% for template in templates %}
@@ -454,9 +447,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="alert alert-warning">
-            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans|raw }}
-          </div>
+          {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|raw) }}
           <br>
           <div class="form-group">
             {% form_field html %}

@@ -1858,27 +1858,25 @@ jsBackend.messages = {
     var icon
     switch (type) {
       case 'danger':
-        icon = 'times'
+        icon = 'far fa-times-circle'
         break
       case 'warning':
-        icon = 'exclamation-triangle'
+        icon = 'fas fa-exclamation-circle'
         break
       case 'success':
-        icon = 'check'
+        icon = 'far fa-check-circle'
         break
       case 'info':
-        icon = 'info'
+        icon = 'fas fa-info-circle'
         break
     }
 
-    var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
-      '<div class="container-fluid">' +
-      '<i class="fas fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
+    var html = '<div role="alert" id="' + uniqueId + '" class="alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
+      '<i class="' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +
       '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
       '<span aria-hidden="true" class="fas fa-times"></span>' +
       '</button>' +
-      '</div>' +
       '</div>'
 
     // prepend

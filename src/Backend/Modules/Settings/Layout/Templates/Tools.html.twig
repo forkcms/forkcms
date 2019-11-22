@@ -1,4 +1,11 @@
 {% extends 'Layout/Templates/base.html.twig' %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
+
+{% block message %}
+  {{ 'msg.ClearingCache'|trans }}
+  <span data-role="fork-dots-animation"></span>
+{% endblock %}
+
 
 {% block content %}
   <div class="row fork-module-content">
@@ -12,10 +19,7 @@
         <div class="card-body">
           <p>{{ 'msg.ClearCache'|trans }}</p>
           <a href="#" data-role="fork-clear-cache" class="btn btn-primary">{{ 'lbl.ClearCache'|trans|ucfirst }}</a>
-          <div class="alert alert-warning d-none" role="alert" data-role="fork-clear-cache-status">
-            {{ 'msg.ClearingCache'|trans }}
-            <span data-role="fork-dots-animation"></span>
-          </div>
+          {{ macro.alert('warning', block('message'), null, null, {'class': 'd-none', 'data-role': 'fork-clear-cache-status'}) }}
         </div>
       </div>
     </div>

@@ -1,28 +1,9 @@
-@each $color, $value in $theme-colors {
-  .alert-#{$color} {
-    background: theme-color($color);
-    color: $white;
-    -webkit-font-smoothing: antialiased;
-
-    a {
-      border-bottom: 1px solid $white;
-      color: $white;
-
-      @include hover-focus {
-        border-color: $gray-200;
-        color: $gray-200;
-        text-decoration: none;
-      }
-    }
-  }
-}
-
 .alert {
   border: 0;
   margin: 10px 0 0;
 
   &.alert-xs {
-    padding: 7px;
+    padding: 0.4375rem 0.7rem;
   }
 
   .svg-inline--fa {
@@ -37,65 +18,70 @@
       margin-top: $spacer;
     }
   }
+
+  a {
+    text-decoration: underline;
+  }
 }
 
-.alert-main {
-  font-size: $font-size-btn;
-  font-weight: normal;
-  margin: 0;
-  opacity: 0;
-  padding: 28px 15px;
-  position: fixed;
-  text-align: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 81;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  -webkit-transition: opacity 250ms;
-  -moz-transition: opacity 250ms;
-  -ms-transition: opacity 250ms;
-  -o-transition: opacity 250ms;
-  transition: opacity 250ms;
-  -webkit-font-smoothing: antialiased;
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    border-left: 5px solid $value;
 
-  &.active {
-    opacity: 1;
+    .svg-inline--fa {
+      color: $value;
+    }
+
+    a {
+      color: theme-color-level($color, $alert-color-level);
+    }
+  }
+}
+
+.alerts-messaging-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30vw;
+  z-index: $zindex-fixed;
+
+  .alert {
+    background: rgba($white, .9);
+    box-shadow: 2px 2px 6px 3px rgba($black, 0.1);
+    font-size: $font-size-btn;
+    margin: 0 0 20px;
+    opacity: 0;
     -webkit-transition: opacity 250ms;
     -moz-transition: opacity 250ms;
     -ms-transition: opacity 250ms;
     -o-transition: opacity 250ms;
     transition: opacity 250ms;
+
+    &.active {
+      opacity: 1;
+      -webkit-transition: opacity 250ms;
+      -moz-transition: opacity 250ms;
+      -ms-transition: opacity 250ms;
+      -o-transition: opacity 250ms;
+      transition: opacity 250ms;
+    }
   }
 }
 
 .alert-dismissible {
+
   .close {
     float: none;
     opacity: 1;
     position: absolute;
-    right: 10px;
+    right: -10px;
     text-shadow: none;
-    top: 10px;
-  }
+    top: -3px;
 
-  .svg-inline--fa {
-    color: $white;
-    font-size: $font-size-btn;
-  }
-}
-
-.alert-warning {
-  color: $black;
-
-  a,
-  .fa,
-  .close {
-    border-color: $black;
-    color: $black;
+    .svg-inline--fa {
+      color: $close-color;
+      font-size: $close-font-size;
+    }
   }
 }
 
@@ -105,12 +91,4 @@
   position: static;
   text-align: left;
   width: 100%;
-}
-
-.alert-danger:hover {color: $white}
-
-.alert-warning a:hover,
-.alert-warning a:focus {
-  color: $blue-dark;
-  border-color: $blue-dark;
 }
