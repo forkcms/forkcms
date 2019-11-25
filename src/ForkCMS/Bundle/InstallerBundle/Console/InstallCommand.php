@@ -266,10 +266,10 @@ class InstallCommand extends Command
     {
         $config = Yaml::parse(file_get_contents($this->installConfigPath))['config'] ?? [];
 
-        if ($this->input->hasOption('email')) {
+        if ($this->input->hasOption('email') && $this->input->getOption('email') !== null) {
             $config['user']['email'] = $this->input->getOption('email');
         }
-        if ($this->input->hasOption('password')) {
+        if ($this->input->hasOption('password') && $this->input->getOption('password') !== null) {
             $config['user']['password'] = $this->input->getOption('password');
         }
 
