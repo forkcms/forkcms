@@ -52,3 +52,9 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        types:
+            locale: ForkCMS\Bundle\InstallerBundle\DBALType\LocaleDBALType

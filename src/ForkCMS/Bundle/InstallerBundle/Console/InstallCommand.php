@@ -86,6 +86,8 @@ class InstallCommand extends Command
                 return;
             }
         } catch (Throwable $throwable) {
+            var_dump($throwable->getMessage(),$throwable->getTrace());
+            die;
             // There was a validation error
             $this->formatter->error($throwable->getMessage());
 
