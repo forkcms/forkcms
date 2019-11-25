@@ -84,11 +84,9 @@ class Page
     private $locale;
 
     /**
-     * page, header, footer, ...
+     * @var Type
      *
-     * @var string
-     *
-     * @ORM\Column(type="string", name="type")
+     * @ORM\Column(type="pages_page_type")
      */
     private $type;
 
@@ -142,7 +140,7 @@ class Page
     private $publishOn;
 
     /**
-     * @var mixed|null
+     * @var array|null
      *
      * @ORM\Column(type="text", name="data", nullable=true)
      */
@@ -211,8 +209,8 @@ class Page
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
         Status $status = null,
-        string $type = 'root',
-        $data = null,
+        Type $type = null,
+        array $data = null,
         bool $allowMove = true,
         bool $allowChildren = true,
         bool $allowEdit = true,
@@ -234,7 +232,7 @@ class Page
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
         $this->sequence = $sequence;
-        $this->type = $type;
+        $this->type = $type ?? Type::root();
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
         $this->status = $status;
@@ -262,8 +260,8 @@ class Page
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
         Status $status = null,
-        string $type = 'root',
-        $data = null,
+        Type $type = null,
+        array $data = null,
         bool $allowMove = true,
         bool $allowChildren = true,
         bool $allowEdit = true,
@@ -285,7 +283,7 @@ class Page
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
         $this->sequence = $sequence;
-        $this->type = $type;
+        $this->type = $type ?? Type::root();
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
         if ($this->status !== null) {
@@ -333,7 +331,7 @@ class Page
         return $this->locale;
     }
 
-    public function getType(): string
+    public function getType(): Type
     {
         return $this->type;
     }
@@ -403,7 +401,7 @@ class Page
         return $this->sequence;
     }
 
-    public function getData()
+    public function getData(): ?array
     {
         return $this->data;
     }

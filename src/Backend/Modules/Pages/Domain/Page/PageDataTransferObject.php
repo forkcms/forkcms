@@ -32,7 +32,7 @@ class PageDataTransferObject
     /** @var Locale */
     public $locale;
 
-    /** @var string */
+    /** @var Type */
     public $type;
 
     /** @var string */
@@ -53,7 +53,7 @@ class PageDataTransferObject
     /** @var DateTime */
     public $publishOn;
 
-    /** @var mixed|null */
+    /** @var array|null */
     public $data;
 
     /** @var DateTime */

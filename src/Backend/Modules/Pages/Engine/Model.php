@@ -1210,7 +1210,7 @@ class Model
                     'navigation_title_overwrite' => $page->isNavigationTitleOverwrite(),
                     'hidden' => $page->isHidden(),
                     'status' => (string) $page->getStatus(),
-                    'type' => $page->getType(),
+                    'type' => (string) $page->getType(),
                     'data' => $page->getData(),
                     'allow_move' => $page->isAllowMove(),
                     'allow_children' => $page->isAllowChildren(),
