@@ -7,6 +7,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -170,7 +171,7 @@ class Navigation extends KernelLoader
      */
     public static function getKeys(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getKeys($language ?? LANGUAGE);
+        return BackendPagesModel::getCacheBuilder()->getKeys(Locale::fromString($language ?? LANGUAGE));
     }
 
     /**
@@ -183,7 +184,7 @@ class Navigation extends KernelLoader
      */
     public static function getNavigation(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getNavigation($language ?? LANGUAGE);
+        return BackendPagesModel::getCacheBuilder()->getNavigation(Locale::fromString($language ?? LANGUAGE));
     }
 
     /**

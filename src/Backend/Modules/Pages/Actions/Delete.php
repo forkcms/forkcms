@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Locale;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -66,7 +67,7 @@ class Delete extends BackendBaseActionDelete
         BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
         // build cache
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        BackendPagesModel::buildCache(Locale::workingLocale());
 
         if (!$success) {
             $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));

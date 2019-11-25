@@ -9,6 +9,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
@@ -163,7 +164,7 @@ class Add extends BackendBaseActionAdd
             // loop active languages
             foreach (BL::getActiveLanguages() as $language) {
                 if ($language !== BL::getWorkingLanguage()) {
-                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    $pages = BackendPagesModel::getPagesForDropdown(Locale::fromString($language));
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
                     $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
@@ -658,7 +659,7 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // build the cache
-                BackendPagesModel::buildCache(BL::getWorkingLanguage());
+                BackendPagesModel::buildCache(Locale::workingLocale());
 
                 // active
                 if ($page->getStatus()->isActive()) {

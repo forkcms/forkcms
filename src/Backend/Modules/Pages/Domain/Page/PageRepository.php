@@ -6,6 +6,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Common\Doctrine\Entity\Meta;
+use Common\Locale;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -42,17 +43,17 @@ class PageRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush($page);
     }
 
-    public function archive(int $id, string $language): void
+    public function archive(int $id, Locale $locale): void
     {
         $this
             ->createQueryBuilder('p')
             ->set('p.status', Status::archive())
             ->where('p.id = :id')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->setParameters(
                 [
                     'id' => $id,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->getQuery()
@@ -72,11 +73,11 @@ class PageRepository extends ServiceEntityRepository
         $this->getEntityManager()->clear(Page::class);
     }
 
-    public function deleteByIdAndUserIdAndStatusAndLanguage(
+    public function deleteByIdAndUserIdAndStatusAndLocale(
         int $id,
         int $userId,
         Status $status,
-        string $language
+        Locale $locale
     ): void {
         $this
             ->createQueryBuilder('p')
@@ -84,13 +85,13 @@ class PageRepository extends ServiceEntityRepository
             ->where('p.id = :id')
             ->andWhere('p.userId = :userId')
             ->andWhere('p.status = :status')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->setParameters(
                 [
                     'id' => $id,
                     'userId' => $userId,
                     'status' => $status,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->getQuery()
@@ -99,9 +100,9 @@ class PageRepository extends ServiceEntityRepository
         $this->getEntityManager()->clear(PageBlock::class);
     }
 
-    public function get(int $id, int $revisionId = null, string $language = null): array
+    public function get(int $id, int $revisionId = null, Locale $locale = null): array
     {
-        $qb = $this->buildGetQuery($id, $revisionId, $language);
+        $qb = $this->buildGetQuery($id, $revisionId, $locale);
 
         // @todo This wil not be necessary when we can return the entities instead of arrays
         $results = $qb->getQuery()->getScalarResult();
@@ -112,9 +113,9 @@ class PageRepository extends ServiceEntityRepository
         return $results;
     }
 
-    public function getOne(int $id, int $revisionId = null, string $language = null): ?array
+    public function getOne(int $id, int $revisionId = null, Locale $locale = null): ?array
     {
-        $qb = $this->buildGetQuery($id, $revisionId, $language);
+        $qb = $this->buildGetQuery($id, $revisionId, $locale);
         $qb->setMaxResults(1);
 
         // @todo This wil not be necessary when we can return the entities instead of arrays
@@ -127,9 +128,9 @@ class PageRepository extends ServiceEntityRepository
         return $this->processFields($results[0]);
     }
 
-    public function getLatestForApi(int $id, string $language = null): ?array
+    public function getLatestForApi(int $id, Locale $locale = null): ?array
     {
-        $qb = $this->buildGetQuery($id, null, $language);
+        $qb = $this->buildGetQuery($id, null, $locale);
         $qb
             ->select('p, m')
             ->andWhere('p.status = :active')
@@ -164,14 +165,14 @@ class PageRepository extends ServiceEntityRepository
             ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
             ->where('p.id = :pageId')
             ->andWhere('p.revisionId = :revisionId')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->orderBy('b.sequence', 'ASC');
 
         $qb->setParameters(
             [
                 'pageId' => $id,
                 'revisionId' => $result['revisionId'],
-                'language' => $language,
+                'locale' => $locale,
             ]
         );
 
@@ -203,7 +204,7 @@ class PageRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function getSubPagesForApi(int $parentId, string $language): array
+    public function getSubPagesForApi(int $parentId, Locale $locale): array
     {
         $subPageIds = $this
             ->createQueryBuilder('p')
@@ -212,14 +213,14 @@ class PageRepository extends ServiceEntityRepository
             ->where('p.parentId = :parentId')
             ->andWhere('p.status = :active')
             ->andWhere('p.hidden = :false')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->andWhere('p.publishOn <= :now')
             ->setParameters(
                 [
                     'parentId' => $parentId,
                     'active' => Status::active(),
                     'false' => false,
-                    'language' => $language,
+                    'locale' => $locale,
                     'now' => new DateTime(),
                 ]
             )
@@ -230,26 +231,26 @@ class PageRepository extends ServiceEntityRepository
 
         $subPages = [];
         foreach ($subPageIds as $subPageIdArray) {
-            $subPages[] = $this->getLatestForApi($subPageIdArray['id'], $language);
+            $subPages[] = $this->getLatestForApi($subPageIdArray['id'], $locale);
         }
 
         return $subPages;
     }
 
-    public function getLatestVersion(int $id, string $language): ?int
+    public function getLatestVersion(int $id, Locale $locale): ?int
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb
             ->select('MAX(p.revisionId)')
             ->where('p.id = :id')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->andWhere('p.status != :status');
 
         $qb->setParameters(
             [
                 'id' => $id,
-                'language' => $language,
+                'locale' => $locale,
                 'status' => Status::archive(),
             ]
         );
@@ -260,17 +261,17 @@ class PageRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getMaximumPageId(string $language, bool $isGodUser): int
+    public function getMaximumPageId(Locale $locale, bool $isGodUser): int
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb
             ->select('MAX(p.id)')
-            ->where('p.language = :language');
+            ->where('p.locale = :locale');
 
         $qb->setParameters(
             [
-                'language' => $language,
+                'locale' => $locale,
             ]
         );
 
@@ -288,17 +289,17 @@ class PageRepository extends ServiceEntityRepository
         return $max;
     }
 
-    public function getMaximumSequence(int $parentId, string $language, string $type = null): int
+    public function getMaximumSequence(int $parentId, Locale $locale, string $type = null): int
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb
             ->select('MAX(p.sequence)')
-            ->where('p.language = :language')
+            ->where('p.locale = :locale')
             ->andWhere('p.parentId = :parentId');
 
         $parameters = [
-            'language' => $language,
+            'locale' => $locale,
             'parentId' => $parentId,
         ];
 
@@ -312,18 +313,18 @@ class PageRepository extends ServiceEntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getNewSequenceForMove(int $parentId, string $language): int
+    public function getNewSequenceForMove(int $parentId, Locale $locale): int
     {
         return $this
             ->createQueryBuilder('p')
             ->select('COALESCE(MAX(p.sequence), 0)')
             ->where('p.id = :parentId')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->andWhere('p.status = :status')
             ->setParameters(
                 [
                     'parentId' => $parentId,
-                    'language' => $language,
+                    'locale' => $locale,
                     'status' => Status::active(),
                 ]
             )
@@ -331,18 +332,18 @@ class PageRepository extends ServiceEntityRepository
             ->getSingleScalarResult() + 1;
     }
 
-    public function incrementSequence(int $parentId, string $language, int $sequence): void
+    public function incrementSequence(int $parentId, Locale $locale, int $sequence): void
     {
         $this
             ->createQueryBuilder('p')
             ->set('p.sequence', 'p.sequence + 1')
             ->where('p.parentId = :parentId')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->andWhere('p.sequence > :sequence')
             ->setParameters(
                 [
                     'parentId' => $parentId,
-                    'language' => $language,
+                    'locale' => $locale,
                     'sequence' => $sequence,
                 ]
             )
@@ -350,7 +351,7 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function getPageTree(array $parentIds, string $language): array
+    public function getPageTree(array $parentIds, Locale $locale): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -381,11 +382,11 @@ class PageRepository extends ServiceEntityRepository
                 'p2',
                 Join::WITH,
                 'p2.parentId = p.id AND p2.status = :active ' .
-                'AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.language = :language'
+                'AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.locale = :locale'
             )
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->groupBy('p.revisionId')
             ->orderBy('p.sequence', 'ASC')
         ;
@@ -395,7 +396,7 @@ class PageRepository extends ServiceEntityRepository
                 'active' => 'active',
                 'data' => '%s:9:\"is_action\";b:1;%',
                 'hidden' => 'N',
-                'language' => $language,
+                'locale' => $locale,
                 'parentIds' => $parentIds,
                 'status' => Status::active(),
                 'type' => 'block',
@@ -407,39 +408,39 @@ class PageRepository extends ServiceEntityRepository
             ->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
-    public function getFirstChild(int $pageId, Status $status, string $language): ?Page
+    public function getFirstChild(int $pageId, Status $status, Locale $locale): ?Page
     {
         return $this
             ->createQueryBuilder('p')
             ->where('p.parentId = :id')
             ->andWhere('p.status = :status')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->orderBy('p.sequence', 'ASC')
             ->setMaxResults(1)
             ->setParameters(
                 [
                     'id' => $pageId,
                     'status' => $status,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function getRevisionId(int $id, Status $status, string $language): int
+    public function getRevisionId(int $id, Status $status, Locale $locale): int
     {
         return (int) $this
             ->createQueryBuilder('p')
             ->select('p.revisionId')
             ->where('p.id = :id')
             ->andWhere('p.status = :status')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->setParameters(
                 [
                     'id' => $id,
                     'status' => $status,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->setMaxResults(1)
@@ -506,11 +507,11 @@ class PageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByParentsAndUrlAndStatusAndLanguage(
+    public function findOneByParentsAndUrlAndStatusAndLocale(
         array $parentIds,
         string $url,
         Status $status,
-        string $language
+        Locale $locale
     ): ?Page {
         $qb = $this
             ->createQueryBuilder('p')
@@ -520,14 +521,14 @@ class PageRepository extends ServiceEntityRepository
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
             ->andWhere('meta.url = :url')
-            ->andWhere('p.language = :language');
+            ->andWhere('p.locale = :locale');
 
         $qb->setParameters(
             [
                 'parentIds' => $parentIds,
                 'status' => $status,
                 'url' => $url,
-                'language' => $language,
+                'locale' => $locale,
             ]
         );
 
@@ -537,11 +538,11 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
+    public function findOneByParentsAndUrlAndStatusAndLocaleExcludingId(
         array $parentIds,
         string $url,
         Status $status,
-        string $language,
+        Locale $locale,
         int $excludedId
     ): ?Page {
         $qb = $this
@@ -553,7 +554,7 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.status = :status')
             ->andWhere('meta.url = :url')
             ->andWhere('p.id <> :id')
-            ->andWhere('p.language = :language');
+            ->andWhere('p.locale = :locale');
 
         $qb->setParameters(
             [
@@ -561,7 +562,7 @@ class PageRepository extends ServiceEntityRepository
                 'status' => $status,
                 'url' => $url,
                 'id' => $excludedId,
-                'language' => $language,
+                'locale' => $locale,
             ]
         );
 
@@ -571,7 +572,7 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function pageExistsWithModuleBlockForLanguage(string $module, string $language): bool
+    public function pageExistsWithModuleBlockForLocale(string $module, Locale $locale): bool
     {
         $results = $this
             ->getEntityManager()
@@ -581,12 +582,12 @@ class PageRepository extends ServiceEntityRepository
             ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
             ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
             ->where('e.module = :module')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->setMaxResults(1)
             ->setParameters(
                 [
                     'module' => $module,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->getQuery()
@@ -595,7 +596,7 @@ class PageRepository extends ServiceEntityRepository
         return count($results) === 1;
     }
 
-    public function pageExistsWithModuleActionForLanguage(string $module, string $action, string $language): bool
+    public function pageExistsWithModuleActionForLocale(string $module, string $action, Locale $locale): bool
     {
         $results = $this
             ->getEntityManager()
@@ -606,13 +607,13 @@ class PageRepository extends ServiceEntityRepository
             ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
             ->where('e.module = :module')
             ->andWhere('e.action = :action')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->setMaxResults(1)
             ->setParameters(
                 [
                     'module' => $module,
                     'action' => $action,
-                    'language' => $language,
+                    'locale' => $locale,
                 ]
             )
             ->getQuery()
@@ -621,7 +622,7 @@ class PageRepository extends ServiceEntityRepository
         return count($results) === 1;
     }
 
-    private function buildGetQuery(int $pageId, ?int $revisionId, ?string $language): QueryBuilder
+    private function buildGetQuery(int $pageId, ?int $revisionId, ?Locale $locale): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -651,9 +652,9 @@ class PageRepository extends ServiceEntityRepository
             $parameters['revisionId'] = $revisionId;
         }
 
-        if ($language !== null) {
-            $qb->andWhere('p.language = :language');
-            $parameters['language'] = $language;
+        if ($locale !== null) {
+            $qb->andWhere('p.locale = :locale');
+            $parameters['locale'] = $locale;
         }
 
         $qb->setParameters($parameters);

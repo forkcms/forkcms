@@ -3,8 +3,11 @@
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\Status;
+use Common\Locale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 
 /**
@@ -32,10 +35,10 @@ class PageBlockRepository extends ServiceEntityRepository
 
     public function deleteByRevisionIds(array $ids): void
     {
-        $qb = $this->createQueryBuilder('pb');
+        $qb = $this->createQueryBuilder('b');
         $qb
             ->delete()
-            ->where($qb->expr()->in('pb.revisionId', ':ids'))
+            ->where($qb->expr()->in('b.revisionId', ':ids'))
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
@@ -46,9 +49,9 @@ class PageBlockRepository extends ServiceEntityRepository
     public function deleteByExtraId(int $extraId): void
     {
         $this
-            ->createQueryBuilder('em')
+            ->createQueryBuilder('b')
             ->delete()
-            ->where('em.extraId = :extraId')
+            ->where('b.extraId = :extraId')
             ->setParameter('extraId', $extraId)
             ->getQuery()
             ->execute();
@@ -59,9 +62,9 @@ class PageBlockRepository extends ServiceEntityRepository
     public function clearExtraId(int $extraId): void
     {
         $this
-            ->createQueryBuilder('em')
-            ->where('em.extraId = :extraId')
-            ->set('em.extraId', null)
+            ->createQueryBuilder('b')
+            ->where('b.extraId = :extraId')
+            ->set('b.extraId', null)
             ->setParameter('extraId', $extraId)
             ->getQuery()
             ->execute();
@@ -70,27 +73,26 @@ class PageBlockRepository extends ServiceEntityRepository
     /**
      * @return PageBlock[]
      */
-    public function getBlocksForPage(int $pageId, int $revisionId, string $language): array
+    public function getBlocksForPage(int $pageId, int $revisionId, Locale $locale): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->createQueryBuilder('b');
 
         $qb
             ->select('b')
             ->addSelect('unix_timestamp(b.createdOn) as created_on')
             ->addSelect('unix_timestamp(b.editedOn) as edited_on')
-            ->from(PageBlock::class, 'b')
             // @todo Use relation when it exists
             ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
             ->where('p.id = :pageId')
             ->andWhere('p.revisionId = :revisionId')
-            ->andWhere('p.language = :language')
+            ->andWhere('p.locale = :locale')
             ->orderBy('b.sequence', 'ASC');
 
         $qb->setParameters(
             [
                 'pageId' => $pageId,
                 'revisionId' => $revisionId,
-                'language' => $language,
+                'locale' => $locale,
             ]
         );
 
@@ -123,5 +125,29 @@ class PageBlockRepository extends ServiceEntityRepository
         $key = implode('_', $ret);
 
         return $key;
+    }
+
+    public function moduleExtraExistsForLocale(int $moduleExtraId, Locale $locale): bool
+    {
+        $qb = $this->createQueryBuilder('b');
+
+        $qb->select('1')
+            ->innerJoin(
+                Page::class,
+                'p',
+                Join::WITH,
+                'b.revisionId = p.revisionId AND b.extraId = :extraId AND p.locale = :locale AND p.status = :active'
+            )
+            ->setMaxResults(1);
+
+        $qb->setParameters(
+            [
+                'extraId' => $moduleExtraId,
+                'active' => Status::active(),
+                'locale' => $locale,
+            ]
+        );
+
+        return (bool) $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
     }
 }

@@ -14,6 +14,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
+use Common\Locale;
 use DateTime;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
@@ -25,8 +26,8 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
-        $toLanguage = (string) $command->getToLocale();
-        $fromLanguage = (string) $command->getFromLocale();
+        $toLanguage = $command->getToLocale();
+        $fromLanguage = $command->getFromLocale();
         $previousResults = $command->getPreviousResults();
 
         // Get already copied ContentBlock ids
@@ -192,31 +193,31 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
     private function getOldPagesToRemove(
         PageRepository $pageRepository,
         CopyModuleContentToOtherLocaleInterface $command,
-        string $toLanguage
+        Locale $toLocale
     ): array {
         if ($command->getPageToCopy() instanceof Page) {
             return $pageRepository->findBy(
                 [
                     'id' => $command->getPageToCopy()->getId(),
-                    'language' => $command->getToLocale(),
+                    'locale' => $command->getToLocale(),
                     'status' => Status::active(),
                 ]
             );
         }
 
-        return $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
+        return $pageRepository->findBy(['locale' => $toLocale, 'status' => Status::active()]);
     }
 
     private function getActivePagesToCopy(
         PageRepository $pageRepository,
         CopyModuleContentToOtherLocaleInterface $command,
-        string $fromLanguage
+        Locale $fromLocale
     ): array {
         if ($command->getPageToCopy() instanceof Page) {
             return [$command->getPageToCopy()];
         }
 
-        return $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
+        return $pageRepository->findBy(['locale' => $fromLocale, 'status' => Status::active()]);
     }
 
     private function processTags(Page $activePageToCopy, string $fromLanguage, string $toLanguage, Page $page): void

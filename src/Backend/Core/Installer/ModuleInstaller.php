@@ -19,6 +19,7 @@ use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Uri as CommonUri;
 use DateTime;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -583,7 +584,7 @@ class ModuleInstaller
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
 
-        $maximumPageId =  $pageRepository->getMaximumPageId($language, true);
+        $maximumPageId =  $pageRepository->getMaximumPageId(Locale::fromString($language), true);
 
         return ++$maximumPageId;
     }
@@ -591,13 +592,13 @@ class ModuleInstaller
     private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
-        $pageRepository->archive($pageId, $language);
+        $pageRepository->archive($pageId, Locale::fromString($language));
     }
 
-    private function getNextPageSequence(string $language, int $parentId, string $type): int
+    private function getNextPageSequence(string $locale, int $parentId, string $type): int
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
-        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, $language, $type);
+        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, Locale::fromString($locale), $type);
 
         return ++$maximumPageSequence;
     }
@@ -727,7 +728,7 @@ class ModuleInstaller
             $revision['parent_id'],
             $revision['template_id'],
             $meta,
-            $revision['language'],
+            Locale::fromString($revision['language']),
             $revision['title'],
             $revision['navigation_title'],
             new DateTime($revision['publish_on']),

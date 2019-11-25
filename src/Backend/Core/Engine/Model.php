@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use Backend\Core\Language\Locale;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -378,7 +379,7 @@ class Model extends \Common\Core\Model
             $language = BackendLanguage::getWorkingLanguage();
         }
 
-        return BackendPagesModel::getCacheBuilder()->getKeys($language);
+        return BackendPagesModel::getCacheBuilder()->getKeys(Locale::fromString($language));
     }
 
     /**
@@ -435,7 +436,7 @@ class Model extends \Common\Core\Model
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
 
-        return $cacheBuilder->getNavigation($language);
+        return $cacheBuilder->getNavigation(Locale::fromString($language));
     }
 
     /**
@@ -534,7 +535,7 @@ class Model extends \Common\Core\Model
         }
 
         $pageIdForUrl = null;
-        $navigation = self::getNavigation($language);
+        $navigation = self::getNavigation(Locale::fromString($language));
 
         $dataMatch = false;
         // loop types

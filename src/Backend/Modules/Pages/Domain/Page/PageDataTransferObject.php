@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Domain\Page;
 
 use Common\Doctrine\Entity\Meta;
+use Common\Locale;
 use DateTime;
 
 class PageDataTransferObject
@@ -28,8 +29,8 @@ class PageDataTransferObject
     /** @var Meta */
     public $meta;
 
-    /** @var string */
-    public $language;
+    /** @var Locale */
+    public $locale;
 
     /** @var string */
     public $type;
@@ -90,7 +91,7 @@ class PageDataTransferObject
         $this->parentId = $page->getParentId();
         $this->templateId = $page->getTemplateId();
         $this->meta = $page->getMeta();
-        $this->language = $page->getLanguage();
+        $this->locale = $page->getLocale();
         $this->type = $page->getType();
         $this->title = $page->getTitle();
         $this->navigationTitle = $page->getNavigationTitle();

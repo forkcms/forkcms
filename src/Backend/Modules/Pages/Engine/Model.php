@@ -17,9 +17,9 @@ use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
+use Common\Locale as AbstractLocale;
 use DateTime;
 use ForkCMS\App\ForkController;
-use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use RuntimeException;
@@ -44,7 +44,7 @@ class Model
     const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM PagesPage AS i
-         WHERE i.status = ? AND i.language = ?
+         WHERE i.status = ? AND i.locale = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
@@ -55,7 +55,7 @@ class Model
          (
              SELECT MAX(i.revision_id) AS revision_id
              FROM PagesPage AS i
-             WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+             WHERE i.status = ? AND i.user_id = ? AND i.locale = ?
              GROUP BY i.id
          ) AS p
          WHERE i.revision_id = p.revision_id';
@@ -63,13 +63,13 @@ class Model
     const QUERY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM PagesPage AS i
-         WHERE i.id = ? AND i.status = ? AND i.language = ?
+         WHERE i.id = ? AND i.status = ? AND i.locale = ?
          ORDER BY i.edited_on DESC';
 
     const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM PagesPage AS i
-         WHERE i.id = ? AND i.status = ? AND i.language = ?
+         WHERE i.id = ? AND i.status = ? AND i.locale = ?
          ORDER BY i.edited_on DESC';
 
     public static function getCacheBuilder(): CacheBuilder
@@ -86,10 +86,10 @@ class Model
         return $cacheBuilder;
     }
 
-    public static function buildCache(string $language = null): void
+    public static function buildCache(Locale $locale = null): void
     {
         $cacheBuilder = static::getCacheBuilder();
-        $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
+        $cacheBuilder->buildCache($locale ?? Locale::workingLocale());
     }
 
     /**
@@ -101,7 +101,7 @@ class Model
         int $parentId = BackendModel::HOME_PAGE_ID,
         string $html = ''
     ): string {
-        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
+        $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
 
         // check if item exists
         if (isset($navigation[$navigationType][$depth][$parentId])) {
@@ -137,13 +137,13 @@ class Model
 
     /**
      * @param int $id The id of the page to delete.
-     * @param string $language The language wherein the page will be deleted,
-     *                           if not provided we will use the working language.
+     * @param Locale $locale The locale wherein the page will be deleted,
+     *                           if not provided we will use the working locale.
      * @param int $revisionId If specified the given revision will be deleted, used for deleting drafts.
      *
      * @return bool
      */
-    public static function delete(int $id, string $language = null, int $revisionId = null): bool
+    public static function delete(int $id, Locale $locale = null, int $revisionId = null): bool
     {
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
@@ -151,10 +151,10 @@ class Model
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         // get record
-        $page = self::get($id, $revisionId, $language);
+        $page = self::get($id, $revisionId, $locale);
 
         // validate
         if (empty($page)) {
@@ -165,7 +165,7 @@ class Model
         }
 
         // get revision ids
-        $pages = $pageRepository->findBy(['id' => $id, 'language' => $language]);
+        $pages = $pageRepository->findBy(['id' => $id, 'locale' => $locale]);
 
         $revisionIDs = array_map(
             function (Page $page) {
@@ -205,7 +205,7 @@ class Model
         $page = $pageRepository->findOneBy(
             [
                 'id' => $pageId,
-                'language' => BL::getWorkingLanguage(),
+                'locale' => Locale::workingLocale(),
                 'status' => [Status::active(), Status::draft()],
             ]
         );
@@ -218,23 +218,23 @@ class Model
      *
      * @param int $pageId The Id of the page to fetch.
      * @param int $revisionId
-     * @param string $language The language to use while fetching the page.
+     * @param Locale $locale The locale to use while fetching the page.
      *
      * @return mixed False if the record can't be found, otherwise an array with all data.
      */
-    public static function get(int $pageId, int $revisionId = null, string $language = null)
+    public static function get(int $pageId, int $revisionId = null, Locale $locale = null)
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($pageId, $language);
+            $revisionId = self::getLatestRevision($pageId, $locale);
         }
 
         // redefine
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $page = $pageRepository->getOne($pageId, $revisionId, $language);
+        $page = $pageRepository->getOne($pageId, $revisionId, $locale);
 
         // no page?
         if ($page === null) {
@@ -259,19 +259,19 @@ class Model
         return $pageId === BackendModel::ERROR_PAGE_ID;
     }
 
-    public static function getBlocks(int $pageId, int $revisionId = null, string $language = null): array
+    public static function getBlocks(int $pageId, int $revisionId = null, Locale $locale = null): array
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($pageId, $language);
+            $revisionId = self::getLatestRevision($pageId, $locale);
         }
 
         // redefine
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
-        $pageBlocks = $pageBlockRepository->getBlocksForPage($pageId, $revisionId, $language);
+        $pageBlocks = $pageBlockRepository->getBlocksForPage($pageId, $revisionId, $locale);
 
         return $pageBlocks;
     }
@@ -308,7 +308,7 @@ class Model
     {
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $page = $pageRepository->getFirstChild($parentId, Status::active(), BL::getWorkingLanguage());
+        $page = $pageRepository->getFirstChild($parentId, Status::active(), Locale::workingLocale());
 
         if ($page instanceof Page) {
             return $page->getId();
@@ -319,7 +319,7 @@ class Model
 
     public static function getFullUrl(int $id): string
     {
-        $keys = static::getCacheBuilder()->getKeys(BL::getWorkingLanguage());
+        $keys = static::getCacheBuilder()->getKeys(Locale::workingLocale());
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
 
         // available in generated file?
@@ -353,40 +353,41 @@ class Model
         return urldecode($url);
     }
 
-    public static function getLatestRevision(int $id, string $language = null): int
+    public static function getLatestRevision(int $id, Locale $locale = null): int
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
 
-        return (int) $pageRepository->getLatestVersion($id, $language);
+        return (int) $pageRepository->getLatestVersion($id, $locale);
     }
 
-    public static function getMaximumPageId($language = null): int
+    public static function getMaximumPageId(Locale $locale = null): int
     {
-        $language = $language ?? BL::getWorkingLanguage();
-
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
 
-        return $pageRepository->getMaximumPageId($language, BackendAuthentication::getUser()->isGod());
+        return $pageRepository->getMaximumPageId(
+            $locale ?? Locale::workingLocale(),
+            BackendAuthentication::getUser()->isGod()
+        );
     }
 
-    public static function getMaximumSequence(int $parentId, string $language = null): int
+    public static function getMaximumSequence(int $parentId, Locale $locale = null): int
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
 
         // get the maximum sequence inside a certain leaf
-        return $pageRepository->getMaximumSequence($parentId, $language);
+        return $pageRepository->getMaximumSequence($parentId, $locale);
     }
 
-    public static function getPagesForDropdown(string $language = null): array
+    public static function getPagesForDropdown(Locale $locale = null): array
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
         $titles = [];
         $sequences = [
             'pages' => [],
@@ -394,7 +395,7 @@ class Model
         ];
         $keys = [];
         $pages = [];
-        $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $language);
+        $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $locale);
         $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
         foreach ($pageTree as $pageTreePages) {
@@ -516,9 +517,9 @@ class Model
         );
     }
 
-    public static function getMoveTreeForDropdown(int $currentPageId, string $language = null): array
+    public static function getMoveTreeForDropdown(int $currentPageId, Locale $locale = null): array
     {
-        $navigation = static::getCacheBuilder()->getNavigation($language = $language ?? BL::getWorkingLanguage());
+        $navigation = static::getCacheBuilder()->getNavigation($locale ?? Locale::workingLocale());
 
         $tree = self::addMainPageToTreeForDropdown(
             self::getEmptyTreeArray(),
@@ -600,17 +601,17 @@ class Model
      * @param int[] $ids The parentIds.
      * @param array $data A holder for the generated data.
      * @param int $level The counter for the level.
-     * @param string $language The language.
+     * @param AbstractLocale $locale
      *
      * @return array
      */
-    public static function getTree(array $ids, array $data = null, int $level = 1, string $language = null): array
+    public static function getTree(array $ids, array $data = null, int $level = 1, AbstractLocale $locale = null): array
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
-        $data[$level] = $pageRepository->getPageTree($ids, $language);
+        $data[$level] = $pageRepository->getPageTree($ids, $locale);
 
         // get the childIDs
         $childIds = array_keys($data[$level]);
@@ -627,7 +628,7 @@ class Model
                 $data[$level]
             );
 
-            return self::getTree($childIds, $data, ++$level, $language);
+            return self::getTree($childIds, $data, ++$level, $locale);
         }
 
         unset($data[$level]);
@@ -637,7 +638,7 @@ class Model
 
     public static function getTreeHTML(): string
     {
-        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
+        $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
 
         // start HTML
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
@@ -792,7 +793,7 @@ class Model
 
     public static function getTreeNameForPageId(int $pageId): ?string
     {
-        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
+        $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
 
         if ($pageId === BackendModel::HOME_PAGE_ID || self::pageIsChildOfParent($navigation, $pageId, BackendModel::HOME_PAGE_ID)) {
             return 'main';
@@ -854,11 +855,11 @@ class Model
 
         // no specific id
         if ($id === null) {
-            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguage(
+            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLocale(
                 $parentIds,
                 $url,
                 Status::active(),
-                BL::getWorkingLanguage()
+                Locale::workingLocale()
             );
 
             // no items?
@@ -872,11 +873,11 @@ class Model
         } else {
             // one item should be ignored
             // there are items so, call this method again.
-            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLanguageExcludingId(
+            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLocaleExcludingId(
                 $parentIds,
                 $url,
                 Status::active(),
-                BL::getWorkingLanguage(),
+                Locale::workingLocale(),
                 $id
             );
 
@@ -893,7 +894,7 @@ class Model
         $fullUrl = self::getFullUrl($parentId) . '/' . $url;
 
         // get info about parent page
-        $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
+        $parentPageInfo = self::get($parentId, null, Locale::workingLocale());
 
         // does the parent have extras?
         if (!$isAction && $parentPageInfo['has_extra']) {
@@ -1003,7 +1004,7 @@ class Model
      * @param int $droppedOnPageId The id for the page where to page has been dropped on.
      * @param string $typeOfDrop The type of drop, possible values are: before, after, inside.
      * @param string $tree The tree the item is dropped on, possible values are: main, meta, footer, root.
-     * @param string $language The language to use, if not provided we will use the working language.
+     * @param Locale $locale The locale to use, if not provided we will use the working locale.
      *
      * @return bool
      */
@@ -1012,11 +1013,11 @@ class Model
         int $droppedOnPageId,
         string $typeOfDrop,
         string $tree,
-        string $language = null
+        Locale $locale = null
     ): bool {
         $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = $locale ?? Locale::workingLocale();
 
         // When dropping on the main navigation it should be added as a child of the home page
         if ($tree === 'main' && $droppedOnPageId === 0) {
@@ -1029,11 +1030,11 @@ class Model
             $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
         }
 
-        $page = self::get($pageId, null, $language);
+        $page = self::get($pageId, null, $locale);
         $droppedOnPage = self::get(
             ($droppedOnPageId === self::NO_PARENT_PAGE_ID ? BackendModel::HOME_PAGE_ID : $droppedOnPageId),
             null,
-            $language
+            $locale
         );
 
         if (empty($page) || empty($droppedOnPage)) {
@@ -1051,7 +1052,7 @@ class Model
             $typeOfDrop,
             self::getNewType($droppedOnPageId, $tree, $newParent, $droppedOnPage),
             $pageId,
-            $language,
+            $locale,
             $newParent,
             $droppedOnPage['id']
         );
@@ -1068,6 +1069,8 @@ class Model
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
+        $locale = Locale::fromString($page['language']);
+
         if (self::isForbiddenToDelete($page['id'])) {
             $page['allow_delete'] = false;
         }
@@ -1082,18 +1085,23 @@ class Model
 
         // update old revisions
         if ($page['status'] !== (string) Status::draft()) {
-            $pageEntities = $pageRepository->findBy(['id' => $page['id'], 'language' => $page['language']]);
+            $pageEntities = $pageRepository->findBy(
+                [
+                    'id' => $page['id'],
+                    'locale' => $locale,
+                ]
+            );
 
             foreach ($pageEntities as $pageEntity) {
                 $pageEntity->archive();
                 $pageRepository->save($pageEntity);
             }
         } else {
-            $pageRepository->deleteByIdAndUserIdAndStatusAndLanguage(
+            $pageRepository->deleteByIdAndUserIdAndStatusAndLocale(
                 (int) $page['id'],
                 BackendAuthentication::getUser()->getUserId(),
                 Status::draft(),
-                $page['language']
+                $locale
             );
         }
 
@@ -1105,7 +1113,7 @@ class Model
             $page['parent_id'],
             $page['template_id'],
             $meta,
-            $page['language'],
+            $locale,
             $page['title'],
             $page['navigation_title'],
             new DateTime($page['publish_on']),
@@ -1166,7 +1174,7 @@ class Model
     {
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
-        $newTemplate['data'] = @unserialize($newTemplate['data']);
+        $newTemplate['data'] = @unserialize($newTemplate['data'], ['al'], ['allowed_classes' => 'false']);
 
         // fetch all pages
         /** @var PageRepository $pageRepository */
@@ -1184,7 +1192,7 @@ class Model
         /** @var Page $page */
         foreach ($pages as $page) {
             // fetch blocks
-            $blocksContent = self::getBlocks($page->getId(), $page->getRevisionId(), $page->getLanguage());
+            $blocksContent = self::getBlocks($page->getId(), $page->getRevisionId(), $page->getLocale());
 
             // save new page revision
             $newPageRevisionId = self::update(
@@ -1194,7 +1202,7 @@ class Model
                     'parent_id' => $page->getParentId(),
                     'template_id' => $newTemplateId,
                     'meta_id' => $page->getMeta()->getId(),
-                    'language' => $page->getLanguage(),
+                    'locale' => $page->getLocale(),
                     'title' => $page->getTitle(),
                     'navigation_title' => $page->getNavigationTitle(),
                     'publish_on' => $page->getPublishOn()->format('Y-m-d H:i:s'),
@@ -1217,8 +1225,8 @@ class Model
 
                 // fetch default blocks for this page
                 $defaultBlocks = [];
-                if (isset($newTemplate['data']['default_extras_' . $page->getLanguage()])) {
-                    $defaultBlocks = $newTemplate['data']['default_extras_' . $page->getLanguage()];
+                if (isset($newTemplate['data']['default_extras_' . $page->getLocale()])) {
+                    $defaultBlocks = $newTemplate['data']['default_extras_' . $page->getLocale()];
                 } elseif (isset($newTemplate['data']['default_extras'])) {
                     $defaultBlocks = $newTemplate['data']['default_extras'];
                 }
@@ -1317,7 +1325,7 @@ class Model
         string $typeOfDrop,
         string $newType,
         int $pageId,
-        string $language,
+        Locale $locale,
         string $newParent,
         int $droppedOnPageId
     ): void {
@@ -1326,9 +1334,9 @@ class Model
 
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
-            $newSequence = $pageRepository->getNewSequenceForMove((int) $newParent, $language);
+            $newSequence = $pageRepository->getNewSequenceForMove((int) $newParent, $locale);
 
-            $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
+            $pages = $pageRepository->findBy(['id' => $pageId, 'locale' => $locale, 'status' => Status::active()]);
 
             foreach ($pages as $page) {
                 $page->move((int) $newParent, $newSequence, $newType);
@@ -1342,7 +1350,7 @@ class Model
             ->findOneBy(
                 [
                     'id' => $droppedOnPageId,
-                    'language' => $language,
+                    'locale' => $locale,
                     'status' => Status::active(),
                 ]
             );
@@ -1357,9 +1365,9 @@ class Model
         $newSequence = $droppedOnPageSequence + ($typeOfDrop === self::TYPE_OF_DROP_BEFORE ? -1 : 1);
 
         // increment all pages with a sequence that is higher than the new sequence;
-        $pageRepository->incrementSequence($newParent, $language, $newSequence);
+        $pageRepository->incrementSequence($newParent, $locale, $newSequence);
 
-        $pages = $pageRepository->findBy(['id' => $pageId, 'language' => $language, 'status' => Status::active()]);
+        $pages = $pageRepository->findBy(['id' => $pageId, 'locale' => $locale, 'status' => Status::active()]);
 
         foreach ($pages as $page) {
             $page->move((int) $newParent, $newSequence, $newType);

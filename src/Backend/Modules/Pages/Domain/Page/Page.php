@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Domain\Page;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Doctrine\Entity\Meta;
+use Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *     name="PagesPage",
  *     indexes={
- *      @ORM\Index(name="idx_id_status_hidden_language", columns={"id", "status", "language"})
+ *      @ORM\Index(name="idx_id_status_hidden_locale", columns={"id", "status", "locale"})
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
@@ -76,13 +77,11 @@ class Page
     private $meta;
 
     /**
-     * Language of the content
+     * @var Locale
      *
-     * @var string
-     *
-     * @ORM\Column(type="string", length=5, name="language")
+     * @ORM\Column(type="locale")
      */
-    private $language;
+    private $locale;
 
     /**
      * page, header, footer, ...
@@ -204,7 +203,7 @@ class Page
         ?int $parentId,
         ?int $templateId,
         Meta $meta,
-        string $language,
+        Locale $locale,
         string $title,
         string $navigationTitle,
         DateTime $publishOn,
@@ -230,7 +229,7 @@ class Page
             $this->templateId = 0;
         }
         $this->meta = $meta;
-        $this->language = $language;
+        $this->locale = $locale;
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
@@ -255,7 +254,7 @@ class Page
         ?int $parentId,
         ?int $templateId,
         Meta $meta,
-        string $language,
+        Locale $locale,
         string $title,
         string $navigationTitle,
         DateTime $publishOn,
@@ -281,7 +280,7 @@ class Page
             $this->templateId = 0;
         }
         $this->meta = $meta;
-        $this->language = $language;
+        $this->locale = $locale;
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
@@ -329,9 +328,9 @@ class Page
         return $this->meta;
     }
 
-    public function getLanguage(): string
+    public function getLocale(): Locale
     {
-        return $this->language;
+        return $this->locale;
     }
 
     public function getType(): string
@@ -439,6 +438,7 @@ class Page
         }
         $this->data = null;
     }
+
     /**
      * @ORM\PostPersist
      * @ORM\PostUpdate

@@ -309,7 +309,7 @@ class Edit extends BackendBaseActionEdit
             // loop active languages
             foreach (BL::getActiveLanguages() as $language) {
                 if ($language != BL::getWorkingLanguage()) {
-                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    $pages = BackendPagesModel::getPagesForDropdown(Locale::fromString($language));
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages, (!empty($this->record['data']['hreflang_' . $language]) ? $this->record['data']['hreflang_' . $language] : null))->setDefaultElement('');
                     $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
@@ -794,7 +794,7 @@ class Edit extends BackendBaseActionEdit
 
         // build cache
         if ($cacheShouldBeUpdated) {
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+            BackendPagesModel::buildCache(Locale::workingLocale());
         }
 
         if ($page['status'] === 'draft') {
@@ -858,7 +858,7 @@ class Edit extends BackendBaseActionEdit
             $this->form->getField('move_page_type')->getValue(),
             $this->form->getField('move_page_tree')->getValue()
         );
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        BackendPagesModel::buildCache(Locale::workingLocale());
     }
 
     private function buildPageData(string $redirectValue): array

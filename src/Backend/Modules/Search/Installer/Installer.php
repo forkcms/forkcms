@@ -2,13 +2,14 @@
 
 namespace Backend\Modules\Search\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
-use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 
 /**
  * Installer for the search module
@@ -70,7 +71,7 @@ class Installer extends ModuleInstaller
     private function configureFrontendPages(): void
     {
         foreach ($this->getLanguages() as $language) {
-            if ($this->hasExistingSearchIndex($language)) {
+            if ($this->hasExistingSearchIndex(Locale::fromString($language))) {
                 continue;
             }
 
@@ -94,10 +95,10 @@ class Installer extends ModuleInstaller
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
 
         foreach ($pageRepository->findActivePages() as $page) {
-            $this->insertSearchIndexForPage($page->getId(), $page->getLanguage(), $page->getTitle());
+            $this->insertSearchIndexForPage($page->getId(), $page->getLocale(), $page->getTitle());
             $this->insertSearchIndexForPage(
                 $page->getId(),
-                $page->getLanguage(),
+                $page->getLocale(),
                 $this->getContentFromBlocksForPageRevision($page->getRevisionId())
             );
         }
@@ -133,27 +134,22 @@ class Installer extends ModuleInstaller
         );
     }
 
-    private function hasExistingSearchIndex(string $language): bool
+    private function hasExistingSearchIndex(Locale $locale): bool
     {
-        // @todo: Replace with a PageBlockRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM PagesPage AS p
-             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
-             WHERE b.extra_id = ? AND p.language = ?
-             LIMIT 1',
-            [$this->searchBlockId, $language]
+        return Model::getContainer()->get(PageBlockRepository::class)->moduleExtraExistsForLocale(
+            $this->searchBlockId,
+            $locale
         );
     }
 
-    private function insertSearchIndexForPage(int $id, string $language, string $term): void
+    private function insertSearchIndexForPage(int $id, Locale $locale, string $term): void
     {
         // @todo: Replace with a SearchRepository method when it exists.
         $this->getDatabase()->execute(
             'INSERT INTO search_index (module, other_id, language, field, value, active)
              VALUES (?, ?, ?, ?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?, active = ?',
-            ['Pages', $id, $language, 'title', $term, true, $term, true]
+            ['Pages', $id, (string) $locale, 'title', $term, true, $term, true]
         );
     }
 }
