@@ -36,20 +36,20 @@
       color: theme-color-level($color, $alert-color-level);
     }
   }
+
+  .alerts-messaging-wrapper .alert-#{$color} {
+    background: rgba(theme-color-level($color, $alert-bg-level), .9);
+  }
 }
 
 .alerts-messaging-wrapper {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 30vw;
+  padding: 15px 15px 0;
   z-index: $zindex-fixed;
 
   .alert {
-    background: rgba($white, .9);
     box-shadow: 2px 2px 6px 3px rgba($black, 0.1);
     font-size: $font-size-btn;
-    margin: 0 0 20px;
+    margin: 0 0 15px;
     opacity: 0;
     -webkit-transition: opacity 250ms;
     -moz-transition: opacity 250ms;
@@ -91,4 +91,28 @@
   position: static;
   text-align: left;
   width: 100%;
+}
+
+@include media-breakpoint-up(md) {
+
+  .alerts-messaging-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65vw;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+
+  .alerts-messaging-wrapper {
+    width: 45vw;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+
+  .alerts-messaging-wrapper {
+    width: 35vw;
+  }
 }

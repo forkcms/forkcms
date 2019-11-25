@@ -2,7 +2,7 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation d-none d-sm-block">
+  <div class="sub-navigation d-none d-md-block">
     <div class="pages-tree">
       {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans|ucfirst, null, null, {'class': 'd-md-none'}) }}
       <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">

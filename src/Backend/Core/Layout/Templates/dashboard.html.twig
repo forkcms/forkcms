@@ -11,7 +11,7 @@
   <div class="sidebar">
     {% include "Layout/Templates/navigation.html.twig" %}
   </div>
-
+  {% include "Layout/Templates/messaging.html.twig" %}
   <div id="root">
     <div id="content" class="content-wrapper">
       <div class="content-main content-main-dashboard{% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
