@@ -6,6 +6,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\Page\Page;
 
 /**
  * Installer for the form_builder module
@@ -157,7 +158,7 @@ class Installer extends ModuleInstaller
             $this->insertPage(
                 [
                     'title' => \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend')),
-                    'parent_id' => BackendModel::HOME_PAGE_ID,
+                    'parent_id' => Page::HOME_PAGE_ID,
                     'language' => $language,
                 ],
                 null,

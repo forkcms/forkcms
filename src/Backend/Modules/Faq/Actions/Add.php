@@ -9,6 +9,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -58,7 +59,7 @@ class Add extends BackendBaseActionAdd
 
         // get url
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
 
         // parse additional variables
         if ($url404 != $url) {

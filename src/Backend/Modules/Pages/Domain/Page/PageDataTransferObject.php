@@ -137,4 +137,14 @@ class PageDataTransferObject
 
         return null;
     }
+
+    public function isAction(): bool
+    {
+        return $this->data['is_action'] ?? false;
+    }
+
+    public function getParentId(): ?int
+    {
+        return $this->parentId;
+    }
 }

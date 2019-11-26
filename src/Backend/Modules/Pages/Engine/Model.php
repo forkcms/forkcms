@@ -19,8 +19,6 @@ use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Locale as AbstractLocale;
 use DateTime;
-use ForkCMS\App\ForkController;
-use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,8 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class Model
 {
-    const NO_PARENT_PAGE_ID = 0;
-
     const TYPE_OF_DROP_BEFORE = 'before';
     const TYPE_OF_DROP_AFTER = 'after';
     const TYPE_OF_DROP_INSIDE = 'inside';
@@ -98,7 +94,7 @@ class Model
     public static function createHtml(
         string $navigationType = 'page',
         int $depth = 0,
-        int $parentId = BackendModel::HOME_PAGE_ID,
+        int $parentId = Page::HOME_PAGE_ID,
         string $html = ''
     ): string {
         $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
@@ -246,17 +242,17 @@ class Model
 
     public static function isForbiddenToDelete(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [Page::HOME_PAGE_ID, Page::ERROR_PAGE_ID], true);
     }
 
     public static function isForbiddenToMove(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [Page::HOME_PAGE_ID, Page::ERROR_PAGE_ID], true);
     }
 
     public static function isForbiddenToHaveChildren(int $pageId): bool
     {
-        return $pageId === BackendModel::ERROR_PAGE_ID;
+        return $pageId === Page::ERROR_PAGE_ID;
     }
 
     public static function getBlocks(int $pageId, int $revisionId = null, Locale $locale = null): array
@@ -325,7 +321,7 @@ class Model
         // available in generated file?
         if (isset($keys[$id])) {
             $url = $keys[$id];
-        } elseif ($id == self::NO_PARENT_PAGE_ID) {
+        } elseif ($id == Page::NO_PARENT_PAGE_ID) {
             // parent id 0 hasn't an url
             $url = '/';
 
@@ -395,8 +391,8 @@ class Model
         ];
         $keys = [];
         $pages = [];
-        $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $locale);
-        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $pageTree = self::getTree([Page::NO_PARENT_PAGE_ID], null, 1, $locale);
+        $homepageTitle = $pageTree[1][Page::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {
@@ -488,9 +484,9 @@ class Model
             return [
                 'data-tree-name' => $treeName,
                 'data-tree-label' => $treeLabel,
-                'data-allow-after' => (int) (!$isCurrentPage && $page['page_id'] !== BackendModel::HOME_PAGE_ID),
+                'data-allow-after' => (int) (!$isCurrentPage && $page['page_id'] !== Page::HOME_PAGE_ID),
                 'data-allow-inside' => (int) (!$isCurrentPage && $page['allow_children']),
-                'data-allow-before' => (int) (!$isCurrentPage && $page['page_id'] !== BackendModel::HOME_PAGE_ID),
+                'data-allow-before' => (int) (!$isCurrentPage && $page['page_id'] !== Page::HOME_PAGE_ID),
             ];
         };
     }
@@ -525,7 +521,7 @@ class Model
             self::getEmptyTreeArray(),
             BL::lbl('MainNavigation'),
             self::getAttributesFunctionForTreeName('main', BL::lbl('MainNavigation'), $currentPageId),
-            $navigation['page'][0][BackendModel::HOME_PAGE_ID],
+            $navigation['page'][0][Page::HOME_PAGE_ID],
             $navigation
         );
 
@@ -644,20 +640,20 @@ class Model
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home" ' . 'data-jstree=\'{"opened": true, "type":"home"}\'' . '>';
+        $html .= '        <li id="page-"' . Page::HOME_PAGE_ID . ' rel="home" ' . 'data-jstree=\'{"opened": true, "type":"home"}\'' . '>';
 
         // create homepage anchor from title
-        $homePage = self::get(BackendModel::HOME_PAGE_ID);
+        $homePage = self::get(Page::HOME_PAGE_ID);
         $urlForAction = BackendModel::createUrlForAction(
             'Edit',
             null,
             null,
-            ['id' => BackendModel::HOME_PAGE_ID]
+            ['id' => Page::HOME_PAGE_ID]
         );
         $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
+        $html .= self::getSubtree($navigation, Page::HOME_PAGE_ID);
 
         // end
         $html .= '        </li>' . "\n";
@@ -795,7 +791,7 @@ class Model
     {
         $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
 
-        if ($pageId === BackendModel::HOME_PAGE_ID || self::pageIsChildOfParent($navigation, $pageId, BackendModel::HOME_PAGE_ID)) {
+        if ($pageId === Page::HOME_PAGE_ID || self::pageIsChildOfParent($navigation, $pageId, Page::HOME_PAGE_ID)) {
             return 'main';
         }
 
@@ -1021,18 +1017,18 @@ class Model
 
         // When dropping on the main navigation it should be added as a child of the home page
         if ($tree === 'main' && $droppedOnPageId === 0) {
-            $droppedOnPageId = BackendModel::HOME_PAGE_ID;
+            $droppedOnPageId = Page::HOME_PAGE_ID;
             $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
         }
 
         // reset type of drop for special pages
-        if ($droppedOnPageId === BackendModel::HOME_PAGE_ID || $droppedOnPageId === self::NO_PARENT_PAGE_ID) {
+        if ($droppedOnPageId === Page::HOME_PAGE_ID || $droppedOnPageId === Page::NO_PARENT_PAGE_ID) {
             $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
         }
 
         $page = self::get($pageId, null, $locale);
         $droppedOnPage = self::get(
-            ($droppedOnPageId === self::NO_PARENT_PAGE_ID ? BackendModel::HOME_PAGE_ID : $droppedOnPageId),
+            ($droppedOnPageId === Page::NO_PARENT_PAGE_ID ? Page::HOME_PAGE_ID : $droppedOnPageId),
             null,
             $locale
         );
@@ -1283,8 +1279,8 @@ class Model
 
     private static function getNewParent(int $droppedOnPageId, string $typeOfDrop, array $droppedOnPage): int
     {
-        if ($droppedOnPageId === self::NO_PARENT_PAGE_ID) {
-            return self::NO_PARENT_PAGE_ID;
+        if ($droppedOnPageId === Page::NO_PARENT_PAGE_ID) {
+            return Page::NO_PARENT_PAGE_ID;
         }
 
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
@@ -1302,7 +1298,7 @@ class Model
 
     private static function getNewType(int $droppedOnPageId, string $tree, int $newParent, array $droppedOnPage): string
     {
-        if ($droppedOnPageId === self::NO_PARENT_PAGE_ID) {
+        if ($droppedOnPageId === Page::NO_PARENT_PAGE_ID) {
             if ($tree === 'footer') {
                 return 'footer';
             }
@@ -1314,7 +1310,7 @@ class Model
             return 'root';
         }
 
-        if ($newParent === self::NO_PARENT_PAGE_ID) {
+        if ($newParent === Page::NO_PARENT_PAGE_ID) {
             return $droppedOnPage['type'];
         }
 

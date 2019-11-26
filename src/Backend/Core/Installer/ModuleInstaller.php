@@ -13,7 +13,6 @@ use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
@@ -656,7 +655,7 @@ class ModuleInstaller
         $revision['template_id'] = $revision['template_id'] ?? $this->getTemplateId('Default');
         $revision['type'] = $revision['type'] ?? 'page';
         $revision['parent_id'] = $revision['parent_id'] ?? (
-            $revision['type'] === 'page' ? Model::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
+            $revision['type'] === 'page' ? Page::HOME_PAGE_ID : Page::NO_PARENT_PAGE_ID
         );
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
         $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;

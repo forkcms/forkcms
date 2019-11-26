@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\Page\Page as PageEntity;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
@@ -177,7 +178,7 @@ class Url extends KernelLoader
         // invalid page, or parameters but no extra
         if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
-            $url = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $url = Navigation::getUrl(PageEntity::ERROR_PAGE_ID);
 
             // remove language
             if ($hasMultiLanguages) {
@@ -283,7 +284,7 @@ class Url extends KernelLoader
         if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] !== '') {
             // get url for item
             $newPageUrl = Navigation::getUrl((int) $pageInfo['redirect_page_id']);
-            $errorURL = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $errorURL = Navigation::getUrl(PageEntity::ERROR_PAGE_ID);
 
             // not an error?
             if ($newPageUrl !== $errorURL) {
@@ -344,7 +345,7 @@ class Url extends KernelLoader
         // if it's the homepage AND parameters were given (not allowed!)
         if ($url === '' && $queryString !== '') {
             // get 404 URL
-            $url = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $url = Navigation::getUrl(PageEntity::ERROR_PAGE_ID);
 
             // remove language
             if ($this->getContainer()->getParameter('site.multilanguage')) {

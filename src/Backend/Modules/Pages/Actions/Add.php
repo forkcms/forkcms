@@ -430,7 +430,7 @@ class Add extends BackendBaseActionAdd
         $this->template->assign(
             'prefixURL',
             rtrim(
-                BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', BackendModel::HOME_PAGE_ID)),
+                BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', Page::HOME_PAGE_ID)),
                 '/'
             )
         );

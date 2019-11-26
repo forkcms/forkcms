@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockNotFound;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
@@ -115,7 +116,7 @@ class Model implements FrontendTagsInterface
         $database = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
-        $ignore = [FrontendModel::ERROR_PAGE_ID];
+        $ignore = [Page::ERROR_PAGE_ID];
 
         // get items
         $items = (array) $database->getRecords(

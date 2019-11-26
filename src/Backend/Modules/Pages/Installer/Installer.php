@@ -5,11 +5,9 @@ namespace Backend\Modules\Pages\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * Installer for the pages module
@@ -198,7 +196,7 @@ class Installer extends ModuleInstaller
                     ),
                     'type' => 'page',
                     'language' => $language,
-                    'parent_id' => BackendModel::HOME_PAGE_ID,
+                    'parent_id' => Page::HOME_PAGE_ID,
                 ],
                 null,
                 ['extra_id' => $this->getExtraId('subpages')],
@@ -210,8 +208,8 @@ class Installer extends ModuleInstaller
                 // re-insert homepage
                 $this->insertPage(
                     [
-                        'id' => BackendModel::HOME_PAGE_ID,
-                        'parent_id' => BackendPagesModel::NO_PARENT_PAGE_ID,
+                        'id' => Page::HOME_PAGE_ID,
+                        'parent_id' => Page::NO_PARENT_PAGE_ID,
                         'template_id' => $this->getTemplateId('home'),
                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language)),
                         'language' => $language,
@@ -427,8 +425,8 @@ class Installer extends ModuleInstaller
             // insert homepage
             $this->insertPage(
                 [
-                    'id' => BackendModel::HOME_PAGE_ID,
-                    'parent_id' => BackendPagesModel::NO_PARENT_PAGE_ID,
+                    'id' => Page::HOME_PAGE_ID,
+                    'parent_id' => Page::NO_PARENT_PAGE_ID,
                     'template_id' => $this->getTemplateId('home'),
                     'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
                     'language' => $language,
@@ -477,7 +475,7 @@ class Installer extends ModuleInstaller
             // insert 404
             $this->insertPage(
                 [
-                    'id' => BackendModel::ERROR_PAGE_ID,
+                    'id' => Page::ERROR_PAGE_ID,
                     'title' => '404',
                     'template_id' => $this->getTemplateId('error'),
                     'type' => 'root',
@@ -512,7 +510,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with PageRepository method when it exists.
         return (bool) $this->getDatabase()->getVar(
             'SELECT 1 FROM PagesPage WHERE locale = ? AND id > ? LIMIT 1',
-            [$language, BackendModel::ERROR_PAGE_ID]
+            [$language, Page::ERROR_PAGE_ID]
         );
     }
 

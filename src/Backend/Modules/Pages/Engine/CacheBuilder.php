@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Doctrine\ORM\NoResultException;
 use Psr\Cache\CacheItemPoolInterface;
@@ -139,7 +140,7 @@ class CacheBuilder
         $url = $keys[$parentID] ?? '';
 
         // home is special
-        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
+        if ($page['id'] == Page::HOME_PAGE_ID) {
             $page['url'] = '';
             if ($hasMultiLanguages) {
                 $languageUrl = rtrim($languageUrl, '/');
@@ -180,11 +181,11 @@ class CacheBuilder
         }
 
         // homepage should have a special icon
-        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
+        if ($page['id'] == Page::HOME_PAGE_ID) {
             $treeType = 'home';
-        } elseif ($page['id'] == BackendModel::ERROR_PAGE_ID) {
+        } elseif ($page['id'] == Page::ERROR_PAGE_ID) {
             $treeType = 'error';
-        } elseif ($page['id'] < BackendModel::ERROR_PAGE_ID
+        } elseif ($page['id'] < Page::ERROR_PAGE_ID
                   && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             $extraIDs = explode(',', $page['extra_ids']);
 
@@ -277,7 +278,7 @@ class CacheBuilder
     protected function getOrder(
         array $navigation,
         string $type = 'page',
-        int $parentId = Model::NO_PARENT_PAGE_ID,
+        int $parentId = Page::NO_PARENT_PAGE_ID,
         array $order = []
     ): array {
         // loop alle items for the type and parent

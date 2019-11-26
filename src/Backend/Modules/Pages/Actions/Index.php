@@ -8,6 +8,7 @@ use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
@@ -188,7 +189,7 @@ class Index extends BackendBaseActionIndex
                 $this->getRequest()->query->getInt('id')
             );
         } else {
-            $this->template->assign('openedPageId', BackendModel::HOME_PAGE_ID);
+            $this->template->assign('openedPageId', Page::HOME_PAGE_ID);
         }
     }
 }

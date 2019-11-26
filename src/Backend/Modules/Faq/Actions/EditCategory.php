@@ -10,6 +10,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Pages\Domain\Page\Page;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
@@ -65,7 +66,7 @@ class EditCategory extends BackendBaseActionEdit
         );
 
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
         if ($url404 != $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

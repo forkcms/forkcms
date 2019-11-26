@@ -17,9 +17,6 @@ use TijsVerkoyen\Akismet\Akismet;
  */
 class Model extends BaseModel
 {
-    const HOME_PAGE_ID = 1;
-    const ERROR_PAGE_ID = 404;
-
     /**
      * Cached modules
      *

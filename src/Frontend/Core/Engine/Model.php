@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\Page\Page as PageEntity;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
 use Doctrine\ORM\EntityManager;
@@ -172,7 +173,7 @@ class Model extends \Common\Core\Model
             return [];
         }
 
-        if (!$allowHidden && (int) $pageRevision['id'] !== self::ERROR_PAGE_ID && $pageRevision['hidden']) {
+        if (!$allowHidden && (int) $pageRevision['id'] !== PageEntity::ERROR_PAGE_ID && $pageRevision['hidden']) {
             throw new NotFoundHttpException('The requested page revision is not available');
         }
 

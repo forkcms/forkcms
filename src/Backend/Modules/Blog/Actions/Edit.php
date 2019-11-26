@@ -3,6 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\Form\BlogDeleteType;
+use Backend\Modules\Pages\Domain\Page\Page;
 use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -274,7 +275,7 @@ class Edit extends BackendBaseActionEdit
 
         // parse base url for preview
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
         if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

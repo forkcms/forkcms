@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Language\Locale;
+use Backend\Modules\Pages\Domain\Page\Page;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -505,7 +506,7 @@ class Model extends \Common\Core\Model
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getUrl(BackendModel::ERROR_PAGE_ID, $language);
+            return self::getUrl(Page::ERROR_PAGE_ID, $language);
         }
 
         // return the unique URL!
@@ -596,7 +597,7 @@ class Model extends \Common\Core\Model
 
         // Page not found so return the 404 url
         if ($pageIdForUrl === null) {
-            return self::getUrl(self::ERROR_PAGE_ID, $language);
+            return self::getUrl(Page::ERROR_PAGE_ID, $language);
         }
 
         $url = self::getUrl($pageIdForUrl, $language);

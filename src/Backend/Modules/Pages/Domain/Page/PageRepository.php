@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\Page;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;

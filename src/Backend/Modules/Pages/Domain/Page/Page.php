@@ -20,6 +20,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Page
 {
+    public const NO_PARENT_PAGE_ID = 0;
+    public const HOME_PAGE_ID = 1;
+    public const ERROR_PAGE_ID = 404;
+    public const TOP_LEVEL_IDS = [
+        self::NO_PARENT_PAGE_ID,
+        self::HOME_PAGE_ID,
+        2,
+        3,
+        4,
+    ];
+
     /**
      * The real page id although revision id is the real one... (legacy stuff here)
      * @todo Fix this legacy stuff with the multiple ids.
@@ -461,7 +472,7 @@ class Page
      */
     public static function isForbiddenToDelete(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [self::HOME_PAGE_ID, self::ERROR_PAGE_ID], true);
     }
 
     /**
@@ -469,7 +480,7 @@ class Page
      */
     public static function isForbiddenToMove(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [self::HOME_PAGE_ID, self::ERROR_PAGE_ID], true);
     }
 
     /**
@@ -477,7 +488,7 @@ class Page
      */
     public static function isForbiddenToHaveChildren(int $pageId): bool
     {
-        return $pageId === BackendModel::ERROR_PAGE_ID;
+        return $pageId === self::ERROR_PAGE_ID;
     }
 
     public function move(int $parentId, int $sequence, string $type): void
