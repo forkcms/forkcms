@@ -41,8 +41,8 @@
     {% if label is not same as(false) and label is empty %}
       {%- if label_format is not empty -%}
         {% set label = label_format|replace({
-        '%name%': name,
-        '%id%': id,
+          '%name%': name,
+          '%id%': id,
         }) %}
       {%- else -%}
         {% set label = name|humanize %}
@@ -50,7 +50,7 @@
     {% endif %}
     {{- widget|raw }}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}
+    {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst) -}}
     </label>
   {% endif %}
 {% endblock checkbox_radio_label %}
@@ -67,9 +67,9 @@
   {% if errors|length > 0 -%}
     {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
-        {%- for error in errors -%}
-          <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
-        {%- endfor -%}
+      {%- for error in errors -%}
+        <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+      {%- endfor -%}
     </ul>
     {% if form.parent %}</small>{% else %}</div>{% endif %}
   {%- endif %}
@@ -347,3 +347,14 @@
     </div>
   </div>
 {%- endblock collection_row -%}
+
+{% block title_widget %}
+  {{- form_widget(form) -}}
+  {% if form.parent.meta is defined %}
+    {% set meta = form.parent.meta %}
+    {% set slug = meta.children.url.vars.value %}
+    <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
+      {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
+    </a>
+  {% endif %}
+{% endblock %}

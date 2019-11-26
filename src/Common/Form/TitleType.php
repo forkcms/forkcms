@@ -21,4 +21,9 @@ class TitleType extends TextType
             ]
         );
     }
+
+    public function getBlockPrefix(): string
+    {
+        return 'title';
+    }
 }
