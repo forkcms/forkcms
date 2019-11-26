@@ -3,7 +3,6 @@
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Form\EventListener\AddMetaSubscriber;
-use Backend\Form\Type\MetaType;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Common\Form\TitleType;
@@ -28,6 +27,7 @@ final class PageType extends AbstractType
                 ]
             )
         );
+        $builder->add('navigation', PageNavigationType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
