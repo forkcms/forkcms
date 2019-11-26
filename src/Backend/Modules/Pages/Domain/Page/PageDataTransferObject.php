@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\Page;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PageDataTransferObject
 {
@@ -35,13 +36,23 @@ class PageDataTransferObject
     /** @var Type */
     public $type;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank(message="err.FieldIsRequired")
+     */
     public $title;
 
-    /** @var string */
+    /**
+     * @var string|null
+     *
+     * @Assert\Expression("this.hasValidNavigationTitle()", message="err.FieldIsRequired")
+     */
     public $navigationTitle;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $navigationTitleOverwrite;
 
     /** @var bool */
@@ -86,6 +97,7 @@ class PageDataTransferObject
             $this->allowDelete = true;
             $this->allowEdit = true;
             $this->allowMove = true;
+            $this->navigationTitleOverwrite = false;
 
             return;
         }
@@ -146,5 +158,11 @@ class PageDataTransferObject
     public function getParentId(): ?int
     {
         return $this->parentId;
+    }
+
+    public function hasValidNavigationTitle(): bool
+    {
+        return !$this->navigationTitleOverwrite
+               || ($this->navigationTitleOverwrite && $this->navigationTitle !== null && $this->navigationTitle !== '');
     }
 }

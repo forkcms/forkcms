@@ -24,6 +24,8 @@ final class PageType extends AbstractType
                 [
                     'getData.getLocale',
                     'getData.getId',
+                    'getData.getParentId',
+                    'getData.isAction',
                 ]
             )
         );

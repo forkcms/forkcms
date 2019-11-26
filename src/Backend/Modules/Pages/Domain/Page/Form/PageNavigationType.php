@@ -27,7 +27,7 @@ final class PageNavigationType extends AbstractType
             TextType::class,
             [
                 'label' => 'lbl.NavigationTitle',
-                'property_path' => 'navigationTitleOverwrite',
+                'property_path' => 'navigationTitle',
                 'label_attr' => ['class' => 'sr-only'],
             ]
         );
