@@ -89,49 +89,6 @@ class Model
     }
 
     /**
-     * @deprecated Will become private since it is only used in this class
-     */
-    public static function createHtml(
-        string $navigationType = 'page',
-        int $depth = 0,
-        int $parentId = Page::HOME_PAGE_ID,
-        string $html = ''
-    ): string {
-        $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
-
-        // check if item exists
-        if (isset($navigation[$navigationType][$depth][$parentId])) {
-            // start html
-            $html .= '<ul>' . "\n";
-
-            // loop elements
-            foreach ($navigation[$navigationType][$depth][$parentId] as $key => $aValue) {
-                $html .= "\t<li>" . "\n";
-                $html .= "\t\t" . '<a href="#">' . $aValue['navigation_title'] . '</a>' . "\n";
-
-                // insert recursive here!
-                if (isset($navigation[$navigationType][$depth + 1][$key])) {
-                    $html .= self::createHtml(
-                        $navigationType,
-                        $depth + 1,
-                        $parentId,
-                        ''
-                    );
-                }
-
-                // add html
-                $html .= '</li>' . "\n";
-            }
-
-            // end html
-            $html .= '</ul>' . "\n";
-        }
-
-        // return
-        return $html;
-    }
-
-    /**
      * @param int $id The id of the page to delete.
      * @param Locale $locale The locale wherein the page will be deleted,
      *                           if not provided we will use the working locale.
