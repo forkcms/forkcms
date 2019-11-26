@@ -1,5 +1,6 @@
 {% extends 'Layout/Templates/pages.html.twig' %}
 {% import 'Layout/Templates/macros.html.twig' as macro %}
+{% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
 
 {% block pagesTree %}
   <div class="sub-navigation d-none d-sm-block">
@@ -33,18 +34,15 @@
 
 {% block content %}
   {{ form_start(form) }}
-  <div class="fork-module-content">
-    {{ form_rest(form) }}
-  </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar justify-content-between">
-        <div class="btn-group" role="group">
-          {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group" role="group">
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
-        </div>
+  {{ form_widget(form) }}
+  {{ form_rest(form) }}
+  <div class="fork-module-actions">
+    <div class="btn-toolbar justify-content-between">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
       </div>
     </div>
   </div>
