@@ -783,110 +783,15 @@ class Model
         ];
     }
 
+    /**
+     * @deprecated use the repository
+     */
     public static function getUrl(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
 
-        $parentIds = [$parentId ?? self::NO_PARENT_PAGE_ID];
-
-        // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
-        if ($parentId === self::NO_PARENT_PAGE_ID
-            || $parentId === BackendModel::HOME_PAGE_ID
-            || $parentId === 2
-            || $parentId === 3
-            || $parentId === 4
-        ) {
-            $parentIds = [
-                self::NO_PARENT_PAGE_ID,
-                BackendModel::HOME_PAGE_ID,
-                2,
-                3,
-                4,
-            ];
-        }
-
-        // no specific id
-        if ($id === null) {
-            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLocale(
-                $parentIds,
-                $url,
-                Status::active(),
-                Locale::workingLocale()
-            );
-
-            // no items?
-            if ($page instanceof Page) {
-                // add a number
-                $url = BackendModel::addNumber($url);
-
-                // recall this method, but with a new URL
-                return self::getUrl($url, null, $parentId, $isAction);
-            }
-        } else {
-            // one item should be ignored
-            // there are items so, call this method again.
-            $page = $pageRepository->findOneByParentsAndUrlAndStatusAndLocaleExcludingId(
-                $parentIds,
-                $url,
-                Status::active(),
-                Locale::workingLocale(),
-                $id
-            );
-
-            if ($page instanceof Page) {
-                // add a number
-                $url = BackendModel::addNumber($url);
-
-                // recall this method, but with a new URL
-                return self::getUrl($url, $id, $parentId, $isAction);
-            }
-        }
-
-        // get full URL
-        $fullUrl = self::getFullUrl($parentId) . '/' . $url;
-
-        // get info about parent page
-        $parentPageInfo = self::get($parentId, null, Locale::workingLocale());
-
-        // does the parent have extras?
-        if (!$isAction && $parentPageInfo['has_extra']) {
-            // set locale
-            FrontendLanguage::setLocale(BL::getWorkingLanguage(), true);
-
-            // get all on-site action
-            $actions = FrontendLanguage::getActions();
-
-            // if the new URL conflicts with an action we should rebuild the URL
-            if (in_array($url, $actions)) {
-                // add a number
-                $url = BackendModel::addNumber($url);
-
-                // recall this method, but with a new URL
-                return self::getUrl($url, $id, $parentId, $isAction);
-            }
-        }
-
-        // check if folder exists
-        if (is_dir(PATH_WWW . '/' . $fullUrl) || is_file(PATH_WWW . '/' . $fullUrl)) {
-            // add a number
-            $url = BackendModel::addNumber($url);
-
-            // recall this method, but with a new URL
-            return self::getUrl($url, $id, $parentId, $isAction);
-        }
-
-        // check if it is an application
-        if (array_key_exists(trim($fullUrl, '/'), ForkController::getRoutes())) {
-            // add a number
-            $url = BackendModel::addNumber($url);
-
-            // recall this method, but with a new URL
-            return self::getUrl($url, $id, $parentId, $isAction);
-        }
-
-        // return the unique URL!
-        return $url;
+        return $pageRepository->getUrl($url, Locale::workingLocale(), $id, $parentId, $isAction);
     }
 
     /**

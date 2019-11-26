@@ -2,10 +2,11 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
+use Backend\Core\Engine\Model;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
-use Backend\Modules\Pages\Engine\Model;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -14,6 +15,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use ForkCMS\App\ForkController;
+use Frontend\Core\Language\Language;
 
 /**
  * @method Page|null find($id, $lockMode = null, $lockVersion = null)
@@ -227,8 +230,7 @@ class PageRepository extends ServiceEntityRepository
             )
             ->orderBy('p.sequence', 'ASC')
             ->getQuery()
-            ->getScalarResult()
-        ;
+            ->getScalarResult();
 
         $subPages = [];
         foreach ($subPageIds as $subPageIdArray) {
@@ -317,20 +319,20 @@ class PageRepository extends ServiceEntityRepository
     public function getNewSequenceForMove(int $parentId, Locale $locale): int
     {
         return $this
-            ->createQueryBuilder('p')
-            ->select('COALESCE(MAX(p.sequence), 0)')
-            ->where('p.id = :parentId')
-            ->andWhere('p.locale = :locale')
-            ->andWhere('p.status = :status')
-            ->setParameters(
-                [
-                    'parentId' => $parentId,
-                    'locale' => $locale,
-                    'status' => Status::active(),
-                ]
-            )
-            ->getQuery()
-            ->getSingleScalarResult() + 1;
+                   ->createQueryBuilder('p')
+                   ->select('COALESCE(MAX(p.sequence), 0)')
+                   ->where('p.id = :parentId')
+                   ->andWhere('p.locale = :locale')
+                   ->andWhere('p.status = :status')
+                   ->setParameters(
+                       [
+                           'parentId' => $parentId,
+                           'locale' => $locale,
+                           'status' => Status::active(),
+                       ]
+                   )
+                   ->getQuery()
+                   ->getSingleScalarResult() + 1;
     }
 
     public function incrementSequence(int $parentId, Locale $locale, int $sequence): void
@@ -371,8 +373,7 @@ class PageRepository extends ServiceEntityRepository
             ->addSelect('p.allowChildren as allow_children')
             ->addSelect('ifelse(count(e.id) > 0, 1, 0) AS has_extra')
             ->addSelect('group_concat(b.extraId) AS extra_ids')
-            ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children')
-        ;
+            ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children');
         $qb
             ->from(Page::class, 'p', 'p.id')
             ->innerJoin(Meta::class, 'm', Join::WITH, 'p.meta = m.id')
@@ -389,8 +390,7 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.status = :status')
             ->andWhere('p.locale = :locale')
             ->groupBy('p.revisionId')
-            ->orderBy('p.sequence', 'ASC')
-        ;
+            ->orderBy('p.sequence', 'ASC');
 
         $qb->setParameters(
             [
@@ -512,39 +512,8 @@ class PageRepository extends ServiceEntityRepository
         array $parentIds,
         string $url,
         Status $status,
-        Locale $locale
-    ): ?Page {
-        $qb = $this
-            ->createQueryBuilder('p')
-            ->join('p.meta', 'meta');
-
-        $qb
-            ->where($qb->expr()->in('p.parentId', ':parentIds'))
-            ->andWhere('p.status = :status')
-            ->andWhere('meta.url = :url')
-            ->andWhere('p.locale = :locale');
-
-        $qb->setParameters(
-            [
-                'parentIds' => $parentIds,
-                'status' => $status,
-                'url' => $url,
-                'locale' => $locale,
-            ]
-        );
-
-        return $qb
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function findOneByParentsAndUrlAndStatusAndLocaleExcludingId(
-        array $parentIds,
-        string $url,
-        Status $status,
         Locale $locale,
-        int $excludedId
+        int $excludedId = null
     ): ?Page {
         $qb = $this
             ->createQueryBuilder('p')
@@ -554,15 +523,19 @@ class PageRepository extends ServiceEntityRepository
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
             ->andWhere('meta.url = :url')
-            ->andWhere('p.id <> :id')
             ->andWhere('p.locale = :locale');
+
+        if ($excludedId !== null) {
+            $qb
+                ->andWhere('p.id <> :excludedId')
+                ->setParameter('excludedId', $excludedId);
+        }
 
         $qb->setParameters(
             [
                 'parentIds' => $parentIds,
                 'status' => $status,
                 'url' => $url,
-                'id' => $excludedId,
                 'locale' => $locale,
             ]
         );
@@ -640,8 +613,7 @@ class PageRepository extends ServiceEntityRepository
             ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId AND b.extraId IS NOT NULL')
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
             ->where('p.id = :id')
-            ->groupBy('p.revisionId')
-        ;
+            ->groupBy('p.revisionId');
 
         $parameters = [
             'type' => ModuleExtraType::block(),
@@ -728,5 +700,63 @@ class PageRepository extends ServiceEntityRepository
         $key = implode('_', $ret);
 
         return $key;
+    }
+
+    private function getParentIds(int $parentId = null): array
+    {
+        if (in_array($parentId, Page::TOP_LEVEL_IDS, true)) {
+            return Page::TOP_LEVEL_IDS;
+        }
+
+        return [$parentId];
+    }
+
+    public function getUrl(
+        string $url,
+        Locale $locale,
+        int $excludedId = null,
+        int $parentId = null,
+        bool $isAction = false
+    ): string {
+        $parentId = $parentId ?? Page::NO_PARENT_PAGE_ID;
+        $parentIds = $this->getParentIds($parentId);
+
+        $page = $this->findOneByParentsAndUrlAndStatusAndLocale(
+            $parentIds,
+            $url,
+            Status::active(),
+            $locale,
+            $excludedId
+        );
+
+        if ($page instanceof Page) {
+            return $this->getUrl(Model::addNumber($url), $locale, $excludedId, $parentId, $isAction);
+        }
+
+        // get full URL
+        $fullUrl = BackendPagesModel::getFullUrl($parentId ?? Page::NO_PARENT_PAGE_ID) . '/' . $url;
+
+        // get info about parent page
+        $parentPageInfo = $this->get($parentId, null, $locale);
+
+        // does the parent have extras?
+        if (!$isAction && ($parentPageInfo['has_extra'] ?? false)) {
+            Language::setLocale($locale, true);
+
+            // if the new URL conflicts with an action we should rebuild the URL
+            if (in_array($url, Language::getActions(), true)) {
+                // recall this method, but with a new URL
+                return $this->getUrl(Model::addNumber($url), $locale, $excludedId, $parentId, $isAction);
+            }
+        }
+
+        // check if folder exists or is a reserved route
+        if (is_dir(PATH_WWW . '/' . $fullUrl) || is_file(PATH_WWW . '/' . $fullUrl)
+            || array_key_exists(trim($fullUrl, '/'), ForkController::getRoutes())) {
+            // recall this method, but with a new URL
+            return $this->getUrl(Model::addNumber($url), $locale, $excludedId, $parentId, $isAction);
+        }
+
+        return $url;
     }
 }
