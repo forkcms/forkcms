@@ -7,8 +7,11 @@ use Common\Locale;
 
 final class CreatePage extends PageDataTransferObject
 {
-    public function __construct(Locale $locale)
+    public function __construct(Locale $locale, int $templateId)
     {
+        parent::__construct();
+
         $this->locale = $locale;
+        $this->templateId = $templateId;
     }
 }

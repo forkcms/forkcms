@@ -77,35 +77,64 @@ class PageDataTransferObject
     /** @var int */
     public $sequence;
 
-    public function __construct(Page $page = null)
+    protected function __construct(Page $page = null)
     {
-        if ($page === null) {
+        $this->page = $page;
+
+        if (!$this->hasExistingPage()) {
+            $this->allowChildren = true;
+            $this->allowDelete = true;
+            $this->allowEdit = true;
+            $this->allowMove = true;
+
             return;
         }
 
-        $this->page = $page;
+        $this->id = $this->page->getId();
+        $this->revisionId = $this->page->getRevisionId();
+        $this->userId = $this->page->getUserId();
+        $this->parentId = $this->page->getParentId();
+        $this->templateId = $this->page->getTemplateId();
+        $this->meta = $this->page->getMeta();
+        $this->locale = $this->page->getLocale();
+        $this->type = $this->page->getType();
+        $this->title = $this->page->getTitle();
+        $this->navigationTitle = $this->page->getNavigationTitle();
+        $this->navigationTitleOverwrite = $this->page->isNavigationTitleOverwrite();
+        $this->hidden = $this->page->isHidden();
+        $this->status = $this->page->getStatus();
+        $this->publishOn = $this->page->getPublishOn();
+        $this->data = $this->page->getData();
+        $this->createdOn = $this->page->getCreatedOn();
+        $this->editedOn = $this->page->getEditedOn();
+        $this->allowMove = $this->page->isAllowMove();
+        $this->allowChildren = $this->page->isAllowChildren();
+        $this->allowEdit = $this->page->isAllowEdit();
+        $this->allowDelete = $this->page->isAllowDelete();
+        $this->sequence = $this->page->getSequence();
+    }
 
-        $this->id = $page->getId();
-        $this->revisionId = $page->getRevisionId();
-        $this->userId = $page->getUserId();
-        $this->parentId = $page->getParentId();
-        $this->templateId = $page->getTemplateId();
-        $this->meta = $page->getMeta();
-        $this->locale = $page->getLocale();
-        $this->type = $page->getType();
-        $this->title = $page->getTitle();
-        $this->navigationTitle = $page->getNavigationTitle();
-        $this->navigationTitleOverwrite = $page->isNavigationTitleOverwrite();
-        $this->hidden = $page->isHidden();
-        $this->status = $page->getStatus();
-        $this->publishOn = $page->getPublishOn();
-        $this->data = $page->getData();
-        $this->createdOn = $page->getCreatedOn();
-        $this->editedOn = $page->getEditedOn();
-        $this->allowMove = $page->isAllowMove();
-        $this->allowChildren = $page->isAllowChildren();
-        $this->allowEdit = $page->isAllowEdit();
-        $this->allowDelete = $page->isAllowDelete();
-        $this->sequence = $page->getSequence();
+    public function getPageEntity(): Page
+    {
+        return $this->page;
+    }
+
+    public function hasExistingPage(): bool
+    {
+        return $this->page instanceof Page;
+    }
+
+    public function getLocale(): Locale
+    {
+        return $this->locale;
+    }
+
+    public function getId(): ?int
+    {
+        if ($this->hasExistingPage()) {
+            return $this->page->getId();
+        }
+
+        return null;
     }
 }
