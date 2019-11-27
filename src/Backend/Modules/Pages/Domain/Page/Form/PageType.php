@@ -33,7 +33,7 @@ final class PageType extends AbstractType
         $builder->add('navigation', PageNavigationType::class);
         $builder->add('data', PageDataType::class);
         $builder->add('settings', PageSettingsType::class);
-        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere']);
+        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
