@@ -6,6 +6,8 @@ services:
         autowire: true
         autoconfigure: true
         public: true
+        bind:
+            $siteIsMultiLingual: '%site.multilanguage%'
 
     Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
     Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository: ~
