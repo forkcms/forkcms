@@ -30,6 +30,7 @@ final class PageType extends AbstractType
             )
         );
         $builder->add('navigation', PageNavigationType::class);
+        $builder->add('data', PageDataType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -5,14 +5,22 @@
       <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
     </li>
   </ul>
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
     </div>
+    <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
+      {{ form_widget(form.data.redirect) }}
+      {{ form_errors(form.data.redirect) }}
+    </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}
+      {{ form_errors(form.meta) }}
     </div>
   </div>
 {% endblock %}
@@ -141,3 +149,14 @@
   <input type="hidden" id="{{ parametersId }}" value="{{ generate_url_callback_parameters }}">
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
+
+{% block _page_data_redirect_entry_widget %}
+  <div class="form-group">
+    {{ form_widget(form) }}
+    {% if form.vars.value == 'internal' %}
+      {{ form_widget(form.parent.parent.internal_redirect) }}
+    {% elseif form.vars.value == 'external' %}
+      {{ form_widget(form.parent.parent.external_redirect) }}
+    {% endif %}
+  </div>
+{% endblock %}
