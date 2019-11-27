@@ -117,7 +117,7 @@ class MetaType extends AbstractType
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
-            'label_attr' => ['class' => 'fork-check-label'],
+            'label_attr' => ['class' => 'custom-control-label radio-custom'],
         ];
     }
 
@@ -145,7 +145,7 @@ class MetaType extends AbstractType
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
-            'label_attr' => ['class' => 'fork-check-label'],
+            'label_attr' => ['class' => 'custom-control-label radio-custom'],
         ];
     }
 

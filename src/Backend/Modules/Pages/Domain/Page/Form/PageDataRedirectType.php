@@ -24,6 +24,7 @@ final class PageDataRedirectType extends AbstractType implements PageDataTypeInt
                     'lbl.InternalLink' => 'internal',
                     'lbl.ExternalLink' => 'external',
                 ],
+                'label_attr' => ['class' => 'custom-control-label radio-custom'],
                 'expanded' => true,
                 'attr' => [
                     'class' => 'radiobuttonFieldCombo'
