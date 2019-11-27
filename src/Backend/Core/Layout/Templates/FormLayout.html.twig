@@ -388,3 +388,8 @@
     {{- block('choice_widget_options') -}}
   </select>
 {%- endblock %}
+
+{% block tags_widget -%}
+  {{ form_widget(form) }}
+  <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
+{%- endblock %}
