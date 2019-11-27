@@ -86,8 +86,6 @@ class InstallCommand extends Command
                 return;
             }
         } catch (Throwable $throwable) {
-            var_dump($throwable->getMessage(),$throwable->getTrace());
-            die;
             // There was a validation error
             $this->formatter->error($throwable->getMessage());
 
@@ -142,13 +140,13 @@ class InstallCommand extends Command
     {
         $installationData->setExampleData($config['exampleData'] ?? false);
 
-        foreach ($config['modules'] ?? [] as $module) {
-            $installationData->addModule($module);
-        }
         foreach (ForkInstaller::getRequiredModules() as $module) {
             $installationData->addModule($module);
         }
         foreach (ForkInstaller::getHiddenModules() as $module) {
+            $installationData->addModule($module);
+        }
+        foreach ($config['install'] ?? [] as $module) {
             $installationData->addModule($module);
         }
 
