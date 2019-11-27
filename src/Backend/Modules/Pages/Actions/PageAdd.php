@@ -46,7 +46,8 @@ final class PageAdd extends Action
     private function handleForm(Form $form): void
     {
         $createPage = $form->getData();
-
+dump($createPage);
+die;
         $this->get('command_bus')->handle($createPage);
 
         $this->redirect(

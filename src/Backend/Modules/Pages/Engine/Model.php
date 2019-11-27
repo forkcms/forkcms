@@ -56,18 +56,6 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QUERY_BROWSE_REVISIONS =
-        'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM PagesPage AS i
-         WHERE i.id = ? AND i.status = ? AND i.locale = ?
-         ORDER BY i.edited_on DESC';
-
-    const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
-        'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM PagesPage AS i
-         WHERE i.id = ? AND i.status = ? AND i.locale = ?
-         ORDER BY i.edited_on DESC';
-
     public static function getCacheBuilder(): CacheBuilder
     {
         static $cacheBuilder = null;

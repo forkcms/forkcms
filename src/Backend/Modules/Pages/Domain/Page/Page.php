@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
-use Backend\Core\Engine\Model as BackendModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
