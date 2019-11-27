@@ -2,15 +2,10 @@
 
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\HttpFoundation\Response;
 
 final class PageDataType extends AbstractType
 {
@@ -22,10 +17,19 @@ final class PageDataType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->add(
+            'isAction',
+            SwitchType::class,
+            [
+                'label' => 'msg.IsAction',
+                'required' => false,
+            ]
+        );
+
         $builder->addModelTransformer(
             new CallbackTransformer(
                 static function (?array $persistedData): array {
-                    $transformedData = [];
+                    $transformedData = ['isAction' => $persistedData['is_action'] ?? false];
                     foreach (self::FORM_TYPES as $formTypeClass) {
                         $transformedData = $formTypeClass::transform($persistedData, $transformedData);
                     }
@@ -33,7 +37,7 @@ final class PageDataType extends AbstractType
                     return $transformedData;
                 },
                 static function (array $submittedData): array {
-                    $transformedData = [];
+                    $transformedData = ['is_action' => $submittedData['isAction']];
                     foreach (self::FORM_TYPES as $formTypeClass) {
                         $transformedData = $formTypeClass::reverseTransform($submittedData, $transformedData);
                     }

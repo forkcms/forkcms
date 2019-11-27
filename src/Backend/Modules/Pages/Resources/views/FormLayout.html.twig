@@ -5,10 +5,13 @@
       <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
     </li>
   </ul>
   <div class="tab-content">
@@ -17,6 +20,9 @@
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
       {{ form_widget(form.data.redirect.redirect) }}
       {{ form_errors(form.data.redirect.redirect) }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
+      {{ form_row(form.data.isAction) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}
