@@ -13,6 +13,7 @@ final class PageDataType extends AbstractType
     private const FORM_TYPES = [
         'redirect' => PageDataRedirectType::class,
         'hreflang' => PageDataHreflangType::class,
+        'authentication' => PageDataAuthenticationType::class,
     ];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

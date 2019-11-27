@@ -22,15 +22,6 @@ jsBackend.pages = {
       $('form#edit').submit()
     })
 
-    // show / hide the remove from search index checkbox on change
-    $('#authRequired').on('change', function (e) {
-      if ($(this).is(':checked')) {
-        $('[data-role="remove-from-search-index"]').removeClass('d-none')
-      } else {
-        $('[data-role="remove-from-search-index"]').addClass('d-none')
-      }
-    }).trigger('change')
-
     // do meta
     if ($('#title').length > 0) $('#title').doMeta()
 
@@ -142,8 +133,6 @@ jsBackend.pages.extras = {
 
     // make the default position sortable
     jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'))
-
-    $('#authRequired').on('change', jsBackend.pages.extras.showGroups)
   },
 
   // handle stuff when scroll inside a modal
@@ -1139,12 +1128,6 @@ jsBackend.pages.extras = {
 
       $('#confirmDeleteBlock').modal('show')
     }
-  },
-
-  // show the groups for authentication
-  showGroups: function (e) {
-    // save element to variable
-    $('.js-authentication-groups').toggle()
   },
 
   // re-order blocks

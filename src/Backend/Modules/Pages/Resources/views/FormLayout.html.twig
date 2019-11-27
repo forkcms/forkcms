@@ -21,6 +21,9 @@
       <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
     </li>
   </ul>
@@ -30,6 +33,12 @@
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
       {{ form_widget(form.data.redirect.redirect) }}
       {{ form_errors(form.data.redirect.redirect) }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tabAuthentication" aria-labelledby="authentication-tab {% if form.data.authentication.required.vars.value %} show{% endif %}">
+      {{ form_row(form.data.authentication.required) }}
+      <div data-role="authentication-options" class="{% if form.data.authentication.required.vars.value %} show{% endif %}" >
+        {{ form_rest(form.data.authentication) }}
+      </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
       {% if form.vars.dataGridDrafts %}

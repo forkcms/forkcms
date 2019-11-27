@@ -120,4 +120,9 @@ class Group
     {
         $this->rights->add($groupRight);
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }
