@@ -6,12 +6,12 @@ use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
+use Common\Form\SwitchType;
 use SpoonFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\LogicException;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -54,19 +54,19 @@ class MetaType extends AbstractType
                 TextType::class,
                 ['label' => 'lbl.PageTitle', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add('titleOverwrite', CheckboxType::class, ['label' => 'lbl.PageTitle', 'required' => false])
+            ->add('titleOverwrite', SwitchType::class, ['label' => 'lbl.PageTitle', 'required' => false])
             ->add(
                 'description',
                 TextType::class,
                 ['label' => 'lbl.Description', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add('descriptionOverwrite', CheckboxType::class, ['label' => 'lbl.Description', 'required' => false])
+            ->add('descriptionOverwrite', SwitchType::class, ['label' => 'lbl.Description', 'required' => false])
             ->add(
                 'keywords',
                 TextType::class,
                 ['label' => 'lbl.Keywords', 'label_attr' => ['class' => 'sr-only']]
             )
-            ->add('keywordsOverwrite', CheckboxType::class, ['label' => 'lbl.Keywords', 'required' => false])
+            ->add('keywordsOverwrite', SwitchType::class, ['label' => 'lbl.Keywords', 'required' => false])
             ->add(
                 'url',
                 TextType::class,
@@ -76,7 +76,7 @@ class MetaType extends AbstractType
                     'label_attr' => ['class' => 'sr-only'],
                 ]
             )
-            ->add('urlOverwrite', CheckboxType::class, ['label' => 'lbl.URL', 'required' => false])
+            ->add('urlOverwrite', SwitchType::class, ['label' => 'lbl.URL', 'required' => false])
             ->add('SEOIndex', ChoiceType::class, $this->getSEOIndexChoiceTypeOptions())
             ->add('SEOFollow', ChoiceType::class, $this->getSEOFollowChoiceTypeOptions())
             ->addModelTransformer(

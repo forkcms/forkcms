@@ -3,8 +3,8 @@
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
+use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +15,7 @@ final class PageNavigationType extends AbstractType
     {
         $builder->add(
             'titleOverwrite',
-            CheckboxType::class,
+            SwitchType::class,
             [
                 'label' => 'lbl.NavigationTitle',
                 'property_path' => 'navigationTitleOverwrite',

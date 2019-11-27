@@ -2,10 +2,11 @@
 
 namespace Common\Form;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SwitchType extends CheckboxType
+class SwitchType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
