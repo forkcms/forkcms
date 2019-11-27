@@ -22,7 +22,9 @@
       {{ form_errors(form.data.redirect.redirect) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
+      {{ form_row(form.settings.hidden) }}
       {{ form_row(form.data.isAction) }}
+      {{ form_widget(form.settings) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}

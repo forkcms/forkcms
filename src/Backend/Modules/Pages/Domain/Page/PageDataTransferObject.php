@@ -98,6 +98,7 @@ class PageDataTransferObject
             $this->allowEdit = true;
             $this->allowMove = true;
             $this->navigationTitleOverwrite = false;
+            $this->hidden = false;
 
             return;
         }
