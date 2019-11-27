@@ -1032,7 +1032,7 @@ class Model
     {
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
-        $newTemplate['data'] = @unserialize($newTemplate['data'], ['al'], ['allowed_classes' => 'false']);
+        $newTemplate['data'] = @unserialize($newTemplate['data'], ['allowed_classes' => 'false']);
 
         // fetch all pages
         /** @var PageRepository $pageRepository */
