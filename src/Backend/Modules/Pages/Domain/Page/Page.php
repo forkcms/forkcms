@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -85,6 +87,13 @@ class Page
      * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
      */
     private $meta;
+
+    /**
+     * @var MediaGroup|null
+     *
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup", cascade={"ALL"})
+     */
+    private $image;
 
     /**
      * @var Locale
@@ -221,6 +230,7 @@ class Page
         Locale $locale,
         string $title,
         string $navigationTitle,
+        MediaGroup $image,
         DateTime $publishOn,
         ?DateTime $publishUntil,
         int $sequence,
@@ -248,6 +258,7 @@ class Page
         $this->locale = $locale;
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
+        $this->image = $image;
         $this->publishOn = $publishOn;
         $this->publishUntil = $publishUntil;
         $this->sequence = $sequence;
@@ -274,6 +285,7 @@ class Page
         Locale $locale,
         string $title,
         string $navigationTitle,
+        MediaGroup $image,
         DateTime $publishOn,
         ?DateTime $publishUntil,
         int $sequence,
@@ -299,6 +311,7 @@ class Page
         }
         $this->meta = $meta;
         $this->locale = $locale;
+        $this->image = $image;
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
@@ -360,6 +373,20 @@ class Page
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getImage(): ?MediaGroup
+    {
+        return $this->image;
+    }
+
+    public function getImageItem(): ?MediaItem
+    {
+        if ($this->image === null) {
+            return null;
+        }
+
+        return $this->image->getFirstConnectedMediaItem();
     }
 
     public function getNavigationTitle(): string
