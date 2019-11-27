@@ -7,7 +7,6 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use Backend\Core\Language\Locale;
 
 class PageVersionDataGrid extends DataGridDatabase
 {
@@ -59,8 +58,8 @@ class PageVersionDataGrid extends DataGridDatabase
         }
     }
 
-    public static function getHtml(Locale $locale): string
+    public static function getHtml(Page $page, Status $status): string
     {
-        return (new self($locale))->getContent();
+        return (new self($page, $status))->getContent();
     }
 }
