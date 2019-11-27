@@ -28,8 +28,8 @@ class PageVersionDataGrid extends DataGridDatabase
         $this->setPaging(false);
         $this->setHeaderLabels(
             [
-                'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
+                'user_id' => \SpoonFilter::ucfirst(Language::lbl('By')),
+                'edited_on' => \SpoonFilter::ucfirst(Language::lbl('LastEditedOn')),
             ]
         );
 

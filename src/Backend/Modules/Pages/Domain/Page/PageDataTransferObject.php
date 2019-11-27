@@ -92,7 +92,7 @@ class PageDataTransferObject
     /** @var string */
     public $tags;
 
-    protected function __construct(Page $page = null)
+    public function __construct(Page $page = null)
     {
         $this->page = $page;
 

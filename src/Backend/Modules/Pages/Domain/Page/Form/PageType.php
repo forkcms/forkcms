@@ -6,9 +6,13 @@ use Backend\Form\EventListener\AddMetaSubscriber;
 use Backend\Form\Type\TagsType;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\PageVersionDataGrid;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Common\Form\TitleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PageType extends AbstractType
@@ -43,5 +47,18 @@ final class PageType extends AbstractType
                 'data_class' => PageDataTransferObject::class,
             ]
         );
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        parent::finishView($view, $form, $options);
+
+        if (!$form->getData()->hasExistingPage()) {
+            return;
+        }
+
+        $page = $form->getData()->getPageEntity();
+        $view->vars['dataGridDrafts'] = PageVersionDataGrid::getHtml($page, Status::draft());
+        $view->vars['dataGridRevisions'] = PageVersionDataGrid::getHtml($page, Status::archive());
     }
 }

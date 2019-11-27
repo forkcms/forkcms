@@ -1,9 +1,16 @@
 {% block page_widget %}
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+
   {{ form_row(form.title) }}
   <ul class="nav nav-tabs justify-content-end" role="tablist">
     <li class="nav-item mr-auto">
       <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
+    {% if form.vars.dataGridDrafts is defined or form.vars.dataGridRevisions is defined %}
+      <li class="nav-item">
+        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+      </li>
+    {% endif %}
     <li class="nav-item">
       <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
     </li>
@@ -23,6 +30,22 @@
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
       {{ form_widget(form.data.redirect.redirect) }}
       {{ form_errors(form.data.redirect.redirect) }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
+      {% if form.vars.dataGridDrafts %}
+        <div class="content-title">
+          {{ 'lbl.Drafts'|trans|ucfirst }}
+          {{ macro.infoTooltip('msg.HelpDrafts'|trans) }}
+        </div>
+        {{ macro.dataGrid(form.vars.dataGridDrafts) }}
+      {% endif %}
+      {% if form.vars.dataGridRevisions is defined %}
+        <div class="content-title{% if form.vars.dataGridDrafts %} mt-3{% endif %}">
+          {{ 'lbl.PreviousVersions'|trans|ucfirst }}
+          {{ macro.infoTooltip('msg.HelpRevisions'|trans) }}
+        </div>
+        {{ macro.dataGrid(form.vars.dataGridRevisions, 'msg.NoRevisions'|trans) }}
+      {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
       {{ form_row(form.tags) }}
