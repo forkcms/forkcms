@@ -15,8 +15,8 @@
     <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
     </div>
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
-      {{ form_widget(form.data.redirect) }}
-      {{ form_errors(form.data.redirect) }}
+      {{ form_widget(form.data.redirect.redirect) }}
+      {{ form_errors(form.data.redirect.redirect) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}
@@ -150,7 +150,7 @@
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
-{% block _page_data_redirect_entry_widget %}
+{% block _page_data_redirect_redirect_entry_widget %}
   <div class="form-group">
     {{ form_widget(form) }}
     {% if form.vars.value == 'internal' %}
