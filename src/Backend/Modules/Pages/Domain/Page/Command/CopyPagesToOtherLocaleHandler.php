@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\Page\Command;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale as BackendLocale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
@@ -137,7 +138,11 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         array $locationWidgetIds
     ): void {
         // get data
-        $sourceData = BackendPagesModel::get($activePageToCopy->getId(), null, $fromLanguage);
+        $sourceData = BackendPagesModel::get(
+            $activePageToCopy->getId(),
+            null,
+            BackendLocale::fromString($fromLanguage)
+        );
 
         /** @var Meta $originalMeta */
         $originalMeta = $metaRepository->find($sourceData['meta_id']);
@@ -256,7 +261,11 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         $blocks = [];
 
         // get the blocks
-        $sourceBlocks = BackendPagesModel::getBlocks($activePageToCopy->getId(), null, $fromLanguage);
+        $sourceBlocks = BackendPagesModel::getBlocks(
+            $activePageToCopy->getId(),
+            null,
+            BackendLocale::fromString($fromLanguage)
+        );
 
         // loop blocks
         foreach ($sourceBlocks as $sourceBlock) {
