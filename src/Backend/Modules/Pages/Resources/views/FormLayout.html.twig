@@ -8,6 +8,9 @@
       <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
@@ -20,6 +23,9 @@
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
       {{ form_widget(form.data.redirect.redirect) }}
       {{ form_errors(form.data.redirect.redirect) }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
+      {{ form_row(form.tags) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
       {{ form_row(form.settings.hidden) }}

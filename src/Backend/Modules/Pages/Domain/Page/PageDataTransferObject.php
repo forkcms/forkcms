@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
+use Backend\Modules\Tags\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -88,6 +89,9 @@ class PageDataTransferObject
     /** @var int */
     public $sequence;
 
+    /** @var string */
+    public $tags;
+
     protected function __construct(Page $page = null)
     {
         $this->page = $page;
@@ -125,6 +129,7 @@ class PageDataTransferObject
         $this->allowEdit = $this->page->isAllowEdit();
         $this->allowDelete = $this->page->isAllowDelete();
         $this->sequence = $this->page->getSequence();
+        $this->tags = Model::getTags('Pages', $this->id);
     }
 
     public function getPageEntity(): Page

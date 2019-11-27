@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Form\EventListener\AddMetaSubscriber;
+use Backend\Form\Type\TagsType;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Common\Form\TitleType;
@@ -32,6 +33,7 @@ final class PageType extends AbstractType
         $builder->add('navigation', PageNavigationType::class);
         $builder->add('data', PageDataType::class);
         $builder->add('settings', PageSettingsType::class);
+        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
