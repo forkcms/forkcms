@@ -11,6 +11,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -735,7 +736,7 @@ class ModuleInstaller
             $revision['navigation_title_overwrite'],
             $revision['hidden'],
             new Status($revision['status']),
-            $revision['type'],
+            new Type($revision['type']),
             $revision['data'],
             $revision['allow_move'],
             $revision['allow_children'],

@@ -110,7 +110,7 @@ class CacheBuilder
                 $temp = $this->getPageData($keys, $page, $locale);
 
                 // add it
-                $navigation[$page['type']][$page['parent_id']][$pageId] = $temp;
+                $navigation[(string) $page['type']][$page['parent_id']][$pageId] = $temp;
             }
         }
 
