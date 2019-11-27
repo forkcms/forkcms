@@ -10,6 +10,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 
 /**
  * Installer for the blog module

@@ -495,6 +495,60 @@ class PageRepository extends ServiceEntityRepository
         return array_column($result, 'revisionId');
     }
 
+    public function getNavigationTitles(array $pageIds, Locale $locale, Status $status): array
+    {
+        $qb = $this->createQueryBuilder('p', 'p.id');
+
+        $results = $qb
+            ->select('p.id')
+            ->addSelect('p.navigationTitle')
+            ->where($qb->expr()->in('p.id', ':pageIds'))
+            ->andWhere('p.locale = :locale')
+            ->andWhere('p.status = :status')
+            ->setParameters(
+                [
+                    'pageIds' => $pageIds,
+                    'status' => $status,
+                    'locale' => $locale,
+                ]
+            )
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_combine(array_column($results, 'id'), array_column($results, 'navigationTitle'));
+    }
+
+    public function getCacheExpirationDate(): ?DateTime
+    {
+        $result = $this
+            ->createQueryBuilder('p')
+            ->select('min(least(coalesce(p.publishOn, :now), coalesce(p.publishUntil, :future))) as min')
+            ->where('p.status = :active')
+            ->andWhere('p.publishOn > :now')
+            ->setParameters(
+                [
+                    'now' => new DateTime(),
+                    'future' => new DateTime('2099-12-31 23:59'),
+                    'active' => Status::active(),
+                ]
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getScalarResult();
+
+        if (count($result) !== 1) {
+            return null;
+        }
+
+        $min = array_column($result, 'min')[0];
+
+        if ($min === null) {
+            return null;
+        }
+
+        return new DateTime($min);
+    }
+
     /**
      * @return Page[]
      */
@@ -544,6 +598,30 @@ class PageRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findPagesWithoutExtra(int $extraId): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $subQuery = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->from(PageBlock::class, 'b')
+            ->where('b.extraId = :extraId')
+            ->groupBy('b.revisionId')
+        ;
+
+        $qb
+            ->select('p.revisionId')
+            ->where($qb->expr()->notIn('p.revisionId', $subQuery->getDQL()))
+            ->setParameters(['extraId' => $extraId]);
+
+        $results = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($results, 'revisionId');
     }
 
     public function pageExistsWithModuleBlockForLocale(string $module, Locale $locale): bool

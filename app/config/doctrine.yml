@@ -42,6 +42,7 @@ doctrine:
                     numeric_functions:
                         ceil: DoctrineExtensions\Query\Mysql\Ceil
                         unix_timestamp: \DoctrineExtensions\Query\Mysql\UnixTimestamp
+                        least: \DoctrineExtensions\Query\Mysql\Least
                     string_functions:
                         group_concat: DoctrineExtensions\Query\Mysql\GroupConcat
                         ifelse: DoctrineExtensions\Query\Mysql\IfElse

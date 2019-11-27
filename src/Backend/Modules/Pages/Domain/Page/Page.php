@@ -150,6 +150,13 @@ class Page
     private $publishOn;
 
     /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="datetime", name="publish_until", nullable=true)
+     */
+    private $publishUntil;
+
+    /**
      * @var array|null
      *
      * @ORM\Column(type="text", name="data", nullable=true)
@@ -215,6 +222,7 @@ class Page
         string $title,
         string $navigationTitle,
         DateTime $publishOn,
+        ?DateTime $publishUntil,
         int $sequence,
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
@@ -241,6 +249,7 @@ class Page
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
+        $this->publishUntil = $publishUntil;
         $this->sequence = $sequence;
         $this->type = $type ?? Type::root();
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
@@ -266,6 +275,7 @@ class Page
         string $title,
         string $navigationTitle,
         DateTime $publishOn,
+        ?DateTime $publishUntil,
         int $sequence,
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
@@ -292,6 +302,7 @@ class Page
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
         $this->publishOn = $publishOn;
+        $this->publishUntil = $publishUntil;
         $this->sequence = $sequence;
         $this->type = $type ?? Type::root();
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
@@ -374,6 +385,11 @@ class Page
     public function getPublishOn(): DateTime
     {
         return $this->publishOn;
+    }
+
+    public function getPublishUntil(): ?DateTime
+    {
+        return $this->publishUntil;
     }
 
     public function getCreatedOn(): DateTime

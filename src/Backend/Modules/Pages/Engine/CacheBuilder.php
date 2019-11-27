@@ -4,6 +4,8 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Doctrine\ORM\NoResultException;
@@ -83,6 +85,11 @@ class CacheBuilder
 
         $navigation = $this->getData($locale)[1];
         $item->set($navigation);
+
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cacheExpirationDate = $pageRepository->getCacheExpirationDate();
+        $item->expiresAt($cacheExpirationDate);
+
         $this->cache->save($item);
 
         return $navigation;
@@ -316,15 +323,8 @@ class CacheBuilder
         // init var
         $links = [];
 
-        // init var
-        // @TODO replace this with the repository
-        $cachedTitles = (array) $this->database->getPairs(
-            'SELECT i.id, i.navigation_title
-             FROM PagesPage AS i
-             WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
-             AND i.locale = ? AND i.status = ?',
-            [$locale, 'active']
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cachedTitles = $pageRepository->getNavigationTitles(array_keys($keys), $locale, Status::active());
 
         // loop the types in the order we want them to appear
         foreach (['page', 'meta', 'footer', 'root'] as $type) {

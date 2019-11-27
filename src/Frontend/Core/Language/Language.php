@@ -2,10 +2,10 @@
 
 namespace Frontend\Core\Language;
 
-use Backend\Core\Engine\Model;
+use Backend\Modules\Locale\Engine\CacheBuilder;
+use Common\Core\Model;
 use Frontend\Core\Engine\Exception;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Modules\Locale\Engine\CacheBuilder;
 
 /**
  * This class will store the language-dependant content for the frontend.
@@ -67,7 +67,7 @@ class Language
      */
     public static function buildCache(string $language, string $application): void
     {
-        $cacheBuilder = new CacheBuilder(Model::get('database'));
+        $cacheBuilder = Model::get(CacheBuilder::class);
         $cacheBuilder->buildCache($language, $application);
     }
 
