@@ -525,12 +525,6 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('meta.url = :url')
             ->andWhere('p.locale = :locale');
 
-        if ($excludedId !== null) {
-            $qb
-                ->andWhere('p.id <> :excludedId')
-                ->setParameter('excludedId', $excludedId);
-        }
-
         $qb->setParameters(
             [
                 'parentIds' => $parentIds,
@@ -539,6 +533,12 @@ class PageRepository extends ServiceEntityRepository
                 'locale' => $locale,
             ]
         );
+
+        if ($excludedId !== null) {
+            $qb
+                ->andWhere('p.id <> :excludedId')
+                ->setParameter('excludedId', $excludedId);
+        }
 
         return $qb
             ->setMaxResults(1)
