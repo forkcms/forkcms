@@ -183,7 +183,7 @@
       </div>
     </fieldset>
 
-    <fieldset>
+    <fieldset{% if form.parent.data.hreflang.children is empty %} class="last"{% endif %}>
       <legend>{{ 'lbl.SEO'|trans|ucfirst }}</legend>
       <div class="row">
         <div class="col-md-6">
@@ -200,10 +200,12 @@
         </div>
       </div>
     </fieldset>
-    <fieldset class="last">
-      <legend>{{ form.parent.data.hreflang.vars.label|trans }}</legend>
-      {{ form_widget(form.parent.data.hreflang) }}
-    </fieldset>
+    {% if form.parent.data.hreflang.children is not empty %}
+      <fieldset class="last">
+        <legend>{{ form.parent.data.hreflang.vars.label|trans }}</legend>
+        {{ form_widget(form.parent.data.hreflang) }}
+      </fieldset>
+    {% endif %}
   </div>
   <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
   <input type="hidden" id="{{ classId }}" value="{{ generate_url_callback_class }}">

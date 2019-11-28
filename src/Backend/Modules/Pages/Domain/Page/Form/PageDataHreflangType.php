@@ -48,7 +48,7 @@ final class PageDataHreflangType extends AbstractType implements PageDataTypeInt
         $resolver->setDefaults(
             [
                 'inherit_data' => true,
-                'label' => 'lbl.Languages',
+                'label' => false,
             ]
         );
     }
