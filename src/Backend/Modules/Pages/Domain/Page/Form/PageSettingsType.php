@@ -33,6 +33,9 @@ final class PageSettingsType extends AbstractType
                 SwitchType::class,
                 [
                     'label' => 'msg.Allow_move',
+                    'attr' => [
+                        'data-role' => 'allow-move-toggle',
+                    ],
                     'required' => false,
                 ]
             );
@@ -41,6 +44,9 @@ final class PageSettingsType extends AbstractType
                 SwitchType::class,
                 [
                     'label' => 'msg.Allow_children',
+                    'attr' => [
+                        'data-role' => 'allow-children-toggle',
+                    ],
                     'required' => false,
                 ]
             );
@@ -49,6 +55,9 @@ final class PageSettingsType extends AbstractType
                 SwitchType::class,
                 [
                     'label' => 'msg.Allow_edit',
+                    'attr' => [
+                        'data-role' => 'allow-edit-toggle',
+                    ],
                     'required' => false,
                 ]
             );
@@ -57,6 +66,9 @@ final class PageSettingsType extends AbstractType
                 SwitchType::class,
                 [
                     'label' => 'msg.Allow_delete',
+                    'attr' => [
+                        'data-role' => 'allow-delete-toggle',
+                    ],
                     'required' => false,
                 ]
             );
