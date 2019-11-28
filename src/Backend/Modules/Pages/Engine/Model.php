@@ -14,7 +14,7 @@ use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
-use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
+use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;

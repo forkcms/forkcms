@@ -9,7 +9,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
-use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
+use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\DependencyInjection\Container;

@@ -754,7 +754,7 @@ class Edit extends BackendBaseActionEdit
             'parent_id' => $this->record['parent_id'],
             'template_id' => (int) $this->form->getField('template_id')->getValue(),
             'meta_id' => $this->meta->save(),
-            'language' => BL::getWorkingLanguage(),
+            'locale' => BL::getWorkingLanguage(),
             'type' => $this->record['type'],
             'title' => $this->form->getField('title')->getValue(),
             'navigation_title' => !empty($this->form->getField('navigation_title')->getValue())

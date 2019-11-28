@@ -4,7 +4,6 @@ namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
@@ -47,7 +46,7 @@ class PageBlock
     /**
      * @var string
      *
-     * @ORM\Column(type="page_block_type", name="extra_type", options={"default": "rich_text"})
+     * @ORM\Column(type="pages_page_block_type", name="extra_type", options={"default": "rich_text"})
      */
     private $extraType;
 
@@ -103,7 +102,7 @@ class PageBlock
         int $revisionId,
         string $position,
         ?int $extraId,
-        ?PageBlockType $extraType,
+        ?Type $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
@@ -112,7 +111,7 @@ class PageBlock
         $this->revisionId = $revisionId;
         $this->position = $position;
         $this->extraId = $extraId;
-        $this->extraType = $extraType ?? PageBlockType::richText();
+        $this->extraType = $extraType ?? Type::richText();
         $this->extraData = $extraData;
         $this->html = $html;
         $this->visible = $visible;
@@ -123,7 +122,7 @@ class PageBlock
         int $revisionId,
         string $position,
         ?int $extraId,
-        PageBlockType $extraType,
+        Type $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
@@ -171,7 +170,7 @@ class PageBlock
         return $this->extraId;
     }
 
-    public function getExtraType(): PageBlockType
+    public function getExtraType(): Type
     {
         return $this->extraType;
     }

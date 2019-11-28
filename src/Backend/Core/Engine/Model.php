@@ -652,7 +652,7 @@ class Model extends \Common\Core\Model
     /**
      * Insert extra
      *
-     * @param ModuleExtraType $type What type do you want to insert, 'homepage', 'block' or 'widget'.
+     * @param ModuleExtraType $type What type do you want to insert, 'block' or 'widget'.
      * @param string $module The module you are inserting this extra for.
      * @param string $action The action this extra will use.
      * @param string $label Label which will be used when you want to connect this block.

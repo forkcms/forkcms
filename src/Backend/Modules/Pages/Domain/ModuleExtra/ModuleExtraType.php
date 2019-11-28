@@ -8,11 +8,9 @@ use JsonSerializable;
 final class ModuleExtraType implements JsonSerializable
 {
     private const BLOCK = 'block';
-    private const HOMEPAGE = 'homepage';
     private const WIDGET = 'widget';
     public const POSSIBLE_TYPES = [
         self::BLOCK,
-        self::HOMEPAGE,
         self::WIDGET,
     ];
 
@@ -36,11 +34,6 @@ final class ModuleExtraType implements JsonSerializable
     public static function block(): self
     {
         return new self(self::BLOCK);
-    }
-
-    public static function homepage(): self
-    {
-        return new self(self::HOMEPAGE);
     }
 
     public static function widget(): self

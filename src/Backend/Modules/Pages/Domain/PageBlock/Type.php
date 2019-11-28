@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use JsonSerializable;
 
-final class PageBlockType implements JsonSerializable
+final class Type implements JsonSerializable
 {
     private const RICH_TEXT = 'rich_text';
     private const BLOCK = 'block';
