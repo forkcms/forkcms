@@ -11,6 +11,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
@@ -915,7 +916,7 @@ class Model
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
-        $locale = Locale::fromString($page['language']);
+        $locale = Locale::fromString($page['locale']);
 
         if (self::isForbiddenToDelete($page['id'])) {
             $page['allow_delete'] = false;
@@ -962,13 +963,14 @@ class Model
             $locale,
             $page['title'],
             $page['navigation_title'],
+            null,
             $page['publish_on'],
             null,
             $page['sequence'],
             $page['navigation_title_overwrite'],
             $page['hidden'],
             new Status($page['status']),
-            $page['type'],
+            new Type($page['type']),
             $page['data'],
             $page['allow_move'],
             $page['allow_children'],
