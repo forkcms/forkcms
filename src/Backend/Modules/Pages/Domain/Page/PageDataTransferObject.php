@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
 use Backend\Modules\Tags\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
@@ -30,6 +32,9 @@ class PageDataTransferObject
 
     /** @var Meta */
     public $meta;
+
+    /** @var MediaGroup */
+    public $image;
 
     /** @var Locale */
     public $locale;
@@ -106,6 +111,7 @@ class PageDataTransferObject
             $this->allowMove = true;
             $this->navigationTitleOverwrite = false;
             $this->hidden = false;
+            $this->image = MediaGroup::create(MediaGroupType::image());
 
             return;
         }
@@ -126,6 +132,7 @@ class PageDataTransferObject
         $this->publishOn = $this->page->getPublishOn();
         $this->publishUntil = $this->page->getPublishUntil();
         $this->data = $this->page->getData();
+        $this->image = $this->page->getImage() ?? MediaGroup::create(MediaGroupType::image());
         $this->createdOn = $this->page->getCreatedOn();
         $this->editedOn = $this->page->getEditedOn();
         $this->allowMove = $this->page->isAllowMove();

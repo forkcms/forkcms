@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Form\EventListener\AddMetaSubscriber;
 use Backend\Form\Type\TagsType;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\SingleMediaGroupType;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\PageVersionDataGrid;
@@ -20,6 +21,8 @@ final class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TitleType::class);
+        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
+        $builder->add('image', SingleMediaGroupType::class, ['label' => 'lbl.Image', 'required' => false]);
         $builder->addEventSubscriber(
             new AddMetaSubscriber(
                 'Pages', // Virtual to make sure the correct url is used
@@ -37,7 +40,6 @@ final class PageType extends AbstractType
         $builder->add('navigation', PageNavigationType::class);
         $builder->add('data', PageDataType::class);
         $builder->add('settings', PageSettingsType::class);
-        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
