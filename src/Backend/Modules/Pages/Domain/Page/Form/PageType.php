@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
+use Backend\Core\Engine\Authentication;
 use Backend\Form\EventListener\AddMetaSubscriber;
 use Backend\Form\Type\TagsType;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\SingleMediaGroupType;
@@ -21,7 +22,9 @@ final class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TitleType::class);
-        $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
+        if ($this->authenticatedUserIsAllowedToSeeAndEditTags()) {
+            $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
+        }
         $builder->add('image', SingleMediaGroupType::class, ['label' => 'lbl.Image', 'required' => false]);
         $builder->addEventSubscriber(
             new AddMetaSubscriber(
@@ -62,5 +65,10 @@ final class PageType extends AbstractType
         $page = $form->getData()->getPageEntity();
         $view->vars['dataGridDrafts'] = PageVersionDataGrid::getHtml($page, Status::draft());
         $view->vars['dataGridRevisions'] = PageVersionDataGrid::getHtml($page, Status::archive());
+    }
+
+    private function authenticatedUserIsAllowedToSeeAndEditTags(): bool
+    {
+        return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }
 }
