@@ -9,6 +9,7 @@ use Backend\Core\Language\Locale as BackendLocale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -163,12 +164,14 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $toLanguage,
             $sourceData['type'],
             $sourceData['title'],
+            null,
             new DateTime(),
+            null,
             $sourceData['sequence'],
             $sourceData['navigation_title_overwrite'],
             $sourceData['hidden'],
             Status::active(),
-            $sourceData['type'],
+            new Type($sourceData['type']),
             $sourceData['data'],
             $sourceData['allow_move'],
             $sourceData['allow_children'],
