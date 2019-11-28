@@ -731,6 +731,7 @@ class ModuleInstaller
             Locale::fromString($revision['language']),
             $revision['title'],
             $revision['navigation_title'],
+            null,
             new DateTime($revision['publish_on']),
             null,
             $revision['sequence'],
