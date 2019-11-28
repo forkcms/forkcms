@@ -42,7 +42,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="tabAuthentication" aria-labelledby="authentication-tab {% if form.data.authentication.required.vars.value %} show{% endif %}">
       {{ form_row(form.data.authentication.required) }}
-      <div data-role="authentication-options" class="{% if form.data.authentication.required.vars.value %} show{% endif %}" >
+      <div data-role="authentication-options" class="collapse{% if form.data.authentication.required.vars.checked %} show{% endif %}" >
         {{ form_rest(form.data.authentication) }}
       </div>
     </div>
