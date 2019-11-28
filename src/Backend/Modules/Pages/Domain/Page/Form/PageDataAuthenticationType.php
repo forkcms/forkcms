@@ -63,7 +63,7 @@ final class PageDataAuthenticationType extends AbstractType implements PageDataT
         $resolver->setDefaults(
             [
                 'inherit_data' => true,
-                'label' => 'lbl.Authentication',
+                'label' => false,
             ]
         );
     }

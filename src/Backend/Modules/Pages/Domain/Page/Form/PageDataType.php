@@ -6,6 +6,7 @@ use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PageDataType extends AbstractType
 {
@@ -51,5 +52,14 @@ final class PageDataType extends AbstractType
         foreach (self::FORM_TYPES as $name => $class) {
             $builder->add($name, $class);
         }
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(
+            [
+                'label' => false,
+            ]
+        );
     }
 }
