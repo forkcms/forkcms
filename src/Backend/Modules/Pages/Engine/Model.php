@@ -1150,30 +1150,30 @@ class Model
         return $droppedOnPage['parent_id'];
     }
 
-    private static function getNewType(int $droppedOnPageId, string $tree, int $newParent, array $droppedOnPage): string
+    private static function getNewType(int $droppedOnPageId, string $tree, int $newParent, array $droppedOnPage): Type
     {
         if ($droppedOnPageId === Page::NO_PARENT_PAGE_ID) {
             if ($tree === 'footer') {
-                return 'footer';
+                return Type::footer();
             }
 
             if ($tree === 'meta') {
-                return 'meta';
+                return Type::meta();
             }
 
-            return 'root';
+            return Type::root();
         }
 
         if ($newParent === Page::NO_PARENT_PAGE_ID) {
             return $droppedOnPage['type'];
         }
 
-        return 'page';
+        return Type::page();
     }
 
     private static function recalculateSequenceAfterMove(
         string $typeOfDrop,
-        string $newType,
+        Type $newType,
         int $pageId,
         Locale $locale,
         string $newParent,
