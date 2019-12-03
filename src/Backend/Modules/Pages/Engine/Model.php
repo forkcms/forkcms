@@ -563,6 +563,7 @@ class Model
                 function ($page) {
                     $page['has_extra'] = (bool) $page['has_extra'];
                     $page['has_children'] = (bool) $page['has_children'];
+                    $page['allow_move'] = (bool) $page['allow_move'];
 
                     return $page;
                 },

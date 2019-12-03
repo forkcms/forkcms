@@ -371,6 +371,7 @@ class PageRepository extends ServiceEntityRepository
             ->addSelect('m.seoFollow as seo_follow')
             ->addSelect('m.seoIndex as seo_index')
             ->addSelect('p.allowChildren as allow_children')
+            ->addSelect('p.allowMove as allow_move')
             ->addSelect('ifelse(count(e.id) > 0, 1, 0) AS has_extra')
             ->addSelect('group_concat(b.extraId) AS extra_ids')
             ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children');
