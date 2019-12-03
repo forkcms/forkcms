@@ -19,7 +19,6 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Locale as AbstractLocale;
-use DateTime;
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -514,7 +513,7 @@ class Model
                 // insert link
                 $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
-                    null,
+                    'Pages',
                     null,
                     [
                         'id' => $page['page_id'],
@@ -592,7 +591,7 @@ class Model
         $homePage = self::get(Page::HOME_PAGE_ID);
         $urlForAction = BackendModel::createUrlForAction(
             'Edit',
-            null,
+            'Pages',
             null,
             ['id' => Page::HOME_PAGE_ID]
         );
@@ -659,7 +658,7 @@ class Model
                 // insert link
                 $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
-                    null,
+                    'Pages',
                     null,
                     ['id' => $page['page_id']]
                 );
@@ -694,7 +693,7 @@ class Model
                 // insert link
                 $urlForAction = BackendModel::createUrlForAction(
                     'Edit',
-                    null,
+                    'Pages',
                     null,
                     ['id' => $page['page_id']]
                 );
