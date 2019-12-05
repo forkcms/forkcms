@@ -146,9 +146,13 @@ class Model
         return md5(sha1(md5($string)) . sha1(md5($salt)));
     }
 
-    public static function getIdByEmail(string $email): int
+    public static function getIdByEmail(string $email): ?int
     {
         $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+
+        if ($profile === null) {
+            return null;
+        }
 
         return $profile->getId();
     }

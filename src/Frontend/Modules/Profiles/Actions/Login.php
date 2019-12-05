@@ -67,7 +67,7 @@ class Login extends FrontendBaseBlock
         );
 
         $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
-        if ($profileId !== 0 && $loginStatus->isInvalid()) {
+        if ($profileId !== null && $loginStatus->isInvalid()) {
             $loginAttempts = (int) FrontendProfilesModel::getSetting($profileId, 'login_attempts');
 
             FrontendProfilesModel::setSetting($profileId, 'login_attempts', ++$loginAttempts);
