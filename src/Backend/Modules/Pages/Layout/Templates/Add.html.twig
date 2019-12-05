@@ -90,28 +90,34 @@
 
               <div id="templateVisualFallback" style="display: none">
                 <div id="fallback" class="generalMessage singleMessage infoMessage">
-                  <div id="fallbackInfo">
-                    {{ 'msg.FallbackInfo'|trans }}
-                  </div>
-                  <table cellspacing="2">
-                    <tbody>
-                      <tr>
-                        <td data-position="fallback" id="templatePosition-fallback"
-                          colspan="1" class="box">
-                          <div class="panel panel-default panel-pages-block">
-                            <div class="panel-heading">
-                              <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
-                            </div>
-                            <div class="panel-body">
-                              <div class="linkedBlocks">
-                                <!-- linked blocks will be added here -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div id="fallbackInfo">
+                        <div class="alert alert-warning">
+                          {{ macro.icon('exclamation-triangle') }}{{ 'msg.FallbackInfo'|trans|raw }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <table cellspacing="2">
+                        <tbody>
+                        <tr>
+                          <td data-position="fallback" id="templatePosition-fallback"
+                              colspan="1" class="box">
+                            <div class="panel panel-default panel-pages-block">
+                              <div class="panel-heading">
+                                <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
+                              </div>
+                              <div class="panel-body">
+                                <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
                               </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div id="templateVisualLarge">
