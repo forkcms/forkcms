@@ -86,6 +86,9 @@ class Thumbnails
                 if ($box->getWidth() < $width) {
                     $height = ($box->getHeight() / $box->getWidth()) * $width;
                     $image = $image->resize(new Box($width, $height));
+                } elseif ($box->getHeight() < $height) {
+                    $width *= ($box->getWidth() / $box->getHeight());
+                    $image = $image->resize(new Box($width, $height));
                 } else {
                     $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
                 }
