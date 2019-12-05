@@ -7,934 +7,395 @@
 
 {% block content %}
   {% form edit %}
-  <script type="text/javascript">
-    //@todo why data comes not from action?
-    //<![CDATA[
-    var defaultErrorMessages = {};
-    {% if errors %}
-    {% for error in errors %}
-    defaultErrorMessages.{{ error.type }} = '{{ error.message }}';
-    {% endfor %}
-    {% endif %}
-    //]]>
-  </script>
-  <input type="hidden" name="id" id="formId" value="{{ id }}" />
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
-          </li>
-          <li role="presentation">
-            <a href="#tabFields" aria-controls="tabFields" role="tab" data-toggle="tab">{{ 'lbl.Fields'|trans|ucfirst }}</a>
-          </li>
-          <li role="presentation">
-            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
-                      {{ 'lbl.Status'|trans|ucfirst }}
-                    </h2>
-                  </div>
-                  <div class="panel-body">
-                    <div class="form-group">
-                      <label for="name" class="control-label">
-                        {{ 'lbl.Name'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      {% form_field name %} {% form_field_error name %}
-                    </div>
-                    <div class="form-group">
-                      <label for="method" class="control-label">
-                        {{ 'lbl.Method'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      {% form_field method %} {% form_field_error method %}
-                    </div>
-                    <div class="form-group">
-                      <label for="EmailSubject" class="control-label">
-                        {{ 'lbl.EmailSubject'|trans|ucfirst }}
-                      </label>
-                      {% form_field email_subject %} {% form_field_error email_subject %}
-                    </div>
-                    {% if ddmTemplate %}
-                      <div class="form-group">
-                        <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
-                        {% form_field template %} {% form_field_error template %}
-                      </div>
-                    {% endif %}
-                    <div class="form-group">
-                      <label for="email" class="control-label">
-                        {{ 'lbl.Recipient'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      {% form_field email %} {% form_field_error email %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
-                    <label for="successMessage" class="control-label">
-                      {{ 'lbl.SuccessMessage'|trans|ucfirst }}
-                      {{ macro.required }}<br>
-                    </label>
-                  </div>
-                  <div class="panel-body">
-                    {% form_field success_message %}
-                  </div>
-                  {% if txtSuccessMessageError %}
-                    <div class="panel-footer">
-                      {% form_field_error success_message %}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabFields">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="alert alert-warning alert-xs">
-                  {{ macro.icon('exclamation-triangle') }}{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
-                  {% if recaptchaMissing %}<br>{{ macro.icon('exclamation-triangle') }}{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
-                </p>
-                <br>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
-                      {{ 'lbl.Preview'|trans|ucfirst }}
-                    </h2>
-                  </div>
-                  <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
-                    {% if fields %}
-                      {% for field in fields %}
-                        {{ field.field|raw }}
-                      {% endfor %}
-                    {% endif %}
-
-                    {# This row always needs to be here. We show/hide it with javascript #}
-                    <div class="form-group field" {% if fields %} style="display: none;"{% endif %}>
-                      <div id="noFields" class="alert alert-info alert-xs">
-                        {{ 'msg.NoFields'|trans }}
-                      </div>
-                    </div>
-
-                    {# Submit button is always here. Cannot be deleted or moved. #}
-                    <div class="form-group field field-submit">
-                      <div class="row">
-                        <div class="col-md-5 col-md-offset-3">
-                          <div class="btn-group" role="group">
-                            {{ btnSubmitField|raw }}
-                          </div>
-                        </div>
-                        <div class="col-md-4">
-                          <div class="btn-group pull-right" role="group">
-                            <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ submitId }}">
-                              {{ macro.icon('pencil fa-fw') }}
-                              <span class="sr-only">{{ 'lbl.Edit'|trans|ucfirst }}</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div id="formElements" class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
-                      {{ 'lbl.AddFields'|trans|ucfirst }}
-                    </h2>
-                  </div>
-                  <div class="panel-body">
-                    <div class="list-group first">
-                      <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
-                      <button id="textboxSelector" data-field-id="textboxDialog" class="list-group-item jsFieldDialogTrigger">
-                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}
-                      </button>
-                      <button id="textareaSelector" data-field-id="textareaDialog" class="list-group-item jsFieldDialogTrigger">
-                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
-                      </button>
-                      <button id="datetimeSelector" data-field-id="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
-                      </button>
-                      <button id="dropdownSelector" data-field-id="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
-                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
-                      </button>
-                      <button id="checkboxSelector" data-field-id="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
-                      </button>
-                      <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
-                      </button>
-                      <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
-                        <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
-                      </button>
-                      {% if showMailmotorOption %}
-                        <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
-                          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>{{ 'lbl.Mailmotor'|trans|ucfirst }}
-                        </button>
-                      {% endif %}
-                    </div>
-                    <div class="list-group">
-                      <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
-                      <button id="headingSelector" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
-                      </button>
-                      <button id="paragraphSelector" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabExtra">
-            <div class="row">
-              <div class="col-md-12">
-                <label for="identifier" class="control-label">
-                  {{ 'lbl.Identifier'|trans|ucfirst }}
-                  {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
-                </label>
-                {% form_field identifier %} {% form_field_error identifier %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row fork-page-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
-          {% if showFormBuilderDelete %}
-  	  	    {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button" } ) }}
-          {% endif %}
-  	  	  {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group pull-right" role="group">
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "name":"edit", "type":"submit" } ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-  {# Dialog for a textbox #}
-
-  <div class="modal fade jsFieldDialog" id="textboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textboxDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="textboxDialogTitle">{{ 'lbl.Textbox'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="textbox_id" id="textboxId" value="" />
+    <script type="text/javascript">
+      //@todo why data comes not from action?
+      //<![CDATA[
+      var defaultErrorMessages = {};
+      {% if errors %}
+      {% for error in errors %}
+      defaultErrorMessages.{{ error.type }} = '{{ error.message }}';
+      {% endfor %}
+      {% endif %}
+      //]]>
+    </script>
+    <input type="hidden" name="id" id="formId" value="{{ id }}" />
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div>
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-              <a href="#tabTextboxBasic" aria-controls="tabTextboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
             </li>
             <li role="presentation">
-              <a href="#tabTextboxProperties" aria-controls="tabTextboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              <a href="#tabFields" aria-controls="tabFields" role="tab" data-toggle="tab">{{ 'lbl.Fields'|trans|ucfirst }}</a>
             </li>
             <li role="presentation">
-              <a href="#tabTextboxAdvanced" aria-controls="tabTextboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
+            <div role="tabpanel" class="tab-pane active" id="tabGeneral">
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textboxLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field textbox_label %}
+                <div class="col-lg-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">
+                        {{ 'lbl.Status'|trans|ucfirst }}
+                      </h2>
+                    </div>
+                    <div class="panel-body">
+                      <fieldset>
+                        <div class="form-group">
+                          <label for="name" class="control-label">
+                            {{ 'lbl.Name'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          {% form_field name %} {% form_field_error name %}
+                        </div>
+                      </fieldset>
+                      <div class="form-group">
+                        <label for="method" class="control-label">
+                          {{ 'lbl.Method'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        {% form_field method %} {% form_field_error method %}
+                      </div>
+                      <div id="emailWrapper">
+                        <div class="form-group">
+                          <label for="EmailSubject" class="control-label">
+                            {{ 'lbl.EmailSubject'|trans|ucfirst }}
+                          </label>
+                          {% form_field email_subject %} {% form_field_error email_subject %}
+                        </div>
+                        {% if ddmTemplate %}
+                          <div class="form-group">
+                            <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
+                            {% form_field template %} {% form_field_error template %}
+                          </div>
+                        {% endif %}
+                        <div class="form-group">
+                          <label for="email" class="control-label">
+                            {{ 'lbl.Recipient'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          {% form_field email %} {% form_field_error email %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="panel panel-default panel-editor">
+                    <div class="panel-heading">
+                      <label for="successMessage" class="control-label">
+                        {{ 'lbl.SuccessMessage'|trans|ucfirst }}
+                        {{ macro.required }}<br>
+                      </label>
+                    </div>
+                    <div class="panel-body">
+                      {% form_field success_message %}
+                    </div>
+                    {% if txtSuccessMessageError %}
+                      <div class="panel-footer">
+                        {% form_field_error success_message %}
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabTextboxProperties">
+            <div role="tabpanel" class="tab-pane" id="tabFields">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textboxValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    {% form_field textbox_value %}
+                  <p class="alert alert-warning alert-xs">
+                    {{ macro.icon('exclamation-triangle') }}{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
+                    {% if recaptchaMissing %}<br>{{ macro.icon('exclamation-triangle') }}{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
+                  </p>
+                  <br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="panel panel-default panel-editor">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">
+                        {{ 'lbl.Preview'|trans|ucfirst }}
+                      </h2>
+                    </div>
+                    <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
+                      {% if fields %}
+                        {% for field in fields %}
+                          {{ field.field|raw }}
+                        {% endfor %}
+                      {% endif %}
+
+                      {# This row always needs to be here. We show/hide it with javascript #}
+                      <div class="form-group field" {% if fields %} style="display: none;"{% endif %}>
+                        <div id="noFields" class="alert alert-info alert-xs">
+                          {{ 'msg.NoFields'|trans }}
+                        </div>
+                      </div>
+
+                      {# Submit button is always here. Cannot be deleted or moved. #}
+                      <div class="form-group field field-submit">
+                        <div class="row">
+                          <div class="col-md-5 col-md-offset-3">
+                            <div class="btn-group" role="group">
+                              {{ btnSubmitField|raw }}
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="btn-group pull-right" role="group">
+                              <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ submitId }}">
+                                {{ macro.icon('pencil fa-fw') }}
+                                <span class="sr-only">{{ 'lbl.Edit'|trans|ucfirst }}</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxReplyTo" class="control-label">
-                          {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
-                          {{ macro.infoTooltip('msg.HelpReplyTo'|trans) }}
-                        </label>
-                      </li>
-                    </ul>
+                </div>
+                <div class="col-md-4">
+                  <div id="formElements" class="panel panel-default">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">
+                        {{ 'lbl.AddFields'|trans|ucfirst }}
+                      </h2>
+                    </div>
+                    <div class="panel-body">
+                      <div class="list-group first">
+                        <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
+                        <button id="textboxSelector" data-field-id="textboxDialog" class="list-group-item jsFieldDialogTrigger">
+                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}
+                        </button>
+                        <button id="textareaSelector" data-field-id="textareaDialog" class="list-group-item jsFieldDialogTrigger">
+                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
+                        </button>
+                        <button id="datetimeSelector" data-field-id="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
+                        </button>
+                        <button id="dropdownSelector" data-field-id="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
+                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
+                        </button>
+                        <button id="checkboxSelector" data-field-id="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
+                        </button>
+                        <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
+                        </button>
+                        <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
+                          <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
+                        </button>
+                        {% if showMailmotorOption %}
+                          <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
+                            <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>{{ 'lbl.Mailmotor'|trans|ucfirst }}
+                          </button>
+                        {% endif %}
+                      </div>
+                      <div class="list-group">
+                        <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
+                        <button id="headingSelector" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
+                        </button>
+                        <button id="paragraphSelector" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  {% if showMailmotorOption %}
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tabExtra">
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="identifier" class="control-label">
+                    {{ 'lbl.Identifier'|trans|ucfirst }}
+                  </label>
+                  {% form_field identifier %} {% form_field_error identifier %}
+                  <p class="help-block">{{ 'msg.HelpIdentifier'|trans|ucfirst }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row fork-page-actions">
+      <div class="col-md-12">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-left" role="group">
+            {% if showFormBuilderDelete %}
+              {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button" } ) }}
+            {% endif %}
+            {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+          </div>
+          <div class="btn-group pull-right" role="group">
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "name":"edit", "type":"submit" } ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {# Dialog for a textbox #}
+
+    <div class="modal fade jsFieldDialog" id="textboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textboxDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="textboxDialogTitle">{{ 'lbl.Textbox'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="textbox_id" id="textboxId" value="" />
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabTextboxBasic" aria-controls="tabTextboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabTextboxProperties" aria-controls="tabTextboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabTextboxAdvanced" aria-controls="tabTextboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabTextboxExtra" aria-controls="tabTextboxExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group last">
+                      <label for="textboxLabel" class="control-label">
+                        {{ 'lbl.Label'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                      {% form_field textbox_label %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabTextboxProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="jsValidation">
+                        <div class="form-group">
+                          <ul class="list-unstyled">
+                            <li class="checkbox">
+                              <label for="textboxRequired" class="control-label">
+                                {% form_field textbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}
+                              </label>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
+                          <label for="textboxRequiredErrorMessage" class="control-label">
+                            {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                          {% form_field textbox_required_error_message %}
+                        </div>
+                      </div>
+                      <div class="jsValidation">
+                        <div class="form-group">
+                          <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
+                          {% form_field textbox_validation %}
+                        </div>
+                        <p id="textboxReplyToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        <p id="textboxMailmotorErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        <p id="textboxSendConfirmationMailToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        <div class="form-group jsValidationParameter" style="display: none;">
+                          <label for="textboxValidationParameter" class="control-label">
+                            {{ 'lbl.Parameter'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          {% form_field textbox_validation_parameter %}
+                        </div>
+                        <div class="form-group jsValidationErrorMessage" style="display: none;">
+                          <label for="textareaErrorMessage" class="control-label">
+                            {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                          {% form_field textbox_error_message %}
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="textboxAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
+                      {% form_field textbox_autocomplete %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="textboxValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                      {% form_field textbox_value %}
+                    </div>
+                    <div class="form-group">
+                      <label for="textboxPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
+                      {% form_field textbox_placeholder %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="textboxClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field textbox_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxExtra">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="form-group">
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="textboxReplyTo" class="control-label">
+                              {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
+                            </label>
+                            <p class="help-block">{{ 'msg.HelpReplyTo'|trans|raw }}</p>
+                          </li>
+                        </ul>
+                      </div>
+                      {% if showMailmotorOption %}
+                        <div class="form-group">
+                          <ul class="list-unstyled">
+                            <li class="checkbox">
+                              <label for="textboxMailmotor" class="control-label">
+                                {% form_field textbox_mailmotor %} {{ 'lbl.Mailmotor'|trans|ucfirst }}
+                              </label>
+                              <p class="help-block">{{ 'msg.HelpMailmotor'|trans }}</p>
+                            </li>
+                          </ul>
+                        </div>
+                      {% endif %}
+                    </fieldset>
                     <div class="form-group">
                       <ul class="list-unstyled">
                         <li class="checkbox">
-                          <label for="textboxMailmotor" class="control-label">
-                            {% form_field textbox_mailmotor %} {{ 'lbl.Mailmotor'|trans|ucfirst }}
-                            {{ macro.infoTooltip('msg.HelpMailmotor'|trans) }}
+                          <label for="textboxSendConfirmationMailTo" class="control-label">
+                            {% form_field textbox_send_confirmation_mail_to %} {{ 'lbl.SendConfirmationMail'|trans|ucfirst }}
                           </label>
                         </li>
                       </ul>
                     </div>
-                  {% endif %}
-                  <div class="form-group">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxSendConfirmationMailTo" class="control-label">
-                          {% form_field textbox_send_confirmation_mail_to %} {{ 'lbl.SendConfirmationMailTo'|trans|ucfirst }}
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="form-group">
-                    <label for="textboxConfirmationMailSubject" class="control-label">
-                      {{ 'lbl.ConfirmationMailSubject'|trans|ucfirst }}
-                    </label>
-                    {% form_field textbox_confirmation_mail_subject %}
-                    <p id="textboxConfirmationMailSubjectErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                  </div>
-                  <div class="jsValidation">
-                    <ul class="list-unstyled">
-                      <li class="checkbox">
-                        <label for="textboxRequired" class="control-label">
-                          {% form_field textbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}
-                        </label>
-                      </li>
-                    </ul>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="textboxRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
+                    <div class="form-group last">
+                      <label for="textboxConfirmationMailSubject" class="control-label">
+                        {{ 'lbl.ConfirmationMailSubject'|trans|ucfirst }}
                       </label>
-                      <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field textbox_required_error_message %}
-                    </div>
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
-                      {% form_field textbox_validation %}
-                    </div>
-                    <p id="textboxReplyToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                    <p id="textboxMailmotorErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                    <p id="textboxSendConfirmationMailToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                    <div class="form-group jsValidationParameter" style="display: none;">
-                      <label for="textboxValidationParameter" class="control-label">
-                        {{ 'lbl.Parameter'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      {% form_field textbox_validation_parameter %}
-                    </div>
-                    <div class="form-group jsValidationErrorMessage" style="display: none;">
-                      <label for="textareaErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field textbox_error_message %}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="textboxAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
-                    {% form_field textbox_autocomplete %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textboxPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
-                    {% form_field textbox_placeholder %}
-                  </div>
-                  <div class="form-group">
-                    <label for="textboxClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field textbox_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a textarea #}
-  <div class="modal fade jsFieldDialog" id="textareaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textareaDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="textareaDialogTitle">{{ 'lbl.Textarea'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="textarea_id" id="textareaId" value="" />
-          <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabTextareaBasic" aria-controls="tabTextareaBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabTextareaProperties" aria-controls="tabTextareaProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabTextareaAdvanced" aria-controls="tabTextareaAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textareaLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field textarea_label %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textareaValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    {% form_field textarea_value %}
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="textareaRequired" class="control-label">{% form_field textarea_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="textareaRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field textarea_required_error_message %}
-                    </div>
-                  </div>
-                  <div class="jsValidation" style="display: none;">
-                    <div class="form-group">
-                      <label for="textareaValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
-                      {% form_field textarea_validation %}
-                    </div>
-                    <div class="form-group jsValidationParameter" style="display: none;">
-                      <label for="textareaValidationParameter" class="control-label">
-                        {{ 'lbl.Parameter'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      {% form_field textarea_validation_parameter %}
-                    </div>
-                    <div class="form-group jsValidationErrorMessage" style="display: none;">
-                      <label for="textareaErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field_error textarea_error_message %}
+                      {% form_field textbox_confirmation_mail_subject %}
+                      <p id="textboxConfirmationMailSubjectErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="textareaPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
-                    {% form_field textarea_placeholder %}
-                  </div>
-                  <div class="form-group">
-                    <label for="textareaClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field textarea_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a datetime #}
-  <div class="modal fade jsFieldDialog" id="datetimeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="datetimeDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="datetimeDialogTitle">{{ 'lbl.Datetime'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="datetime_id" id="datetimeId" value="" />
-          <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabDatetimeBasic" aria-controls="tabDatetimeBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabDatetimeProperties" aria-controls="tabDatetimeProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabDatetimeAdvanced" aria-controls="tabDatetimeAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="datetimeLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field datetime_label %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group jsDefaultValue">
-                    <label for="datetimeValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    <div class="form-inline">
-                      {% form_field datetime_value_amount %} {% form_field datetime_value_type %}
-                    </div>
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="datetimeRequired" class="control-label">{% form_field datetime_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="datetimeRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field datetime_required_error_message %}
-                    </div>
-                  </div>
-                  <div>
-                    <div class="form-group">
-                      <label for="datetimeType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
-                      {% form_field datetime_type %}
-                    </div>
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group" style="display: none;">
-                      <label for="datetimeValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
-                      {% form_field datetime_validation %}
-                    </div>
-                    <div class="form-group jsValidationErrorMessage" style="display: none;">
-                      <label for="datetimeErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field datetime_error_message %}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="datetimeAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
-                    {% form_field datetime_autocomplete %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="datetimeClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field datetime_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a dropdown #}
-  <div class="modal fade jsFieldDialog" id="dropdownDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="dropdownDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="dropdownDialogTitle">{{ 'lbl.Dropdown'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="dropdown_id" id="dropdownId" value="" />
-          <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabDropdownProperties" aria-controls="tabDropdownProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabDropdownAdvanced" aria-controls="tabDropdownAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="dropdownLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field dropdown_label %}
-                  </div>
-                  <div class="form-group">
-                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
-                    <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field dropdown_values %} {% form_field_error dropdown_values %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabDropdownProperties">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="dropdownDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    {% form_field dropdown_default_value %}
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="dropdownRequired" class="control-label">{% form_field dropdown_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="dropdownRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field dropdown_required_error_message %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="dropdownClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field dropdown_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a radiobutton #}
-  <div class="modal fade jsFieldDialog" id="radiobuttonDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="radiobuttonDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="radiobuttonDialogTitle">{{ 'lbl.Radiobutton'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="radiobutton_id" id="radiobuttonId" value="" />
-          <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabRadiobuttonProperties" aria-controls="tabRadiobuttonProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabRadiobuttonAdvanced" aria-controls="tabRadiobuttonAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="radiobuttonLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field radiobutton_label %}
-                  </div>
-                  <div class="form-group">
-                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
-                    {% form_field radiobutton_values %} {% form_field_error radiobutton_values %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    {% form_field radiobutton_default_value %}
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="checkboxRequired" class="control-label">{% form_field radiobutton_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="checkboxRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field radiobutton_required_error_message %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="radiobuttonClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field radiobutton_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a checkbox #}
-  <div class="modal fade jsFieldDialog" id="checkboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="checkboxDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="checkboxDialogTitle">{{ 'lbl.Checkbox'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="checkbox_id" id="checkboxId" value="" />
-          <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabCheckboxProperties" aria-controls="tabCheckboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
-            </li>
-            <li role="presentation">
-              <a href="#tabCheckboxAdvanced" aria-controls="tabCheckboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="checkboxLabel" class="control-label">
-                      {{ 'lbl.Label'|trans|ucfirst }}
-                      {{ macro.required }}
-                    </label>
-                    <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-                    {% form_field checkbox_label %}
-                  </div>
-                  <div class="form-group">
-                    <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
-                    {% form_field checkbox_values %} {% form_field_error checkbox_values %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
-                    {% form_field checkbox_default_value %}
-                  </div>
-                  <div class="jsValidation">
-                    <div class="form-group">
-                      <ul class="list-unstyled">
-                        <li class="checkbox">
-                          <label for="checkboxRequired" class="control-label">{% form_field checkbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                      <label for="checkboxRequiredErrorMessage" class="control-label">
-                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                      <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field checkbox_required_error_message %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="checkboxClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
-                    {% form_field checkbox_classname %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for the submit button #}
-  <div class="modal fade jsFieldDialog" id="submitDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="submitDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="submitDialogTitle">{{ 'lbl.SubmitButton'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="submit_id" id="submitId" value="" />
-          <div class="form-group">
-            <label for="submit" class="control-label">
-              {{ 'lbl.Content'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
-            {% form_field submit %}
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Dialog for a heading #}
-  <div class="modal fade jsFieldDialog" id="headingDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="headingDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="headingDialogTitle">{{ 'lbl.Heading'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="heading_id" id="headingId" value="" />
-          <div class="form-group">
-            <label for="heading" class="control-label">
-              {{ 'lbl.Content'|trans|ucfirst }}
-              {{ macro.required }}
-            </label>
-            <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
-            {% form_field heading %}
-          </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
-        </div>
-      </div>
-    </div>
-  </div>
-  {% if showMailmotorOption %}
-    {# Dialog for a mailmotor #}
-    <div class="modal fade jsFieldDialog" id="mailmotorDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="mailmotorDialogTitle">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="mailmotorDialogTitle">{{ 'lbl.Mailmotor'|trans|ucfirst }}</h4>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" name="mailmotor_id" id="mailmotorId" value="" />
-            <div class="form-group">
-              <label for="mailmotorLabel" class="control-label">
-                {{ 'lbl.Label'|trans|ucfirst }}{{ macro.required }}
-              </label>
-              <p id="mailmotorLabelError" class="text-danger jsFieldError" style="display: none;"></p>
-              {% form_field mailmotor_label %}
-            </div>
-            <div class="form-group">
-              <label for="mailmotorListId" class="control-label">
-                {{ mailmotorMailEngine|ucfirst }}: {{ 'lbl.MailmotorListId'|trans }}{{ macro.required }}
-              </label>
-              <p id="mailmotorListIdError" class="text-danger jsFieldError" style="display: none;"></p>
-              {% form_field mailmotor_list_id %} {% form_field_error mailmotor_list_id %}
             </div>
           </div>
           <div class="modal-footer">
@@ -944,29 +405,599 @@
         </div>
       </div>
     </div>
-  {% endif %}
 
-  {# Dialog for a paragraph #}
-  <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="paragraphDialogTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="paragraphDialogTitle">{{ 'lbl.Content'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="paragraph_id" id="paragraphId" value="" />
-          <div class="form-group">
-            <p id="paragraphError" class="text-danger jsFieldError" style="display: none;"></p>
-            {% form_field paragraph %}
+    {# Dialog for a textarea #}
+    <div class="modal fade jsFieldDialog" id="textareaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textareaDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="textareaDialogTitle">{{ 'lbl.Textarea'|trans|ucfirst }}</h4>
           </div>
-        </div>
-        <div class="modal-footer">
-  	  	  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-  	  	  {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          <div class="modal-body">
+            <input type="hidden" name="textarea_id" id="textareaId" value="" />
+            <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabTextareaBasic" aria-controls="tabTextareaBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabTextareaProperties" aria-controls="tabTextareaProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabTextareaAdvanced" aria-controls="tabTextareaAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group last">
+                      <label for="textareaLabel" class="control-label">
+                        {{ 'lbl.Label'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                      {% form_field textarea_label %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="jsValidation">
+                      <div class="form-group">
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="textareaRequired" class="control-label">{% form_field textarea_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
+                        <label for="textareaRequiredErrorMessage" class="control-label">
+                          {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field textarea_required_error_message %}
+                      </div>
+                    </div>
+                    <div class="jsValidation" style="display: none;">
+                      <div class="form-group">
+                        <label for="textareaValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
+                        {% form_field textarea_validation %}
+                      </div>
+                      <div class="form-group jsValidationParameter" style="display: none;">
+                        <label for="textareaValidationParameter" class="control-label">
+                          {{ 'lbl.Parameter'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        {% form_field textarea_validation_parameter %}
+                      </div>
+                      <div class="form-group jsValidationErrorMessage" style="display: none;">
+                        <label for="textareaErrorMessage" class="control-label">
+                          {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field_error textarea_error_message %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="textareaValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                      {% form_field textarea_value %}
+                    </div>
+                    <div class="form-group">
+                      <label for="textareaPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
+                      {% form_field textarea_placeholder %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="textareaClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field textarea_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    {# Dialog for a datetime #}
+    <div class="modal fade jsFieldDialog" id="datetimeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="datetimeDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="datetimeDialogTitle">{{ 'lbl.Datetime'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="datetime_id" id="datetimeId" value="" />
+            <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabDatetimeBasic" aria-controls="tabDatetimeBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabDatetimeProperties" aria-controls="tabDatetimeProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabDatetimeAdvanced" aria-controls="tabDatetimeAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group last">
+                      <label for="datetimeLabel" class="control-label">
+                        {{ 'lbl.Label'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                      {% form_field datetime_label %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="jsValidation">
+                        <div class="form-group">
+                          <ul class="list-unstyled">
+                            <li class="checkbox">
+                              <label for="datetimeRequired" class="control-label">{% form_field datetime_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
+                          <label for="datetimeRequiredErrorMessage" class="control-label">
+                            {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                          {% form_field datetime_required_error_message %}
+                        </div>
+                      </div>
+                      <div class="jsValidation">
+                        <div class="form-group" style="display: none;">
+                          <label for="datetimeValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
+                          {% form_field datetime_validation %}
+                        </div>
+                        <div class="form-group jsValidationErrorMessage" style="display: none;">
+                          <label for="datetimeErrorMessage" class="control-label">
+                            {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                            {{ macro.required }}
+                          </label>
+                          <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                          {% form_field datetime_error_message %}
+                        </div>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <div>
+                        <div class="form-group">
+                          <label for="datetimeType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
+                          {% form_field datetime_type %}
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="datetimeAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
+                      {% form_field datetime_autocomplete %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="form-group jsDefaultValue">
+                        <label for="datetimeValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                        <div class="form-inline">
+                          {% form_field datetime_value_amount %} {% form_field datetime_value_type %}
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="datetimeClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field datetime_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Dialog for a dropdown #}
+    <div class="modal fade jsFieldDialog" id="dropdownDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="dropdownDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="dropdownDialogTitle">{{ 'lbl.Dropdown'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="dropdown_id" id="dropdownId" value="" />
+            <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabDropdownProperties" aria-controls="tabDropdownProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabDropdownAdvanced" aria-controls="tabDropdownAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="dropdownLabel" class="control-label">
+                          {{ 'lbl.Label'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field dropdown_label %}
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
+                      <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
+                      {% form_field dropdown_values %} {% form_field_error dropdown_values %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabDropdownProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="jsValidation">
+                      <div class="form-group">
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="dropdownRequired" class="control-label">{% form_field dropdown_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="form-group last jsValidationRequiredErrorMessage" style="display: none;">
+                        <label for="dropdownRequiredErrorMessage" class="control-label">
+                          {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field dropdown_required_error_message %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="dropdownDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                      {% form_field dropdown_default_value %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="dropdownClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field dropdown_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Dialog for a radiobutton #}
+    <div class="modal fade jsFieldDialog" id="radiobuttonDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="radiobuttonDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="radiobuttonDialogTitle">{{ 'lbl.Radiobutton'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="radiobutton_id" id="radiobuttonId" value="" />
+            <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabRadiobuttonProperties" aria-controls="tabRadiobuttonProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabRadiobuttonAdvanced" aria-controls="tabRadiobuttonAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="radiobuttonLabel" class="control-label">
+                          {{ 'lbl.Label'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field radiobutton_label %}
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
+                      {% form_field radiobutton_values %} {% form_field_error radiobutton_values %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="jsValidation">
+                      <div class="form-group">
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="radiobuttonRequired" class="control-label">{% form_field radiobutton_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="form-group last jsValidationRequiredErrorMessage" style="display: none;">
+                        <label for="radiobuttonRequiredErrorMessage" class="control-label">
+                          {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field radiobutton_required_error_message %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="radiobuttonDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                      {% form_field radiobutton_default_value %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="radiobuttonClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field radiobutton_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Dialog for a checkbox #}
+    <div class="modal fade jsFieldDialog" id="checkboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="checkboxDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="checkboxDialogTitle">{{ 'lbl.Checkbox'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="checkbox_id" id="checkboxId" value="" />
+            <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabCheckboxProperties" aria-controls="tabCheckboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+              </li>
+              <li role="presentation">
+                <a href="#tabCheckboxAdvanced" aria-controls="tabCheckboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
+                <div class="row">
+                  <div class="col-md-12">
+                    <fieldset>
+                      <div class="form-group">
+                        <label for="checkboxLabel" class="control-label">
+                          {{ 'lbl.Label'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field checkbox_label %}
+                      </div>
+                    </fieldset>
+                    <div class="form-group last">
+                      <label for="checkboxValues" class="control-label">{{ 'lbl.Values'|trans|ucfirst }}</label>
+                      {% form_field checkbox_values %} {% form_field_error checkbox_values %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="jsValidation">
+                      <div class="form-group">
+                        <ul class="list-unstyled">
+                          <li class="checkbox">
+                            <label for="checkboxRequired" class="control-label">{% form_field checkbox_required %} {{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="form-group last jsValidationRequiredErrorMessage" style="display: none;">
+                        <label for="checkboxRequiredErrorMessage" class="control-label">
+                          {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                          {{ macro.required }}
+                        </label>
+                        <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                        {% form_field checkbox_required_error_message %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
+                      {% form_field checkbox_default_value %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="checkboxClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
+                      {% form_field checkbox_classname %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Dialog for the submit button #}
+    <div class="modal fade jsFieldDialog" id="submitDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="submitDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="submitDialogTitle">{{ 'lbl.SubmitButton'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="submit_id" id="submitId" value="" />
+            <div class="form-group last">
+              <label for="submit" class="control-label">
+                {{ 'lbl.Content'|trans|ucfirst }}
+                {{ macro.required }}
+              </label>
+              <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
+              {% form_field submit %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# Dialog for a heading #}
+    <div class="modal fade jsFieldDialog" id="headingDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="headingDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="headingDialogTitle">{{ 'lbl.Heading'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="heading_id" id="headingId" value="" />
+            <div class="form-group">
+              <label for="heading" class="control-label">
+                {{ 'lbl.Content'|trans|ucfirst }}
+                {{ macro.required }}
+              </label>
+              <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
+              {% form_field heading %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if showMailmotorOption %}
+      {# Dialog for a mailmotor #}
+      <div class="modal fade jsFieldDialog" id="mailmotorDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="mailmotorDialogTitle">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="mailmotorDialogTitle">{{ 'lbl.Mailmotor'|trans|ucfirst }}</h4>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="mailmotor_id" id="mailmotorId" value="" />
+              <div class="form-group">
+                <label for="mailmotorLabel" class="control-label">
+                  {{ 'lbl.Label'|trans|ucfirst }}{{ macro.required }}
+                </label>
+                <p id="mailmotorLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                {% form_field mailmotor_label %}
+              </div>
+              <div class="form-group">
+                <label for="mailmotorListId" class="control-label">
+                  {{ mailmotorMailEngine|ucfirst }}: {{ 'lbl.MailmotorListId'|trans }}{{ macro.required }}
+                </label>
+                <p id="mailmotorListIdError" class="text-danger jsFieldError" style="display: none;"></p>
+                {% form_field mailmotor_list_id %} {% form_field_error mailmotor_list_id %}
+              </div>
+            </div>
+            <div class="modal-footer">
+              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+              {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {# Dialog for a paragraph #}
+    <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="paragraphDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="paragraphDialogTitle">{{ 'lbl.Content'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="paragraph_id" id="paragraphId" value="" />
+            <div class="form-group">
+              <p id="paragraphError" class="text-danger jsFieldError" style="display: none;"></p>
+              {% form_field paragraph %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
   {% endform %}
 
   {# Page delete confirm block #}

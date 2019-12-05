@@ -43,7 +43,7 @@ jsBackend.FormBuilder = {
     var $selectMethod = $('select#method')
     var $emailWrapper = $('#emailWrapper')
 
-    if ($selectMethod.val() === 'database_email') {
+    if ($selectMethod.val() === 'database_email' || $selectMethod.val() === 'email') {
       // show email field
       $emailWrapper.slideDown()
 
