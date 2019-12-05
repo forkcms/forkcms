@@ -82,6 +82,14 @@
         <translation language="el"><![CDATA[Πεδίο επιλογής]]></translation>
         <translation language="pl"><![CDATA[powrót do zgłoszeń]]></translation>
       </item>
+      <item type="label" name="Data">
+        <translation language="nl"><![CDATA[inzendingen]]></translation>
+        <translation language="en"><![CDATA[submissions]]></translation>
+      </item>
+      <item type="label" name="DataDetails">
+        <translation language="nl"><![CDATA[inzending detail]]></translation>
+        <translation language="en"><![CDATA[submission detail]]></translation>
+      </item>
       <item type="label" name="DefaultValue">
         <translation language="nl"><![CDATA[standaardwaarde]]></translation>
         <translation language="en"><![CDATA[default value]]></translation>

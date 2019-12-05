@@ -2,19 +2,11 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
-  <div class="row fork-module-heading">
-    <div class="col-md-6">
-      <h2>{{ 'lbl.FormData'|trans|format(name|ucfirst)|raw }}</h2>
-    </div>
-    <div class="col-md-6">
-
-      <div class="btn-toolbar pull-right">
-        <div class="btn-group" role="group">
-          {% if showFormBuilderData %}
-            {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|ucfirst) }}
-          {% endif %}
-        </div>
-      </div>
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showFormBuilderData %}
+        {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|ucfirst) }}
+      {% endif %}
     </div>
   </div>
 {% endblock %}
