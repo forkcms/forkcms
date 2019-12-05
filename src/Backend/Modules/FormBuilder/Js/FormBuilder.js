@@ -13,6 +13,7 @@ jsBackend.FormBuilder = {
     // variables
     var $selectMethod = $('select#method')
     var $formId = $('#formId')
+    var $recipientOption = $('input[name="recipient"]')
 
     // fields handler
     jsBackend.FormBuilder.Fields.init()
@@ -26,7 +27,14 @@ jsBackend.FormBuilder = {
       $(document).on('change', 'select#method', jsBackend.FormBuilder.handleMethodField)
     }
 
-    $('#email').multipleTextbox({
+    // hide or show the recipient options
+    if ($recipientOption.length > 0) {
+      jsBackend.FormBuilder.handleRecipientOptions()
+      $(document).on('change', 'input[name="recipient"]', jsBackend.FormBuilder.handleRecipientOptions)
+    }
+
+    // format email field
+    $('#emailAddresses').multipleTextbox({
       emptyMessage: jsBackend.locale.msg('NoEmailaddresses'),
       addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add', 'Core')),
       removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
@@ -52,6 +60,34 @@ jsBackend.FormBuilder = {
 
     // hide email field
     $emailWrapper.slideUp()
+  },
+
+  /**
+   * Toggle recipient options based on the recipient value
+   */
+  handleRecipientOptions: function () {
+    // variables
+    var $recipientOption = $('input[name="recipient"]:checked')
+    var $emailWrapper = $('#recipientGroupEmail')
+    var $fieldsWrapper = $('#recipientGroupFields')
+
+    console.log($recipientOption.val());
+    if ($recipientOption.val() === 'email') {
+      // show email field
+      $emailWrapper.fadeIn()
+      $fieldsWrapper.hide()
+
+      return;
+    }
+
+    if ($recipientOption.val() === 'field') {
+      // show email field
+      $fieldsWrapper.fadeIn()
+      $emailWrapper.hide()
+
+      return;
+    }
+
   }
 }
 

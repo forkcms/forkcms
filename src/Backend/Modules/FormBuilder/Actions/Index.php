@@ -28,11 +28,18 @@ class Index extends BackendBaseActionIndex
             BackendFormBuilderModel::QUERY_BROWSE,
             [BL::getWorkingLanguage()]
         );
+        $this->dataGrid->addColumn(
+            'emails',
+            null,
+            ucfirst(BL::lbl('Emails')),
+            BackendModel::createUrlForAction('Emails') .
+            '&amp;id=[id]',
+            BL::lbl('Emails')
+        );
         $this->dataGrid->setHeaderLabels([
-            'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
             'sent_forms' => '',
         ]);
-        $this->dataGrid->setSortingColumns(['name', 'email', 'method', 'sent_forms'], 'name');
+        $this->dataGrid->setSortingColumns(['name', 'sent_forms'], 'name');
         $this->dataGrid->setColumnFunction(
             [new BackendFormBuilderModel(), 'formatRecipients'],
             ['[email]'],

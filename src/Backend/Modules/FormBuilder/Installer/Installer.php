@@ -34,6 +34,9 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'FormBuilder', 'form_builder/index', [
             'form_builder/add',
             'form_builder/edit',
+            'form_builder/emails',
+            'form_builder/edit_email',
+            'form_builder/add_email',
             'form_builder/data',
             'form_builder/data_details',
         ]);
@@ -44,11 +47,15 @@ class Installer extends ModuleInstaller
         $this->setModuleRights(1, $this->getModule());
 
         $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'AddEmail');
         $this->setActionRights(1, $this->getModule(), 'Data');
         $this->setActionRights(1, $this->getModule(), 'DataDetails');
         $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'DeleteField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'DeleteEmail');
         $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'EditEmail');
+        $this->setActionRights(1, $this->getModule(), 'Emails');
         $this->setActionRights(1, $this->getModule(), 'ExportData');
         $this->setActionRights(1, $this->getModule(), 'GetField'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'Index');
@@ -68,8 +75,7 @@ class Installer extends ModuleInstaller
             $form['language'] = $language;
             $form['user_id'] = $this->getDefaultUserID();
             $form['name'] = \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend'));
-            $form['method'] = 'database_email';
-            $form['email'] = serialize([$this->getVariable('email')]);
+            $form['database'] = 1;
             $form['success_message'] = $this->getLocale('ContactMessageSent', 'Core', $language, 'msg', 'Frontend');
             $form['identifier'] = 'contact-' . $language;
             $form['created_on'] = gmdate('Y-m-d H:i:s');

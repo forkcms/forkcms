@@ -1,0 +1,21 @@
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showFormBuilderAdd %}
+        {{ macro.buttonIcon( geturl('AddEmail', null, '&id='~item.id), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% if dataGrid %}
+    {{ macro.dataGrid(dataGrid) }}
+  {% else %}
+    <p>{{ 'msg.NoEmails'|trans|ucfirst }}</p>
+  {% endif %}
+{% endblock %}
+

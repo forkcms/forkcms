@@ -53,26 +53,7 @@ class Edit extends BackendBaseActionEdit
     {
         $this->form = new BackendForm('edit');
         $this->form->addText('name', $this->record['name'])->makeRequired();
-        $this->form->addDropdown(
-            'method',
-            [
-                'database' => BL::getLabel('MethodDatabase'),
-                'database_email' => BL::getLabel('MethodDatabaseEmail'),
-                'email' => BL::getLabel('MethodEmail'),
-            ],
-            $this->record['method']
-        )->makeRequired();
-        $this->form->addText('email', implode(',', (array) $this->record['email']));
-        $this->form->addText('email_subject', $this->record['email_subject']);
-
-        // if we have multiple templates, add a dropdown to select them
-        if (count($this->templates) > 1) {
-            $this->form->addDropdown(
-                'template',
-                array_combine($this->templates, $this->templates),
-                $this->record['email_template']
-            );
-        }
+        $this->form->addCheckbox('database', (int) $this->record['database']);
         $this->form->addText('identifier', $this->record['identifier']);
         $this->form->addEditor('success_message', $this->record['success_message'])->makeRequired();
 
@@ -289,35 +270,13 @@ class Edit extends BackendBaseActionEdit
 
             // shorten the fields
             $txtName = $this->form->getField('name');
-            $txtEmail = $this->form->getField('email');
-            $txtEmailSubject = $this->form->getField('email_subject');
-            $ddmMethod = $this->form->getField('method');
+            $chkDatabase = $this->form->getField('database');
             $txtSuccessMessage = $this->form->getField('success_message');
             $txtIdentifier = $this->form->getField('identifier');
-
-            $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
-                $error = false;
-
-                // check the addresses
-                foreach ($emailAddresses as $address) {
-                    $address = trim($address);
-
-                    if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
-                        $error = true;
-                        break;
-                    }
-                }
-
-                // add error
-                if ($error) {
-                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
-                }
-            }
 
             // identifier
             if ($txtIdentifier->isFilled()) {
@@ -333,12 +292,7 @@ class Edit extends BackendBaseActionEdit
                 // build array
                 $values = [];
                 $values['name'] = $txtName->getValue();
-                $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() == 'database_email' || $ddmMethod->getValue() === 'email')
-                    ? serialize($emailAddresses) : null;
-                $values['email_template'] = count($this->templates) > 1
-                    ? $this->form->getField('template')->getValue() : $this->templates[0];
-                $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
+                $values['database'] = (int) $chkDatabase->isChecked();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
