@@ -13,6 +13,6 @@ class Logout extends FrontendBaseBlock
             FrontendProfilesAuthentication::logout();
         }
 
-        $this->redirect(SITE_URL);
+        $this->redirect(SITE_MULTILANGUAGE ? SITE_URL . '/' . LANGUAGE : SITE_URL);
     }
 }
