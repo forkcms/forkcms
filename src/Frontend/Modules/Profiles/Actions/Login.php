@@ -114,7 +114,7 @@ class Login extends FrontendBaseBlock
                 urldecode(
                     $this->getRequest()->query->get(
                         'queryString',
-                        SITE_URL
+                        SITE_MULTILANGUAGE ? SITE_URL . '/' . LANGUAGE : SITE_URL
                     )
                 )
             )
@@ -124,7 +124,7 @@ class Login extends FrontendBaseBlock
     private function sanitizeQueryString(string $queryString): string
     {
         if (!preg_match('/^\/[^\/]/', $queryString)) {
-            return SITE_URL;
+            return SITE_MULTILANGUAGE ? SITE_URL . '/' . LANGUAGE : SITE_URL;
         }
 
         return filter_var($queryString, FILTER_SANITIZE_URL);

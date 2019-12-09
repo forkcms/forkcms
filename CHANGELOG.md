@@ -1,3 +1,24 @@
+5.7.1  (2019-12-05)
+------------------
+
+Fixed:
+* Core: Update vendors [#2993](https://github.com/forkcms/forkcms/pull/2993) [#2988](https://github.com/forkcms/forkcms/pull/2988) [#2970](https://github.com/forkcms/forkcms/pull/2970) [#2979](https://github.com/forkcms/forkcms/pull/2979) [#2981](https://github.com/forkcms/forkcms/pull/2981) [#2995](https://github.com/forkcms/forkcms/pull/2995) [#2999](https://github.com/forkcms/forkcms/pull/2999)
+* Location: fix coordinates being saved as integers instead of floats [#3001](https://github.com/forkcms/forkcms/pull/3001)
+* FormBuilder: Fixed the method toggle, remove e-mail options if database is selected as method [#2958](https://github.com/forkcms/forkcms/pull/2958)
+* FormBuilder: Fixed submission layout [#2956](https://github.com/forkcms/forkcms/pull/2956)
+* Profiles: Fix redirect after login/logout profile on different language in multi lingual site [#2955](https://github.com/forkcms/forkcms/pull/2955)
+* Core: Open links to Google documentation in new tab [#2954](https://github.com/forkcms/forkcms/pull/2954)
+* Pages: Fix broken alert on add page [#2940](https://github.com/forkcms/forkcms/pull/2940)
+* Core: Fix cropping images with height lower than requested height [#2997](https://github.com/forkcms/forkcms/pull/2997)
+* Core: Allow anything as default setting [#2968](https://github.com/forkcms/forkcms/pull/2968)
+* MediaLibrary: Make modal scrollable [#2960](https://github.com/forkcms/forkcms/pull/2960)
+* DX: Fix false errors on code style tests [#2957](https://github.com/forkcms/forkcms/pull/2957)
+
+Security:
+* Core: Symfony security update [#2994](https://github.com/forkcms/forkcms/pull/2994)
+
+
+
 5.7.0  (2019-10-03)
 ------------------
 
