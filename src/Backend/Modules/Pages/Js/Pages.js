@@ -1445,6 +1445,9 @@ jsBackend.pages.tree = {
     jsTreeInstance.on('move_node.jstree', function (event, data) {
       jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
     })
+    jsTreeInstance.on('copy_node.jstree', function (event, data) {
+      jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
+    })
 
     // Search through pages
     var searchThroughPages = function () {
@@ -1481,7 +1484,7 @@ jsBackend.pages.tree = {
     jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
-  checkCallback: function (operation, node, parent, position, more) {
+  checkCallback: function (operation, node, parent) {
     if (operation !== 'move_node') {
       return true
     }
@@ -1490,36 +1493,50 @@ jsBackend.pages.tree = {
       return false
     }
 
-    return typeof parent.data === 'undefined' || parent.data.allowChildren
+    if (typeof parent.data === 'undefined' || parent.data === null) {
+      return typeof parent.children === 'undefined' || parent.children[0] !== 'page-1'
+    }
+
+    return parent.data.allowChildren
   },
 
   // when an item is moved
   onMove: function (event, data, jsTreeInstance) {
     var tree = data.new_instance.element.first().data('tree')
 
+    var node = event.type === 'copy_node' ? data.original : data.node
     // get pageID that has to be moved
-    var currentPageID = data.node.id.replace('page-', '')
+    var currentPageID = node.id.replace('page-', '')
 
     // set the default type of moving
     var type = 'before'
 
     // get the position where the page is dropped
-    var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+    var droppedOnElement = null
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] !== undefined) {
+      droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+    }
 
     // when node is dropped on the last position, we can not add it before the last one -> we need after
-    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined) {
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined
+      && data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
       droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
       type = 'after'
     }
 
     // when node is dropped on another node to move it inside
-    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === data.node.id) {
+    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === node.id) {
       type = 'inside'
-      droppedOnElement = $('#' + data.parent)
+      if (data.parent !== undefined && data.parent !== '#') {
+        droppedOnElement = $('#' + data.parent)
+      }
     }
 
     // get pageID wheron the page has been dropped
-    var droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
+    var droppedOnPageID = 0
+    if (droppedOnElement !== null) {
+      droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
+    }
 
     // move the page
     $.ajax({
