@@ -1,0 +1,18 @@
+{% apply spaceless %}
+{% for subtree in tree %}
+  <h4>{{ ('lbl.' ~ subtree.label)|trans|ucfirst }}</h4>
+  <div class="clearfix" data-tree="{{ subtree.name}}">
+    {{ _self.parseTree(subtree.pages, editUrl) }}
+  </div>
+{% endfor %}
+{% endapply %}
+{% macro parseTree(tree, editUrl) %}
+  <ul>
+    {% for page in tree %}
+      <li id="page-{{ page.page.page_id }}"{% for attr,value in page.attr %} {{ attr }}='{{ value|raw }}'{% endfor %}>
+        <a href="{{ editUrl }}&id={{ page.page.page_id }}"><ins>&#160;</ins>{{ page.page.navigation_title }}</a>
+        {% if page.children is not empty %}{{ _self.parseTree(page.children, editUrl) }}{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}

@@ -496,44 +496,27 @@ class Model
         return $tree;
     }
 
-    public static function getSubtree(array $navigation, int $parentId): string
+    private static function getSubtree(Type $type, array $navigation, int $parentId): ?array
     {
-        $html = '';
+        $subPages = $navigation[(string) $type][$parentId] ?? null;
 
-        // any elements
-        if (isset($navigation['page'][$parentId]) && !empty($navigation['page'][$parentId])) {
-            // start
-            $html .= '<ul>' . "\n";
-
-            // loop pages
-            foreach ($navigation['page'][$parentId] as $page) {
-                // start
-                $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
-
-                // insert link
-                $urlForAction = BackendModel::createUrlForAction(
-                    'Edit',
-                    'Pages',
-                    null,
-                    [
-                        'id' => $page['page_id'],
-                    ]
-                );
-                $html .= '    <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
-
-                // get children
-                $html .= self::getSubtree($navigation, $page['page_id']);
-
-                // end
-                $html .= '</li>' . "\n";
-            }
-
-            // end
-            $html .= '</ul>' . "\n";
+        if ($subPages === null || count($subPages) === 0) {
+            return null;
         }
 
-        // return
-        return $html;
+        $subTree = [];
+        foreach ($subPages as $page) {
+            $subTree[$page['page_id']] = [
+                'attr' => [
+                    'rel' => $page['tree_type'],
+                    'data-jstree' => '{"type":"' . $page['tree_type'] . '"}',
+                ],
+                'page' => $page,
+                'children' => self::getSubtree(Type::page(), $navigation, $page['page_id']),
+            ];
+        }
+
+        return $subTree;
     }
 
     /**
@@ -582,138 +565,39 @@ class Model
     {
         $navigation = static::getCacheBuilder()->getNavigation(Locale::workingLocale());
 
-        // start HTML
-        $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
-        $html .= '<div class="clearfix" data-tree="main">' . "\n";
-        $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-"' . Page::HOME_PAGE_ID . ' rel="home" ' . 'data-jstree=\'{"opened": true, "type":"home"}\'' . '>';
+        $tree = [];
 
-        // create homepage anchor from title
-        $homePage = self::get(Page::HOME_PAGE_ID);
-        $urlForAction = BackendModel::createUrlForAction(
-            'Edit',
-            'Pages',
-            null,
-            ['id' => Page::HOME_PAGE_ID]
-        );
-        $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
-
-        // add subpages
-        $html .= self::getSubtree($navigation, Page::HOME_PAGE_ID);
-
-        // end
-        $html .= '        </li>' . "\n";
-        $html .= '    </ul>' . "\n";
-        $html .= '</div>' . "\n";
-
-        // only show meta if needed
+        $tree['main'] = [
+            'name' => 'main',
+            'label' => 'MainNavigation',
+            'pages' => self::getSubtree(Type::page(), $navigation, 0),
+        ];
         if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
-            // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
-            $html .= '<div class="clearfix" data-tree="meta">' . "\n";
-            $html .= '    <ul>' . "\n";
-
-            // are there any meta pages
-            if (isset($navigation['meta'][0]) && !empty($navigation['meta'][0])) {
-                // loop the items
-                foreach ($navigation['meta'][0] as $page) {
-                    // start
-                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
-
-                    // insert link
-                    $urlForAction = BackendModel::createUrlForAction(
-                        'Edit',
-                        null,
-                        null,
-                        ['id' => $page['page_id']]
-                    );
-                    $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
-
-                    // insert subtree
-                    $html .= self::getSubtree($navigation, $page['page_id']);
-
-                    // end
-                    $html .= '        </li>' . "\n";
-                }
-            }
-
-            // end
-            $html .= '    </ul>' . "\n";
-            $html .= '</div>' . "\n";
+            $tree['meta'] = [
+                'name' => 'meta',
+                'label' => 'Meta',
+                'pages' => self::getSubtree(Type::meta(), $navigation, 0),
+            ];
         }
-
-        // footer pages
-        $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
-
-        // start
-        $html .= '<div class="clearfix" data-tree="footer">' . "\n";
-        $html .= '    <ul>' . "\n";
-
-        // are there any footer pages
-        if (isset($navigation['footer'][0]) && !empty($navigation['footer'][0])) {
-            // loop the items
-            foreach ($navigation['footer'][0] as $page) {
-                // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
-
-                // insert link
-                $urlForAction = BackendModel::createUrlForAction(
-                    'Edit',
-                    'Pages',
-                    null,
-                    ['id' => $page['page_id']]
-                );
-                $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
-
-                // insert subtree
-                $html .= self::getSubtree($navigation, $page['page_id']);
-
-                // end
-                $html .= '        </li>' . "\n";
-            }
-        }
-
-        // end
-        $html .= '    </ul>' . "\n";
-        $html .= '</div>' . "\n";
-
-        // are there any root pages
-        if (isset($navigation['root'][0]) && !empty($navigation['root'][0])) {
-            // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
-
-            // start
-            $html .= '<div class="clearfix" data-tree="root">' . "\n";
-            $html .= '    <ul>' . "\n";
-
-            // loop the items
-            foreach ($navigation['root'][0] as $page) {
-                // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
-
-                // insert link
-                $urlForAction = BackendModel::createUrlForAction(
-                    'Edit',
-                    'Pages',
-                    null,
-                    ['id' => $page['page_id']]
-                );
-                $html .= '            <a href="' . $urlForAction . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
-
-                // insert subtree
-                $html .= self::getSubtree($navigation, $page['page_id']);
-
-                // end
-                $html .= '        </li>' . "\n";
-            }
-
-            // end
-            $html .= '    </ul>' . "\n";
-            $html .= '</div>' . "\n";
-        }
+        $tree['footer'] = [
+            'name' => 'footer',
+            'label' => 'Footer',
+            'pages' => self::getSubtree(Type::footer(), $navigation, 0),
+        ];
+        $tree['root'] = [
+            'name' => 'root',
+            'label' => 'Root',
+            'pages' => self::getSubtree(Type::root(), $navigation, 0),
+        ];
 
         // return
-        return $html;
+        return BackendModel::getContainer()->get('templating')->render(
+            BACKEND_MODULES_PATH . '/Pages/Resources/views/NavigationTree.html.twig',
+            [
+                'editUrl' => BackendModel::createUrlForAction('Edit', 'Pages'),
+                'tree' => $tree,
+            ]
+        );
     }
 
     private static function pageIsChildOfParent(array $navigation, int $childId, int $parentId): bool
@@ -752,7 +636,8 @@ class Model
             if (isset($navigation[$treeName][0]) && !empty($navigation[$treeName][0])) {
                 // loop the items
                 foreach ($navigation[$treeName][0] as $page) {
-                    if ($pageId === $page['page_id'] || self::pageIsChildOfParent($navigation, $pageId, $page['page_id'])) {
+                    if ($pageId === $page['page_id']
+                        || self::pageIsChildOfParent($navigation, $pageId, $page['page_id'])) {
                         return $treeName;
                     }
                 }
