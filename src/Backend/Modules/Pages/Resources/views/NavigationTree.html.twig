@@ -9,7 +9,7 @@
 {% macro parseTree(tree, editUrl) %}
   <ul>
     {% for page in tree %}
-      <li id="page-{{ page.page.page_id }}"{% for attr,value in page.attr %} {{ attr }}='{{ value|raw }}'{% endfor %}>
+      <li id="page-{{ page.page.page_id }}"{% for attr,value in page.attr %} {{ attr }}='{{ value|raw }}'{% endfor %} data-allow-children="{{ page.page.allow_children ? 'true' : 'false' }}" data-allow-move="{{ page.page.allow_move ? 'true' : 'false' }}">
         <a href="{{ editUrl }}&id={{ page.page.page_id }}"><ins>&#160;</ins>{{ page.page.navigation_title }}</a>
         {% if page.children is not empty %}{{ _self.parseTree(page.children, editUrl) }}{% endif %}
       </li>

@@ -1411,7 +1411,7 @@ jsBackend.pages.tree = {
           responsive: true
         },
         multiple: false,
-        check_callback: true
+        check_callback: jsBackend.pages.tree.checkCallback
       },
       types: {
         default: {
@@ -1481,6 +1481,18 @@ jsBackend.pages.tree = {
     jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
+  checkCallback: function (operation, node, parent, position, more) {
+    if (operation !== 'move_node') {
+      return true
+    }
+
+    if (!node.data.allowMove) {
+      return false
+    }
+
+    return typeof parent.data === 'undefined' || parent.data.allowChildren
+  },
+
   // when an item is moved
   onMove: function (event, data, jsTreeInstance) {
     var tree = data.new_instance.element.first().data('tree')
@@ -1490,9 +1502,6 @@ jsBackend.pages.tree = {
 
     // set the default type of moving
     var type = 'before'
-
-    // init allowMove
-    var allowMove = false
 
     // get the position where the page is dropped
     var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
@@ -1511,48 +1520,6 @@ jsBackend.pages.tree = {
 
     // get pageID wheron the page has been dropped
     var droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
-
-    // before an item will be moved we have to do some checks
-    $.ajax({
-      async: false, // important that this isn't asynchronous
-      data: {
-        fork: {action: 'GetInfo'},
-        id: currentPageID,
-        dropped_on: droppedOnPageID
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        if (jsBackend.debug) window.alert(textStatus)
-        allowMove = false
-      },
-      success: function (json, textStatus) {
-        if (json.code !== 200) {
-          if (jsBackend.debug) window.alert(textStatus)
-          allowMove = false
-        } else {
-          // is page allowed to move
-          if (json.data.move_allowed) {
-            allowMove = true
-          } else {
-            jsTreeInstance.jstree('refresh')
-            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToMove'))
-            allowMove = false
-          }
-
-          // is parent allowed to have children
-          if (json.data.children_allowed) {
-            allowMove = true
-          } else {
-            jsTreeInstance.jstree('refresh')
-            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToHaveChildren'))
-            allowMove = false
-          }
-        }
-      }
-    })
-
-    if (!allowMove) {
-      return
-    }
 
     // move the page
     $.ajax({
@@ -1576,7 +1543,10 @@ jsBackend.pages.tree = {
           // show message
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
         }
-      }
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        window.location.reload()
+      },
     })
   },
 
