@@ -384,8 +384,8 @@ class PageRepository extends ServiceEntityRepository
                 Page::class,
                 'p2',
                 Join::WITH,
-                'p2.parentId = p.id AND p2.status = :active ' .
-                'AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.locale = :locale'
+                'p2.parentId = p.id AND p2.status = :status ' .
+                'AND p2.hidden = :hidden AND (p2.data NOT LIKE :data OR p2.data IS NULL) AND p2.locale = :locale'
             )
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
@@ -395,9 +395,8 @@ class PageRepository extends ServiceEntityRepository
 
         $qb->setParameters(
             [
-                'active' => 'active',
                 'data' => '%s:9:\"is_action\";b:1;%',
-                'hidden' => 'N',
+                'hidden' => false,
                 'locale' => $locale,
                 'parentIds' => $parentIds,
                 'status' => Status::active(),
