@@ -481,6 +481,7 @@ class Installer extends ModuleInstaller
                     'language' => $language,
                     'allow_move' => false,
                     'allow_delete' => false,
+                    'allow_children' => false,
                 ],
                 null,
                 ['html' => __DIR__ . '/Data/' . $language . '/404.txt'],
