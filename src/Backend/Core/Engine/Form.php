@@ -77,7 +77,6 @@ class Form extends \Common\Core\Form
 
         // we add JS because we need CKEditor
         $this->header->addJS('ckeditor/ckeditor.js', 'Core', false);
-        $this->header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
         $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file

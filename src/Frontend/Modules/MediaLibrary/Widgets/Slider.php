@@ -18,7 +18,7 @@ class Slider extends FrontendMediaWidget
             return;
         }
 
-        $this->addJS('/js/vendors/slick.min.js', true);
+        $this->addJS('/js/vendors/slick.min.js', true, false);
 
         parent::execute();
         $this->loadTemplate();
