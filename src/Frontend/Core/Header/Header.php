@@ -123,14 +123,14 @@ class Header extends KernelLoader
 
         // debug stylesheet
         if ($container->getParameter('kernel.debug')) {
-            $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css', true, false, Priority::debug());
+            $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css', true, true, Priority::debug());
         }
 
         // add default javascript-files
-        $this->addJS('/js/vendors/jquery.min.js', false, false, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, false, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/utils.js', true, false, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', true, false, Priority::core());
+        $this->addJS('/js/vendors/jquery.min.js', false, true, Priority::core());
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, true, Priority::core());
+        $this->addJS('/src/Frontend/Core/Js/utils.js', true, true, Priority::core());
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', true, true, Priority::core());
     }
 
     /**

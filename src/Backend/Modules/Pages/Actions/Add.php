@@ -14,6 +14,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Common\Core\Header\Priority;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 use Symfony\Component\Filesystem\Filesystem;
@@ -78,10 +79,10 @@ class Add extends BackendBaseActionAdd
         parent::execute();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
-        $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
+        $this->header->addJS('jstree/jquery.tree.js');
+        $this->header->addJS('jstree/lib/jquery.cookie.js');
+        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+        $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', null, false, true, true, Priority::core());
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
