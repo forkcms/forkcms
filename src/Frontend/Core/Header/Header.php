@@ -131,6 +131,8 @@ class Header extends KernelLoader
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, false, Priority::core());
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, false, Priority::core());
         $this->addJS('/src/Frontend/Core/Js/frontend.js', true, false, Priority::core());
+        // @custom for SumoCoders
+        $this->addJS('src/Frontend/Core/Js/bundle.js', false, true, Priority::core());
     }
 
     /**
