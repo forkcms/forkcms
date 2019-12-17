@@ -64,6 +64,6 @@ final class Asset
         // check if we need to use a ? or &
         $separator = mb_strpos($this->file, '?') === false ? '?' : '&';
 
-        return $this->file . $separator . 'm=' . filemtime(__DIR__ . '/../../../../' . $this->file);
+        return $this->file . $separator . 'm=' . @filemtime(__DIR__ . '/../../../../' . $this->file);
     }
 }
