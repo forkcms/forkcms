@@ -18,7 +18,7 @@ final class Asset
     /** @var DateTimeImmutable */
     private $createdOn;
 
-    public function __construct(string $file, bool $addTimestamp = false, Priority $priority = null)
+    public function __construct(string $file, bool $addTimestamp = true, Priority $priority = null)
     {
         $this->file = $file;
         $this->addTimestamp = $addTimestamp;

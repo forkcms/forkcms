@@ -128,7 +128,7 @@ class Block extends KernelLoader
         string $file,
         bool $overwritePath = false,
         bool $minify = true,
-        bool $addTimestamp = false
+        bool $addTimestamp = true
     ): void {
         // external urls always overwrite the path
         $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
@@ -159,7 +159,7 @@ class Block extends KernelLoader
         string $file,
         bool $overwritePath = false,
         bool $minify = true,
-        bool $addTimestamp = false
+        bool $addTimestamp = true
     ): void {
         // external urls always overwrite the path
         $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
