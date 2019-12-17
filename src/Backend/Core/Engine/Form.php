@@ -82,16 +82,12 @@ class Form extends \Common\Core\Form
 
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
-            $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
-            );
             $this->header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
-                ) . '.js?m=' . $timestamp,
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js',
                 null,
                 false,
                 true,
-                false
+                true
             );
         }
 
