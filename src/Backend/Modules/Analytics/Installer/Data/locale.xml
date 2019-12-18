@@ -200,10 +200,11 @@
       </item>
       <item type="message" name="CertificateHelp">
         <translation language="nl"><![CDATA[
-          <h3>Hoe verkrijg je je secret file?</h3>
-          <br/>
-          <p>De Analytics API inschakelen</p>
-          <p>
+          <div class="content-title">
+            <h3>Hoe verkrijg je je secret file?</h3>
+          </div>
+          <div class="form-text text-muted">
+            <p class="mb-1">De Analytics API inschakelen</p>
             <ol>
               <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank" rel="noopener noreferrer">Google Developers Console</a>.</li>
               <li>Zorg dat je aangemeld bent met een Google account die toegang heeft op de gewenste analytics account.</li>
@@ -212,9 +213,7 @@
               <li>Ga naar de <strong>Analytics API</strong> door er op te klikken in de <strong>Andere populaire API's</strong> categorie of door het te typen in de zoekbalk.</li>
               <li>Als je de API nog niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.</li>
             </ol>
-          </p>
-          <p>Toegangsgegevens aanmaken voor Fork CMS.</p>
-          <p>
+            <p class="mb-1">Toegangsgegevens aanmaken voor Fork CMS.</p>
             <ol>
               <li>Kies in de zijbalk aan de linkerkant <strong>Inloggegevens</strong>.</li>
               <li>Klik op <strong>Inloggegevens maken</strong> en kies <strong>Serviceaccountsleutel</strong> in de dropdown.</li>
@@ -225,12 +224,14 @@
               <li>Log in in Google Analytics, ga naar het beheerder onderdeel en voeg het gegenereerde e-mail adres toe bij de gewenste property en geef deze "lezen en analyseren" rechten.</li>
               <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
             </ol>
-          </p>]]></translation>
+          </div>]]>
+        </translation>
         <translation language="en"><![CDATA[
-          <h3>How to get your secret file?</h3>
-          <br/>
-          <p>Enable the Analytics API</p>
-          <p>
+          <div class="content-title">
+            <h3>How to get your secret file?</h3>
+          </div>
+          <div class="form-text text-muted">
+            <p class="mb-1">Enable the Analytics API</p>
             <ol>
               <li>Go to the <a href="https://console.developers.google.com/" target="_blank" rel="noopener noreferrer">Google Developers Console</a>.</li>
               <li>Make sure you're logged in with a Google account that has access to the wanted Analytics account.</li>
@@ -239,9 +240,7 @@
               <li>Go to the <strong>Analytics API</strong> page by clicking on it in the <strong>Other popular API's</strong> category or typing it in the search bar.</li>
               <li>You can enable the API if you haven't done that yet by clicking on <strong>ENABLE API</strong> underneath the header.</li>
             </ol>
-          </p>
-          <p>Creating credentials for Fork CMS.</p>
-          <p>
+            <p class="mb-1">Creating credentials for Fork CMS.</p>
             <ol>
               <li>In the sidebar on the left, select <strong>Credentials</strong>.</li>
               <li>Click on <strong>Create credentials</strong> and select <strong>Service account key</strong> in the dropdown.</li>
@@ -252,7 +251,8 @@
               <li>Login to analytics, go to admin page and add the generated e-mail adress to the prefered property with "read and analyze" rights.</li>
               <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>
             </ol>
-          </p>]]></translation>
+          </div>]]>
+        </translation>
       </item>
 
       <item type="message" name="NoAccounts">

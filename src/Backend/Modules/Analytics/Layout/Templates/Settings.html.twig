@@ -21,14 +21,27 @@
           </div>
           <div class="card-body">
             <div class="form-group last">
-             <p>
-               <small class="form-text text-muted">
-                 {{ 'msg.CertificateHelp'|trans|raw }}
-               </small>
-             </p>
-              {% form_field certificate %} {% form_field_error certificate %}
-              <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
-              {% form_field email %} {% form_field_error email %}
+              {{ 'msg.CertificateHelp'|trans|raw }}
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>{{ 'lbl.Certificate'|trans|ucfirst }}</label>
+                    <div class="custom-file">
+                      {% form_field certificate %}
+                      <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans }}</label>
+                    </div>
+                    {% form_field_error certificate %}
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
+                    {% form_field email %} {% form_field_error email %}
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
