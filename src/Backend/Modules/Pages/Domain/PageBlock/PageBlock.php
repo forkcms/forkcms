@@ -6,9 +6,8 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
  * @ORM\Table(name="PagesPageBlock")
- *
+ * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class PageBlock
@@ -44,7 +43,7 @@ class PageBlock
     private $extraId;
 
     /**
-     * @var string
+     * @var Type
      *
      * @ORM\Column(type="pages_page_block_type", name="extra_type", options={"default": "rich_text"})
      */
@@ -62,7 +61,6 @@ class PageBlock
      *
      * @ORM\Column(
      *     type="text",
-     *     name="html",
      *     nullable=true,
      *     options={"comment": "if this block is HTML this field should contain the real HTML."}
      * )
@@ -72,29 +70,29 @@ class PageBlock
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="visible", options={"default": "1"})
+     * @ORM\Column(type="boolean", options={"default": "1"})
      */
     private $visible;
 
     /**
-     * @var integer
+     * @var int
+     * @ORM\Id
      *
-     * @ORM\Id()
-     * @ORM\Column(type="integer", name="sequence")
+     * @ORM\Column(type="integer")
      */
     private $sequence;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 
@@ -116,43 +114,6 @@ class PageBlock
         $this->html = $html;
         $this->visible = $visible;
         $this->sequence = $sequence;
-    }
-
-    public function update(
-        int $revisionId,
-        string $position,
-        ?int $extraId,
-        Type $extraType,
-        ?string $extraData,
-        ?string $html,
-        bool $visible,
-        int $sequence
-    ): void {
-        $this->revisionId = $revisionId;
-        $this->position = $position;
-        $this->extraId = $extraId;
-        $this->extraType = $extraType;
-        $this->extraData = $extraData;
-        $this->html = $html;
-        $this->visible = $visible;
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedOn(): void
-    {
-        $this->createdOn = new DateTime();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setEditedOn(): void
-    {
-        $this->editedOn = new DateTime();
     }
 
     public function getRevisionId(): int
@@ -195,6 +156,28 @@ class PageBlock
         return $this->sequence;
     }
 
+    public function getTest(): string
+    {
+        return $this->test;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedOn(): void
+    {
+        $this->createdOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setEditedOn(): void
+    {
+        $this->editedOn = new DateTime();
+    }
+
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
@@ -203,5 +186,33 @@ class PageBlock
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
+    }
+
+    public static function fromDataTransferObject(PageBlockDataTransferObject $dataTransferObject): self
+    {
+        if ($dataTransferObject->hasExistingPageBlock()) {
+            $pageBlock = $dataTransferObject->getPageBlockEntity();
+            $pageBlock->revisionId = $dataTransferObject->revisionId;
+            $pageBlock->position = $dataTransferObject->position;
+            $pageBlock->extraId = $dataTransferObject->extraId;
+            $pageBlock->extraType = $dataTransferObject->extraType;
+            $pageBlock->extraData = $dataTransferObject->extraData;
+            $pageBlock->html = $dataTransferObject->html;
+            $pageBlock->visible = $dataTransferObject->visible;
+            $pageBlock->sequence = $dataTransferObject->sequence;
+
+            return $pageBlock;
+        }
+
+        return new self(
+            $dataTransferObject->revisionId,
+            $dataTransferObject->position,
+            $dataTransferObject->extraId,
+            $dataTransferObject->extraType,
+            $dataTransferObject->extraData,
+            $dataTransferObject->html,
+            $dataTransferObject->visible,
+            $dataTransferObject->sequence
+        );
     }
 }
