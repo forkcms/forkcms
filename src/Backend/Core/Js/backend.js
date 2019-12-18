@@ -575,14 +575,16 @@ jsBackend.blockEditor = {
 
   // initialize the editor
   init: function () {
-    var editors = $('textarea.inputBlockEditor')
+    jsBackend.blockEditor.initEditors($('textarea.inputBlockEditor'))
+    jsBackend.blockEditor.loadEditorsInCollections()
+  },
+
+  initEditors: function (editors) {
     if (editors.length > 0) {
       editors.each(function () {
         jsBackend.blockEditor.createEditor($(this))
       })
     }
-
-    jsBackend.blockEditor.loadEditorsInCollections()
   },
 
   createEditor: function ($element) {
@@ -590,8 +592,8 @@ jsBackend.blockEditor = {
   },
 
   loadEditorsInCollections: function () {
-    $('[data-addfield="collection"]').on('collection-field-added', function () {
-      jsBackend.blockEditor.createEditor($(this))
+    $('[data-addfield="collection"]').on('collection-field-added', function (event, formCollectionItem) {
+      jsBackend.blockEditor.initEditors($(formCollectionItem).find('textarea.inputBlockEditor'))
     })
   }
 }
