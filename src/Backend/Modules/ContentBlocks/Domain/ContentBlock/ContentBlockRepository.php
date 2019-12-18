@@ -6,6 +6,12 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotF
 use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
+/**
+ * @method ContentBlock|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ContentBlock|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ContentBlock[]    findAll()
+ * @method ContentBlock[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class ContentBlockRepository extends EntityRepository
 {
     public function add(ContentBlock $contentBlock): void
@@ -79,5 +85,13 @@ class ContentBlockRepository extends EntityRepository
             },
             (array) $this->findBy(['id' => $id, 'locale' => $locale])
         );
+    }
+
+    /**
+     * @return array|ContentBlock[]
+     */
+    public function findAllActiveForLocale(Locale $locale): array
+    {
+        return $this->findBy(['locale' => $locale, 'status' => Status::active()]);
     }
 }

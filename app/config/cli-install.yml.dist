@@ -1,0 +1,21 @@
+config:
+    database:
+        hostname: # string
+        username: # string
+        password: # string
+        name:  # string
+        port: # optional int
+    language:
+        multiLanguage: # boolean
+        languages: # string[] required when multiLanguage is true
+        defaultLanguage: # string
+        interfaceLanguages: # optional string[] only fill this in when it needs to be different from the languages
+        defaultInterfaceLanguage: # optional string defaults to the defaultLanguage and needs to be in the languages array
+    modules:
+        install: # optional string[] of all modules that aren't required by default
+        exampleData: # optional boolean
+    debug:
+        email: # optional string
+    user:
+        email: # optional string will be asked in the cli if missing
+        password: # optional string will be asked in the cli if missing

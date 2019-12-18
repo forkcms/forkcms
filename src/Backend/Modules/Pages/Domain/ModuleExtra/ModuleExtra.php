@@ -61,7 +61,7 @@ class ModuleExtra
     private $action;
 
     /**
-     * @var string|null
+     * @var mixed
      *
      * @ORM\Column(
      *     type="text",
@@ -194,5 +194,10 @@ class ModuleExtra
             return;
         }
         $this->data = unserialize($this->data, ['allowed_classes' => false]);
+    }
+
+    public function setData(string $key, $value): void
+    {
+        $this->data[$key] = $value;
     }
 }

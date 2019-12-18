@@ -212,6 +212,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 1 }
 
+    ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager:
+        public: true
+        arguments:
+            - "@command_bus"
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
@@ -237,6 +242,18 @@ services:
         autowire: true
         tags:
             - { name: twig.extension }
+
+    Console\Locale\ImportLocaleCommand:
+        public: false
+        autowire: true
+        tags:
+            - { name: console.command }
+
+    Console\Thumbnails\GenerateThumbnailsCommand:
+        public: false
+        autowire: true
+        tags:
+            - { name: console.command }
 
 fos_rest:
     routing_loader:

@@ -1,0 +1,5 @@
+services:
+    Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocaleHandler:
+        public: true
+        tags:
+            - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale }
