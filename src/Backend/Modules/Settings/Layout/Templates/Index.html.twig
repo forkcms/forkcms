@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block warning %}
-  <strong>{{ 'msg.ConfigurationError'|trans|ucfirst }}</strong>
+  <p><strong>{{ 'msg.ConfigurationError'|trans|ucfirst }}</strong></p>
   <ul class="mb-0">
     {% for warning in warnings %}
       <li>{{ warning.message|raw }}</li>

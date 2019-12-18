@@ -63,21 +63,19 @@
 
   <div{% if id %} id="{{ id }}"{% endif %}{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="alert"{% if not active %} style="display: none;"{% endif %}>
     {% if message %}
-      <p class="mb-0">
-        {% if type == 'danger' %}
-          {{ macro.icon('times-circle', 'far') }}
-        {% elseif type == 'success' %}
-          {{ macro.icon('check-circle', 'far') }}
-        {% elseif type == 'info' %}
-          {{ macro.icon('info-circle') }}
-        {% elseif type == 'warning' %}
-          {{ macro.icon('exclamation-triangle') }}
-        {% endif %}
-        {% if dismissable %}
-          <button type="button" class="close" data-dismiss="alert">×</button>
-        {% endif %}
-        {{ message|raw }}
-      </p>
+      {% if type == 'danger' %}
+        {{ macro.icon('times-circle', 'far') }}
+      {% elseif type == 'success' %}
+        {{ macro.icon('check-circle', 'far') }}
+      {% elseif type == 'info' %}
+        {{ macro.icon('info-circle') }}
+      {% elseif type == 'warning' %}
+        {{ macro.icon('exclamation-triangle') }}
+      {% endif %}
+      {% if dismissable %}
+        <button type="button" class="close" data-dismiss="alert">×</button>
+      {% endif %}
+      {{ message|raw }}
     {% endif %}
   </div>
 {% endmacro %}
