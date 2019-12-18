@@ -1,22 +1,4 @@
 /**
- * Media tree
- */
-
-#mediaTree .tree-fork li[rel="folder"] a {
-  width: auto !important;
-  position: relative;
-
-  &:before {
-    content: "\f114";
-    color: #999;
-    font-family: FontAwesome;
-    font-size: 12px;
-    position: absolute;
-    left: 4px
-  }
-}
-
-/**
  * Media library Helper
  *
  * Structure:
