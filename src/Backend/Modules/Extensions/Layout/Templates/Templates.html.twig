@@ -19,19 +19,10 @@
             {% if not template.exists %}
               &nbsp;
             {% elseif template.large %}
-              <div class="card card-default card-pages-block">
-                <div class="card-heading">
-                  <div class="heading linkedBlocksTitle"><h3>{{ template.title }}</h3></div>
-                </div>
-                <div class="card-body">
-                  <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                  <div class="text-center">
-                    <div class="btn-group">
-                      {{ macro.buttonIcon('', 'plus-square', 'lbl.AddBlock'|trans|ucfirst, 'btn-secondary btn-md addBlock') }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {{ '{% set form_name="blocks_'|raw ~ template.value|raw ~ '" %}'|raw }}
+              {% verbatim %}
+              {{ form_row(form.children[form_name])}}
+              {% endverbatim %}
             {% else %}
               <a href="#position-{{ template.value }}" title="{{ template.title }}">{{ template.title }}</a>
             {% endif %}
