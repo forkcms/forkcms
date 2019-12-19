@@ -100,6 +100,9 @@ class PageDataTransferObject
     /** @var string */
     public $tags;
 
+    /** @var array */
+    public $blocks;
+
     public function __construct(Page $page = null)
     {
         $this->page = $page;
@@ -112,6 +115,7 @@ class PageDataTransferObject
             $this->navigationTitleOverwrite = false;
             $this->hidden = false;
             $this->image = MediaGroup::create(MediaGroupType::image());
+            $this->blocks = [];
 
             return;
         }
