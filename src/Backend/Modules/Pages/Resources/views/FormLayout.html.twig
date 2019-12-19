@@ -36,6 +36,8 @@
   </ul>
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
+      {{ form_widget(form.content) }}
+      {{ form_errors(form.content) }}
     </div>
     <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
       {{ form_widget(form.data.redirect.redirect) }}
@@ -227,4 +229,68 @@
       {{ form_widget(form.parent.parent.external_redirect) }}
     {% endif %}
   </div>
+{% endblock %}
+
+{% block page_content_widget %}
+  {{ form_row(form.templateId) }}
+  <div id="templateVisualLarge">
+    {{ include(template_from_string(selectedTemplate.htmlLarge|replace({'&quot;': '"'}), 'page template: ' ~ selectedTemplate.label), {'form': form}) }}
+  </div>
+{% endblock %}
+
+{% block _page_content_page_block_collection_widget %}
+  {% spaceless %}
+    {% import 'Layout/Templates/macros.html.twig' as macro %}
+    {% if prototype is defined %}
+      {% set prototype_vars = {} %}
+      {% if style is defined %}
+        {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+      {% endif %}
+      {% set prototype_html = form_widget(prototype, prototype_vars) %}
+      {% if form.vars.allow_delete %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar">' %}
+        {% if form.vars.allow_sequence %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
+        {% endif %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><button class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw ~ '</button></div></div>' %}
+      {% endif %}
+
+      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+      <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+        {% for field in form %}
+          <li class="list-group-item">
+            {{ form_widget(field) }}
+            {{ form_errors(field) }}
+            {% if form.vars.allow_delete or form.vars.allow_sequence %}
+              <div class="btn-toolbar">
+                {% if form.vars.allow_sequence %}
+                  <div class="btn-group pull-left">
+                    <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('reorder') }}</span>
+                    {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
+                    {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
+                  </div>
+                {% endif %}
+                {% if form.vars.allow_delete %}
+                  <div class="btn-group pull-right">
+                    <button class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="card-footer clearfix">
+        {% if form.vars.allow_add %}
+          <div class="btn-group pull-right">
+            <button class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
+          </div>
+        {% endif %}
+        {{ form_errors(form) }}
+      </div>
+    </div>
+  {% endspaceless %}
 {% endblock %}

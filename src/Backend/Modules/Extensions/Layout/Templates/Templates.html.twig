@@ -20,9 +20,16 @@
               &nbsp;
             {% elseif template.large %}
               {{ '{% set form_name="blocks_'|raw ~ template.value|raw ~ '" %}'|raw }}
-              {% verbatim %}
-              {{ form_row(form.children[form_name])}}
-              {% endverbatim %}
+              <div class="card card-default card-pages-block">
+                <div class="card-heading">
+                  <div class="heading linkedBlocksTitle"><h3>{{ template.title }}</h3></div>
+                </div>
+                <div class="card-body">
+                {% verbatim %}
+                {{ form_widget(form.children[form_name])}}
+                {% endverbatim %}
+                </div>
+              </div>
             {% else %}
               <a href="#position-{{ template.value }}" title="{{ template.title }}">{{ template.title }}</a>
             {% endif %}

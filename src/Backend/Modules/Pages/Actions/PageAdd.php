@@ -8,7 +8,6 @@ use Backend\Modules\Pages\Domain\Page\Command\CreatePage;
 use Backend\Modules\Pages\Domain\Page\Form\PageType;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\Doctrine\Repository\MetaRepository;
 use Common\ModulesSettings;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\KernelInterface;
