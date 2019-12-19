@@ -259,6 +259,11 @@ services:
         public: true
         autowire: true
 
+    Twig\Extension\StringLoaderExtension:
+        autowire: true
+        tags:
+            - { name: twig.extension }
+
 fos_rest:
     routing_loader:
         default_format: json
