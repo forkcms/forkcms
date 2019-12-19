@@ -53,6 +53,18 @@ final class PageType extends AbstractType
         $builder->add('navigation', PageNavigationType::class);
         $builder->add('data', PageDataType::class);
         $builder->add('settings', PageSettingsType::class);
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            static function (FormEvent $event): void {
+                $event->getForm()->add(
+                    'content',
+                    PageContentType::class,
+                    [
+                        'selectedTemplateId' => $event->getData()->templateId,
+                    ]
+                );
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
