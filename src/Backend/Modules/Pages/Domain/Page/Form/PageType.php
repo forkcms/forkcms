@@ -13,6 +13,8 @@ use Backend\Modules\Pages\Domain\Page\Status;
 use Common\Form\TitleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +27,15 @@ final class PageType extends AbstractType
         if ($this->authenticatedUserIsAllowedToSeeAndEditTags()) {
             $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
         }
-        $builder->add('image', SingleMediaGroupType::class, ['label' => 'lbl.Image', 'required' => false]);
+        $builder->add(
+            'image',
+            SingleMediaGroupType::class,
+            [
+                'label' => 'lbl.Image',
+                'required' => false,
+                'minimum_items' => 0,
+            ]
+        );
         $builder->addEventSubscriber(
             new AddMetaSubscriber(
                 'Pages', // Virtual to make sure the correct url is used
