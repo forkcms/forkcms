@@ -68,7 +68,7 @@ phpstan:
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - php composer.phar install --quiet --ignore-platform-reqs
+        - php -d memory_limit=-1 composer.phar install --quiet --ignore-platform-reqs
     script:
         - bin/phpstan analyze src
     stage: code quality
