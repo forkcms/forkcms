@@ -70,7 +70,7 @@ phpstan:
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
         - php composer.phar install --quiet --ignore-platform-reqs
     script:
-        - bin/phpstan analyze src
+        - php -d memory_limit=-1 bin/phpstan analyze src
     stage: code quality
     tags:
         - php71
