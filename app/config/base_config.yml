@@ -104,6 +104,9 @@ liip_imagine:
         media_library_one_image_large:
             filters:
                 thumbnail: { size : [1600, 500], mode : inbound }
+        content_block_image:
+            filters:
+                scale: { dim: [2400, 2400] }
 
 services:
     templating.name_parser.public:

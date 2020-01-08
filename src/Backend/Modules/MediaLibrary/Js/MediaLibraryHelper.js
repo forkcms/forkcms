@@ -1156,8 +1156,8 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' +
-              responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' +
+              responseJSON.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder')
@@ -1288,7 +1288,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
@@ -1453,9 +1453,10 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<div class="icon"></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
-    html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
-    html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
+    html += '<span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += '<i class="fas fa-times"></i>'
     html += '</button>'
     html += '</div>'
     html += '</li>'
@@ -1526,9 +1527,10 @@ jsBackend.mediaLibraryHelper.templates = {
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 
-    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-block" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
-    html += utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect'))
+    html += '<i class="fas fa-times"></i>'
+    html += '<span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'
     html += '</div>'
     html += '</li>'

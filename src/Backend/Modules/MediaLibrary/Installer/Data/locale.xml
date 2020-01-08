@@ -808,6 +808,10 @@
         <translation language="ru"><![CDATA[Вы уверены, что хотите удалить носитель?]]></translation>
         <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć nośnik?]]></translation>
       </item>
+      <item type="label" name="Retry">
+        <translation language="en"><![CDATA[retry]]></translation>
+        <translation language="nl"><![CDATA[opnieuw]]></translation>
+      </item>
     </MediaLibrary>
   </Backend>
 </locale>
