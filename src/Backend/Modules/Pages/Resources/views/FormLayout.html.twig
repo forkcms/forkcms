@@ -247,12 +247,15 @@
         {% set prototype_vars = prototype_vars|merge({'style': style}) %}
       {% endif %}
       {% set prototype_html = form_widget(prototype, prototype_vars) %}
-      {% if form.vars.allow_delete %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar">' %}
+      {% if form.vars.allow_delete or form.vars.allow_sequence %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar justify-content-between">' %}
         {% if form.vars.allow_sequence %}
-          {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('arrows-alt') ~ '</span>' ~ macro.buttonIcon('', 'sort-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'sort-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
         {% endif %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><button class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw ~ '</button></div></div>' %}
+        {% if form.vars.allow_delete %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group">' ~ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock__id__', 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) ~ '</div><div class="modal" id="confirmDeleteBlock__id__" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle__id__"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="confirmDeleteBlockTitle__id__">' ~ 'lbl.DeleteBlock'|trans|ucfirst ~ '</h4></div><div class="modal-body"><p>' ~ 'msg.ConfirmDeleteBlock'|trans ~ '</p></div><div class="modal-footer">' ~ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) ~ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-dismiss":"modal", 'data-field': '__id__', 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) ~ '</div></div></div></div></div>' %}
+        {% endif %}
+        {% set prototype_html = prototype_html ~ '</div>' %}
       {% endif %}
 
       {% set attr = attr|merge({'data-prototype': prototype_html }) %}
@@ -265,20 +268,38 @@
             {{ form_widget(field) }}
             {{ form_errors(field) }}
             {% if form.vars.allow_delete or form.vars.allow_sequence %}
-              <div class="btn-toolbar">
+              <div class="btn-toolbar justify-content-between">
                 {% if form.vars.allow_sequence %}
-                  <div class="btn-group pull-left">
-                    <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('reorder') }}</span>
-                    {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
-                    {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
+                  <div class="btn-group">
+                    <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('arrows-alt') }}</span>
+                    {{ macro.buttonIcon('', 'sort-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
+                    {{ macro.buttonIcon('', 'sort-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
                   </div>
                 {% endif %}
                 {% if form.vars.allow_delete %}
-                  <div class="btn-group pull-right">
-                    <button class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw }}</button>
+                  <div class="btn-group">
+                    {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
                   </div>
                 {% endif %}
               </div>
+              {% if form.vars.allow_delete %}
+                <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="confirmDeleteBlockTitle{{ field.vars.id }}">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
+                      </div>
+                      <div class="modal-footer">
+                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+                        {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-dismiss":"modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
             {% endif %}
           </li>
         {% endfor %}
