@@ -30,6 +30,7 @@ final class PageBlockType extends AbstractType
             CheckboxType::class,
             [
                 'label' => 'lbl.Visible',
+                'required' => false,
             ]
         );
         $builder->add(
