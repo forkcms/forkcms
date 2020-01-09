@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use Backend\Form\EventListener\AddMetaSubscriber;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +18,14 @@ final class PageBlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
+            'extraType',
+            ChoiceType::class,
+            [
+                'label' => 'lbl.Type',
+                'choices' => Type::dropdownChoices(),
+            ]
+        );
+        $builder->add(
             'visible',
             CheckboxType::class,
             [
@@ -25,13 +34,6 @@ final class PageBlockType extends AbstractType
         );
         $builder->add(
             'extraId',
-            HiddenType::class,
-            [
-                'required' => false,
-            ]
-        );
-        $builder->add(
-            'extraType',
             HiddenType::class,
             [
                 'required' => false,

@@ -2,7 +2,10 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Core\Language\Language as BL;
+use Common\Language;
 use JsonSerializable;
+use SpoonFilter;
 
 final class Type implements JsonSerializable
 {
@@ -63,5 +66,18 @@ final class Type implements JsonSerializable
     public function jsonSerialize(): string
     {
         return (string) $this;
+    }
+
+    /**
+     * @return self[]
+     */
+    public static function dropdownChoices(): array
+    {
+        return [
+            SpoonFilter::ucfirst(Language::lbl('Editor')) => self::richText(),
+            SpoonFilter::ucfirst(Language::lbl('Module')) => self::block(),
+            SpoonFilter::ucfirst(Language::lbl('Widget')) => self::widget(),
+            SpoonFilter::ucfirst(Language::lbl('UserTemplate')) => self::userTemplate(),
+        ];
     }
 }
