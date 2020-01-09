@@ -101,6 +101,8 @@ final class PageContentType extends AbstractType
                     'data' => $pageBlocks,
                     'label' => false,
                     'allow_add' => true,
+                    'allow_delete' => true,
+                    'allow_sequence' => true,
                     'property_path' => 'blocks[' . $block . ']',
                     'entry_type' => PageBlockType::class,
                     'block_name' => 'page_block_collection',
