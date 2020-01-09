@@ -5,6 +5,7 @@ namespace Backend\Modules\Pages\Domain\PageBlock;
 use Backend\Core\Language\Language as BL;
 use Common\Language;
 use JsonSerializable;
+use RuntimeException;
 use SpoonFilter;
 
 final class Type implements JsonSerializable
@@ -73,11 +74,32 @@ final class Type implements JsonSerializable
      */
     public static function dropdownChoices(): array
     {
+        $richText = self::richText();
+        $block = self::block();
+        $widget = self::widget();
+        $userTemplate = self::userTemplate();
+
         return [
-            SpoonFilter::ucfirst(Language::lbl('Editor')) => self::richText(),
-            SpoonFilter::ucfirst(Language::lbl('Module')) => self::block(),
-            SpoonFilter::ucfirst(Language::lbl('Widget')) => self::widget(),
-            SpoonFilter::ucfirst(Language::lbl('UserTemplate')) => self::userTemplate(),
+            $richText->getLabel() => $richText,
+            $block->getLabel() => $block,
+            $widget->getLabel() => $widget,
+            $userTemplate->getLabel() => $userTemplate,
         ];
+    }
+
+    public function getLabel(): string
+    {
+        switch ($this->type) {
+            case self::RICH_TEXT:
+                return SpoonFilter::ucfirst(Language::lbl('Editor'));
+            case self::BLOCK:
+                return SpoonFilter::ucfirst(Language::lbl('Module'));
+            case self::WIDGET:
+                return SpoonFilter::ucfirst(Language::lbl('Widget'));
+            case self::USER_TEMPLATE:
+                return SpoonFilter::ucfirst(Language::lbl('UserTemplate'));
+        }
+
+        throw new RuntimeException('No label implemented for type: ' . $this->type);
     }
 }
