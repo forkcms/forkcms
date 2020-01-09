@@ -13,13 +13,11 @@ final class Type implements JsonSerializable
     private const RICH_TEXT = 'rich_text';
     private const BLOCK = 'block';
     private const WIDGET = 'widget';
-    private const USER_TEMPLATE = 'usertemplate';
 
     public const POSSIBLE_TYPES = [
         self::RICH_TEXT,
         self::BLOCK,
         self::WIDGET,
-        self::USER_TEMPLATE,
     ];
 
     /** @var string */
@@ -37,6 +35,26 @@ final class Type implements JsonSerializable
         }
 
         $this->type = $type;
+    }
+
+    public function equals(self $type): bool
+    {
+        return $this->type = $type->type;
+    }
+
+    public function isRichText(): bool
+    {
+        return $this->equals(self::richText());
+    }
+
+    public function isBlock(): bool
+    {
+        return $this->equals(self::block());
+    }
+
+    public function isWidget(): bool
+    {
+        return $this->equals(self::widget());
     }
 
     public static function richText(): self
@@ -77,13 +95,11 @@ final class Type implements JsonSerializable
         $richText = self::richText();
         $block = self::block();
         $widget = self::widget();
-        $userTemplate = self::userTemplate();
 
         return [
             $richText->getLabel() => $richText,
             $block->getLabel() => $block,
             $widget->getLabel() => $widget,
-            $userTemplate->getLabel() => $userTemplate,
         ];
     }
 
@@ -96,8 +112,6 @@ final class Type implements JsonSerializable
                 return SpoonFilter::ucfirst(Language::lbl('Module'));
             case self::WIDGET:
                 return SpoonFilter::ucfirst(Language::lbl('Widget'));
-            case self::USER_TEMPLATE:
-                return SpoonFilter::ucfirst(Language::lbl('UserTemplate'));
         }
 
         throw new RuntimeException('No label implemented for type: ' . $this->type);
