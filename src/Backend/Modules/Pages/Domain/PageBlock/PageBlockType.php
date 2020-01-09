@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use Backend\Form\EventListener\AddMetaSubscriber;
+use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -27,7 +28,7 @@ final class PageBlockType extends AbstractType
         );
         $builder->add(
             'visible',
-            CheckboxType::class,
+            SwitchType::class,
             [
                 'label' => 'lbl.Visible',
                 'required' => false,

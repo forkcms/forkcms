@@ -68,6 +68,8 @@ class PageBlockDataTransferObject
 
         if (!$this->hasExistingPageBlock()) {
             $this->visible = true;
+            $this->extraType = Type::richText();
+
             return;
         }
 
