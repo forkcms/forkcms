@@ -37,6 +37,7 @@
     "photoswipe": "^4.1.1",
     "popper.js": "^1.16.0",
     "select2": "^4.0.12",
+    "select2-theme-bootstrap4": "^0.2.0-beta.4",
     "simple-ajax-uploader": "^2.6.7",
     "slick-carousel": "^1.6.0",
     "standard": "^10.0.3",

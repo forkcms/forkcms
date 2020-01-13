@@ -1232,6 +1232,7 @@ jsBackend.forms = {
     jsBackend.forms.bootstrapTabFormValidation()
     jsBackend.forms.imagePreview()
     jsBackend.forms.fileUpload()
+    jsBackend.forms.select2()
   },
 
   fileUpload: function () {
@@ -1245,6 +1246,12 @@ jsBackend.forms = {
 
       $(event.currentTarget).siblings('.custom-file-label').text(file.name)
     })
+  },
+
+  select2: function () {
+    $.fn.select2.defaults.set( "theme", "bootstrap" )
+
+    $('[data-fork=select2]').select2()
   },
 
   imagePreview: function () {

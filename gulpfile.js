@@ -17,6 +17,7 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/cropper/dist/cropper.css',
     'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css',
     'node_modules/select2/dist/css/select2.css',
+    'node_modules/select2-theme-bootstrap4/dist/select2-bootstrap.css'
   ])
   .pipe(gulp.dest('./css/vendors'))
 })

@@ -119,6 +119,7 @@ final class Header extends KernelLoader
         $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
         $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
         $this->addCSS('/css/vendors/select2.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('/css/vendors/select2-bootstrap.css', 'Core', true, true, true, Priority::core());
     }
 
     private function buildPathForModule(string $fileName, string $module, string $subDirectory): string
