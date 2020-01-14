@@ -14,6 +14,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Form\Type\EditorType;
 
@@ -53,12 +55,12 @@ final class PageBlockType extends AbstractType
             $this->getModuleExtraOptions(Type::widget())
         );
         $builder->add(
-            'moduleExtraId',
+            'blockExtraId',
             EntityType::class,
             $this->getModuleExtraOptions(Type::block())
         );
         $builder->add(
-            'position',
+            'sequence',
             HiddenType::class,
             [
                 'required' => false,
@@ -68,12 +70,33 @@ final class PageBlockType extends AbstractType
             ]
         );
         $builder->add(
+            'extraId', // will be filled in the event afterwards
+            HiddenType::class,
+            [
+                'required' => false,
+            ]
+        );
+        $builder->add(
             'html',
             EditorType::class,
             [
                 'label' => 'lbl.Content',
                 'required' => false,
             ]
+        );
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            static function (FormEvent $event): void {
+                $data = $event->getData();
+                $data['sequence'] = (int) $data['sequence'];
+                $type = new Type($data['extraType']);
+                $data['extraId'] = null;
+                if ($type->isBlock() || $type->isWidget()) {
+                    $data['extraId'] = (int) $data[$type . 'ExtraId'];
+                }
+
+                $event->setData($data);
+            }
         );
     }
 
