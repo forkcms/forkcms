@@ -35,7 +35,7 @@
     </li>
   </ul>
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
+    <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab" data-role="page-content-tab">
       {{ form_widget(form.content) }}
       {{ form_errors(form.content) }}
     </div>
@@ -344,7 +344,11 @@
           <div class="modal-header">
             <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" data-role="page-block-form-wrapper">
+            {{ form_row(form.extraType) }}
+            <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
+            <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.moduleExtraId) }}</div>
+            <div data-role="page-block-content-type-wrapper" data-type="rich_text">{{ form_row(form.html) }}</div>
             {{ form_rest(form) }}
           </div>
           <div class="modal-footer">

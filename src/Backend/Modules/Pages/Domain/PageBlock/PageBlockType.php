@@ -2,17 +2,19 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
-use Backend\Form\EventListener\AddMetaSubscriber;
+use Backend\Core\Language\Language;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Form\SwitchType;
+use Doctrine\ORM\QueryBuilder;
+use SpoonFilter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Backend\Form\Type\EditorType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 final class PageBlockType extends AbstractType
 {
@@ -24,6 +26,12 @@ final class PageBlockType extends AbstractType
             [
                 'label' => 'lbl.Type',
                 'choices' => Type::dropdownChoices(),
+                'attr' => [
+                    'data-role' => 'select-block-type',
+                ],
+                'choice_value' => static function (Type $type): string {
+                    return (string) $type;
+                }
             ]
         );
         $builder->add(
@@ -35,18 +43,14 @@ final class PageBlockType extends AbstractType
             ]
         );
         $builder->add(
-            'extraId',
-            HiddenType::class,
-            [
-                'required' => false,
-            ]
+            'widgetExtraId',
+            EntityType::class,
+            $this->getModuleExtraOptions(Type::widget())
         );
         $builder->add(
-            'extraData',
-            HiddenType::class,
-            [
-                'required' => false,
-            ]
+            'moduleExtraId',
+            EntityType::class,
+            $this->getModuleExtraOptions(Type::block())
         );
         $builder->add(
             'position',
@@ -59,7 +63,7 @@ final class PageBlockType extends AbstractType
             'html',
             EditorType::class,
             [
-                'label' => 'lbl.Html',
+                'label' => 'lbl.Content',
                 'required' => false,
             ]
         );
@@ -68,5 +72,35 @@ final class PageBlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => PageBlockDataTransferObject::class]);
+    }
+
+    private function getModuleExtraOptions(Type $type): array
+    {
+        return [
+            'label' => $type->getLabel(),
+            'class' => ModuleExtra::class,
+            'choice_label' => static function (ModuleExtra $moduleExtra): string {
+                $data = $moduleExtra->getData();
+                if (!empty($data) && array_key_exists('extra_label', $data)) {
+                    return SpoonFilter::ucfirst($data['extra_label']);
+                }
+
+                return SpoonFilter::ucfirst($moduleExtra->getLabel());
+            },
+            'group_by' => static function (ModuleExtra $moduleExtra): string {
+                return SpoonFilter::ucfirst(Language::lbl($moduleExtra->getModule()));
+            },
+            'query_builder' => static function (ModuleExtraRepository $repository) use ($type): QueryBuilder {
+                return $repository
+                    ->createQueryBuilder('me')
+                    ->where('me.type = :type')
+                    ->setParameter('type', $type)
+                    ->andWhere('me.hidden = :hidden')
+                    ->setParameter('hidden', false)
+                    ->orderBy('me.sequence');
+            },
+            'mapped' => false,
+            'attr' => ['data-fork' => 'select2'],
+        ];
     }
 }

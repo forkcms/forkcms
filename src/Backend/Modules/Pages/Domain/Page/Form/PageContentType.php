@@ -54,6 +54,9 @@ final class PageContentType extends AbstractType
                         'data-config' => $this->templates[$templateId]['json'],
                     ];
                 },
+                'attr' => [
+                    'data-role' => 'template-switcher'
+                ]
             ]
         );
 
