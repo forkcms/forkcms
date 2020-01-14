@@ -156,11 +156,6 @@ class PageBlock
         return $this->sequence;
     }
 
-    public function isNew(): bool
-    {
-        return $this->createdOn === null;
-    }
-
     /**
      * @ORM\PrePersist()
      */
@@ -190,20 +185,6 @@ class PageBlock
 
     public static function fromDataTransferObject(PageBlockDataTransferObject $dataTransferObject): self
     {
-        if ($dataTransferObject->hasExistingPageBlock()) {
-            $pageBlock = $dataTransferObject->getPageBlockEntity();
-            $pageBlock->revisionId = $dataTransferObject->revisionId;
-            $pageBlock->position = $dataTransferObject->position;
-            $pageBlock->extraId = $dataTransferObject->extraId;
-            $pageBlock->extraType = $dataTransferObject->extraType;
-            $pageBlock->extraData = $dataTransferObject->extraData;
-            $pageBlock->html = $dataTransferObject->html;
-            $pageBlock->visible = $dataTransferObject->visible;
-            $pageBlock->sequence = $dataTransferObject->sequence;
-
-            return $pageBlock;
-        }
-
         return new self(
             $dataTransferObject->revisionId,
             $dataTransferObject->position,

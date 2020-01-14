@@ -93,9 +93,7 @@ final class CreatePageHandler
                 $blockDataTransferObject->revisionId = $page->getRevisionId();
                 $blockDataTransferObject->position = $position;
                 $pageBlock = PageBlock::fromDataTransferObject($blockDataTransferObject);
-                if ($pageBlock->isNew()) {
-                    $this->pageBlockRepository->add($pageBlock);
-                }
+                $this->pageBlockRepository->add($pageBlock);
                 $this->pageBlockRepository->save($pageBlock);
             }
         }

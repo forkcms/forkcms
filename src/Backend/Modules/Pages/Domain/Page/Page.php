@@ -490,42 +490,6 @@ class Page
 
     public static function fromDataTransferObject(PageDataTransferObject $pageDataTransferObject): self
     {
-        if ($pageDataTransferObject->hasExistingPage()) {
-            $page = $pageDataTransferObject->getPageEntity();
-            $page->parentId = $pageDataTransferObject->parentId;
-            if ($page->parentId === null) {
-                $page->parentId = 0;
-            }
-            $page->templateId = $pageDataTransferObject->templateId;
-            if ($page->templateId === null) {
-                $page->templateId = 0;
-            }
-            $page->meta = $pageDataTransferObject->meta;
-            $page->locale = $pageDataTransferObject->locale;
-            $page->image = $pageDataTransferObject->image;
-            $page->title = $pageDataTransferObject->title;
-            $page->navigationTitle = $pageDataTransferObject->navigationTitle ?? $pageDataTransferObject->title;
-            $page->publishOn = $pageDataTransferObject->publishOn;
-            $page->publishUntil = $pageDataTransferObject->publishUntil;
-            $page->sequence = $pageDataTransferObject->sequence;
-            $page->type = $pageDataTransferObject->type ?? Type::root();
-            $page->navigationTitleOverwrite = $pageDataTransferObject->navigationTitleOverwrite;
-            $page->hidden = $pageDataTransferObject->hidden;
-            if ($page->status !== null) {
-                $page->status = $pageDataTransferObject->status;
-            }
-            $page->data = $pageDataTransferObject->data;
-            $page->allowMove = !self::isForbiddenToMove($page->id)
-                               && $pageDataTransferObject->allowMove;
-            $page->allowChildren = !self::isForbiddenToHaveChildren($page->id)
-                                   && $pageDataTransferObject->allowChildren;
-            $page->allowDelete = !self::isForbiddenToDelete($page->id)
-                                 && $pageDataTransferObject->allowDelete;
-            $page->allowEdit = $pageDataTransferObject->allowEdit;
-
-            return $page;
-        }
-
         return new self(
             $pageDataTransferObject->id,
             $pageDataTransferObject->userId,
