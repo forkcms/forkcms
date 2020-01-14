@@ -72,11 +72,6 @@ final class Type implements JsonSerializable
         return new self(self::WIDGET);
     }
 
-    public static function userTemplate(): self
-    {
-        return new self(self::USER_TEMPLATE);
-    }
-
     public function __toString(): string
     {
         return $this->type;
