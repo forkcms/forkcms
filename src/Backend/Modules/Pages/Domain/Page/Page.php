@@ -379,12 +379,12 @@ class Page
 
     public function isAllowMove(): bool
     {
-        return $this->allowMove;
+        return $this->allowMove && !self::isForbiddenToMove($this->id);
     }
 
     public function isAllowChildren(): bool
     {
-        return $this->allowChildren;
+        return $this->allowChildren && !self::isForbiddenToHaveChildren($this->id);
     }
 
     public function isAllowEdit(): bool
@@ -394,7 +394,7 @@ class Page
 
     public function isAllowDelete(): bool
     {
-        return $this->allowDelete;
+        return $this->allowDelete && !self::isForbiddenToDelete($this->id);
     }
 
     public function getSequence(): int
