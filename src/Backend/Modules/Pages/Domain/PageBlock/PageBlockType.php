@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
 use Backend\Core\Language\Language;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Form\SwitchType;
@@ -79,13 +80,8 @@ final class PageBlockType extends AbstractType
         return [
             'label' => $type->getLabel(),
             'class' => ModuleExtra::class,
-            'choice_label' => static function (ModuleExtra $moduleExtra): string {
-                $data = $moduleExtra->getData();
-                if (!empty($data) && array_key_exists('extra_label', $data)) {
-                    return SpoonFilter::ucfirst($data['extra_label']);
-                }
-
-                return SpoonFilter::ucfirst($moduleExtra->getLabel());
+            'choice_label' => static function (ModuleExtra $moduleExtra) : string {
+                return $moduleExtra->getTranslatedLabel();
             },
             'group_by' => static function (ModuleExtra $moduleExtra): string {
                 return SpoonFilter::ucfirst(Language::lbl($moduleExtra->getModule()));
@@ -95,8 +91,8 @@ final class PageBlockType extends AbstractType
                     ->createQueryBuilder('me')
                     ->where('me.type = :type')
                     ->setParameter('type', $type)
-                    ->andWhere('me.hidden = :hidden')
-                    ->setParameter('hidden', false)
+                    ->andWhere('me.id IN (:allowedExtraIds)')
+                    ->setParameter('allowedExtraIds', array_keys(BackendExtensionsModel::getExtras()))
                     ->orderBy('me.sequence');
             },
             'mapped' => false,
