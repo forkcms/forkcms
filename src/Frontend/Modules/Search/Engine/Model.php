@@ -136,24 +136,24 @@ class Model
             $query =
                 'SELECT i.module, i.other_id, SUM(' .
                 mb_substr(
-                str_repeat(
-                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ',
-                    count($terms)
-                ),
-                0,
-                -3
-            ) . ') * m.weight AS score
+                    str_repeat(
+                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ',
+                        count($terms)
+                    ),
+                    0,
+                    -3
+                ) . ') * m.weight AS score
                  FROM search_index AS i
                  INNER JOIN search_modules AS m ON i.module = m.module
                  WHERE (' .
                 mb_substr(
-                str_repeat(
-                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                    count($terms)
-                ),
-                0,
-                -4
-            ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+                    str_repeat(
+                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                        count($terms)
+                    ),
+                    0,
+                    -4
+                ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
                  GROUP BY module, other_id
                  ORDER BY score DESC
                  LIMIT ?, ?';
@@ -344,13 +344,13 @@ class Model
                      INNER JOIN search_modules AS m ON i.module = m.module
                      WHERE (' .
                 mb_substr(
-                str_repeat(
-                    'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
-                    count($terms)
-                ),
-                0,
-                -4
-            ) .
+                    str_repeat(
+                        'MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ',
+                        count($terms)
+                    ),
+                    0,
+                    -4
+                ) .
                 ') AND i.language = ? AND i.active = ? AND m.searchable = ?
                 GROUP BY i.module, i.other_id
             ) AS results';

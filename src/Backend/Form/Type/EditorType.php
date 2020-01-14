@@ -152,7 +152,7 @@ class EditorType extends TextareaType
         parent::buildView($view, $form, $options);
 
         $javaScriptUrls = $options['editorBlocks']->getJavaScriptUrls();
-        $javaScriptUrls['/js/editor.js'] = '/js/editor.js';
+        $javaScriptUrls['/js/vendors/editor.js'] = '/js/vendors/editor.js';
 
         foreach ($javaScriptUrls as $url) {
             $header->addJS($url, null, false, true, true, Priority::core());

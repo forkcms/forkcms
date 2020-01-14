@@ -131,10 +131,10 @@ class Form extends \Common\Core\Form
                     ) . '</label>' . "\n";
                     $value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) .
                         '} {$ddm' . str_replace(
-                        '[]',
-                        '',
-                        SpoonFilter::toCamelCase($object->getName())
-                    ) . 'Error}' . "\n";
+                            '[]',
+                            '',
+                            SpoonFilter::toCamelCase($object->getName())
+                        ) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormImage) {
                     $value .= "\t" . '<p{option:file' . SpoonFilter::toCamelCase($object->getName()) .
