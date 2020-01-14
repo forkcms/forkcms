@@ -251,7 +251,7 @@
       {% endif %}
       {% set prototype_html = prototype_html ~ '<div class="col">' %}
       {% set prototype_html = prototype_html ~ form_widget(prototype, prototype_vars) %}
-      {% set prototype_html = prototype_html ~ '<div class="btn-toolbar justify-content-center"><div class="btn-group">' ~ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#editBlockModal__id__', 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) %}
+      {% set prototype_html = prototype_html ~ '<div class="btn-toolbar justify-content-center"><div class="btn-group">' ~ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal__id__', 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) %}
       {% if form.vars.allow_sequence %}
         {% set prototype_html = prototype_html ~ '<span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('arrows-alt') ~ '</span>' %}
       {% endif %}
@@ -283,7 +283,7 @@
                 {{ form_errors(field) }}
                 <div class="btn-toolbar justify-content-center">
                   <div class="btn-group">
-                    {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) }}
+                    {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) }}
                     {% if form.vars.allow_sequence %}
                       <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('arrows-alt') }}</span>
                     {% endif %}

@@ -109,6 +109,15 @@ jsBackend.pages.extras = {
   init: function () {
     jsBackend.pages.extras.blockTypeSwitcher()
     jsBackend.pages.extras.saveBlock()
+    jsBackend.pages.extras.newBlock()
+  },
+
+  newBlock: function () {
+    $('[data-role="page-content-tab"]').on('collection-field-added', '[data-addfield="collection"]', function (event, formCollectionItem) {
+      var $formCollectionItem = $(formCollectionItem)
+      $formCollectionItem.find('[data-role="select-block-type"]').trigger('change')
+      $formCollectionItem.find('[data-role="page-block-edit"]').trigger('click')
+    })
   },
 
   saveBlock: function () {
@@ -138,18 +147,13 @@ jsBackend.pages.extras = {
   },
 
   blockTypeSwitcher: function () {
-    var $pageContentTab = $('[data-role="page-content-tab"]')
-    $pageContentTab.on('change', '[data-role="select-block-type"]', function () {
+    $('[data-role="page-content-tab"]').on('change', '[data-role="select-block-type"]', function () {
       var $this = $(this)
       var $wrapper = $this.closest('[data-role="page-block-form-wrapper"]')
       $wrapper.find('[data-role="page-block-content-type-wrapper"]').hide()
       $wrapper.find('[data-role="page-block-content-type-wrapper"][data-type=' + $this.val() + ']').show()
     })
     $('[data-role="page-content-tab"] [data-role="select-block-type"]').trigger('change') // set the initial state
-
-    $pageContentTab.on('collection-field-added', '[data-addfield="collection"]', function (event, formCollectionItem) {
-      $(formCollectionItem).find('[data-role="select-block-type"]').trigger('change')
-    })
   }
 }
 
