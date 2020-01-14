@@ -9,7 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
-    "@editorjs/editorjs": "^2.15.1",
+    "@editorjs/editorjs": "^2.16.1",
     "@editorjs/embed": "^2.2.1",
     "@editorjs/header": "^2.3.1",
     "@editorjs/list": "^1.4.0",
