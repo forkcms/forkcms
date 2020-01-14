@@ -1,5 +1,13 @@
 services:
-    Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocaleHandler:
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: true
+
+    Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocaleHandler:
         tags:
             - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale }
+
+    Backend\Modules\Pages\Domain\Page\Command\CreatePageHandler:
+        tags:
+            - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\CreatePage }

@@ -156,6 +156,11 @@ class PageBlock
         return $this->sequence;
     }
 
+    public function isNew(): bool
+    {
+        return $this->createdOn === null;
+    }
+
     /**
      * @ORM\PrePersist()
      */
