@@ -31,7 +31,7 @@ class Installer extends ModuleInstaller
     private function configureBackendNavigation(): void
     {
         // Set navigation for "Pages"
-        $this->setNavigation(null, $this->getModule(), 'pages/index', ['pages/add', 'pages/edit'], 2);
+        $this->setNavigation(null, $this->getModule(), 'pages/page_index', ['pages/page_add', 'pages/page_edit'], 2);
 
         // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -43,11 +43,11 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'PageAdd');
+        $this->setActionRights(1, $this->getModule(), 'PageDelete');
+        $this->setActionRights(1, $this->getModule(), 'PageEdit');
         $this->setActionRights(1, $this->getModule(), 'GetInfo'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'PageIndex');
         $this->setActionRights(1, $this->getModule(), 'Move'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'RemoveUploadedFile'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'Settings');

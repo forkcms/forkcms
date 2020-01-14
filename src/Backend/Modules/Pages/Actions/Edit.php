@@ -126,7 +126,7 @@ class Edit extends BackendBaseActionEdit
         // check if something went wrong
         if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
             $this->redirect(
-                BackendModel::createUrlForAction('Index') . '&error=non-existing'
+                BackendModel::createUrlForAction('PageIndex') . '&error=non-existing'
             );
         }
 

@@ -28,7 +28,7 @@ class Copy extends BackendBaseActionIndex
         $form->handleRequest($this->getRequest());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=error-copy');
+            $this->redirect(BackendModel::createUrlForAction('PageIndex') . '&error=error-copy');
         }
 
         /** @var CopyPageDataTransferObject $data */
@@ -62,7 +62,7 @@ class Copy extends BackendBaseActionIndex
 
         // redirect
         $this->redirect(
-            BackendModel::createUrlForAction('Index') . '&report=copy-added&var=' . rawurlencode($data->to)
+            BackendModel::createUrlForAction('PageIndex') . '&report=copy-added&var=' . rawurlencode($data->to)
         );
     }
 }

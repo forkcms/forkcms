@@ -24,7 +24,7 @@ class Delete extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+            $this->redirect(BackendModel::createUrlForAction('PageIndex', null, null, ['error' => 'something-went-wrong']));
 
             return;
         }
@@ -34,7 +34,7 @@ class Delete extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
-            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('PageIndex', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -43,7 +43,7 @@ class Delete extends BackendBaseActionDelete
 
         // cannot have children
         if (BackendPagesModel::getFirstChildId($this->id) !== null) {
-            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('PageIndex', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -56,7 +56,7 @@ class Delete extends BackendBaseActionDelete
         $page = BackendPagesModel::get($this->id, $revisionId);
 
         if (empty($page)) {
-            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('PageIndex', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -70,13 +70,13 @@ class Delete extends BackendBaseActionDelete
         BackendPagesModel::buildCache(Locale::workingLocale());
 
         if (!$success) {
-            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('PageIndex', null, null, ['error' => 'non-existing']));
 
             return;
         }
 
         $this->redirect(BackendModel::createUrlForAction(
-            'Index',
+            'PageIndex',
             null,
             null,
             ['id' => $page['parent_id'], 'report' => 'deleted', 'var' => $page['title']]
