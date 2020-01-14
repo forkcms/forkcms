@@ -161,7 +161,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $sourceData['parent_id'],
             $sourceData['template_id'],
             $meta,
-            $toLanguage,
+            BackendLocale::fromString($toLanguage),
             $sourceData['type'],
             $sourceData['title'],
             null,
