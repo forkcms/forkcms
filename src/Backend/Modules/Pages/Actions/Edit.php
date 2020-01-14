@@ -204,11 +204,11 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('PageEdit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add use column
@@ -216,7 +216,7 @@ class Edit extends BackendBaseActionEdit
                 'use_draft',
                 null,
                 BL::lbl('UseThisDraft'),
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('UseThisDraft')
             );
         }
@@ -618,11 +618,11 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('PageEdit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;revision=[revision_id]'
             );
 
             // add use column
@@ -630,7 +630,7 @@ class Edit extends BackendBaseActionEdit
                 'use_revision',
                 null,
                 BL::lbl('UseThisVersion'),
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
         }
@@ -800,7 +800,7 @@ class Edit extends BackendBaseActionEdit
 
         if ($page['status'] === 'draft') {
             $this->redirect(
-                BackendModel::createUrlForAction('Edit') . '&id=' . $page['id']
+                BackendModel::createUrlForAction('PageEdit') . '&id=' . $page['id']
                 . '&report=saved-as-draft&var=' . rawurlencode($page['title']) . '&highlight=row-' . $page['id']
                 . '&draft=' . $page['revision_id']
             );
@@ -812,7 +812,7 @@ class Edit extends BackendBaseActionEdit
         $this->saveSearchIndex($data['remove_from_search_index'] || $redirectValue !== 'none', $page);
 
         $this->redirect(
-            BackendModel::createUrlForAction('Edit') . '&id=' . $page['id'] . '&report=edited&var='
+            BackendModel::createUrlForAction('PageEdit') . '&id=' . $page['id'] . '&report=edited&var='
             . rawurlencode($page['title']) . '&highlight=row-' . $page['id']
         );
     }

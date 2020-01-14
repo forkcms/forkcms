@@ -34,13 +34,13 @@
 
       {% endif %}
 
-      {% if showPagesIndex %}
-        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
+      {% if showPagesPageIndex %}
+        {{ macro.buttonIcon(geturl('PageIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
-      {% if showPagesAdd %}
+      {% if showPagesPageAdd %}
         <div class="btn-group">
-          <a type="button" href="{{ geturl('add') }}" class="btn btn-default pull-left">
+          <a type="button" href="{{ geturl('PageAdd') }}" class="btn btn-default pull-left">
             {{ macro.icon('plus-square') }}
             <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
           </a>
@@ -49,9 +49,9 @@
             <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="{{ geturl('add') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
-            <a class="dropdown-item" href="{{ geturl('add') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
-            <a class="dropdown-item" href="{{ geturl('add') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ item.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ item.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
             {% if copy_form is defined and copy_form is not null %}
               <button type="button" class="dropdown-item" data-toggle="modal" data-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
             {% endif %}

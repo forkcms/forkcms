@@ -77,11 +77,11 @@ class PageIndex extends BackendBaseActionIndex
         );
 
         // check if allowed to edit
-        if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('PageEdit', $this->getModule())) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add edit column
@@ -89,7 +89,7 @@ class PageIndex extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('Edit')
             );
         }
@@ -129,22 +129,22 @@ class PageIndex extends BackendBaseActionIndex
             ]
         );
 
-        if (BackendAuthentication::isAllowedAction('Add', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('PageAdd', $this->getModule())) {
             $this->dgRecentlyEdited->addColumnAction(
                 'copy',
                 null,
                 BL::lbl('Copy'),
-                BackendModel::createUrlForAction('Add') . '&amp;copy=[id]',
+                BackendModel::createUrlForAction('PageAdd') . '&amp;copy=[id]',
                 BL::lbl('Copy')
             );
         }
 
         // check if allowed to edit
-        if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('PageEdit', $this->getModule())) {
             // set column URL
             $this->dgRecentlyEdited->setColumnURL(
                 'title',
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
 
@@ -153,7 +153,7 @@ class PageIndex extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('PageEdit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

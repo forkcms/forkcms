@@ -53,7 +53,7 @@ class Copy extends BackendBaseActionIndex
                 );
         } catch (Exception $e) {
             $this->redirect(
-                BackendModel::createUrlForAction('Edit')
+                BackendModel::createUrlForAction('PageEdit')
                 . '&id='
                 . $data->pageToCopy->getRevisionId()
                 . '&error=error-copy'
