@@ -4,6 +4,8 @@ namespace Backend\Modules\Pages\Domain\Page;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -83,7 +85,7 @@ class Page
      *
      * @var Meta
      *
-     * @ORM\ManyToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
+     * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
      * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
      */
     private $meta;
@@ -246,6 +248,10 @@ class Page
     ) {
         $this->id = $id;
         $this->userId = $userId;
+        $this->allowMove = !self::isForbiddenToMove($this->id) && $allowMove;
+        $this->allowChildren = !self::isForbiddenToHaveChildren($this->id) && $allowChildren;
+        $this->allowDelete = !self::isForbiddenToDelete($this->id) && $allowDelete;
+        $this->allowEdit = $allowEdit;
         $this->parentId = $parentId;
         if ($this->parentId === null) {
             $this->parentId = 0;
@@ -270,64 +276,6 @@ class Page
             $this->status = Status::active();
         }
         $this->data = $data;
-        $this->allowMove = $allowMove;
-        $this->allowChildren = $allowChildren;
-        $this->allowEdit = $allowEdit;
-        $this->allowDelete = $allowDelete;
-    }
-
-    public function update(
-        int $id,
-        int $userId,
-        ?int $parentId,
-        ?int $templateId,
-        Meta $meta,
-        Locale $locale,
-        string $title,
-        string $navigationTitle,
-        ?MediaGroup $image,
-        DateTime $publishOn,
-        ?DateTime $publishUntil,
-        int $sequence,
-        bool $navigationTitleOverwrite = false,
-        bool $hidden = true,
-        Status $status = null,
-        Type $type = null,
-        array $data = null,
-        bool $allowMove = true,
-        bool $allowChildren = true,
-        bool $allowEdit = true,
-        bool $allowDelete = true
-    ): void {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->parentId = $parentId;
-        if ($this->parentId === null) {
-            $this->parentId = 0;
-        }
-        $this->templateId = $templateId;
-        if ($this->templateId === null) {
-            $this->templateId = 0;
-        }
-        $this->meta = $meta;
-        $this->locale = $locale;
-        $this->image = $image;
-        $this->title = $title;
-        $this->navigationTitle = $navigationTitle;
-        $this->publishOn = $publishOn;
-        $this->publishUntil = $publishUntil;
-        $this->sequence = $sequence;
-        $this->type = $type ?? Type::root();
-        $this->navigationTitleOverwrite = $navigationTitleOverwrite;
-        $this->hidden = $hidden;
-        if ($this->status !== null) {
-            $this->status = $status;
-        }
-        $this->data = $data;
-        $this->allowMove = $allowMove;
-        $this->allowChildren = $allowChildren;
-        $this->allowEdit = $allowEdit;
-        $this->allowDelete = $allowDelete;
     }
 
     public function getId(): int
@@ -538,5 +486,68 @@ class Page
         $this->parentId = $parentId;
         $this->sequence = $sequence;
         $this->type = $type;
+    }
+
+    public static function fromDataTransferObject(PageDataTransferObject $pageDataTransferObject): self
+    {
+        if ($pageDataTransferObject->hasExistingPage()) {
+            $page = $pageDataTransferObject->getPageEntity();
+            $page->parentId = $pageDataTransferObject->parentId;
+            if ($page->parentId === null) {
+                $page->parentId = 0;
+            }
+            $page->templateId = $pageDataTransferObject->templateId;
+            if ($page->templateId === null) {
+                $page->templateId = 0;
+            }
+            $page->meta = $pageDataTransferObject->meta;
+            $page->locale = $pageDataTransferObject->locale;
+            $page->image = $pageDataTransferObject->image;
+            $page->title = $pageDataTransferObject->title;
+            $page->navigationTitle = $pageDataTransferObject->navigationTitle ?? $pageDataTransferObject->title;
+            $page->publishOn = $pageDataTransferObject->publishOn;
+            $page->publishUntil = $pageDataTransferObject->publishUntil;
+            $page->sequence = $pageDataTransferObject->sequence;
+            $page->type = $pageDataTransferObject->type ?? Type::root();
+            $page->navigationTitleOverwrite = $pageDataTransferObject->navigationTitleOverwrite;
+            $page->hidden = $pageDataTransferObject->hidden;
+            if ($page->status !== null) {
+                $page->status = $pageDataTransferObject->status;
+            }
+            $page->data = $pageDataTransferObject->data;
+            $page->allowMove = !self::isForbiddenToMove($page->id)
+                               && $pageDataTransferObject->allowMove;
+            $page->allowChildren = !self::isForbiddenToHaveChildren($page->id)
+                                   && $pageDataTransferObject->allowChildren;
+            $page->allowDelete = !self::isForbiddenToDelete($page->id)
+                                 && $pageDataTransferObject->allowDelete;
+            $page->allowEdit = $pageDataTransferObject->allowEdit;
+
+            return $page;
+        }
+
+        return new self(
+            $pageDataTransferObject->id,
+            $pageDataTransferObject->userId,
+            $pageDataTransferObject->parentId,
+            $pageDataTransferObject->templateId,
+            $pageDataTransferObject->meta,
+            $pageDataTransferObject->locale,
+            $pageDataTransferObject->title,
+            $pageDataTransferObject->navigationTitle ?? $pageDataTransferObject->title,
+            $pageDataTransferObject->image,
+            $pageDataTransferObject->publishOn,
+            $pageDataTransferObject->publishUntil,
+            $pageDataTransferObject->sequence,
+            $pageDataTransferObject->navigationTitleOverwrite,
+            $pageDataTransferObject->hidden,
+            $pageDataTransferObject->status,
+            $pageDataTransferObject->type,
+            $pageDataTransferObject->data,
+            $pageDataTransferObject->allowMove,
+            $pageDataTransferObject->allowChildren,
+            $pageDataTransferObject->allowEdit,
+            $pageDataTransferObject->allowDelete
+        );
     }
 }
