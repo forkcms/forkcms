@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,16 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
 class PageBlock
 {
     /**
-     * @var int
+     * @var Page
      *
      * @ORM\Id
-     * @ORM\Column(
-     *     type="integer",
-     *     name="revision_id",
-     *     options={"comment": "The ID of the page that contains this block."}
-     * )
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Pages\Domain\Page\Page", inversedBy="blocks")
+     * @ORM\JoinColumn(name="revision_id", referencedColumnName="revision_id")
      */
-    private $revisionId;
+    private $page;
 
     /**
      * @var string
@@ -97,7 +95,7 @@ class PageBlock
     private $editedOn;
 
     public function __construct(
-        int $revisionId,
+        Page $page,
         string $position,
         ?int $extraId,
         ?Type $extraType,
@@ -106,7 +104,7 @@ class PageBlock
         bool $visible,
         int $sequence
     ) {
-        $this->revisionId = $revisionId;
+        $this->page = $page;
         $this->position = $position;
         $this->extraId = $extraId;
         $this->extraType = $extraType ?? Type::richText();
@@ -118,7 +116,12 @@ class PageBlock
 
     public function getRevisionId(): int
     {
-        return $this->revisionId;
+        return $this->page->getRevisionId();
+    }
+
+    public function getPage(): Page
+    {
+        return $this->page;
     }
 
     public function getPosition(): string
@@ -186,7 +189,7 @@ class PageBlock
     public static function fromDataTransferObject(PageBlockDataTransferObject $dataTransferObject): self
     {
         return new self(
-            $dataTransferObject->revisionId,
+            $dataTransferObject->page,
             $dataTransferObject->position,
             $dataTransferObject->extraId,
             $dataTransferObject->extraType,

@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,11 +14,11 @@ class PageBlockDataTransferObject
     private $pageBlockEntity;
 
     /**
-     * @var int
+     * @var Page
      *
      * @Assert\NotBlank(message="err.FieldIsRequired")
      */
-    public $revisionId;
+    public $page;
 
     /**
      * @var string
@@ -73,7 +74,7 @@ class PageBlockDataTransferObject
             return;
         }
 
-        $this->revisionId = $this->pageBlockEntity->getRevisionId();
+        $this->page = $this->pageBlockEntity->getPage();
         $this->position = $this->pageBlockEntity->getPosition();
         $this->extraId = $this->pageBlockEntity->getExtraId();
         $this->extraType = $this->pageBlockEntity->getExtraType();

@@ -5,10 +5,11 @@ namespace Backend\Modules\Pages\Domain\Page;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
-use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -223,6 +224,13 @@ class Page
      */
     private $sequence;
 
+    /**
+     * @var PageBlock[]|Collection
+     * @ORM\OneToMany(targetEntity="Backend\Modules\Pages\Domain\PageBlock\PageBlock", mappedBy="page")
+     * @ORM\OrderBy({"sequence" = "ASC"})
+     */
+    private $blocks;
+
     public function __construct(
         int $id,
         int $userId,
@@ -276,6 +284,7 @@ class Page
             $this->status = Status::active();
         }
         $this->data = $data;
+        $this->blocks = new ArrayCollection();
     }
 
     public function getId(): int
@@ -513,5 +522,13 @@ class Page
             $pageDataTransferObject->allowEdit,
             $pageDataTransferObject->allowDelete
         );
+    }
+
+    /**
+     * @return PageBlock[]|Collection
+     */
+    public function getBlocks(): Collection
+    {
+        return $this->blocks;
     }
 }

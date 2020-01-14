@@ -214,11 +214,11 @@ class ForkInstaller
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
             $pageRepository = Model::getContainer()->get(PageRepository::class);
-            $revisionIds = $pageRepository->findPagesWithoutExtra($extra['id']);
+            $pages = $pageRepository->findPagesWithoutExtra($extra['id']);
 
-            foreach ($revisionIds as $revisionId) {
+            foreach ($pages as $page) {
                 $pageBlock = new PageBlock(
-                    $revisionId,
+                    $page,
                     $extra['position'],
                     $extra['id'],
                     PageBlockType::richText(),

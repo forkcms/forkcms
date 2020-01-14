@@ -4,10 +4,12 @@ namespace Backend\Modules\Pages\Domain\Page;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Tags\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PageDataTransferObject
@@ -106,6 +108,7 @@ class PageDataTransferObject
     public function __construct(Page $page = null)
     {
         $this->page = $page;
+        $this->blocks = [];
 
         if (!$this->hasExistingPage()) {
             $this->allowChildren = true;
@@ -115,14 +118,12 @@ class PageDataTransferObject
             $this->navigationTitleOverwrite = false;
             $this->hidden = false;
             $this->image = MediaGroup::create(MediaGroupType::image());
-            $this->blocks = [];
             $this->publishOn = new DateTime();
 
             return;
         }
 
         $this->id = $this->page->getId();
-        $this->revisionId = $this->page->getRevisionId();
         $this->userId = $this->page->getUserId();
         $this->parentId = $this->page->getParentId();
         $this->templateId = $this->page->getTemplateId();

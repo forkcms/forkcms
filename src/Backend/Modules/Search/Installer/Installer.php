@@ -115,7 +115,7 @@ class Installer extends ModuleInstaller
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::getContainer()->get(PageBlockRepository::class);
 
-        $pageBlocks = $pageBlockRepository->findBy(['revisionId' => $pageRevisionId]);
+        $pageBlocks = $pageBlockRepository->findBy(['page' => $pageRevisionId]);
 
         if (count($pageBlocks) === 0) {
             return '';

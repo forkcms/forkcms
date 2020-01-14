@@ -755,12 +755,12 @@ class ModuleInstaller
             return $page->getId();
         }
 
-        $this->completeAndSavePageBlocks($blocks, $page->getRevisionId());
+        $this->completeAndSavePageBlocks($blocks, $page);
 
         return $page->getId();
     }
 
-    private function completeAndSavePageBlocks(array $blocks, int $defaultRevisionId): void
+    private function completeAndSavePageBlocks(array $blocks, Page $defaultPage): void
     {
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
@@ -773,7 +773,13 @@ class ModuleInstaller
 
             $positions[$position][] = $block;
 
-            $revisionId = $block['revision_id'] ?? $defaultRevisionId;
+            $page = $block['page'] ?? $defaultPage;
+            if (isset($block['revision_id'])) {
+                /** @var PageRepository $pageRepository */
+                $pageRepository = BackendModel::get(PageRepository::class);
+                $page = $pageRepository->find($block['revision_id']);
+            }
+
             $extraId = $block['extra_id'] ?? null;
             $visible = $block['visible'] ?? true;
             $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
@@ -785,7 +791,7 @@ class ModuleInstaller
             }
 
             $pageBlock = new PageBlock(
-                $revisionId,
+                $page,
                 $position,
                 $extraId,
                 null,

@@ -162,11 +162,9 @@ class PageRepository extends ServiceEntityRepository
         }
 
         $qb = $this
-            ->getEntityManager()
-            ->createQueryBuilder()
+            ->createQueryBuilder('p')
             ->select('b')
-            ->from(PageBlock::class, 'b')
-            ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
+            ->innerJoin('p.blocks', 'b')
             ->where('p.id = :pageId')
             ->andWhere('p.revisionId = :revisionId')
             ->andWhere('p.locale = :locale')
@@ -376,8 +374,8 @@ class PageRepository extends ServiceEntityRepository
             ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children');
         $qb
             ->from(Page::class, 'p', 'p.id')
-            ->innerJoin(Meta::class, 'm', Join::WITH, 'p.meta = m.id')
-            ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId')
+            ->innerJoin('p.meta', 'm')
+            ->leftJoin('p.blocks', 'b')
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
             ->leftJoin(
                 Page::class,
@@ -600,6 +598,11 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @param int $extraId
+     *
+     * @return Page[]
+     */
     public function findPagesWithoutExtra(int $extraId): array
     {
         $qb = $this->createQueryBuilder('p');
@@ -613,15 +616,13 @@ class PageRepository extends ServiceEntityRepository
         ;
 
         $qb
-            ->select('p.revisionId')
+            ->select('p')
             ->where($qb->expr()->notIn('p.revisionId', $subQuery->getDQL()))
             ->setParameters(['extraId' => $extraId]);
 
-        $results = $qb
+        return $qb
             ->getQuery()
-            ->getArrayResult();
-
-        return array_column($results, 'revisionId');
+            ->getResult();
     }
 
     public function pageExistsWithModuleBlockForLocale(string $module, Locale $locale): bool
@@ -631,7 +632,7 @@ class PageRepository extends ServiceEntityRepository
             ->createQueryBuilder()
             ->select('1')
             ->from(Page::class, 'p')
-            ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
+            ->innerJoin('p.blocks', 'b')
             ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
             ->where('e.module = :module')
             ->andWhere('p.locale = :locale')
@@ -655,7 +656,7 @@ class PageRepository extends ServiceEntityRepository
             ->createQueryBuilder()
             ->select('1')
             ->from(Page::class, 'p')
-            ->innerJoin(PageBlock::class, 'b', Join::WITH, 'p.revisionId = b.revisionId')
+            ->innerJoin('p.blocks', 'b')
             ->innerJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId')
             ->where('e.module = :module')
             ->andWhere('e.action = :action')
@@ -687,8 +688,8 @@ class PageRepository extends ServiceEntityRepository
             ->addSelect('ifelse(count(e.id) > 0, 1, 0) as has_extra')
             ->addSelect('group_concat(b.extraId) as extra_ids')
             ->from(Page::class, 'p')
-            ->leftJoin(Meta::class, 'm', Join::WITH, 'p.meta = m.id')
-            ->leftJoin(PageBlock::class, 'b', Join::WITH, 'b.revisionId = p.revisionId AND b.extraId IS NOT NULL')
+            ->leftJoin('p.meta', 'm')
+            ->leftJoin('p.blocks', 'b', Join::WITH, 'b.extraId IS NOT NULL')
             ->leftJoin(ModuleExtra::class, 'e', Join::WITH, 'e.id = b.extraId AND e.type = :type')
             ->where('p.id = :id')
             ->groupBy('p.revisionId');

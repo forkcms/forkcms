@@ -38,7 +38,7 @@ class PageBlockRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('b');
         $qb
             ->delete()
-            ->where($qb->expr()->in('b.revisionId', ':ids'))
+            ->where($qb->expr()->in('b.page', ':ids'))
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
@@ -79,10 +79,7 @@ class PageBlockRepository extends ServiceEntityRepository
 
         $qb
             ->select('b')
-            ->addSelect('unix_timestamp(b.createdOn) as created_on')
-            ->addSelect('unix_timestamp(b.editedOn) as edited_on')
-            // @todo Use relation when it exists
-            ->innerJoin(Page::class, 'p', Join::WITH, 'b.revisionId = p.revisionId')
+            ->innerJoin('b.page', 'p')
             ->where('p.id = :pageId')
             ->andWhere('p.revisionId = :revisionId')
             ->andWhere('p.locale = :locale')
@@ -133,10 +130,10 @@ class PageBlockRepository extends ServiceEntityRepository
 
         $qb->select('1')
             ->innerJoin(
-                Page::class,
+                'b.page',
                 'p',
                 Join::WITH,
-                'b.revisionId = p.revisionId AND b.extraId = :extraId AND p.locale = :locale AND p.status = :active'
+                'b.extraId = :extraId AND p.locale = :locale AND p.status = :active'
             )
             ->setMaxResults(1);
 

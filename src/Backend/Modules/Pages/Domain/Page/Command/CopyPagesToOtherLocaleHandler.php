@@ -274,7 +274,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         foreach ($sourceBlocks as $sourceBlock) {
             // build block
             $block = $sourceBlock;
-            $block['revision_id'] = $page->getRevisionId();
+            $block['page'] = $page;
             $block['created_on'] = BackendModel::getUTCDate();
             $block['edited_on'] = BackendModel::getUTCDate();
 

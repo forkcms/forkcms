@@ -90,7 +90,7 @@ final class CreatePageHandler
         foreach ($createPage->blocks as $position => $blocks) {
             /** @var PageBlockDataTransferObject $blockDataTransferObject */
             foreach ($blocks as $blockDataTransferObject) {
-                $blockDataTransferObject->revisionId = $page->getRevisionId();
+                $blockDataTransferObject->page = $page;
                 $blockDataTransferObject->position = $position;
                 $pageBlock = PageBlock::fromDataTransferObject($blockDataTransferObject);
                 $this->pageBlockRepository->add($pageBlock);

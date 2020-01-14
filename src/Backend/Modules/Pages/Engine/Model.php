@@ -213,9 +213,8 @@ class Model
 
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
-        $pageBlocks = $pageBlockRepository->getBlocksForPage($pageId, $revisionId, $locale);
 
-        return $pageBlocks;
+        return $pageBlockRepository->getBlocksForPage($pageId, $revisionId, $locale);
     }
 
     public static function getByTag(int $tagId): array
@@ -797,6 +796,9 @@ class Model
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
 
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+
         // loop blocks
         foreach ($blocks as $block) {
             $extraId = $block['extra_id'];
@@ -804,8 +806,12 @@ class Model
                 $extraId = null;
             }
 
+            if (!isset($block['page']) && isset($block['revision_id'])) {
+                $block['page'] = $pageRepository->find($block['revision_id']);
+            }
+
             $pageBlock = new PageBlock(
-                $block['revision_id'],
+                $block['page'],
                 $block['position'],
                 $extraId,
                 new PageBlockType($block['extra_type']),
