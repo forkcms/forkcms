@@ -8279,6 +8279,10 @@
         <translation language="el"><![CDATA[δημοσίευση στις]]></translation>
         <translation language="pl"><![CDATA[opublikuj dn.]]></translation>
       </item>
+      <item type="label" name="PublishTill">
+        <translation language="nl"><![CDATA[publiceer tot]]></translation>
+        <translation language="en"><![CDATA[publish till]]></translation>
+      </item>
       <item type="label" name="QuantityNo">
         <translation language="en"><![CDATA[no]]></translation>
         <translation language="nl"><![CDATA[geen]]></translation>

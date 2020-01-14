@@ -7,6 +7,7 @@ use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,6 +27,22 @@ final class PageSettingsType extends AbstractType
                 'label_attr' => ['class' => 'custom-control-label radio-custom'],
                 'expanded' => true,
             ]
+        );
+        $builder->add(
+            'publishOn',
+            DateTimeType::class,
+            [
+                'label' => 'lbl.PublishOn',
+            ]
+        );
+        $builder->add(
+            'publishUntil',
+            DateTimeType::class,
+            [
+                'label' => 'lbl.PublishTill',
+                'required' => false,
+            ]
+
         );
         if (BackendAuthentication::getUser()->isGod()) {
             $builder->add(
