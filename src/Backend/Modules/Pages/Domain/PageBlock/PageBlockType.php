@@ -62,6 +62,9 @@ final class PageBlockType extends AbstractType
             HiddenType::class,
             [
                 'required' => false,
+                'attr' => [
+                    'data-role' => 'sequence',
+                ],
             ]
         );
         $builder->add(
