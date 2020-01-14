@@ -116,6 +116,7 @@ class PageDataTransferObject
             $this->hidden = false;
             $this->image = MediaGroup::create(MediaGroupType::image());
             $this->blocks = [];
+            $this->publishOn = new DateTime();
 
             return;
         }
@@ -133,8 +134,8 @@ class PageDataTransferObject
         $this->navigationTitleOverwrite = $this->page->isNavigationTitleOverwrite();
         $this->hidden = $this->page->isHidden();
         $this->status = $this->page->getStatus();
-        $this->publishOn = $this->page->getPublishOn();
-        $this->publishUntil = $this->page->getPublishUntil();
+        $this->publishOn = $this->hidden ? new DateTime() : $this->page->getPublishOn();
+        $this->publishUntil = $this->hidden ? null : $this->page->getPublishUntil();
         $this->data = $this->page->getData();
         $this->image = $this->page->getImage() ?? MediaGroup::create(MediaGroupType::image());
         $this->createdOn = $this->page->getCreatedOn();
