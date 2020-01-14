@@ -108,6 +108,33 @@ jsBackend.pages.extras = {
   // init, something like a constructor
   init: function () {
     jsBackend.pages.extras.blockTypeSwitcher()
+    jsBackend.pages.extras.saveBlock()
+  },
+
+  saveBlock: function () {
+    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function() {
+      var $modal = $(this).closest('.modal')
+      var separator = ' › '
+      var $pageBlockTitle = $modal.closest('[data-role="page-block-wrapper"]').find('[data-role="page-block-title"]')
+      var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
+      var title = $modal.find('[data-role="select-block-type"] option:selected').text()
+
+      if (selectedBlockType === 'block' ||selectedBlockType === 'widget') {
+        title += separator + jsBackend.pages.extras.extractExtraTitle(
+          separator,
+          $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
+        )
+      }
+
+      $pageBlockTitle.text(title)
+      $modal.modal('hide')
+    })
+
+    $('[data-role="page-content-tab"] [data-role="page-block-save"]').trigger('click')
+  },
+
+  extractExtraTitle: function (separator, $selectedOption) {
+    return $selectedOption.closest('optgroup').attr('label') + separator + $selectedOption.text()
   },
 
   blockTypeSwitcher: function () {
