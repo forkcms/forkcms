@@ -30,9 +30,13 @@ final class PageBlockType extends AbstractType
                 'attr' => [
                     'data-role' => 'select-block-type',
                 ],
-                'choice_value' => static function (Type $type): string {
+                'choice_value' => static function (?Type $type): ?string {
+                    if ($type === null) {
+                        return null;
+                    }
+
                     return (string) $type;
-                }
+                },
             ]
         );
         $builder->add(
@@ -80,7 +84,7 @@ final class PageBlockType extends AbstractType
         return [
             'label' => $type->getLabel(),
             'class' => ModuleExtra::class,
-            'choice_label' => static function (ModuleExtra $moduleExtra) : string {
+            'choice_label' => static function (ModuleExtra $moduleExtra): string {
                 return $moduleExtra->getTranslatedLabel();
             },
             'group_by' => static function (ModuleExtra $moduleExtra): string {
