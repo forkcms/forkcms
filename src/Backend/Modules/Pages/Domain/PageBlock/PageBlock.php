@@ -156,11 +156,6 @@ class PageBlock
         return $this->sequence;
     }
 
-    public function getTest(): string
-    {
-        return $this->test;
-    }
-
     /**
      * @ORM\PrePersist()
      */
