@@ -39,7 +39,7 @@ final class Type implements JsonSerializable
 
     public function equals(self $type): bool
     {
-        return $this->type = $type->type;
+        return $this->type === $type->type;
     }
 
     public function isRichText(): bool
