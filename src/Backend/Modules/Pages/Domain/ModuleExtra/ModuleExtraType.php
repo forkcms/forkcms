@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
+use Backend\Modules\Pages\Domain\PageBlock\Type;
 use Common\Exception\InvalidModuleExtraType;
 use JsonSerializable;
 
@@ -44,6 +45,11 @@ final class ModuleExtraType implements JsonSerializable
     public function __toString(): string
     {
         return $this->type;
+    }
+
+    public function getPageBlockType(): Type
+    {
+        return new Type($this->type);
     }
 
     public function jsonSerialize(): string
