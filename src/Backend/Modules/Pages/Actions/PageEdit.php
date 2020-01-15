@@ -110,13 +110,22 @@ final class PageEdit extends Action
 
     private function getPage(): ?Page
     {
-        $page = $this->pageRepository->findOneBy(
-            [
-                'id' => $this->getRequest()->query->getInt('id'),
-                'status' => Status::active(),
-                'locale' => Locale::workingLocale(),
-            ]
-        );
+        $query = $this->getRequest()->query;
+        $parameters = [
+            'id' => $query->getInt('id'),
+            'status' => Status::active(),
+            'locale' => Locale::workingLocale(),
+        ];
+
+        if ($query->has('revision')) {
+            $parameters['revisionId'] = $query->getInt('revision');
+            $parameters['status'] = Status::archive();
+        } elseif ($query->has('draft')) {
+            $parameters['revisionId'] = $query->getInt('draft');
+            $parameters['status'] = Status::draft();
+        }
+
+        $page = $this->pageRepository->findOneBy($parameters);
 
         if ($page instanceof Page) {
             $this->template->assign('page', $page);
