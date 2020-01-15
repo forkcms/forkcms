@@ -77,7 +77,8 @@ final class PageAdd extends Action
             new CreatePage(
                 Locale::workingLocale(),
                 $this->settings->get($this->getModule(), 'default_template', 1),
-                $this->getParent()
+                $this->getParent(),
+                $this->getCopyFromPage()
             )
         );
 
@@ -112,6 +113,22 @@ final class PageAdd extends Action
         );
 
         if ($parentPage instanceof Page && $parentPage->isAllowChildren()) {
+            return $parentPage;
+        }
+
+        return null;
+    }
+
+    private function getCopyFromPage(): ?Page
+    {
+        $parentPage = $this->pageRepository->findOneBy(
+            [
+                'id' => $this->getRequest()->query->getInt('copy'),
+                'status' => Status::active(),
+            ]
+        );
+
+        if ($parentPage instanceof Page) {
             return $parentPage;
         }
 

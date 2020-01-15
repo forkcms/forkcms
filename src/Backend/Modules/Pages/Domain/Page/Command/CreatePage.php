@@ -9,14 +9,17 @@ use Common\Locale;
 
 final class CreatePage extends PageDataTransferObject
 {
-    public function __construct(Locale $locale, int $templateId, Page $parent = null)
+    public function __construct(Locale $locale, int $templateId, Page $parent = null, Page $copiedFromPage = null)
     {
-        parent::__construct();
+        parent::__construct($copiedFromPage);
 
         $this->locale = $locale;
-        $this->templateId = $templateId;
-        $this->type = Type::root();
-        $this->parentId = 0;
+
+        if ($copiedFromPage === null) {
+            $this->templateId = $templateId;
+            $this->type = Type::root();
+            $this->parentId = 0;
+        }
 
         if ($parent instanceof Page && $parent->isAllowChildren()) {
             $this->parentId = $parent->getId();
