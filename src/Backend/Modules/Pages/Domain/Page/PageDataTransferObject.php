@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Domain\Page;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Tags\Engine\Model;
 use Common\Doctrine\Entity\Meta;
@@ -147,6 +148,12 @@ class PageDataTransferObject
         $this->allowDelete = $this->page->isAllowDelete();
         $this->sequence = $this->page->getSequence();
         $this->tags = Model::getTags('Pages', $this->id);
+
+        foreach ($this->page->getBlocks() as $block) {
+            $position = $block->getPosition();
+            $this->blocks[$position] = $this->blocks[$position] ?? new ArrayCollection();
+            $this->blocks[$position]->add(new PageBlockDataTransferObject($block));
+        }
     }
 
     public function getPageEntity(): Page
