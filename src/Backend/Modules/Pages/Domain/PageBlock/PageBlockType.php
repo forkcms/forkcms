@@ -6,6 +6,8 @@ use Backend\Core\Language\Language;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
+use Common\Core\Model;
 use Common\Form\SwitchType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -37,7 +39,7 @@ final class PageBlockType extends AbstractType
             ChoiceType::class,
             [
                 'label' => 'lbl.Type',
-                'choices' => Type::dropdownChoices(),
+                'choices' => $options['possibleExtraTypes'],
                 'attr' => [
                     'data-role' => 'select-block-type',
                 ],
@@ -128,6 +130,7 @@ final class PageBlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => PageBlockDataTransferObject::class]);
+        $resolver->setRequired('possibleExtraTypes');
     }
 
     private static function getModuleExtraOptions(Type $type, ?ModuleExtra $moduleExtra): array

@@ -5,10 +5,12 @@ namespace Backend\Modules\Pages\Domain\Page\Form;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
 use Backend\Modules\Pages\Domain\PageBlock\Type;
+use Common\Core\Model;
 use Common\Form\CollectionType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
@@ -91,6 +93,13 @@ final class PageContentType extends AbstractType
      */
     private function buildPageBlockForm($form, array $selectedTemplate): void
     {
+        $possibleExtraTypes = Type::dropdownChoices();
+
+        // The home page is not allowed to have module blocks linked to it
+        if (Model::getRequest()->query->getInt('id') === Page::HOME_PAGE_ID) {
+            unset($possibleExtraTypes[Type::block()->getLabel()]);
+        }
+
         foreach ($this->getDefaultExtrasForTemplate($selectedTemplate) as $block => $defaults) {
             $pageBlocks = new ArrayCollection();
             foreach ($defaults as $sequence => $extraId) {
@@ -108,6 +117,9 @@ final class PageContentType extends AbstractType
                     'allow_sequence' => true,
                     'property_path' => 'blocks[' . $block . ']',
                     'entry_type' => PageBlockType::class,
+                    'entry_options' => [
+                        'possibleExtraTypes' => $possibleExtraTypes,
+                    ],
                     'block_name' => 'page_block_collection',
                     'prototype_data' => new PageBlockDataTransferObject(),
                 ]
@@ -131,6 +143,9 @@ final class PageContentType extends AbstractType
                     'allow_sequence' => true,
                     'property_path' => 'blocks[' . $block . ']',
                     'entry_type' => PageBlockType::class,
+                    'entry_options' => [
+                        'possibleExtraTypes' => $possibleExtraTypes,
+                    ],
                     'block_name' => 'page_block_collection',
                     'prototype_data' => new PageBlockDataTransferObject(),
                 ]
