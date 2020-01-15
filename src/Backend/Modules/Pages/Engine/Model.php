@@ -593,7 +593,7 @@ class Model
         return BackendModel::getContainer()->get('templating')->render(
             BACKEND_MODULES_PATH . '/Pages/Resources/views/NavigationTree.html.twig',
             [
-                'editUrl' => BackendModel::createUrlForAction('Edit', 'Pages'),
+                'editUrl' => BackendModel::createUrlForAction('PageEdit', 'Pages'),
                 'tree' => $tree,
             ]
         );
