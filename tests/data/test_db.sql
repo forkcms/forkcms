@@ -587,7 +587,6 @@ VALUES
   (183,1,'Location','Settings',7),
   (184,1,'Mailmotor','Ping',7),
   (185,1,'Pages','Copy',7),
-  (186,1,'Pages','RemoveUploadedFile',7),
   (187,1,'Pages','UploadFile',7),
   (188,1,'Profiles','Settings',7),
   (189,1,'Settings','Tools',7),

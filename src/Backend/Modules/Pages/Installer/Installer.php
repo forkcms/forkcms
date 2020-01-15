@@ -49,7 +49,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'GetInfo'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'PageIndex');
         $this->setActionRights(1, $this->getModule(), 'Move'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'RemoveUploadedFile'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'Settings');
         $this->setActionRights(1, $this->getModule(), 'UploadFile'); // AJAX
     }
