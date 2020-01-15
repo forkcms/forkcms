@@ -1,0 +1,68 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
+{% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
+
+{% block pagesTree %}
+  <div class="sub-navigation d-none d-sm-block">
+    <div class="pages-tree">
+      <div class="alert alert-warning d-md-none">
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
+      </div>
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+      </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  <div class="btn-toolbar justify-content-end">
+    <div class="btn-group" role="group">
+      {% if showPagesPageIndex %}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
+      {% endif %}
+
+      {% if showPagesPageAdd %}
+        <div class="btn-group">
+          <a type="button" href="{{ geturl('PageAdd') }}" class="btn btn-default pull-left">
+            {{ macro.icon('plus-square') }}
+            <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
+          </a>
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ page.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ page.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ form_rest(form) }}
+  <div class="fork-module-actions">
+    <div class="btn-toolbar justify-content-between">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+{% endblock %}
