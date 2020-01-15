@@ -92,6 +92,8 @@ final class PageEdit extends Action
 
     private function getBackLink(array $parameters = []): string
     {
+        $parameters['id'] = $parameters['id'] ?? $this->page->getId();
+
         return BackendModel::createUrlForAction(
             'PageEdit',
             null,
