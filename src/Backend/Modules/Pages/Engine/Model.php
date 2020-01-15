@@ -802,9 +802,6 @@ class Model
         // loop blocks
         foreach ($blocks as $block) {
             $extraId = $block['extra_id'];
-            if ($block['extra_type'] === (string) PageBlockType::userTemplate()) {
-                $extraId = null;
-            }
 
             if (!isset($block['page']) && isset($block['revision_id'])) {
                 $block['page'] = $pageRepository->find($block['revision_id']);

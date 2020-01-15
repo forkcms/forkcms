@@ -98,7 +98,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         $activePage = $page->getId();
 
         // get revision ids
-        $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
+        $pagesById = $pageRepository->findBy(['id' => $activePage, 'locale' => $toLanguage]);
         $revisionIDs = array_map(
             function (Page $page) {
                 return $page->getRevisionId();

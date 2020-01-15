@@ -3,7 +3,6 @@
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\Page;
@@ -16,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CopyPageType extends AbstractType
+final class CopyPageToOtherLanguageType extends AbstractType
 {
     /** @var ModulesSettings */
     private $settings;
@@ -80,7 +79,7 @@ final class CopyPageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'action' => Model::createUrlForAction('Copy', 'Pages', Locale::workingLocale()->getLocale()),
+                'action' => Model::createUrlForAction('PageCopyToOtherLanguage'),
                 'data_class' => CopyPageDataTransferObject::class,
             ]
         );

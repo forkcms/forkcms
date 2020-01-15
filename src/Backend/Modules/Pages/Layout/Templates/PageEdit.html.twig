@@ -43,6 +43,9 @@
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ page.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ page.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+            {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
+              <button type="button" class="dropdown-item" data-toggle="modal" data-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
+            {% endif %}
           </div>
         </div>
       {% endif %}
@@ -65,4 +68,27 @@
     </div>
   </div>
   {{ form_end(form) }}
+
+  {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
+    {{ form_start(copyToOtherLanguageForm) }}
+    <div class="modal fade" id="copyPage" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="copyPageTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="copyPageTitle">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            {{ form_row(copyToOtherLanguageForm.to) }}
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Copy'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"copyPageSubmit" }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(copyToOtherLanguageForm) }}
+  {% endif %}
 {% endblock %}

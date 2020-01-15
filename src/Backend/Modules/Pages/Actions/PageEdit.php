@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\Action;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\Command\UpdatePage;
 use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
-use Backend\Modules\Pages\Domain\Page\Form\CopyPageType;
+use Backend\Modules\Pages\Domain\Page\Form\CopyPageToOtherLanguageType;
 use Backend\Modules\Pages\Domain\Page\Form\PageType;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\Page\Page;
@@ -46,6 +46,8 @@ final class PageEdit extends Action
         parent::execute();
 
         $this->page = $this->getPage();
+        $this->createCopyToOtherLocaleForm();
+
         $form = $this->getForm();
 
         if (!$form->isSubmitted() || !$form->isValid()) {
@@ -123,5 +125,14 @@ final class PageEdit extends Action
         $this->redirect(
             BackendModel::createUrlForAction('PageIndex') . '&error=non-existing'
         );
+    }
+
+    private function createCopyToOtherLocaleForm(): void
+    {
+        $copyForm = $this->createForm(
+            CopyPageToOtherLanguageType::class,
+            new CopyPageDataTransferObject(Locale::workingLocale(), $this->page)
+        );
+        $this->template->assign('copyToOtherLanguageForm', $copyForm->createView());
     }
 }
