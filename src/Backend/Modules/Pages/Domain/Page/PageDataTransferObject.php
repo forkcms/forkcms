@@ -5,7 +5,6 @@ namespace Backend\Modules\Pages\Domain\Page;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Tags\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;

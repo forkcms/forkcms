@@ -13,7 +13,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
-final class CreatePageHandler
+final class UpdatePageHandler
 {
     /** @var PageRepository */
     private $pageRepository;
@@ -27,25 +27,14 @@ final class CreatePageHandler
         $this->pageBlockRepository = $pageBlockRepository;
     }
 
-    public function handle(CreatePage $createPage): void
+    public function handle(UpdatePage $updatePage): void
     {
-        $authenticatedUser = Authentication::getUser();
-        $createPage->id = $this->pageRepository->getMaximumPageId(
-                $createPage->locale ?? Locale::workingLocale(),
-                Authentication::getUser()->isGod()
-            ) + 1;
-        $createPage->userId = $authenticatedUser->getUserId();
-        $createPage->sequence = $this->pageRepository->getMaximumSequence(
-            $createPage->getParentId(),
-            $createPage->locale
-        );
-
-        $page = Page::fromDataTransferObject($createPage);
+        $page = Page::fromDataTransferObject($updatePage);
 
         $this->pageRepository->add($page);
         $this->pageRepository->save($page);
-        $this->saveBlocks($page, $createPage);
-        $this->saveTags($page, $createPage);
+        $this->saveBlocks($page, $updatePage);
+        $this->saveTags($page, $updatePage);
 
         BackendPagesModel::buildCache(Locale::workingLocale());
 
@@ -55,6 +44,10 @@ final class CreatePageHandler
                 $data['remove_from_search_index'] ?? false || $data['internal_redirect']['page_id'] ?? false || ['external_redirect']['url'] ?? false,
                 $page
             );
+
+            $oldPage = $updatePage->getPageEntity();
+            $oldPage->archive();
+            $this->pageRepository->save($oldPage);
         }
     }
 
@@ -84,9 +77,9 @@ final class CreatePageHandler
         );
     }
 
-    private function saveBlocks(Page $page, CreatePage $createPage): void
+    private function saveBlocks(Page $page, UpdatePage $updatePage): void
     {
-        foreach ($createPage->blocks as $position => $blocks) {
+        foreach ($updatePage->blocks as $position => $blocks) {
             /** @var PageBlockDataTransferObject $blockDataTransferObject */
             foreach ($blocks as $blockDataTransferObject) {
                 $blockDataTransferObject->page = $page;
@@ -98,7 +91,7 @@ final class CreatePageHandler
         }
     }
 
-    private function saveTags(Page $page, CreatePage $createPage): void
+    private function saveTags(Page $page, UpdatePage $updatePage): void
     {
         if (!Authentication::isAllowedAction('Edit', 'Tags')
             || !Authentication::isAllowedAction('GetAllTags', 'Tags')) {
@@ -107,7 +100,7 @@ final class CreatePageHandler
 
         BackendTagsModel::saveTags(
             $page->getId(),
-            $createPage->tags,
+            $updatePage->tags,
             'Pages'
         );
     }

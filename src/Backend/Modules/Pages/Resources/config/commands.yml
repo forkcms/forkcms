@@ -11,3 +11,7 @@ services:
     Backend\Modules\Pages\Domain\Page\Command\CreatePageHandler:
         tags:
             - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\CreatePage }
+
+    Backend\Modules\Pages\Domain\Page\Command\UpdatePageHandler:
+        tags:
+            - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\UpdatePage }
