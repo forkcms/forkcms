@@ -962,7 +962,7 @@ class Model
             $page['user_id'],
             $page['parent_id'],
             $page['template_id'],
-            $meta,
+            clone $meta,
             $locale,
             $page['title'],
             $page['navigation_title'],
@@ -1107,8 +1107,8 @@ class Model
                 // set new page revision id
                 foreach ($blocksContent as &$block) {
                     $block['revision_id'] = $newPageRevisionId;
-                    $block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
-                    $block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
+                    $block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']->getTimestamp());
+                    $block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']->getTimestamp());
                 }
             }
 
