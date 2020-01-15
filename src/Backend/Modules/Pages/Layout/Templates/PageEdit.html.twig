@@ -25,6 +25,14 @@
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
+      {% if not page.isHidden %}
+        {% set url = (SITE_URL ~ page.url) %}
+        {% if page.status.draft or page.status.archive %}
+          {% set url = (url ~ '?page_revision=' ~ page.revisionId) %}
+        {% endif %}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
+      {% endif %}
+
       {% if showPagesPageIndex %}
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}

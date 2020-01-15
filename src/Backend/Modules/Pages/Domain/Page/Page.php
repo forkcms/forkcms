@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Frontend\Core\Engine\Navigation;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\Page\PageRepository")
@@ -530,5 +531,10 @@ class Page
     public function getBlocks(): Collection
     {
         return $this->blocks;
+    }
+
+    public function getUrl(): string
+    {
+        return Navigation::getUrl($this->id, $this->locale->getLocale());
     }
 }
