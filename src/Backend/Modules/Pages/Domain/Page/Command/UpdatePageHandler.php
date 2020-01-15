@@ -36,6 +36,7 @@ final class UpdatePageHandler
         $this->saveBlocks($page, $updatePage);
         $this->saveTags($page, $updatePage);
 
+        $this->clearCache($page, $updatePage->page);
         BackendPagesModel::buildCache(Locale::workingLocale());
 
         if ($page->getStatus()->isActive()) {
@@ -103,5 +104,22 @@ final class UpdatePageHandler
             $updatePage->tags,
             'Pages'
         );
+    }
+
+    private function clearCache(Page $page, ?Page $originalPage): void
+    {
+        if (
+            !$originalPage instanceof Page
+            && $page->getTitle() === $originalPage->getTitle()
+            && $page->getNavigationTitle() === $originalPage->getNavigationTitle()
+            && $page->isNavigationTitleOverwrite() === $originalPage->isNavigationTitleOverwrite()
+            && $page->isHidden() === $originalPage->isHidden()
+            && $page->getPublishOn() == $originalPage->getPublishOn()
+            && $page->getPublishUntil() == $originalPage->getPublishUntil()
+        ) {
+            return;
+        }
+
+        BackendPagesModel::buildCache($page->getLocale());
     }
 }

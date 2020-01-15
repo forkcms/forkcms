@@ -70,7 +70,7 @@ class Model
         return $cacheBuilder;
     }
 
-    public static function buildCache(Locale $locale = null): void
+    public static function buildCache(AbstractLocale $locale = null): void
     {
         $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($locale ?? Locale::workingLocale());
