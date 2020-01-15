@@ -2,8 +2,10 @@
 
 namespace Backend\Modules\Pages\Actions;
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\Action;
 use Backend\Core\Language\Locale;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Pages\Domain\Page\Command\UpdatePage;
 use Backend\Modules\Pages\Domain\Page\CopyPageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\Form\CopyPageToOtherLanguageType;
@@ -47,6 +49,7 @@ final class PageEdit extends Action
 
         $this->page = $this->getPage();
         $this->createCopyToOtherLocaleForm();
+        $this->createDeleteForm();
 
         $form = $this->getForm();
 
@@ -145,5 +148,27 @@ final class PageEdit extends Action
             new CopyPageDataTransferObject(Locale::workingLocale(), $this->page)
         );
         $this->template->assign('copyToOtherLanguageForm', $copyForm->createView());
+    }
+
+    private function createDeleteForm(): void
+    {
+        if (
+            !$this->page->isAllowDelete()
+            || !Authentication::isAllowedAction('PageDelete', $this->getModule())
+            || $this->pageRepository->getFirstChild(
+                $this->page->getId(),
+                Status::active(),
+                Locale::workingLocale()
+            ) instanceof Page
+        ) {
+            return;
+        }
+
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->page->getId()],
+            ['module' => $this->getModule(), 'action' => 'PageDelete']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }
