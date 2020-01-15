@@ -44,52 +44,55 @@ final class PageSettingsType extends AbstractType
             ]
 
         );
-        if (BackendAuthentication::getUser()->isGod()) {
-            $builder->add(
-                'allowMove',
-                SwitchType::class,
-                [
-                    'label' => 'msg.Allow_move',
-                    'attr' => [
-                        'data-role' => 'allow-move-toggle',
-                    ],
-                    'required' => false,
-                ]
-            );
-            $builder->add(
-                'allowChildren',
-                SwitchType::class,
-                [
-                    'label' => 'msg.Allow_children',
-                    'attr' => [
-                        'data-role' => 'allow-children-toggle',
-                    ],
-                    'required' => false,
-                ]
-            );
-            $builder->add(
-                'allowEdit',
-                SwitchType::class,
-                [
-                    'label' => 'msg.Allow_edit',
-                    'attr' => [
-                        'data-role' => 'allow-edit-toggle',
-                    ],
-                    'required' => false,
-                ]
-            );
-            $builder->add(
-                'allowDelete',
-                SwitchType::class,
-                [
-                    'label' => 'msg.Allow_delete',
-                    'attr' => [
-                        'data-role' => 'allow-delete-toggle',
-                    ],
-                    'required' => false,
-                ]
-            );
+
+        if (!BackendAuthentication::getUser()->isGod()) {
+            return;
         }
+
+        $builder->add(
+            'allowMove',
+            SwitchType::class,
+            [
+                'label' => 'msg.Allow_move',
+                'attr' => [
+                    'data-role' => 'allow-move-toggle',
+                ],
+                'required' => false,
+            ]
+        );
+        $builder->add(
+            'allowChildren',
+            SwitchType::class,
+            [
+                'label' => 'msg.Allow_children',
+                'attr' => [
+                    'data-role' => 'allow-children-toggle',
+                ],
+                'required' => false,
+            ]
+        );
+        $builder->add(
+            'allowEdit',
+            SwitchType::class,
+            [
+                'label' => 'msg.Allow_edit',
+                'attr' => [
+                    'data-role' => 'allow-edit-toggle',
+                ],
+                'required' => false,
+            ]
+        );
+        $builder->add(
+            'allowDelete',
+            SwitchType::class,
+            [
+                'label' => 'msg.Allow_delete',
+                'attr' => [
+                    'data-role' => 'allow-delete-toggle',
+                ],
+                'required' => false,
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
