@@ -40,19 +40,19 @@ class PageVersionDataGrid extends DataGridDatabase
         $this->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
-        if (Authentication::isAllowedAction('Edit')) {
+        if (Authentication::isAllowedAction('PageEdit')) {
             $key = $status->isDraft() ? 'draft' : 'revision';
             $label = $status->isDraft() ? Language::lbl('UseThisDraft') : Language::lbl('UseThisVersion');
             $this->setColumnURL(
                 'title',
-                Model::createUrlForAction('Edit') . '&amp;id=[id]&amp;' . $key . '=[revision_id]'
+                Model::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;' . $key . '=[revision_id]'
             );
 
             $this->addColumn(
                 'use_' . $key,
                 null,
                 $label,
-                Model::createUrlForAction('Edit') . '&amp;id=[id]&amp;' . $key . '=[revision_id]',
+                Model::createUrlForAction('PageEdit') . '&amp;id=[id]&amp;' . $key . '=[revision_id]',
                 $label
             );
         }
