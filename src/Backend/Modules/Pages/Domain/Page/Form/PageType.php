@@ -6,12 +6,14 @@ use Backend\Core\Engine\Authentication;
 use Backend\Form\EventListener\AddMetaSubscriber;
 use Backend\Form\Type\TagsType;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\SingleMediaGroupType;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\PageVersionDataGrid;
 use Backend\Modules\Pages\Domain\Page\Status;
 use Common\Form\TitleType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -63,6 +65,16 @@ final class PageType extends AbstractType
                         'selectedTemplateId' => $event->getData()->templateId,
                     ]
                 );
+
+                if ($event->getData()->page instanceof Page) {
+                    $event->getForm()->add(
+                        'saveAsDraft',
+                        SubmitType::class,
+                        [
+                            'label' => 'lbl.SaveDraft'
+                        ]
+                    );
+                }
             }
         );
     }

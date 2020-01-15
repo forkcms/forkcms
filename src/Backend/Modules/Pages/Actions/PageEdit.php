@@ -70,7 +70,22 @@ final class PageEdit extends Action
     {
         $updatePage = $form->getData();
 
+        $updatePage->status = $form->get('saveAsDraft')->isClicked() ? Status::draft() : Status::active();
+
         $this->commandBus->handle($updatePage);
+
+        if ($updatePage->status->isDraft()) {
+            $this->redirect(
+                $this->getBackLink(
+                    [
+                        'report' => 'saved-as-draft',
+                        'var' => rawurlencode($updatePage->title),
+                        'highlight-row' => $updatePage->id,
+                        'draft' => $updatePage->revisionId,
+                    ]
+                )
+            );
+        }
 
         $this->redirect(
             $this->getBackLink(

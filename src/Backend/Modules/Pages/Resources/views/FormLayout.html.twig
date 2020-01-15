@@ -361,3 +361,9 @@
     </div>
   </div>
 {% endblock %}
+
+{% block _page_saveAsDraft_widget %}
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+  {%- set attr = attr|merge({class: (attr.class|default('btn-default') ~ ' btn')|trim}) -%}
+  <button type="submit" {{ block('button_attributes') }}>{{ macro.icon('file') }}<span class="btn-text">{{ label|trans|ucfirst }}</span></button>
+{% endblock %}
