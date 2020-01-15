@@ -160,10 +160,9 @@ final class PageContentType extends AbstractType
             return $pageBlock;
         }
 
-        // @TODO finish this
-        $moduleExtra = $this->moduleExtraRepository->find($extraId);
-        dump($moduleExtra);
-        die;
+        $pageBlock->setModuleExtra($this->moduleExtraRepository->find($extraId));
+
+        return $pageBlock;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

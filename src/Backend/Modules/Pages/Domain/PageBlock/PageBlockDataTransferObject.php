@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Common\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -92,5 +93,18 @@ class PageBlockDataTransferObject
     public function hasExistingPageBlock(): bool
     {
         return $this->pageBlockEntity instanceof PageBlock;
+    }
+
+    public function setModuleExtra(?ModuleExtra $moduleExtra): void
+    {
+        if ($moduleExtra === null) {
+            $this->extraId = null;
+            $this->extraType = Type::richText();
+
+            return;
+        }
+
+        $this->extraType = $moduleExtra->getType()->getPageBlockType();
+        $this->extraId = $moduleExtra->getId();
     }
 }
