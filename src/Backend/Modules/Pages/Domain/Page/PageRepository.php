@@ -371,6 +371,7 @@ class PageRepository extends ServiceEntityRepository
             ->addSelect('m.seoFollow as seo_follow')
             ->addSelect('m.seoIndex as seo_index')
             ->addSelect('p.allowChildren as allow_children')
+            ->addSelect('p.allowMove as allow_move')
             ->addSelect('ifelse(count(e.id) > 0, 1, 0) AS has_extra')
             ->addSelect('group_concat(b.extraId) AS extra_ids')
             ->addSelect('ifelse(count(p2.id) != 0, 1, 0) AS has_children');
@@ -383,8 +384,8 @@ class PageRepository extends ServiceEntityRepository
                 Page::class,
                 'p2',
                 Join::WITH,
-                'p2.parentId = p.id AND p2.status = :active ' .
-                'AND p2.hidden = :hidden AND p2.data NOT LIKE :data AND p2.locale = :locale'
+                'p2.parentId = p.id AND p2.status = :status ' .
+                'AND p2.hidden = :hidden AND (p2.data NOT LIKE :data OR p2.data IS NULL) AND p2.locale = :locale'
             )
             ->where($qb->expr()->in('p.parentId', ':parentIds'))
             ->andWhere('p.status = :status')
@@ -394,9 +395,8 @@ class PageRepository extends ServiceEntityRepository
 
         $qb->setParameters(
             [
-                'active' => 'active',
                 'data' => '%s:9:\"is_action\";b:1;%',
-                'hidden' => 'N',
+                'hidden' => false,
                 'locale' => $locale,
                 'parentIds' => $parentIds,
                 'status' => Status::active(),

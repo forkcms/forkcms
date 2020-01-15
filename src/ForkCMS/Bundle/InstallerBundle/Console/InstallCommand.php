@@ -246,10 +246,7 @@ class InstallCommand extends Command
     private function isReadyForInstall(): bool
     {
         if ($this->forkIsInstalled
-            && $this->prepareForReinstallCommand->run(
-                new ArrayInput([]),
-                $this->output
-            ) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
+            && $this->prepareForReinstallCommand->run(new ArrayInput([]), $this->output) !== PrepareForReinstallCommand::RETURN_SUCCESS) {
             $this->formatter->error('Fork CMS is already installed');
 
             return false;

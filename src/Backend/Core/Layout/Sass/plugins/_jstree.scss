@@ -52,6 +52,15 @@
 .jstree-leaf > .jstree-ocl {
   cursor: default;
 }
+.jstree  ul:empty {
+  min-height: 16px;
+  max-width: 100%;
+  &:before {
+    content: '';
+    margin-left: 10px;
+    border-left: 1px solid #a6a6a6;
+  }
+}
 .jstree .jstree-open > .jstree-children {
   display: block;
 }

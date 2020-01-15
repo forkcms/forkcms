@@ -1411,7 +1411,7 @@ jsBackend.pages.tree = {
           responsive: true
         },
         multiple: false,
-        check_callback: true
+        check_callback: jsBackend.pages.tree.checkCallback
       },
       types: {
         default: {
@@ -1443,6 +1443,9 @@ jsBackend.pages.tree = {
     var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
     jsTreeInstance.on('move_node.jstree', function (event, data) {
+      jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
+    })
+    jsTreeInstance.on('copy_node.jstree', function (event, data) {
       jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
     })
 
@@ -1481,77 +1484,58 @@ jsBackend.pages.tree = {
     jsBackend.pages.tree.toggleJsTreeCollapse(jsTreeInstance)
   },
 
+  checkCallback: function (operation, node, parent) {
+    if (operation !== 'move_node') {
+      return true
+    }
+
+    if (!node.data.allowMove) {
+      return false
+    }
+
+    if (typeof parent.data === 'undefined' || parent.data === null) {
+      return typeof parent.children === 'undefined' || parent.children[0] !== 'page-1'
+    }
+
+    return parent.data.allowChildren
+  },
+
   // when an item is moved
   onMove: function (event, data, jsTreeInstance) {
     var tree = data.new_instance.element.first().data('tree')
 
+    var node = event.type === 'copy_node' ? data.original : data.node
     // get pageID that has to be moved
-    var currentPageID = data.node.id.replace('page-', '')
+    var currentPageID = node.id.replace('page-', '')
 
     // set the default type of moving
     var type = 'before'
 
-    // init allowMove
-    var allowMove = false
-
     // get the position where the page is dropped
-    var droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+    var droppedOnElement = null
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] !== undefined) {
+      droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position + 1])
+    }
 
     // when node is dropped on the last position, we can not add it before the last one -> we need after
-    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined) {
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined
+      && data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
       droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
       type = 'after'
     }
 
     // when node is dropped on another node to move it inside
-    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === data.node.id) {
+    if (data.new_instance._model.data[data.parent].children.length === 1 && data.new_instance._model.data[data.parent].children[0] === node.id) {
       type = 'inside'
-      droppedOnElement = $('#' + data.parent)
+      if (data.parent !== undefined && data.parent !== '#') {
+        droppedOnElement = $('#' + data.parent)
+      }
     }
 
     // get pageID wheron the page has been dropped
-    var droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
-
-    // before an item will be moved we have to do some checks
-    $.ajax({
-      async: false, // important that this isn't asynchronous
-      data: {
-        fork: {action: 'GetInfo'},
-        id: currentPageID,
-        dropped_on: droppedOnPageID
-      },
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
-        if (jsBackend.debug) window.alert(textStatus)
-        allowMove = false
-      },
-      success: function (json, textStatus) {
-        if (json.code !== 200) {
-          if (jsBackend.debug) window.alert(textStatus)
-          allowMove = false
-        } else {
-          // is page allowed to move
-          if (json.data.move_allowed) {
-            allowMove = true
-          } else {
-            jsTreeInstance.jstree('refresh')
-            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToMove'))
-            allowMove = false
-          }
-
-          // is parent allowed to have children
-          if (json.data.children_allowed) {
-            allowMove = true
-          } else {
-            jsTreeInstance.jstree('refresh')
-            jsBackend.messages.add('danger', jsBackend.locale.lbl('PageNotAllowedToHaveChildren'))
-            allowMove = false
-          }
-        }
-      }
-    })
-
-    if (!allowMove) {
-      return
+    var droppedOnPageID = 0
+    if (droppedOnElement !== null) {
+      droppedOnPageID = droppedOnElement.prop('id').replace('page-', '')
     }
 
     // move the page
@@ -1576,7 +1560,10 @@ jsBackend.pages.tree = {
           // show message
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
         }
-      }
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        window.location.reload()
+      },
     })
   },
 
