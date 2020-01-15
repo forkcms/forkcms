@@ -109,6 +109,7 @@ final class PageAdd extends Action
             [
                 'id' => $this->getRequest()->query->getInt('parent'),
                 'status' => Status::active(),
+                'locale' => Locale::workingLocale(),
             ]
         );
 
@@ -125,6 +126,7 @@ final class PageAdd extends Action
             [
                 'id' => $this->getRequest()->query->getInt('copy'),
                 'status' => Status::active(),
+                'locale' => Locale::workingLocale(),
             ]
         );
 

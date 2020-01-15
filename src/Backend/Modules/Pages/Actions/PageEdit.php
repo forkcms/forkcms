@@ -110,6 +110,7 @@ final class PageEdit extends Action
             [
                 'id' => $this->getRequest()->query->getInt('id'),
                 'status' => Status::active(),
+                'locale' => Locale::workingLocale(),
             ]
         );
 
