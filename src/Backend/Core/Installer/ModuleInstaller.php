@@ -14,6 +14,7 @@ use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
@@ -781,6 +782,10 @@ class ModuleInstaller
             }
 
             $extraId = $block['extra_id'] ?? null;
+            $type = $extraId === null ? PageBlockType::richText() : $this->getPageBlockTypeForModuleExtra($extraId);
+            if ($extraId !== null && $type->isRichText()) {
+                continue; // module extra doesn't exist
+            }
             $visible = $block['visible'] ?? true;
             $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
             $html = $block['html'] ?? '';
@@ -794,7 +799,7 @@ class ModuleInstaller
                 $page,
                 $position,
                 $extraId,
-                null,
+                $type,
                 null,
                 $html,
                 $visible,
@@ -1022,5 +1027,16 @@ class ModuleInstaller
         );
 
         return $randomName;
+    }
+
+    private function getPageBlockTypeForModuleExtra(int $extraId): PageBlockType
+    {
+        $moduleExtra = BackendModel::getContainer()->get(ModuleExtraRepository::class)->find($extraId);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            return PageBlockType::richText();
+        }
+
+        return $moduleExtra->getType()->getPageBlockType();
     }
 }
