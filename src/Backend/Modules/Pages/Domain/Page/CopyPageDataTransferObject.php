@@ -17,11 +17,7 @@ final class CopyPageDataTransferObject
 
     public function __construct(Locale $from = null, Page $pageToCopy = null)
     {
-        if ($from !== null) {
-            $this->from = $from;
-        }
-        if ($pageToCopy !== null) {
-            $this->pageToCopy = $pageToCopy;
-        }
+        $this->from = $from;
+        $this->pageToCopy = $pageToCopy;
     }
 }
