@@ -46,7 +46,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'PageAdd');
         $this->setActionRights(1, $this->getModule(), 'PageDelete');
         $this->setActionRights(1, $this->getModule(), 'PageEdit');
-        $this->setActionRights(1, $this->getModule(), 'GetInfo'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'PageIndex');
         $this->setActionRights(1, $this->getModule(), 'Move'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'Settings');
@@ -480,6 +479,7 @@ class Installer extends ModuleInstaller
                     'language' => $language,
                     'allow_move' => false,
                     'allow_delete' => false,
+                    'allow_children' => false,
                 ],
                 null,
                 ['html' => __DIR__ . '/Data/' . $language . '/404.txt'],

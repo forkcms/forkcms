@@ -490,7 +490,7 @@ class Page
         return $pageId === self::ERROR_PAGE_ID;
     }
 
-    public function move(int $parentId, int $sequence, string $type): void
+    public function move(int $parentId, int $sequence, Type $type): void
     {
         $this->parentId = $parentId;
         $this->sequence = $sequence;

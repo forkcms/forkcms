@@ -114,10 +114,11 @@ class CacheBuilder
         foreach ($levels as $pages) {
             // loop all items on this level
             foreach ($pages as $pageId => $page) {
-                $temp = $this->getPageData($keys, $page, $locale);
-
-                // add it
-                $navigation[(string) $page['type']][$page['parent_id']][$pageId] = $temp;
+                $navigation[(string) $page['type']][$page['parent_id']][$pageId] = $this->getPageData(
+                    $keys,
+                    $page,
+                    $locale
+                );
             }
         }
 
@@ -170,6 +171,7 @@ class CacheBuilder
             'extra_blocks' => null,
             'has_children' => (bool) $page['has_children'],
             'allow_children' => (bool) $page['allow_children'],
+            'allow_move' => (bool) $page['allow_move'],
             'data' => $page['data'],
         ];
 
