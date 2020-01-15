@@ -128,7 +128,7 @@ class PageDataTransferObject
         $this->userId = $this->page->getUserId();
         $this->parentId = $this->page->getParentId();
         $this->templateId = $this->page->getTemplateId();
-        $this->meta = $this->page->getMeta();
+        $this->meta = clone $this->page->getMeta();
         $this->locale = $this->page->getLocale();
         $this->type = $this->page->getType();
         $this->title = $this->page->getTitle();
