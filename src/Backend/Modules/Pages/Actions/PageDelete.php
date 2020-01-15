@@ -3,7 +3,6 @@
 namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
 use Backend\Form\Type\DeleteType;
@@ -12,8 +11,9 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the delete-action, it will delete a page
+ * @TODO clean up this action
  */
-class Delete extends BackendBaseActionDelete
+class PageDelete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
