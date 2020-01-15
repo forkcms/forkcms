@@ -50,6 +50,7 @@ final class PageEdit extends Action
         $this->page = $this->getPage();
         $this->createCopyToOtherLocaleForm();
         $this->createDeleteForm();
+        $this->header->appendDetailToBreadcrumbs($this->page->getTitle());
 
         $form = $this->getForm();
 
