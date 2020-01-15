@@ -152,8 +152,23 @@ jsBackend.pages.extras = {
       var $wrapper = $this.closest('[data-role="page-block-form-wrapper"]')
       $wrapper.find('[data-role="page-block-content-type-wrapper"]').hide()
       $wrapper.find('[data-role="page-block-content-type-wrapper"][data-type=' + $this.val() + ']').show()
+
+      jsBackend.pages.extras.validateOnlyOneModuleIsConnected()
     })
     $('[data-role="page-content-tab"] [data-role="select-block-type"]').trigger('change') // set the initial state
+  },
+
+  validateOnlyOneModuleIsConnected: function () {
+    var $selectedBlockOption = $('[data-role="select-block-type"] option:selected[value="block"]:first')
+    var $allBlockOptions = $('[data-role="select-block-type"] option[value="block"]')
+
+    if ($selectedBlockOption.length === 0) {
+      $allBlockOptions.removeAttr('disabled')
+
+      return
+    }
+
+    $allBlockOptions.not($selectedBlockOption).attr('disabled', 'disabled')
   }
 }
 
