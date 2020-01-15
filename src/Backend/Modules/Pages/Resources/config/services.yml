@@ -13,6 +13,7 @@ services:
         resource: '../../Api/*'
     Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository: ~
     Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository: ~
+    Backend\Modules\Pages\Domain\PageBlock\PageBlockType:
     Backend\Modules\Pages\Domain\Page\Form\:
         resource: '../../Domain/Page/Form/*'
     Backend\Modules\Pages\Domain\Page\PageRepository: ~

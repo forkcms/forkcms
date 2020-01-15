@@ -7,6 +7,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Common\Form\SwitchType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use SpoonFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,6 +22,14 @@ use Backend\Form\Type\EditorType;
 
 final class PageBlockType extends AbstractType
 {
+    /** @var EntityManager */
+    private $entityManager;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -48,16 +57,6 @@ final class PageBlockType extends AbstractType
                 'label' => 'lbl.Visible',
                 'required' => false,
             ]
-        );
-        $builder->add(
-            'widgetExtraId',
-            EntityType::class,
-            $this->getModuleExtraOptions(Type::widget())
-        );
-        $builder->add(
-            'blockExtraId',
-            EntityType::class,
-            $this->getModuleExtraOptions(Type::block())
         );
         $builder->add(
             'sequence',
@@ -98,6 +97,32 @@ final class PageBlockType extends AbstractType
                 $event->setData($data);
             }
         );
+        $entityManager = $this->entityManager;
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            static function (FormEvent $event) use ($entityManager): void {
+                $data = $event->getData();
+                $extraId = null;
+                if ($data instanceof PageBlockDataTransferObject) {
+                    $extraId = $data->extraId;
+                }
+
+                $moduleExtra = null;
+                if ($extraId !== null) {
+                    $moduleExtra = $entityManager->getReference(ModuleExtra::class, $extraId);
+                }
+                $event->getForm()->add(
+                    'widgetExtraId',
+                    EntityType::class,
+                    self::getModuleExtraOptions(Type::widget(), $moduleExtra)
+                );
+                $event->getForm()->add(
+                    'blockExtraId',
+                    EntityType::class,
+                    self::getModuleExtraOptions(Type::block(), $moduleExtra)
+                );
+            }
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -105,9 +130,10 @@ final class PageBlockType extends AbstractType
         $resolver->setDefaults(['data_class' => PageBlockDataTransferObject::class]);
     }
 
-    private function getModuleExtraOptions(Type $type): array
+    private static function getModuleExtraOptions(Type $type, ?ModuleExtra $moduleExtra): array
     {
         return [
+            'data' => $moduleExtra,
             'label' => $type->getLabel(),
             'class' => ModuleExtra::class,
             'choice_label' => static function (ModuleExtra $moduleExtra): string {
