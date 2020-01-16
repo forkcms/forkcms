@@ -6,6 +6,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockDataTransferObject;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
@@ -29,7 +30,17 @@ final class UpdatePageHandler
 
     public function handle(UpdatePage $updatePage): void
     {
+        $updatePage->userId = Authentication::getUser()->getUserId();
         $page = Page::fromDataTransferObject($updatePage);
+
+        if ($page->getStatus()->isDraft()) {
+            $this->pageRepository->deleteByIdAndUserIdAndStatusAndLocale(
+                $page->getId(),
+                $page->getUserId(),
+                Status::draft(),
+                $page->getLocale()
+            );
+        }
 
         $this->pageRepository->add($page);
         $this->pageRepository->save($page);
@@ -37,19 +48,24 @@ final class UpdatePageHandler
         $this->saveTags($page, $updatePage);
 
         $this->clearCache($page, $updatePage->page);
-        BackendPagesModel::buildCache(Locale::workingLocale());
 
-        if ($page->getStatus()->isActive()) {
-            $data = $page->getData();
-            $this->saveSearchIndex(
-                $data['remove_from_search_index'] ?? false || $data['internal_redirect']['page_id'] ?? false || ['external_redirect']['url'] ?? false,
-                $page
-            );
+        if (!$page->getStatus()->isActive()) {
+            BackendPagesModel::buildCache(Locale::workingLocale());
 
-            $oldPage = $updatePage->getPageEntity();
-            $oldPage->archive();
-            $this->pageRepository->save($oldPage);
+            return;
         }
+
+        $data = $page->getData();
+        $this->saveSearchIndex(
+            $data['remove_from_search_index'] ?? false || $data['internal_redirect']['page_id'] ?? false || ['external_redirect']['url'] ?? false,
+            $page
+        );
+
+        $oldPage = $updatePage->getPageEntity();
+        $oldPage->archive();
+        $this->pageRepository->save($oldPage);
+
+        BackendPagesModel::buildCache(Locale::workingLocale());
     }
 
     private function saveSearchIndex(bool $removeFromSearchIndex, Page $page): void
@@ -83,6 +99,7 @@ final class UpdatePageHandler
         foreach ($updatePage->blocks as $position => $blocks) {
             /** @var PageBlockDataTransferObject $blockDataTransferObject */
             foreach ($blocks as $blockDataTransferObject) {
+                dump($blockDataTransferObject);
                 $blockDataTransferObject->page = $page;
                 $blockDataTransferObject->position = $position;
                 $pageBlock = PageBlock::fromDataTransferObject($blockDataTransferObject);
