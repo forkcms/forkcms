@@ -47,6 +47,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'PageDelete');
         $this->setActionRights(1, $this->getModule(), 'PageEdit');
         $this->setActionRights(1, $this->getModule(), 'PageIndex');
+        $this->setActionRights(1, $this->getModule(), 'PageCopyToOtherLanguage');
         $this->setActionRights(1, $this->getModule(), 'Move'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
