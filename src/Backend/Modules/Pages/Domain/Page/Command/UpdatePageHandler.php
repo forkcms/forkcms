@@ -129,8 +129,7 @@ final class UpdatePageHandler
 
     private function clearCache(Page $page, ?Page $originalPage): void
     {
-        if (
-            !$originalPage instanceof Page
+        if (!$originalPage instanceof Page
             && $page->getTitle() === $originalPage->getTitle()
             && $page->getNavigationTitle() === $originalPage->getNavigationTitle()
             && $page->isNavigationTitleOverwrite() === $originalPage->isNavigationTitleOverwrite()

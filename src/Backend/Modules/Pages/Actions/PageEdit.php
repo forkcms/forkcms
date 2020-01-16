@@ -169,8 +169,7 @@ final class PageEdit extends Action
 
     private function createDeleteForm(): void
     {
-        if (
-            !$this->page->isAllowDelete()
+        if (!$this->page->isAllowDelete()
             || !Authentication::isAllowedAction('PageDelete', $this->getModule())
             || $this->pageRepository->getFirstChild(
                 $this->page->getId(),

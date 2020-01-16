@@ -42,7 +42,6 @@ final class PageSettingsType extends AbstractType
                 'label' => 'lbl.PublishTill',
                 'required' => false,
             ]
-
         );
 
         if (!BackendAuthentication::getUser()->isGod()) {
