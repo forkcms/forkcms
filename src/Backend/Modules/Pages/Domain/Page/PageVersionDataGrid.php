@@ -12,16 +12,24 @@ class PageVersionDataGrid extends DataGridDatabase
 {
     public function __construct(Page $page, Status $status)
     {
+        $whereStatement = 'p.id = :id AND p.status = :status AND p.locale = :locale';
+        $parameters =             [
+            'id' => $page->getId(),
+            'status' => $status,
+            'locale' => $page->getLocale(),
+        ];
+
+        if ($status->isDraft()) {
+            $whereStatement .= ' AND p.user_id = :authenticatedUserId';
+            $parameters['authenticatedUserId'] = Authentication::getUser()->getUserId();
+        }
+
         parent::__construct(
-            'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-             FROM PagesPage AS i
-             WHERE i.id = :id AND i.status = :status AND i.locale = :locale
-             ORDER BY i.edited_on DESC',
-            [
-                'id' => $page->getId(),
-                'status' => $status,
-                'locale' => $page->getLocale(),
-            ]
+            'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on, p.user_id
+             FROM PagesPage AS p
+             WHERE ' . $whereStatement . '
+             ORDER BY p.edited_on DESC',
+            $parameters
         );
 
         $this->setColumnsHidden(['id', 'revision_id']);
