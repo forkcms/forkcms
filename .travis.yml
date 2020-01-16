@@ -1,5 +1,7 @@
 language: php
 dist: xenial
+services:
+    - mysql
 matrix:
   include:
     - php: 7.1
