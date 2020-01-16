@@ -12,11 +12,11 @@ final class IndexTest extends WebTestCase
         $this->logout($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/pages/index');
+        $client->request('GET', '/private/en/pages/page_index');
 
         // we should get redirected to authentication with a reference to blog index in our url
         self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fpages%2Findex',
+            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fpages%2Fpage_index',
             $client->getHistory()->current()->getUri()
         );
     }
@@ -26,7 +26,7 @@ final class IndexTest extends WebTestCase
         $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/pages/index');
+        $client->request('GET', '/private/en/pages/page_index');
 
         self::assertContains(
             'Home',
