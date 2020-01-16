@@ -13,7 +13,7 @@ jsBackend.pages = {
     if ($('[data-role="template-switcher"]').length > 0) {
       // load stuff for editing and adding an page
       jsBackend.pages.extras.init()
-      //jsBackend.pages.template.init()
+      jsBackend.pages.template.init()
     }
 
     if ($('[data-role="move-page-toggle"]').length > 0) {
@@ -173,167 +173,43 @@ jsBackend.pages.extras = {
 }
 
 /**
- * All methods related to the templates
+ * Template switcher
  */
 jsBackend.pages.template = {
-  // indicates whether or not the page content is original or has been altered already
-  original: true,
-  userTemplates: {},
-
-  // init, something like a constructor
   init: function () {
-    // bind events
-    jsBackend.pages.template.changeTemplateBindSubmit()
-
-    // assign the global variable so we can use & modify it later on
-    jsBackend.pages.template.initDefaults = initDefaults
-
-    // load to initialize when adding a page
-    jsBackend.pages.template.changeTemplate()
+    $('[data-role="template-switcher"]').on('change', function() {
+      window.location.replace(jsBackend.pages.template.getChangeTemplateUrl('template-id', $(this).val()))
+    })
   },
 
-  // method to change a template
-  changeTemplate: function () {
-    // get checked
-    var selected = $('#templateList input:radio:checked').val()
+  getChangeTemplateUrl: function (key, value, url) {
+    if (!url) url = jsBackend.pages.template.getChangeTemplateUrl('report', null, window.location.href);
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
+      hash
 
-    // get current & old template
-    var old = templates[$('#templateId').val()]
-    var current = templates[selected]
-    var i = 0
-
-    // show or hide the image tab
-    if ('image' in current.data && current.data.image) {
-      $('.js-page-image-tab').show()
-    }
-    else {
-      $('.js-page-image-tab').hide()
-    }
-
-    // hide default (base) block
-    $('#block-0').hide()
-
-    // reset HTML for the visual representation of the template
-    $('#templateVisual').html(current.html)
-    $('#templateVisualLarge').html(current.htmlLarge)
-    $('#templateVisualFallback .linkedBlocks').children().remove()
-    $('#templateId').val(selected)
-    $('#templateLabel, #tabTemplateLabel').html(current.label)
-
-    // make new positions sortable
-    jsBackend.pages.extras.sortable($('#templateVisualLarge div.linkedBlocks'))
-
-    // hide fallback by default
-    $('#templateVisualFallback').hide()
-
-    // remove previous fallback blocks
-    $('input[id^=blockPosition][value=fallback][id!=blockPosition0]').parent().remove()
-
-    // check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
-    if (current !== old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove()
-
-    // loop existing blocks
-    $('#editContent .contentBlock').each(function (i) {
-      // fetch variables
-      var index = parseInt($('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', ''))
-      var extraId = parseInt($('input[id^=blockExtraId]', this).val())
-      var position = $('input[id^=blockPosition]', this).val()
-      var html = $('textarea[id^=blockHtml]', this).val()
-
-      // skip default (base) block (= continue)
-      if (index === 0) return true
-
-      // blocks were present already = template was not original
-      jsBackend.pages.template.original = false
-
-      // check if this block is a default of the old template, in which case it'll go to the fallback position
-      if (current !== old && typeof old.data.default_extras !== 'undefined' && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback')
-    })
-
-    // init var
-    var newDefaults = []
-
-    // check if this default block has been changed
-    if (current !== old || (typeof jsBackend.pages.template.initDefaults !== 'undefined' && jsBackend.pages.template.initDefaults)) {
-      // this is a variable indicating that the add-action may initially set default blocks
-      if (typeof jsBackend.pages.template.initDefaults !== 'undefined') jsBackend.pages.template.initDefaults = false
-
-      // loop positions in new template
-      for (var position in current.data.default_extras) {
-        // loop default extra's on positions
-        for (var block in current.data.default_extras[position]) {
-          // grab extraId
-          var extraId = current.data.default_extras[position][block]
-
-          // find existing block sent to default
-          var existingBlock = $('input[id^=blockPosition][value=fallback]:not(#blockPosition0)').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent()
-
-          // if this block did net yet exist, add it
-          if (existingBlock.length === 0) {
-            newDefaults.push([extraId, position])
-          }
-          else {
-            // if this block already existed, reset it to correct (new) position
-            $('input[id^=blockPosition]', existingBlock).val(position)
-          }
-        }
-      }
-    }
-
-    // loop existing blocks
-    $('#editContent .contentBlock').each(function (i) {
-      // fetch variables
-      var index = parseInt($('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', ''))
-      var extraId = parseInt($('input[id^=blockExtraId]', this).val())
-      var extraType = $('input[id^=blockExtraType]', this).val()
-      var extraData = $('input[id^=blockExtraData]', this).val()
-      var position = $('input[id^=blockPosition]', this).val()
-      var visible = $('input[id^=blockVisible]', this).attr('checked')
-
-      // skip default (base) block (= continue)
-      if (index === 0) return true
-
-      // check if this position exists
-      if ($.inArray(position, current.data.names) < 0) {
-        // blocks in positions that do no longer exist should go to fallback
-        position = 'fallback'
-
-        // save position as fallback
-        $('input[id=blockPosition' + index + ']', this).val(position)
-
-        // show fallback
-        $('#templateVisualFallback').show()
+    if (re.test(url)) {
+      if (typeof value !== 'undefined' && value !== null) {
+        return url.replace(re, '$1' + key + "=" + value + '$2$3')
       }
 
-      // add visual representation of block to template visualisation
-      var added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType, extraData)
-
-      // if the visual could be not added, remove the content entirely
-      if (!added) $(this).remove()
-    })
-
-    // reset block indexes
-    jsBackend.pages.extras.resetIndexes()
-
-    // add new defaults at last
-    for (i in newDefaults) {
-      jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1])
-    }
-  },
-
-  // bind template change submit click event
-  changeTemplateBindSubmit: function (e) {
-    // prevent the default action
-    $('#changeTemplateSubmit').unbind('click').on('click', function(e) {
-      e.preventDefault()
-      if ($('#templateList input:radio:checked').val() !== $('#templateId').val()) {
-        // change the template for real
-        jsBackend.pages.template.changeTemplate()
+      hash = url.split('#')
+      url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '')
+      if (typeof hash[1] !== 'undefined' && hash[1] !== null) {
+        url += '#' + hash[1]
       }
+      return url
+    }
+    if (typeof value !== 'undefined' && value !== null) {
+      var separator = url.indexOf('?') !== -1 ? '&' : '?'
+      hash = url.split('#')
+      url = hash[0] + separator + key + '=' + value
+      if (typeof hash[1] !== 'undefined' && hash[1] !== null) {
+        url += '#' + hash[1]
+      }
+      return url
+    }
 
-      // close modal
-      $('#changeTemplate').modal('hide')
-    })
+    return url
   }
 }
 

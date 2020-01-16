@@ -57,22 +57,28 @@ final class PageContentType extends AbstractType
                     ];
                 },
                 'attr' => [
-                    'data-role' => 'template-switcher'
-                ]
+                    'data-role' => 'template-switcher',
+                    'autocomplete' => 'off',
+                ],
             ]
         );
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event): void {
+            function (FormEvent $event) use ($options) : void {
                 $this->buildPageBlockForm(
                     $event->getForm(),
-                    $this->templates[$event->getData()['templateId']]
+                    $this->templates[$event->getData()['templateId']],
+                    $options['load_default_blocks']
                 );
             }
         );
 
-        $this->buildPageBlockForm($builder, $this->templates[$options['selectedTemplateId']]);
+        $this->buildPageBlockForm(
+            $builder,
+            $this->templates[$options['selectedTemplateId']],
+            $options['load_default_blocks']
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -82,6 +88,7 @@ final class PageContentType extends AbstractType
                 'data_class' => PageDataTransferObject::class,
                 'inherit_data' => true,
                 'allow_extra_fields' => true,
+                'load_default_blocks' => false,
             ]
         );
         $resolver->setRequired('selectedTemplateId');
@@ -90,8 +97,9 @@ final class PageContentType extends AbstractType
     /**
      * @param FormInterface|FormBuilderInterface $form
      * @param array $selectedTemplate
+     * @param bool $loadDefaultBlocks
      */
-    private function buildPageBlockForm($form, array $selectedTemplate): void
+    private function buildPageBlockForm($form, array $selectedTemplate, bool $loadDefaultBlocks): void
     {
         $possibleExtraTypes = Type::dropdownChoices();
 
@@ -100,30 +108,37 @@ final class PageContentType extends AbstractType
             unset($possibleExtraTypes[Type::block()->getLabel()]);
         }
 
-        foreach ($this->getDefaultExtrasForTemplate($selectedTemplate) as $block => $defaults) {
-            $pageBlocks = new ArrayCollection();
-            foreach ($defaults as $sequence => $extraId) {
-                $pageBlocks->add($this->createPageBlockForExtraId($extraId, $block, ++$sequence));
-            }
+        if ($loadDefaultBlocks) {
+            foreach ($this->getDefaultExtrasForTemplate($selectedTemplate) as $block => $defaults) {
+                $pageBlocks = new ArrayCollection();
 
-            $form->add(
-                'blocks_' . $block,
-                CollectionType::class,
-                [
-                    'data' => $pageBlocks,
-                    'label' => false,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'allow_sequence' => true,
-                    'property_path' => 'blocks[' . $block . ']',
-                    'entry_type' => PageBlockType::class,
-                    'entry_options' => [
-                        'possibleExtraTypes' => $possibleExtraTypes,
-                    ],
-                    'block_name' => 'page_block_collection',
-                    'prototype_data' => new PageBlockDataTransferObject(),
-                ]
-            );
+                if (empty($defaults)) {
+                    continue;
+                }
+
+                foreach ($defaults as $sequence => $extraId) {
+                    $pageBlocks->add($this->createPageBlockForExtraId($extraId, $block, ++$sequence));
+                }
+
+                $form->add(
+                    'blocks_' . $block,
+                    CollectionType::class,
+                    [
+                        'data' => $pageBlocks,
+                        'label' => false,
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'allow_sequence' => true,
+                        'property_path' => 'blocks[' . $block . ']',
+                        'entry_type' => PageBlockType::class,
+                        'entry_options' => [
+                            'possibleExtraTypes' => $possibleExtraTypes,
+                        ],
+                        'block_name' => 'page_block_collection',
+                        'prototype_data' => new PageBlockDataTransferObject(),
+                    ]
+                );
+            }
         }
 
         // add the blocks that didn't have defaults

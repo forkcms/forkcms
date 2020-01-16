@@ -105,7 +105,7 @@ class PageDataTransferObject
     /** @var array */
     public $blocks;
 
-    public function __construct(Page $page = null)
+    public function __construct(Page $page = null, int $templateId = null)
     {
         $this->page = $page;
         $this->blocks = [];
@@ -119,6 +119,7 @@ class PageDataTransferObject
             $this->hidden = false;
             $this->image = MediaGroup::create(MediaGroupType::image());
             $this->publishOn = new DateTime();
+            $this->templateId = $templateId;
 
             return;
         }
@@ -126,7 +127,8 @@ class PageDataTransferObject
         $this->id = $this->page->getId();
         $this->userId = $this->page->getUserId();
         $this->parentId = $this->page->getParentId();
-        $this->templateId = $this->page->getTemplateId();
+        // update the template id if it isn't null
+        $this->templateId = $templateId === 0 || $templateId === null ? $this->page->getTemplateId() : $templateId;
         $this->meta = clone $this->page->getMeta();
         $this->locale = $this->page->getLocale();
         $this->type = $this->page->getType();

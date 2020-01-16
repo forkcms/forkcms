@@ -6,6 +6,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Form\EventListener\AddMetaSubscriber;
 use Backend\Form\Type\TagsType;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\SingleMediaGroupType;
+use Backend\Modules\Pages\Domain\Page\Command\CreatePage;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
@@ -63,10 +64,11 @@ final class PageType extends AbstractType
                     PageContentType::class,
                     [
                         'selectedTemplateId' => $event->getData()->templateId,
+                        'load_default_blocks' => !$event->getData()->page instanceof Page
                     ]
                 );
 
-                if ($event->getData()->page instanceof Page) {
+                if (!$event->getData() instanceof CreatePage) {
                     $event->getForm()->add(
                         'saveAsDraft',
                         SubmitType::class,

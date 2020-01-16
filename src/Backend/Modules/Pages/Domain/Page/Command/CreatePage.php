@@ -11,12 +11,11 @@ final class CreatePage extends PageDataTransferObject
 {
     public function __construct(Locale $locale, int $templateId, Page $parent = null, Page $copiedFromPage = null)
     {
-        parent::__construct($copiedFromPage);
+        parent::__construct($copiedFromPage, $copiedFromPage === null ? $templateId : null);
 
         $this->locale = $locale;
 
         if ($copiedFromPage === null) {
-            $this->templateId = $templateId;
             $this->type = Type::root();
             $this->parentId = 0;
         }

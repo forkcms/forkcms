@@ -101,7 +101,7 @@ final class PageEdit extends Action
     {
         $form = $this->createForm(
             PageType::class,
-            new UpdatePage($this->page)
+            new UpdatePage($this->page, $this->getRequest()->query->getInt('template-id'))
         );
 
         $form->handleRequest($this->getRequest());
