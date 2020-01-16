@@ -227,7 +227,11 @@ class Page
 
     /**
      * @var PageBlock[]|Collection
-     * @ORM\OneToMany(targetEntity="Backend\Modules\Pages\Domain\PageBlock\PageBlock", mappedBy="page")
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Pages\Domain\PageBlock\PageBlock",
+     *     mappedBy="page",
+     *     cascade={"remove"}
+     * )
      * @ORM\OrderBy({"sequence" = "ASC"})
      */
     private $blocks;
