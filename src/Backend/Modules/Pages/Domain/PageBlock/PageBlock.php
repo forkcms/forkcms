@@ -18,7 +18,7 @@ class PageBlock
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Pages\Domain\Page\Page", inversedBy="blocks")
-     * @ORM\JoinColumn(name="revision_id", referencedColumnName="revision_id")
+     * @ORM\JoinColumn(name="revision_id", referencedColumnName="revision_id", onDelete="CASCADE")
      */
     private $page;
 

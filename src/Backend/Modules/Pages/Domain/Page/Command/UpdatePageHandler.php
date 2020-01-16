@@ -12,6 +12,7 @@ use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\ModulesSettings;
 
 final class UpdatePageHandler
 {
@@ -21,10 +22,17 @@ final class UpdatePageHandler
     /** @var PageBlockRepository */
     private $pageBlockRepository;
 
-    public function __construct(PageRepository $pageRepository, PageBlockRepository $pageBlockRepository)
-    {
+    /** @var ModulesSettings */
+    private $settings;
+
+    public function __construct(
+        PageRepository $pageRepository,
+        PageBlockRepository $pageBlockRepository,
+        ModulesSettings $settings
+    ) {
         $this->pageRepository = $pageRepository;
         $this->pageBlockRepository = $pageBlockRepository;
+        $this->settings = $settings;
     }
 
     public function handle(UpdatePage $updatePage): void
@@ -59,6 +67,8 @@ final class UpdatePageHandler
         $oldPage = $updatePage->getPageEntity();
         $oldPage->archive();
         $this->pageRepository->save($oldPage);
+
+        $this->cleanUpOldRevisions($page);
 
         $this->clearCache($page, $updatePage->page);
     }
@@ -132,5 +142,29 @@ final class UpdatePageHandler
         }
 
         BackendPagesModel::buildCache($page->getLocale());
+    }
+
+    private function cleanUpOldRevisions(Page $page): void
+    {
+        $revisionIdsToKeep = $this->pageRepository->getRevisionIdsToKeep(
+            $page->getId(),
+            (int) $this->settings->get('Pages', 'max_num_revisions', 20)
+        );
+
+        if (count($revisionIdsToKeep) === 0) {
+            return;
+        }
+
+        $revisionsToDelete = $this->pageRepository->getRevisionIdsToDelete(
+            $page->getId(),
+            Status::archive(),
+            $revisionIdsToKeep
+        );
+
+        if (count($revisionsToDelete) === 0) {
+            return;
+        }
+
+        $this->pageRepository->deleteByRevisionIds($revisionsToDelete);
     }
 }

@@ -74,6 +74,7 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
 
+        $this->getEntityManager()->clear(PageBlock::class);
         $this->getEntityManager()->clear(Page::class);
     }
 
