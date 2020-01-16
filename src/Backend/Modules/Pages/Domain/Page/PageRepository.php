@@ -102,6 +102,7 @@ class PageRepository extends ServiceEntityRepository
             ->execute();
 
         $this->getEntityManager()->clear(PageBlock::class);
+        $this->getEntityManager()->clear(Page::class);
     }
 
     public function get(int $id, int $revisionId = null, Locale $locale = null): array
