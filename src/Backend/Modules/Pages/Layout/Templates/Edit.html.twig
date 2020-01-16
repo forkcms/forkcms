@@ -26,8 +26,8 @@
     <div class="btn-group" role="group">
       {% if not item.is_hidden %}
 
-        {% set url = (SITE_URL ~ item.full_url) %}
-        {% if appendRevision %}
+        {% set url = (SITE_URL ~ page.url) %}
+        {% if page.status.draft or page.status.archive %}
           {% set url = (url ~ '?page_revision=' ~ item.revision_id) %}
         {% endif %}
         {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
