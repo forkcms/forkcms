@@ -13,6 +13,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the index-action (default), it will display the pages-overview
+ * @TODO clean this one up
  */
 class PageIndex extends BackendBaseActionIndex
 {
