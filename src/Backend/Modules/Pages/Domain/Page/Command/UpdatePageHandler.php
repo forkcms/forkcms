@@ -47,11 +47,7 @@ final class UpdatePageHandler
         $this->saveBlocks($page, $updatePage);
         $this->saveTags($page, $updatePage);
 
-        $this->clearCache($page, $updatePage->page);
-
         if (!$page->getStatus()->isActive()) {
-            BackendPagesModel::buildCache(Locale::workingLocale());
-
             return;
         }
 
@@ -65,7 +61,7 @@ final class UpdatePageHandler
         $oldPage->archive();
         $this->pageRepository->save($oldPage);
 
-        BackendPagesModel::buildCache(Locale::workingLocale());
+        $this->clearCache($page, $updatePage->page);
     }
 
     private function saveSearchIndex(bool $removeFromSearchIndex, Page $page): void
