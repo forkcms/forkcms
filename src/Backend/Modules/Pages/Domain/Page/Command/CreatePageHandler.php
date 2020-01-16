@@ -29,12 +29,11 @@ final class CreatePageHandler
 
     public function handle(CreatePage $createPage): void
     {
-        $authenticatedUser = Authentication::getUser();
         $createPage->id = $this->pageRepository->getMaximumPageId(
                 $createPage->locale ?? Locale::workingLocale(),
                 Authentication::getUser()->isGod()
             ) + 1;
-        $createPage->userId = $authenticatedUser->getUserId();
+        $createPage->userId = Authentication::getUser()->getUserId();
         $createPage->sequence = $this->pageRepository->getMaximumSequence(
             $createPage->getParentId(),
             $createPage->locale

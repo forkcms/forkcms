@@ -142,6 +142,7 @@ final class PageEdit extends Action
         } elseif ($query->has('draft')) {
             $parameters['revisionId'] = $query->getInt('draft');
             $parameters['status'] = Status::draft();
+            $parameters['userId'] = Authentication::getUser()->getUserId();
         }
 
         $page = $this->pageRepository->findOneBy($parameters);
