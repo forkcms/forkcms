@@ -3,7 +3,6 @@
 namespace Backend\Modules\Pages\Domain\Page\Command;
 
 use Backend\Core\Engine\Authentication;
-use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
@@ -95,7 +94,6 @@ final class UpdatePageHandler
         foreach ($updatePage->blocks as $position => $blocks) {
             /** @var PageBlockDataTransferObject $blockDataTransferObject */
             foreach ($blocks as $blockDataTransferObject) {
-                dump($blockDataTransferObject);
                 $blockDataTransferObject->page = $page;
                 $blockDataTransferObject->position = $position;
                 $pageBlock = PageBlock::fromDataTransferObject($blockDataTransferObject);
