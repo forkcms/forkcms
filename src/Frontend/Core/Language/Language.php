@@ -334,10 +334,10 @@ class Language
             file_get_contents(FRONTEND_CACHE_PATH . '/Locale/en.json'),
             true
         );
-        self::$fallbackAct = (array) $fallbackTranslations['act'];
-        self::$fallbackErr = (array) $fallbackTranslations['err'];
-        self::$fallbackLbl = (array) $fallbackTranslations['lbl'];
-        self::$fallbackMsg = (array) $fallbackTranslations['msg'];
+        self::$fallbackAct = (array) ($fallbackTranslations['act'] ?? []);
+        self::$fallbackErr = (array) ($fallbackTranslations['err'] ?? []);
+        self::$fallbackLbl = (array) ($fallbackTranslations['lbl'] ?? []);
+        self::$fallbackMsg = (array) ($fallbackTranslations['msg'] ?? []);
 
         // We will overwrite with the requested language's translations upon request
         $translations = json_decode(
