@@ -9,6 +9,10 @@
 	Contact: katrien-is-a-human [at] sumocoders.be
 	From: Belgium, Ghent
 
+	Frontender: Sarah Meysman
+	Contact: sarah-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
 	Developer: Jonas De Keukelaere
 	Contact: jonas-is-a-human [at] sumocoders.be
 	Twitter: @jonasdk89
