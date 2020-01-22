@@ -79,6 +79,11 @@ class ModelTest extends WebTestCase
             $this->getBlogPostData()['title'],
             $editedComment['post_title']
         );
+
+        // Reset data
+        $commentData = $this->getCommentData();
+        $commentData['id'] = $editedComment['id'];
+        Model::updateComment($commentData);
     }
 
     public function testGettingAllComments(): void
@@ -93,7 +98,7 @@ class ModelTest extends WebTestCase
 
         $this->assertEquals(1, $firstComment['post_id']);
         $this->assertEquals($commentData['post_id'], $firstComment['post_id']);
-        $this->assertEquals(strtotime($commentData['created_on']), $firstComment['created_on']);
+        $this->assertEquals((string) strtotime($commentData['created_on'].' UTC'), $firstComment['created_on']);
         $this->assertEquals($commentData['author'], $firstComment['author']);
         $this->assertEquals($commentData['email'], $firstComment['email']);
         $this->assertEquals($commentData['website'], $firstComment['website']);
