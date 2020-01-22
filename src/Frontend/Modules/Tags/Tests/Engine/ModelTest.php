@@ -132,6 +132,8 @@ final class ModelTest extends WebTestCase
     {
         $modules = TagsModel::getModulesForTag(1);
         $this->assertSame('Faq', $modules[0]);
+        $this->assertCount(2, $modules);
+        $this->assertCount(1, TagsModel::getModulesForTag(2));
     }
 
     public function testGetName(): void
