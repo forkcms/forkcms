@@ -166,14 +166,14 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupId, $addedProfileGroup['id']);
         $this->assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
         $this->assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
-        $this->assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']);
+        $this->assertEquals($profileGroupData['expires_on'], strtotime($addedProfileGroup['expires_on']));
 
         $this->assertContains(
             [
                 'id' => $profileId,
                 'group_id' => $groupId,
                 'group_name' => 'My Fork CMS group',
-                'expires_on' => $profileGroupData['expires_on'],
+                'expires_on' => strtotime($profileGroupData['expires_on']),
             ],
             Model::getProfileGroups(1)
         );
@@ -284,8 +284,8 @@ final class ModelTest extends WebTestCase
         return [
             'profile_id' => $profileId,
             'group_id' => $groupId,
-            'starts_on' => time(),
-            'expires_on' =>  time() + 60 * 60,
+            'starts_on' => date('Y-m-d H:i:s', time()),
+            'expires_on' =>  date('Y-m-d H:i:s', time() + 60 * 60),
         ];
     }
 
@@ -314,7 +314,7 @@ final class ModelTest extends WebTestCase
         return [
             'profile_id' => 1,
             'group_id' => 1,
-            'expires_on' => time() + 60 * 60,
+            'expires_on' => date('Y-m-d H:i:s', time() + 60 * 60),
         ];
     }
 }
