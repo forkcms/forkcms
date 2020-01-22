@@ -3,12 +3,11 @@
 namespace Backend\Modules\Blog\Tests\Engine;
 
 use Backend\Modules\Blog\Engine\Model;
-use Common\Doctrine\Entity\Meta;
 use Common\WebTestCase;
 
 class ModelTest extends WebTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +39,7 @@ class ModelTest extends WebTestCase
         self::assertEquals($commentData['type'], $addedComment['type']);
         self::assertEquals($commentData['status'], $addedComment['status']);
         self::assertEquals($commentData['data'], $addedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $addedComment['post_title']);
+        self::assertEquals($this->getBlogPostData()['title'], $addedComment['post_title']);
     }
 
     public function testCommentExists(): void
@@ -68,8 +67,8 @@ class ModelTest extends WebTestCase
         self::assertEquals($commentData['text'], $firstComment['text']);
         self::assertEquals($commentData['type'], $firstComment['type']);
         self::assertEquals($commentData['status'], $firstComment['status']);
-        self::assertEquals($this->getBlogpostData()['title'], $firstComment['post_title']);
-        self::assertEquals($this->getBlogpostData()['language'], $firstComment['post_language']);
+        self::assertEquals($this->getBlogPostData()['title'], $firstComment['post_title']);
+        self::assertEquals($this->getBlogPostData()['language'], $firstComment['post_language']);
     }
 
     public function testEditingComment(): void
@@ -91,20 +90,20 @@ class ModelTest extends WebTestCase
         self::assertEquals($commentData['type'], $editedComment['type']);
         self::assertEquals($commentData['status'], $editedComment['status']);
         self::assertEquals($commentData['data'], $editedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $editedComment['post_title']);
+        self::assertEquals($this->getBlogPostData()['title'], $editedComment['post_title']);
     }
 
     public function testDeletingComment(): void
     {
-        self::assertEquals(true, Model::existsComment(1));
+        self::assertTrue(Model::existsComment(1));
         Model::deleteComments([1]);
-        self::assertEquals(false, Model::existsComment(1));
+        self::assertFalse(Model::existsComment(1));
     }
 
     private function getCommentData(): array
     {
         return [
-            'post_id' => $this->getBlogpostData()['id'],
+            'post_id' => $this->getBlogPostData()['id'],
             'language' => 'en',
             'created_on' => '2017-01-01 13:37:00',
             'author' => 'John Doe',
@@ -121,7 +120,7 @@ class ModelTest extends WebTestCase
     {
         return [
             'id' => 1,
-            'post_id' => $this->getBlogpostData()['id'],
+            'post_id' => $this->getBlogPostData()['id'],
             'language' => 'en',
             'created_on' => '2017-01-01 13:37:00',
             'author' => 'John Doe EDIT',
@@ -134,14 +133,14 @@ class ModelTest extends WebTestCase
         ];
     }
 
-    private function insertBlogPost()
+    private function insertBlogPost(): void
     {
         Model::insert(
-            $this->getBlogpostData()
+            $this->getBlogPostData()
         );
     }
 
-    private function getBlogpostData()
+    private function getBlogPostData(): array
     {
         return [
             'id' => 1,
