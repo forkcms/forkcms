@@ -140,8 +140,9 @@ final class ModelTest extends WebTestCase
 
     public function testDeletingGroup(): void
     {
+        $profileId = $this->addProfile();
         $groupId = $this->addGroup();
-        $profileGroupId = $this->addProfileGroup();
+        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
 
         $this->assertNotEmpty(Model::getGroup($groupId));
         $this->assertNotEmpty(Model::getProfileGroup($profileGroupId));
@@ -154,12 +155,12 @@ final class ModelTest extends WebTestCase
 
     public function testInsertingProfileGroup(): void
     {
-        $this->addGroup();
-        $this->addProfile();
+        $profileId = $this->addProfile();
+        $groupId = $this->addGroup();
 
-        $profileGroupId = $this->addProfileGroup();
+        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
 
-        $profileGroupData = $this->getProfileGroupData();
+        $profileGroupData = $this->getProfileGroupData($profileId, $groupId);
         $addedProfileGroup = Model::getProfileGroup($profileGroupId);
 
         $this->assertEquals($profileGroupId, $addedProfileGroup['id']);
@@ -169,10 +170,10 @@ final class ModelTest extends WebTestCase
 
         $this->assertContains(
             [
-                'id' => 1,
-                'group_id' => 1,
+                'id' => $profileId,
+                'group_id' => $groupId,
                 'group_name' => 'My Fork CMS group',
-                'expires_on' => null,
+                'expires_on' => $profileGroupData['expires_on'],
             ],
             Model::getProfileGroups(1)
         );
@@ -226,9 +227,9 @@ final class ModelTest extends WebTestCase
         return Model::insertGroup($this->getGroupData());
     }
 
-    public function addProfileGroup(): int
+    public function addProfileGroup(int $profileId, int $groupId): int
     {
-        return Model::insertProfileGroup($this->getProfileGroupData());
+        return Model::insertProfileGroup($this->getProfileGroupData($profileId, $groupId));
     }
 
     public function updateProfile(): int
@@ -276,13 +277,13 @@ final class ModelTest extends WebTestCase
         ];
     }
 
-    public function getProfileGroupData(): array
+    public function getProfileGroupData(int $profileId, int $groupId): array
     {
         return [
-            'profile_id' => 1,
-            'group_id' => 1,
-            'starts_on' => null,
-            'expires_on' => null,
+            'profile_id' => $profileId,
+            'group_id' => $groupId,
+            'starts_on' => time(),
+            'expires_on' =>  time() + 60 * 60,
         ];
     }
 
