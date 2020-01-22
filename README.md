@@ -50,10 +50,11 @@ Running the tests:
 
     composer test
 
-Running only the unit tests or the functional tests
+Running only the unit, functional, or the installer tests
 
      composer test -- --testsuite=functional
      composer test -- --testsuite=unit
+     composer test -- --testsuite=installer
 
 ## Styling the backend
 
