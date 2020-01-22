@@ -70,7 +70,7 @@ final class ProfileTest extends WebTestCase
         */
     }
 
-    public function testLoadingOfProfile()
+    public function testLoadingOfProfile(): void
     {
         $profileId = $this->addProfile();
 
