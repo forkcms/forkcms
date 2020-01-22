@@ -56,6 +56,10 @@ Running only the unit, functional, or the installer tests
      composer test -- --testsuite=unit
      composer test -- --testsuite=installer
 
+If you want to run all the tests except the ones from the installer use
+
+    composer test -- --exclude-group=installer
+
 ## Styling the backend
 
 The backend uses [Bootstrap](http://www.getbootstrap.com) in combination with Sass. To make changes, you should make
