@@ -127,7 +127,7 @@ final class ModelTest extends WebTestCase
         $this->assertNotContains('Someone else\'s setting\'s value', $settings);
     }
 
-    public  function testDeletingSetting(): void
+    public function testDeletingSetting(): void
     {
         Model::setSetting(1, 'my_setting', 'My setting\'s value');
         $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
