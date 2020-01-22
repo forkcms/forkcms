@@ -13,7 +13,7 @@ class PageVersionDataGrid extends DataGridDatabase
     public function __construct(Page $page, Status $status)
     {
         $whereStatement = 'p.id = :id AND p.status = :status AND p.locale = :locale';
-        $parameters =             [
+        $parameters = [
             'id' => $page->getId(),
             'status' => $status,
             'locale' => $page->getLocale(),
