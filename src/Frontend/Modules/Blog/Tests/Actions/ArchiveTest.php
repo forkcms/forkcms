@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Blog\Tests\Actions;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Common\WebTestCase;
 
 class ArchiveTest extends WebTestCase
@@ -13,8 +15,8 @@ class ArchiveTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 

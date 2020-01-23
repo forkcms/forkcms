@@ -15,9 +15,6 @@ final class ModelTest extends WebTestCase
         if (!defined('APPLICATION')) {
             define('APPLICATION', 'Backend');
         }
-
-        $client = self::createClient();
-        $this->loadFixtures($client);
     }
 
     public function testInsertingFaqCategory(): void

@@ -19,9 +19,6 @@ final class ProfileTest extends WebTestCase
         if (!defined('LANGUAGE')) {
             define('LANGUAGE', 'en');
         }
-
-        $client = self::createClient();
-        $this->loadFixtures($client);
     }
 
     public function testCreatingProfile(): void

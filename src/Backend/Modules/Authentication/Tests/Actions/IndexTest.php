@@ -26,7 +26,6 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
         $this->logout($client);
         $client->followRedirects();
-        $this->loadFixtures($client);
 
         $client->request('GET', '/private');
         self::assertStringEndsWith(

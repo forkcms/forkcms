@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Common\WebTestCase;
 
 class DeleteTest extends WebTestCase
@@ -13,8 +15,8 @@ class DeleteTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 

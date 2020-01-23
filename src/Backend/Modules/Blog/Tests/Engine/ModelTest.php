@@ -19,8 +19,6 @@ class ModelTest extends WebTestCase
     // comments
     public function testCreateComment(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
         $this->insertBlogpost();
 
         $commentData = $this->getCommentData();
@@ -180,9 +178,6 @@ class ModelTest extends WebTestCase
     // categories
     public function testCreateCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryData = $this->getCategoryData();
         $categoryMetaData = $this->getCategoryMetaData();
         $id = Model::insertCategory($categoryData, $categoryMetaData);
@@ -205,9 +200,6 @@ class ModelTest extends WebTestCase
 
     public function testUpdateCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryData = $this->getUpdateCategoryData();
         $categoryMetaData = $this->getUpdatedCategoryMetaData();
 
@@ -223,9 +215,6 @@ class ModelTest extends WebTestCase
 
     public function testDeleteCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $id = Model::insertCategory(
             $this->getCategoryData(),
             $this->getCategoryMetaData()
@@ -238,9 +227,6 @@ class ModelTest extends WebTestCase
 
     public function testCalculatingCategoryUrl(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $this->assertEquals('foo-bar', Model::getUrlForCategory('foo-bar'));
 
         // check if 2 is appended for an existing category

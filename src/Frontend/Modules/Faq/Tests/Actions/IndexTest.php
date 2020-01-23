@@ -3,6 +3,8 @@
 namespace Frontend\Modules\Faq\Tests\Actions;
 
 use Common\WebTestCase;
+use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
+use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
 
 class IndexTest extends WebTestCase
 {
@@ -13,8 +15,8 @@ class IndexTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
-                'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
             ]
         );
 

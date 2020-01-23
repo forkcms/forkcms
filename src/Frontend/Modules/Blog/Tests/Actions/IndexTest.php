@@ -3,6 +3,8 @@
 namespace Frontend\Modules\Blog\Tests\Actions;
 
 use Common\WebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 
 class IndexTest extends WebTestCase
 {
@@ -13,8 +15,8 @@ class IndexTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 

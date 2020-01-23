@@ -15,9 +15,6 @@ final class ModelTest extends WebTestCase
         if (!defined('APPLICATION')) {
             define('APPLICATION', 'Frontend');
         }
-
-        $client = self::createClient();
-        $this->loadFixtures($client);
     }
 
     public function testInsertingProfile(): void

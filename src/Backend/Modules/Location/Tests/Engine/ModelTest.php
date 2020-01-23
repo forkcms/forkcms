@@ -18,9 +18,6 @@ class ModelTest extends WebTestCase
 
     public function testInsertingLocation(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $locationArray = $this->getLocationArray();
 
         Model::insert($locationArray);

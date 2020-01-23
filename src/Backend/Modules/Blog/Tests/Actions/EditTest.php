@@ -3,6 +3,8 @@
 namespace Backend\Modules\Blog\Tests\Action;
 
 use Common\WebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 
 class EditTest extends WebTestCase
 {
@@ -13,8 +15,8 @@ class EditTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 

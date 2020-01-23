@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Faq\Actions;
 
+use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
+use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
 use Common\WebTestCase;
 
 class DetailTest extends WebTestCase
@@ -12,8 +14,8 @@ class DetailTest extends WebTestCase
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
-                'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
             ]
         );
 

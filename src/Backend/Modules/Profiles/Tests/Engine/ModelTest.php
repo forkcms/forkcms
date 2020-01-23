@@ -19,8 +19,6 @@ final class ModelTest extends WebTestCase
             define('APPLICATION', 'Backend');
         }
 
-        $client = self::createClient();
-        $this->loadFixtures($client);
         $this->expiresOnTimestamp = time() + 60 * 60;
     }
 
