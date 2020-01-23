@@ -17,6 +17,13 @@ use Backend\Core\Engine\Authentication;
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->resetDataBase(static::createClient());
+    }
+
     /**
      * Attempts to guess the kernel location.
      *
@@ -63,7 +70,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param SpoonDatabase $database
      */
-    protected function emptyTestDatabase(SpoonDatabase $database)
+    protected function emptyTestDatabase(SpoonDatabase $database): void
     {
         foreach ($database->getTables() as $table) {
             $database->execute(
@@ -78,7 +85,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param SpoonDatabase $database
      * @param string $sql
      */
-    protected function importSQL(SpoonDatabase $database, string $sql)
+    protected function importSQL(SpoonDatabase $database, string $sql): void
     {
         $database->execute(trim($sql));
     }
@@ -112,7 +119,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
-    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir)
+    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir): void
     {
         if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
             $filesystem->copy(
@@ -131,7 +138,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
-    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir)
+    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir): void
     {
         if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
             $filesystem->copy(
@@ -146,7 +153,7 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    protected function assertIs404(Client $client)
+    protected function assertIs404(Client $client): void
     {
         self::assertEquals(
             404,
