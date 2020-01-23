@@ -17,8 +17,8 @@ use Backend\Core\Engine\Authentication;
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
-    protected $preserveGlobalState = FALSE;
-    protected $runTestInSeparateProcess = TRUE;
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     protected function setUp(): void
     {
@@ -32,7 +32,13 @@ abstract class WebTestCase extends BaseWebTestCase
             define('FRONTEND_LANGUAGE', 'en');
         }
 
-        $this->resetDataBase(static::createClient());
+        // Inject the client in the data
+        $client = static::createClient();
+        $data = $this->getProvidedData();
+        $data[] = $client;
+        $this->__construct($this->getName(), $data, $this->dataDescription());
+
+        $this->resetDataBase($client);
     }
 
     /**
@@ -40,11 +46,11 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * When the Kernel is located, the file is required.
      *
-     * @todo Remove this when Fork has no custom Kernel class anymore
-     *
+     * @return string The Kernel class name
      * @throws \RuntimeException
      *
-     * @return string The Kernel class name
+     * @todo Remove this when Fork has no custom Kernel class anymore
+     *
      */
     protected static function getKernelClass(): string
     {
@@ -101,7 +107,8 @@ abstract class WebTestCase extends BaseWebTestCase
         $database->execute(trim($sql));
     }
 
-    protected function resetDataBase(Client $client): void {
+    protected function resetDataBase(Client $client): void
+    {
         $database = $client->getContainer()->get('database');
 
         // make sure our database has a clean state (freshly installed Fork)
@@ -280,12 +287,16 @@ abstract class WebTestCase extends BaseWebTestCase
         $crawler = $client->request('GET', '/private/en/authentication');
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, [
-            'form' => 'authenticationIndex',
-            'backend_email' => 'noreply@fork-cms.com',
-            'backend_password' => 'fork',
-            'form_token' => $form['form_token']->getValue(),
-        ]);
+        $this->submitForm(
+            $client,
+            $form,
+            [
+                'form' => 'authenticationIndex',
+                'backend_email' => 'noreply@fork-cms.com',
+                'backend_password' => 'fork',
+                'form_token' => $form['form_token']->getValue(),
+            ]
+        );
     }
 
     /**
