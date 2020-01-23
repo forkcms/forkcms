@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class AddTest extends WebTestCase
+class AddTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {

@@ -2,10 +2,10 @@
 
 namespace Backend\Modules\Authentication\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Core\Engine\Authentication as Authentication;
 
-class LogoutTest extends WebTestCase
+class LogoutTest extends BackendWebTestCase
 {
     public function testLogoutActionRedirectsYouToLoginAfterLoggingOut(): void
     {

@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Analytics\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class ResetTest extends WebTestCase
+class ResetTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {

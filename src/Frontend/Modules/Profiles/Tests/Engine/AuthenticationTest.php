@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication;
 use Frontend\Modules\Profiles\Tests\DataFixtures\LoadProfiles;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-final class AuthenticationTest extends WebTestCase
+final class AuthenticationTest extends FrontendWebTestCase
 {
     /** @var SpoonDatabase */
     private $database;
@@ -19,13 +19,9 @@ final class AuthenticationTest extends WebTestCase
     /** @var Session */
     private $session;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
 
         $client = self::createClient();
         $this->loadFixtures($client, [LoadProfiles::class]);
@@ -110,7 +106,7 @@ final class AuthenticationTest extends WebTestCase
         $this->assertEquals(
             '0',
             $this->database->getVar(
-                'SELECT COUNT(session_id) 
+                'SELECT COUNT(session_id)
                  FROM profiles_sessions
                  WHERE profile_id = 2'
             )
@@ -121,7 +117,7 @@ final class AuthenticationTest extends WebTestCase
         $this->assertEquals(
             '1',
             $this->database->getVar(
-                'SELECT COUNT(session_id) 
+                'SELECT COUNT(session_id)
                  FROM profiles_sessions
                  WHERE profile_id = 2'
             )

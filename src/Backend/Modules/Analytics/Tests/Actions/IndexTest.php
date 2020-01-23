@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Analytics\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {

@@ -4,9 +4,9 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-class CategoryTest extends WebTestCase
+class CategoryTest extends FrontendWebTestCase
 {
     public function testCategoryHasPage(): void
     {

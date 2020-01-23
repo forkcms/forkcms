@@ -4,9 +4,9 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-class DetailTest extends WebTestCase
+class DetailTest extends FrontendWebTestCase
 {
     public function testBlogPostHasDetailPage(): void
     {

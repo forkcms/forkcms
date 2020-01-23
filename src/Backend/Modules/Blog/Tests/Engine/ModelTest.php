@@ -3,19 +3,10 @@
 namespace Backend\Modules\Blog\Tests\Engine;
 
 use Backend\Modules\Blog\Engine\Model;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class ModelTest extends WebTestCase
+class ModelTest extends BackendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-    }
-
     // comments
     public function testCreateComment(): void
     {

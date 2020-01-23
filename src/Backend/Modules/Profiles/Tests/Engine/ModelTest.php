@@ -3,21 +3,17 @@
 namespace Backend\Modules\Profiles\Tests\Engine;
 
 use Backend\Modules\Profiles\Engine\Model;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use DateTime;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends BackendWebTestCase
 {
     /** @var int */
     private $expiresOnTimestamp;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
 
         $this->expiresOnTimestamp = time() + 60 * 60;
     }

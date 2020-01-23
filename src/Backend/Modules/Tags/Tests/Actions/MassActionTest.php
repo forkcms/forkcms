@@ -4,17 +4,13 @@ namespace Backend\Modules\Tags\Tests\Action;
 
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class MassActionTest extends WebTestCase
+class MassActionTest extends BackendWebTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
 
         $client = self::createClient();
         $this->loadFixtures(

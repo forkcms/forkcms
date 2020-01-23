@@ -2,10 +2,10 @@
 
 namespace Backend\Modules\Authentication\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Core\Engine\Authentication as Authentication;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
     /**
      * The authentication class persist the previous user.

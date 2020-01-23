@@ -4,9 +4,9 @@ namespace Frontend\Modules\Tags\Actions;
 
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-class DetailTest extends WebTestCase
+class DetailTest extends FrontendWebTestCase
 {
     public function testTagsHaveDetailPage(): void
     {

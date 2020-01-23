@@ -4,9 +4,9 @@ namespace Frontend\Modules\Faq\Actions;
 
 use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
 use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-class DetailTest extends WebTestCase
+class DetailTest extends FrontendWebTestCase
 {
     public function testFaqHasDetailPage(): void
     {

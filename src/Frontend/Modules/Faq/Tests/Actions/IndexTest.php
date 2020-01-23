@@ -2,11 +2,11 @@
 
 namespace Frontend\Modules\Faq\Tests\Actions;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
 use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
 
-class IndexTest extends WebTestCase
+class IndexTest extends FrontendWebTestCase
 {
     public function testFaqIndexContainsCategories(): void
     {

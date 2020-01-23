@@ -2,10 +2,10 @@
 
 namespace Frontend\Core\Tests\Engine;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class AjaxTest extends WebTestCase
+class AjaxTest extends FrontendWebTestCase
 {
     public function testAjaxWithoutModuleAndAction(): void
     {

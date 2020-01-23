@@ -10,17 +10,13 @@ use Frontend\Core\Language\Locale;
 use Frontend\Modules\Search\Engine\Model as SearchModel;
 use Frontend\Modules\Pages\Engine\Model as PagesModel;
 use Frontend\Modules\Tags\Engine\Model as TagsModel;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends FrontendWebTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
 
         $client = self::createClient();
         $this->loadFixtures(
@@ -30,14 +26,6 @@ final class ModelTest extends WebTestCase
                 LoadTagsModulesTags::class,
             ]
         );
-
-        if (!defined('LANGUAGE')) {
-            define('LANGUAGE', $client->getContainer()->getParameter('site.default_language'));
-        }
-
-        if (!defined('FRONTEND_LANGUAGE')) {
-            define('FRONTEND_LANGUAGE', $client->getContainer()->getParameter('site.default_language'));
-        }
     }
 
     public function testCallFromInterfaceOnModuleThatDoesNotImplementIt(): void

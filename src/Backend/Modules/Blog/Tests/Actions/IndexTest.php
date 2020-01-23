@@ -2,11 +2,11 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {

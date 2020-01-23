@@ -3,20 +3,11 @@
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
 use Frontend\Modules\Profiles\Engine\Model;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Frontend\Modules\Profiles\Engine\Profile;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends FrontendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
-    }
-
     public function testInsertingProfile(): void
     {
         $profileId = $this->addProfile();

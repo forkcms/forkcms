@@ -4,19 +4,10 @@ namespace Backend\Modules\Faq\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends BackendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-    }
-
     public function testInsertingFaqCategory(): void
     {
         $categoryId = $this->addCategory();

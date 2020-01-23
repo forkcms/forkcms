@@ -13,7 +13,7 @@ class StorageManagerTest extends TestCase
     /** @var StorageManager */
     protected $storageManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->storageManager = new StorageManager();
     }

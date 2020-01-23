@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Extensions\Tests\Actions;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Filesystem\Filesystem;
@@ -11,7 +11,7 @@ use ZipArchive;
 /**
  * Class UploadThemeTest
  */
-class UploadThemeTest extends WebTestCase
+class UploadThemeTest extends BackendWebTestCase
 {
     const THEME_NAME = 'Fork Test Theme';
     const URL_UPLOAD_THEME = '/private/en/extensions/upload_theme';

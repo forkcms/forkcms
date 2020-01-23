@@ -4,9 +4,9 @@ namespace Frontend\Modules\Blog\Tests\Actions;
 
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 
-class ArchiveTest extends WebTestCase
+class ArchiveTest extends FrontendWebTestCase
 {
     public function testArchiveContainsBlogPosts(): void
     {

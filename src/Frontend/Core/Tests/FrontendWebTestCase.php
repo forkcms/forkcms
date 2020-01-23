@@ -1,17 +1,17 @@
 <?php
 
-namespace Backend\Core\Tests;
+namespace Frontend\Core\Tests;
 
 use Common\WebTestCase;
 
-abstract class BackendWebTestCase extends WebTestCase
+abstract class FrontendWebTestCase extends WebTestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
 
         if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
+            define('APPLICATION', 'Frontend');
         }
     }
 }

@@ -3,19 +3,10 @@
 namespace Backend\Modules\Location\Tests\Engine;
 
 use Backend\Modules\Location\Engine\Model;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-class ModelTest extends WebTestCase
+class ModelTest extends BackendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-    }
-
     public function testInsertingLocation(): void
     {
         $locationArray = $this->getLocationArray();

@@ -7,17 +7,13 @@ use Backend\Core\Language\Language;
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
 use Backend\Modules\Tags\Engine\Model as TagsModel;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends BackendWebTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
 
         $client = self::createClient();
         $this->loadFixtures(

@@ -2,11 +2,11 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
+use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
-use Common\WebTestCase;
 
-class DeleteTest extends WebTestCase
+class DeleteTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {

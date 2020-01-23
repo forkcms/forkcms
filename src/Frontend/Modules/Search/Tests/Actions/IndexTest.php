@@ -2,11 +2,11 @@
 
 namespace Frontend\Modules\Search\Tests\Actions;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 
-class IndexTest extends WebTestCase
+class IndexTest extends FrontendWebTestCase
 {
     public function testSearchIndexWorks(): void
     {

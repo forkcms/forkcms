@@ -2,10 +2,10 @@
 
 namespace Backend\Modules\Error\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNotNeeded(): void
     {

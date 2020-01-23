@@ -17,9 +17,20 @@ use Backend\Core\Engine\Authentication;
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
+    protected $preserveGlobalState = FALSE;
+    protected $runTestInSeparateProcess = TRUE;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (!defined('LANGUAGE')) {
+            define('LANGUAGE', 'en');
+        }
+
+        if (!defined('FRONTEND_LANGUAGE')) {
+            define('FRONTEND_LANGUAGE', 'en');
+        }
 
         $this->resetDataBase(static::createClient());
     }
