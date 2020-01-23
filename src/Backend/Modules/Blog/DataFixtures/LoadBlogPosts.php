@@ -6,6 +6,9 @@ use SpoonDatabase;
 
 class LoadBlogPosts
 {
+    public const BLOG_POST_TITLE = 'Blogpost for functional tests';
+    public const BLOG_POST_ID = 1;
+
     public function load(SpoonDatabase $database): void
     {
         $metaId = $database->insert(
@@ -32,12 +35,12 @@ class LoadBlogPosts
         $database->insert(
             'blog_posts',
             [
-                'id' => 1,
+                'id' => self::BLOG_POST_ID,
                 'meta_id' => $metaId,
                 'category_id' => $categoryId,
                 'user_id' => 1,
                 'language' => 'en',
-                'title' => 'Blogpost for functional tests',
+                'title' => self::BLOG_POST_TITLE,
                 'introduction' => '<p>Lorem ipsum dolor sit amet</p>',
                 'text' => '<p>Lorem ipsum dolor sit amet</p>',
                 'status' => 'active',

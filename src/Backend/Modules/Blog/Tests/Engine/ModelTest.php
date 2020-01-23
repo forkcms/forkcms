@@ -2,15 +2,17 @@
 
 namespace Backend\Modules\Blog\Tests\Engine;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Backend\Modules\Blog\Engine\Model;
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class ModelTest extends BackendWebTestCase
 {
     // comments
-    public function testCreateComment(): void
+    public function testCreateComment(Client $client): void
     {
-        $this->insertBlogpost();
+        $this->loadFixtures($client, [LoadBlogPosts::class]);
 
         $commentData = $this->getCommentData();
 
@@ -32,7 +34,7 @@ class ModelTest extends BackendWebTestCase
         $this->assertEquals($commentData['status'], $addedComment['status']);
         $this->assertEquals($commentData['data'], $addedComment['data']);
         $this->assertEquals(
-            $this->getBlogPostData()['title'],
+            LoadBlogPosts::BLOG_POST_TITLE,
             $addedComment['post_title']
         );
     }
@@ -108,7 +110,7 @@ class ModelTest extends BackendWebTestCase
     private function getCommentData(): array
     {
         return [
-            'post_id' => $this->getBlogPostData()['id'],
+            'post_id' => LoadBlogPosts::BLOG_POST_ID,
             'language' => 'en',
             'created_on' => '2017-01-01 13:37:00',
             'author' => 'John Doe',
@@ -136,13 +138,6 @@ class ModelTest extends BackendWebTestCase
             'status' => 'published',
             'data' => serialize(['server' => ['foo' => 'bar edit']]),
         ];
-    }
-
-    private function insertBlogPost(): void
-    {
-        Model::insert(
-            $this->getBlogPostData()
-        );
     }
 
     private function getBlogPostData(): array
