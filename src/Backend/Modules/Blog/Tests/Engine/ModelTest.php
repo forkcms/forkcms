@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Blog\Tests\Engine;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogPostComments;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Backend\Modules\Blog\Engine\Model;
 use Backend\Core\Tests\BackendWebTestCase;
@@ -39,8 +40,10 @@ class ModelTest extends BackendWebTestCase
         );
     }
 
-    public function testIfCommentExists(): void
+    public function testIfCommentExists(Client $client): void
     {
+        $this->loadFixtures($client, [LoadBlogPostComments::class]);
+
         $this->assertTrue(Model::existsComment(1));
         $this->assertFalse(Model::existsComment(2));
     }
