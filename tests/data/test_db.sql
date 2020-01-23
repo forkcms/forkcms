@@ -1632,7 +1632,7 @@ VALUES
 	(919, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstall', 'Are you sure you want to install the module \"%1$s\"?', '2017-08-31 14:28:21'),
 	(920, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstallDefault', 'Are you sure you want to install the module?', '2017-08-31 14:28:21'),
 	(921, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmThemeInstall', 'Are you sure you want to install this theme?', '2017-08-31 14:28:21'),
-	(922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'The user can upload a file.', '2017-08-31 14:28:21'),
+	(922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'Allow the user to upload an image.', '2017-08-31 14:28:21'),
 	(923, 1, 'en', 'Backend', 'Extensions', 'msg', 'DeletedTemplate', 'The template \"%1$s\" was deleted.', '2017-08-31 14:28:21'),
 	(924, 1, 'en', 'Backend', 'Extensions', 'msg', 'EditedTemplate', 'The template \"%1$s\" was saved.', '2017-08-31 14:28:21'),
 	(925, 1, 'en', 'Backend', 'Extensions', 'msg', 'HelpInstallableThemes', 'Click a theme to install it.', '2017-08-31 14:28:21'),
