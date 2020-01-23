@@ -83,8 +83,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $database->execute(trim($sql));
     }
 
-    protected function loadFixtures(Client $client, array $fixtureClasses = [])
-    {
+    protected function resetDataBase(Client $client): void {
         $database = $client->getContainer()->get('database');
 
         // make sure our database has a clean state (freshly installed Fork)
@@ -94,6 +93,11 @@ abstract class WebTestCase extends BaseWebTestCase
             $client->getContainer()->get('database'),
             file_get_contents($kernelDir . '/../tests/data/test_db.sql')
         );
+    }
+
+    protected function loadFixtures(Client $client, array $fixtureClasses = []): void
+    {
+        $database = $client->getContainer()->get('database');
 
         // load all the fixtures
         foreach ($fixtureClasses as $class) {
