@@ -48,15 +48,17 @@ class ModelTest extends BackendWebTestCase
         $this->assertFalse(Model::existsComment(2));
     }
 
-    public function testUpdateComment(): void
+    public function testUpdateComment(Client $client): void
     {
+        $this->loadFixtures($client, [LoadBlogPostComments::class]);
+
         $commentData = $this->getUpdatedCommentData();
 
         Model::updateComment($commentData);
 
-        $editedComment = Model::getComment(1);
+        $editedComment = Model::getComment(LoadBlogPostComments::BLOG_POST_COMMENT_ID);
 
-        $this->assertEquals(1, $editedComment['id']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_ID, $editedComment['id']);
         $this->assertEquals($commentData['post_id'], $editedComment['post_id']);
         $this->assertEquals(
             $commentData['language'],
@@ -70,14 +72,9 @@ class ModelTest extends BackendWebTestCase
         $this->assertEquals($commentData['status'], $editedComment['status']);
         $this->assertEquals($commentData['data'], $editedComment['data']);
         $this->assertEquals(
-            $this->getBlogPostData()['title'],
+            LoadBlogPostComments::BLOG_POST_TITLE,
             $editedComment['post_title']
         );
-
-        // Reset data
-        $commentData = $this->getCommentData();
-        $commentData['id'] = $editedComment['id'];
-        Model::updateComment($commentData);
     }
 
     public function testGettingAllComments(): void
@@ -129,8 +126,8 @@ class ModelTest extends BackendWebTestCase
     private function getUpdatedCommentData(): array
     {
         return [
-            'id' => 1,
-            'post_id' => $this->getBlogPostData()['id'],
+            'id' => LoadBlogPostComments::BLOG_POST_COMMENT_ID,
+            'post_id' => LoadBlogPostComments::BLOG_POST_ID,
             'language' => 'en',
             'created_on' => '2017-01-01 13:37:00',
             'author' => 'John Doe EDIT',

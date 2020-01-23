@@ -14,9 +14,9 @@ class LoadBlogPosts
         $metaId = $database->insert(
             'meta',
             [
-                'keywords' => 'Blogpost for functional tests',
-                'description' => 'Blogpost for functional tests',
-                'title' => 'Blogpost for functional tests',
+                'keywords' => self::BLOG_POST_TITLE,
+                'description' => self::BLOG_POST_TITLE,
+                'title' => self::BLOG_POST_TITLE,
                 'url' => 'blogpost-for-functional-tests',
             ]
         );
@@ -55,9 +55,9 @@ class LoadBlogPosts
             'search_index',
             [
                 'module' => 'Blog',
-                'other_id' => 1,
+                'other_id' => self::BLOG_POST_ID,
                 'field' => 'title',
-                'value' => 'Blogpost for functional tests',
+                'value' => self::BLOG_POST_TITLE,
                 'language' => 'en',
                 'active' => true,
             ]

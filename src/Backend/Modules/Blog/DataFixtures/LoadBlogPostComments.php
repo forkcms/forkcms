@@ -6,14 +6,18 @@ use SpoonDatabase;
 
 class LoadBlogPostComments
 {
+    public const BLOG_POST_TITLE = 'Blogpost for functional tests';
+    public const BLOG_POST_ID = 1;
+    public const BLOG_POST_COMMENT_ID = 1;
+
     public function load(SpoonDatabase $database): void
     {
         $metaId = $database->insert(
             'meta',
             [
-                'keywords' => 'Blogpost for functional tests',
-                'description' => 'Blogpost for functional tests',
-                'title' => 'Blogpost for functional tests',
+                'keywords' => self::BLOG_POST_TITLE,
+                'description' => self::BLOG_POST_TITLE,
+                'title' => self::BLOG_POST_TITLE,
                 'url' => 'blogpost-for-functional-tests',
             ]
         );
@@ -32,12 +36,12 @@ class LoadBlogPostComments
         $database->insert(
             'blog_posts',
             [
-                'id' => 1,
+                'id' => self::BLOG_POST_ID,
                 'meta_id' => $metaId,
                 'category_id' => $categoryId,
                 'user_id' => 1,
                 'language' => 'en',
-                'title' => 'Blogpost for functional tests',
+                'title' => self::BLOG_POST_TITLE,
                 'introduction' => '<p>Lorem ipsum dolor sit amet</p>',
                 'text' => '<p>Lorem ipsum dolor sit amet</p>',
                 'status' => 'active',
@@ -49,9 +53,22 @@ class LoadBlogPostComments
         );
 
         $database->insert(
+            'search_index',
+            [
+                'module' => 'Blog',
+                'other_id' => self::BLOG_POST_ID,
+                'field' => 'title',
+                'value' => self::BLOG_POST_TITLE,
+                'language' => 'en',
+                'active' => true,
+            ]
+        );
+
+        $database->insert(
             'blog_comments',
             [
-                'post_id' => 1,
+                'id' => self::BLOG_POST_COMMENT_ID,
+                'post_id' => self::BLOG_POST_ID,
                 'language' => 'en',
                 'created_on' => '2017-01-01 13:37:00',
                 'author' => 'John Doe',
@@ -61,18 +78,6 @@ class LoadBlogPostComments
                 'type' => 'comment',
                 'status' => 'published',
                 'data' => serialize(['server' => ['foo' => 'bar']]),
-            ]
-        );
-
-        $database->insert(
-            'search_index',
-            [
-                'module' => 'Blog',
-                'other_id' => 1,
-                'field' => 'title',
-                'value' => 'Blogpost for functional tests',
-                'language' => 'en',
-                'active' => true,
             ]
         );
     }
