@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Blog\Tests\Engine;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPostComments;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Backend\Modules\Blog\Engine\Model;
@@ -13,20 +14,33 @@ class ModelTest extends BackendWebTestCase
     // comments
     public function testCreateComment(Client $client): void
     {
-        $this->loadFixtures($client, [LoadBlogPosts::class]);
-
-        $commentData = $this->getCommentData();
-
-        Model::insertComment($commentData);
-
-        $addedComment = Model::getComment(1);
-
-        $this->assertEquals(1, $addedComment['id']);
-        $this->assertEquals($commentData['post_id'], $addedComment['post_id']);
-        $this->assertEquals(
-            $commentData['language'],
-            $addedComment['language']
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
         );
+
+        $commentData = [
+            'post_id' => LoadBlogPosts::BLOG_POST_ID,
+            'language' => 'en',
+            'created_on' => '2020-01-01 13:37:00',
+            'author' => 'Elon Musk',
+            'email' => 'elon@example.org',
+            'website' => 'http://example.org',
+            'text' => 'I really like this CMS',
+            'type' => 'comment',
+            'status' => 'published',
+            'data' => 'a:1:{s:6:"server";a:1:{s:3:"foo";s:3:"bar";}}',
+        ];
+        $id = Model::insertComment($commentData);
+
+        $addedComment = Model::getComment($id);
+
+        $this->assertEquals($id, $addedComment['id']);
+        $this->assertEquals($commentData['post_id'], $addedComment['post_id']);
+        $this->assertEquals($commentData['language'], $addedComment['language']);
         $this->assertEquals($commentData['author'], $addedComment['author']);
         $this->assertEquals($commentData['email'], $addedComment['email']);
         $this->assertEquals($commentData['website'], $addedComment['website']);
@@ -34,15 +48,19 @@ class ModelTest extends BackendWebTestCase
         $this->assertEquals($commentData['type'], $addedComment['type']);
         $this->assertEquals($commentData['status'], $addedComment['status']);
         $this->assertEquals($commentData['data'], $addedComment['data']);
-        $this->assertEquals(
-            LoadBlogPosts::BLOG_POST_TITLE,
-            $addedComment['post_title']
-        );
+        $this->assertEquals(LoadBlogPosts::BLOG_POST_TITLE, $addedComment['post_title']);
     }
 
     public function testIfCommentExists(Client $client): void
     {
-        $this->loadFixtures($client, [LoadBlogPostComments::class]);
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
+        );
 
         $this->assertTrue(Model::existsComment(1));
         $this->assertFalse(Model::existsComment(2));
@@ -50,84 +68,18 @@ class ModelTest extends BackendWebTestCase
 
     public function testUpdateComment(Client $client): void
     {
-        $this->loadFixtures($client, [LoadBlogPostComments::class]);
-
-        $commentData = $this->getUpdatedCommentData();
-
-        Model::updateComment($commentData);
-
-        $editedComment = Model::getComment(LoadBlogPostComments::BLOG_POST_COMMENT_ID);
-
-        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_ID, $editedComment['id']);
-        $this->assertEquals($commentData['post_id'], $editedComment['post_id']);
-        $this->assertEquals(
-            $commentData['language'],
-            $editedComment['language']
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
         );
-        $this->assertEquals($commentData['author'], $editedComment['author']);
-        $this->assertEquals($commentData['email'], $editedComment['email']);
-        $this->assertEquals($commentData['website'], $editedComment['website']);
-        $this->assertEquals($commentData['text'], $editedComment['text']);
-        $this->assertEquals($commentData['type'], $editedComment['type']);
-        $this->assertEquals($commentData['status'], $editedComment['status']);
-        $this->assertEquals($commentData['data'], $editedComment['data']);
-        $this->assertEquals(
-            LoadBlogPostComments::BLOG_POST_TITLE,
-            $editedComment['post_title']
-        );
-    }
 
-    public function testGettingAllComments(): void
-    {
-        $comments = Model::getAllCommentsForStatus('published');
-
-        $this->assertCount(1, $comments);
-
-        $firstComment = $comments[0];
-
-        $commentData = $this->getCommentData();
-
-        $this->assertEquals(1, $firstComment['post_id']);
-        $this->assertEquals($commentData['post_id'], $firstComment['post_id']);
-        $this->assertEquals((string) strtotime($commentData['created_on'].' UTC'), $firstComment['created_on']);
-        $this->assertEquals($commentData['author'], $firstComment['author']);
-        $this->assertEquals($commentData['email'], $firstComment['email']);
-        $this->assertEquals($commentData['website'], $firstComment['website']);
-        $this->assertEquals($commentData['text'], $firstComment['text']);
-        $this->assertEquals($commentData['type'], $firstComment['type']);
-        $this->assertEquals($commentData['status'], $firstComment['status']);
-        $this->assertEquals($this->getBlogPostData()['title'], $firstComment['post_title']);
-        $this->assertEquals($this->getBlogPostData()['language'], $firstComment['post_language']);
-    }
-
-    public function testDeleteComment(): void
-    {
-        $this->assertTrue(Model::existsComment(1));
-        Model::deleteComments([1]);
-        $this->assertFalse(Model::existsComment(1));
-    }
-
-    private function getCommentData(): array
-    {
-        return [
-            'post_id' => LoadBlogPosts::BLOG_POST_ID,
-            'language' => 'en',
-            'created_on' => '2017-01-01 13:37:00',
-            'author' => 'John Doe',
-            'email' => 'john@example.org',
-            'website' => 'http://example.org',
-            'text' => 'Lorem Ipsum',
-            'type' => 'comment',
-            'status' => 'published',
-            'data' => serialize(['server' => ['foo' => 'bar']]),
-        ];
-    }
-
-    private function getUpdatedCommentData(): array
-    {
-        return [
+        $commentData = [
             'id' => LoadBlogPostComments::BLOG_POST_COMMENT_ID,
-            'post_id' => LoadBlogPostComments::BLOG_POST_ID,
+            'post_id' => LoadBlogPosts::BLOG_POST_ID,
             'language' => 'en',
             'created_on' => '2017-01-01 13:37:00',
             'author' => 'John Doe EDIT',
@@ -138,44 +90,87 @@ class ModelTest extends BackendWebTestCase
             'status' => 'published',
             'data' => serialize(['server' => ['foo' => 'bar edit']]),
         ];
+
+        Model::updateComment($commentData);
+
+        $editedComment = Model::getComment(LoadBlogPostComments::BLOG_POST_COMMENT_ID);
+
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_ID, $editedComment['id']);
+        $this->assertEquals($commentData['post_id'], $editedComment['post_id']);
+        $this->assertEquals($commentData['language'], $editedComment['language']);
+        $this->assertEquals($commentData['author'], $editedComment['author']);
+        $this->assertEquals($commentData['email'], $editedComment['email']);
+        $this->assertEquals($commentData['website'], $editedComment['website']);
+        $this->assertEquals($commentData['text'], $editedComment['text']);
+        $this->assertEquals($commentData['type'], $editedComment['type']);
+        $this->assertEquals($commentData['status'], $editedComment['status']);
+        $this->assertEquals($commentData['data'], $editedComment['data']);
+        $this->assertEquals(LoadBlogPosts::BLOG_POST_TITLE, $editedComment['post_title']);
     }
 
-    private function getBlogPostData(): array
+    public function testGettingAllComments(Client $client): void
     {
-        return [
-            'id' => 1,
-            'meta_id' => 1,
-            'category_id' => 1,
-            'user_id' => 1,
-            'language' => 'en',
-            'title' => 'Blog Title',
-            'introduction' => 'Intro',
-            'text' => 'Text',
-            'publish_on' => '2017-01-01 13:37:00',
-            'created_on' => '2017-01-01 13:37:00',
-            'edited_on' => '2017-01-01 13:37:00',
-            'hidden' => 0,
-            'allow_comments' => 1,
-            'num_comments' => 0,
-            'status' => 'active',
-        ];
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
+        );
+
+        $comments = Model::getAllCommentsForStatus('published');
+
+        $this->assertCount(1, $comments);
+
+        $firstComment = $comments[0];
+
+        $this->assertEquals(1, $firstComment['post_id']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['post_id'], $firstComment['post_id']);
+        $this->assertEquals(
+            (string) strtotime(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['created_on'] . ' UTC'),
+            $firstComment['created_on']
+        );
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['author'], $firstComment['author']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['email'], $firstComment['email']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['website'], $firstComment['website']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['text'], $firstComment['text']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['type'], $firstComment['type']);
+        $this->assertEquals(LoadBlogPostComments::BLOG_POST_COMMENT_DATA['status'], $firstComment['status']);
+        $this->assertEquals(LoadBlogPosts::BLOG_POST_TITLE, $firstComment['post_title']);
+        $this->assertEquals(LoadBlogPosts::BLOG_POST_DATA['language'], $firstComment['post_language']);
+    }
+
+    public function testDeleteComment(Client $client): void
+    {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
+        );
+
+        $this->assertTrue(Model::existsComment(1));
+        Model::deleteComments([1]);
+        $this->assertFalse(Model::existsComment(1));
     }
 
     // categories
     public function testCreateCategory(): void
     {
-        $categoryData = $this->getCategoryData();
         $categoryMetaData = $this->getCategoryMetaData();
-        $id = Model::insertCategory($categoryData, $categoryMetaData);
+        $id = Model::insertCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, $categoryMetaData);
         $createdCategory = Model::getCategory($id);
 
         $this->assertArrayHasKey('meta_id', $createdCategory);
         $this->assertEquals($id, $createdCategory['id']);
         $this->assertEquals(
-            $categoryData['language'],
+            LoadBlogCategories::BLOG_CATEGORY_DATA['language'],
             $createdCategory['language']
         );
-        $this->assertEquals($categoryData['title'], $createdCategory['title']);
+        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['title'], $createdCategory['title']);
     }
 
     public function testIfCategoryExists(): void
@@ -186,17 +181,16 @@ class ModelTest extends BackendWebTestCase
 
     public function testUpdateCategory(): void
     {
-        $categoryData = $this->getUpdateCategoryData();
         $categoryMetaData = $this->getUpdatedCategoryMetaData();
 
-        Model::updateCategory($categoryData, $categoryMetaData);
+        Model::updateCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, $categoryMetaData);
 
         $updatedCategory = Model::getCategory(1);
 
-        $this->assertEquals($categoryData['id'], $updatedCategory['id']);
+        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['id'], $updatedCategory['id']);
         $this->assertArrayHasKey('meta_id', $updatedCategory);
-        $this->assertEquals($categoryData['language'], $updatedCategory['language']);
-        $this->assertEquals($categoryData['title'], $updatedCategory['title']);
+        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['language'], $updatedCategory['language']);
+        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['title'], $updatedCategory['title']);
     }
 
     public function testDeleteCategory(): void
@@ -241,15 +235,6 @@ class ModelTest extends BackendWebTestCase
             'description' => 'description',
             'title' => 'meta title',
             'url' => 'meta-url',
-        ];
-    }
-
-    private function getUpdateCategoryData(): array
-    {
-        return [
-            'id' => 1,
-            'language' => 'en',
-            'title' => 'category title edited',
         ];
     }
 
