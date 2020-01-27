@@ -320,12 +320,13 @@ abstract class WebTestCase extends BaseWebTestCase
         Client $client,
         string $initialUrl,
         string $expectedUrl,
-        string $method = 'GET',
+        string $requestMethod = 'GET',
+        array $requestParameters = [],
         int $maxRedirects = null
     ): void {
         $maxRedirects !== null ? $client->setMaxRedirects($maxRedirects) : $client->followRedirects();
 
-        $client->request($method, $initialUrl);
+        $client->request($requestMethod, $initialUrl, $requestParameters);
 
         // we should have been redirected to the settings page because the module isn't configured
         self::assertContains(
