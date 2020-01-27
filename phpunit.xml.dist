@@ -90,6 +90,8 @@
                 <directory>src/Frontend/Modules/*/Tests</directory>
                 <directory>src/Frontend/Modules/*/DataFixtures</directory>
                 <directory>src/Common/Tests</directory>
+                <directory>src/Backend/Modules/*/Installer</directory>
+                <directory>ForkCMS\Bundle\InstallerBundle\Tests</directory>
             </exclude>
         </whitelist>
     </filter>
