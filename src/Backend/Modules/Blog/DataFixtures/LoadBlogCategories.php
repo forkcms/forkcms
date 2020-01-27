@@ -20,16 +20,32 @@ final class LoadBlogCategories
         'url' => self::BLOG_CATEGORY_SLUG,
     ];
 
+    /** @var int|null */
+    private static $metaId;
+
+    /** @var int|null */
+    private static $categoryId;
+
     public function load(SpoonDatabase $database): void
     {
-        $metaId = $database->insert(
+        self::$metaId = $database->insert(
             'meta',
             self::BLOG_CATEGORY_META_DATA
         );
 
-        $database->insert(
+        self::$categoryId = $database->insert(
             'blog_categories',
-            ['meta_id' => $metaId, 'id' => self::BLOG_CATEGORY_ID] + self::BLOG_CATEGORY_DATA
+            ['meta_id' => self::$metaId, 'id' => self::BLOG_CATEGORY_ID] + self::BLOG_CATEGORY_DATA
         );
+    }
+
+    public static function getMetaId(): ?int
+    {
+        return self::$metaId;
+    }
+
+    public static function getCategoryId(): ?int
+    {
+        return self::$categoryId;
     }
 }

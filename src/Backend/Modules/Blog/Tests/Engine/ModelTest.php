@@ -160,7 +160,10 @@ class ModelTest extends BackendWebTestCase
     // categories
     public function testCreateCategory(): void
     {
-        $id = Model::insertCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, LoadBlogCategories::BLOG_CATEGORY_META_DATA);
+        $id = Model::insertCategory(
+            LoadBlogCategories::BLOG_CATEGORY_DATA,
+            LoadBlogCategories::BLOG_CATEGORY_META_DATA
+        );
         $createdCategory = Model::getCategory($id);
 
         $this->assertArrayHasKey('meta_id', $createdCategory);
@@ -174,7 +177,7 @@ class ModelTest extends BackendWebTestCase
         $this->loadFixtures(
             $client,
             [
-                LoadBlogCategories::class
+                LoadBlogCategories::class,
             ]
         );
         $this->assertTrue(Model::existsCategory(1));
@@ -182,18 +185,41 @@ class ModelTest extends BackendWebTestCase
         $this->assertFalse(Model::existsCategory(1337));
     }
 
-    public function testUpdateCategory(): void
+    public function testUpdateCategory(Client $client): void
     {
-        $categoryMetaData = $this->getUpdatedCategoryMetaData();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+            ]
+        );
+        $categoryMetaData = [
+            'id' => LoadBlogCategories::getMetaId(),
+            'keywords' => 'Believe me, I\'ve changed',
+            'description' => 'Believe me, I\'ve changed',
+            'title' => 'Believe me, I\'ve changed',
+            'url' => 'believe-me-i-ve-changed',
+        ];
 
-        Model::updateCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, $categoryMetaData);
+        $newCategoryData = [
+            'id' => LoadBlogCategories::getCategoryId(),
+            'title' => 'Believe me, I\'ve changed',
+            'language' => 'en'
+        ];
+        $category = Model::getCategory(LoadBlogCategories::getCategoryId());
+        $this->assertEquals($newCategoryData['id'], $category['id']);
+        $this->assertEquals($categoryMetaData['id'], $category['meta_id']);
+        $this->assertEquals($newCategoryData['language'], $category['language']);
+        $this->assertNotEquals($newCategoryData['title'], $category['title']);
 
-        $updatedCategory = Model::getCategory(1);
+        Model::updateCategory($newCategoryData, $categoryMetaData);
 
-        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['id'], $updatedCategory['id']);
-        $this->assertArrayHasKey('meta_id', $updatedCategory);
-        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['language'], $updatedCategory['language']);
-        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['title'], $updatedCategory['title']);
+        $updatedCategory = Model::getCategory(LoadBlogCategories::getCategoryId());
+
+        $this->assertEquals($newCategoryData['id'], $updatedCategory['id']);
+        $this->assertEquals($categoryMetaData['id'], $updatedCategory['meta_id']);
+        $this->assertEquals($newCategoryData['language'], $updatedCategory['language']);
+        $this->assertEquals($newCategoryData['title'], $updatedCategory['title']);
     }
 
     public function testDeleteCategory(): void
@@ -228,16 +254,6 @@ class ModelTest extends BackendWebTestCase
         return [
             'language' => 'en',
             'title' => 'category title',
-        ];
-    }
-
-    private function getCategoryMetaData(): array
-    {
-        return [
-            'keywords' => 'keywords',
-            'description' => 'description',
-            'title' => 'meta title',
-            'url' => 'meta-url',
         ];
     }
 
