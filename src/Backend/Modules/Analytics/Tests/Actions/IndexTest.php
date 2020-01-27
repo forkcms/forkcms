@@ -16,13 +16,10 @@ class IndexTest extends BackendWebTestCase
     {
         $this->login($client);
 
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/analytics/index');
-
-        // we should have been redirected to the settings page because the module isn't configured
-        self::assertContains(
-            '/private/en/analytics/settings',
-            $client->getHistory()->current()->getUri()
+        $this->assertGetsRedirected(
+            $client,
+            '/private/en/analytics/index',
+            '/private/en/analytics/settings'
         );
     }
 }

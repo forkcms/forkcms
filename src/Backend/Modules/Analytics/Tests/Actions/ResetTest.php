@@ -17,13 +17,10 @@ class ResetTest extends BackendWebTestCase
         $client = static::createClient();
         $this->login($client);
 
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/analytics/reset');
-
-        // we should have been redirected to the settings page after the reset
-        self::assertContains(
-            '/private/en/analytics/settings',
-            $client->getHistory()->current()->getUri()
+        $this->assertGetsRedirected(
+            $client,
+            '/private/en/analytics/reset',
+            '/private/en/analytics/settings'
         );
     }
 }

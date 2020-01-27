@@ -21,13 +21,11 @@ abstract class BackendWebTestCase extends WebTestCase
         // make sure we aren't logged in with the client
         $this->logout($client);
 
-        $client->setMaxRedirects(1);
-        $client->request($method, $url);
-
-        // we should get redirected to authentication with a reference to the wanted page
-        self::assertStringEndsWith(
+        $this->assertGetsRedirected(
+            $client,
+            $url,
             '/private/en/authentication?querystring=' . rawurlencode($url),
-            $client->getHistory()->current()->getUri()
+            $method
         );
     }
 }
