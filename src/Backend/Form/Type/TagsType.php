@@ -2,11 +2,10 @@
 
 namespace Backend\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TagsType extends AbstractType
+class TagsType extends TextType
 {
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
@@ -19,15 +18,5 @@ class TagsType extends AbstractType
                 'label' => 'lbl.Tags',
             ]
         );
-    }
-
-    public function getParent(): string
-    {
-        return TextType::class;
-    }
-
-    public function getBlockPrefix(): string
-    {
-        return 'tags';
     }
 }
