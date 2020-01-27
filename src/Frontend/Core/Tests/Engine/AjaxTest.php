@@ -3,83 +3,72 @@
 namespace Frontend\Core\Tests\Engine;
 
 use Frontend\Core\Tests\FrontendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 class AjaxTest extends FrontendWebTestCase
 {
-    public function testAjaxWithoutModuleAndAction(): void
+    public function testAjaxWithoutModuleAndAction(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/frontend/ajax');
-
-        self::assertEquals(
-            Response::HTTP_FORBIDDEN,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax',
             'Module not allowed',
-            $client->getResponse()->getContent()
+            Response::HTTP_FORBIDDEN
         );
     }
 
-    public function testAjaxWithoutModule(): void
+    public function testAjaxWithoutModule(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/frontend/ajax?action=Test');
-        self::assertEquals(
-            Response::HTTP_FORBIDDEN,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax?action=Test',
             'Module not allowed',
-            $client->getResponse()->getContent()
+            Response::HTTP_FORBIDDEN
         );
     }
 
-    public function testAjaxWithInvalidModule(): void
+    public function testAjaxWithInvalidModule(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/frontend/ajax?module=Test');
-        self::assertEquals(
-            Response::HTTP_FORBIDDEN,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax?module=Test',
             'Module not allowed',
-            $client->getResponse()->getContent()
+            Response::HTTP_FORBIDDEN
         );
     }
 
-    public function testAjaxWithoutAction(): void
+    public function testAjaxWithoutAction(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/frontend/ajax?module=Blog');
-        self::assertEquals(
-            Response::HTTP_BAD_REQUEST,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax?module=Blog',
             'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
-            $client->getResponse()->getContent()
+            Response::HTTP_BAD_REQUEST
         );
     }
 
-    public function testAjaxWithInvalidAction(): void
+    public function testAjaxWithInvalidAction(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/frontend/ajax?module=Blog&action=Test');
-        self::assertEquals(
-            Response::HTTP_BAD_REQUEST,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax?module=Blog&action=Test',
             'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
-            $client->getResponse()->getContent()
+            Response::HTTP_BAD_REQUEST
+        );
+    }
+
+    public function testAjaxWithValidAction(Client $client): void
+    {
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/frontend/ajax?module=Search&action=Autosuggest',
+            '"title":"Search","url":"search"',
+            Response::HTTP_OK,
+            'POST',
+            [
+                'term' => 'Sear',
+            ]
         );
     }
 }
