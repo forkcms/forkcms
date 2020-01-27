@@ -13,17 +13,18 @@ final class LoadBlogCategories
         'language' => 'en',
         'title' => self::BLOG_CATEGORY_TITLE,
     ];
+    public const BLOG_CATEGORY_META_DATA = [
+        'keywords' => self::BLOG_CATEGORY_TITLE,
+        'description' => self::BLOG_CATEGORY_TITLE,
+        'title' => self::BLOG_CATEGORY_TITLE,
+        'url' => self::BLOG_CATEGORY_SLUG,
+    ];
 
     public function load(SpoonDatabase $database): void
     {
         $metaId = $database->insert(
             'meta',
-            [
-                'keywords' => self::BLOG_CATEGORY_TITLE,
-                'description' => self::BLOG_CATEGORY_TITLE,
-                'title' => self::BLOG_CATEGORY_TITLE,
-                'url' => self::BLOG_CATEGORY_SLUG,
-            ]
+            self::BLOG_CATEGORY_META_DATA
         );
 
         $database->insert(

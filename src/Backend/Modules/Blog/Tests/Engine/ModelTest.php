@@ -160,16 +160,12 @@ class ModelTest extends BackendWebTestCase
     // categories
     public function testCreateCategory(): void
     {
-        $categoryMetaData = $this->getCategoryMetaData();
-        $id = Model::insertCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, $categoryMetaData);
+        $id = Model::insertCategory(LoadBlogCategories::BLOG_CATEGORY_DATA, LoadBlogCategories::BLOG_CATEGORY_META_DATA);
         $createdCategory = Model::getCategory($id);
 
         $this->assertArrayHasKey('meta_id', $createdCategory);
         $this->assertEquals($id, $createdCategory['id']);
-        $this->assertEquals(
-            LoadBlogCategories::BLOG_CATEGORY_DATA['language'],
-            $createdCategory['language']
-        );
+        $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['language'], $createdCategory['language']);
         $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['title'], $createdCategory['title']);
     }
 
