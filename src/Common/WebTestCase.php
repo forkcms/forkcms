@@ -322,17 +322,22 @@ abstract class WebTestCase extends BaseWebTestCase
         string $expectedUrl,
         string $requestMethod = 'GET',
         array $requestParameters = [],
-        int $maxRedirects = null
+        int $maxRedirects = null,
+        int $expectedHttpResponseCode = Response::HTTP_OK
     ): void {
         $maxRedirects !== null ? $client->setMaxRedirects($maxRedirects) : $client->followRedirects();
 
         $client->request($requestMethod, $initialUrl, $requestParameters);
+
+        $response = $client->getResponse();
+        self::assertNotNull($response, 'No response received');
 
         // we should have been redirected to the settings page because the module isn't configured
         self::assertContains(
             $expectedUrl,
             $client->getHistory()->current()->getUri()
         );
+        self::assertEquals($expectedHttpResponseCode, $response->getStatusCode());
     }
 
     protected function assertPageLoadedCorrectly(
