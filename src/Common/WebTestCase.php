@@ -321,9 +321,10 @@ abstract class WebTestCase extends BaseWebTestCase
         string $initialUrl,
         string $expectedUrl,
         string $method = 'GET',
-        int $maxRedirects = 1
+        int $maxRedirects = null
     ): void {
-        $client->setMaxRedirects($maxRedirects);
+        $maxRedirects !== null ? $client->setMaxRedirects($maxRedirects) : $client->followRedirects();
+
         $client->request($method, $initialUrl);
 
         // we should have been redirected to the settings page because the module isn't configured
