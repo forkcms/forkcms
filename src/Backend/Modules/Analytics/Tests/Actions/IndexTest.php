@@ -12,15 +12,14 @@ class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/index');
     }
 
-    public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(): void
+    public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/analytics/reset');
+        $client->request('GET', '/private/en/analytics/index');
 
-        // we should have been redirected to the settings page after the reset
+        // we should have been redirected to the settings page because the module isn't configured
         self::assertContains(
             '/private/en/analytics/settings',
             $client->getHistory()->current()->getUri()
