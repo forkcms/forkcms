@@ -101,6 +101,7 @@ final class Header extends KernelLoader
 
         $this->addJS('/js/vendors/select2/select2.full.js', 'Core', true, true, true, Priority::core());
         $select2InterfaceLanguage = BL::getInterfaceLanguage();
+        // There is no 1 on 1 mapping for Chinese so we need to select which version of Chinese we want
         if ($select2InterfaceLanguage === 'zh') {
             $select2InterfaceLanguage = 'zh-TW';
         }
