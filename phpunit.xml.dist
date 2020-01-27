@@ -85,6 +85,11 @@
                 <directory>src/Backend/Cache</directory>
                 <directory>src/Backend/Core/Js</directory>
                 <directory>src/Frontend/Cache</directory>
+                <directory>src/Backend/Modules/*/Tests</directory>
+                <directory>src/Backend/Modules/*/DataFixtures</directory>
+                <directory>src/Frontend/Modules/*/Tests</directory>
+                <directory>src/Frontend/Modules/*/DataFixtures</directory>
+                <directory>src/Common/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
