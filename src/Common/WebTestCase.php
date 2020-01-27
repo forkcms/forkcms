@@ -172,6 +172,10 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
+    /**
+     * @param Client $client
+     * @TODO refactor to just passing a url
+     */
     protected function assertIs404(Client $client): void
     {
         self::assertEquals(
@@ -355,5 +359,20 @@ abstract class WebTestCase extends BaseWebTestCase
         $response = $client->getResponse();
         self::assertNotNull($response, 'No response received');
         self::assertEquals($httpStatusCode, $response->getStatusCode());
+    }
+
+    protected function assertIs200(
+        Client $client,
+        string $url,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $this->assertHttpStatusCode(
+            $client,
+            $url,
+            Response::HTTP_OK,
+            $requestMethod,
+            $requestParameters
+        );
     }
 }
