@@ -782,9 +782,10 @@ class ModuleInstaller
             }
 
             $extraId = $block['extra_id'] ?? null;
-            $type = $extraId === null ? PageBlockType::richText() : $this->getPageBlockTypeForModuleExtra($extraId);
-            if ($extraId !== null && $type->isRichText()) {
-                continue; // module extra doesn't exist
+            $type = $this->getPageBlockTypeForModuleExtra($extraId);
+            // No need to add a non existing type here
+            if ($extraId !== null && $type === null) {
+                continue;
             }
             $visible = $block['visible'] ?? true;
             $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
@@ -1029,12 +1030,16 @@ class ModuleInstaller
         return $randomName;
     }
 
-    private function getPageBlockTypeForModuleExtra(int $extraId): PageBlockType
+    private function getPageBlockTypeForModuleExtra(int $extraId = null): ?PageBlockType
     {
+        if ($extraId === null) {
+            return PageBlockType::richText();
+        }
+
         $moduleExtra = BackendModel::getContainer()->get(ModuleExtraRepository::class)->find($extraId);
 
         if (!$moduleExtra instanceof ModuleExtra) {
-            return PageBlockType::richText();
+            return null;
         }
 
         return $moduleExtra->getType()->getPageBlockType();
