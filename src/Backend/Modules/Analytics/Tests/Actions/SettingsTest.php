@@ -16,9 +16,6 @@ class SettingsTest extends BackendWebTestCase
     {
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/analytics/settings');
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains('How to get your secret file?', $crawler->html());
+        $this->assertPageLoadedCorrectly($client, '/private/en/analytics/settings', 'How to get your secret file?');
     }
 }
