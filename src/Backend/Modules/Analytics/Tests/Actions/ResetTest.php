@@ -12,9 +12,8 @@ class ResetTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/reset');
     }
 
-    public function testAfterResetRedirectToSettings(): void
+    public function testAfterResetRedirectToSettings(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $this->assertGetsRedirected(

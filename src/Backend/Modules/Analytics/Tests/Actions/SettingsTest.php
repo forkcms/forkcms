@@ -12,9 +12,8 @@ class SettingsTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
     }
 
-    public function testAnalyticsSettingsWorks(): void
+    public function testAnalyticsSettingsWorks(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/analytics/settings');
