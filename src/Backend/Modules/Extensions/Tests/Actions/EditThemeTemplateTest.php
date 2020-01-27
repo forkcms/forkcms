@@ -3,22 +3,13 @@
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class EditThemeTemplateTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/edit_theme_template?token=68ozixmy4j&id=3');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fedit_theme_template%3Ftoken%3D68ozixmy4j%26id%3D3',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/edit_theme_template?token=68ozixmy4j&id=3');
     }
 
     public function testFormIsDisplayed(): void

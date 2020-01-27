@@ -3,22 +3,13 @@
 namespace Backend\Modules\Pages\Tests\Actions;
 
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 final class IndexTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/pages/index');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fpages%2Findex',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private/en/pages/index');
     }
 
     public function testIndexContainsPages(): void

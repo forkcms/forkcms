@@ -4,6 +4,7 @@ namespace Backend\Modules\Authentication\Tests\Action;
 
 use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Core\Engine\Authentication as Authentication;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class IndexTest extends BackendWebTestCase
 {
@@ -21,17 +22,9 @@ class IndexTest extends BackendWebTestCase
         Authentication::tearDown();
     }
 
-    public function testPrivateRedirectsToAuthentication(): void
+    public function testPrivateRedirectsToAuthentication(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-        $client->followRedirects();
-
-        $client->request('GET', '/private');
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private');
     }
 
     public function testAuthenticationIndexWorks(): void

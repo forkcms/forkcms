@@ -5,13 +5,12 @@ namespace Backend\Modules\Blog\Tests\Action;
 use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class DeleteTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
         $this->loadFixtures(
             $client,
             [
@@ -19,15 +18,7 @@ class DeleteTest extends BackendWebTestCase
                 LoadBlogPosts::class,
             ]
         );
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/blog/delete?id=1');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fblog%2Fdelete%3Fid%3D1',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private/en/blog/delete?id=1');
     }
 
     public function testInvalidIdShouldShowAnError(): void

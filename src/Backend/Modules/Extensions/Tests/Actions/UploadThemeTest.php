@@ -160,19 +160,9 @@ class UploadThemeTest extends BackendWebTestCase
         parent::tearDown();
     }
 
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', self::URL_UPLOAD_THEME);
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fupload_theme',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, self::URL_UPLOAD_THEME);
     }
 
     public function testUploadPage(): void

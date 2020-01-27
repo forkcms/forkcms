@@ -3,22 +3,13 @@
 namespace Backend\Modules\Analytics\Tests\Action;
 
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class SettingsTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/analytics/settings');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fanalytics%2Fsettings',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
     }
 
     public function testAnalyticsSettingsWorks(): void

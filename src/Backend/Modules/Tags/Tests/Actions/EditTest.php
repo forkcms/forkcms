@@ -5,6 +5,7 @@ namespace Backend\Modules\Tags\Tests\Action;
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class EditTest extends BackendWebTestCase
 {
@@ -22,19 +23,9 @@ class EditTest extends BackendWebTestCase
         );
     }
 
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/edit?id=1');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        $this->assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Ftags%2Fedit%3Fid%3D1',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/edit?id=1');
     }
 
     public function testWeCanGoToEditFromTheIndexPage(): void
