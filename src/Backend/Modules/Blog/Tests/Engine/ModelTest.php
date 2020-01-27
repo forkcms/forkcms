@@ -266,23 +266,4 @@ class ModelTest extends BackendWebTestCase
             )
         );
     }
-
-    private function getCategoryData(): array
-    {
-        return [
-            'language' => 'en',
-            'title' => 'category title',
-        ];
-    }
-
-    private function getUpdatedCategoryMetaData(): array
-    {
-        return [
-            'id' => 28,
-            'keywords' => 'keywords',
-            'description' => 'description',
-            'title' => 'meta title',
-            'url' => 'meta-url',
-        ];
-    }
 }
