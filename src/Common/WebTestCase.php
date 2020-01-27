@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
 use Backend\Core\Engine\Authentication;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -321,5 +322,21 @@ abstract class WebTestCase extends BaseWebTestCase
             $expectedUrl,
             $client->getHistory()->current()->getUri()
         );
+    }
+
+    protected function assertPageLoadedCorrectly(
+        Client $client,
+        string $url,
+        string $expectedContent,
+        int $httpStatusCode = Response::HTTP_OK,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $client->request($requestMethod, $url, $requestParameters);
+        $response = $client->getResponse();
+
+        self::assertNotNull($response, 'No response received');
+        self::assertEquals($httpStatusCode, $response->getStatusCode());
+        self::assertContains($expectedContent, $response->getContent());
     }
 }
