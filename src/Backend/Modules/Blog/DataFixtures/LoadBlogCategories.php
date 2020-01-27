@@ -6,8 +6,8 @@ use SpoonDatabase;
 
 final class LoadBlogCategories
 {
-    public const BLOG_CATEGORY_TITLE = 'BlogCategory for tests';
-    public const BLOG_CATEGORY_SLUG = 'BlogCategory for tests';
+    public const BLOG_CATEGORY_TITLE = 'Blog Category for tests';
+    public const BLOG_CATEGORY_SLUG = 'blog-category-for-tests';
     public const BLOG_CATEGORY_ID = 2;
     public const BLOG_CATEGORY_DATA = [
         'language' => 'en',

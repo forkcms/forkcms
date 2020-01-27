@@ -204,7 +204,7 @@ class ModelTest extends BackendWebTestCase
         $newCategoryData = [
             'id' => LoadBlogCategories::getCategoryId(),
             'title' => 'Believe me, I\'ve changed',
-            'language' => 'en'
+            'language' => 'en',
         ];
         $category = Model::getCategory(LoadBlogCategories::getCategoryId());
         $this->assertEquals($newCategoryData['id'], $category['id']);
@@ -238,19 +238,33 @@ class ModelTest extends BackendWebTestCase
         $this->assertFalse(Model::existsCategory($id));
     }
 
-    public function testCalculatingCategoryUrl(): void
+    public function testCalculatingCategoryUrl(Client $client): void
     {
-        $this->assertEquals('foo-bar', Model::getUrlForCategory('foo-bar'));
-
-        // check if 2 is appended for an existing category
-        $id = Model::insertCategory(
-            $this->getCategoryData(),
-            $this->getCategoryMetaData()
+        $this->assertEquals(
+            LoadBlogCategories::BLOG_CATEGORY_SLUG,
+            Model::getUrlForCategory(LoadBlogCategories::BLOG_CATEGORY_SLUG)
         );
-        $this->assertEquals('meta-url-2', Model::getUrlForCategory('meta-url'));
+
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+            ]
+        );
+
+        $this->assertEquals(
+            LoadBlogCategories::BLOG_CATEGORY_SLUG . '-2',
+            Model::getUrlForCategory(LoadBlogCategories::BLOG_CATEGORY_SLUG)
+        );
 
         // check if the same url is returned when we pass the id
-        $this->assertEquals('meta-url', Model::getUrlForCategory('meta-url', $id));
+        $this->assertEquals(
+            LoadBlogCategories::BLOG_CATEGORY_SLUG,
+            Model::getUrlForCategory(
+                LoadBlogCategories::BLOG_CATEGORY_SLUG,
+                LoadBlogCategories::getCategoryId()
+            )
+        );
     }
 
     private function getCategoryData(): array
