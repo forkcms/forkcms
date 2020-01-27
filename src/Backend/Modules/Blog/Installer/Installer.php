@@ -210,15 +210,7 @@ class Installer extends ModuleInstaller
     }
 
     /**
-     * Insert a category for a language
-     *
-     * @param string $language The language to use.
-     * @param string $title The title of the category.
-     * @param string $url The URL for the category.
-     *
-     * @return int
      * @todo: Replace this with a BlogCategoryRepository method when it exists.
-     *
      */
     private function insertCategory(string $language, string $title, string $url): int
     {
