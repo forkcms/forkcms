@@ -2,11 +2,23 @@
 
 namespace Backend\Core\Tests;
 
+use Backend\Core\Engine\Authentication as Authentication;
 use Common\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 abstract class BackendWebTestCase extends WebTestCase
 {
+    /**
+     * Make sure we are no longer logged-in
+     */
+    protected function tearDown(): void
+    {
+        $client = $this->getProvidedData()[0] ?? null;
+        if ($client instanceof Client) {
+            $this->logout($client);
+        }
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
