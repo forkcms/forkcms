@@ -312,8 +312,13 @@ abstract class WebTestCase extends BaseWebTestCase
         Authentication::tearDown();
     }
 
-    protected function assertGetsRedirected(Client $client, string $initialUrl, string $expectedUrl, string $method = 'GET', int $maxRedirects = 1): void
-    {
+    protected function assertGetsRedirected(
+        Client $client,
+        string $initialUrl,
+        string $expectedUrl,
+        string $method = 'GET',
+        int $maxRedirects = 1
+    ): void {
         $client->setMaxRedirects($maxRedirects);
         $client->request($method, $initialUrl);
 
@@ -332,11 +337,23 @@ abstract class WebTestCase extends BaseWebTestCase
         string $requestMethod = 'GET',
         array $requestParameters = []
     ): void {
-        $client->request($requestMethod, $url, $requestParameters);
+        $this->assertHttpStatusCode($client, $url, $httpStatusCode, $requestMethod, $requestParameters);
         $response = $client->getResponse();
 
         self::assertNotNull($response, 'No response received');
-        self::assertEquals($httpStatusCode, $response->getStatusCode());
         self::assertContains($expectedContent, $response->getContent());
+    }
+
+    protected function assertHttpStatusCode(
+        Client $client,
+        string $url,
+        int $httpStatusCode,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $client->request($requestMethod, $url, $requestParameters);
+        $response = $client->getResponse();
+        self::assertNotNull($response, 'No response received');
+        self::assertEquals($httpStatusCode, $response->getStatusCode());
     }
 }
