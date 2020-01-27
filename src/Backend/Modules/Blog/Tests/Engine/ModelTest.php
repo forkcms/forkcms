@@ -169,9 +169,16 @@ class ModelTest extends BackendWebTestCase
         $this->assertEquals(LoadBlogCategories::BLOG_CATEGORY_DATA['title'], $createdCategory['title']);
     }
 
-    public function testIfCategoryExists(): void
+    public function testIfCategoryExists(Client $client): void
     {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class
+            ]
+        );
         $this->assertTrue(Model::existsCategory(1));
+        $this->assertTrue(Model::existsCategory(2));
         $this->assertFalse(Model::existsCategory(1337));
     }
 
