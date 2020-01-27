@@ -222,12 +222,16 @@ class ModelTest extends BackendWebTestCase
         $this->assertEquals($newCategoryData['title'], $updatedCategory['title']);
     }
 
-    public function testDeleteCategory(): void
+    public function testDeleteCategory(Client $client): void
     {
-        $id = Model::insertCategory(
-            $this->getCategoryData(),
-            $this->getCategoryMetaData()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+            ]
         );
+
+        $id = LoadBlogCategories::getCategoryId();
 
         $this->assertTrue(Model::existsCategory($id));
         Model::deleteCategory($id);
