@@ -332,11 +332,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $response = $client->getResponse();
         self::assertNotNull($response, 'No response received');
 
-        // we should have been redirected to the settings page because the module isn't configured
-        self::assertContains(
-            $expectedUrl,
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, $expectedUrl);
         self::assertEquals($expectedHttpResponseCode, $response->getStatusCode());
     }
 
@@ -375,6 +371,16 @@ abstract class WebTestCase extends BaseWebTestCase
         foreach ($content as $notExpectedContent) {
             self::assertNotContains($notExpectedContent, $response->getContent());
         }
+    }
+
+    protected function assertCurrentUrlContains(Client $client, string $partialUrl): void
+    {
+        self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
+    }
+
+    protected function assertCurrentUrlEndsWith(Client $client, string $partialUrl): void
+    {
+        self::assertStringEndsWith($partialUrl, $client->getHistory()->current()->getUri());
     }
 
     protected function assertHttpStatusCode(
