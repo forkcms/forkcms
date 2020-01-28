@@ -52,21 +52,28 @@ class DeleteTest extends BackendWebTestCase
         );
     }
 
-    public function testDeleteIsAvailableFromTheEditpage(): void
+    public function testDeleteIsAvailableFromTheEditPage(Client $client): void
     {
-        $client = static::createClient();
-        $this->login($client);
-
-        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
         );
 
-        $form = $crawler->filter('#confirmDelete')->selectButton('Delete')->form();
+        $this->login($client);
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/blog/edit?id=1',
+            LoadBlogPosts::BLOG_POST_TITLE
+        );
+
+        $form = $client->getCrawler()->filter('#confirmDelete')->selectButton('Delete')->form();
         $client->submit($form);
 
         // we're now on the delete page of the blogpost with id 1
+        $this->assertCurrentUrlContains($response, $partialUrl);
         self::assertContains(
             '/private/en/blog/delete',
             $client->getHistory()->current()->getUri()
@@ -78,19 +85,19 @@ class DeleteTest extends BackendWebTestCase
 
         // we're redirected back to the index page after deletion
         $client->followRedirect();
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         self::assertContains(
             '/private/en/blog/index',
             $client->getHistory()->current()->getUri()
         );
         self::assertContains(
-            'report=deleted&var=Blogpost+for+functional+tests',
+            'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE),
             $client->getHistory()->current()->getUri()
         );
 
-        // the blogpost should not be available anymore
+        // the blog post should not be available anymore
         self::assertNotContains(
-            'Blogpost for functional tests',
+            LoadBlogPosts::BLOG_POST_TITLE,
             $client->getResponse()->getContent()
         );
     }

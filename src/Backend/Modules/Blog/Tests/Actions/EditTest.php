@@ -6,6 +6,7 @@ use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditTest extends BackendWebTestCase
 {
@@ -14,44 +15,59 @@ class EditTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
-    public function testWeCanGoToEditFromTheIndexPage(): void
+    public function testWeCanGoToEditFromTheIndexPage(Client $client): void
     {
-        $client = static::createClient();
-        $this->login($client);
-
-        $crawler = $client->request('GET', '/private/en/blog/index');
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
         );
 
-        $link = $crawler->selectLink('Blogpost for functional tests')->link();
+        $this->login($client);
+
+        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', LoadBlogPosts::BLOG_POST_TITLE);
+
+        $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
         $client->click($link);
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         self::assertContains(
             '&id=1',
             $client->getHistory()->current()->getUri()
         );
     }
 
-    public function testEditingOurBlogPost(): void
+    public function testEditingOurBlogPost(Client $client): void
     {
-        $client = static::createClient();
-        $this->login($client);
-
-        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
-        self::assertContains(
-            'form method="post" action="/private/en/blog/edit?id=1" id="edit"',
-            $client->getResponse()->getContent()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
         );
 
-        $form = $crawler->selectButton('Publish')->form();
+        $this->login($client);
 
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/blog/edit?id=1',
+            'form method="post" action="/private/en/blog/edit?id=1" id="edit"'
+        );
+
+        $form = $client->getCrawler()->selectButton('Publish')->form();
+
+        $newBlogPostTitle = 'Edited blogpost for functional tests';
         $client->setMaxRedirects(1);
-        $this->submitEditForm($client, $form, [
-            'title' => 'Edited blogpost for functional tests',
-        ]);
+        $this->submitEditForm(
+            $client,
+            $form,
+            [
+                'title' => $newBlogPostTitle,
+            ]
+        );
 
         // we should get a 200 and be redirected to the index page
         self::assertEquals(200, $client->getResponse()->getStatusCode());
@@ -62,35 +78,47 @@ class EditTest extends BackendWebTestCase
 
         // our url and our page should contain the new title of our blogpost
         self::assertContains(
-            '&id=1&highlight%3Drow=2&var=Edited%20blogpost%20for%20functional%20tests&report=edited',
+            '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited',
             $client->getHistory()->current()->getUri()
         );
         self::assertContains(
-            'Edited blogpost for functional tests',
+            $newBlogPostTitle,
             $client->getResponse()->getContent()
         );
     }
 
-    public function testSubmittingInvalidData(): void
+    public function testSubmittingInvalidData(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
+
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
+        $this->assertIs200($client, '/private/en/blog/edit?id=1');
+
+        $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Publish')->form();
-        $this->submitEditForm($client, $form, [
-            'title' => '',
-        ]);
+        $this->submitEditForm(
+            $client,
+            $form,
+            [
+                'title' => '',
+            ]
+        );
 
-        // we should get a 200 and be redirected to the index page
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
         self::assertContains(
             '/private/en/blog/edit',
             $client->getHistory()->current()->getUri()
         );
 
-        // our page shows an overal error message and a specific one
+        // our page shows an overall error message and a specific one
         self::assertContains(
             'Something went wrong',
             $client->getResponse()->getContent()
@@ -101,19 +129,19 @@ class EditTest extends BackendWebTestCase
         );
     }
 
-    public function testInvalidIdShouldShowAnError(): void
+    public function testInvalidIdShouldShowAnError(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
+
         $this->login($client);
 
-        $client->request('GET', '/private/en/blog/edit?id=12345678');
-        $client->followRedirect();
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertGetsRedirected($client, '/private/en/blog/edit?id=12345678', '/private/en/blog/index');
         self::assertContains(
             'error=non-existing',
             $client->getHistory()->current()->getUri()

@@ -14,25 +14,20 @@ class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/blog/index');
     }
 
-    public function testIndexContainsBlogPosts(): void
+    public function testIndexContainsBlogPosts(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
         $this->login($client);
 
-        $client->request('GET', '/private/en/blog/index');
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', 'Blogpost for functional tests');
 
         // some stuff we also want to see on the blog index
-        self::assertContains(
-            'Add article',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Published articles',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseHasContent($client->getResponse(), 'Add article', 'Published articles');
     }
 }
