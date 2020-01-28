@@ -340,10 +340,18 @@ abstract class WebTestCase extends BaseWebTestCase
         self::assertEquals($expectedHttpResponseCode, $response->getStatusCode());
     }
 
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string[] $expectedContent
+     * @param int $httpStatusCode
+     * @param string $requestMethod
+     * @param array $requestParameters
+     */
     protected function assertPageLoadedCorrectly(
         Client $client,
         string $url,
-        string $expectedContent,
+        array $expectedContent,
         int $httpStatusCode = Response::HTTP_OK,
         string $requestMethod = 'GET',
         array $requestParameters = []
@@ -352,13 +360,20 @@ abstract class WebTestCase extends BaseWebTestCase
         $response = $client->getResponse();
 
         self::assertNotNull($response, 'No response received');
-        $this->assertResponseHasContent($response, $expectedContent);
+        $this->assertResponseHasContent($response, ...$expectedContent);
     }
 
     protected function assertResponseHasContent(Response $response, string ...$content): void
     {
         foreach ($content as $expectedContent) {
             self::assertContains($expectedContent, $response->getContent());
+        }
+    }
+
+    protected function assertResponseDoesNotHaveContent(Response $response, string ...$content): void
+    {
+        foreach ($content as $notExpectedContent) {
+            self::assertNotContains($notExpectedContent, $response->getContent());
         }
     }
 

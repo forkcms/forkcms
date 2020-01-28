@@ -27,7 +27,7 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', LoadBlogPosts::BLOG_POST_TITLE);
+        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', [LoadBlogPosts::BLOG_POST_TITLE]);
 
         $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
         $client->click($link);
@@ -54,7 +54,7 @@ class EditTest extends BackendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/private/en/blog/edit?id=1',
-            'form method="post" action="/private/en/blog/edit?id=1" id="edit"'
+            ['form method="post" action="/private/en/blog/edit?id=1" id="edit"']
         );
 
         $form = $client->getCrawler()->selectButton('Publish')->form();

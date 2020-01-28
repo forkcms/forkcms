@@ -66,7 +66,7 @@ class DeleteTest extends BackendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/private/en/blog/edit?id=1',
-            LoadBlogPosts::BLOG_POST_TITLE
+            [LoadBlogPosts::BLOG_POST_TITLE]
         );
 
         $form = $client->getCrawler()->filter('#confirmDelete')->selectButton('Delete')->form();
@@ -96,9 +96,6 @@ class DeleteTest extends BackendWebTestCase
         );
 
         // the blog post should not be available anymore
-        self::assertNotContains(
-            LoadBlogPosts::BLOG_POST_TITLE,
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseDoesNotHaveContent($client->getResponse(), [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 }

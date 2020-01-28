@@ -13,7 +13,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax',
-            'Module not allowed',
+            ['Module not allowed'],
             Response::HTTP_FORBIDDEN
         );
     }
@@ -23,7 +23,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?action=Test',
-            'Module not allowed',
+            ['Module not allowed'],
             Response::HTTP_FORBIDDEN
         );
     }
@@ -33,7 +33,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Test',
-            'Module not allowed',
+            ['Module not allowed'],
             Response::HTTP_FORBIDDEN
         );
     }
@@ -43,7 +43,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Blog',
-            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
+            ['Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist'],
             Response::HTTP_BAD_REQUEST
         );
     }
@@ -53,7 +53,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Blog&action=Test',
-            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
+            ['Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist'],
             Response::HTTP_BAD_REQUEST
         );
     }
@@ -63,7 +63,7 @@ class AjaxTest extends FrontendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Search&action=Autosuggest',
-            '"title":"Search","url":"search"',
+            ['"title":"Search","url":"search"'],
             Response::HTTP_OK,
             'POST',
             [

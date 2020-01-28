@@ -25,7 +25,7 @@ class IndexTest extends BackendWebTestCase
         );
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', 'Blogpost for functional tests');
+        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', ['Blogpost for functional tests']);
 
         // some stuff we also want to see on the blog index
         $this->assertResponseHasContent($client->getResponse(), 'Add article', 'Published articles');

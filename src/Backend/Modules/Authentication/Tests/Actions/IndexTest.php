@@ -18,7 +18,7 @@ class IndexTest extends BackendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/private/en/authentication',
-            'title="Log in"  name="login" type="submit"'
+            ['title="Log in"  name="login" type="submit"']
         );
     }
 
@@ -27,7 +27,7 @@ class IndexTest extends BackendWebTestCase
         $this->assertPageLoadedCorrectly(
             $client,
             '/private/en/authentication',
-            '<meta name="robots" content="noindex, nofollow"'
+            ['<meta name="robots" content="noindex, nofollow"']
         );
     }
 
@@ -63,10 +63,7 @@ class IndexTest extends BackendWebTestCase
         $this->assertIs200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'pages-user@fork-cms.com');
 
-        self::assertContains(
-            'Now editing',
-            $response->getContent()
-        );
+        $this->assertResponseHasContent($response, 'Now editing');
     }
 
     /**
@@ -81,10 +78,7 @@ class IndexTest extends BackendWebTestCase
         $this->assertIs200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'users-edit-user@fork-cms.com');
 
-        self::assertContains(
-            'Edit profile',
-            $response->getContent()
-        );
+        $this->assertResponseHasContent($response, 'Edit profile');
     }
 
     private function submitLoginForm(Client $client, string $email, string $password = 'fork'): Response

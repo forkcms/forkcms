@@ -16,6 +16,6 @@ class SettingsTest extends BackendWebTestCase
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly($client, '/private/en/analytics/settings', 'How to get your secret file?');
+        $this->assertPageLoadedCorrectly($client, '/private/en/analytics/settings', ['How to get your secret file?']);
     }
 }
