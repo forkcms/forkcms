@@ -78,9 +78,15 @@ final class PageDataRedirectType extends AbstractType implements PageDataTypeInt
         if (isset($persistedData['internal_redirect']['page_id'])) {
             $transformedData['redirect'] = 'internal';
             $transformedData['external_redirect'] = $persistedData['internal_redirect']['page_id'];
-        } elseif (isset($persistedData['external_redirect']['url'])) {
+
+            return $transformedData;
+        }
+
+        if (isset($persistedData['external_redirect']['url'])) {
             $transformedData['redirect'] = 'external';
             $transformedData['external_redirect'] = $persistedData['external_redirect']['url'];
+
+            return $transformedData;
         }
 
         return $transformedData;
@@ -93,11 +99,18 @@ final class PageDataRedirectType extends AbstractType implements PageDataTypeInt
                 'page_id' => $submittedData['internal_redirect'],
                 'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
-        } elseif ($submittedData['redirect'] === 'external') {
+
+            return $transformedData;
+        }
+
+
+        if ($submittedData['redirect'] === 'external') {
             $transformedData['external_redirect'] = [
                 'url' => $submittedData['external_redirect'],
                 'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
+
+            return $transformedData;
         }
 
         return $transformedData;
