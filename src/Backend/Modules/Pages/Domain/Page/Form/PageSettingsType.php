@@ -24,7 +24,9 @@ final class PageSettingsType extends AbstractType
                     'lbl.Published' => false,
                 ],
                 'label' => false,
-                'label_attr' => ['class' => 'custom-control-label radio-custom'],
+                'label_attr' => [
+                    'class' => 'custom-control-label radio-custom',
+                ],
                 'expanded' => true,
             ]
         );

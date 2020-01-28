@@ -64,7 +64,7 @@ final class PageType extends AbstractType
                     PageContentType::class,
                     [
                         'selectedTemplateId' => $event->getData()->templateId,
-                        'load_default_blocks' => !$event->getData()->page instanceof Page
+                        'load_default_blocks' => !$event->getData()->page instanceof Page,
                     ]
                 );
 
@@ -73,7 +73,7 @@ final class PageType extends AbstractType
                         'saveAsDraft',
                         SubmitType::class,
                         [
-                            'label' => 'lbl.SaveDraft'
+                            'label' => 'lbl.SaveDraft',
                         ]
                     );
                 }
