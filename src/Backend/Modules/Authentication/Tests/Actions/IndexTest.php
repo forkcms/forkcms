@@ -39,11 +39,7 @@ class IndexTest extends BackendWebTestCase
 
         $response = $this->submitLoginForm($client, 'test@test.com', 'wrong_password');
 
-        // result should not yet be found
-        self::assertContains(
-            'Your e-mail and password combination is incorrect.',
-            $response->getContent()
-        );
+        $this->assertResponseHasContent($response, 'Your e-mail and password combination is incorrect.');
     }
 
     public function testAuthenticationWithCorrectCredentials(Client $client): void
@@ -53,14 +49,7 @@ class IndexTest extends BackendWebTestCase
         $this->assertIs200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'noreply@fork-cms.com');
 
-        self::assertContains(
-            'Dashboard',
-            $response->getContent()
-        );
-        self::assertContains(
-            'Pages',
-            $response->getContent()
-        );
+        $this->assertResponseHasContent($response, 'Dashboard', 'Pages');
     }
 
     /**

@@ -6,6 +6,7 @@ use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 class DeleteTest extends BackendWebTestCase
 {
@@ -21,24 +22,30 @@ class DeleteTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/blog/delete?id=1');
     }
 
-    public function testInvalidIdShouldShowAnError(): void
+    public function testInvalidIdShouldShowAnError(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
+
         $this->login($client);
 
         // go to edit page to get a form token
         $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
         $token = $crawler->filter('#blog_delete__token')->attr('value');
 
-        // do request
-        $client->request('POST', '/private/en/blog/delete', ['blog_delete' => ['_token' => $token, 'id' => 12345678]]);
-        $client->followRedirect();
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
+        $this->assertGetsRedirected(
+            $client,
+            '/private/en/blog/delete',
             '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
+            'POST',
+            ['blog_delete' => ['_token' => $token, 'id' => 12345678]]
         );
+
         self::assertContains(
             'error=non-existing',
             $client->getHistory()->current()->getUri()

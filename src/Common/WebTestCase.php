@@ -352,7 +352,14 @@ abstract class WebTestCase extends BaseWebTestCase
         $response = $client->getResponse();
 
         self::assertNotNull($response, 'No response received');
-        self::assertContains($expectedContent, $response->getContent());
+        $this->assertResponseHasContent($response, $expectedContent);
+    }
+
+    protected function assertResponseHasContent(Response $response, string ...$content): void
+    {
+        foreach ($content as $expectedContent) {
+            self::assertContains($expectedContent, $response->getContent());
+        }
     }
 
     protected function assertHttpStatusCode(
