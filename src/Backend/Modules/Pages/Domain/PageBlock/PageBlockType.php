@@ -155,7 +155,9 @@ final class PageBlockType extends AbstractType
                     ->orderBy('me.sequence');
             },
             'mapped' => false,
-            'attr' => ['data-fork' => 'select2'],
+            'attr' => [
+                'data-fork' => 'select2',
+            ],
         ];
     }
 }
