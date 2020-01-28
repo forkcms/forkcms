@@ -63,10 +63,8 @@ abstract class Locale implements Serializable, JsonSerializable
 
     /**
      * @param string $locale
-     *
-     * @return static
      */
-    public function unserialize($locale)
+    public function unserialize($locale): void
     {
         $this->locale = $locale;
     }
