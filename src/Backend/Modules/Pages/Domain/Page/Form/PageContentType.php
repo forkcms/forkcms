@@ -172,11 +172,17 @@ final class PageContentType extends AbstractType
         }
     }
 
-    private function getDefaultExtrasForTemplate(array $selectedTemplate)
+    private function getDefaultExtrasForTemplate(array $selectedTemplate): array
     {
-        return $selectedTemplate['data']['default_extras_' . BL::getWorkingLanguage()]
-               ?? $selectedTemplate['data']['default_extras']
-                  ?? [];
+        if (isset($selectedTemplate['data']['default_extras_nl'])) {
+            return $selectedTemplate['data']['default_extras_nl'];
+        }
+
+        if (isset($selectedTemplate['data']['default_extras'])) {
+            return $selectedTemplate['data']['default_extras'];
+        }
+
+        return [];
     }
 
     private function createPageBlockForExtraId(
