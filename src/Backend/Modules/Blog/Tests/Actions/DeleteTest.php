@@ -81,7 +81,7 @@ class DeleteTest extends BackendWebTestCase
 
         // we're redirected back to the index page after deletion
         $client->followRedirect();
-        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertIs200($client);
         $this->assertCurrentUrlContains($client, '/private/en/blog/index');
         $this->assertCurrentUrlContains($client, 'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE));
 

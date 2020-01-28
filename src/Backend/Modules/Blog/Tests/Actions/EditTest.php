@@ -32,11 +32,8 @@ class EditTest extends BackendWebTestCase
         $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
         $client->click($link);
 
-        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '&id=1',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertIs200($client);
+        $this->assertCurrentUrlContains($client, '&id=1');
     }
 
     public function testEditingOurBlogPost(Client $client): void
@@ -70,7 +67,7 @@ class EditTest extends BackendWebTestCase
         );
 
         // we should get a 200 and be redirected to the index page
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertIs200($client);
         $this->assertCurrentUrlContains($client, '/private/en/blog/index');
         // our url and our page should contain the new title of our blog post
         $this->assertCurrentUrlContains($client, '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited');
@@ -89,7 +86,7 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertIs200($client, '/private/en/blog/edit?id=1');
+        $this->assertHttpStatusCode200($client, '/private/en/blog/edit?id=1');
 
         $crawler = $client->getCrawler();
 
@@ -102,7 +99,7 @@ class EditTest extends BackendWebTestCase
             ]
         );
 
-        self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        $this->assertIs200($client);
         $this->assertCurrentUrlContains($client, '/private/en/blog/edit');
 
         // our page shows an overall error message and a specific one

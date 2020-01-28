@@ -35,7 +35,7 @@ class IndexTest extends BackendWebTestCase
     {
         $client = static::createClient();
 
-        $this->assertIs200($client, '/private/en/authentication');
+        $this->assertHttpStatusCode200($client, '/private/en/authentication');
 
         $response = $this->submitLoginForm($client, 'test@test.com', 'wrong_password');
 
@@ -46,7 +46,7 @@ class IndexTest extends BackendWebTestCase
     {
         $client->setMaxRedirects(2);
 
-        $this->assertIs200($client, '/private/en/authentication');
+        $this->assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'noreply@fork-cms.com');
 
         $this->assertResponseHasContent($response, 'Dashboard', 'Pages');
@@ -60,7 +60,7 @@ class IndexTest extends BackendWebTestCase
     {
         $client->setMaxRedirects(2);
 
-        $this->assertIs200($client, '/private/en/authentication');
+        $this->assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'pages-user@fork-cms.com');
 
         $this->assertResponseHasContent($response, 'Now editing');
@@ -75,7 +75,7 @@ class IndexTest extends BackendWebTestCase
     {
         $client->setMaxRedirects(2);
 
-        $this->assertIs200($client, '/private/en/authentication');
+        $this->assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'users-edit-user@fork-cms.com');
 
         $this->assertResponseHasContent($response, 'Edit profile');

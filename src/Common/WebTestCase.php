@@ -172,14 +172,18 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    /**
-     * @param Client $client
-     * @TODO refactor to just passing a url
-     */
     protected function assertIs404(Client $client): void
     {
         self::assertEquals(
-            404,
+            Response::HTTP_NOT_FOUND,
+            $client->getResponse()->getStatusCode()
+        );
+    }
+
+    protected function assertIs200(Client $client): void
+    {
+        self::assertEquals(
+            Response::HTTP_OK,
             $client->getResponse()->getStatusCode()
         );
     }
@@ -396,7 +400,7 @@ abstract class WebTestCase extends BaseWebTestCase
         self::assertEquals($httpStatusCode, $response->getStatusCode());
     }
 
-    protected function assertIs200(
+    protected function assertHttpStatusCode200(
         Client $client,
         string $url,
         string $requestMethod = 'GET',
