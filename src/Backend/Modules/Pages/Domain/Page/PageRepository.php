@@ -156,17 +156,16 @@ class PageRepository extends ServiceEntityRepository
             $result[$pageItemKey] = $pageItemValue;
         }
 
-        $result['meta'] = $results[1];
-
         // Unserialize data
         if (array_key_exists('data', $results)) {
             $result['data'] = unserialize($result['data'], ['allowed_classes' => false]);
         }
 
         $qb = $this
-            ->createQueryBuilder('p')
+            ->getEntityManager()->createQueryBuilder()
             ->select('b')
-            ->innerJoin('p.blocks', 'b')
+            ->from(PageBlock::class, 'b')
+            ->innerJoin('b.page', 'p')
             ->where('p.id = :pageId')
             ->andWhere('p.revisionId = :revisionId')
             ->andWhere('p.locale = :locale')
