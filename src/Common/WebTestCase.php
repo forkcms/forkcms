@@ -377,14 +377,18 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    protected function assertCurrentUrlContains(Client $client, string $partialUrl): void
+    protected function assertCurrentUrlContains(Client $client, string ...$partialUrls): void
     {
-        self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
+        foreach ($partialUrls as $partialUrl) {
+            self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
+        }
     }
 
-    protected function assertCurrentUrlEndsWith(Client $client, string $partialUrl): void
+    protected function assertCurrentUrlEndsWith(Client $client, string ...$partialUrls): void
     {
-        self::assertStringEndsWith($partialUrl, $client->getHistory()->current()->getUri());
+        foreach ($partialUrls as $partialUrl) {
+            self::assertStringEndsWith($partialUrl, $client->getHistory()->current()->getUri());
+        }
     }
 
     protected function assertHttpStatusCode(

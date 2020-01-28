@@ -68,9 +68,12 @@ class EditTest extends BackendWebTestCase
 
         // we should get a 200 and be redirected to the index page
         $this->assertIs200($client);
-        $this->assertCurrentUrlContains($client, '/private/en/blog/index');
         // our url and our page should contain the new title of our blog post
-        $this->assertCurrentUrlContains($client, '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited');
+        $this->assertCurrentUrlContains(
+            $client,
+            '/private/en/blog/index',
+            '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited'
+        );
         $this->assertResponseHasContent($client->getResponse(), $newBlogPostTitle);
     }
 
