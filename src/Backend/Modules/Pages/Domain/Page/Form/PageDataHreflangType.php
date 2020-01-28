@@ -29,17 +29,20 @@ final class PageDataHreflangType extends AbstractType implements PageDataTypeInt
         }
 
         foreach (BL::getActiveLanguages() as $language) {
-            if ($language !== BL::getWorkingLanguage()) {
-                $builder->add(
-                    'hreflang_' . $language . '',
-                    ChoiceType::class,
-                    [
-                        'choices' => array_flip(BackendPagesModel::getPagesForDropdown(Locale::fromString($language))),
-                        'label' => 'lbl.' . mb_strtoupper($language),
-                        'required' => false,
-                    ]
-                );
+            // we don't want the current language because this is a redirect to a different language selector
+            if ($language === BL::getWorkingLanguage()) {
+                continue;
             }
+
+            $builder->add(
+                'hreflang_' . $language . '',
+                ChoiceType::class,
+                [
+                    'choices' => array_flip(BackendPagesModel::getPagesForDropdown(Locale::fromString($language))),
+                    'label' => 'lbl.' . mb_strtoupper($language),
+                    'required' => false,
+                ]
+            );
         }
     }
 
