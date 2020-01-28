@@ -141,8 +141,12 @@ final class PageContentType extends AbstractType
             }
         }
 
+        if (!isset($selectedTemplate['data']['names'])) {
+            return;
+        }
+
         // add the blocks that didn't have defaults
-        foreach ($selectedTemplate['data']['names'] ?? [] as $block) {
+        foreach ($selectedTemplate['data']['names'] as $block) {
             $blockFormName = 'blocks_' . $block;
             if ($form->has($blockFormName)) {
                 continue;
