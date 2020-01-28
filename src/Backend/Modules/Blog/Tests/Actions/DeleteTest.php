@@ -73,11 +73,7 @@ class DeleteTest extends BackendWebTestCase
         $client->submit($form);
 
         // we're now on the delete page of the blogpost with id 1
-        $this->assertCurrentUrlContains($response, $partialUrl);
-        self::assertContains(
-            '/private/en/blog/delete',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, '/private/en/blog/delete');
         self::assertEquals(
             1,
             $client->getRequest()->request->get('blog_delete')['id']
@@ -86,14 +82,8 @@ class DeleteTest extends BackendWebTestCase
         // we're redirected back to the index page after deletion
         $client->followRedirect();
         self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertContains(
-            'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE),
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, '/private/en/blog/index');
+        $this->assertCurrentUrlContains($client, 'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE));
 
         // the blog post should not be available anymore
         $this->assertResponseDoesNotHaveContent($client->getResponse(), [LoadBlogPosts::BLOG_POST_TITLE]);

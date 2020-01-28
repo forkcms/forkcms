@@ -71,20 +71,10 @@ class EditTest extends BackendWebTestCase
 
         // we should get a 200 and be redirected to the index page
         self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
-        );
-
-        // our url and our page should contain the new title of our blogpost
-        self::assertContains(
-            '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertContains(
-            $newBlogPostTitle,
-            $client->getResponse()->getContent()
-        );
+        $this->assertCurrentUrlContains($client, '/private/en/blog/index');
+        // our url and our page should contain the new title of our blog post
+        $this->assertCurrentUrlContains($client, '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited');
+        $this->assertResponseHasContent($client->getResponse(), $newBlogPostTitle);
     }
 
     public function testSubmittingInvalidData(Client $client): void
@@ -113,20 +103,10 @@ class EditTest extends BackendWebTestCase
         );
 
         self::assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/blog/edit',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, '/private/en/blog/edit');
 
         // our page shows an overall error message and a specific one
-        self::assertContains(
-            'Something went wrong',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Provide a title.',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseHasContent($client->getResponse(), 'Something went wrong', 'Provide a title.');
     }
 
     public function testInvalidIdShouldShowAnError(Client $client): void
@@ -142,9 +122,6 @@ class EditTest extends BackendWebTestCase
         $this->login($client);
 
         $this->assertGetsRedirected($client, '/private/en/blog/edit?id=12345678', '/private/en/blog/index');
-        self::assertContains(
-            'error=non-existing',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, 'error=non-existing');
     }
 }
