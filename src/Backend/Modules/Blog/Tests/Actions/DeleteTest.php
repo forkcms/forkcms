@@ -6,7 +6,6 @@ use Backend\Core\Tests\BackendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\HttpFoundation\Response;
 
 class DeleteTest extends BackendWebTestCase
 {
@@ -35,8 +34,8 @@ class DeleteTest extends BackendWebTestCase
         $this->login($client);
 
         // go to edit page to get a form token
-        $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
-        $token = $crawler->filter('#blog_delete__token')->attr('value');
+        $this->assertHttpStatusCode200($client, '/private/en/blog/edit?token=1234&id=1');
+        $token = $client->getCrawler()->filter('#blog_delete__token')->attr('value');
 
         $this->assertGetsRedirected(
             $client,
@@ -46,10 +45,7 @@ class DeleteTest extends BackendWebTestCase
             ['blog_delete' => ['_token' => $token, 'id' => 12345678]]
         );
 
-        self::assertContains(
-            'error=non-existing',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertCurrentUrlContains($client, 'error=non-existing');
     }
 
     public function testDeleteIsAvailableFromTheEditPage(Client $client): void
