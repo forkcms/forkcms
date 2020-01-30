@@ -8,7 +8,6 @@ final class LoadBlogCategories
 {
     public const BLOG_CATEGORY_TITLE = 'Blog Category for tests';
     public const BLOG_CATEGORY_SLUG = 'blog-category-for-tests';
-    public const BLOG_CATEGORY_ID = 2;
     public const BLOG_CATEGORY_DATA = [
         'language' => 'en',
         'title' => self::BLOG_CATEGORY_TITLE,
@@ -33,12 +32,14 @@ final class LoadBlogCategories
             self::BLOG_CATEGORY_META_DATA
         );
 
+        $database->insert(
+            'blog_categories',
+            ['meta_id' => 28, 'id' => 1, 'language' => 'en', 'title' => 'Default']
+        );
+
         self::$categoryId = $database->insert(
             'blog_categories',
-            [
-                ['meta_id' => 28, 'id' => 1, 'language' => 'en', 'title' => 'Default'],
-                ['meta_id' => self::$metaId, 'id' => self::BLOG_CATEGORY_ID] + self::BLOG_CATEGORY_DATA,
-            ]
+            ['meta_id' => self::$metaId] + self::BLOG_CATEGORY_DATA
         );
     }
 
