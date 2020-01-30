@@ -12,21 +12,17 @@ class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/content_blocks/index');
     }
 
-    public function testIndexHasNoItems(): void
+    public function testIndexHasNoItems(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/content_blocks/index');
-        self::assertContains(
-            'There are no items yet.',
-            $client->getResponse()->getContent()
-        );
-
-        // some stuff we also want to see on the content block index
-        self::assertContains(
-            'Add content block',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/content_blocks/index',
+            [
+                'There are no items yet.',
+                'Add content block',
+            ]
         );
     }
 }
