@@ -12,27 +12,19 @@ class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/dashboard/index');
     }
 
-    public function testIndexHasWidgets(): void
+    public function testIndexHasWidgets(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/dashboard/index');
-        self::assertContains(
-            'Blog: Latest comments',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'FAQ: Feedback',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Analysis',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Users: Statistics',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/dashboard/index',
+            [
+                'Blog: Latest comments',
+                'FAQ: Feedback',
+                'Analysis',
+                'Users: Statistics',
+            ]
         );
     }
 }
