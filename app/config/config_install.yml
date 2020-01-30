@@ -46,6 +46,9 @@ parameters:
     fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
 
 services:
+    templating:
+        alias: templating.engine.twig
+
     fork.settings:
         class: Common\ModulesSettings
         public: true
