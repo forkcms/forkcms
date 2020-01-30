@@ -35,7 +35,10 @@ final class LoadBlogCategories
 
         self::$categoryId = $database->insert(
             'blog_categories',
-            ['meta_id' => self::$metaId, 'id' => self::BLOG_CATEGORY_ID] + self::BLOG_CATEGORY_DATA
+            [
+                ['meta_id' => 28, 'id' => 1, 'language' => 'en', 'title' => 'Default'],
+                ['meta_id' => self::$metaId, 'id' => self::BLOG_CATEGORY_ID] + self::BLOG_CATEGORY_DATA,
+            ]
         );
     }
 

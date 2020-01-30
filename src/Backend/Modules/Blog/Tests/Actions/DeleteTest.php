@@ -82,6 +82,6 @@ class DeleteTest extends BackendWebTestCase
         $this->assertCurrentUrlContains($client, 'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE));
 
         // the blog post should not be available anymore
-        $this->assertResponseDoesNotHaveContent($client->getResponse(), [LoadBlogPosts::BLOG_POST_TITLE]);
+        $this->assertResponseDoesNotHaveContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 }
