@@ -19,11 +19,11 @@ final class ModelTest extends BackendWebTestCase
 
         $addedCategory = Model::getCategory($categoryId);
 
-        $this->assertEquals($categoryId, $addedCategory['id']);
-        $this->assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['language'], $addedCategory['language']);
-        $this->assertArrayHasKey('meta_id', $addedCategory);
-        $this->assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['title'], $addedCategory['title']);
-        $this->assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['sequence'], $addedCategory['sequence']);
+        self::assertEquals($categoryId, $addedCategory['id']);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['language'], $addedCategory['language']);
+        self::assertArrayHasKey('meta_id', $addedCategory);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['title'], $addedCategory['title']);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['sequence'], $addedCategory['sequence']);
     }
 
     public function testIfCategoryExists(Client $client): void
@@ -35,14 +35,14 @@ final class ModelTest extends BackendWebTestCase
             ]
         );
 
-        $this->assertTrue(Model::existsCategory(LoadFaqCategories::getCategoryId()));
-        $this->assertFalse(Model::existsCategory(99));
+        self::assertTrue(Model::existsCategory(LoadFaqCategories::getCategoryId()));
+        self::assertFalse(Model::existsCategory(99));
     }
 
     public function testGeneratingCategoryUrl(Client $client): void
     {
         // new url
-        $this->assertEquals(
+        self::assertEquals(
             LoadFaqCategories::FAQ_CATEGORY_SLUG,
             Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG)
         );
@@ -55,12 +55,12 @@ final class ModelTest extends BackendWebTestCase
         );
 
         // existing url, "2" is should be appended
-        $this->assertEquals(
+        self::assertEquals(
             LoadFaqCategories::FAQ_CATEGORY_SLUG . '-2',
             Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG)
         );
         // existing url with id
-        $this->assertEquals(
+        self::assertEquals(
             LoadFaqCategories::FAQ_CATEGORY_SLUG,
             Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG, LoadFaqCategories::getCategoryId())
         );
@@ -97,10 +97,10 @@ final class ModelTest extends BackendWebTestCase
 
         $editedCategory = Model::getCategory($categoryData['id']);
 
-        $this->assertEquals($categoryData['id'], $editedCategory['id']);
-        $this->assertEquals($categoryMetaData['id'], $editedCategory['meta_id']);
-        $this->assertEquals($categoryData['language'], $editedCategory['language']);
-        $this->assertEquals($categoryData['title'], $editedCategory['title']);
+        self::assertEquals($categoryData['id'], $editedCategory['id']);
+        self::assertEquals($categoryMetaData['id'], $editedCategory['meta_id']);
+        self::assertEquals($categoryData['language'], $editedCategory['language']);
+        self::assertEquals($categoryData['title'], $editedCategory['title']);
     }
 
     public function testDeleteCategory(Client $client): void
@@ -113,8 +113,8 @@ final class ModelTest extends BackendWebTestCase
         );
 
         $id = LoadFaqCategories::getCategoryId();
-        $this->assertTrue(Model::existsCategory($id));
+        self::assertTrue(Model::existsCategory($id));
         Model::deleteCategory($id);
-        $this->assertFalse(Model::existsCategory($id));
+        self::assertFalse(Model::existsCategory($id));
     }
 }

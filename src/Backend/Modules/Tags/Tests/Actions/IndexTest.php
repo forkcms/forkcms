@@ -34,17 +34,17 @@ class IndexTest extends BackendWebTestCase
         $this->login($client);
 
         $client->request('GET', '/private/en/tags/index');
-        $this->assertContains(
+        self::assertContains(
             'test',
             $client->getResponse()->getContent()
         );
 
-        $this->assertContains(
+        self::assertContains(
             'most used',
             $client->getResponse()->getContent()
         );
 
-        $this->assertContains(
+        self::assertContains(
             '<a href="/private/en/tags/index?offset=0&order=num_tags',
             $client->getResponse()->getContent()
         );

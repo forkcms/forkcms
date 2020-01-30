@@ -22,7 +22,7 @@ final class ModelTest extends BackendWebTestCase
     {
         $encryptedPassword = Model::encryptPassword($this->getPassword());
 
-        $this->assertTrue(password_verify($this->getPassword(), $encryptedPassword));
+        self::assertTrue(password_verify($this->getPassword(), $encryptedPassword));
     }
 
     public function testInsertingProfile(): void
@@ -32,53 +32,53 @@ final class ModelTest extends BackendWebTestCase
         $profileData = $this->getProfileData();
         $addedProfile = Model::get($profileId);
 
-        $this->assertEquals($profileId, $addedProfile['id']);
-        $this->assertEquals($profileData['email'], $addedProfile['email']);
-        $this->assertEquals($profileData['status'], $addedProfile['status']);
-        $this->assertEquals($profileData['display_name'], $addedProfile['display_name']);
-        $this->assertEquals($profileData['url'], $addedProfile['url']);
+        self::assertEquals($profileId, $addedProfile['id']);
+        self::assertEquals($profileData['email'], $addedProfile['email']);
+        self::assertEquals($profileData['status'], $addedProfile['status']);
+        self::assertEquals($profileData['display_name'], $addedProfile['display_name']);
+        self::assertEquals($profileData['url'], $addedProfile['url']);
 
         $addedProfileByEmail = Model::getByEmail($profileData['email']);
 
-        $this->assertEquals($profileId, $addedProfileByEmail['id']);
-        $this->assertEquals($profileData['email'], $addedProfileByEmail['email']);
-        $this->assertEquals($profileData['status'], $addedProfileByEmail['status']);
-        $this->assertEquals($profileData['display_name'], $addedProfileByEmail['display_name']);
-        $this->assertEquals($profileData['url'], $addedProfileByEmail['url']);
+        self::assertEquals($profileId, $addedProfileByEmail['id']);
+        self::assertEquals($profileData['email'], $addedProfileByEmail['email']);
+        self::assertEquals($profileData['status'], $addedProfileByEmail['status']);
+        self::assertEquals($profileData['display_name'], $addedProfileByEmail['display_name']);
+        self::assertEquals($profileData['url'], $addedProfileByEmail['url']);
     }
 
     public function testGettingUrl(): void
     {
         $firstUrl = Model::getUrl($this->getDisplayName());
-        $this->assertEquals('fork-cms', $firstUrl);
+        self::assertEquals('fork-cms', $firstUrl);
 
         $this->addProfile();
 
         $secondUrl = Model::getUrl($this->getDisplayName());
-        $this->assertEquals('fork-cms-2', $secondUrl);
+        self::assertEquals('fork-cms-2', $secondUrl);
     }
 
     public function testIfProfileExists(): void
     {
         $this->addProfile();
-        $this->assertTrue(Model::exists(1));
-        $this->assertTrue(Model::existsByEmail('test@fork-cms.com'));
-        $this->assertTrue(Model::existsDisplayName($this->getDisplayName()));
+        self::assertTrue(Model::exists(1));
+        self::assertTrue(Model::existsByEmail('test@fork-cms.com'));
+        self::assertTrue(Model::existsDisplayName($this->getDisplayName()));
     }
 
     public function testUpdatingProfile(): void
     {
         $profileId = $this->addProfile();
-        $this->assertEquals(1, $this->updateProfile());
+        self::assertEquals(1, $this->updateProfile());
 
         $updatedProfileData = $this->getUpdatedProfileData();
         $updatedProfile = Model::get($profileId);
 
-        $this->assertEquals($profileId, $updatedProfile['id']);
-        $this->assertEquals($updatedProfileData['email'], $updatedProfile['email']);
-        $this->assertEquals($updatedProfileData['status'], $updatedProfile['status']);
-        $this->assertEquals($updatedProfileData['display_name'], $updatedProfile['display_name']);
-        $this->assertEquals($updatedProfileData['url'], $updatedProfile['url']);
+        self::assertEquals($profileId, $updatedProfile['id']);
+        self::assertEquals($updatedProfileData['email'], $updatedProfile['email']);
+        self::assertEquals($updatedProfileData['status'], $updatedProfile['status']);
+        self::assertEquals($updatedProfileData['display_name'], $updatedProfile['display_name']);
+        self::assertEquals($updatedProfileData['url'], $updatedProfile['url']);
     }
 
     public function testDeletingProfile(): void
@@ -88,7 +88,7 @@ final class ModelTest extends BackendWebTestCase
 
         $deletedProfile = Model::get($profileId);
 
-        $this->assertEquals('deleted', $deletedProfile['status']);
+        self::assertEquals('deleted', $deletedProfile['status']);
     }
 
     public function testSettingSettings(): void
@@ -96,10 +96,10 @@ final class ModelTest extends BackendWebTestCase
         $profileId = $this->addProfile();
 
         Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
-        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
 
         Model::setSetting($profileId, 'my_setting', 'My updated value');
-        $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
     }
 
     public function testInsertingGroup(): void
@@ -109,31 +109,31 @@ final class ModelTest extends BackendWebTestCase
         $groupData = $this->getGroupData();
         $addedGroup = Model::getGroup($groupId);
 
-        $this->assertEquals($groupId, $addedGroup['id']);
-        $this->assertEquals($groupData['name'], $addedGroup['name']);
+        self::assertEquals($groupId, $addedGroup['id']);
+        self::assertEquals($groupData['name'], $addedGroup['name']);
 
         $groups = Model::getGroups();
 
-        $this->assertContains($groupData['name'], $groups);
+        self::assertContains($groupData['name'], $groups);
     }
 
     public function testUpdatingGroup(): void
     {
         $groupId = $this->addGroup();
-        $this->assertEquals(1, $this->updateGroup());
+        self::assertEquals(1, $this->updateGroup());
 
         $updatedGroupData = $this->getUpdatedGroupData();
         $updatedGroup = Model::getGroup($groupId);
 
-        $this->assertEquals($groupId, $updatedGroup['id']);
-        $this->assertEquals($updatedGroupData['name'], $updatedGroup['name']);
+        self::assertEquals($groupId, $updatedGroup['id']);
+        self::assertEquals($updatedGroupData['name'], $updatedGroup['name']);
     }
 
     public function testIfGroupExists(): void
     {
         $this->addGroup();
-        $this->assertTrue(Model::existsGroup(1));
-        $this->assertTrue(Model::existsGroupName('My Fork CMS group'));
+        self::assertTrue(Model::existsGroup(1));
+        self::assertTrue(Model::existsGroupName('My Fork CMS group'));
     }
 
     public function testDeletingGroup(): void
@@ -142,13 +142,13 @@ final class ModelTest extends BackendWebTestCase
         $groupId = $this->addGroup();
         $profileGroupId = $this->addProfileGroup($profileId, $groupId);
 
-        $this->assertNotEmpty(Model::getGroup($groupId));
-        $this->assertNotEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertNotEmpty(Model::getGroup($groupId));
+        self::assertNotEmpty(Model::getProfileGroup($profileGroupId));
 
         Model::deleteGroup($groupId);
 
-        $this->assertEmpty(Model::getGroup($groupId));
-        $this->assertEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertSame(Model::getGroup($groupId));
+        self::assertSame(Model::getProfileGroup($profileGroupId));
     }
 
     public function testInsertingProfileGroup(): void
@@ -161,12 +161,12 @@ final class ModelTest extends BackendWebTestCase
         $profileGroupData = $this->getProfileGroupData($profileId, $groupId);
         $addedProfileGroup = Model::getProfileGroup($profileGroupId);
 
-        $this->assertEquals($profileGroupId, $addedProfileGroup['id']);
-        $this->assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
-        $this->assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
-        $this->assertEquals(strtotime($profileGroupData['expires_on'].'.UTC'), $addedProfileGroup['expires_on']);
+        self::assertEquals($profileGroupId, $addedProfileGroup['id']);
+        self::assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
+        self::assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
+        self::assertEquals(strtotime($profileGroupData['expires_on'].'.UTC'), $addedProfileGroup['expires_on']);
 
-        $this->assertContains(
+        self::assertContains(
             [
                 'id' => $profileId,
                 'group_id' => $groupId,
@@ -183,15 +183,15 @@ final class ModelTest extends BackendWebTestCase
         $profileId = $this->addProfile();
 
         $profileGroupId = $this->addProfileGroup($profileId, $groupId);
-        $this->assertEquals(1, $this->updateProfileGroup());
+        self::assertEquals(1, $this->updateProfileGroup());
 
         $updatedProfileGroupData = $this->getUpdatedProfileGroupData();
         $updatedProfileGroup = Model::getProfileGroup($profileGroupId);
 
-        $this->assertEquals($profileGroupId, $updatedProfileGroup['id']);
-        $this->assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
-        $this->assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
-        $this->assertEquals(strtotime($updatedProfileGroupData['expires_on'] . '.UTC'), $updatedProfileGroup['expires_on']);
+        self::assertEquals($profileGroupId, $updatedProfileGroup['id']);
+        self::assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
+        self::assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
+        self::assertEquals(strtotime($updatedProfileGroupData['expires_on'] . '.UTC'), $updatedProfileGroup['expires_on']);
     }
 
     public function testIfProfileGroupExists(): void
@@ -200,7 +200,7 @@ final class ModelTest extends BackendWebTestCase
         $groupId = $this->addGroup();
 
         $profileGroupId = $this->addProfileGroup($profileId, $groupId);
-        $this->assertTrue(Model::existsProfileGroup($profileGroupId));
+        self::assertTrue(Model::existsProfileGroup($profileGroupId));
     }
 
     public function testDeletingProfileGroup(): void
@@ -210,11 +210,11 @@ final class ModelTest extends BackendWebTestCase
 
         $profileGroupId = $this->addProfileGroup($profileId, $groupId);
 
-        $this->assertNotEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertNotEmpty(Model::getProfileGroup($profileGroupId));
 
         Model::deleteProfileGroup($profileGroupId);
 
-        $this->assertEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertSame(Model::getProfileGroup($profileGroupId));
     }
 
     public function addProfile(): int

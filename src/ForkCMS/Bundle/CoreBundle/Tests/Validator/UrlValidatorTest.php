@@ -17,7 +17,7 @@ class UrlValidatorTest extends TestCase
         ];
 
         foreach ($urls as $url) {
-            $this->assertTrue($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+            self::assertTrue($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
         }
     }
 
@@ -33,7 +33,7 @@ class UrlValidatorTest extends TestCase
         ];
 
         foreach ($urls as $url) {
-            $this->assertFalse($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+            self::assertFalse($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
         }
     }
 }

@@ -15,61 +15,61 @@ final class ModelTest extends FrontendWebTestCase
         $profileData = $this->getProfileData();
         $addedProfile = Model::get($profileId);
 
-        $this->assertInstanceOf(Profile::class, $addedProfile);
+        self::assertInstanceOf(Profile::class, $addedProfile);
 
-        $this->assertEquals($profileId, $addedProfile->getId());
-        $this->assertEquals($profileData['email'], $addedProfile->getEmail());
-        $this->assertEquals($profileData['status'], $addedProfile->getStatus());
-        $this->assertEquals($profileData['display_name'], $addedProfile->getDisplayName());
-        $this->assertEquals($profileData['url'], $addedProfile->getUrl());
+        self::assertEquals($profileId, $addedProfile->getId());
+        self::assertEquals($profileData['email'], $addedProfile->getEmail());
+        self::assertEquals($profileData['status'], $addedProfile->getStatus());
+        self::assertEquals($profileData['display_name'], $addedProfile->getDisplayName());
+        self::assertEquals($profileData['url'], $addedProfile->getUrl());
 
-        $this->assertEquals($profileId, Model::getIdByEmail($profileData['email']));
+        self::assertEquals($profileId, Model::getIdByEmail($profileData['email']));
     }
 
     public function testUpdatingProfile(): void
     {
         $profileId = $this->addProfile();
-        $this->assertEquals(1, $this->updateProfile());
+        self::assertEquals(1, $this->updateProfile());
 
         $updatedProfileData = $this->getUpdatedProfileData();
         $updatedProfile = Model::get($profileId);
 
-        $this->assertInstanceOf(Profile::class, $updatedProfile);
+        self::assertInstanceOf(Profile::class, $updatedProfile);
 
-        $this->assertEquals($profileId, $updatedProfile->getId());
-        $this->assertEquals($updatedProfileData['email'], $updatedProfile->getEmail());
-        $this->assertEquals($updatedProfileData['status'], $updatedProfile->getStatus());
-        $this->assertEquals($updatedProfileData['display_name'], $updatedProfile->getDisplayName());
-        $this->assertEquals($updatedProfileData['url'], $updatedProfile->getUrl());
+        self::assertEquals($profileId, $updatedProfile->getId());
+        self::assertEquals($updatedProfileData['email'], $updatedProfile->getEmail());
+        self::assertEquals($updatedProfileData['status'], $updatedProfile->getStatus());
+        self::assertEquals($updatedProfileData['display_name'], $updatedProfile->getDisplayName());
+        self::assertEquals($updatedProfileData['url'], $updatedProfile->getUrl());
 
-        $this->assertEquals($profileId, Model::getIdByEmail($updatedProfileData['email']));
+        self::assertEquals($profileId, Model::getIdByEmail($updatedProfileData['email']));
     }
 
     public function testProfileExists(): void
     {
         $profileData = $this->getProfileData();
 
-        $this->assertFalse(Model::existsDisplayName($profileData['display_name']));
-        $this->assertFalse(Model::existsByEmail($profileData['email']));
+        self::assertFalse(Model::existsDisplayName($profileData['display_name']));
+        self::assertFalse(Model::existsByEmail($profileData['email']));
 
         $this->addProfile();
 
-        $this->assertTrue(Model::existsDisplayName($profileData['display_name']));
-        $this->assertTrue(Model::existsByEmail($profileData['email']));
+        self::assertTrue(Model::existsDisplayName($profileData['display_name']));
+        self::assertTrue(Model::existsByEmail($profileData['email']));
     }
 
     public function testPasswordGetsEncrypted(): void
     {
         $encryptedPassword = Model::encryptPassword('Fork CMS');
 
-        $this->assertTrue(password_verify('Fork CMS', $encryptedPassword));
+        self::assertTrue(password_verify('Fork CMS', $encryptedPassword));
     }
 
     public function testGettingEncryptedPassword(): void
     {
         $this->addProfile();
 
-        $this->assertEquals(
+        self::assertEquals(
             '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
             Model::getEncryptedPassword('test@fork-cms.com')
         );
@@ -79,16 +79,16 @@ final class ModelTest extends FrontendWebTestCase
     {
         $this->addProfile();
 
-        $this->assertTrue(Model::verifyPassword('test@fork-cms.com', 'forkcms'));
+        self::assertTrue(Model::verifyPassword('test@fork-cms.com', 'forkcms'));
     }
 
     public function testSettingSettings(): void
     {
         Model::setSetting(1, 'my_setting', 'My setting\'s value');
-        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
 
         Model::setSetting(1, 'my_setting', 'My updated value');
-        $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
 
         Model::setSettings(
             1,
@@ -98,8 +98,8 @@ final class ModelTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertEquals('Another updated value', Model::getSetting(1, 'my_setting'));
-        $this->assertEquals('A new value', Model::getSetting(1, 'my_other_setting'));
+        self::assertEquals('Another updated value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('A new value', Model::getSetting(1, 'my_other_setting'));
     }
 
     public function testGettingSettings(): void
@@ -110,99 +110,99 @@ final class ModelTest extends FrontendWebTestCase
 
         $settings = Model::getSettings(1);
 
-        $this->assertContains('My setting\'s value', $settings);
-        $this->assertContains(['one', 'two', 'banana'], $settings);
-        $this->assertNotContains('Someone else\'s setting\'s value', $settings);
+        self::assertContains('My setting\'s value', $settings);
+        self::assertContains(['one', 'two', 'banana'], $settings);
+        self::assertNotContains('Someone else\'s setting\'s value', $settings);
     }
 
     public function testDeletingSetting(): void
     {
         Model::setSetting(1, 'my_setting', 'My setting\'s value');
-        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
 
         Model::deleteSetting(1, 'my_setting');
-        $this->assertEquals('', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('', Model::getSetting(1, 'my_setting'));
     }
 
     public function testGettingId(): void
     {
         $this->addProfile();
 
-        $this->assertEquals(1, Model::getIdByEmail('test@fork-cms.com'));
+        self::assertEquals(1, Model::getIdByEmail('test@fork-cms.com'));
 
         Model::setSetting(1, 'get_my_id', 'with_a_setting');
-        $this->assertEquals(1, Model::getIdBySetting('get_my_id', 'with_a_setting'));
+        self::assertEquals(1, Model::getIdBySetting('get_my_id', 'with_a_setting'));
     }
 
     public function testGettingRandomString()
     {
-        $this->assertNotEmpty(Model::getRandomString());
-        $this->assertEquals(15, strlen(Model::getRandomString()));
-        $this->assertEquals(14, strlen(Model::getRandomString(14)));
-        $this->assertEquals(1, preg_match("#^[0-9]+$#", Model::getRandomString(15, true, false, false, false)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, false, false)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, false)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, true)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, false)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, true)));
-        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, false, true)));
-        $this->assertEquals(1, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, true, false, false)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, false, false)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, false)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, true)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, false)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, true)));
-        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, false, true)));
-        $this->assertEquals(1, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, true, false)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, false, false, false)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, false)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, true)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, false)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, true)));
-        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, false, true)));
-        $this->assertEquals(
+        self::assertNotEmpty(Model::getRandomString());
+        self::assertEquals(15, strlen(Model::getRandomString()));
+        self::assertEquals(14, strlen(Model::getRandomString(14)));
+        self::assertEquals(1, preg_match("#^[0-9]+$#", Model::getRandomString(15, true, false, false, false)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, false, false)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, false)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, true)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, false)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, true)));
+        self::assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, false, true)));
+        self::assertEquals(1, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, true, false, false)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, false, false)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, false)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, true)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, false)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, true)));
+        self::assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, false, true)));
+        self::assertEquals(1, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, true, false)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, false, false, false)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, false)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, true)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, false)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, true)));
+        self::assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, false, true)));
+        self::assertEquals(
             1,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, false, false, false, true)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, true, false, false, false)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, true, true, false, false)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, true, true, true, false)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, false, true, false, false)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
                 Model::getRandomString(15, false, true, true, false)
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             preg_match(
                 "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
@@ -214,12 +214,12 @@ final class ModelTest extends FrontendWebTestCase
     public function testGettingUrl(): void
     {
         $firstUrl = Model::getUrl('Fork CMS');
-        $this->assertEquals('fork-cms', $firstUrl);
+        self::assertEquals('fork-cms', $firstUrl);
 
         $this->addProfile();
 
         $secondUrl = Model::getUrl('Fork CMS');
-        $this->assertEquals('fork-cms-2', $secondUrl);
+        self::assertEquals('fork-cms-2', $secondUrl);
     }
 
     public function addProfile(): int

@@ -9,12 +9,12 @@ class PriorityTest extends TestCase
 {
     public function testPriorityEquals(): void
     {
-        $this->assertTrue(Priority::widget()->equals(Priority::widget()));
+        self::assertTrue(Priority::widget()->equals(Priority::widget()));
     }
 
     public function testPriorityNotEquals(): void
     {
-        $this->assertFalse(Priority::widget()->equals(Priority::core()));
+        self::assertFalse(Priority::widget()->equals(Priority::core()));
     }
 
     public function testPriorityComparison(): void
@@ -43,14 +43,14 @@ class PriorityTest extends TestCase
         );
 
         foreach ($sortedPriorities as $key => $priority) {
-            $this->assertTrue($priorities[$key]->equals($priority), 'Priorities not sorted correctly');
+            self::assertTrue($priorities[$key]->equals($priority), 'Priorities not sorted correctly');
         }
     }
 
     public function testPriorityForModule(): void
     {
-        $this->assertTrue(Priority::core()->equals(Priority::forModule('Core')));
-        $this->assertTrue(Priority::module()->equals(Priority::forModule('Blog')));
-        $this->assertTrue(Priority::module()->equals(Priority::forModule('ContentBlocks')));
+        self::assertTrue(Priority::core()->equals(Priority::forModule('Core')));
+        self::assertTrue(Priority::module()->equals(Priority::forModule('Blog')));
+        self::assertTrue(Priority::module()->equals(Priority::forModule('ContentBlocks')));
     }
 }

@@ -46,7 +46,7 @@ final class ModelTest extends FrontendWebTestCase
         $module = 'Pages';
         $pages = TagsModel::callFromInterface($module, PagesModel::class, 'getForTags', [1]);
 
-        $this->assertSame($pages[0]['title'], 'Home');
+        self::assertSame($pages[0]['title'], 'Home');
     }
 
     public function testGettingATagWithTheDefaultLocale(): void
@@ -54,7 +54,7 @@ final class ModelTest extends FrontendWebTestCase
         $url = 'test';
         $tag = TagsModel::get($url);
         $this->assertTag($tag);
-        $this->assertSame($tag['url'], $url);
+        self::assertSame($tag['url'], $url);
     }
 
     public function testGettingATagWithASpecificLocale(): void
@@ -62,8 +62,8 @@ final class ModelTest extends FrontendWebTestCase
         $url = 'test';
         $tag = TagsModel::get($url, Locale::fromString('en'));
         $this->assertTag($tag);
-        $this->assertSame($tag['url'], $url);
-        $this->assertSame($tag['language'], 'en');
+        self::assertSame($tag['url'], $url);
+        self::assertSame($tag['language'], 'en');
     }
 
     public function testGetAllTags(): void
@@ -73,11 +73,11 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetMostUsed(): void
     {
-        $this->assertEmpty(TagsModel::getMostUsed(0), 'Most used limit isn\'t respected');
+        self::assertSame(TagsModel::getMostUsed(0), 'Most used limit isn\'t respected');
         $mostUsedTags = TagsModel::getMostUsed(2);
         $this->assertTag($mostUsedTags[0], ['url', 'name', 'number']);
         $this->assertTag($mostUsedTags[1], ['url', 'name', 'number']);
-        $this->assertTrue($mostUsedTags[0]['number'] >= $mostUsedTags[1]['number'], 'Tags not sorted by usage');
+        self::assertTrue($mostUsedTags[0]['number'] >= $mostUsedTags[1]['number'], 'Tags not sorted by usage');
     }
 
     public function testGetForItemWithDefaultLocale(): void
@@ -95,8 +95,8 @@ final class ModelTest extends FrontendWebTestCase
     public function testGetForMultipleItemsWithDefaultLocale(): void
     {
         $tags = TagsModel::getForMultipleItems('Pages', [1, 2]);
-        $this->assertArrayHasKey(1, $tags);
-        $this->assertArrayHasKey(2, $tags);
+        self::assertArrayHasKey(1, $tags);
+        self::assertArrayHasKey(2, $tags);
         $this->assertTag($tags[1][0], ['name', 'other_id', 'url', 'full_url']);
         $this->assertTag($tags[2][0], ['name', 'other_id', 'url', 'full_url']);
     }
@@ -104,44 +104,44 @@ final class ModelTest extends FrontendWebTestCase
     public function testGetForMultipleItemsSpecificLocale(): void
     {
         $tags = TagsModel::getForMultipleItems('Pages', [1, 2], Locale::fromString('en'));
-        $this->assertArrayHasKey(1, $tags);
-        $this->assertArrayHasKey(2, $tags);
+        self::assertArrayHasKey(1, $tags);
+        self::assertArrayHasKey(2, $tags);
         $this->assertTag($tags[1][0], ['name', 'other_id', 'url', 'full_url']);
         $this->assertTag($tags[2][0], ['name', 'other_id', 'url', 'full_url']);
     }
 
     public function testGetIdByUrl(): void
     {
-        $this->assertSame(1, TagsModel::getIdByUrl('test'));
-        $this->assertSame(2, TagsModel::getIdByUrl('most-used'));
+        self::assertSame(1, TagsModel::getIdByUrl('test'));
+        self::assertSame(2, TagsModel::getIdByUrl('most-used'));
     }
 
     public function testGetModulesForTag(): void
     {
         $modules = TagsModel::getModulesForTag(1);
-        $this->assertSame('Faq', $modules[0]);
-        $this->assertCount(2, $modules);
-        $this->assertCount(1, TagsModel::getModulesForTag(2));
+        self::assertSame('Faq', $modules[0]);
+        self::assertCount(2, $modules);
+        self::assertCount(1, TagsModel::getModulesForTag(2));
     }
 
     public function testGetName(): void
     {
-        $this->assertSame('test', TagsModel::getName(1));
+        self::assertSame('test', TagsModel::getName(1));
     }
 
     public function testGetRelatedItemsByTags(): void
     {
         $ids = TagsModel::getRelatedItemsByTags(1, 'Pages', 'Faq');
-        $this->assertSame('1', $ids[0]);
+        self::assertSame('1', $ids[0]);
     }
 
     public function testGetItemsForTag(): void
     {
         $items = TagsModel::getItemsForTag(1);
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         $this->assertModuleTags($items[1]);
-        $this->assertSame('Pages', $items[1]['name']);
-        $this->assertSame('Home', $items[1]['items'][0]['title']);
+        self::assertSame('Pages', $items[1]['name']);
+        self::assertSame('Home', $items[1]['items'][0]['title']);
     }
 
     public function testGetItemsForTagAndModule(): void
@@ -149,30 +149,30 @@ final class ModelTest extends FrontendWebTestCase
         $items = TagsModel::getItemsForTagAndModule(1, 'Pages');
 
         $this->assertModuleTags($items);
-        $this->assertSame('Pages', $items['name']);
-        $this->assertSame('Home', $items['items'][0]['title']);
+        self::assertSame('Pages', $items['name']);
+        self::assertSame('Home', $items['items'][0]['title']);
     }
 
     public function testGetAllForTag(): void
     {
-        $this->assertEmpty(TagsModel::getAllForTag('tests', Locale::frontendLanguage()));
+        self::assertSame(TagsModel::getAllForTag('tests', Locale::frontendLanguage()));
         $items = TagsModel::getAllForTag('test');
-        $this->assertSame('Faq', $items[0]['module']);
-        $this->assertSame('1', $items[0]['other_id']);
+        self::assertSame('Faq', $items[0]['module']);
+        self::assertSame('1', $items[0]['other_id']);
     }
 
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $tag);
+            self::assertArrayHasKey($key, $tag);
         }
     }
 
     private function assertModuleTags($items): void
     {
-        $this->assertArrayHasKey('name', $items);
-        $this->assertArrayHasKey('label', $items);
-        $this->assertArrayHasKey('items', $items);
+        self::assertArrayHasKey('name', $items);
+        self::assertArrayHasKey('label', $items);
+        self::assertArrayHasKey('items', $items);
         $this->assertTag($items['items'][0], ['id', 'title', 'full_url']);
     }
 }
