@@ -1213,6 +1213,10 @@
         <translation language="en"><![CDATA[Activate email validation to use this option.]]></translation>
         <translation language="pl"><![CDATA[Aktywuj sprawdzanie poczty e-mail, aby użyć tej opcji.]]></translation>
       </item>
+      <item type="label" name="SendConfirmationMail">
+        <translation language="nl"><![CDATA[verstuur bevestigingsmail]]></translation>
+        <translation language="en"><![CDATA[send confirmation mail]]></translation>
+      </item>
       <item type="label" name="SendConfirmationMailTo">
         <translation language="nl"><![CDATA[verstuur bevestigingsmail naar]]></translation>
         <translation language="en"><![CDATA[send confirmation mail to]]></translation>
