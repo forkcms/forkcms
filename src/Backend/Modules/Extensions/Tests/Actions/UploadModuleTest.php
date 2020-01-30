@@ -12,20 +12,17 @@ class UploadModuleTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/upload_module');
     }
 
-    public function testUploadPage(): void
+    public function testUploadPage(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/upload_module');
-        self::assertContains(
-            'Install',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            '<label for="file" class="control-label">',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/upload_module',
+            [
+                'Install',
+                '<label for="file" class="control-label">',
+            ]
         );
     }
 }

@@ -12,29 +12,19 @@ class DetailThemeTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/detail_theme?theme=Fork');
-        self::assertContains(
-            'Core/Layout/Templates/Home.html.twig',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'class="positions">top, main',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Version',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Description',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/detail_theme?theme=Fork',
+            [
+                'Core/Layout/Templates/Home.html.twig',
+                'class="positions">top, main',
+                'Version',
+                'Description',
+            ]
         );
     }
 }

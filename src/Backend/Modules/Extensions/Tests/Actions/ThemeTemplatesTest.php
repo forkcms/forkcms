@@ -12,28 +12,23 @@ class ThemeTemplatesTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/theme_templates');
     }
 
-    public function testIndexHasTemplates(): void
+    public function testIndexHasTemplates(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->request('GET', '/private/en/extensions/theme_templates');
-        self::assertContains(
-            'Templates for',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/theme_templates',
+            [
+                'Templates for',
+                'Add template',
+                'Export',
+            ]
         );
-        self::assertNotContains(
-            '<a href="/private/en/extensions/edit_theme_template?token=68ozixmy4j&amp;id=3" title="">Default</a>',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Add template',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Export',
-            $client->getResponse()->getContent()
+        $this->assertResponseDoesNotHaveContent(
+            $client->getResponse(),
+            '<a href="/private/en/extensions/edit_theme_template?token=68ozixmy4j&amp;id=3" title="">Default</a>'
         );
     }
 }

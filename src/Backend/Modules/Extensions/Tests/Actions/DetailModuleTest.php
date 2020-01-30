@@ -12,29 +12,19 @@ class DetailModuleTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_module?module=Blog');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/detail_module?module=Blog');
-        self::assertContains(
-            'The Blog (you could also call it \'News\') module features',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/detail_module?module=Blog',
+            [
+                'The Blog (you could also call it \'News\') module features',
+                'Version',
+                'automatic recommendation of related articles',
+            ]
         );
-        self::assertNotContains(
-            'Authors ',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Version',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'automatic recommendation of related articles',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseDoesNotHaveContent($client->getResponse(), 'Authors ');
     }
 }

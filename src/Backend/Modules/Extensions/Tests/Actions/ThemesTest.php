@@ -12,29 +12,19 @@ class ThemesTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/themes');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/themes');
-        self::assertContains(
-            'Installed themes',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/themes',
+            [
+                'Installed themes',
+                'Upload theme',
+                'Find themes',
+            ]
         );
-        self::assertNotContains(
-            'Not installed themes',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Upload theme',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Find themes',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseDoesNotHaveContent($client->getResponse(), 'Not installed themes');
     }
 }

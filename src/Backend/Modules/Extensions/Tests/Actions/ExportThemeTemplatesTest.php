@@ -12,23 +12,18 @@ class ExportThemeTemplatesTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/export_theme_templates');
     }
 
-    public function testExportIsReturned(): void
+    public function testExportIsReturned(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/export_theme_templates');
-        self::assertContains(
-            '<template label="Default" path="Core/Layout/Templates/Default.html.twig">',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            '<?xml version="1.0" encoding="UTF-8"?>',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            '[/,/,top,top],[/,/,/,/]',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/export_theme_templates',
+            [
+                '<template label="Default" path="Core/Layout/Templates/Default.html.twig">',
+                '<?xml version="1.0" encoding="UTF-8"?>',
+                '[/,/,top,top],[/,/,/,/]',
+            ]
         );
     }
 }
