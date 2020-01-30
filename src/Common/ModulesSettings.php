@@ -2,8 +2,10 @@
 
 namespace Common;
 
+use Common\Core\Model;
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
+use TypeError;
 
 /**
  * This is our module settings class
@@ -20,10 +22,22 @@ class ModulesSettings
      */
     private $cache;
 
+    /**
+     * @var bool
+     */
+    private $forkIsInstalled;
+
     public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
         $this->cache = $cache;
+
+        // @TODO pass this as parameter in Fork 6
+        try {
+            $this->forkIsInstalled = Model::getContainer()->getParameter('fork.is_installed');
+        } catch (TypeError $typeError) {
+            $this->forkIsInstalled = false;
+        }
     }
 
     /**
@@ -55,14 +69,16 @@ class ModulesSettings
      */
     public function set(string $module, string $key, $value): void
     {
-        $valueToStore = serialize($value);
+        if ($this->forkIsInstalled) {
+            $valueToStore = serialize($value);
 
-        $this->database->execute(
-            'INSERT INTO modules_settings(module, name, value)
+            $this->database->execute(
+                'INSERT INTO modules_settings(module, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            [$module, $key, $valueToStore, $valueToStore]
-        );
+                [$module, $key, $valueToStore, $valueToStore]
+            );
+        }
 
         /*
          * Instead of invalidating the cache, we could also fetch existing
@@ -86,14 +102,16 @@ class ModulesSettings
      */
     public function delete(string $module, string $key): void
     {
-        $this->database->delete(
-            'modules_settings',
-            'module = :module and name = :name',
-            [
-                'module' => $module,
-                'name' => $key,
-            ]
-        );
+        if ($this->forkIsInstalled) {
+            $this->database->delete(
+                'modules_settings',
+                'module = :module and name = :name',
+                [
+                    'module' => $module,
+                    'name' => $key,
+                ]
+            );
+        }
 
         /*
          * Instead of invalidating the cache, we could also fetch existing
@@ -162,6 +180,10 @@ class ModulesSettings
      */
     private function getAllSettingsFromDatabase(): array
     {
+        if (!$this->forkIsInstalled) {
+            return [];
+        }
+
         // fetch settings
         $settings = (array) $this->database->getRecords(
             'SELECT ms.module, ms.name, ms.value
