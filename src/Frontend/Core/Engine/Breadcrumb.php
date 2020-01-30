@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\Page\Page as PageEntity;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -42,10 +43,10 @@ class Breadcrumb extends KernelLoader
         $this->getContainer()->set('breadcrumb', $this);
 
         // get more information for the homepage
-        $homeInfo = Navigation::getPageInfo(Model::HOME_PAGE_ID);
+        $homeInfo = Navigation::getPageInfo(PageEntity::HOME_PAGE_ID);
 
         // add homepage as first item (with correct element)
-        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(Model::HOME_PAGE_ID));
+        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(PageEntity::HOME_PAGE_ID));
 
         $this->addBreadcrumbsForPages($this->url->getPages());
     }
@@ -68,7 +69,7 @@ class Breadcrumb extends KernelLoader
     private function getBreadcrumbsForPages(array $pages): array
     {
         $breadcrumbs = [];
-        $errorUrl = Navigation::getUrl(Model::ERROR_PAGE_ID);
+        $errorUrl = Navigation::getUrl(PageEntity::ERROR_PAGE_ID);
 
         // loop pages
         while (!empty($pages)) {

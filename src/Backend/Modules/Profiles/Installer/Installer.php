@@ -9,6 +9,7 @@ use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\Session\Session;
 use Backend\Modules\Profiles\Domain\Setting\Setting;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
@@ -198,9 +199,10 @@ class Installer extends ModuleInstaller
         foreach ($this->getLanguages() as $language) {
             // We must define the locale we want to insert the page into
             Language::setLocale($language);
+            $locale = Locale::fromString($language);
 
             // index page
-            if (!$this->hasPageWithProfilesBlock($language)) {
+            if (!$this->hasPageWithProfilesBlock($locale)) {
                 $indexPageId = $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('Profile')),
@@ -213,7 +215,7 @@ class Installer extends ModuleInstaller
                 );
 
                 // settings page
-                if (!$this->hasPageWithProfilesAction($language, 'Settings')) {
+                if (!$this->hasPageWithProfilesAction($locale, 'Settings')) {
                     $this->insertPage(
                         [
                             'title' => ucfirst(Language::lbl('ProfileSettings')),
@@ -227,7 +229,7 @@ class Installer extends ModuleInstaller
                 }
 
                 // change email page
-                if (!$this->hasPageWithProfilesAction($language, 'ChangeEmail')) {
+                if (!$this->hasPageWithProfilesAction($locale, 'ChangeEmail')) {
                     $this->insertPage(
                         [
                             'title' => ucfirst(Language::lbl('ChangeEmail')),
@@ -241,7 +243,7 @@ class Installer extends ModuleInstaller
                 }
 
                 // change password page
-                if (!$this->hasPageWithProfilesAction($language, 'ChangePassword')) {
+                if (!$this->hasPageWithProfilesAction($locale, 'ChangePassword')) {
                     $this->insertPage(
                         [
                             'title' => ucfirst(Language::lbl('ChangePassword')),
@@ -256,7 +258,7 @@ class Installer extends ModuleInstaller
             }
 
             // activate page
-            if (!$this->hasPageWithProfilesAction($language, 'Activate')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'Activate')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('Activate')),
@@ -270,7 +272,7 @@ class Installer extends ModuleInstaller
             }
 
             // forgot password page
-            if (!$this->hasPageWithProfilesAction($language, 'ForgotPassword')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'ForgotPassword')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('ForgotPassword')),
@@ -284,7 +286,7 @@ class Installer extends ModuleInstaller
             }
 
             // reset password page
-            if (!$this->hasPageWithProfilesAction($language, 'ResetPassword')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'ResetPassword')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('ResetPassword')),
@@ -298,7 +300,7 @@ class Installer extends ModuleInstaller
             }
 
             // resend activation email page
-            if (!$this->hasPageWithProfilesAction($language, 'ResendActivation')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'ResendActivation')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('ResendActivation')),
@@ -312,7 +314,7 @@ class Installer extends ModuleInstaller
             }
 
             // login page
-            if (!$this->hasPageWithProfilesAction($language, 'Login')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'Login')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('Login')),
@@ -326,7 +328,7 @@ class Installer extends ModuleInstaller
             }
 
             // register page
-            if (!$this->hasPageWithProfilesAction($language, 'Register')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'Register')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('Register')),
@@ -340,7 +342,7 @@ class Installer extends ModuleInstaller
             }
 
             // logout page
-            if (!$this->hasPageWithProfilesAction($language, 'Logout')) {
+            if (!$this->hasPageWithProfilesAction($locale, 'Logout')) {
                 $this->insertPage(
                     [
                         'title' => ucfirst(Language::lbl('Logout')),
@@ -391,18 +393,18 @@ class Installer extends ModuleInstaller
         return $widgetId;
     }
 
-    private function hasPageWithProfilesBlock(string $language): bool
+    private function hasPageWithProfilesBlock(Locale $locale): bool
     {
         $pageRepository = Model::getContainer()->get(PageRepository::class);
 
-        return $pageRepository->pageExistsWithModuleBlockForLanguage('Profiles', $language);
+        return $pageRepository->pageExistsWithModuleBlockForLocale('Profiles', $locale);
     }
 
-    private function hasPageWithProfilesAction(string $language, string $action): bool
+    private function hasPageWithProfilesAction(Locale $locale, string $action): bool
     {
         $pageRepository = Model::getContainer()->get(PageRepository::class);
 
-        return $pageRepository->pageExistsWithModuleActionForLanguage('Profiles', $action, $language);
+        return $pageRepository->pageExistsWithModuleActionForLocale('Profiles', $action, $locale);
     }
 
     private function configureEntities(): void

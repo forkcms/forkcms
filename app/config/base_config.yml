@@ -255,6 +255,15 @@ services:
         tags:
             - { name: console.command }
 
+    Backend\Modules\Locale\Engine\CacheBuilder:
+        public: true
+        autowire: true
+
+    Twig\Extension\StringLoaderExtension:
+        autowire: true
+        tags:
+            - { name: twig.extension }
+
 fos_rest:
     routing_loader:
         default_format: json

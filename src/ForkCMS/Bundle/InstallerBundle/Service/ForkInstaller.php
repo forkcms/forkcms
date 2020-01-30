@@ -6,9 +6,12 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
-use Backend\Modules\Pages\Domain\PageBlock\PageBlockType;
+use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\DependencyInjection\Container;
@@ -212,25 +215,18 @@ class ForkInstaller
 
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
-            // get pages without this extra
-            $revisionIds = $this->container->get('database')->getColumn(
-                'SELECT i.revision_id
-                 FROM PagesPage AS i
-                 WHERE i.revision_id NOT IN (
-                     SELECT DISTINCT b.revision_id
-                     FROM PagesPageBlock AS b
-                     WHERE b.extra_id = ?
-                    GROUP BY b.revision_id
-                 )',
-                [$extra['id']]
-            );
-
-            foreach ($revisionIds as $revisionId) {
+            $pageRepository = Model::getContainer()->get(PageRepository::class);
+            $pages = $pageRepository->findPagesWithoutExtra($extra['id']);
+            $type = $extra['id'] === null ? PageBlockType::richText() : $this->getPageBlockTypeForModuleExtra($extra['id']);
+            if ($extra['id'] !== null && $type->isRichText()) {
+                continue; // module extra doesn't exist
+            }
+            foreach ($pages as $page) {
                 $pageBlock = new PageBlock(
-                    $revisionId,
+                    $page,
                     $extra['position'],
                     $extra['id'],
-                    PageBlockType::richText(),
+                    $type,
                     null,
                     null,
                     true,
@@ -360,5 +356,16 @@ class ForkInstaller
             'password' => $data->getPassword(),
             'selected_modules' => $data->getModules(),
         ];
+    }
+
+    private function getPageBlockTypeForModuleExtra(int $extraId): PageBlockType
+    {
+        $moduleExtra = Model::getContainer()->get(ModuleExtraRepository::class)->find($extraId);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            return PageBlockType::richText();
+        }
+
+        return $moduleExtra->getType()->getPageBlockType();
     }
 }

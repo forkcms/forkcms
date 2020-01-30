@@ -11,14 +11,16 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Uri as CommonUri;
 use DateTime;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -583,7 +585,7 @@ class ModuleInstaller
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
 
-        $maximumPageId =  $pageRepository->getMaximumPageId($language, true);
+        $maximumPageId =  $pageRepository->getMaximumPageId(Locale::fromString($language), true);
 
         return ++$maximumPageId;
     }
@@ -591,13 +593,13 @@ class ModuleInstaller
     private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
-        $pageRepository->archive($pageId, $language);
+        $pageRepository->archive($pageId, Locale::fromString($language));
     }
 
-    private function getNextPageSequence(string $language, int $parentId, string $type): int
+    private function getNextPageSequence(string $locale, int $parentId, string $type): int
     {
         $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
-        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, $language, $type);
+        $maximumPageSequence = $pageRepository->getMaximumSequence($parentId, Locale::fromString($locale), $type);
 
         return ++$maximumPageSequence;
     }
@@ -655,7 +657,7 @@ class ModuleInstaller
         $revision['template_id'] = $revision['template_id'] ?? $this->getTemplateId('Default');
         $revision['type'] = $revision['type'] ?? 'page';
         $revision['parent_id'] = $revision['parent_id'] ?? (
-            $revision['type'] === 'page' ? Model::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
+            $revision['type'] === 'page' ? Page::HOME_PAGE_ID : Page::NO_PARENT_PAGE_ID
         );
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
         $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;
@@ -727,15 +729,17 @@ class ModuleInstaller
             $revision['parent_id'],
             $revision['template_id'],
             $meta,
-            $revision['language'],
+            Locale::fromString($revision['language']),
             $revision['title'],
             $revision['navigation_title'],
+            null,
             new DateTime($revision['publish_on']),
+            null,
             $revision['sequence'],
             $revision['navigation_title_overwrite'],
             $revision['hidden'],
             new Status($revision['status']),
-            $revision['type'],
+            new Type($revision['type']),
             $revision['data'],
             $revision['allow_move'],
             $revision['allow_children'],
@@ -752,12 +756,12 @@ class ModuleInstaller
             return $page->getId();
         }
 
-        $this->completeAndSavePageBlocks($blocks, $page->getRevisionId());
+        $this->completeAndSavePageBlocks($blocks, $page);
 
         return $page->getId();
     }
 
-    private function completeAndSavePageBlocks(array $blocks, int $defaultRevisionId): void
+    private function completeAndSavePageBlocks(array $blocks, Page $defaultPage): void
     {
         /** @var PageBlockRepository $pageBlockRepository */
         $pageBlockRepository = BackendModel::get(PageBlockRepository::class);
@@ -770,8 +774,19 @@ class ModuleInstaller
 
             $positions[$position][] = $block;
 
-            $revisionId = $block['revision_id'] ?? $defaultRevisionId;
+            $page = $block['page'] ?? $defaultPage;
+            if (isset($block['revision_id'])) {
+                /** @var PageRepository $pageRepository */
+                $pageRepository = BackendModel::get(PageRepository::class);
+                $page = $pageRepository->find($block['revision_id']);
+            }
+
             $extraId = $block['extra_id'] ?? null;
+            $type = $this->getPageBlockTypeForModuleExtra($extraId);
+            // No need to add a non existing type here
+            if ($extraId !== null && $type === null) {
+                continue;
+            }
             $visible = $block['visible'] ?? true;
             $sequence = $block['sequence'] ?? count($positions[$position]) - 1;
             $html = $block['html'] ?? '';
@@ -782,10 +797,10 @@ class ModuleInstaller
             }
 
             $pageBlock = new PageBlock(
-                $revisionId,
+                $page,
                 $position,
                 $extraId,
-                null,
+                $type,
                 null,
                 $html,
                 $visible,
@@ -1013,5 +1028,20 @@ class ModuleInstaller
         );
 
         return $randomName;
+    }
+
+    private function getPageBlockTypeForModuleExtra(int $extraId = null): ?PageBlockType
+    {
+        if ($extraId === null) {
+            return PageBlockType::richText();
+        }
+
+        $moduleExtra = BackendModel::getContainer()->get(ModuleExtraRepository::class)->find($extraId);
+
+        if (!$moduleExtra instanceof ModuleExtra) {
+            return null;
+        }
+
+        return $moduleExtra->getType()->getPageBlockType();
     }
 }

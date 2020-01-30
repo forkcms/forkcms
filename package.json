@@ -9,7 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
-    "@editorjs/editorjs": "^2.15.1",
+    "@editorjs/editorjs": "^2.16.1",
     "@editorjs/embed": "^2.2.1",
     "@editorjs/header": "^2.3.1",
     "@editorjs/list": "^1.4.0",
@@ -35,12 +35,14 @@
     "jquery-ui-dist": "~1.12",
     "jstree": "^3.3.8",
     "photoswipe": "^4.1.1",
+    "popper.js": "^1.16.0",
+    "select2": "^4.0.12",
+    "select2-theme-bootstrap4": "^0.2.0-beta.4",
     "simple-ajax-uploader": "^2.6.7",
     "slick-carousel": "^1.6.0",
     "standard": "^10.0.3",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
-    "popper.js": "^1.16.0"
+    "webpack-cli": "^3.3.9"
   },
   "scripts": {
     "test": "standard"
@@ -59,7 +61,6 @@
       "src/Backend/Core/Js/ckeditor/",
       "src/Backend/Core/Js/highcharts.js",
       "src/Backend/Core/Layout/EditorTemplates/templates.js",
-      "src/Backend/Modules/Pages/Js/jstree/",
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]

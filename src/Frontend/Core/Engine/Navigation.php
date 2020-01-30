@@ -3,10 +3,12 @@
 namespace Frontend\Core\Engine;
 
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\Page\Page as PageEntity;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -170,7 +172,7 @@ class Navigation extends KernelLoader
      */
     public static function getKeys(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getKeys($language ?? LANGUAGE);
+        return BackendPagesModel::getCacheBuilder()->getKeys(Locale::fromString($language ?? LANGUAGE));
     }
 
     /**
@@ -183,7 +185,7 @@ class Navigation extends KernelLoader
      */
     public static function getNavigation(string $language = null): array
     {
-        return BackendPagesModel::getCacheBuilder()->getNavigation($language ?? LANGUAGE);
+        return BackendPagesModel::getCacheBuilder()->getNavigation(Locale::fromString($language ?? LANGUAGE));
     }
 
     /**
@@ -248,7 +250,7 @@ class Navigation extends KernelLoader
             // loop elements
             foreach ($navigation[$type][$parentId] as $id => $page) {
                 // home is a special item, it should live on the same depth
-                if (!$mergedHome && (int) $page['page_id'] === FrontendModel::HOME_PAGE_ID) {
+                if (!$mergedHome && (int) $page['page_id'] === PageEntity::HOME_PAGE_ID) {
                     // extra checks otherwise exceptions will wbe triggered.
                     if (!isset($navigation[$type][$parentId])
                         || !is_array($navigation[$type][$parentId])) {
@@ -327,7 +329,7 @@ class Navigation extends KernelLoader
 
                 // fetch children if needed
                 if (($depthCounter + 1 <= $depth || $depth === null)
-                    && (int) $page['page_id'] !== FrontendModel::HOME_PAGE_ID
+                    && (int) $page['page_id'] !== PageEntity::HOME_PAGE_ID
                     && isset($navigation[$subType][$page['page_id']])
                 ) {
                     $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML(
@@ -392,7 +394,7 @@ class Navigation extends KernelLoader
 
         // return 404 if we don't known a valid Id
         if ($key === false) {
-            return FrontendModel::ERROR_PAGE_ID;
+            return PageEntity::ERROR_PAGE_ID;
         }
 
         // return the real Id
@@ -455,12 +457,12 @@ class Navigation extends KernelLoader
         $keys = self::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
-        if ($pageId !== FrontendModel::ERROR_PAGE_ID && !isset($keys[$pageId])) {
-            return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
+        if ($pageId !== PageEntity::ERROR_PAGE_ID && !isset($keys[$pageId])) {
+            return self::getUrl(PageEntity::ERROR_PAGE_ID, $language);
         }
 
         if (empty($keys)) {
-            return urldecode($url . FrontendModel::ERROR_PAGE_ID);
+            return urldecode($url . PageEntity::ERROR_PAGE_ID);
         }
 
         // return the URL
@@ -549,7 +551,7 @@ class Navigation extends KernelLoader
 
         // pageId still null?
         if ($pageIdForUrl === null) {
-            return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
+            return self::getUrl(PageEntity::ERROR_PAGE_ID, $language);
         }
 
         // build URL
@@ -604,7 +606,7 @@ class Navigation extends KernelLoader
         }
 
         // fallback
-        return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
+        return self::getUrl(PageEntity::ERROR_PAGE_ID, $language);
     }
 
     /**
@@ -629,7 +631,7 @@ class Navigation extends KernelLoader
 
         // no pages, means we're at the homepage
         if (empty($pages)) {
-            self::$selectedPageIds[] = FrontendModel::HOME_PAGE_ID;
+            self::$selectedPageIds[] = PageEntity::HOME_PAGE_ID;
 
             return;
         }

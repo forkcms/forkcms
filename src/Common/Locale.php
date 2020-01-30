@@ -18,6 +18,11 @@ abstract class Locale implements Serializable, JsonSerializable
         $this->setLocale($locale);
     }
 
+    /**
+     * @param string $locale
+     *
+     * @return static
+     */
     public static function fromString(string $locale): self
     {
         return new static($locale);
@@ -25,6 +30,11 @@ abstract class Locale implements Serializable, JsonSerializable
 
     abstract protected function getPossibleLanguages(): array;
 
+    /**
+     * @param string $locale
+     *
+     * @return static
+     */
     protected function setLocale(string $locale): self
     {
         if (!array_key_exists($locale, $this->getPossibleLanguages())) {
@@ -53,10 +63,8 @@ abstract class Locale implements Serializable, JsonSerializable
 
     /**
      * @param string $locale
-     *
-     * @return Locale
      */
-    public function unserialize($locale)
+    public function unserialize($locale): void
     {
         $this->locale = $locale;
     }

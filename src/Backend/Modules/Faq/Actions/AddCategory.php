@@ -8,6 +8,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Pages\Domain\Page\Page;
 
 /**
  * This is the add-action, it will display a form to create a new category
@@ -33,7 +34,7 @@ class AddCategory extends BackendBaseActionAdd
         parent::parse();
 
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
         if ($url404 != $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

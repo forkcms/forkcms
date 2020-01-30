@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,6 +16,7 @@ class LanguagesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $availableLocale = array_flip(Locale::AVAILABLE_LOCALE);
         $builder
             ->add(
                 'language_type',
@@ -32,7 +34,7 @@ class LanguagesType extends AbstractType
                 'languages',
                 ChoiceType::class,
                 [
-                    'choices' => $this->getInstallableLanguages(),
+                    'choices' => $availableLocale,
                     'expanded' => true,
                     'multiple' => true,
                 ]
@@ -41,7 +43,7 @@ class LanguagesType extends AbstractType
                 'default_language',
                 ChoiceType::class,
                 [
-                    'choices' => $this->getInstallableLanguages(),
+                    'choices' => $availableLocale,
                 ]
             )
             ->add(
@@ -56,14 +58,14 @@ class LanguagesType extends AbstractType
                 'default_interface_language',
                 ChoiceType::class,
                 [
-                    'choices' => $this->getInstallableLanguages(),
+                    'choices' => $availableLocale,
                 ]
             )
             ->add(
                 'interface_languages',
                 ChoiceType::class,
                 [
-                    'choices' => $this->getInstallableLanguages(),
+                    'choices' => $availableLocale,
                     'multiple' => true,
                     'expanded' => true,
                 ]
@@ -81,25 +83,5 @@ class LanguagesType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'install_languages';
-    }
-
-    protected function getInstallableLanguages(): array
-    {
-        return [
-            'English' => 'en',
-            'Chinese' => 'zh',
-            'Dutch' => 'nl',
-            'French' => 'fr',
-            'German' => 'de',
-            'Greek' => 'el',
-            'Hungarian' => 'hu',
-            'Italian' => 'it',
-            'Lithuanian' => 'lt',
-            'Russian' => 'ru',
-            'Spanish' => 'es',
-            'Swedish' => 'sv',
-            'Ukrainian' => 'uk',
-            'Polish' => 'pl',
-        ];
     }
 }

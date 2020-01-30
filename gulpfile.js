@@ -16,6 +16,8 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css',
     'node_modules/cropper/dist/cropper.css',
     'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css',
+    'node_modules/select2/dist/css/select2.css',
+    'node_modules/select2-theme-bootstrap4/dist/select2-bootstrap.css'
   ])
   .pipe(gulp.dest('./css/vendors'))
 })
@@ -66,6 +68,15 @@ gulp.task('build:backend:assets:copy-ckeditor', function () {
     ],
     {base: 'node_modules/ckeditor'}
   ).pipe(gulp.dest('src/Backend/Core/Js/ckeditor'))
+})
+gulp.task('build:backend:assets:copy-select2-js', function () {
+  return gulp.src(
+    [
+      'node_modules/select2/dist/js/select2.full.js',
+      'node_modules/select2/dist/js/i18n/*.js',
+    ],
+    {base: 'node_modules/select2/dist/js'}
+  ).pipe(gulp.dest('./js/vendors/select2'))
 })
 
 gulp.task('build:backend:assets:copy-fine-uploader-css-and-images', function () {
@@ -129,7 +140,8 @@ const buildBackend = gulp.parallel(
   'build:backend:assets:copy-js-vendors',
   'build:backend:assets:copy-fine-uploader-css-and-images',
   'build:backend:sass:generate-css',
-  'build:backend:assets:copy-ckeditor'
+  'build:backend:assets:copy-ckeditor',
+  'build:backend:assets:copy-select2-js'
 )
 
 gulp.task('serve:backend', function () {

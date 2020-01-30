@@ -2,66 +2,162 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
-use JsonSerializable;
+use Backend\Core\Language\Language;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
+use Common\Core\Model;
+use Common\Form\SwitchType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use SpoonFilter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Backend\Form\Type\EditorType;
 
-final class PageBlockType implements JsonSerializable
+final class PageBlockType extends AbstractType
 {
-    private const RICH_TEXT = 'rich_text';
-    private const BLOCK = 'block';
-    private const WIDGET = 'widget';
-    private const USER_TEMPLATE = 'usertemplate';
+    /** @var EntityManager */
+    private $entityManager;
 
-    public const POSSIBLE_TYPES = [
-        self::RICH_TEXT,
-        self::BLOCK,
-        self::WIDGET,
-        self::USER_TEMPLATE,
-    ];
-
-    /** @var string */
-    private $type;
-
-    /**
-     * @param string $type
-     *
-     * @throws InvalidPageBlockTypeException
-     */
-    public function __construct(string $type)
+    public function __construct(EntityManager $entityManager)
     {
-        if (!in_array($type, self::POSSIBLE_TYPES, true)) {
-            throw InvalidPageBlockTypeException::withType($type);
-        }
-
-        $this->type = $type;
+        $this->entityManager = $entityManager;
     }
 
-    public static function richText(): self
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        return new self(self::RICH_TEXT);
+        $builder->add(
+            'extraType',
+            ChoiceType::class,
+            [
+                'label' => 'lbl.Type',
+                'choices' => $options['possibleExtraTypes'],
+                'attr' => [
+                    'data-role' => 'select-block-type',
+                ],
+                'choice_value' => static function (?Type $type): ?string {
+                    if ($type === null) {
+                        return null;
+                    }
+
+                    return (string) $type;
+                },
+            ]
+        );
+        $builder->add(
+            'visible',
+            SwitchType::class,
+            [
+                'label' => 'lbl.Visible',
+                'required' => false,
+            ]
+        );
+        $builder->add(
+            'sequence',
+            HiddenType::class,
+            [
+                'required' => false,
+                'attr' => [
+                    'data-role' => 'sequence',
+                ],
+            ]
+        );
+        $builder->add(
+            'extraId', // will be filled in the event afterwards
+            HiddenType::class,
+            [
+                'required' => false,
+            ]
+        );
+        $builder->add(
+            'html',
+            EditorType::class,
+            [
+                'label' => 'lbl.Content',
+                'required' => false,
+            ]
+        );
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            static function (FormEvent $event): void {
+                $data = $event->getData();
+                $data['sequence'] = (int) $data['sequence'];
+                $type = new Type($data['extraType']);
+                $data['extraId'] = null;
+                if ($type->isBlock() || $type->isWidget()) {
+                    $data['extraId'] = (int) $data[$type . 'ExtraId'];
+                }
+
+                $event->setData($data);
+            }
+        );
+        $entityManager = $this->entityManager;
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            static function (FormEvent $event) use ($entityManager): void {
+                $data = $event->getData();
+                $extraId = null;
+                if ($data instanceof PageBlockDataTransferObject) {
+                    $extraId = $data->extraId;
+                }
+
+                $moduleExtra = null;
+                if ($extraId !== null) {
+                    $moduleExtra = $entityManager->getReference(ModuleExtra::class, $extraId);
+                }
+                $event->getForm()->add(
+                    'widgetExtraId',
+                    EntityType::class,
+                    self::getModuleExtraOptions(Type::widget(), $moduleExtra)
+                );
+                $event->getForm()->add(
+                    'blockExtraId',
+                    EntityType::class,
+                    self::getModuleExtraOptions(Type::block(), $moduleExtra)
+                );
+            }
+        );
     }
 
-    public static function block(): self
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        return new self(self::BLOCK);
+        $resolver->setDefaults(['data_class' => PageBlockDataTransferObject::class]);
+        $resolver->setRequired('possibleExtraTypes');
     }
 
-    public static function widget(): self
+    private static function getModuleExtraOptions(Type $type, ?ModuleExtra $moduleExtra): array
     {
-        return new self(self::WIDGET);
-    }
-
-    public static function userTemplate(): self
-    {
-        return new self(self::USER_TEMPLATE);
-    }
-
-    public function __toString(): string
-    {
-        return $this->type;
-    }
-
-    public function jsonSerialize(): string
-    {
-        return (string) $this;
+        return [
+            'data' => $moduleExtra,
+            'label' => $type->getLabel(),
+            'class' => ModuleExtra::class,
+            'choice_label' => static function (ModuleExtra $moduleExtra): string {
+                return $moduleExtra->getTranslatedLabel();
+            },
+            'group_by' => static function (ModuleExtra $moduleExtra): string {
+                return SpoonFilter::ucfirst(Language::lbl($moduleExtra->getModule()));
+            },
+            'query_builder' => static function (ModuleExtraRepository $repository) use ($type): QueryBuilder {
+                return $repository
+                    ->createQueryBuilder('me')
+                    ->where('me.type = :type')
+                    ->setParameter('type', $type)
+                    ->andWhere('me.id IN (:allowedExtraIds)')
+                    ->setParameter('allowedExtraIds', array_keys(BackendExtensionsModel::getExtras()))
+                    ->orderBy('me.sequence');
+            },
+            'mapped' => false,
+            'attr' => [
+                'data-fork' => 'select2',
+            ],
+        ];
     }
 }

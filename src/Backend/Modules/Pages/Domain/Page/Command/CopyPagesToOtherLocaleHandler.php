@@ -5,15 +5,18 @@ namespace Backend\Modules\Pages\Domain\Page\Command;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale as BackendLocale;
 use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Type;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
+use Common\Locale;
 use DateTime;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
@@ -25,8 +28,8 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         /** @var MetaRepository $metaRepository */
         $metaRepository = BackendModel::get('fork.repository.meta');
 
-        $toLanguage = (string) $command->getToLocale();
-        $fromLanguage = (string) $command->getFromLocale();
+        $toLanguage = $command->getToLocale();
+        $fromLanguage = $command->getFromLocale();
         $previousResults = $command->getPreviousResults();
 
         // Get already copied ContentBlock ids
@@ -95,7 +98,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         $activePage = $page->getId();
 
         // get revision ids
-        $pagesById = $pageRepository->findBy(['id' => $activePage, 'language' => $toLanguage]);
+        $pagesById = $pageRepository->findBy(['id' => $activePage, 'locale' => $toLanguage]);
         $revisionIDs = array_map(
             function (Page $page) {
                 return $page->getRevisionId();
@@ -136,7 +139,11 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         array $locationWidgetIds
     ): void {
         // get data
-        $sourceData = BackendPagesModel::get($activePageToCopy->getId(), null, $fromLanguage);
+        $sourceData = BackendPagesModel::get(
+            $activePageToCopy->getId(),
+            null,
+            BackendLocale::fromString($fromLanguage)
+        );
 
         /** @var Meta $originalMeta */
         $originalMeta = $metaRepository->find($sourceData['meta_id']);
@@ -154,15 +161,17 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
             $sourceData['parent_id'],
             $sourceData['template_id'],
             $meta,
-            $toLanguage,
+            BackendLocale::fromString($toLanguage),
             $sourceData['type'],
             $sourceData['title'],
+            null,
             new DateTime(),
+            null,
             $sourceData['sequence'],
             $sourceData['navigation_title_overwrite'],
             $sourceData['hidden'],
             Status::active(),
-            $sourceData['type'],
+            new Type($sourceData['type']),
             $sourceData['data'],
             $sourceData['allow_move'],
             $sourceData['allow_children'],
@@ -192,31 +201,31 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
     private function getOldPagesToRemove(
         PageRepository $pageRepository,
         CopyModuleContentToOtherLocaleInterface $command,
-        string $toLanguage
+        Locale $toLocale
     ): array {
         if ($command->getPageToCopy() instanceof Page) {
             return $pageRepository->findBy(
                 [
                     'id' => $command->getPageToCopy()->getId(),
-                    'language' => $command->getToLocale(),
+                    'locale' => $command->getToLocale(),
                     'status' => Status::active(),
                 ]
             );
         }
 
-        return $pageRepository->findBy(['language' => $toLanguage, 'status' => Status::active()]);
+        return $pageRepository->findBy(['locale' => $toLocale, 'status' => Status::active()]);
     }
 
     private function getActivePagesToCopy(
         PageRepository $pageRepository,
         CopyModuleContentToOtherLocaleInterface $command,
-        string $fromLanguage
+        Locale $fromLocale
     ): array {
         if ($command->getPageToCopy() instanceof Page) {
             return [$command->getPageToCopy()];
         }
 
-        return $pageRepository->findBy(['language' => $fromLanguage, 'status' => Status::active()]);
+        return $pageRepository->findBy(['locale' => $fromLocale, 'status' => Status::active()]);
     }
 
     private function processTags(Page $activePageToCopy, string $fromLanguage, string $toLanguage, Page $page): void
@@ -255,13 +264,17 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
         $blocks = [];
 
         // get the blocks
-        $sourceBlocks = BackendPagesModel::getBlocks($activePageToCopy->getId(), null, $fromLanguage);
+        $sourceBlocks = BackendPagesModel::getBlocks(
+            $activePageToCopy->getId(),
+            null,
+            BackendLocale::fromString($fromLanguage)
+        );
 
         // loop blocks
         foreach ($sourceBlocks as $sourceBlock) {
             // build block
             $block = $sourceBlock;
-            $block['revision_id'] = $page->getRevisionId();
+            $block['page'] = $page;
             $block['created_on'] = BackendModel::getUTCDate();
             $block['edited_on'] = BackendModel::getUTCDate();
 

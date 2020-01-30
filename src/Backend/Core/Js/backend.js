@@ -575,14 +575,16 @@ jsBackend.blockEditor = {
 
   // initialize the editor
   init: function () {
-    var editors = $('textarea.inputBlockEditor')
+    jsBackend.blockEditor.initEditors($('textarea.inputBlockEditor'))
+    jsBackend.blockEditor.loadEditorsInCollections()
+  },
+
+  initEditors: function (editors) {
     if (editors.length > 0) {
       editors.each(function () {
         jsBackend.blockEditor.createEditor($(this))
       })
     }
-
-    jsBackend.blockEditor.loadEditorsInCollections()
   },
 
   createEditor: function ($element) {
@@ -590,8 +592,8 @@ jsBackend.blockEditor = {
   },
 
   loadEditorsInCollections: function () {
-    $('[data-addfield="collection"]').on('collection-field-added', function () {
-      jsBackend.blockEditor.createEditor($(this))
+    $('[data-addfield="collection"]').on('collection-field-added', function (event, formCollectionItem) {
+      jsBackend.blockEditor.initEditors($(formCollectionItem).find('textarea.inputBlockEditor'))
     })
   }
 }
@@ -709,10 +711,10 @@ jsBackend.controls = {
           var $this = $(this)
 
           // disable all
-          $this.parents('.radiobuttonFieldCombo:first').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea').addClass('disabled').prop('disabled', true)
+          $this.parents('.radiobuttonFieldCombo:first').find('input:not([name="' + $radiobutton.attr('name') + '"]), select, textarea').addClass('disabled').prop('disabled', true)
 
           // get fields that should be enabled
-          var $fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('.form-group').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
+          var $fields = $('input[name="' + $radiobutton.attr('name') + '"]:checked').parents('.form-group:first').find('input:not([name="' + $radiobutton.attr('name') + '"]), select, textarea')
 
           // enable
           $fields.removeClass('disabled').prop('disabled', false)
@@ -1230,6 +1232,7 @@ jsBackend.forms = {
     jsBackend.forms.bootstrapTabFormValidation()
     jsBackend.forms.imagePreview()
     jsBackend.forms.fileUpload()
+    jsBackend.forms.select2()
   },
 
   fileUpload: function () {
@@ -1243,6 +1246,12 @@ jsBackend.forms = {
 
       $(event.currentTarget).siblings('.custom-file-label').text(file.name)
     })
+  },
+
+  select2: function () {
+    $.fn.select2.defaults.set( "theme", "bootstrap" )
+
+    $('[data-fork=select2]').select2()
   },
 
   imagePreview: function () {

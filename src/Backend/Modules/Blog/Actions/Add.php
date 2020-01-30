@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Blog\Actions;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -86,7 +87,7 @@ class Add extends BackendBaseActionAdd
 
         // parse base url for preview
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
         if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

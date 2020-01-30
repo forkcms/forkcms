@@ -1,0 +1,50 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
+{% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
+
+{% block pagesTree %}
+  <div class="sub-navigation d-none d-sm-block">
+    <div class="pages-tree">
+      <div class="alert alert-warning d-md-none">
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
+      </div>
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+      </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  {% if showPagesPageIndex %}
+    <div class="btn-toolbar justify-content-end">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ form_rest(form) }}
+  <div class="fork-module-actions">
+    <div class="btn-toolbar justify-content-between">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+{% endblock %}

@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
 use Common\ModulesSettings;
 use Exception;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale as InstallableLocale;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -289,7 +290,7 @@ class EnableLocaleCommand extends Command
     {
         $this->workingLocale = $this->formatter->choice(
             'What locale would you like to configure',
-            $this->getInstallableLocale()
+            InstallableLocale::AVAILABLE_LOCALE
         );
     }
 
@@ -317,8 +318,8 @@ class EnableLocaleCommand extends Command
                     'redirect' => array_key_exists($key, $this->redirectLocale) ? 'Y' : 'N',
                 ];
             },
-            $this->getInstallableLocale(),
-            array_keys($this->getInstallableLocale())
+            InstallableLocale::AVAILABLE_LOCALE,
+            array_keys(InstallableLocale::AVAILABLE_LOCALE)
         );
 
         $this->formatter->listing(
@@ -332,25 +333,5 @@ class EnableLocaleCommand extends Command
             ]
         );
         $this->formatter->table(['key', 'locale', 'installed', 'interface', 'enabled', 'redirect'], $locale);
-    }
-
-    private function getInstallableLocale(): array
-    {
-        return [
-            'en' => 'English',
-            'zh' => 'Chinese',
-            'nl' => 'Dutch',
-            'fr' => 'French',
-            'de' => 'German',
-            'el' => 'Greek',
-            'hu' => 'Hungarian',
-            'it' => 'Italian',
-            'lt' => 'Lithuanian',
-            'ru' => 'Russian',
-            'es' => 'Spanish',
-            'sv' => 'Swedish',
-            'uk' => 'Ukrainian',
-            'pl' => 'Polish',
-        ];
     }
 }

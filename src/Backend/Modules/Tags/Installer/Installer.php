@@ -6,8 +6,10 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
 use Backend\Modules\Tags\Domain\Tag\Tag;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 
 /**
  * Installer for the tags module
@@ -58,7 +60,7 @@ class Installer extends ModuleInstaller
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            if ($this->hasPageWithTagsBlock($language)) {
+            if ($this->hasPageWithTagsBlock(Locale::fromString($language))) {
                 continue;
             }
 
@@ -89,16 +91,11 @@ class Installer extends ModuleInstaller
         return $widgetId;
     }
 
-    private function hasPageWithTagsBlock(string $language): bool
+    private function hasPageWithTagsBlock(Locale $locale): bool
     {
-        // @todo: Replace with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM PagesPage AS p
-             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
-             WHERE b.extra_id = ? AND p.language = ?
-             LIMIT 1',
-            [$this->tagsBlockId, $language]
+        return Model::getContainer()->get(PageBlockRepository::class)->moduleExtraExistsForLocale(
+            $this->tagsBlockId,
+            $locale
         );
     }
 

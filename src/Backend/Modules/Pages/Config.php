@@ -9,4 +9,8 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
  */
 class Config extends BackendBaseConfig
 {
+    /**
+     * @var string
+     */
+    protected $defaultAction = 'PageIndex';
 }

@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockNotFound;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
@@ -9,7 +10,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use RuntimeException;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module
@@ -30,10 +30,20 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title
              FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
-            implode(',', $ids) . ')
+             WHERE i.status = ?
+               AND i.hidden = ?
+               AND i.locale = ?
+               AND i.publish_on <= ?
+               AND (i.publish_until IS NULL OR i.publish_until >= ?)
+               AND i.id IN (' . implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            ['active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
+            [
+                'active',
+                false,
+                LANGUAGE,
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            ]
         );
 
         // has items
@@ -76,9 +86,16 @@ class Model implements FrontendTagsInterface
              FROM PagesPage AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
-             AND i.language = ? AND i.publish_on <= ?
+             AND i.locale = ? AND i.publish_on <= ? AND (i.publish_until IS NULL OR i.publish_until >= ?)
              ORDER BY i.sequence ASC',
-            [$id, 'active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
+            [
+                $id,
+                'active',
+                false,
+                LANGUAGE,
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            ]
         );
 
         // has items
@@ -115,7 +132,7 @@ class Model implements FrontendTagsInterface
         $database = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
-        $ignore = [FrontendModel::ERROR_PAGE_ID];
+        $ignore = [Page::ERROR_PAGE_ID];
 
         // get items
         $items = (array) $database->getRecords(
@@ -124,7 +141,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
-            implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
+            implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.locale = ?',
             ['active', false, LANGUAGE],
             'id'
         );

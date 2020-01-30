@@ -11,6 +11,8 @@ use Backend\Modules\Faq\Domain\Question\Question;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 
 /**
  * Installer for the faq module
@@ -124,13 +126,9 @@ class Installer extends ModuleInstaller
             }
 
             // check if a page for the faq already exists in this language
-            $faqPageExists = (bool) $this->getDatabase()->getVar(
-                'SELECT 1
-                 FROM PagesPage AS p
-                 INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->faqBlockId, $language]
+            $faqPageExists = Model::getContainer()->get(PageBlockRepository::class)->moduleExtraExistsForLocale(
+                $this->faqBlockId,
+                Locale::fromString($language)
             );
 
             if (!$faqPageExists) {

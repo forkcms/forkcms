@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
+use Common\Language;
 use Doctrine\ORM\Mapping as ORM;
+use SpoonFilter;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository")
@@ -199,5 +201,16 @@ class ModuleExtra
     public function setData(string $key, $value): void
     {
         $this->data[$key] = $value;
+    }
+
+    public function getTranslatedLabel(): string
+    {
+        $name = $this->data['extra_label'] ?? SpoonFilter::ucfirst(Language::lbl($this->label));
+
+        if (!isset($this->data['label_variables'])) {
+            return $name;
+        }
+
+        return vsprintf($name, $this->data['label_variables']);
     }
 }

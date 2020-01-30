@@ -4,6 +4,10 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
+use Backend\Modules\Pages\Domain\Page\Status;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Common\Locale;
 use Doctrine\ORM\NoResultException;
 use Psr\Cache\CacheItemPoolInterface;
 use RuntimeException;
@@ -42,45 +46,50 @@ class CacheBuilder
         $this->moduleExtraRepository = $moduleExtraRepository;
     }
 
-    public function buildCache(string $language): void
+    public function buildCache(Locale $locale): void
     {
         // kill existing caches so they can be re-generated
-        $this->cache->deleteItems(['keys_' . $language, 'navigation_' . $language]);
-        $keys = $this->getKeys($language);
-        $navigation = $this->getNavigation($language);
+        $this->cache->deleteItems(['keys_' . $locale, 'navigation_' . $locale]);
+        $keys = $this->getKeys($locale);
+        $navigation = $this->getNavigation($locale);
 
         // build file with navigation structure to feed into editor
         $filesystem = new Filesystem();
         $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
         $filesystem->dumpFile(
-            $cachePath . 'editor_link_list_' . $language . '.js',
-            $this->dumpEditorLinkList($navigation, $keys, $language)
+            $cachePath . 'editor_link_list_' . $locale . '.js',
+            $this->dumpEditorLinkList($navigation, $keys, $locale)
         );
     }
 
-    public function getKeys(string $language): array
+    public function getKeys(Locale $locale): array
     {
-        $item = $this->cache->getItem('keys_' . $language);
+        $item = $this->cache->getItem('keys_' . $locale);
         if ($item->isHit()) {
             return $item->get();
         }
 
-        $keys = $this->getData($language)[0];
+        $keys = $this->getData($locale)[0];
         $item->set($keys);
         $this->cache->save($item);
 
         return $keys;
     }
 
-    public function getNavigation(string $language): array
+    public function getNavigation(Locale $locale): array
     {
-        $item = $this->cache->getItem('navigation_' . $language);
+        $item = $this->cache->getItem('navigation_' . $locale);
         if ($item->isHit()) {
             return $item->get();
         }
 
-        $navigation = $this->getData($language)[1];
+        $navigation = $this->getData($locale)[1];
         $item->set($navigation);
+
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cacheExpirationDate = $pageRepository->getCacheExpirationDate();
+        $item->expiresAt($cacheExpirationDate);
+
         $this->cache->save($item);
 
         return $navigation;
@@ -89,14 +98,14 @@ class CacheBuilder
     /**
      * Fetches all data from the database
      *
-     * @param string $language
+     * @param Locale $locale
      *
      * @return array tupple containing keys and navigation
      */
-    protected function getData(string $language): array
+    protected function getData(Locale $locale): array
     {
         // get tree
-        $levels = Model::getTree([0], null, 1, $language);
+        $levels = Model::getTree([0], null, 1, $locale);
 
         $keys = [];
         $navigation = [];
@@ -105,10 +114,11 @@ class CacheBuilder
         foreach ($levels as $pages) {
             // loop all items on this level
             foreach ($pages as $pageId => $page) {
-                $temp = $this->getPageData($keys, $page, $language);
-
-                // add it
-                $navigation[$page['type']][$page['parent_id']][$pageId] = $temp;
+                $navigation[(string) $page['type']][$page['parent_id']][$pageId] = $this->getPageData(
+                    $keys,
+                    $page,
+                    $locale
+                );
             }
         }
 
@@ -124,21 +134,21 @@ class CacheBuilder
      *
      * @param array &$keys
      * @param array $page
-     * @param string $language
+     * @param Locale $locale
      *
      * @return array An array containing more data for the page
      */
-    protected function getPageData(array &$keys, array $page, string $language): array
+    protected function getPageData(array &$keys, array $page, Locale $locale): array
     {
         $parentID = (int) $page['parent_id'];
 
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
-        $languageUrl = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
+        $languageUrl = $hasMultiLanguages ? '/' . $locale . '/' : '/';
         $url = $keys[$parentID] ?? '';
 
         // home is special
-        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
+        if ($page['id'] == Page::HOME_PAGE_ID) {
             $page['url'] = '';
             if ($hasMultiLanguages) {
                 $languageUrl = rtrim($languageUrl, '/');
@@ -161,6 +171,7 @@ class CacheBuilder
             'extra_blocks' => null,
             'has_children' => (bool) $page['has_children'],
             'allow_children' => (bool) $page['allow_children'],
+            'allow_move' => (bool) $page['allow_move'],
             'data' => $page['data'],
         ];
 
@@ -179,11 +190,11 @@ class CacheBuilder
         }
 
         // homepage should have a special icon
-        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
+        if ($page['id'] == Page::HOME_PAGE_ID) {
             $treeType = 'home';
-        } elseif ($page['id'] == BackendModel::ERROR_PAGE_ID) {
+        } elseif ($page['id'] == Page::ERROR_PAGE_ID) {
             $treeType = 'error';
-        } elseif ($page['id'] < BackendModel::ERROR_PAGE_ID
+        } elseif ($page['id'] < Page::ERROR_PAGE_ID
                   && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             $extraIDs = explode(',', $page['extra_ids']);
 
@@ -276,7 +287,7 @@ class CacheBuilder
     protected function getOrder(
         array $navigation,
         string $type = 'page',
-        int $parentId = Model::NO_PARENT_PAGE_ID,
+        int $parentId = Page::NO_PARENT_PAGE_ID,
         array $order = []
     ): array {
         // loop alle items for the type and parent
@@ -298,7 +309,7 @@ class CacheBuilder
         return $order;
     }
 
-    protected function dumpEditorLinkList(array $navigation, array $keys, string $language): string
+    protected function dumpEditorLinkList(array $navigation, array $keys, Locale $locale): string
     {
         $order = [];
         // get the order
@@ -314,14 +325,8 @@ class CacheBuilder
         // init var
         $links = [];
 
-        // init var
-        $cachedTitles = (array) $this->database->getPairs(
-            'SELECT i.id, i.navigation_title
-             FROM PagesPage AS i
-             WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
-             AND i.language = ? AND i.status = ?',
-            [$language, 'active']
-        );
+        $pageRepository = BackendModel::getContainer()->get(PageRepository::class);
+        $cachedTitles = $pageRepository->getNavigationTitles(array_keys($keys), $locale, Status::active());
 
         // loop the types in the order we want them to appear
         foreach (['page', 'meta', 'footer', 'root'] as $type) {

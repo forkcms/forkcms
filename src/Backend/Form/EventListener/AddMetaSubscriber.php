@@ -4,6 +4,8 @@ namespace Backend\Form\EventListener;
 
 use Backend\Core\Engine\Model;
 use Backend\Form\Type\MetaType;
+use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -75,12 +77,24 @@ class AddMetaSubscriber implements EventSubscriberInterface
             MetaType::class,
             [
                 'base_field_name' => $this->baseFieldName,
-                'detail_url' => Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
+                'detail_url' => $this->getDetailUrl(),
                 'generate_url_callback_class' => $this->generateUrlCallbackClass,
                 'generate_url_callback_method' => $this->generateUrlCallbackMethod,
                 'generate_url_callback_parameters' => $this->buildCallbackParameters($event),
             ]
         );
+    }
+
+    private function getDetailUrl(): string
+    {
+        if ($this->moduleForUrl === 'Pages' && $this->actionForUrl === 'Page') {
+            return rtrim(
+                BackendPagesModel::getFullUrl(Model::getRequest()->query->getInt('parent', Page::HOME_PAGE_ID)),
+                '/'
+            );
+        }
+
+        return Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl);
     }
 
     private function buildCallbackParameters(FormEvent $event): array
