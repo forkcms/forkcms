@@ -12,26 +12,18 @@ final class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/pages/index');
     }
 
-    public function testIndexContainsPages(): void
+    public function testIndexContainsPages(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/pages/index');
-
-        self::assertContains(
-            'Home',
-            $client->getResponse()->getContent()
-        );
-
-        // some stuff we also want to see on the blog index
-        self::assertContains(
-            'Add page',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Recently edited',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/pages/index',
+            [
+                'Home',
+                'Add page',
+                'Recently edited',
+            ]
         );
     }
 }
