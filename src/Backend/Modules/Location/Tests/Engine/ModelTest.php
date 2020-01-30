@@ -2,18 +2,21 @@
 
 namespace Backend\Modules\Location\Tests\Engine;
 
+use Backend\Modules\Location\DataFixtures\LoadLocation;
+use Backend\Modules\Location\DataFixtures\LoadLocationSettings;
 use Backend\Modules\Location\Engine\Model;
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class ModelTest extends BackendWebTestCase
 {
     public function testInsertingLocation(): void
     {
-        $locationArray = $this->getLocationArray();
+        $locationArray = LoadLocation::LOCATION_LOCATION_DATA;
 
-        Model::insert($locationArray);
+        $id = Model::insert($locationArray);
 
-        $addedLocation = Model::get(1);
+        $addedLocation = Model::get($id);
 
         self::assertEquals($locationArray['language'], $addedLocation['language']);
         self::assertEquals($locationArray['title'], $addedLocation['title']);
@@ -27,72 +30,141 @@ class ModelTest extends BackendWebTestCase
         self::assertEquals($locationArray['show_overview'], $addedLocation['show_overview']);
     }
 
-    public function testInsertingLocationSetting(): void
+    public function testInsertingLocationSetting(Client $client): void
     {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+            ]
+        );
+
+        $locationId = LoadLocation::getLocationId();
+
+        self::assertFalse(Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_1));
+        self::assertFalse(Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_2));
+
         Model::setMapSetting(
-            1,
-            'foo',
-            'bar'
+            $locationId,
+            LoadLocationSettings::SETTING_NAME_1,
+            LoadLocationSettings::SETTING_VALUE_1
         );
 
         Model::setMapSetting(
-            1,
-            'ping',
-            'pong'
+            $locationId,
+            LoadLocationSettings::SETTING_NAME_2,
+            LoadLocationSettings::SETTING_VALUE_2
         );
 
-        self::assertEquals('bar', Model::getMapSetting(1, 'foo'));
-        self::assertEquals('pong', Model::getMapSetting(1, 'ping'));
+        self::assertEquals(
+            LoadLocationSettings::SETTING_VALUE_1,
+            Model::getMapSetting(
+                $locationId,
+                LoadLocationSettings::SETTING_NAME_1
+            )
+        );
+        self::assertEquals(
+            LoadLocationSettings::SETTING_VALUE_2,
+            Model::getMapSetting(
+                $locationId,
+                LoadLocationSettings::SETTING_NAME_2
+            )
+        );
     }
 
-    public function testEditingLocationSetting(): void
+    public function testEditingLocationSetting(Client $client): void
     {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+                LoadLocationSettings::class,
+            ]
+        );
+
+        $locationId = LoadLocation::getLocationId();
+        $newValue1 = 'fork';
+        $newValue2 = 'cms';
+
+        self::assertNotEquals($newValue1, Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_1));
+        self::assertNotEquals($newValue2, Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_2));
+
         Model::setMapSetting(
-            1,
-            'foo',
-            'pong'
+            $locationId,
+            LoadLocationSettings::SETTING_NAME_1,
+            $newValue1
         );
 
         Model::setMapSetting(
-            1,
-            'ping',
-            'bar'
+            $locationId,
+            LoadLocationSettings::SETTING_NAME_2,
+            $newValue2
         );
 
-        self::assertEquals('pong', Model::getMapSetting(1, 'foo'));
-        self::assertEquals('bar', Model::getMapSetting(1, 'ping'));
+        self::assertEquals($newValue1, Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_1));
+        self::assertEquals($newValue2, Model::getMapSetting($locationId, LoadLocationSettings::SETTING_NAME_2));
     }
 
-    public function testGettingAllLocationSettings(): void
+    public function testGettingAllLocationSettings(Client $client): void
     {
-        $settings = Model::getMapSettings(1);
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+                LoadLocationSettings::class,
+            ]
+        );
+
+        $settings = Model::getMapSettings(LoadLocation::getLocationId());
 
         self::assertCount(2, $settings);
-        self::assertEquals('pong', $settings['foo']);
-        self::assertEquals('bar', $settings['ping']);
+        self::assertEquals(LoadLocationSettings::SETTING_VALUE_1, $settings[LoadLocationSettings::SETTING_NAME_1]);
+        self::assertEquals(LoadLocationSettings::SETTING_VALUE_2, $settings[LoadLocationSettings::SETTING_NAME_2]);
     }
 
-    public function testGettingNonexistantSettingReturnsFalse(): void
+    public function testGettingNonExistentSettingReturnsFalse(Client $client): void
     {
-        self::assertFalse(Model::getMapSetting(1, 'i-dont-exist'));
-        self::assertFalse(Model::getMapSetting(3, 'the-location-also-doesnt-exist'));
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+                LoadLocationSettings::class,
+            ]
+        );
+
+        self::assertFalse(Model::getMapSetting(LoadLocation::getLocationId(), 'i-dont-exist'));
+        self::assertFalse(Model::getMapSetting(9000, 'the-location-also-doesnt-exist'));
     }
 
-    public function testLocationExists(): void
+    public function testLocationExists(Client $client): void
     {
-        self::assertEquals(true, Model::exists(1));
-        self::assertEquals(false, Model::exists(2));
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+            ]
+        );
+
+        self::assertTrue(Model::exists(LoadLocation::getLocationId()));
+        self::assertFalse(Model::exists(2));
     }
 
-    public function testGettingAllLocations(): void
+    public function testGettingAllLocations(Client $client): void
     {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+            ]
+        );
+
         $locations = Model::getAll();
 
         self::assertCount(1, $locations);
 
         $firstLocation = $locations[0];
 
-        $locationArray = $this->getLocationArray();
+        $locationArray = LoadLocation::LOCATION_LOCATION_DATA;
 
         self::assertEquals($locationArray['language'], $firstLocation['language']);
         self::assertEquals($locationArray['title'], $firstLocation['title']);
@@ -106,13 +178,46 @@ class ModelTest extends BackendWebTestCase
         self::assertEquals($locationArray['show_overview'], $firstLocation['show_overview']);
     }
 
-    public function testEditingLocation(): void
+    public function testEditingLocation(Client $client): void
     {
-        $locationArray = $this->getUpdatedLocationArray();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+            ]
+        );
+
+        $locationArray = [
+            'id' => LoadLocation::getLocationId(),
+            'extra_id' => LoadLocation::getExtraId(),
+            'language' => 'en',
+            'title' => 'Test location edit',
+            'street' => 'Visserij',
+            'number' => '1',
+            'zip' => '9000',
+            'city' => 'Ghent',
+            'country' => 'BE',
+            'lat' => '51.0713',
+            'lng' => '3.73523',
+            'show_overview' => '0',
+        ];
+
+        $location = Model::get($locationArray['id']);
+
+        self::assertEquals($locationArray['language'], $location['language']);
+        self::assertNotEquals($locationArray['title'], $location['title']);
+        self::assertNotEquals($locationArray['street'], $location['street']);
+        self::assertNotEquals($locationArray['number'], $location['number']);
+        self::assertEquals($locationArray['zip'], $location['zip']);
+        self::assertEquals($locationArray['city'], $location['city']);
+        self::assertEquals($locationArray['country'], $location['country']);
+        self::assertNotEquals($locationArray['lat'], $location['lat']);
+        self::assertNotEquals($locationArray['lng'], $location['lng']);
+        self::assertNotEquals($locationArray['show_overview'], $location['show_overview']);
 
         Model::update($locationArray);
 
-        $editedLocation = Model::get(1);
+        $editedLocation = Model::get($locationArray['id']);
 
         self::assertEquals($locationArray['language'], $editedLocation['language']);
         self::assertEquals($locationArray['title'], $editedLocation['title']);
@@ -126,47 +231,24 @@ class ModelTest extends BackendWebTestCase
         self::assertEquals($locationArray['show_overview'], $editedLocation['show_overview']);
     }
 
-    public function testDeletingLocation(): void
+    public function testDeletingLocation(Client $client): void
     {
-        self::assertEquals(true, Model::exists(1));
+        $this->loadFixtures(
+            $client,
+            [
+                LoadLocation::class,
+                LoadLocationSettings::class,
+            ]
+        );
 
-        Model::delete(1);
+        $locationId = LoadLocation::getLocationId();
 
-        self::assertEquals(false, Model::exists(1));
-        self::assertEmpty(Model::getMapSettings(1));
-    }
+        self::assertTrue(Model::exists($locationId));
+        self::assertNotEmpty(Model::getMapSettings($locationId));
 
-    private function getLocationArray(): array
-    {
-        return [
-            'language' => 'en',
-            'title' => 'Test location',
-            'street' => 'Afrikalaan',
-            'number' => '289',
-            'zip' => '9000',
-            'city' => 'Ghent',
-            'country' => 'BE',
-            'lat' => '51.0728',
-            'lng' => '3.73599',
-            'show_overview' => '1'
-        ];
-    }
+        Model::delete($locationId);
 
-    private function getUpdatedLocationArray(): array
-    {
-        return [
-            'id' => '1',
-            'extra_id' => '999',
-            'language' => 'en',
-            'title' => 'Test location edit',
-            'street' => 'Visserij',
-            'number' => '1',
-            'zip' => '9000',
-            'city' => 'Ghent',
-            'country' => 'BE',
-            'lat' => '51.0713',
-            'lng' => '3.73523',
-            'show_overview' => '0'
-        ];
+        self::assertFalse(Model::exists($locationId));
+        self::assertEmpty(Model::getMapSettings($locationId));
     }
 }

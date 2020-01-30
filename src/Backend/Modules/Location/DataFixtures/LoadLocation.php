@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\DataFixtures;
+namespace Backend\Modules\Location\DataFixtures;
 
 use SpoonDatabase;
 
@@ -35,13 +35,16 @@ final class LoadLocation
     /** @var int|null */
     private static $locationId;
 
+    /** @var int|null */
+    private static $extraId;
+
     public function load(SpoonDatabase $database): void
     {
-        $extraId = $database->insert('modules_extras', self::LOCATION_LOCATION_MODULES_EXTRA_DATA);
+        self::$extraId = $database->insert('modules_extras', self::LOCATION_LOCATION_MODULES_EXTRA_DATA);
         self::$locationId = $database->insert(
             'location',
             [
-                'extra_id' => $extraId,
+                'extra_id' => self::$extraId,
                 'created_on' => '2020-01-30 15:42:18',
                 'edited_on' => '2020-01-30 15:42:18',
             ] + self::LOCATION_LOCATION_DATA
@@ -51,5 +54,10 @@ final class LoadLocation
     public static function getLocationId(): ?int
     {
         return self::$locationId;
+    }
+
+    public static function getExtraId(): ?int
+    {
+        return self::$extraId;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\DataFixtures;
+namespace Backend\Modules\Location\DataFixtures;
 
 use SpoonDatabase;
 
@@ -19,12 +19,12 @@ final class LoadLocationSettings
                 [
                     'map_id' => LoadLocation::getLocationId(),
                     'name' => self::SETTING_NAME_1,
-                    serialize(self::SETTING_VALUE_1),
+                    'value' => serialize(self::SETTING_VALUE_1),
                 ],
                 [
                     'map_id' => LoadLocation::getLocationId(),
                     'name' => self::SETTING_NAME_2,
-                    serialize(self::SETTING_VALUE_2),
+                    'value' => serialize(self::SETTING_VALUE_2),
                 ],
             ]
         );
