@@ -309,7 +309,7 @@ class Model
         );
     }
 
-    public static function existsCategory(int $id): int
+    public static function existsCategory(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -320,7 +320,7 @@ class Model
         );
     }
 
-    public static function existsComment(int $id): int
+    public static function existsComment(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1

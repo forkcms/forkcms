@@ -223,6 +223,17 @@ class Model
         );
     }
 
+    public static function getAllForTag(string $tag, Locale $locale = null): array
+    {
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT mt.*
+                 FROM modules_tags AS mt
+                 INNER JOIN tags AS t ON t.id = mt.tag_id
+                 WHERE t.language = ? AND t.tag = ?',
+            [$locale ?? FrontendLocale::frontendLanguage(), $tag]
+        );
+    }
+
     public static function getItemsForTag(int $id): array
     {
         return array_map(
