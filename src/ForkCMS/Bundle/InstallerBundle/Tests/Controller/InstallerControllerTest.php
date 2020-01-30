@@ -30,9 +30,8 @@ class InstallerControllerTest extends WebTestCase
         );
     }
 
-    public function testInstallationProcess(): void
+    public function testInstallationProcess(Client $client): void
     {
-        $client = static::createClient();
         $container = $client->getContainer();
 
         // make sure we have a clean slate and our parameters file is backed up
@@ -47,9 +46,9 @@ class InstallerControllerTest extends WebTestCase
         ];
 
         // recreate the client with the empty database because we need this in our installer checks
-        $client = static::createClient(['environment' => 'test_install']);
         $filesystem = new Filesystem();
         $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.project_dir') . '/app');
+        $client = static::createClient(['environment' => 'test_install']);
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
