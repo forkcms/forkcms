@@ -2,92 +2,88 @@
 
 namespace Frontend\Modules\Search\Tests\Actions;
 
+use Backend\Modules\Blog\DataFixtures\LoadBlogPostComments;
 use Frontend\Core\Tests\FrontendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class IndexTest extends FrontendWebTestCase
 {
-    public function testSearchIndexWorks(): void
+    public function testSearchIndexWorks(Client $client): void
     {
-        $client = static::createClient();
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/en/search',
+            [
+                'Searchterm',
+                'type="submit" name="submit" value="Search" />',
+            ]
+        );
+    }
 
+    public function testNotSubmittedSearchIndexDoesNotContainData(Client $client): void
+    {
         $this->loadFixtures(
             $client,
             [
                 LoadBlogCategories::class,
                 LoadBlogPosts::class,
+                LoadBlogPostComments::class,
             ]
         );
 
-        $client->request('GET', '/en/search');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
+        $this->assertHttpStatusCode200($client, '/en/search');
+        $this->assertResponseDoesNotHaveContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 
-    public function testNotSubmittedSearchIndexDoesNotContainData(): void
+    public function testSubmittedSearchValidatesData(Client $client): void
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/en/search');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
         );
 
-        // result should not yet be found
-        self::assertEquals(
-            0,
-            $crawler->filter('html:contains("Blogpost for functional tests")')->count()
-        );
-    }
+        $this->assertHttpStatusCode200($client, '/en/search');
 
-    public function testSubmittedSearchValidatesData(): void
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/en/search');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-
-        $form = $crawler->selectButton('Search')->form();
+        $form = $client->getCrawler()->selectButton('Search')->form();
 
         // $_GET parameters should be set manually, since Fork uses them.
         $this->submitForm($client, $form, ['form' => 'search']);
 
         // result should not yet be found
-        self::assertContains(
-            'The searchterm is required.',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseHasContent($client->getResponse(), 'The searchterm is required.');
     }
 
-    public function testSubmittedSearchIndexContainsData(): void
+    public function testSubmittedSearchIndexContainsData(Client $client): void
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/en/search');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+                LoadBlogPostComments::class,
+            ]
         );
 
-        $form = $crawler->selectButton('Search')->form();
+        $this->assertHttpStatusCode200($client, '/en/search');
 
-        $this->submitForm($client, $form, [
-            'q' => 'Blogpost',
-            'submit' => 'Search',
-            'form' => 'search',
-        ]);
+        $form = $client->getCrawler()->selectButton('Search')->form();
 
-        // result should not yet be found
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
+        $this->submitForm(
+            $client,
+            $form,
+            [
+                'q' => substr(LoadBlogPosts::BLOG_POST_TITLE, 0, strpos(LoadBlogPosts::BLOG_POST_TITLE, ' ')),
+                'submit' => 'Search',
+                'form' => 'search',
+            ]
         );
+
+        $this->assertResponseHasContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 }
