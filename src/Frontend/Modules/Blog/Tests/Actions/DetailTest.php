@@ -20,10 +20,7 @@ class DetailTest extends FrontendWebTestCase
         );
 
         $this->assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
-
-        $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
-
-        $this->assertPageLoadedCorrectly($client, $link->getUri(), [LoadBlogPosts::BLOG_POST_TITLE]);
+        $this->assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
         $this->assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 

@@ -28,11 +28,7 @@ class EditTest extends BackendWebTestCase
         $this->login($client);
 
         $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', [LoadBlogPosts::BLOG_POST_TITLE]);
-
-        $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
-        $client->click($link);
-
-        $this->assertIs200($client);
+        $this->assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
         $this->assertCurrentUrlContains($client, '&id=1');
     }
 

@@ -51,10 +51,9 @@ class CategoryTest extends FrontendWebTestCase
             ]
         );
 
-        $link = $client->getCrawler()->selectLink(LoadFaqQuestions::FAQ_QUESTION_TITLE)->link();
-        $this->assertPageLoadedCorrectly(
+        $this->assertClickOnLink(
             $client,
-            $link->getUri(),
+            LoadFaqQuestions::FAQ_QUESTION_TITLE,
             [
                 '<title>' . LoadFaqQuestions::FAQ_QUESTION_TITLE,
             ]

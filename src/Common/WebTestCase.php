@@ -368,6 +368,32 @@ abstract class WebTestCase extends BaseWebTestCase
         $this->assertResponseHasContent($response, ...$expectedContent);
     }
 
+    /**
+     * @param Client $client
+     * @param string $linkText
+     * @param string[] $expectedContent
+     * @param int $httpStatusCode
+     * @param string $requestMethod
+     * @param array $requestParameters
+     */
+    protected function assertClickOnLink(
+        Client $client,
+        string $linkText,
+        array $expectedContent,
+        int $httpStatusCode = Response::HTTP_OK,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $this->assertPageLoadedCorrectly(
+            $client,
+            $client->getCrawler()->selectLink($linkText)->link()->getUri(),
+            $expectedContent,
+            $httpStatusCode,
+            $requestMethod,
+            $requestParameters
+        );
+    }
+
     protected function assertResponseHasContent(Response $response, string ...$content): void
     {
         foreach ($content as $expectedContent) {
