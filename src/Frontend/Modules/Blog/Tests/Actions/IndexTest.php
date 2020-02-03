@@ -5,13 +5,12 @@ namespace Frontend\Modules\Blog\Tests\Actions;
 use Frontend\Core\Tests\FrontendWebTestCase;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class IndexTest extends FrontendWebTestCase
 {
-    public function testIndexContainsBlogPosts(): void
+    public function testIndexContainsBlogPosts(Client $client): void
     {
-        $client = static::createClient();
-
         $this->loadFixtures(
             $client,
             [
@@ -20,22 +19,12 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $client->request('GET', '/en/blog');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        $this->assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 
-    public function testNonExistingPageGives404(): void
+    public function testNonExistingPageGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog', ['page' => 34]);
-        $this->assertIs404($client);
+        $this->assertHttpStatusCode200($client, '/en/blog');
+        $this->assertHttpStatusCode404($client, '/en/blog', 'GET', ['page' => 34]);
     }
 }

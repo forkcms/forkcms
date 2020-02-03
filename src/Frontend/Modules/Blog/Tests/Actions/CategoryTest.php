@@ -5,12 +5,12 @@ namespace Frontend\Modules\Blog\Actions;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Frontend\Core\Tests\FrontendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class CategoryTest extends FrontendWebTestCase
 {
-    public function testCategoryHasPage(): void
+    public function testCategoryHasPage(Client $client): void
     {
-        $client = static::createClient();
         $this->loadFixtures(
             $client,
             [
@@ -19,53 +19,41 @@ class CategoryTest extends FrontendWebTestCase
             ]
         );
 
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringStartsWith(
-            'BlogCategory for tests',
-            $crawler->filter('title')->text()
-        );
+        $this->assertPageLoadedCorrectly($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, [LoadBlogCategories::BLOG_CATEGORY_TITLE]);
     }
 
-    public function testNonExistingCategoryPostGives404(): void
+    public function testNonExistingCategoryPostGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog/category/non-existing');
-        $this->assertIs404($client);
+        $this->assertHttpStatusCode404($client, '/en/blog/category/non-existing');
     }
 
-    public function testCategoryPageContainsBlogPost(): void
+    public function testCategoryPageContainsBlogPost(Client $client): void
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
 
-        self::assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
-        $link = $crawler->selectLink('Blogpost for functional tests')->link();
-        $crawler = $client->click($link);
-
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/en/blog/detail/blogpost-for-functional-tests',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertStringStartsWith(
-            'Blogpost for functional tests',
-            $crawler->filter('title')->text()
-        );
+        $this->assertPageLoadedCorrectly($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, [LoadBlogCategories::BLOG_CATEGORY_TITLE]);
+        $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
+        $this->assertPageLoadedCorrectly($client, $link->getUri(), [LoadBlogPosts::BLOG_POST_TITLE]);
+        $this->assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 
-    public function testNonExistingPageGives404(): void
+    public function testNonExistingPageGives404(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', ['page' => 34]);
-        $this->assertIs404($client);
+        $this->assertPageLoadedCorrectly($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, [LoadBlogCategories::BLOG_CATEGORY_TITLE]);
+        $this->assertHttpStatusCode404($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, 'GET', ['page' => 34]);
     }
 }

@@ -5,12 +5,12 @@ namespace Frontend\Modules\Blog\Actions;
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
 use Frontend\Core\Tests\FrontendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class DetailTest extends FrontendWebTestCase
 {
-    public function testBlogPostHasDetailPage(): void
+    public function testBlogPostHasDetailPage(Client $client): void
     {
-        $client = static::createClient();
         $this->loadFixtures(
             $client,
             [
@@ -19,34 +19,16 @@ class DetailTest extends FrontendWebTestCase
             ]
         );
 
-        $crawler = $client->request('GET', '/en/blog');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
+        $this->assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
 
-        $link = $crawler->selectLink('Blogpost for functional tests')->link();
-        $crawler = $client->click($link);
+        $link = $client->getCrawler()->selectLink(LoadBlogPosts::BLOG_POST_TITLE)->link();
 
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/en/blog/detail/blogpost-for-functional-tests',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertStringStartsWith(
-            'Blogpost for functional tests',
-            $crawler->filter('title')->text()
-        );
+        $this->assertPageLoadedCorrectly($client, $link->getUri(), [LoadBlogPosts::BLOG_POST_TITLE]);
+        $this->assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 
-    public function testNonExistingBlogPostGives404(): void
+    public function testNonExistingBlogPostGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog/detail/non-existing');
-        $this->assertIs404($client);
+        $this->assertHttpStatusCode404($client, '/en/blog/detail/non-existing');
     }
 }
