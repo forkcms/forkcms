@@ -2,13 +2,12 @@
 
 namespace Common;
 
-use Common\Core\Model;
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
-use TypeError;
 
 /**
  * This is our module settings class
+ * @TODO make final in fork 6
  */
 class ModulesSettings
 {
@@ -27,17 +26,11 @@ class ModulesSettings
      */
     private $forkIsInstalled;
 
-    public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
+    public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache, bool $forkIsInstalled = true)
     {
         $this->database = $database;
         $this->cache = $cache;
-
-        // @TODO pass this as parameter in Fork 6
-        try {
-            $this->forkIsInstalled = Model::getContainer()->getParameter('fork.is_installed');
-        } catch (TypeError $typeError) {
-            $this->forkIsInstalled = false;
-        }
+        $this->forkIsInstalled = $forkIsInstalled;
     }
 
     /**

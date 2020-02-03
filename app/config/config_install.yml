@@ -55,6 +55,7 @@ services:
         arguments:
             - "@database"
             - "@cache.pool"
+            - "%fork.is_installed%"
 
     # dummy service during the installation
     mailer_configurator:
