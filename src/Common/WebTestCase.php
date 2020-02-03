@@ -423,4 +423,19 @@ abstract class WebTestCase extends BaseWebTestCase
             $requestParameters
         );
     }
+
+    protected function assertHttpStatusCode404(
+        Client $client,
+        string $url,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $this->assertHttpStatusCode(
+            $client,
+            $url,
+            Response::HTTP_NOT_FOUND,
+            $requestMethod,
+            $requestParameters
+        );
+    }
 }
