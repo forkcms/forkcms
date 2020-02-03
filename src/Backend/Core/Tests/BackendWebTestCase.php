@@ -2,7 +2,6 @@
 
 namespace Backend\Core\Tests;
 
-use Backend\Core\Engine\Authentication as Authentication;
 use Common\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
