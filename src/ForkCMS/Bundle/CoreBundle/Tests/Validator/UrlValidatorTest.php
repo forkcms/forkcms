@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class UrlValidatorTest extends TestCase
 {
-    public function testValidExternalUrlValidation()
+    public function testValidExternalUrlValidation(): void
     {
         $urlValidator = new UrlValidator();
 
@@ -21,7 +21,7 @@ class UrlValidatorTest extends TestCase
         }
     }
 
-    public function testInvalidExternalUrlValidation()
+    public function testInvalidExternalUrlValidation(): void
     {
         $urlValidator = new UrlValidator();
 
