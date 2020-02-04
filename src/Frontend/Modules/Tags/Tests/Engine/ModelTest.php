@@ -51,18 +51,18 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGettingATagWithTheDefaultLocale(): void
     {
-        $url = 'test';
-        $tag = TagsModel::get($url);
+        $tag = TagsModel::get(LoadTagsTags::TAGS_TAG_1_SLUG);
         $this->assertTag($tag);
-        self::assertSame($tag['url'], $url);
+        self::assertSame($tag['url'], LoadTagsTags::TAGS_TAG_1_SLUG);
+        self::assertEquals($tag['id'], LoadTagsTags::TAGS_TAG_1_ID);
     }
 
     public function testGettingATagWithASpecificLocale(): void
     {
-        $url = 'test';
-        $tag = TagsModel::get($url, Locale::fromString('en'));
+        $tag = TagsModel::get(LoadTagsTags::TAGS_TAG_1_SLUG, Locale::fromString('en'));
         $this->assertTag($tag);
-        self::assertSame($tag['url'], $url);
+        self::assertSame($tag['url'], LoadTagsTags::TAGS_TAG_1_SLUG);
+        self::assertEquals($tag['id'], LoadTagsTags::TAGS_TAG_1_ID);
         self::assertSame($tag['language'], 'en');
     }
 
@@ -73,7 +73,7 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetMostUsed(): void
     {
-        self::assertSame(TagsModel::getMostUsed(0), 'Most used limit isn\'t respected');
+        self::assertEmpty(TagsModel::getMostUsed(0), 'Most used limit isn\'t respected');
         $mostUsedTags = TagsModel::getMostUsed(2);
         $this->assertTag($mostUsedTags[0], ['url', 'name', 'number']);
         $this->assertTag($mostUsedTags[1], ['url', 'name', 'number']);
@@ -112,21 +112,21 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetIdByUrl(): void
     {
-        self::assertSame(1, TagsModel::getIdByUrl('test'));
-        self::assertSame(2, TagsModel::getIdByUrl('most-used'));
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_ID, TagsModel::getIdByUrl(LoadTagsTags::TAGS_TAG_1_SLUG));
+        self::assertSame(LoadTagsTags::TAGS_TAG_2_ID, TagsModel::getIdByUrl(LoadTagsTags::TAGS_TAG_2_SLUG));
     }
 
     public function testGetModulesForTag(): void
     {
-        $modules = TagsModel::getModulesForTag(1);
+        $modules = TagsModel::getModulesForTag(LoadTagsTags::TAGS_TAG_1_ID);
         self::assertSame('Faq', $modules[0]);
         self::assertCount(2, $modules);
-        self::assertCount(1, TagsModel::getModulesForTag(2));
+        self::assertCount(1, TagsModel::getModulesForTag(LoadTagsTags::TAGS_TAG_2_ID));
     }
 
     public function testGetName(): void
     {
-        self::assertSame('test', TagsModel::getName(1));
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, TagsModel::getName(LoadTagsTags::TAGS_TAG_1_ID));
     }
 
     public function testGetRelatedItemsByTags(): void
@@ -137,7 +137,7 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetItemsForTag(): void
     {
-        $items = TagsModel::getItemsForTag(1);
+        $items = TagsModel::getItemsForTag(LoadTagsTags::TAGS_TAG_1_ID);
         self::assertCount(2, $items);
         $this->assertModuleTags($items[1]);
         self::assertSame('Pages', $items[1]['name']);
@@ -146,7 +146,7 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetItemsForTagAndModule(): void
     {
-        $items = TagsModel::getItemsForTagAndModule(1, 'Pages');
+        $items = TagsModel::getItemsForTagAndModule(LoadTagsTags::TAGS_TAG_1_ID, 'Pages');
 
         $this->assertModuleTags($items);
         self::assertSame('Pages', $items['name']);
@@ -155,8 +155,8 @@ final class ModelTest extends FrontendWebTestCase
 
     public function testGetAllForTag(): void
     {
-        self::assertSame(TagsModel::getAllForTag('tests', Locale::frontendLanguage()));
-        $items = TagsModel::getAllForTag('test');
+        self::assertEmpty(TagsModel::getAllForTag('tests', Locale::frontendLanguage()));
+        $items = TagsModel::getAllForTag(LoadTagsTags::TAGS_TAG_1_NAME);
         self::assertSame('Faq', $items[0]['module']);
         self::assertSame('1', $items[0]['other_id']);
     }
