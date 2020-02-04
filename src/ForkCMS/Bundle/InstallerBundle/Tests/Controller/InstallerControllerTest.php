@@ -125,7 +125,7 @@ class InstallerControllerTest extends WebTestCase
 
         // submit with correct database credentials
         $form = $this->getFormForSubmitButton($client, 'Next');
-        $this->submitForm($client, $form, $installDatabaseConfig);
+        $this->submitForm($client, $form, $installDatabaseConfig, true);
 
         // we should be redirected to step 5
         $this->assertIs200($client);
@@ -142,7 +142,8 @@ class InstallerControllerTest extends WebTestCase
                 'install_login[email]' => 'test@test.com',
                 'install_login[password][first]' => 'password',
                 'install_login[password][second]' => 'password',
-            ]
+            ],
+            true
         );
 
         // we should be redirected to step 6

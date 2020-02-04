@@ -200,21 +200,31 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param Form $form
      * @param array $data
+     * @param bool $setValues set to true for symfony @TODO set default true in Fork 6
      */
-    protected function submitForm(Client $client, Form $form, array $data = []): void
+    protected function submitForm(Client $client, Form $form, array $data = [], bool $setValues = false): void
     {
-        // Get parameters should be set manually. Symfony uses the request object,
-        // but spoon still checks the $_GET and $_POST parameters
-        foreach ($data as $key => $value) {
-            $_GET[$key] = $value;
-            $_POST[$key] = $value;
+        $values = $data;
+        // @TODO remove this once SpoonForm has been removed
+        if (!$setValues) {
+            // Get parameters should be set manually. Symfony uses the request object,
+            // but spoon still checks the $_GET and $_POST parameters
+            foreach ($data as $key => $value) {
+                $_GET[$key] = $value;
+                $_POST[$key] = $value;
+            }
+
+            $values = [];
         }
 
-        $client->submit($form, $data);
+        $client->submit($form, $values);
 
-        foreach ($data as $key => $value) {
-            unset($_GET[$key]);
-            unset($_POST[$key]);
+        // @TODO remove this once SpoonForm has been removed
+        if (!$setValues) {
+            foreach ($data as $key => $value) {
+                unset($_GET[$key]);
+                unset($_POST[$key]);
+            }
         }
     }
 
