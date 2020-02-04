@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\Tags\Tests\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language;
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
 use Backend\Modules\Tags\Engine\Model as TagsModel;
 use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 final class ModelTest extends BackendWebTestCase
 {
@@ -15,9 +15,8 @@ final class ModelTest extends BackendWebTestCase
     {
         parent::setUp();
 
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -28,29 +27,29 @@ final class ModelTest extends BackendWebTestCase
     public function testGetStartsWithForDefaultLanguage(): void
     {
         $tags = TagsModel::getStartsWith('te');
-        self::assertSame('test', $tags[0]['name']);
-        self::assertSame('test', $tags[0]['value']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, $tags[0]['name']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, $tags[0]['value']);
     }
 
     public function testGetStartsWithForLanguage(): void
     {
         $tags = TagsModel::getStartsWith('te', Language::getWorkingLanguage());
-        self::assertSame('test', $tags[0]['name']);
-        self::assertSame('test', $tags[0]['value']);
-        self::assertSame(TagsModel::getStartsWith('te', 'nl'));
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, $tags[0]['name']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, $tags[0]['value']);
+        self::assertEmpty(TagsModel::getStartsWith('te', 'nl'));
     }
 
     public function testExistsTag(): void
     {
-        self::assertTrue(TagsModel::existsTag('test'));
+        self::assertTrue(TagsModel::existsTag(LoadTagsTags::TAGS_TAG_1_NAME));
         self::assertFalse(TagsModel::existsTag('non-existing'));
     }
 
-    public function testInsertWithDefaultLanguage(): void
+    public function testInsertWithDefaultLanguage(Client $client): void
     {
         $name = 'inserted';
         $tagId = TagsModel::insert($name);
-        $database = self::createClient()->getContainer()->get('database');
+        $database = $client->getContainer()->get('database');
         self::assertSame(
             $tagId,
             (int) $database->getVar(
@@ -60,12 +59,12 @@ final class ModelTest extends BackendWebTestCase
         );
     }
 
-    public function testInsertWithSpecificLanguage(): void
+    public function testInsertWithSpecificLanguage(Client $client): void
     {
         $name = 'inserted';
         $language = 'nl';
         $tagId = TagsModel::insert($name, $language);
-        $database = self::createClient()->getContainer()->get('database');
+        $database = $client->getContainer()->get('database');
         self::assertSame(
             $tagId,
             (int) $database->getVar(
@@ -78,59 +77,68 @@ final class ModelTest extends BackendWebTestCase
     public function testDeleteSingle(): void
     {
         // check single
-        self::assertTrue(TagsModel::exists(1));
-        TagsModel::delete(1);
-        self::assertFalse(TagsModel::exists(1));
+        self::assertTrue(TagsModel::exists(LoadTagsTags::TAGS_TAG_1_ID));
+        TagsModel::delete(LoadTagsTags::TAGS_TAG_1_ID);
+        self::assertFalse(TagsModel::exists(LoadTagsTags::TAGS_TAG_1_ID));
     }
 
     public function testDeleteMultiple(): void
     {
-        self::assertTrue(TagsModel::exists(2));
-        self::assertTrue(TagsModel::exists(1));
-        TagsModel::delete([2, 1]);
-        self::assertFalse(TagsModel::exists(2));
-        self::assertFalse(TagsModel::exists(1));
+        self::assertTrue(TagsModel::exists(LoadTagsTags::TAGS_TAG_2_ID));
+        self::assertTrue(TagsModel::exists(LoadTagsTags::TAGS_TAG_1_ID));
+        TagsModel::delete([LoadTagsTags::TAGS_TAG_2_ID, LoadTagsTags::TAGS_TAG_1_ID]);
+        self::assertFalse(TagsModel::exists(LoadTagsTags::TAGS_TAG_2_ID));
+        self::assertFalse(TagsModel::exists(LoadTagsTags::TAGS_TAG_1_ID));
     }
 
     public function testGetTags(): void
     {
-        self::assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        self::assertSame(['most used', 'test'], TagsModel::getTags('Pages', 1, 'array'));
+        self::assertSame(
+            implode(',', [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME]),
+            TagsModel::getTags('Pages', 1)
+        );
+        self::assertSame(
+            [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME],
+            TagsModel::getTags('Pages', 1, 'array')
+        );
         self::assertSame('', TagsModel::getTags('Pages', 1, 'string', 'nl'));
         self::assertSame([], TagsModel::getTags('Pages', 1, 'array', 'nl'));
     }
 
     public function testGet(): void
     {
-        self::assertSame('test', TagsModel::get(1)['name']);
-        self::assertSame('most used', TagsModel::get(2)['name']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, TagsModel::get(LoadTagsTags::TAGS_TAG_1_ID)['name']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_2_NAME, TagsModel::get(LoadTagsTags::TAGS_TAG_2_ID)['name']);
     }
 
     public function testUpdate(): void
     {
-        self::assertSame('test', TagsModel::get(1)['name']);
-        TagsModel::update(['id' => 1, 'tag' => 'changed']);
-        self::assertSame('changed', TagsModel::get(1)['name']);
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, TagsModel::get(LoadTagsTags::TAGS_TAG_1_ID)['name']);
+        TagsModel::update(['id' => LoadTagsTags::TAGS_TAG_1_ID, 'tag' => 'changed']);
+        self::assertSame('changed', TagsModel::get(LoadTagsTags::TAGS_TAG_1_ID)['name']);
     }
 
     public function testSaveTagsAlsoAcceptsAString(): void
     {
-        self::assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        TagsModel::saveTags(1, 'test,concat', 'Pages');
-        self::assertSame('concat,test', TagsModel::getTags('Pages', 1));
+        self::assertSame(
+            implode(',', [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME]),
+            TagsModel::getTags('Pages', 1)
+        );
+        TagsModel::saveTags(1, implode(',', ['concat', LoadTagsTags::TAGS_TAG_1_NAME]), 'Pages');
+        self::assertSame(implode(',', ['concat', LoadTagsTags::TAGS_TAG_1_NAME]), TagsModel::getTags('Pages', 1));
     }
 
-    public function testSaveTagsUpdatesTheUsedCount(): void
+    public function testSaveTagsUpdatesTheUsedCount(Client $client): void
     {
-        $database = self::createClient()->getContainer()->get('database');
-        $tagCount = function (int $id) use ($database): int {
+        $database = $client->getContainer()->get('database');
+        $tagCount = static function (int $id) use ($database): int {
             return $database->getVar('SELECT number FROM tags WHERE id = ?', $id);
         };
-        $originalCountTag1 = $tagCount(1);
-        $originalCountTag2 = $tagCount(2);
-        TagsModel::saveTags(2, ['test'], 'Pages');
-        self::assertSame($originalCountTag1 + 1, $tagCount(1));
-        self::assertSame($originalCountTag2 - 1, $tagCount(2));
+        $originalCountTag1 = $tagCount(LoadTagsTags::TAGS_TAG_1_ID);
+        $originalCountTag2 = $tagCount(LoadTagsTags::TAGS_TAG_2_ID);
+        TagsModel::saveTags(2, [LoadTagsTags::TAGS_TAG_1_NAME], 'Pages');
+        self::assertSame($originalCountTag1 + 1, $tagCount(LoadTagsTags::TAGS_TAG_1_ID));
+        self::assertSame($originalCountTag2 - 1, $tagCount(LoadTagsTags::TAGS_TAG_2_ID));
     }
 
     public function testSaveTagsFiltersOutDuplicates(): void
@@ -149,53 +157,62 @@ final class ModelTest extends BackendWebTestCase
 
     public function testSaveTagsReplacesOldLinks(): void
     {
-        self::assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        TagsModel::saveTags(1, ['test'], 'Pages');
-        self::assertSame('test', TagsModel::getTags('Pages', 1));
+        self::assertSame(
+            implode(',', [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME]),
+            TagsModel::getTags('Pages', 1)
+        );
+        TagsModel::saveTags(1, [LoadTagsTags::TAGS_TAG_1_NAME], 'Pages');
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, TagsModel::getTags('Pages', 1));
     }
 
     public function testSaveTagsForOtherLanguage(): void
     {
-        self::assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        TagsModel::saveTags(1, ['test'], 'Pages', 'nl');
-        self::assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        self::assertSame('test', TagsModel::getTags('Pages', 1, 'string', 'nl'));
+        self::assertSame(
+            implode(',', [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME]),
+            TagsModel::getTags('Pages', 1)
+        );
+        TagsModel::saveTags(1, [LoadTagsTags::TAGS_TAG_1_NAME], 'Pages', 'nl');
+        self::assertSame(
+            implode(',', [LoadTagsTags::TAGS_TAG_2_NAME, LoadTagsTags::TAGS_TAG_1_NAME]),
+            TagsModel::getTags('Pages', 1)
+        );
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_NAME, TagsModel::getTags('Pages', 1, 'string', 'nl'));
     }
 
     public function testSaveTagsRemovesUnusedTags(): void
     {
         $id = TagsModel::insert('unused');
         self::assertTrue(TagsModel::exists($id));
-        TagsModel::saveTags(420, ['test','most used'], 'Pages');
+        TagsModel::saveTags(420, [LoadTagsTags::TAGS_TAG_1_NAME, LoadTagsTags::TAGS_TAG_2_NAME], 'Pages');
         self::assertFalse(TagsModel::exists($id));
     }
 
     public function testGetAll(): void
     {
-        $tags = [['name' => 'test'], ['name' => 'most used']];
+        $tags = [['name' => LoadTagsTags::TAGS_TAG_1_NAME], ['name' => LoadTagsTags::TAGS_TAG_2_NAME]];
         self::assertSame($tags, TagsModel::getAll());
         self::assertSame($tags, TagsModel::getAll('en'));
-        self::assertSame(TagsModel::getAll('nl'));
+        self::assertEmpty(TagsModel::getAll('nl'));
     }
 
     public function testGetUrl(): void
     {
-        self::assertSame('test-2', TagsModel::getUrl('test'));
-        self::assertSame('test', TagsModel::getUrl('test', 1));
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_SLUG . '-2', TagsModel::getUrl(LoadTagsTags::TAGS_TAG_1_NAME));
+        self::assertSame(LoadTagsTags::TAGS_TAG_1_SLUG, TagsModel::getUrl(LoadTagsTags::TAGS_TAG_1_NAME, 1));
     }
 
     public function testGetTagNames(): void
     {
-        $tags = ['test', 'most used'];
+        $tags = [LoadTagsTags::TAGS_TAG_1_NAME, LoadTagsTags::TAGS_TAG_2_NAME];
         self::assertSame($tags, TagsModel::getTagNames());
         self::assertSame($tags, TagsModel::getTagNames('en'));
-        self::assertSame(TagsModel::getTagNames('nl'));
+        self::assertEmpty(TagsModel::getTagNames('nl'));
     }
 
     public function testExists(): void
     {
-        self::assertTrue(TagsModel::exists(1));
-        self::assertTrue(TagsModel::exists(2));
+        self::assertTrue(TagsModel::exists(LoadTagsTags::TAGS_TAG_1_ID));
+        self::assertTrue(TagsModel::exists(LoadTagsTags::TAGS_TAG_2_ID));
         self::assertFalse(TagsModel::exists(99));
         self::assertFalse(TagsModel::exists(9));
     }

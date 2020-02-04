@@ -13,9 +13,8 @@ class EditTest extends BackendWebTestCase
     {
         parent::setUp();
 
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -25,112 +24,85 @@ class EditTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/edit?id=1');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID);
     }
 
-    public function testWeCanGoToEditFromTheIndexPage(): void
+    public function testWeCanGoToEditFromTheIndexPage(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/tags/index');
-        self::assertContains(
-            'most used',
-            $client->getResponse()->getContent()
-        );
-
-        $link = $crawler->selectLink('most used')->link();
-        $client->click($link);
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '&id=2',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertPageLoadedCorrectly($client, '/private/en/tags/index', [LoadTagsTags::TAGS_TAG_2_NAME]);
+        $this->assertClickOnLink($client, LoadTagsTags::TAGS_TAG_2_NAME, [LoadTagsTags::TAGS_TAG_2_NAME]);
+        $this->assertCurrentUrlContains($client, '&id=2');
     }
 
-    public function testEditingOurTag(): void
+    public function testEditingOurTag(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/tags/edit?id=1');
-        self::assertContains(
-            'form method="post" action="/private/en/tags/edit?id=1" id="edit"',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID,
+            [
+                'form method="post" action="/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID . '" id="edit"',
+            ]
         );
 
-        $form = $crawler->selectButton('Save')->form();
-
+        $form = $this->getFormForSubmitButton($client, 'Save');
         $client->setMaxRedirects(1);
-        $this->submitEditForm($client, $form, [
-            'name' => 'Edited tag for functional tests',
-        ]);
+        $this->submitEditForm(
+            $client,
+            $form,
+            [
+                'name' => 'Edited tag for functional tests',
+            ]
+        );
 
         // we should get a 200 and be redirected to the index page
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/tags/index',
-            $client->getHistory()->current()->getUri()
-        );
-
+        $this->assertIs200($client);
         // our url and our page should contain the new title of our blogpost
-        self::assertContains(
-            '&report=edited&var=Edited%20tag%20for%20functional%20tests&highlight=row-1',
-            $client->getHistory()->current()->getUri()
+        $this->assertCurrentUrlContains(
+            $client,
+            '/private/en/tags/index',
+            '&report=edited&var=Edited%20tag%20for%20functional%20tests&highlight=row-1'
         );
-        self::assertContains(
-            'Edited tag for functional tests',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseHasContent($client->getResponse(), 'Edited tag for functional tests');
     }
 
-    public function testSubmittingInvalidData(): void
+    public function testSubmittingInvalidData(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/tags/edit?id=1');
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID,
+            [
+                'Save',
+                LoadTagsTags::TAGS_TAG_1_NAME,
+            ]
+        );
 
-        $form = $crawler->selectButton('Save')->form();
-        $this->submitEditForm($client, $form, [
-            'name' => '',
-        ]);
+        $form = $this->getFormForSubmitButton($client, 'Save');
+        $this->submitEditForm(
+            $client,
+            $form,
+            [
+                'name' => '',
+            ]
+        );
 
         // we should get a 200 and be redirected to the index page
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/tags/edit',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertIs200($client);
+        $this->assertCurrentUrlContains($client, '/private/en/tags/edit');
 
         // our page shows an overal error message and a specific one
-        self::assertContains(
-            'Something went wrong',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Please provide a name.',
-            $client->getResponse()->getContent()
-        );
+        $this->assertResponseHasContent($client->getResponse(), 'Something went wrong', 'Please provide a name.');
     }
 
-    public function testInvalidIdShouldShowAnError(): void
+    public function testInvalidIdShouldShowAnError(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
-
-        $client->request('GET', '/private/en/tags/edit?id=12345678');
-        $client->followRedirect();
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/tags/index',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertContains(
-            'error=non-existing',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertGetsRedirected($client, '/private/en/tags/edit?id=12345678', '/private/en/tags/index');
+        $this->assertCurrentUrlContains($client, 'error=non-existing');
     }
 }

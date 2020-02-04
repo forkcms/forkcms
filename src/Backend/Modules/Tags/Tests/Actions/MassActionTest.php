@@ -13,9 +13,8 @@ class MassActionTest extends BackendWebTestCase
     {
         parent::setUp();
 
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -28,64 +27,60 @@ class MassActionTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/tags/mass_action');
     }
 
-    public function testActionIsRequired(): void
+    public function testActionIsRequired(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action');
+        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action');
+        $this->assertCurrentUrlEndsWith($client, '&error=no-action-selected');
+    }
 
-        self::assertStringEndsWith(
-            '&error=no-action-selected',
-            $client->getHistory()->current()->getUri()
+    public function testIdsAreRequired(Client $client): void
+    {
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete');
+        $this->assertCurrentUrlEndsWith($client, '&error=no-selection');
+    }
+
+    public function testDeletingOneTag(Client $client): void
+    {
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete&id[]=2');
+        $this->assertCurrentUrlEndsWith($client, '&report=deleted');
+        $response = $client->getResponse();
+        $this->assertResponseHasContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>'
+        );
+        $this->assertResponseDoesNotHaveContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'
         );
     }
 
-    public function testIdsAreRequired(): void
+    public function testDeletingAllTags(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete');
-
-        self::assertStringEndsWith(
-            '&error=no-selection',
-            $client->getHistory()->current()->getUri()
+        $this->assertHttpStatusCode200(
+            $client,
+            '/private/en/tags/mass_action?action=delete&id[]=' . LoadTagsTags::TAGS_TAG_1_ID
+            . '&id[]=' . LoadTagsTags::TAGS_TAG_2_ID
         );
-    }
+        $this->assertCurrentUrlEndsWith($client, '&report=deleted');
 
-    public function testDeletingOneTag(): void
-    {
-        $client = static::createClient();
-        $this->login($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete&id[]=2');
-
-        self::assertStringEndsWith(
-            '&report=deleted',
-            $client->getHistory()->current()->getUri()
+        $response = $client->getResponse();
+        $this->assertResponseHasContent($response, '<p>There are no tags yet.</p>');
+        $this->assertResponseDoesNotHaveContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>',
+            'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'
         );
-        self::assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
-        self::assertContains('id=1" title="">test</a>', $client->getResponse()->getContent());
-    }
-
-    public function testDeletingAllTags(): void
-    {
-        $client = static::createClient();
-        $this->login($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete&id[]=2&id[]=1');
-
-        self::assertStringEndsWith(
-            '&report=deleted',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
-        self::assertNotContains('id=1" title="">test</a>', $client->getResponse()->getContent());
-        self::assertContains('<p>There are no tags yet.</p>', $client->getResponse()->getContent());
     }
 }

@@ -13,9 +13,8 @@ class IndexTest extends BackendWebTestCase
     {
         parent::setUp();
 
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -28,25 +27,18 @@ class IndexTest extends BackendWebTestCase
         $this->assertAuthenticationIsNeeded($client, '/private/en/tags/index');
     }
 
-    public function testIndexContainsTags(): void
+    public function testIndexContainsTags(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/tags/index');
-        self::assertContains(
-            'test',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'most used',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            '<a href="/private/en/tags/index?offset=0&order=num_tags',
-            $client->getResponse()->getContent()
+        $this->assertPageLoadedCorrectly(
+            $client,
+            '/private/en/tags/index',
+            [
+                LoadTagsTags::TAGS_TAG_2_NAME,
+                LoadTagsTags::TAGS_TAG_1_NAME,
+                '<a href="/private/en/tags/index?offset=0&order=num_tags'
+            ]
         );
     }
 }
