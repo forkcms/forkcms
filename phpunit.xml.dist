@@ -75,7 +75,6 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>ForkCMS\Bundle\InstallerBundle\Tests</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Tests</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
