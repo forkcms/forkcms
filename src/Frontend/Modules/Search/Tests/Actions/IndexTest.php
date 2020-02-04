@@ -50,7 +50,7 @@ class IndexTest extends FrontendWebTestCase
 
         $this->assertHttpStatusCode200($client, '/en/search');
 
-        $form = $client->getCrawler()->selectButton('Search')->form();
+        $form = $this->getFormForSubmitButton($client, 'Search');
 
         // $_GET parameters should be set manually, since Fork uses them.
         $this->submitForm($client, $form, ['form' => 'search']);
@@ -72,7 +72,7 @@ class IndexTest extends FrontendWebTestCase
 
         $this->assertHttpStatusCode200($client, '/en/search');
 
-        $form = $client->getCrawler()->selectButton('Search')->form();
+        $form = $this->getFormForSubmitButton($client, 'Search');
 
         $this->submitForm(
             $client,

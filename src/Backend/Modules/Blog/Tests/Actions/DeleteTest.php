@@ -65,7 +65,7 @@ class DeleteTest extends BackendWebTestCase
             [LoadBlogPosts::BLOG_POST_TITLE]
         );
 
-        $form = $client->getCrawler()->filter('#confirmDelete')->selectButton('Delete')->form();
+        $form = $this->getFormForSubmitButton($client, 'Delete', '#confirmDelete');
         $client->submit($form);
 
         // we're now on the delete page of the blogpost with id 1

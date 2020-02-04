@@ -83,9 +83,7 @@ class IndexTest extends BackendWebTestCase
 
     private function submitLoginForm(Client $client, string $email, string $password = 'fork'): Response
     {
-        $crawler = $client->getCrawler();
-
-        $form = $crawler->selectButton('Log in')->form();
+        $form = $this->getFormForSubmitButton($client, 'Log in');
         $this->submitForm(
             $client,
             $form,

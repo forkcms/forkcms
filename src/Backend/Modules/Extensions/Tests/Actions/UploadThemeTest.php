@@ -121,7 +121,7 @@ class UploadThemeTest extends BackendWebTestCase
     {
         $this->login($client);
         $client->request('GET', self::URL_UPLOAD_THEME);
-        $form = $client->getCrawler()->selectButton('Install')->form();
+        $form = $this->getFormForSubmitButton($client, 'Install');
 
         $_FILES['file'] = [
             'name' => "{$this->fileName}.zip",

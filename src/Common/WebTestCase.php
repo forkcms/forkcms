@@ -298,9 +298,8 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function login(Client $client): void
     {
         Authentication::tearDown();
-        $crawler = $client->request('GET', '/private/en/authentication');
-
-        $form = $crawler->selectButton('login')->form();
+        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        $form = $this->getFormForSubmitButton($client, 'login');
         $this->submitForm(
             $client,
             $form,
@@ -461,5 +460,16 @@ abstract class WebTestCase extends BaseWebTestCase
             $requestMethod,
             $requestParameters
         );
+    }
+
+    protected function getFormForSubmitButton(Client $client, string $buttonText, string $filterSelector = null): Form
+    {
+        $crawler = $client->getCrawler();
+
+        if ($filterSelector !== null) {
+            $crawler = $crawler->filter($filterSelector);
+        }
+
+        return $crawler->selectButton($buttonText)->form();
     }
 }

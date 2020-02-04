@@ -50,8 +50,7 @@ class EditTest extends BackendWebTestCase
             ['form method="post" action="/private/en/blog/edit?id=1" id="edit"']
         );
 
-        $form = $client->getCrawler()->selectButton('Publish')->form();
-
+        $form = $this->getFormForSubmitButton($client, 'Publish');
         $newBlogPostTitle = 'Edited blogpost for functional tests';
         $client->setMaxRedirects(1);
         $this->submitEditForm(
@@ -87,9 +86,7 @@ class EditTest extends BackendWebTestCase
 
         $this->assertHttpStatusCode200($client, '/private/en/blog/edit?id=1');
 
-        $crawler = $client->getCrawler();
-
-        $form = $crawler->selectButton('Publish')->form();
+        $form = $this->getFormForSubmitButton($client, 'Publish');
         $this->submitEditForm(
             $client,
             $form,
