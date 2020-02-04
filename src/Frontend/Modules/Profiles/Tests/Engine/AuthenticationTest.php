@@ -2,153 +2,205 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
+use Backend\Modules\Profiles\DataFixtures\LoadProfilesProfile;
 use Frontend\Core\Tests\FrontendWebTestCase;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication;
-use Frontend\Modules\Profiles\Tests\DataFixtures\LoadProfiles;
 use SpoonDatabase;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 final class AuthenticationTest extends FrontendWebTestCase
 {
-    /** @var SpoonDatabase */
-    private $database;
-
     /** @var Session */
     private $session;
+
+    /** @var string */
+    private const SECRET_COOKIE_KEY = 'NotSoSecret';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $client = self::createClient();
-        $this->loadFixtures($client, [LoadProfiles::class]);
+        $client = $this->getProvidedData()[0];
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
 
-        $this->database = FrontendModel::get('database');
         $this->session = FrontendModel::getSession();
 
         // Create a request stack for cookie stuff
         $requestStack = new RequestStack();
         $request = new Request();
         $request->setSession($this->session);
-        $request->cookies->set('frontend_profile_secret_key', 'NotSoSecret');
+        $request->cookies->set('frontend_profile_secret_key', self::SECRET_COOKIE_KEY);
         $requestStack->push($request);
-        FrontendModel::getContainer()->set('request_stack', $requestStack);
+        $client->getContainer()->set('request_stack', $requestStack);
     }
 
-    public function testOldSessionCleanUp()
+    public function testOldSessionCleanUp(Client $client): void
     {
-        self::assertEquals('2', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $database = $this->getDatabase($client);
+
+        self::assertEquals('2', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
 
         Authentication::cleanupOldSessions();
 
-        self::assertFalse((bool) $this->database->getVar('SELECT 1 FROM profiles_sessions WHERE session_id = "1234567890"'));
+        self::assertEquals('1', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        self::assertFalse(
+            (bool) $database->getVar(
+                'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
+                LoadProfilesProfile::PROFILES_OLD_SESSION_ID
+            )
+        );
     }
 
-    public function testGettingLoginStatusForNonExistingUser()
+    public function testGettingLoginStatusForNonExistingUser(): void
     {
         self::assertEquals('invalid', Authentication::getLoginStatus('non@existe.nt', 'wrong'));
     }
 
-    public function testGettingLoginStatusForUserWithWrongPassword()
+    public function testGettingLoginStatusForUserWithWrongPassword(): void
     {
-        self::assertEquals('invalid', Authentication::getLoginStatus('test-active@fork-cms.com', 'wrong'));
+        self::assertEquals(
+            'invalid',
+            Authentication::getLoginStatus(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL, 'wrong')
+        );
     }
 
-    public function testGettingLoginStatusForActiveUserWithCorrectPassword()
+    public function testGettingLoginStatusForActiveUserWithCorrectPassword(): void
     {
-        self::assertEquals('active', Authentication::getLoginStatus('test-active@fork-cms.com', 'forkcms'));
+        self::assertEquals(
+            'active',
+            Authentication::getLoginStatus(
+                LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL,
+                LoadProfilesProfile::PROFILES_PROFILE_PASSWORD
+            )
+        );
     }
 
-    public function testGettingLoginStatusForInactiveUserWithCorrectPassword()
+    public function testGettingLoginStatusForInactiveUserWithCorrectPassword(): void
     {
-        self::assertEquals('inactive', Authentication::getLoginStatus('test-inactive@fork-cms.com', 'forkcms'));
+        self::assertEquals(
+            'inactive',
+            Authentication::getLoginStatus(
+                LoadProfilesProfile::PROFILES_INACTIVE_PROFILE_EMAIL,
+                LoadProfilesProfile::PROFILES_PROFILE_PASSWORD
+            )
+        );
     }
 
-    public function testGettingLoginStatusForDeletedUserWithCorrectPassword()
+    public function testGettingLoginStatusForDeletedUserWithCorrectPassword(): void
     {
-        self::assertEquals('deleted', Authentication::getLoginStatus('test-deleted@fork-cms.com', 'forkcms'));
+        self::assertEquals(
+            'deleted',
+            Authentication::getLoginStatus(
+                LoadProfilesProfile::PROFILES_DELETED_PROFILE_EMAIL,
+                LoadProfilesProfile::PROFILES_PROFILE_PASSWORD
+            )
+        );
     }
 
-    public function testGettingLoginStatusForBlockedUserWithCorrectPassword()
+    public function testGettingLoginStatusForBlockedUserWithCorrectPassword(): void
     {
-        self::assertEquals('blocked', Authentication::getLoginStatus('test-blocked@fork-cms.com', 'forkcms'));
+        self::assertEquals(
+            'blocked',
+            Authentication::getLoginStatus(
+                LoadProfilesProfile::PROFILES_BLOCKED_PROFILE_EMAIL,
+                LoadProfilesProfile::PROFILES_PROFILE_PASSWORD
+            )
+        );
     }
 
-    public function testLoggingInMakesUsLoggedIn()
+    public function testLoggingInMakesUsLoggedIn(): void
     {
-        Authentication::login(1);
+        Authentication::login(LoadProfilesProfile::getProfileActiveId());
         self::assertTrue(Authentication::isLoggedIn());
     }
 
-    public function testLoggingInCleansUpOldSessions()
+    public function testLoggingInCleansUpOldSessions(Client $client): void
     {
-        self::assertEquals('2', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $database = $this->getDatabase($client);
 
-        Authentication::login(1);
+        self::assertEquals('2', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
 
-        self::assertFalse((bool) $this->database->getVar('SELECT 1 FROM profiles_sessions WHERE session_id = "1234567890"'));
+        Authentication::login(LoadProfilesProfile::getProfileActiveId());
+        self::assertEquals('2', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+
+        self::assertFalse(
+            (bool) $database->getVar(
+                'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
+                LoadProfilesProfile::PROFILES_OLD_SESSION_ID
+            )
+        );
     }
 
-    public function testLoggingInSetsASessionVariable()
+    public function testLoggingInSetsASessionVariable(): void
     {
         self::assertNull(FrontendModel::getSession()->get('frontend_profile_logged_in'));
 
-        Authentication::login(1);
+        Authentication::login(LoadProfilesProfile::getProfileActiveId());
 
         self::assertTrue(FrontendModel::getSession()->get('frontend_profile_logged_in'));
     }
 
-    public function testLogginInAddsASessionToTheDatabase()
+    public function testLoggingInAddsASessionToTheDatabase(Client $client): void
     {
+        $database = $this->getDatabase($client);
+
         self::assertEquals(
             '0',
-            $this->database->getVar(
+            $database->getVar(
                 'SELECT COUNT(session_id)
                  FROM profiles_sessions
-                 WHERE profile_id = 2'
+                 WHERE profile_id = ?',
+                LoadProfilesProfile::getProfileInactiveId()
             )
         );
 
-        Authentication::login(2);
+        Authentication::login(LoadProfilesProfile::getProfileInactiveId());
 
         self::assertEquals(
             '1',
-            $this->database->getVar(
+            $database->getVar(
                 'SELECT COUNT(session_id)
                  FROM profiles_sessions
-                 WHERE profile_id = 2'
+                 WHERE profile_id = ?',
+                LoadProfilesProfile::getProfileInactiveId()
             )
         );
     }
 
-    public function testProfileLastLoginGetsUpdatedWhenLoggingIn()
+    public function testProfileLastLoginGetsUpdatedWhenLoggingIn(Client $client): void
     {
-        $initalLastLogin = $this->database->getVar('SELECT last_login FROM profiles WHERE id = 1');
+        $database = $this->getDatabase($client);
 
-        Authentication::login(1);
+        $profileId = LoadProfilesProfile::getProfileActiveId();
+        $initialLastLogin = $database->getVar('SELECT last_login FROM profiles WHERE id = ?', $profileId);
 
-        $newLastLogin = $this->database->getVar('SELECT last_login FROM profiles WHERE id = 1');
+        Authentication::login($profileId);
 
-        self::assertLessThan($newLastLogin, $initalLastLogin);
+        $newLastLogin = $database->getVar('SELECT last_login FROM profiles WHERE id = ?', $profileId);
+
+        self::assertLessThan($newLastLogin, $initialLastLogin);
     }
 
-    public function testLogoutDeletesSessionFromDatabase(): void
+    public function testLogoutDeletesSessionFromDatabase(Client $client): void
     {
-        $this->database->insert(
+        $database = $this->getDatabase($client);
+
+        $database->insert(
             'profiles_sessions',
             [
                 'session_id' => $this->session->getId(),
-                'profile_id' => 1,
+                'profile_id' => LoadProfilesProfile::getProfileActiveId(),
                 'secret_key' => 'Fork is da bomb',
                 'date' => '1970-01-01 00:00:00',
             ]
         );
 
         self::assertTrue(
-            (bool) $this->database->getVar(
+            (bool) $database->getVar(
                 'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
                 $this->session->getId()
             )
@@ -157,7 +209,7 @@ final class AuthenticationTest extends FrontendWebTestCase
         Authentication::logout();
 
         self::assertFalse(
-            (bool) $this->database->getVar(
+            (bool) $database->getVar(
                 'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
                 $this->session->getId()
             )
@@ -174,16 +226,21 @@ final class AuthenticationTest extends FrontendWebTestCase
         self::assertFalse($this->session->get('frontend_profile_logged_in'));
     }
 
-    public function testLogoutDeletesSecretKeyCookie(): void
+    public function testLogoutDeletesSecretKeyCookie(Client $client): void
     {
-        $cookie = FrontendModel::getContainer()->get('fork.cookie');
+        $cookie = $client->getContainer()->get('fork.cookie');
 
         self::assertTrue($cookie->has('frontend_profile_secret_key'));
-        self::assertEquals('NotSoSecret', $cookie->get('frontend_profile_secret_key'));
+        self::assertEquals(self::SECRET_COOKIE_KEY, $cookie->get('frontend_profile_secret_key'));
 
         Authentication::logout();
 
         self::assertFalse($cookie->has('frontend_profile_secret_key'));
-        self::assertNotEquals('NotSoSecret', $cookie->get('frontend_profile_secret_key'));
+        self::assertNotEquals(self::SECRET_COOKIE_KEY, $cookie->get('frontend_profile_secret_key'));
+    }
+
+    private function getDatabase(Client $client): SpoonDatabase
+    {
+        return $client->getContainer()->get('database');
     }
 }

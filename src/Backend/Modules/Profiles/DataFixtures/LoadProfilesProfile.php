@@ -8,6 +8,7 @@ use SpoonDatabase;
 
 final class LoadProfilesProfile
 {
+    public const PROFILES_OLD_SESSION_ID = 1234567890;
     public const PROFILES_PROFILE_PASSWORD = 'forkcms';
     public const PROFILES_ACTIVE_PROFILE_EMAIL = 'test-active@fork-cms.com';
     public const PROFILES_ACTIVE_PROFILE_DISPLAY_NAME = 'active Fork CMS profile';
@@ -85,7 +86,7 @@ final class LoadProfilesProfile
                     'date' => self::getDateWithinAMonthAgo()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'session_id' => '1234567890',
+                    'session_id' => self::PROFILES_OLD_SESSION_ID,
                     'profile_id' => self::$profileActiveId,
                     'secret_key' => 'WeNeedToTalk',
                     'date' => self::getDateOverAMonthAgo()->format('Y-m-d H:i:s'),
