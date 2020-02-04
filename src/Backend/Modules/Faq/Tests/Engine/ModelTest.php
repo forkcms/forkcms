@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Faq\Tests\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
 use Backend\Modules\Faq\Engine\Model;
 use Backend\Core\Tests\BackendWebTestCase;
@@ -91,7 +90,7 @@ final class ModelTest extends BackendWebTestCase
         ];
 
         // update meta, there doesn't seems to be a function for this?
-        BackendModel::get('database')->update('meta', $categoryMetaData, 'id = ?', [$categoryMetaData['id']]);
+        $client->getContainer()->get('database')->update('meta', $categoryMetaData, 'id = ?', [$categoryMetaData['id']]);
 
         Model::updateCategory($categoryData);
 
