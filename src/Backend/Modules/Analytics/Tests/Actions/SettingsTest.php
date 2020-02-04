@@ -9,13 +9,13 @@ class SettingsTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
+        self::assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
     }
 
     public function testAnalyticsSettingsWorks(Client $client): void
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly($client, '/private/en/analytics/settings', ['How to get your secret file?']);
+        self::assertPageLoadedCorrectly($client, '/private/en/analytics/settings', ['How to get your secret file?']);
     }
 }

@@ -10,7 +10,7 @@ class AjaxTest extends FrontendWebTestCase
 {
     public function testAjaxWithoutModuleAndAction(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax',
             ['Module not allowed'],
@@ -20,7 +20,7 @@ class AjaxTest extends FrontendWebTestCase
 
     public function testAjaxWithoutModule(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?action=Test',
             ['Module not allowed'],
@@ -30,7 +30,7 @@ class AjaxTest extends FrontendWebTestCase
 
     public function testAjaxWithInvalidModule(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Test',
             ['Module not allowed'],
@@ -40,7 +40,7 @@ class AjaxTest extends FrontendWebTestCase
 
     public function testAjaxWithoutAction(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Blog',
             ['Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist'],
@@ -50,7 +50,7 @@ class AjaxTest extends FrontendWebTestCase
 
     public function testAjaxWithInvalidAction(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Blog&action=Test',
             ['Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist'],
@@ -60,7 +60,7 @@ class AjaxTest extends FrontendWebTestCase
 
     public function testAjaxWithValidAction(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/frontend/ajax?module=Search&action=Autosuggest',
             ['"title":"Search","url":"search"'],

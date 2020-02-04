@@ -177,7 +177,7 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    protected function assertIs404(Client $client): void
+    protected static function assertIs404(Client $client): void
     {
         self::assertEquals(
             Response::HTTP_NOT_FOUND,
@@ -185,7 +185,7 @@ abstract class WebTestCase extends BaseWebTestCase
         );
     }
 
-    protected function assertIs200(Client $client): void
+    protected static function assertIs200(Client $client): void
     {
         self::assertEquals(
             Response::HTTP_OK,
@@ -308,7 +308,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function login(Client $client): void
     {
         Authentication::tearDown();
-        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
         $form = $this->getFormForSubmitButton($client, 'login');
         $this->submitForm(
             $client,
@@ -334,7 +334,7 @@ abstract class WebTestCase extends BaseWebTestCase
         Authentication::tearDown();
     }
 
-    protected function assertGetsRedirected(
+    protected static function assertGetsRedirected(
         Client $client,
         string $initialUrl,
         string $expectedUrl,
@@ -350,7 +350,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $response = $client->getResponse();
         self::assertNotNull($response, 'No response received');
 
-        $this->assertCurrentUrlContains($client, $expectedUrl);
+        self::assertCurrentUrlContains($client, $expectedUrl);
         self::assertEquals($expectedHttpResponseCode, $response->getStatusCode());
     }
 
@@ -362,7 +362,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $requestMethod
      * @param array $requestParameters
      */
-    protected function assertPageLoadedCorrectly(
+    protected static function assertPageLoadedCorrectly(
         Client $client,
         string $url,
         array $expectedContent,
@@ -370,11 +370,11 @@ abstract class WebTestCase extends BaseWebTestCase
         string $requestMethod = 'GET',
         array $requestParameters = []
     ): void {
-        $this->assertHttpStatusCode($client, $url, $httpStatusCode, $requestMethod, $requestParameters);
+        self::assertHttpStatusCode($client, $url, $httpStatusCode, $requestMethod, $requestParameters);
         $response = $client->getResponse();
 
         self::assertNotNull($response, 'No response received');
-        $this->assertResponseHasContent($response, ...$expectedContent);
+        self::assertResponseHasContent($response, ...$expectedContent);
     }
 
     /**
@@ -385,7 +385,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $requestMethod
      * @param array $requestParameters
      */
-    protected function assertClickOnLink(
+    protected static function assertClickOnLink(
         Client $client,
         string $linkText,
         array $expectedContent,
@@ -393,7 +393,7 @@ abstract class WebTestCase extends BaseWebTestCase
         string $requestMethod = 'GET',
         array $requestParameters = []
     ): void {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             $client->getCrawler()->selectLink($linkText)->link()->getUri(),
             $expectedContent,
@@ -403,33 +403,33 @@ abstract class WebTestCase extends BaseWebTestCase
         );
     }
 
-    protected function assertResponseHasContent(Response $response, string ...$content): void
+    protected static function assertResponseHasContent(Response $response, string ...$content): void
     {
         foreach ($content as $expectedContent) {
             self::assertContains($expectedContent, $response->getContent());
         }
     }
 
-    protected function assertResponseDoesNotHaveContent(Response $response, string ...$content): void
+    protected static function assertResponseDoesNotHaveContent(Response $response, string ...$content): void
     {
         foreach ($content as $notExpectedContent) {
             self::assertNotContains($notExpectedContent, $response->getContent());
         }
     }
 
-    protected function assertCurrentUrlContains(Client $client, string ...$partialUrls): void
+    protected static function assertCurrentUrlContains(Client $client, string ...$partialUrls): void
     {
         foreach ($partialUrls as $partialUrl) {
             self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
         }
     }
 
-    protected function assertCurrentUrlEndsWith(Client $client, string $partialUrl): void
+    protected static function assertCurrentUrlEndsWith(Client $client, string $partialUrl): void
     {
         self::assertStringEndsWith($partialUrl, $client->getHistory()->current()->getUri());
     }
 
-    protected function assertHttpStatusCode(
+    protected static function assertHttpStatusCode(
         Client $client,
         string $url,
         int $httpStatusCode,
@@ -442,13 +442,13 @@ abstract class WebTestCase extends BaseWebTestCase
         self::assertEquals($httpStatusCode, $response->getStatusCode());
     }
 
-    protected function assertHttpStatusCode200(
+    protected static function assertHttpStatusCode200(
         Client $client,
         string $url,
         string $requestMethod = 'GET',
         array $requestParameters = []
     ): void {
-        $this->assertHttpStatusCode(
+        self::assertHttpStatusCode(
             $client,
             $url,
             Response::HTTP_OK,
@@ -457,13 +457,13 @@ abstract class WebTestCase extends BaseWebTestCase
         );
     }
 
-    protected function assertHttpStatusCode404(
+    protected static function assertHttpStatusCode404(
         Client $client,
         string $url,
         string $requestMethod = 'GET',
         array $requestParameters = []
     ): void {
-        $this->assertHttpStatusCode(
+        self::assertHttpStatusCode(
             $client,
             $url,
             Response::HTTP_NOT_FOUND,

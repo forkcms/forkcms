@@ -24,7 +24,7 @@ class MassActionTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/mass_action');
+        self::assertAuthenticationIsNeeded($client, '/private/en/tags/mass_action');
     }
 
     public function testActionIsRequired(Client $client): void
@@ -32,8 +32,8 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action');
-        $this->assertCurrentUrlEndsWith($client, '&error=no-action-selected');
+        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action');
+        self::assertCurrentUrlEndsWith($client, '&error=no-action-selected');
     }
 
     public function testIdsAreRequired(Client $client): void
@@ -41,8 +41,8 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete');
-        $this->assertCurrentUrlEndsWith($client, '&error=no-selection');
+        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete');
+        self::assertCurrentUrlEndsWith($client, '&error=no-selection');
     }
 
     public function testDeletingOneTag(Client $client): void
@@ -50,14 +50,14 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $this->assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete&id[]=2');
-        $this->assertCurrentUrlEndsWith($client, '&report=deleted');
+        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete&id[]=2');
+        self::assertCurrentUrlEndsWith($client, '&report=deleted');
         $response = $client->getResponse();
-        $this->assertResponseHasContent(
+        self::assertResponseHasContent(
             $response,
             'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>'
         );
-        $this->assertResponseDoesNotHaveContent(
+        self::assertResponseDoesNotHaveContent(
             $response,
             'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'
         );
@@ -68,16 +68,16 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $this->assertHttpStatusCode200(
+        self::assertHttpStatusCode200(
             $client,
             '/private/en/tags/mass_action?action=delete&id[]=' . LoadTagsTags::TAGS_TAG_1_ID
             . '&id[]=' . LoadTagsTags::TAGS_TAG_2_ID
         );
-        $this->assertCurrentUrlEndsWith($client, '&report=deleted');
+        self::assertCurrentUrlEndsWith($client, '&report=deleted');
 
         $response = $client->getResponse();
-        $this->assertResponseHasContent($response, '<p>There are no tags yet.</p>');
-        $this->assertResponseDoesNotHaveContent(
+        self::assertResponseHasContent($response, '<p>There are no tags yet.</p>');
+        self::assertResponseDoesNotHaveContent(
             $response,
             'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>',
             'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'

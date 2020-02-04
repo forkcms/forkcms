@@ -21,14 +21,14 @@ class UploadThemeTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, self::URL_UPLOAD_THEME);
+        self::assertAuthenticationIsNeeded($client, self::URL_UPLOAD_THEME);
     }
 
     public function testUploadPage(Client $client): void
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             self::URL_UPLOAD_THEME,
             [
@@ -50,8 +50,8 @@ class UploadThemeTest extends BackendWebTestCase
         $this->submitThemeUploadForm($client);
 
         // We should get a 200 and show an error.
-        $this->assertIs200($client);
-        $this->assertResponseHasContent($client->getResponse(), 'We could not find an info.xml');
+        self::assertIs200($client);
+        self::assertResponseHasContent($client->getResponse(), 'We could not find an info.xml');
     }
 
     /**
@@ -66,9 +66,9 @@ class UploadThemeTest extends BackendWebTestCase
         $this->submitThemeUploadForm($client);
         $client->followRedirect();
 
-        $this->assertIs200($client);
-        $this->assertCurrentUrlContains($client, self::URL_THEMES_INDEX);
-        $this->assertResponseHasContent($client->getResponse(), self::THEME_NAME);
+        self::assertIs200($client);
+        self::assertCurrentUrlContains($client, self::URL_THEMES_INDEX);
+        self::assertResponseHasContent($client->getResponse(), self::THEME_NAME);
     }
 
     /**
@@ -84,9 +84,9 @@ class UploadThemeTest extends BackendWebTestCase
         $client->followRedirect();
 
         // We should get a 200 and be redirected to the themes index page.
-        $this->assertIs200($client);
-        $this->assertCurrentUrlContains($client, self::URL_THEMES_INDEX);
-        $this->assertResponseHasContent($client->getResponse(), self::THEME_NAME);
+        self::assertIs200($client);
+        self::assertCurrentUrlContains($client, self::URL_THEMES_INDEX);
+        self::assertResponseHasContent($client->getResponse(), self::THEME_NAME);
     }
 
     protected function tearDown(): void

@@ -12,13 +12,13 @@ class IndexTest extends BackendWebTestCase
     {
         $this->logout($client);
 
-        $this->assertHttpStatusCode($client, '/private/en/error/index', Response::HTTP_BAD_REQUEST);
-        $this->assertCurrentUrlEndsWith($client, '/private/en/error/index');
+        self::assertHttpStatusCode($client, '/private/en/error/index', Response::HTTP_BAD_REQUEST);
+        self::assertCurrentUrlEndsWith($client, '/private/en/error/index');
     }
 
     public function testModuleNotAllowed(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/error/index?type=module-not-allowed',
             [
@@ -30,7 +30,7 @@ class IndexTest extends BackendWebTestCase
 
     public function testActionNotAllowed(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/error/index?type=action-not-allowed',
             [
@@ -42,7 +42,7 @@ class IndexTest extends BackendWebTestCase
 
     public function testNotFound(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/error/index?type=not-found',
             [

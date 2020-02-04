@@ -19,12 +19,12 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 
     public function testNonExistingPageGives404(Client $client): void
     {
-        $this->assertHttpStatusCode200($client, '/en/blog');
-        $this->assertHttpStatusCode404($client, '/en/blog', 'GET', ['page' => 34]);
+        self::assertHttpStatusCode200($client, '/en/blog');
+        self::assertHttpStatusCode404($client, '/en/blog', 'GET', ['page' => 34]);
     }
 }

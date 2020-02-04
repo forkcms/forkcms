@@ -19,7 +19,7 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/en/tags',
             [

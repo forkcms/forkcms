@@ -19,7 +19,7 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/en/faq',
             [LoadFaqCategories::FAQ_CATEGORY_TITLE]
@@ -36,7 +36,7 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/en/faq',
             [LoadFaqQuestions::FAQ_QUESTION_TITLE]

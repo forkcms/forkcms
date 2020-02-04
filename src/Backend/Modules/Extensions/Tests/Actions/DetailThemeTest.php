@@ -9,14 +9,14 @@ class DetailThemeTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
     public function testIndexHasModules(Client $client): void
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/extensions/detail_theme?theme=Fork',
             [

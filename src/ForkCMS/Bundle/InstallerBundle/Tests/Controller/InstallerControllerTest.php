@@ -39,7 +39,7 @@ class InstallerControllerTest extends WebTestCase
 
         // we should be redirected to the first step
         self::assertEquals(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
-        $this->assertCurrentUrlEndsWith($client, '/install/1');
+        self::assertCurrentUrlEndsWith($client, '/install/1');
     }
 
     public function testInstallationProcess(Client $client): void
@@ -62,7 +62,7 @@ class InstallerControllerTest extends WebTestCase
         $this->backupParametersFile($filesystem, $this->kernelDir);
         $client = static::createClient(['environment' => 'test_install']);
 
-        $this->assertGetsRedirected($client, '/install', '/install/2');
+        self::assertGetsRedirected($client, '/install', '/install/2');
         $this->runTroughStep2($client);
         $this->runTroughStep3($client);
         $this->runTroughStep4($client, $installDatabaseConfig);
@@ -74,7 +74,7 @@ class InstallerControllerTest extends WebTestCase
 
     private function runTroughStep2(Client $client): void
     {
-        $this->assertCurrentUrlEndsWith($client, '/install/2');
+        self::assertCurrentUrlEndsWith($client, '/install/2');
 
         $form = $this->getFormForSubmitButton($client, 'Next');
         $form['install_languages[languages][0]']->tick();
@@ -90,8 +90,8 @@ class InstallerControllerTest extends WebTestCase
         );
 
         // we should be redirected to step 3
-        $this->assertIs200($client);
-        $this->assertCurrentUrlEndsWith($client, '/install/3');
+        self::assertIs200($client);
+        self::assertCurrentUrlEndsWith($client, '/install/3');
     }
 
     private function runTroughStep3(Client $client): void
@@ -109,8 +109,8 @@ class InstallerControllerTest extends WebTestCase
         $this->submitForm($client, $form);
 
         // we should be redirected to step 4
-        $this->assertIs200($client);
-        $this->assertCurrentUrlEndsWith($client, '/install/4');
+        self::assertIs200($client);
+        self::assertCurrentUrlEndsWith($client, '/install/4');
     }
 
     private function runTroughStep4(Client $client, array $installDatabaseConfig): void
@@ -128,8 +128,8 @@ class InstallerControllerTest extends WebTestCase
         $this->submitForm($client, $form, $installDatabaseConfig, true);
 
         // we should be redirected to step 5
-        $this->assertIs200($client);
-        $this->assertCurrentUrlEndsWith($client, '/install/5');
+        self::assertIs200($client);
+        self::assertCurrentUrlEndsWith($client, '/install/5');
     }
 
     private function runTroughStep5(Client $client): void
@@ -147,8 +147,8 @@ class InstallerControllerTest extends WebTestCase
         );
 
         // we should be redirected to step 6
-        $this->assertIs200($client);
-        $this->assertCurrentUrlEndsWith($client, '/install/6');
+        self::assertIs200($client);
+        self::assertCurrentUrlEndsWith($client, '/install/6');
         self::assertGreaterThan(
             0,
             $client->getCrawler()->filter('h2:contains("Installation complete")')->count()

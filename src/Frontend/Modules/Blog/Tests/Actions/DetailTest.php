@@ -19,13 +19,13 @@ class DetailTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
-        $this->assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
-        $this->assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
+        self::assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 
     public function testNonExistingBlogPostGives404(Client $client): void
     {
-        $this->assertHttpStatusCode404($client, '/en/blog/detail/non-existing');
+        self::assertHttpStatusCode404($client, '/en/blog/detail/non-existing');
     }
 }

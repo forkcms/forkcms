@@ -12,7 +12,7 @@ class IndexTest extends FrontendWebTestCase
 {
     public function testSearchIndexWorks(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/en/search',
             [
@@ -33,8 +33,8 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertHttpStatusCode200($client, '/en/search');
-        $this->assertResponseDoesNotHaveContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
+        self::assertHttpStatusCode200($client, '/en/search');
+        self::assertResponseDoesNotHaveContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 
     public function testSubmittedSearchValidatesData(Client $client): void
@@ -48,7 +48,7 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertHttpStatusCode200($client, '/en/search');
+        self::assertHttpStatusCode200($client, '/en/search');
 
         $form = $this->getFormForSubmitButton($client, 'Search');
 
@@ -56,7 +56,7 @@ class IndexTest extends FrontendWebTestCase
         $this->submitForm($client, $form, ['form' => 'search']);
 
         // result should not yet be found
-        $this->assertResponseHasContent($client->getResponse(), 'The searchterm is required.');
+        self::assertResponseHasContent($client->getResponse(), 'The searchterm is required.');
     }
 
     public function testSubmittedSearchIndexContainsData(Client $client): void
@@ -70,7 +70,7 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertHttpStatusCode200($client, '/en/search');
+        self::assertHttpStatusCode200($client, '/en/search');
 
         $form = $this->getFormForSubmitButton($client, 'Search');
 
@@ -84,6 +84,6 @@ class IndexTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertResponseHasContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
+        self::assertResponseHasContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 }

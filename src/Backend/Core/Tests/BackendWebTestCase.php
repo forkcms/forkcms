@@ -32,7 +32,7 @@ abstract class BackendWebTestCase extends WebTestCase
         // make sure we aren't logged in with the client
         $this->logout($client);
 
-        $this->assertGetsRedirected(
+        self::assertGetsRedirected(
             $client,
             $url,
             '/private/en/authentication?querystring=' . rawurlencode($url),

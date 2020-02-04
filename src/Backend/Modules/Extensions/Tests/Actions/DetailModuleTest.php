@@ -9,14 +9,14 @@ class DetailModuleTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_module?module=Blog');
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_module?module=Blog');
     }
 
     public function testIndexHasModules(Client $client): void
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/extensions/detail_module?module=Blog',
             [
@@ -25,6 +25,6 @@ class DetailModuleTest extends BackendWebTestCase
                 'automatic recommendation of related articles',
             ]
         );
-        $this->assertResponseDoesNotHaveContent($client->getResponse(), 'Authors ');
+        self::assertResponseDoesNotHaveContent($client->getResponse(), 'Authors ');
     }
 }

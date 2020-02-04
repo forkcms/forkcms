@@ -19,8 +19,8 @@ class DetailTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertHttpStatusCode200($client, '/en/tags');
-        $this->assertClickOnLink(
+        self::assertHttpStatusCode200($client, '/en/tags');
+        self::assertClickOnLink(
             $client,
             LoadTagsTags::TAGS_TAG_2_NAME,
             [
@@ -30,11 +30,11 @@ class DetailTest extends FrontendWebTestCase
                 '<title>most used - Tags',
             ]
         );
-        $this->assertCurrentUrlEndsWith($client, '/en/tags/detail/most-used');
+        self::assertCurrentUrlEndsWith($client, '/en/tags/detail/most-used');
     }
 
     public function testNonExistingFaqGives404(Client $client): void
     {
-        $this->assertHttpStatusCode404($client, '/en/faq/detail/non-existing');
+        self::assertHttpStatusCode404($client, '/en/faq/detail/non-existing');
     }
 }

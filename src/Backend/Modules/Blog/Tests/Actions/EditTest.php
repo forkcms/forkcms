@@ -12,7 +12,7 @@ class EditTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
     public function testWeCanGoToEditFromTheIndexPage(Client $client): void
@@ -27,9 +27,9 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly($client, '/private/en/blog/index', [LoadBlogPosts::BLOG_POST_TITLE]);
-        $this->assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
-        $this->assertCurrentUrlContains($client, '&id=1');
+        self::assertPageLoadedCorrectly($client, '/private/en/blog/index', [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertCurrentUrlContains($client, '&id=1');
     }
 
     public function testEditingOurBlogPost(Client $client): void
@@ -44,7 +44,7 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/blog/edit?id=1',
             ['form method="post" action="/private/en/blog/edit?id=1" id="edit"']
@@ -62,14 +62,14 @@ class EditTest extends BackendWebTestCase
         );
 
         // we should get a 200 and be redirected to the index page
-        $this->assertIs200($client);
+        self::assertIs200($client);
         // our url and our page should contain the new title of our blog post
-        $this->assertCurrentUrlContains(
+        self::assertCurrentUrlContains(
             $client,
             '/private/en/blog/index',
             '&id=1&highlight%3Drow=2&var=' . rawurlencode($newBlogPostTitle) . '&report=edited'
         );
-        $this->assertResponseHasContent($client->getResponse(), $newBlogPostTitle);
+        self::assertResponseHasContent($client->getResponse(), $newBlogPostTitle);
     }
 
     public function testSubmittingInvalidData(Client $client): void
@@ -84,7 +84,7 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertHttpStatusCode200($client, '/private/en/blog/edit?id=1');
+        self::assertHttpStatusCode200($client, '/private/en/blog/edit?id=1');
 
         $form = $this->getFormForSubmitButton($client, 'Publish');
         $this->submitEditForm(
@@ -95,11 +95,11 @@ class EditTest extends BackendWebTestCase
             ]
         );
 
-        $this->assertIs200($client);
-        $this->assertCurrentUrlContains($client, '/private/en/blog/edit');
+        self::assertIs200($client);
+        self::assertCurrentUrlContains($client, '/private/en/blog/edit');
 
         // our page shows an overall error message and a specific one
-        $this->assertResponseHasContent($client->getResponse(), 'Something went wrong', 'Provide a title.');
+        self::assertResponseHasContent($client->getResponse(), 'Something went wrong', 'Provide a title.');
     }
 
     public function testInvalidIdShouldShowAnError(Client $client): void
@@ -114,7 +114,7 @@ class EditTest extends BackendWebTestCase
 
         $this->login($client);
 
-        $this->assertGetsRedirected($client, '/private/en/blog/edit?id=12345678', '/private/en/blog/index');
-        $this->assertCurrentUrlContains($client, 'error=non-existing');
+        self::assertGetsRedirected($client, '/private/en/blog/edit?id=12345678', '/private/en/blog/index');
+        self::assertCurrentUrlContains($client, 'error=non-existing');
     }
 }

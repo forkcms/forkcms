@@ -9,14 +9,14 @@ final class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private/en/pages/index');
+        self::assertAuthenticationIsNeeded($client, '/private/en/pages/index');
     }
 
     public function testIndexContainsPages(Client $client): void
     {
         $this->login($client);
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/pages/index',
             [

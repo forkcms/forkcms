@@ -10,12 +10,12 @@ class IndexTest extends BackendWebTestCase
 {
     public function testPrivateRedirectsToAuthentication(Client $client): void
     {
-        $this->assertAuthenticationIsNeeded($client, '/private');
+        self::assertAuthenticationIsNeeded($client, '/private');
     }
 
     public function testAuthenticationIndexWorks(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/authentication',
             ['title="Log in"  name="login" type="submit"']
@@ -24,7 +24,7 @@ class IndexTest extends BackendWebTestCase
 
     public function testPrivateContainsRobotsTag(Client $client): void
     {
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/private/en/authentication',
             ['<meta name="robots" content="noindex, nofollow"']
@@ -35,21 +35,21 @@ class IndexTest extends BackendWebTestCase
     {
         $client = static::createClient();
 
-        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
 
         $response = $this->submitLoginForm($client, 'test@test.com', 'wrong_password');
 
-        $this->assertResponseHasContent($response, 'Your e-mail and password combination is incorrect.');
+        self::assertResponseHasContent($response, 'Your e-mail and password combination is incorrect.');
     }
 
     public function testAuthenticationWithCorrectCredentials(Client $client): void
     {
         $client->setMaxRedirects(2);
 
-        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'noreply@fork-cms.com');
 
-        $this->assertResponseHasContent($response, 'Dashboard', 'Pages');
+        self::assertResponseHasContent($response, 'Dashboard', 'Pages');
     }
 
     /**
@@ -60,10 +60,10 @@ class IndexTest extends BackendWebTestCase
     {
         $client->setMaxRedirects(2);
 
-        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'pages-user@fork-cms.com');
 
-        $this->assertResponseHasContent($response, 'Now editing');
+        self::assertResponseHasContent($response, 'Now editing');
     }
 
     /**
@@ -75,10 +75,10 @@ class IndexTest extends BackendWebTestCase
     {
         $client->setMaxRedirects(2);
 
-        $this->assertHttpStatusCode200($client, '/private/en/authentication');
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
         $response = $this->submitLoginForm($client, 'users-edit-user@fork-cms.com');
 
-        $this->assertResponseHasContent($response, 'Edit profile');
+        self::assertResponseHasContent($response, 'Edit profile');
     }
 
     private function submitLoginForm(Client $client, string $email, string $password = 'fork'): Response

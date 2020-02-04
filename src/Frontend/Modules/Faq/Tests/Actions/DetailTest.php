@@ -19,7 +19,7 @@ class DetailTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertPageLoadedCorrectly(
+        self::assertPageLoadedCorrectly(
             $client,
             '/en/faq',
             [
@@ -28,18 +28,18 @@ class DetailTest extends FrontendWebTestCase
             ]
         );
 
-        $this->assertClickOnLink(
+        self::assertClickOnLink(
             $client,
             LoadFaqQuestions::FAQ_QUESTION_TITLE,
             [
                 '<title>' . LoadFaqQuestions::FAQ_QUESTION_TITLE,
             ]
         );
-        $this->assertCurrentUrlEndsWith($client, '/en/faq/detail/' . LoadFaqQuestions::FAQ_QUESTION_SLUG);
+        self::assertCurrentUrlEndsWith($client, '/en/faq/detail/' . LoadFaqQuestions::FAQ_QUESTION_SLUG);
     }
 
     public function testNonExistingFaqGives404(Client $client): void
     {
-        $this->assertHttpStatusCode404($client, '/en/faq/detail/non-existing');
+        self::assertHttpStatusCode404($client, '/en/faq/detail/non-existing');
     }
 }
