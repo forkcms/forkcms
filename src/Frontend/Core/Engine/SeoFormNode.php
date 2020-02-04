@@ -3,6 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use Backend\Core\Language\Language as BackendLanguage;
+use SpoonFilter;
 use Twig_Compiler;
 
 /**
@@ -228,7 +229,7 @@ class SeoFormNode extends \Twig_Node
 
     private function lbl(string $label): string
     {
-        return ucfirst(BackendLanguage::getLabel($label));
+        return SpoonFilter::ucfirst(BackendLanguage::getLabel($label));
     }
 
     private function msg(string $message): string
