@@ -520,8 +520,8 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN pages AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
-            ['pages', $tagId, 'active']
+             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
+            ['pages', $tagId, 'active', BL::getWorkingLanguage()]
         );
 
         // loop items
