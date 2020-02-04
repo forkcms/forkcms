@@ -4,7 +4,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Common\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -63,23 +62,26 @@ class InstallerControllerTest extends WebTestCase
         $this->backupParametersFile($filesystem, $this->kernelDir);
         $client = static::createClient(['environment' => 'test_install']);
 
-        $crawler = $client->request('GET', '/install/2');
-        $crawler = $this->runTroughStep2($crawler, $client);
-        $crawler = $this->runTroughStep3($crawler, $client);
-        $crawler = $this->runTroughStep4($crawler, $client, $installDatabaseConfig);
-        $this->runTroughStep5($crawler, $client);
+        $this->assertGetsRedirected($client, '/install', '/install/2');
+        $this->runTroughStep2($client);
+        $this->runTroughStep3($client);
+        $this->runTroughStep4($client, $installDatabaseConfig);
+        $this->runTroughStep5($client);
 
         // put back our parameters file
         $this->putParametersFileBack($filesystem, $this->kernelDir);
     }
 
-    private function runTroughStep2(Crawler $crawler, Client $client): Crawler
+    private function runTroughStep2(Client $client): void
     {
-        $form = $crawler->selectButton('Next')->form();
+        $this->assertCurrentUrlEndsWith($client, '/install/2');
+
+        $form = $this->getFormForSubmitButton($client, 'Next');
         $form['install_languages[languages][0]']->tick();
         $form['install_languages[languages][1]']->tick();
         $form['install_languages[languages][2]']->tick();
-        $client->submit(
+        $this->submitForm(
+            $client,
             $form,
             [
                 'install_languages[language_type]' => 'multiple',
@@ -87,24 +89,14 @@ class InstallerControllerTest extends WebTestCase
             ]
         );
 
-        $crawler = $client->followRedirect();
-
         // we should be redirected to step 3
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/install/3',
-            $client->getHistory()->current()->getUri()
-        );
-
-        return $crawler;
+        $this->assertIs200($client);
+        $this->assertCurrentUrlEndsWith($client, '/install/3');
     }
 
-    private function runTroughStep3(Crawler $crawler, Client $client): Crawler
+    private function runTroughStep3(Client $client): void
     {
-        $form = $crawler->selectButton('Next')->form();
+        $form = $this->getFormForSubmitButton($client, 'Next');
         $form['install_modules[modules][9]']->tick();
         $form['install_modules[modules][10]']->tick();
         $form['install_modules[modules][11]']->tick();
@@ -114,57 +106,37 @@ class InstallerControllerTest extends WebTestCase
         $form['install_modules[modules][15]']->tick();
         $form['install_modules[modules][16]']->tick();
         $form['install_modules[modules][17]']->tick();
-        $client->submit($form, []);
-        $crawler = $client->followRedirect();
+        $this->submitForm($client, $form);
 
         // we should be redirected to step 4
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/install/4',
-            $client->getHistory()->current()->getUri()
-        );
-
-        return $crawler;
+        $this->assertIs200($client);
+        $this->assertCurrentUrlEndsWith($client, '/install/4');
     }
 
-    private function runTroughStep4(Crawler $crawler, Client $client, array $installDatabaseConfig): Crawler
+    private function runTroughStep4(Client $client, array $installDatabaseConfig): void
     {
         // first submit with incorrect data
-        $form = $crawler->selectButton('Next')->form();
-        $crawler = $client->submit($form, []);
+        $form = $this->getFormForSubmitButton($client, 'Next');
+        $this->submitForm($client, $form);
         self::assertGreaterThan(
             0,
-            $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
+            $client->getCrawler()->filter('div.errorMessage:contains("Problem with database credentials")')->count()
         );
 
         // submit with correct database credentials
-        $form = $crawler->selectButton('Next')->form();
-        $client->submit(
-            $form,
-            $installDatabaseConfig
-        );
-        $crawler = $client->followRedirect();
+        $form = $this->getFormForSubmitButton($client, 'Next');
+        $this->submitForm($client, $form, $installDatabaseConfig);
 
         // we should be redirected to step 5
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/install/5',
-            $client->getHistory()->current()->getUri()
-        );
-
-        return $crawler;
+        $this->assertIs200($client);
+        $this->assertCurrentUrlEndsWith($client, '/install/5');
     }
 
-    private function runTroughStep5(Crawler $crawler, Client $client): Crawler
+    private function runTroughStep5(Client $client): void
     {
-        $form = $crawler->selectButton('Finish installation')->form();
-        $client->submit(
+        $form = $this->getFormForSubmitButton($client, 'Finish installation');
+        $this->submitForm(
+            $client,
             $form,
             [
                 'install_login[email]' => 'test@test.com',
@@ -172,22 +144,13 @@ class InstallerControllerTest extends WebTestCase
                 'install_login[password][second]' => 'password',
             ]
         );
-        $crawler = $client->followRedirect();
 
         // we should be redirected to step 6
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '/install/6',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertIs200($client);
+        $this->assertCurrentUrlEndsWith($client, '/install/6');
         self::assertGreaterThan(
             0,
-            $crawler->filter('h2:contains("Installation complete")')->count()
+            $client->getCrawler()->filter('h2:contains("Installation complete")')->count()
         );
-
-        return $crawler;
     }
 }
