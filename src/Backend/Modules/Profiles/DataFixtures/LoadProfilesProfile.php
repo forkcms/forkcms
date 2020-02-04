@@ -3,6 +3,7 @@
 namespace Backend\Modules\Profiles\DataFixtures;
 
 use DateTime;
+use DateTimeZone;
 use SpoonDatabase;
 
 final class LoadProfilesProfile
@@ -107,10 +108,12 @@ final class LoadProfilesProfile
 
     public static function getProfileArray(array $profileData): array
     {
+        $utc = new DateTimeZone('UTC');
+
         return $profileData + [
             'password' => self::getEncryptedPassword(),
-            'registered_on' => self::getDateWithinAMonthAgo()->format('Y-m-d H:i:s'),
-            'last_login' => self::getDateOverAMonthAgo()->format('Y-m-d H:i:s'),
+            'registered_on' => self::getDateWithinAMonthAgo()->setTimezone($utc)->format('Y-m-d H:i:s'),
+            'last_login' => self::getDateOverAMonthAgo()->setTimezone($utc)->format('Y-m-d H:i:s'),
         ];
     }
 
