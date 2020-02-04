@@ -2,34 +2,28 @@
 
 namespace Backend\Modules\Profiles\Tests\Engine;
 
+use Backend\Modules\Profiles\DataFixtures\LoadProfilesGroup;
+use Backend\Modules\Profiles\DataFixtures\LoadProfilesGroupData;
+use Backend\Modules\Profiles\DataFixtures\LoadProfilesProfile;
 use Backend\Modules\Profiles\Engine\Model;
 use Backend\Core\Tests\BackendWebTestCase;
-use DateTime;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 final class ModelTest extends BackendWebTestCase
 {
-    /** @var int */
-    private $expiresOnTimestamp;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->expiresOnTimestamp = time() + 60 * 60;
-    }
-
     public function testPasswordGetsEncrypted(): void
     {
-        $encryptedPassword = Model::encryptPassword($this->getPassword());
+        $encryptedPassword = Model::encryptPassword(LoadProfilesProfile::PROFILES_PROFILE_PASSWORD);
 
-        self::assertTrue(password_verify($this->getPassword(), $encryptedPassword));
+        self::assertTrue(password_verify(LoadProfilesProfile::PROFILES_PROFILE_PASSWORD, $encryptedPassword));
     }
 
     public function testInsertingProfile(): void
     {
-        $profileId = $this->addProfile();
-
-        $profileData = $this->getProfileData();
+        $profileData = LoadProfilesProfile::getProfileArray(
+            LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DATA
+        );
+        $profileId = Model::insert($profileData);
         $addedProfile = Model::get($profileId);
 
         self::assertEquals($profileId, $addedProfile['id']);
@@ -47,31 +41,43 @@ final class ModelTest extends BackendWebTestCase
         self::assertEquals($profileData['url'], $addedProfileByEmail['url']);
     }
 
-    public function testGettingUrl(): void
+    public function testGettingUrl(Client $client): void
     {
-        $firstUrl = Model::getUrl($this->getDisplayName());
-        self::assertEquals('fork-cms', $firstUrl);
+        $firstUrl = Model::getUrl(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_URL, $firstUrl);
 
-        $this->addProfile();
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
 
-        $secondUrl = Model::getUrl($this->getDisplayName());
-        self::assertEquals('fork-cms-2', $secondUrl);
+        $secondUrl = Model::getUrl(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_URL . '-2', $secondUrl);
     }
 
-    public function testIfProfileExists(): void
+    public function testIfProfileExists(Client $client): void
     {
-        $this->addProfile();
-        self::assertTrue(Model::exists(1));
-        self::assertTrue(Model::existsByEmail('test@fork-cms.com'));
-        self::assertTrue(Model::existsDisplayName($this->getDisplayName()));
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
+
+        self::assertTrue(Model::exists(LoadProfilesProfile::getProfileActiveId()));
+        self::assertTrue(Model::existsByEmail(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL));
+        self::assertTrue(Model::existsDisplayName(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME));
     }
 
-    public function testUpdatingProfile(): void
+    public function testUpdatingProfile(Client $client): void
     {
-        $profileId = $this->addProfile();
-        self::assertEquals(1, $this->updateProfile());
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
 
-        $updatedProfileData = $this->getUpdatedProfileData();
+        $updatedProfileData = [
+            'email' => 'test2@fork-cms.com',
+            'password' => Model::encryptPassword(LoadProfilesProfile::PROFILES_PROFILE_PASSWORD),
+            'status' => 'blocked',
+            'display_name' => 'Fork CMS 2',
+            'url' => 'fork-cms-2',
+            'registered_on' => '2018-03-05 10:22:34',
+            'last_login' => '2018-03-05 10:16:19',
+        ];
+        $profileId = LoadProfilesProfile::getProfileActiveId();
+
+        self::assertEquals(1, Model::update($profileId, $updatedProfileData));
+
         $updatedProfile = Model::get($profileId);
 
         self::assertEquals($profileId, $updatedProfile['id']);
@@ -81,32 +87,32 @@ final class ModelTest extends BackendWebTestCase
         self::assertEquals($updatedProfileData['url'], $updatedProfile['url']);
     }
 
-    public function testDeletingProfile(): void
+    public function testDeletingProfile(Client $client): void
     {
-        $profileId = $this->addProfile();
-        Model::delete($profileId);
-
-        $deletedProfile = Model::get($profileId);
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
+        Model::delete(LoadProfilesProfile::getProfileActiveId());
+        $deletedProfile = Model::get(LoadProfilesProfile::getProfileActiveId());
 
         self::assertEquals('deleted', $deletedProfile['status']);
     }
 
-    public function testSettingSettings(): void
+    public function testSettingSettings(Client $client): void
     {
-        $profileId = $this->addProfile();
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
+        $profileId = LoadProfilesProfile::getProfileActiveId();
 
         Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
-        self::assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My setting\'s value', Model::getSetting($profileId, 'my_setting'));
 
         Model::setSetting($profileId, 'my_setting', 'My updated value');
-        self::assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+        self::assertEquals('My updated value', Model::getSetting($profileId, 'my_setting'));
     }
 
-    public function testInsertingGroup(): void
+    public function testInsertingGroup(Client $client): void
     {
-        $groupId = $this->addGroup();
+        $groupData = LoadProfilesGroup::PROFILES_GROUP_DATA;
+        $groupId = Model::insertGroup($groupData);
 
-        $groupData = $this->getGroupData();
         $addedGroup = Model::getGroup($groupId);
 
         self::assertEquals($groupId, $addedGroup['id']);
@@ -117,202 +123,143 @@ final class ModelTest extends BackendWebTestCase
         self::assertContains($groupData['name'], $groups);
     }
 
-    public function testUpdatingGroup(): void
+    public function testUpdatingGroup(Client $client): void
     {
-        $groupId = $this->addGroup();
-        self::assertEquals(1, $this->updateGroup());
+        $this->loadFixtures($client, [LoadProfilesGroup::class]);
+        $updatedGroupData = [
+            'name' => 'My updated Fork CMS group',
+        ];
+        $groupId = LoadProfilesGroup::getGroupId();
+        self::assertEquals(1, Model::updateGroup($groupId, $updatedGroupData));
 
-        $updatedGroupData = $this->getUpdatedGroupData();
         $updatedGroup = Model::getGroup($groupId);
 
         self::assertEquals($groupId, $updatedGroup['id']);
         self::assertEquals($updatedGroupData['name'], $updatedGroup['name']);
     }
 
-    public function testIfGroupExists(): void
+    public function testIfGroupExists(Client $client): void
     {
-        $this->addGroup();
-        self::assertTrue(Model::existsGroup(1));
-        self::assertTrue(Model::existsGroupName('My Fork CMS group'));
+        $this->loadFixtures($client, [LoadProfilesGroup::class]);
+        self::assertTrue(Model::existsGroup(LoadProfilesGroup::getGroupId()));
+        self::assertTrue(Model::existsGroupName(LoadProfilesGroup::PROFILES_GROUP_NAME));
     }
 
-    public function testDeletingGroup(): void
+    public function testDeletingGroup(Client $client): void
     {
-        $profileId = $this->addProfile();
-        $groupId = $this->addGroup();
-        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
+        $this->loadFixtures(
+            $client,
+            [
+                LoadProfilesProfile::class,
+                LoadProfilesGroup::class,
+                LoadProfilesGroupData::class,
+            ]
+        );
 
-        self::assertNotEmpty(Model::getGroup($groupId));
-        self::assertNotEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertNotEmpty(Model::getGroup(LoadProfilesGroup::getGroupId()));
+        self::assertNotEmpty(Model::getProfileGroup(LoadProfilesGroupData::getId()));
 
-        Model::deleteGroup($groupId);
+        Model::deleteGroup(LoadProfilesGroup::getGroupId());
 
-        self::assertEmpty(Model::getGroup($groupId));
-        self::assertEmpty(Model::getProfileGroup($profileGroupId));
+        self::assertEmpty(Model::getGroup(LoadProfilesGroup::getGroupId()));
+        self::assertEmpty(Model::getProfileGroup(LoadProfilesGroupData::getId()));
     }
 
-    public function testInsertingProfileGroup(): void
+    public function testInsertingProfileGroup(Client $client): void
     {
-        $profileId = $this->addProfile();
-        $groupId = $this->addGroup();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadProfilesProfile::class,
+                LoadProfilesGroup::class,
+            ]
+        );
 
-        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
+        $profileGroupData = [
+            'profile_id' => LoadProfilesProfile::getProfileActiveId(),
+            'group_id' => LoadProfilesGroup::getGroupId(),
+            'starts_on' => date('Y-m-d H:i:s', LoadProfilesGroupData::getStartsOnTimestamp()),
+            'expires_on' => date('Y-m-d H:i:s', LoadProfilesGroupData::getExpiresOnTimestamp()),
+        ];
 
-        $profileGroupData = $this->getProfileGroupData($profileId, $groupId);
+        $profileGroupId = Model::insertProfileGroup($profileGroupData);
         $addedProfileGroup = Model::getProfileGroup($profileGroupId);
 
         self::assertEquals($profileGroupId, $addedProfileGroup['id']);
         self::assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
         self::assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
-        self::assertEquals(strtotime($profileGroupData['expires_on'].'.UTC'), $addedProfileGroup['expires_on']);
+        self::assertEquals(strtotime($profileGroupData['expires_on'] . '.UTC'), $addedProfileGroup['expires_on']);
 
         self::assertContains(
             [
-                'id' => $profileId,
-                'group_id' => $groupId,
-                'group_name' => 'My Fork CMS group',
+                'id' => $profileGroupId,
+                'group_id' => LoadProfilesGroup::getGroupId(),
+                'group_name' => LoadProfilesGroup::PROFILES_GROUP_NAME,
                 'expires_on' => $profileGroupData['expires_on'],
             ],
-            Model::getProfileGroups(1)
+            Model::getProfileGroups(LoadProfilesProfile::getProfileActiveId())
         );
     }
 
-    public function testUpdatingProfileGroup(): void
+    public function testUpdatingProfileGroup(Client $client): void
     {
-        $groupId = $this->addGroup();
-        $profileId = $this->addProfile();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadProfilesProfile::class,
+                LoadProfilesGroup::class,
+                LoadProfilesGroupData::class,
+            ]
+        );
 
-        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
-        self::assertEquals(1, $this->updateProfileGroup());
+        $updatedProfileGroupData = [
+            'profile_id' => LoadProfilesProfile::getProfileActiveId(),
+            'group_id' => LoadProfilesGroup::getGroupId(),
+            'expires_on' => date('Y-m-d H:i:s', LoadProfilesGroupData::getExpiresOnTimestamp() + 2),
+        ];
 
-        $updatedProfileGroupData = $this->getUpdatedProfileGroupData();
-        $updatedProfileGroup = Model::getProfileGroup($profileGroupId);
+        self::assertEquals(1, Model::updateProfileGroup(LoadProfilesGroupData::getId(), $updatedProfileGroupData));
 
-        self::assertEquals($profileGroupId, $updatedProfileGroup['id']);
+        $updatedProfileGroup = Model::getProfileGroup(LoadProfilesGroupData::getId());
+
+        self::assertEquals(LoadProfilesGroupData::getId(), $updatedProfileGroup['id']);
         self::assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
         self::assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
-        self::assertEquals(strtotime($updatedProfileGroupData['expires_on'] . '.UTC'), $updatedProfileGroup['expires_on']);
+        self::assertEquals(
+            strtotime($updatedProfileGroupData['expires_on'] . '.UTC'),
+            $updatedProfileGroup['expires_on']
+        );
     }
 
-    public function testIfProfileGroupExists(): void
+    public function testIfProfileGroupExists(Client $client): void
     {
-        $profileId = $this->addProfile();
-        $groupId = $this->addGroup();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadProfilesProfile::class,
+                LoadProfilesGroup::class,
+                LoadProfilesGroupData::class,
+            ]
+        );
 
-        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
-        self::assertTrue(Model::existsProfileGroup($profileGroupId));
+        self::assertTrue(Model::existsProfileGroup(LoadProfilesGroupData::getId()));
     }
 
-    public function testDeletingProfileGroup(): void
+    public function testDeletingProfileGroup(Client $client): void
     {
-        $profileId = $this->addProfile();
-        $groupId = $this->addGroup();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadProfilesProfile::class,
+                LoadProfilesGroup::class,
+                LoadProfilesGroupData::class,
+            ]
+        );
 
-        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
+        $profileGroupId = LoadProfilesGroupData::getId();
 
         self::assertNotEmpty(Model::getProfileGroup($profileGroupId));
-
         Model::deleteProfileGroup($profileGroupId);
-
         self::assertEmpty(Model::getProfileGroup($profileGroupId));
-    }
-
-    public function addProfile(): int
-    {
-        return Model::insert($this->getProfileData());
-    }
-
-    public function addGroup(): int
-    {
-        return Model::insertGroup($this->getGroupData());
-    }
-
-    public function addProfileGroup(int $profileId, int $groupId): int
-    {
-        return Model::insertProfileGroup($this->getProfileGroupData($profileId, $groupId));
-    }
-
-    public function updateProfile(): int
-    {
-        return Model::update(1, $this->getUpdatedProfileData());
-    }
-
-    public function updateGroup(): int
-    {
-        return Model::updateGroup(1, $this->getUpdatedGroupData());
-    }
-
-    public function updateProfileGroup(): int
-    {
-        return Model::updateProfileGroup(1, $this->getUpdatedProfileGroupData());
-    }
-
-    public function getPassword(): string
-    {
-        return 'forkcms';
-    }
-
-    public function getDisplayName(): string
-    {
-        return 'Fork CMS';
-    }
-
-    public function getProfileData(): array
-    {
-        return [
-            'email' => 'test@fork-cms.com',
-            'password' => password_hash($this->getPassword(), PASSWORD_DEFAULT),
-            'status' => 'active',
-            'display_name' => $this->getDisplayName(),
-            'url' => 'fork-cms',
-            'registered_on' => '2018-03-05 09:45:12',
-            'last_login' => '1970-01-01 00:00:00',
-        ];
-    }
-
-    public function getGroupData(): array
-    {
-        return [
-            'name' => 'My Fork CMS group',
-        ];
-    }
-
-    public function getProfileGroupData(int $profileId, int $groupId): array
-    {
-        return [
-            'profile_id' => $profileId,
-            'group_id' => $groupId,
-            'starts_on' => date('Y-m-d H:i:s', time()),
-            'expires_on' => date('Y-m-d H:i:s', $this->expiresOnTimestamp),
-        ];
-    }
-
-    public function getUpdatedProfileData(): array
-    {
-        return [
-            'email' => 'test2@fork-cms.com',
-            'password' => password_hash($this->getPassword(), PASSWORD_DEFAULT),
-            'status' => 'blocked',
-            'display_name' => 'Fork CMS 2',
-            'url' => 'fork-cms-2',
-            'registered_on' => '2018-03-05 10:22:34',
-            'last_login' => '2018-03-05 10:16:19',
-        ];
-    }
-
-    public function getUpdatedGroupData(): array
-    {
-        return [
-            'name' => 'My updated Fork CMS group',
-        ];
-    }
-
-    public function getUpdatedProfileGroupData(): array
-    {
-        return [
-            'profile_id' => 1,
-            'group_id' => 1,
-            'expires_on' => date('Y-m-d H:i:s', $this->expiresOnTimestamp + 2),
-        ];
     }
 }
