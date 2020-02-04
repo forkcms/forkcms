@@ -17,29 +17,42 @@ class LoadProfilesGroupData
     /** @var int|null */
     private static $startsOnTimestamp;
 
+    /** @var int|null */
+    private static $id;
+
     public function load(SpoonDatabase $database): void
     {
-        self::$startsOnTimestamp = time();
-        self::$expiresOnTimestamp = self::$startsOnTimestamp + 60 * 60;
-
-        $database->insert(
+        self::$id = $database->insert(
             'profiles_groups_rights',
             [
-                'profile_id' => LoadProfilesProfile::getProfileId(),
+                'profile_id' => LoadProfilesProfile::getProfileActiveId(),
                 'group_id' => LoadProfilesGroup::getGroupId(),
-                'starts_on' => date('Y-m-d H:i:s', self::$startsOnTimestamp),
-                'expires_on' => date('Y-m-d H:i:s', self::$expiresOnTimestamp),
+                'starts_on' => date('Y-m-d H:i:s', self::getStartsOnTimestamp()),
+                'expires_on' => date('Y-m-d H:i:s', self::getExpiresOnTimestamp()),
             ]
         );
     }
 
-    public static function getExpiresOnTimestamp(): ?int
+    public static function getExpiresOnTimestamp(): int
     {
+        if (self::$expiresOnTimestamp === null) {
+            self::$expiresOnTimestamp = self::getStartsOnTimestamp() + 60 * 60;
+        }
+
         return self::$expiresOnTimestamp;
     }
 
-    public static function getStartsOnTimestamp(): ?int
+    public static function getStartsOnTimestamp(): int
     {
+        if (self::$startsOnTimestamp === null) {
+            self::$startsOnTimestamp = time();
+        }
+
         return self::$startsOnTimestamp;
+    }
+
+    public static function getId(): ?int
+    {
+        return self::$id;
     }
 }

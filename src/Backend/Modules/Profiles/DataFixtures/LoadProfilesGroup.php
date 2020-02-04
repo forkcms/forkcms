@@ -7,7 +7,7 @@ use SpoonDatabase;
 class LoadProfilesGroup
 {
     public const PROFILES_GROUP_NAME = 'My Fork CMS group';
-    public const PROFILES_PROFILE_DATA = [
+    public const PROFILES_GROUP_DATA = [
         'name' => self::PROFILES_GROUP_NAME,
     ];
 
@@ -17,8 +17,8 @@ class LoadProfilesGroup
     public function load(SpoonDatabase $database): void
     {
         self::$groupId = $database->insert(
-            'profiles_group',
-            self::PROFILES_PROFILE_DATA
+            'profiles_groups',
+            self::PROFILES_GROUP_DATA
         );
     }
 
