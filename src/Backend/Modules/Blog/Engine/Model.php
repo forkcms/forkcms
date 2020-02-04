@@ -367,8 +367,8 @@ class Model
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND i.language = ?
              GROUP BY i.id
+             HAVING i.status = ? AND post_language = ?
              LIMIT ?, ?',
             [$status, BL::getWorkingLanguage(), $offset, $limit]
         );
