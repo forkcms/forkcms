@@ -16,11 +16,4 @@ class Init extends \Common\Core\Init
 
         parent::__construct($kernel);
     }
-
-    public function initialize(string $type): void
-    {
-        parent::initialize($type);
-
-        SpoonFilter::disableMagicQuotes();
-    }
 }
