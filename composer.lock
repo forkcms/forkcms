@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3b7627cec17cb91e8a8bc3ceb7facaf",
+    "content-hash": "cb95dcdd9b0663e4f670030bccef4b51",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -128,13 +128,13 @@
             "authors": [
                 {
                     "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de",
-                    "role": "Lead Developer"
+                    "role": "Lead Developer",
+                    "email": "kontakt@beberlei.de"
                 },
                 {
                     "name": "Richard Quadling",
-                    "email": "rquadling@gmail.com",
-                    "role": "Collaborator"
+                    "role": "Collaborator",
+                    "email": "rquadling@gmail.com"
                 }
             ],
             "description": "Thin assertion library for input validation in business models.",
@@ -235,8 +235,8 @@
             "authors": [
                 {
                     "name": "Toby Brain",
-                    "email": "tobio85@gmail.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "tobio85@gmail.com"
                 }
             ],
             "description": "A php library which implements the complete functionality of the Campaign Monitor API.",
@@ -1957,9 +1957,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Geolocation PHP class connects to Google Maps API to find latitude/longitude or address.",
@@ -2456,9 +2456,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
+                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be",
-                    "role": "Developer"
+                    "homepage": "http://jeroendesloovere.be"
                 }
             ],
             "description": "This Symfony bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
@@ -2564,9 +2564,9 @@
             "authors": [
                 {
                     "name": "Matthias Mullie",
+                    "role": "Developer",
                     "email": "pathconverter@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
-                    "role": "Developer"
+                    "homepage": "http://www.mullie.eu"
                 }
             ],
             "description": "Relative path converter",
@@ -4714,8 +4714,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "email": "akismet@verkoyen.eu",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "akismet@verkoyen.eu"
                 }
             ],
             "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
@@ -4761,8 +4761,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "email": "css_to_inline_styles@verkoyen.eu",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "css_to_inline_styles@verkoyen.eu"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
@@ -5869,7 +5869,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-zip": "*"
     },
     "platform-dev": []
 }
