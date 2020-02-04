@@ -801,13 +801,13 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
     }
 
-    public static function updateGroup(int $profileId, array $group): int
+    public static function updateGroup(int $groupId, array $group): int
     {
         return (int) BackendModel::getContainer()->get('database')->update(
             'profiles_groups',
             $group,
             'id = ?',
-            $profileId
+            $groupId
         );
     }
 
