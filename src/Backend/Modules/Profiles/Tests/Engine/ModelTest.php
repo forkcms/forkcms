@@ -147,8 +147,8 @@ final class ModelTest extends BackendWebTestCase
 
         Model::deleteGroup($groupId);
 
-        self::assertSame(Model::getGroup($groupId));
-        self::assertSame(Model::getProfileGroup($profileGroupId));
+        self::assertEmpty(Model::getGroup($groupId));
+        self::assertEmpty(Model::getProfileGroup($profileGroupId));
     }
 
     public function testInsertingProfileGroup(): void
@@ -214,7 +214,7 @@ final class ModelTest extends BackendWebTestCase
 
         Model::deleteProfileGroup($profileGroupId);
 
-        self::assertSame(Model::getProfileGroup($profileGroupId));
+        self::assertEmpty(Model::getProfileGroup($profileGroupId));
     }
 
     public function addProfile(): int
