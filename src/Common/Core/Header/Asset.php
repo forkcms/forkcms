@@ -26,7 +26,7 @@ final class Asset
         $this->createdOn = new DateTimeImmutable();
     }
 
-    public function compare(Asset $asset)
+    public function compare(Asset $asset): int
     {
         $comparison = $this->priority->compare($asset->priority);
 
@@ -62,6 +62,8 @@ final class Asset
         }
 
         // check if we need to use a ? or &
-        return $this->file . (mb_strpos($this->file, '?') === false ? '?' : '&') . 'm=' . LAST_MODIFIED_TIME;
+        $separator = mb_strpos($this->file, '?') === false ? '?' : '&';
+
+        return $this->file . $separator . 'm=' . @filemtime(__DIR__ . '/../../../../' . $this->file);
     }
 }

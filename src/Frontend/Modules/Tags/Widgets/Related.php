@@ -49,13 +49,7 @@ class Related extends FrontendBaseWidget
         // loop tags
         foreach ($this->tags as $tag) {
             // fetch entries
-            $items = (array) $this->get('database')->getRecords(
-                'SELECT mt.module, mt.other_id
-                 FROM modules_tags AS mt
-                 INNER JOIN tags AS t ON t.id = mt.tag_id
-                 WHERE t.language = ? AND t.tag = ?',
-                [LANGUAGE, $tag]
-            );
+            $items = FrontendTagsModel::getAllForTag($tag);
 
             // loop items
             foreach ($items as $item) {
