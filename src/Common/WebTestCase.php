@@ -210,7 +210,7 @@ abstract class WebTestCase extends BaseWebTestCase
             $_POST[$key] = $value;
         }
 
-        $client->submit($form);
+        $client->submit($form, $data);
 
         foreach ($data as $key => $value) {
             unset($_GET[$key]);
