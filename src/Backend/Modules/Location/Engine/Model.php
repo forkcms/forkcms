@@ -147,7 +147,7 @@ class Model
                     . ': '
                     . $location->getTitle(),
                 'language' => $location->getLocale()->getLocale(),
-                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Location')
                     . '&id='
                     . $location->getId(),
             ]
@@ -229,7 +229,7 @@ class Model
                     . ': '
                     . $currentLocation->getTitle(),
                 'language' => $currentLocation->getLocale()->getLocale(),
-                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Location')
                     . '&id='
                     . $currentLocation->getId(),
             ]

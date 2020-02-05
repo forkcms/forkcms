@@ -62,16 +62,14 @@ final class IncludeOnceExtension extends AbstractExtension
         }
 
         try {
-            $loaded = null;
             try {
                 $loaded = $env->resolveTemplate($template);
+                $output = $loaded ? $loaded->render($variables) : '';
             } catch (LoaderError $e) {
                 if (!$ignoreMissing) {
                     throw $e;
                 }
             }
-
-            $output = $loaded ? $loaded->render($variables) : '';
         } finally {
             if ($isSandboxed && !$alreadySandboxed) {
                 $sandbox->disableSandbox();

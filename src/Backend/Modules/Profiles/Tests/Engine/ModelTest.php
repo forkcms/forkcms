@@ -4,7 +4,6 @@ namespace Backend\Modules\Profiles\Tests\Engine;
 
 use Backend\Modules\Profiles\Engine\Model;
 use Common\WebTestCase;
-use DateTime;
 
 final class ModelTest extends WebTestCase
 {

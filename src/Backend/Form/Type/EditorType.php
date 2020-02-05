@@ -183,7 +183,7 @@ class EditorType extends TextareaType
                 null,
                 false,
                 true,
-                false
+                true
             );
         }
     }

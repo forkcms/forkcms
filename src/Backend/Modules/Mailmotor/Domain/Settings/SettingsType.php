@@ -5,6 +5,7 @@ namespace Backend\Modules\Mailmotor\Domain\Settings;
 use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Common\Language;
 use MailMotor\Bundle\MailMotorBundle\Manager\SubscriberGatewayManager;
+use SpoonFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -121,7 +122,7 @@ class SettingsType extends AbstractType
         $mailEnginesWithSubscriberGateway = $this->subscriberGatewayManager->getAll();
 
         foreach ($mailEnginesWithSubscriberGateway as $key => $mailEngine) {
-            $label = ucfirst(($key === 'not_implemented') ? Language::lbl('None') : $key);
+            $label = SpoonFilter::ucfirst(($key === 'not_implemented') ? Language::lbl('None') : $key);
 
             $ddmValuesForMailEngines[$label] = $key;
         }

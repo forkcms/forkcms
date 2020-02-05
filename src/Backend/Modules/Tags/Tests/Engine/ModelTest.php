@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Tags\Tests\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language;
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;

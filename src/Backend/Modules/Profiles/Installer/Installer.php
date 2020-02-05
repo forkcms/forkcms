@@ -10,6 +10,7 @@ use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\Session\Session;
 use Backend\Modules\Profiles\Domain\Setting\Setting;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
@@ -205,7 +206,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesBlock($locale)) {
                 $indexPageId = $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Profile')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Profile')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -218,7 +219,7 @@ class Installer extends ModuleInstaller
                 if (!$this->hasPageWithProfilesAction($locale, 'Settings')) {
                     $this->insertPage(
                         [
-                            'title' => ucfirst(Language::lbl('ProfileSettings')),
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ProfileSettings')),
                             'parent_id' => $indexPageId,
                             'language' => $language,
                         ],
@@ -232,7 +233,7 @@ class Installer extends ModuleInstaller
                 if (!$this->hasPageWithProfilesAction($locale, 'ChangeEmail')) {
                     $this->insertPage(
                         [
-                            'title' => ucfirst(Language::lbl('ChangeEmail')),
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ChangeEmail')),
                             'parent_id' => $indexPageId,
                             'language' => $language,
                         ],
@@ -246,7 +247,7 @@ class Installer extends ModuleInstaller
                 if (!$this->hasPageWithProfilesAction($locale, 'ChangePassword')) {
                     $this->insertPage(
                         [
-                            'title' => ucfirst(Language::lbl('ChangePassword')),
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ChangePassword')),
                             'parent_id' => $indexPageId,
                             'language' => $language,
                         ],
@@ -261,7 +262,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'Activate')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Activate')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Activate')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -275,7 +276,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'ForgotPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ForgotPassword')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ForgotPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -289,7 +290,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'ResetPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResetPassword')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ResetPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -303,7 +304,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'ResendActivation')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResendActivation')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ResendActivation')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -317,7 +318,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'Login')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Login')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Login')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -331,7 +332,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'Register')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Register')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Register')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -345,7 +346,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($locale, 'Logout')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Logout')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Logout')),
                         'type' => 'root',
                         'language' => $language,
                     ],
