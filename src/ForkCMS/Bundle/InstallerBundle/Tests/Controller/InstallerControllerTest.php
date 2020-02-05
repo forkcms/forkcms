@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @group installer
+ */
 class InstallerControllerTest extends WebTestCase
 {
     public function testNoStepActionAction(): void

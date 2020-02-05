@@ -3,9 +3,9 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\DecimalType;
+use Doctrine\DBAL\Types\FloatType;
 
-final class AspectRatioDBALType extends DecimalType
+final class AspectRatioDBALType extends FloatType
 {
     public function getName(): string
     {

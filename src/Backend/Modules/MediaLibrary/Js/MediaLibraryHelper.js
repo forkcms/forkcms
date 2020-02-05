@@ -159,7 +159,8 @@ jsBackend.mediaLibraryHelper.group = {
       }
 
       // get current media for group
-      currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
+      var $currentMediaGroupMediaIds = $('#group-' + currentMediaGroupId + ' .mediaIds')
+      currentMediaItemIds = ($currentMediaGroupMediaIds.length > 0 && $currentMediaGroupMediaIds.first().val() !== '')
         ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
       // set the group media

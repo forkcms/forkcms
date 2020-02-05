@@ -2,8 +2,9 @@ doctrine:
     dbal:
         types:
             module_extra_type: Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraDBALType
-            page_block_type: Backend\Modules\Pages\Domain\PageBlock\PageBlockDBALType
+            pages_page_block_type: Backend\Modules\Pages\Domain\PageBlock\TypeDBALType
             page_status: Backend\Modules\Pages\Domain\Page\StatusDBALType
+            pages_page_type: Backend\Modules\Pages\Domain\Page\TypeDBALType
     orm:
         mappings:
             module_extra:

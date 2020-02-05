@@ -153,3 +153,9 @@ fieldset {
 .custom-file .custom-file-label {
   overflow: hidden;
 }
+
+.select2-container--bootstrap {
+  .select2-results__options--nested {
+    margin: 0 1rem;
+  }
+}

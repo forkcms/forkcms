@@ -25,7 +25,7 @@ class LoadProfiles
                     'session_id' => '1234567890',
                     'profile_id' => 1,
                     'secret_key' => 'WeNeedToTalk',
-                    'date' => $dateOverAMonthAgo->format('Y-m-d H:i:s'),
+                    'date' => $dateOverAMonthAgo,
                 ],
             ]
         );

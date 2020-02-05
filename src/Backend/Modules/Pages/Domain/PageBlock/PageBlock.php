@@ -2,29 +2,25 @@
 
 namespace Backend\Modules\Pages\Domain\PageBlock;
 
+use Backend\Modules\Pages\Domain\Page\Page;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
  * @ORM\Table(name="PagesPageBlock")
- *
+ * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class PageBlock
 {
     /**
-     * @var int
+     * @var Page
      *
      * @ORM\Id
-     * @ORM\Column(
-     *     type="integer",
-     *     name="revision_id",
-     *     options={"comment": "The ID of the page that contains this block."}
-     * )
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Pages\Domain\Page\Page", inversedBy="blocks")
+     * @ORM\JoinColumn(name="revision_id", referencedColumnName="revision_id", onDelete="CASCADE")
      */
-    private $revisionId;
+    private $page;
 
     /**
      * @var string
@@ -45,9 +41,9 @@ class PageBlock
     private $extraId;
 
     /**
-     * @var string
+     * @var Type
      *
-     * @ORM\Column(type="page_block_type", name="extra_type", options={"default": "rich_text"})
+     * @ORM\Column(type="pages_page_block_type", name="extra_type", options={"default": "rich_text"})
      */
     private $extraType;
 
@@ -63,7 +59,6 @@ class PageBlock
      *
      * @ORM\Column(
      *     type="text",
-     *     name="html",
      *     nullable=true,
      *     options={"comment": "if this block is HTML this field should contain the real HTML."}
      * )
@@ -73,92 +68,60 @@ class PageBlock
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="visible", options={"default": "1"})
+     * @ORM\Column(type="boolean", options={"default": "1"})
      */
     private $visible;
 
     /**
-     * @var integer
+     * @var int
+     * @ORM\Id
      *
-     * @ORM\Id()
-     * @ORM\Column(type="integer", name="sequence")
+     * @ORM\Column(type="integer")
      */
     private $sequence;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 
     public function __construct(
-        int $revisionId,
+        Page $page,
         string $position,
         ?int $extraId,
-        ?PageBlockType $extraType,
+        ?Type $extraType,
         ?string $extraData,
         ?string $html,
         bool $visible,
         int $sequence
     ) {
-        $this->revisionId = $revisionId;
+        $this->page = $page;
         $this->position = $position;
         $this->extraId = $extraId;
-        $this->extraType = $extraType ?? PageBlockType::richText();
+        $this->extraType = $extraType ?? Type::richText();
         $this->extraData = $extraData;
         $this->html = $html;
         $this->visible = $visible;
         $this->sequence = $sequence;
-    }
-
-    public function update(
-        int $revisionId,
-        string $position,
-        ?int $extraId,
-        PageBlockType $extraType,
-        ?string $extraData,
-        ?string $html,
-        bool $visible,
-        int $sequence
-    ): void {
-        $this->revisionId = $revisionId;
-        $this->position = $position;
-        $this->extraId = $extraId;
-        $this->extraType = $extraType;
-        $this->extraData = $extraData;
-        $this->html = $html;
-        $this->visible = $visible;
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedOn(): void
-    {
-        $this->createdOn = new DateTime();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setEditedOn(): void
-    {
-        $this->editedOn = new DateTime();
     }
 
     public function getRevisionId(): int
     {
-        return $this->revisionId;
+        return $this->page->getRevisionId();
+    }
+
+    public function getPage(): Page
+    {
+        return $this->page;
     }
 
     public function getPosition(): string
@@ -171,7 +134,7 @@ class PageBlock
         return $this->extraId;
     }
 
-    public function getExtraType(): PageBlockType
+    public function getExtraType(): Type
     {
         return $this->extraType;
     }
@@ -196,6 +159,23 @@ class PageBlock
         return $this->sequence;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedOn(): void
+    {
+        $this->createdOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setEditedOn(): void
+    {
+        $this->editedOn = new DateTime();
+    }
+
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
@@ -204,5 +184,19 @@ class PageBlock
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
+    }
+
+    public static function fromDataTransferObject(PageBlockDataTransferObject $dataTransferObject): self
+    {
+        return new self(
+            $dataTransferObject->page,
+            $dataTransferObject->position,
+            $dataTransferObject->extraId,
+            $dataTransferObject->extraType,
+            $dataTransferObject->extraData,
+            $dataTransferObject->html,
+            $dataTransferObject->visible,
+            $dataTransferObject->sequence
+        );
     }
 }

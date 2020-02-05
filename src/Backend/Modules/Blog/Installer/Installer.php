@@ -8,6 +8,9 @@ use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use ForkCMS\Bundle\InstallerBundle\Language\Locale;
+use Backend\Modules\Pages\Domain\Page\PageRepository;
 
 /**
  * Installer for the blog module
@@ -198,27 +201,16 @@ class Installer extends ModuleInstaller
 
     private function hasPageWithBlogBlock(string $language): bool
     {
-        // @todo: Replace with a PageRepository method when it exists.
-        return (bool) $this->getDatabase()->getVar(
-            'SELECT 1
-             FROM PagesPage AS p
-             INNER JOIN PagesPageBlock AS b ON b.revision_id = p.revision_id
-             WHERE b.extra_id = ? AND p.language = ?
-             LIMIT 1',
-            [$this->blogBlockId, $language]
+        return Model::getContainer()->get(PageBlockRepository::class)->moduleExtraExistsForLocale(
+            $this->blogBlockId,
+            Locale::fromString(
+                $language
+            )
         );
     }
 
     /**
-     * Insert a category for a language
-     *
      * @todo: Replace this with a BlogCategoryRepository method when it exists.
-     *
-     * @param string $language The language to use.
-     * @param string $title The title of the category.
-     * @param string $url The URL for the category.
-     *
-     * @return int
      */
     private function insertCategory(string $language, string $title, string $url): int
     {

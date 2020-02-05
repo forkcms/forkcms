@@ -2,17 +2,16 @@
 
 namespace Backend\Modules\Pages\Domain\ModuleExtra;
 
+use Backend\Modules\Pages\Domain\PageBlock\Type;
 use Common\Exception\InvalidModuleExtraType;
 use JsonSerializable;
 
 final class ModuleExtraType implements JsonSerializable
 {
     private const BLOCK = 'block';
-    private const HOMEPAGE = 'homepage';
     private const WIDGET = 'widget';
     public const POSSIBLE_TYPES = [
         self::BLOCK,
-        self::HOMEPAGE,
         self::WIDGET,
     ];
 
@@ -38,11 +37,6 @@ final class ModuleExtraType implements JsonSerializable
         return new self(self::BLOCK);
     }
 
-    public static function homepage(): self
-    {
-        return new self(self::HOMEPAGE);
-    }
-
     public static function widget(): self
     {
         return new self(self::WIDGET);
@@ -51,6 +45,11 @@ final class ModuleExtraType implements JsonSerializable
     public function __toString(): string
     {
         return $this->type;
+    }
+
+    public function getPageBlockType(): Type
+    {
+        return new Type($this->type);
     }
 
     public function jsonSerialize(): string

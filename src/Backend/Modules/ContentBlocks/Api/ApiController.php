@@ -4,6 +4,7 @@ namespace Backend\Modules\ContentBlocks\Api;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +31,10 @@ final class ApiController
     {
         return JsonResponse::create(
             json_decode(
-                $this->serializer->serialize($this->blockRepository->findBy(['locale' => $language]), 'json'),
+                $this->serializer->serialize(
+                    $this->blockRepository->findBy(['locale' => $language, 'status' => Status::active()]),
+                    'json'
+                ),
                 true
             )
         );
@@ -41,7 +45,13 @@ final class ApiController
      */
     public function getContentblockAction(string $language, int $id): JsonResponse
     {
-        $contentBlock = $this->blockRepository->findOneBy(['locale' => $language, 'id' => $id]);
+        $contentBlock = $this->blockRepository->findOneBy(
+            [
+                'locale' => $language,
+                'id' => $id,
+                'status' => Status::active(),
+            ]
+        );
 
         if (!$contentBlock instanceof ContentBlock) {
             throw new NotFoundHttpException();

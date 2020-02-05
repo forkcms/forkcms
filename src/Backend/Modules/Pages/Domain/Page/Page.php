@@ -2,23 +2,40 @@
 
 namespace Backend\Modules\Pages\Domain\Page;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Common\Doctrine\Entity\Meta;
+use Common\Locale;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Frontend\Core\Engine\Navigation;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\Page\PageRepository")
  * @ORM\Table(
  *     name="PagesPage",
  *     indexes={
- *      @ORM\Index(name="idx_id_status_hidden_language", columns={"id", "status", "language"})
+ *      @ORM\Index(name="idx_id_status_hidden_locale", columns={"id", "status", "locale"})
  *     }
  * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Page
 {
+    public const NO_PARENT_PAGE_ID = 0;
+    public const HOME_PAGE_ID = 1;
+    public const ERROR_PAGE_ID = 404;
+    public const TOP_LEVEL_IDS = [
+        self::NO_PARENT_PAGE_ID,
+        self::HOME_PAGE_ID,
+        2,
+        3,
+        4,
+    ];
+
     /**
      * The real page id although revision id is the real one... (legacy stuff here)
      * @todo Fix this legacy stuff with the multiple ids.
@@ -70,26 +87,29 @@ class Page
      *
      * @var Meta
      *
-     * @ORM\ManyToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
+     * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
      * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
      */
     private $meta;
 
     /**
-     * Language of the content
+     * @var MediaGroup|null
      *
-     * @var string
-     *
-     * @ORM\Column(type="string", length=5, name="language")
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup", cascade={"ALL"})
      */
-    private $language;
+    private $image;
 
     /**
-     * page, header, footer, ...
+     * @var Locale
      *
-     * @var string
+     * @ORM\Column(type="locale")
+     */
+    private $locale;
+
+    /**
+     * @var Type
      *
-     * @ORM\Column(type="string", name="type")
+     * @ORM\Column(type="pages_page_type")
      */
     private $type;
 
@@ -143,7 +163,14 @@ class Page
     private $publishOn;
 
     /**
-     * @var mixed|null
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="datetime", name="publish_until", nullable=true)
+     */
+    private $publishUntil;
+
+    /**
+     * @var array|null
      *
      * @ORM\Column(type="text", name="data", nullable=true)
      */
@@ -198,22 +225,35 @@ class Page
      */
     private $sequence;
 
+    /**
+     * @var PageBlock[]|Collection
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Pages\Domain\PageBlock\PageBlock",
+     *     mappedBy="page",
+     *     cascade={"remove"}
+     * )
+     * @ORM\OrderBy({"sequence" = "ASC"})
+     */
+    private $blocks;
+
     public function __construct(
         int $id,
         int $userId,
         ?int $parentId,
         ?int $templateId,
         Meta $meta,
-        string $language,
+        Locale $locale,
         string $title,
         string $navigationTitle,
+        ?MediaGroup $image,
         DateTime $publishOn,
+        ?DateTime $publishUntil,
         int $sequence,
         bool $navigationTitleOverwrite = false,
         bool $hidden = true,
         Status $status = null,
-        string $type = 'root',
-        $data = null,
+        Type $type = null,
+        array $data = null,
         bool $allowMove = true,
         bool $allowChildren = true,
         bool $allowEdit = true,
@@ -221,6 +261,10 @@ class Page
     ) {
         $this->id = $id;
         $this->userId = $userId;
+        $this->allowMove = !self::isForbiddenToMove($this->id) && $allowMove;
+        $this->allowChildren = !self::isForbiddenToHaveChildren($this->id) && $allowChildren;
+        $this->allowDelete = !self::isForbiddenToDelete($this->id) && $allowDelete;
+        $this->allowEdit = $allowEdit;
         $this->parentId = $parentId;
         if ($this->parentId === null) {
             $this->parentId = 0;
@@ -230,12 +274,14 @@ class Page
             $this->templateId = 0;
         }
         $this->meta = $meta;
-        $this->language = $language;
+        $this->locale = $locale;
         $this->title = $title;
         $this->navigationTitle = $navigationTitle;
+        $this->image = $image;
         $this->publishOn = $publishOn;
+        $this->publishUntil = $publishUntil;
         $this->sequence = $sequence;
-        $this->type = $type;
+        $this->type = $type ?? Type::root();
         $this->navigationTitleOverwrite = $navigationTitleOverwrite;
         $this->hidden = $hidden;
         $this->status = $status;
@@ -243,60 +289,7 @@ class Page
             $this->status = Status::active();
         }
         $this->data = $data;
-        $this->allowMove = $allowMove;
-        $this->allowChildren = $allowChildren;
-        $this->allowEdit = $allowEdit;
-        $this->allowDelete = $allowDelete;
-    }
-
-    public function update(
-        int $id,
-        int $userId,
-        ?int $parentId,
-        ?int $templateId,
-        Meta $meta,
-        string $language,
-        string $title,
-        string $navigationTitle,
-        DateTime $publishOn,
-        int $sequence,
-        bool $navigationTitleOverwrite = false,
-        bool $hidden = true,
-        Status $status = null,
-        string $type = 'root',
-        $data = null,
-        bool $allowMove = true,
-        bool $allowChildren = true,
-        bool $allowEdit = true,
-        bool $allowDelete = true
-    ): void {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->parentId = $parentId;
-        if ($this->parentId === null) {
-            $this->parentId = 0;
-        }
-        $this->templateId = $templateId;
-        if ($this->templateId === null) {
-            $this->templateId = 0;
-        }
-        $this->meta = $meta;
-        $this->language = $language;
-        $this->title = $title;
-        $this->navigationTitle = $navigationTitle;
-        $this->publishOn = $publishOn;
-        $this->sequence = $sequence;
-        $this->type = $type;
-        $this->navigationTitleOverwrite = $navigationTitleOverwrite;
-        $this->hidden = $hidden;
-        if ($this->status !== null) {
-            $this->status = $status;
-        }
-        $this->data = $data;
-        $this->allowMove = $allowMove;
-        $this->allowChildren = $allowChildren;
-        $this->allowEdit = $allowEdit;
-        $this->allowDelete = $allowDelete;
+        $this->blocks = new ArrayCollection();
     }
 
     public function getId(): int
@@ -329,12 +322,12 @@ class Page
         return $this->meta;
     }
 
-    public function getLanguage(): string
+    public function getLocale(): Locale
     {
-        return $this->language;
+        return $this->locale;
     }
 
-    public function getType(): string
+    public function getType(): Type
     {
         return $this->type;
     }
@@ -342,6 +335,20 @@ class Page
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getImage(): ?MediaGroup
+    {
+        return $this->image;
+    }
+
+    public function getImageItem(): ?MediaItem
+    {
+        if ($this->image === null) {
+            return null;
+        }
+
+        return $this->image->getFirstConnectedMediaItem();
     }
 
     public function getNavigationTitle(): string
@@ -369,6 +376,11 @@ class Page
         return $this->publishOn;
     }
 
+    public function getPublishUntil(): ?DateTime
+    {
+        return $this->publishUntil;
+    }
+
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
@@ -381,12 +393,12 @@ class Page
 
     public function isAllowMove(): bool
     {
-        return $this->allowMove;
+        return $this->allowMove && !self::isForbiddenToMove($this->id);
     }
 
     public function isAllowChildren(): bool
     {
-        return $this->allowChildren;
+        return $this->allowChildren && !self::isForbiddenToHaveChildren($this->id);
     }
 
     public function isAllowEdit(): bool
@@ -396,7 +408,7 @@ class Page
 
     public function isAllowDelete(): bool
     {
-        return $this->allowDelete;
+        return $this->allowDelete && !self::isForbiddenToDelete($this->id);
     }
 
     public function getSequence(): int
@@ -404,7 +416,7 @@ class Page
         return $this->sequence;
     }
 
-    public function getData()
+    public function getData(): ?array
     {
         return $this->data;
     }
@@ -439,6 +451,7 @@ class Page
         }
         $this->data = null;
     }
+
     /**
      * @ORM\PostPersist
      * @ORM\PostUpdate
@@ -463,7 +476,7 @@ class Page
      */
     public static function isForbiddenToDelete(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [self::HOME_PAGE_ID, self::ERROR_PAGE_ID], true);
     }
 
     /**
@@ -471,7 +484,7 @@ class Page
      */
     public static function isForbiddenToMove(int $pageId): bool
     {
-        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+        return in_array($pageId, [self::HOME_PAGE_ID, self::ERROR_PAGE_ID], true);
     }
 
     /**
@@ -479,13 +492,53 @@ class Page
      */
     public static function isForbiddenToHaveChildren(int $pageId): bool
     {
-        return $pageId === BackendModel::ERROR_PAGE_ID;
+        return $pageId === self::ERROR_PAGE_ID;
     }
 
-    public function move(int $parentId, int $sequence, string $type): void
+    public function move(int $parentId, int $sequence, Type $type): void
     {
         $this->parentId = $parentId;
         $this->sequence = $sequence;
         $this->type = $type;
+    }
+
+    public static function fromDataTransferObject(PageDataTransferObject $pageDataTransferObject): self
+    {
+        return new self(
+            $pageDataTransferObject->id,
+            $pageDataTransferObject->userId,
+            $pageDataTransferObject->parentId,
+            $pageDataTransferObject->templateId,
+            $pageDataTransferObject->meta,
+            $pageDataTransferObject->locale,
+            $pageDataTransferObject->title,
+            $pageDataTransferObject->navigationTitle ?? $pageDataTransferObject->title,
+            $pageDataTransferObject->image,
+            $pageDataTransferObject->publishOn,
+            $pageDataTransferObject->publishUntil,
+            $pageDataTransferObject->sequence,
+            $pageDataTransferObject->navigationTitleOverwrite,
+            $pageDataTransferObject->hidden,
+            $pageDataTransferObject->status,
+            $pageDataTransferObject->type,
+            $pageDataTransferObject->data,
+            $pageDataTransferObject->allowMove,
+            $pageDataTransferObject->allowChildren,
+            $pageDataTransferObject->allowEdit,
+            $pageDataTransferObject->allowDelete
+        );
+    }
+
+    /**
+     * @return PageBlock[]|Collection
+     */
+    public function getBlocks(): Collection
+    {
+        return $this->blocks;
+    }
+
+    public function getUrl(): string
+    {
+        return Navigation::getUrl($this->id, $this->locale->getLocale());
     }
 }

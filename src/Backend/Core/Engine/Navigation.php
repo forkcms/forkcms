@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use Backend\Core\Language\Locale;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
@@ -177,7 +178,7 @@ final class Navigation extends KernelLoader
         );
 
         if (!is_file($editorLinkListCache)) {
-            BackendPagesModel::buildCache(BackendLanguage::getWorkingLanguage());
+            BackendPagesModel::buildCache(Locale::workingLocale());
         }
     }
 }

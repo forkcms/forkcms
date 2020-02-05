@@ -11,7 +11,7 @@
 
 1. Make sure you have [composer](https://getcomposer.org/) installed.
 2. Run `composer create-project forkcms/forkcms .` in your document root.
-3. Browse to your website or run `forkcms:install:install`
+3. Browse to your website or run `forkcms:install:install --env=install`
 4. Follow the steps on-screen
 5. Have fun!
 
@@ -50,10 +50,15 @@ Running the tests:
 
     composer test
 
-Running only the unit tests or the functional tests
+Running only the unit, functional, or the installer tests
 
      composer test -- --testsuite=functional
      composer test -- --testsuite=unit
+     composer test -- --testsuite=installer
+
+If you want to run all the tests except the ones from the installer use
+
+    composer test -- --exclude-group=installer
 
 ## Styling the backend
 

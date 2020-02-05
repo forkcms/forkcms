@@ -31,7 +31,7 @@
 
 {% block checkbox_radio_label %}
   {% if widget is defined %}
-    {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-check-label')|trim}) %}
+    {% set label_attr = label_attr|merge({for: id, class: (label_attr.class|default('') ~ ' form-check-label')|trim}) %}
     {% if required %}
       {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
     {% endif %}
@@ -41,8 +41,8 @@
     {% if label is not same as(false) and label is empty %}
       {%- if label_format is not empty -%}
         {% set label = label_format|replace({
-        '%name%': name,
-        '%id%': id,
+          '%name%': name,
+          '%id%': id,
         }) %}
       {%- else -%}
         {% set label = name|humanize %}
@@ -67,9 +67,9 @@
   {% if errors|length > 0 -%}
     {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
-        {%- for error in errors -%}
-          <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
-        {%- endfor -%}
+      {%- for error in errors -%}
+        <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+      {%- endfor -%}
     </ul>
     {% if form.parent %}</small>{% else %}</div>{% endif %}
   {%- endif %}
@@ -347,3 +347,49 @@
     </div>
   </div>
 {%- endblock collection_row -%}
+
+{% block title_widget %}
+  {{- form_widget(form) -}}
+  {% if form.parent.meta is defined %}
+    {% set meta = form.parent.meta %}
+    {% set slug = meta.children.url.vars.value %}
+    <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
+      {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block checkbox_switch_widget -%}
+  {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
+  <div class="custom-control custom-switch">
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+
+    {{- form_label(form, null, { widget: checkbox.content }) -}}
+  </div>
+{%- endblock %}
+
+{% block choice_widget_collapsed -%}
+  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) %}
+  {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+    {% set required = false %}
+  {%- endif -%}
+  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    {%- if placeholder is not none -%}
+      <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+    {%- endif -%}
+    {%- if preferred_choices|length > 0 -%}
+      {% set options = preferred_choices %}
+      {{- block('choice_widget_options') -}}
+      {%- if choices|length > 0 and separator is not none -%}
+        <option disabled="disabled">{{ separator }}</option>
+      {%- endif -%}
+    {%- endif -%}
+    {%- set options = choices -%}
+    {{- block('choice_widget_options') -}}
+  </select>
+{%- endblock %}
+
+{% block tags_widget -%}
+  {{ form_widget(form) }}
+  <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
+{%- endblock %}

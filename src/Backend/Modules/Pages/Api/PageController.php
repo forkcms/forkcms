@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Pages\Api;
 
+use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,11 +20,11 @@ final class PageController
     }
 
     /**
-     * @Rest\Get("/pages/{language}/{id}")
+     * @Rest\Get("/pages/{locale}/{id}")
      */
-    public function getPageAction(string $language, int $id): JsonResponse
+    public function getPageAction(string $locale, int $id): JsonResponse
     {
-        $latest = $this->pageRepository->getLatestForApi($id, $language);
+        $latest = $this->pageRepository->getLatestForApi($id, Locale::fromString($locale));
 
         if ($latest === null) {
             throw new NotFoundHttpException();
@@ -33,11 +34,11 @@ final class PageController
     }
 
     /**
-     * @Rest\Get("/pages/{language}/{id}/subpages")
+     * @Rest\Get("/pages/{locale}/{id}/subpages")
      */
-    public function getSubPagesAction(string $language, int $id): JsonResponse
+    public function getSubPagesAction(string $locale, int $id): JsonResponse
     {
-        $subPages = $this->pageRepository->getSubPagesForApi($id, $language);
+        $subPages = $this->pageRepository->getSubPagesForApi($id, Locale::fromString($locale));
 
         return JsonResponse::create($subPages);
     }

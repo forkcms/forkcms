@@ -172,11 +172,13 @@ class ModuleExtraRepository extends ServiceEntityRepository
             ->where('em.module = :module')
             ->andWhere('em.type = :type')
             ->andWhere('em.action = :action')
-            ->setParameters([
-                'module' => $module,
-                'action' => $action,
-                'type' => $moduleExtraType,
-            ]);
+            ->setParameters(
+                [
+                    'module' => $module,
+                    'action' => $action,
+                    'type' => $moduleExtraType,
+                ]
+            );
 
         if ($isDataNull === true) {
             $qb

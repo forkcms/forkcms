@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -54,7 +55,7 @@ class Move extends BackendBaseAJAXAction
         $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
 
         // build cache
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        BackendPagesModel::buildCache(Locale::workingLocale());
 
         // output
         if ($success) {

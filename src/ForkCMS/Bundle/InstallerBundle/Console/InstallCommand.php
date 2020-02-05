@@ -140,13 +140,13 @@ class InstallCommand extends Command
     {
         $installationData->setExampleData($config['exampleData'] ?? false);
 
-        foreach ($config['modules'] ?? [] as $module) {
-            $installationData->addModule($module);
-        }
         foreach (ForkInstaller::getRequiredModules() as $module) {
             $installationData->addModule($module);
         }
         foreach (ForkInstaller::getHiddenModules() as $module) {
+            $installationData->addModule($module);
+        }
+        foreach ($config['install'] ?? [] as $module) {
             $installationData->addModule($module);
         }
 
@@ -196,7 +196,14 @@ class InstallCommand extends Command
 
     private function isConfigComplete(array $config, array $required): bool
     {
-        return count(array_intersect_key(array_flip($required), array_filter($config))) === count($required);
+        $cleanedUpConfig = array_filter(
+            $config,
+            static function ($var): bool {
+                return $var !== null;
+            }
+        );
+
+        return count(array_intersect_key(array_flip($required), $cleanedUpConfig)) === count($required);
     }
 
     private function getAskEmailQuestion(): Question

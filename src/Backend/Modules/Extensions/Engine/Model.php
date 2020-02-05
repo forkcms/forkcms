@@ -565,7 +565,7 @@ class Model
         $i = 0;
 
         foreach ($templates as &$row) {
-            $row['data'] = unserialize($row['data']);
+            $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
             $row['has_block'] = false;
 
             // reset

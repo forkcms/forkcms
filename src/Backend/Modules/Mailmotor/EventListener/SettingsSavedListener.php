@@ -20,7 +20,7 @@ final class SettingsSavedListener
         $this->cacheDirectory = $cacheDirectory;
     }
 
-    public function onSettingsSavedEvent(SettingsSavedEvent $event): void
+    public function onSettingsSavedEvent(): void
     {
         /**
          * We must remove our container cache after this request.

@@ -9,6 +9,7 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Pages\Domain\Page\Page;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -81,7 +82,7 @@ class Edit extends BackendBaseActionEdit
 
         // get url
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
+        $url404 = BackendModel::getUrl(Page::ERROR_PAGE_ID);
         if ($url404 != $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

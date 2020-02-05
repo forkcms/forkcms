@@ -59,27 +59,27 @@ final class AuthenticationTest extends WebTestCase
 
     public function testGettingLoginStatusForUserWithWrongPassword()
     {
-        $this->assertEquals('invalid', Authentication::getLoginStatus('test-active@fork-cms.com', 'wrong'));
+        $this->assertEquals(Status::invalid(), Authentication::getLoginStatus('test-active@fork-cms.com', 'wrong'));
     }
 
     public function testGettingLoginStatusForActiveUserWithCorrectPassword()
     {
-        $this->assertEquals('active', Authentication::getLoginStatus('test-active@fork-cms.com', 'forkcms'));
+        $this->assertEquals(Status::active(), Authentication::getLoginStatus('test-active@fork-cms.com', 'forkcms'));
     }
 
     public function testGettingLoginStatusForInactiveUserWithCorrectPassword()
     {
-        $this->assertEquals('inactive', Authentication::getLoginStatus('test-inactive@fork-cms.com', 'forkcms'));
+        $this->assertEquals(Status::inactive(), Authentication::getLoginStatus('test-inactive@fork-cms.com', 'forkcms'));
     }
 
     public function testGettingLoginStatusForDeletedUserWithCorrectPassword()
     {
-        $this->assertEquals('deleted', Authentication::getLoginStatus('test-deleted@fork-cms.com', 'forkcms'));
+        $this->assertEquals(Status::deleted(), Authentication::getLoginStatus('test-deleted@fork-cms.com', 'forkcms'));
     }
 
     public function testGettingLoginStatusForBlockedUserWithCorrectPassword()
     {
-        $this->assertEquals('blocked', Authentication::getLoginStatus('test-blocked@fork-cms.com', 'forkcms'));
+        $this->assertEquals(Status::blocked(), Authentication::getLoginStatus('test-blocked@fork-cms.com', 'forkcms'));
     }
 
     public function testLoggingInMakesUsLoggedIn()

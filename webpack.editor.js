@@ -12,7 +12,7 @@ module.exports = {
   // Webpack will bundle all JavaScript into this file
   output: {
     path: path.resolve(__dirname, 'js'),
-    filename: 'editor.js'
+    filename: 'vendors/editor.js'
   },
 
   module: {

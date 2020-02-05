@@ -98,6 +98,18 @@ final class Header extends KernelLoader
         $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
         $this->addJS('utils.js', 'Core', true, false, true, Priority::core());
         $this->addJS('backend.js', 'Core', true, false, true, Priority::core());
+
+        $this->addJS('/js/vendors/select2/select2.full.js', 'Core', true, true, true, Priority::core());
+        $select2InterfaceLanguage = BL::getInterfaceLanguage();
+        // There is no 1 on 1 mapping for Chinese so we need to select which version of Chinese we want
+        if ($select2InterfaceLanguage === 'zh') {
+            $select2InterfaceLanguage = 'zh-TW';
+        }
+        $select2TranslationPath = '/js/vendors/select2/i18n/' . $select2InterfaceLanguage . '.js';
+
+        if (is_file($this->getContainer()->getParameter('kernel.project_dir') . $select2TranslationPath)) {
+            $this->addJS($select2TranslationPath, 'Core', true, true, true, Priority::core());
+        }
     }
 
     private function addCoreCss(): void
@@ -106,6 +118,8 @@ final class Header extends KernelLoader
         $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
         $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
         $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
+        $this->addCSS('/css/vendors/select2.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('/css/vendors/select2-bootstrap.css', 'Core', true, true, true, Priority::core());
     }
 
     private function buildPathForModule(string $fileName, string $module, string $subDirectory): string

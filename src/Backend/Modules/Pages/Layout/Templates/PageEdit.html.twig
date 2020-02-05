@@ -1,0 +1,127 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import 'Layout/Templates/macros.html.twig' as macro %}
+{% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
+
+{% block pagesTree %}
+  <div class="sub-navigation d-none d-sm-block">
+    <div class="pages-tree">
+      <div class="alert alert-warning d-md-none">
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
+      </div>
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+      </button>
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  <div class="btn-toolbar justify-content-end">
+    <div class="btn-group" role="group">
+      {% if not page.isHidden %}
+        {% set url = (SITE_URL ~ page.url) %}
+        {% if page.status.draft or page.status.archive %}
+          {% set url = (url ~ '?page_revision=' ~ page.revisionId) %}
+        {% endif %}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
+      {% endif %}
+
+      {% if showPagesPageIndex %}
+        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
+      {% endif %}
+
+      {% if showPagesPageAdd %}
+        <div class="btn-group">
+          <a type="button" href="{{ geturl('PageAdd') }}" class="btn btn-default pull-left">
+            {{ macro.icon('plus-square') }}
+            <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
+          </a>
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ page.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
+            <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ page.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
+            {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
+              <button type="button" class="dropdown-item" data-toggle="modal" data-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <div class="fork-module-actions">
+    <div class="btn-toolbar justify-content-between">
+      <div class="btn-group" role="group">
+        {% if showPagesPageDelete and deleteForm is defined %}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+        {% endif %}
+        {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group" role="group">
+        {{ form_widget(form.saveAsDraft) }}
+        {{ macro.buttonIcon('', 'save', 'lbl.Publish'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
+      </div>
+    </div>
+  </div>
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
+  {% if showPagesPageDelete and deleteForm is defined %}
+    {{ form_start(deleteForm) }}
+    {{ form_rest(deleteForm) }}
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDelete'|trans|format(page.title)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal", "id":"blockHtmlCancel" }) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
+
+  {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
+    {{ form_start(copyToOtherLanguageForm) }}
+    <div class="modal fade" id="copyPage" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="copyPageTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="copyPageTitle">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            {{ form_row(copyToOtherLanguageForm.to) }}
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Copy'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"copyPageSubmit" }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(copyToOtherLanguageForm) }}
+  {% endif %}
+{% endblock %}

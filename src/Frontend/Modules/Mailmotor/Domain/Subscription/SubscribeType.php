@@ -137,7 +137,7 @@ class SubscribeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Subscription::class,
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function () {
                 // Define overwrite interests
                 $overwriteInterests = $this->modulesSettings->get('Mailmotor', 'overwrite_interests', true);
                 if (!empty($this->interests) && $overwriteInterests) {
