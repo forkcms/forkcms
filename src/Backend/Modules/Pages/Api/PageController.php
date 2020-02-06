@@ -8,6 +8,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Footer;
 use Frontend\Core\Engine\Navigation;
@@ -97,16 +98,47 @@ final class PageController
         new Breadcrumb($this->kernel);
         new Footer($this->kernel);
 
-        $moduleExtra = ModuleExtra::createModuleExtra(
+        // start up the rendering for the specific module widget or action
+        $moduleExtraFactory = ModuleExtra::createModuleExtra(
             $this->kernel,
             new ModuleExtraType($pageBlock['type']),
             $pageBlock['module'],
             $pageBlock['action'],
             $pageBlock['data']
         );
+
+        $actionClass = 'Frontend\\Modules\\' . $moduleExtraFactory->getModule() . '\\Widgets\\' . $moduleExtraFactory->getAction();
+        if ($moduleExtraFactory->getModule() === 'Core') {
+            $actionClass = 'Frontend\\Core\\Widgets\\' . $moduleExtraFactory->getAction();
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($actionClass)) {
+            return JsonResponse::create(
+                'The action file ' . $actionClass . ' could not be found.',
+                JsonResponse::HTTP_NOT_FOUND
+            );
+        }
+
+        /** @var ModuleExtraInterface $moduleExtra */
+        $moduleExtra = new $actionClass(
+            $this->kernel,
+            $moduleExtraFactory->getModule(),
+            $moduleExtraFactory->getAction(),
+            $moduleExtraFactory->getData()
+        );
+
+        // validate if the execute-method is callable
+        if (!is_callable([$moduleExtra, 'execute'])) {
+            return JsonResponse::create(
+                'The action file should contain a callable method "execute".',
+                JsonResponse::HTTP_NOT_FOUND
+            );
+        }
+
+        // call the execute method of the real action (defined in the module)
         $moduleExtra->execute();
         $extraVariables = $moduleExtra->getTemplate()->getAssignedVariables();
-
         $this->requestStack->pop();
 
         return JsonResponse::create($extraVariables);
