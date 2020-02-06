@@ -183,7 +183,17 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
 
-        $result['blocks'] = $blocks;
+        $result['blocks'] = array_map(
+            static function (array $block): array {
+                $decodedHtml = json_decode($block['html'] ?? null, false);
+                if ($decodedHtml !== null) {
+                    $block['html'] = $decodedHtml;
+                }
+
+                return $block;
+            },
+            $blocks
+        );
 
         $qb = $this
             ->getEntityManager()
@@ -613,8 +623,7 @@ class PageRepository extends ServiceEntityRepository
             ->createQueryBuilder()
             ->from(PageBlock::class, 'b')
             ->where('b.extraId = :extraId')
-            ->groupBy('b.revisionId')
-        ;
+            ->groupBy('b.revisionId');
 
         $qb
             ->select('p')
