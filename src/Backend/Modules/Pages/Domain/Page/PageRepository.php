@@ -202,7 +202,7 @@ class PageRepository extends ServiceEntityRepository
                 ]
             );
 
-        $result['extras'] = $qb->getQuery()->getArrayResult();
+        $result['extras'] = $qb->indexBy('e', 'e.id')->getQuery()->getArrayResult();
 
         return $result;
     }
