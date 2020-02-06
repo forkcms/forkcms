@@ -71,5 +71,4 @@ final class ModuleExtraType implements JsonSerializable
     {
         return (string) $this;
     }
-
 }
