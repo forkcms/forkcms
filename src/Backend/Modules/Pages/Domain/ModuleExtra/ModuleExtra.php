@@ -5,6 +5,10 @@ namespace Backend\Modules\Pages\Domain\ModuleExtra;
 use Common\Language;
 use Doctrine\ORM\Mapping as ORM;
 use SpoonFilter;
+use Frontend\Core\Engine\Block\ModuleExtraInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
+use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository")
@@ -38,7 +42,7 @@ class ModuleExtra
     private $module;
 
     /**
-     * @var string
+     * @var ModuleExtraType
      *
      * @ORM\Column(type="module_extra_type", name="type")
      */
@@ -212,5 +216,24 @@ class ModuleExtra
         }
 
         return vsprintf($name, $this->data['label_variables']);
+    }
+
+    public function getModuleExtra(KernelInterface $kernel): ModuleExtraInterface
+    {
+        return self::createModuleExtra($kernel, $this->type, $this->module, $this->action);
+    }
+
+    public static function createModuleExtra(
+        KernelInterface $kernel,
+        ModuleExtraType $type,
+        string $module,
+        string $action = null,
+        $data = null
+    ): ModuleExtraInterface {
+        if ($type->isBlock()) {
+            return new FrontendBlockExtra($kernel, $module, $action, $data);
+        }
+
+        return new FrontendBlockWidget($kernel, $module, $action, $data);
     }
 }
