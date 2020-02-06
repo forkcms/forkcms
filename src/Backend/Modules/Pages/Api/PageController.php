@@ -27,7 +27,7 @@ final class PageController
         $latest = $this->pageRepository->getLatestForApi($id, Locale::fromString($locale));
 
         if ($latest === null) {
-            throw new NotFoundHttpException();
+            return JsonResponse::create(null, JsonResponse::HTTP_NOT_FOUND);
         }
 
         return JsonResponse::create($latest);
