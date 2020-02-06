@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
@@ -11,8 +13,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
-use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
@@ -490,7 +490,15 @@ class Page extends KernelLoader
                         ];
                     }
 
-                    $block = ['extra' => $this->getExtraForBlock($block)];
+                    $block = [
+                        'extra' => ModuleExtra::createModuleExtra(
+                            $this->getKernel(),
+                            new ModuleExtraType($block['extra_type']),
+                            $block['extra_module'],
+                            $block['extra_action'],
+                            $block['extra_data']
+                        ),
+                    ];
 
                     // add to list of extras to parse
                     $this->extras[] = $block['extra'];
@@ -500,30 +508,6 @@ class Page extends KernelLoader
                 $blocks
             );
         }
-    }
-
-    private function getExtraForBlock(array $block): ModuleExtraInterface
-    {
-        // block
-        if ($block['extra_type'] === 'block') {
-            if (extension_loaded('newrelic')) {
-                newrelic_name_transaction($block['extra_module'] . '::' . $block['extra_action']);
-            }
-
-            return new FrontendBlockExtra(
-                $this->getKernel(),
-                $block['extra_module'],
-                $block['extra_action'],
-                $block['extra_data']
-            );
-        }
-
-        return new FrontendBlockWidget(
-            $this->getKernel(),
-            $block['extra_module'],
-            $block['extra_action'],
-            $block['extra_data']
-        );
     }
 
     private function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND): void
