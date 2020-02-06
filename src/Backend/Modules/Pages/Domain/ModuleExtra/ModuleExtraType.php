@@ -42,6 +42,21 @@ final class ModuleExtraType implements JsonSerializable
         return new self(self::WIDGET);
     }
 
+    public function equals(self $type): bool
+    {
+        return $this->type === $type->type;
+    }
+
+    public function isBlock(): bool
+    {
+        return $this->equals(self::block());
+    }
+
+    public function isWidget(): bool
+    {
+        return $this->equals(self::widget());
+    }
+
     public function __toString(): string
     {
         return $this->type;
@@ -56,4 +71,5 @@ final class ModuleExtraType implements JsonSerializable
     {
         return (string) $this;
     }
+
 }
