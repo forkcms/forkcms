@@ -7,6 +7,7 @@ use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Actions\MediaItemMassAction;
+use SpoonFilter;
 use SpoonFormDropdown;
 
 /**
@@ -44,15 +45,15 @@ class MediaItemDataGrid extends DataGridDatabase
     {
         if ($type->isMovie()) {
             return [
-                'storageType' => ucfirst(Language::lbl('MediaStorageType')),
-                'url' => ucfirst(Language::lbl('MediaMovieId')),
-                'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'storageType' => SpoonFilter::ucfirst(Language::lbl('MediaStorageType')),
+                'url' => SpoonFilter::ucfirst(Language::lbl('MediaMovieId')),
+                'title' => SpoonFilter::ucfirst(Language::lbl('MediaMovieTitle')),
             ];
         }
 
         return [
             'type' => '',
-            'url' => ucfirst(Language::lbl('Image')),
+            'url' => SpoonFilter::ucfirst(Language::lbl('Image')),
         ];
     }
 

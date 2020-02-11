@@ -6,6 +6,7 @@ use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
+use SpoonFilter;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module
@@ -28,7 +29,7 @@ final class TreeManager
     {
         $navigationItems = $this->mediaFolderCache->get();
 
-        $html = '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
+        $html = '<h4>' . SpoonFilter::ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
         $html .= $this->buildNavigationTree($navigationItems);
 
         return $html;

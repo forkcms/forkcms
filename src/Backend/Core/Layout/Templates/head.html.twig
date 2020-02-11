@@ -10,11 +10,11 @@
   <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
 
   {% for cssFile in cssFiles %}
-    <link rel="stylesheet" href="{{ cssFile.file }}" />{{ CRLF }}{{ TAB }}
+    <link rel="stylesheet" href="{{ cssFile }}" />{{ CRLF }}{{ TAB }}
   {% endfor %}
 
   {% for jsFile in jsFiles %}
-    <script src="{{ jsFile.file }}"></script>{{ CRLF }}{{ TAB }}
+    <script src="{{ jsFile }}"></script>{{ CRLF }}{{ TAB }}
   {% endfor %}
 
   {{ jsData|raw }}

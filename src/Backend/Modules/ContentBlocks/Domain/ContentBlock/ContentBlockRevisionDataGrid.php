@@ -8,6 +8,7 @@ use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Core\Language\Locale;
+use SpoonFilter;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -33,8 +34,8 @@ class ContentBlockRevisionDataGrid extends DataGridDatabase
         // set headers
         $this->setHeaderLabels(
             [
-                'user_id' => ucfirst(Language::lbl('By')),
-                'edited_on' => ucfirst(Language::lbl('LastEditedOn')),
+                'user_id' => SpoonFilter::ucfirst(Language::lbl('By')),
+                'edited_on' => SpoonFilter::ucfirst(Language::lbl('LastEditedOn')),
             ]
         );
 

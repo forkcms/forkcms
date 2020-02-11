@@ -193,7 +193,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Location') . '&id=' . $item['id'],
             ]
         );
 
@@ -241,7 +241,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                    'edit_url' => BackendModel::createUrlForAction('Edit', 'Location') . '&id=' . $item['id'],
                 ]
             );
         }
