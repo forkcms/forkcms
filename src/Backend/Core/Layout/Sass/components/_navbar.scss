@@ -445,7 +445,8 @@
   }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(lg) {
+
   .navbar-nav {
     .nav-item {
       float: none;
@@ -522,7 +523,7 @@
   }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-up(lg) {
   .navbar-nav .nav-item .nav-link .svg-inline--fa {
     left: 20px;
   }
