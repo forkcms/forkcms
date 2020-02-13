@@ -83,7 +83,7 @@
 
     // Don't show hover effects while drag and dropping.
     .jstree-dnd-parent .jstree-hovered {
-      background: #FFF;
+      background: $white;
       color: inherit;
       border: none;
       box-shadow: none;
