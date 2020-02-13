@@ -48,7 +48,7 @@ div.active.tab-pane:focus {
       border-radius: 3px 3px 0 0;
       color: $gray-700;
       font-size: $font-size-sm;
-      font-weight: 600;
+      font-weight: $font-weight-medium;
       padding: 8px 12px 7px;
 
       &.active {

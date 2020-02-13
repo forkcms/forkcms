@@ -307,7 +307,7 @@
 
         &.active a {
           color: $blue-dark;
-          font-weight: 600;
+          font-weight: $font-weight-medium;
         }
 
         &:last-of-type {
