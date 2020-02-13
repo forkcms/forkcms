@@ -110,6 +110,9 @@ jsBackend.pages.extras = {
     jsBackend.pages.extras.blockTypeSwitcher()
     jsBackend.pages.extras.saveBlock()
     jsBackend.pages.extras.newBlock()
+
+    // bind events
+    $(document).on('click', '[data-role="page-block-visibility"]', jsBackend.pages.extras.toggleVisibilityBlock)
   },
 
   newBlock: function () {
@@ -121,14 +124,14 @@ jsBackend.pages.extras = {
   },
 
   saveBlock: function () {
-    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function() {
+    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function () {
       var $modal = $(this).closest('.modal')
       var separator = ' › '
       var $pageBlockTitle = $modal.closest('[data-role="page-block-wrapper"]').find('[data-role="page-block-title"]')
       var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
       var title = $modal.find('[data-role="select-block-type"] option:selected').text()
 
-      if (selectedBlockType === 'block' ||selectedBlockType === 'widget') {
+      if (selectedBlockType === 'block' || selectedBlockType === 'widget') {
         title += separator + jsBackend.pages.extras.extractExtraTitle(
           separator,
           $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
@@ -169,6 +172,25 @@ jsBackend.pages.extras = {
     }
 
     $allBlockOptions.not($selectedBlockOption).attr('disabled', 'disabled')
+  },
+
+  toggleVisibilityBlock: function (e) {
+    // get checkbox
+    var $checkbox = $(e.currentTarget)
+    var $blackWrapper = $checkbox.parents('[data-role="page-block-wrapper"]')
+    var $label = $blackWrapper.find('label[for="' + $checkbox.attr('id') + '"]')
+
+    if ($blackWrapper.hasClass('block-not-visible')) {
+      // make visible
+      $blackWrapper.removeClass('block-not-visible')
+      $label.find('[data-fa-i2svg]').removeClass('fa-eye-slash').addClass('fa-eye')
+      $label.find('.sr-only').html(jsBackend.locale.lbl('Hide'))
+    } else {
+      // make invisible
+      $blackWrapper.addClass('block-not-visible')
+      $label.find('[data-fa-i2svg]').removeClass('fa-eye').addClass('fa-eye-slash')
+      $label.find('.sr-only').html(jsBackend.locale.lbl('Show'))
+    }
   }
 }
 

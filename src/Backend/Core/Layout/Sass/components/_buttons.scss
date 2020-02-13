@@ -1,11 +1,10 @@
 .btn {
+  border-radius: 3px;
   font-size: $font-size-base * 0.875;
   -webkit-appearance: none;
-  border-radius: 3px;
-  //padding: 9px 9px 10px;
 
   .svg-inline--fa {
-    margin: 0 3px 0 0;
+    margin: 0 6px 0 0;
   }
 
   .btn-text {
@@ -14,16 +13,16 @@
     margin: 0 3px;
   }
 
-  &.ui-sortable-handle {
-    cursor: move;
-  }
-
   &.btn-sm {
     font-size: $font-size-sm;
   }
 
   &.btn-md {
     font-size: $font-size-sm;
+    padding: 4px 15px 5px;
+  }
+
+  &.btn-wider {
     padding: 4px 15px 5px;
   }
 }
@@ -36,6 +35,16 @@
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  &.btn-sm {
+    align-items: center;
+    align-content: center;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    padding: 0;
+    width: 32px;
   }
 }
 

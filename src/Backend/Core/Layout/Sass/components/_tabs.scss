@@ -10,10 +10,14 @@
   border-top-left-radius: 0;
   border-top: 0;
   margin-bottom: 25px;
-  padding: 30px 25px;
+  padding: 15px;
 
   .tab-pane-title {
     font-size: $font-size-btn;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 30px 25px;
   }
 }
 

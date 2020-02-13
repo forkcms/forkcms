@@ -60,10 +60,6 @@
       display: none;
     }
   }
-
-  .navbar-dark .nav-item-text {
-    opacity: 0;
-  }
 }
 
 .toggle-nav-collapse {
@@ -192,9 +188,7 @@
   }
 
   .nav-item-text {
-    opacity: 1;
     font-size: $font-size-xs;
-    transition: opacity 250ms ease;
   }
 }
 
@@ -496,11 +490,20 @@
 
     .nav-item-text {
       font-size: $font-size-base;
+      opacity: 1;
+      transition: opacity 250ms ease;
     }
   }
 
-  .navigation-collapsed .navbar-dark .navbar-nav .nav-item .nav-link {
-    padding: 15px 0 15px 50px;
+  .navigation-collapsed .navbar-dark {
+
+    .navbar-nav .nav-item .nav-link {
+      padding: 15px 0 15px 50px;
+    }
+
+    .nav-item-text {
+      opacity: 0;
+    }
   }
 
   .main-navigation {

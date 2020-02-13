@@ -127,6 +127,7 @@ final class PageContentType extends AbstractType
                         'data' => $pageBlocks,
                         'label' => false,
                         'allow_add' => true,
+                        'add_button_text' => 'lbl.AddBlock',
                         'allow_delete' => true,
                         'allow_sequence' => true,
                         'property_path' => 'blocks[' . $block . ']',
@@ -158,6 +159,7 @@ final class PageContentType extends AbstractType
                 [
                     'label' => false,
                     'allow_add' => true,
+                    'add_button_text' => 'lbl.AddBlock',
                     'allow_delete' => true,
                     'allow_sequence' => true,
                     'property_path' => 'blocks[' . $block . ']',

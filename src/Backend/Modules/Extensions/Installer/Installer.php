@@ -121,7 +121,7 @@ class Installer extends ModuleInstaller
                     'active' => true,
                     'data' => serialize(
                         [
-                            'format' => '[/,/,top],[main,main,main]',
+                            'format' => '[/,top],[main,main]',
                             'image' => true,
                             'names' => ['main', 'top'],
                         ]

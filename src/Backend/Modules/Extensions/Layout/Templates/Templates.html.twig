@@ -1,5 +1,5 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
-<table cellspacing="10">
+<table>
   <tbody>
     {% for row in table %}
       <tr>
@@ -22,7 +22,7 @@
               {{ '{% set form_name="blocks_'|raw ~ template.value|raw ~ '" %}'|raw }}
               <div class="card card-default card-pages-block">
                 <div class="card-heading">
-                  <div class="heading linkedBlocksTitle"><h3>{{ template.title }}</h3></div>
+                  <div class="heading"><h3>{{ template.title }}</h3></div>
                 </div>
                 <div class="card-body">
                 {% verbatim %}
