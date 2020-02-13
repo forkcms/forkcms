@@ -476,7 +476,7 @@
         width: auto;
 
         .nav-link {
-          height: 50px;
+          height: auto;
           padding: 15px 50px;
 
           .svg-inline--fa {
@@ -520,15 +520,5 @@
     .js-nav-next {
       display: none !important;
     }
-  }
-}
-
-@include media-breakpoint-up(lg) {
-  .navbar-nav .nav-item .nav-link .svg-inline--fa {
-    left: 20px;
-  }
-
-  .navbar-dark .navbar-nav .nav-item .nav-link {
-    height: auto;
   }
 }
