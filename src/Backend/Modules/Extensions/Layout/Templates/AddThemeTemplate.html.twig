@@ -60,22 +60,20 @@
               <div class="form-row">
                 {# Title & button to delete this position #}
                 <div class="col-md-2">
-                  <div class="form-group">
-                    <label for="position{{ position.i }}">{{ 'lbl.Position'|trans|ucfirst }}</label>
-                  </div>
+                  <label for="position{{ position.i }}">{{ 'lbl.Position'|trans|ucfirst }}</label>
                 </div>
                 {# Position name #}
-                <div class="col-10 col-lg-9">
-                  <div class="form-group">
-                    {{ position.formElements.txtPosition.parse()|raw }}
-                    {{ position.formElements.txtPositionError }}
+                <div class="col-lg-10">
+                  <div class="form-group d-flex mb-2">
+                    <div class="flex-grow-1">
+                      {{ position.formElements.txtPosition.parse()|raw }}
+                      {{ position.formElements.txtPositionError }}
+                    </div>
+                    <button class="btn btn-danger btn-icon-only jsDeletePosition ml-2">
+                      {{ macro.icon('trash-alt') }}
+                      <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
+                    </button>
                   </div>
-                </div>
-                <div class="col-2 col-lg-1">
-                  <button class="btn btn-danger btn-icon-only jsDeletePosition">
-                    {{ macro.icon('trash-alt') }}
-                    <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
-                  </button>
                 </div>
               </div>
               <div class="form-row jsBlocks">
@@ -84,18 +82,18 @@
                   {% for block in position.blocks %}
                     <div class="col-md-10 offset-md-2 jsBlock">
                       <div class="form-row">
-                        <div class="col-10 col-lg-9">
-                          <div class="form-group">
-                            {{ block.formElements.ddmType.parse()|raw }}
-                            {{ block.formElements.ddmTypeError }}
+                        <div class="col-lg-6">
+                          <div class="form-group d-flex mb-2">
+                            <div class="flex-grow-1">
+                              {{ block.formElements.ddmType.parse()|raw }}
+                              {{ block.formElements.ddmTypeError }}
+                            </div>
+                            {# Button to remove block from this position #}
+                            <button class="btn btn-danger btn-icon-only jsDeleteBlock ml-2">
+                              {{ macro.icon('trash-alt') }}
+                              <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
+                            </button>
                           </div>
-                        </div>
-                        <div class="col-2 col-lg-1">
-                          {# Button to remove block from this position #}
-                          <button class="btn btn-danger btn-icon-only jsDeleteBlock">
-                            {{ macro.icon('trash-alt') }}
-                            <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -105,12 +103,13 @@
                   <div class="btn-toolbar">
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
-                      <a href="#" class="btn btn-default jsAddBlock">
+                      <a href="#" class="btn btn-secondary btn-wider jsAddBlock">
                         {{ macro.icon('plus-square') }}&nbsp;
                         <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
                   </div>
+                  <hr>
                 </div>
               </div>
             </div>
