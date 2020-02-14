@@ -1,26 +1,29 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
+
 <div class="main-navigation">
   <nav class="navbar navbar-dark">
     <ul class="nav navbar-nav">
       {% for item in navigation %}
+        {% set iconType = 'fas' %}
 
         {% if item.label|lower == 'dashboard' %}
-          {% set icon = 'fas fa-tachometer-alt' %}
+          {% set icon = 'tachometer-alt' %}
         {% elseif item.label|lower == 'pages' %}
-          {% set icon = 'far fa-file' %}
+          {% set icon = 'file' %}
+          {% set iconType = 'far ' %}
         {% elseif item.label|lower == 'medialibrary' %}
-          {% set icon = 'fas fa-images' %}
+          {% set icon = 'images' %}
         {% elseif item.label|lower == 'modules' %}
-          {% set icon = 'fas fa-cube' %}
+          {% set icon = 'cube' %}
         {% elseif item.label|lower == 'marketing' %}
-          {% set icon = 'fas fa-chart-area' %}
+          {% set icon = 'chart-area' %}
         {% elseif item.label|lower == 'settings' %}
-          {% set icon = 'fas fa-cog' %}
+          {% set icon = 'cog' %}
         {% endif %}
 
         <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
           <a class="nav-link" href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ ('lbl.'~item.label)|trans|ucfirst }}" data-container="body" data-placement="right">
-            <i class="{{ icon }}"></i>
+            {{ macro.icon(icon, iconType) }}
             <span class="nav-item-text">{{ ('lbl.'~item.label)|trans|ucfirst }}</span>
             {% if item.active %}<span class="sr-only">({{ 'lbl.Current'|trans }})</span>{% endif %}
           </a>
@@ -29,10 +32,10 @@
     </ul>
   </nav>
   <a href="#" class="arrow-right js-nav-next">
-    <i class="fas fa-chevron-right"></i>
+    {{ macro.icon('chevron-right') }}
   </a>
   <a href="#" class="arrow-left js-nav-prev">
-    <i class="fas fa-chevron-left"></i>
+    {{ macro.icon('chevron-left') }}
   </a>
   <div class="toggle-nav-collapse d-none d-lg-block">
     <button class="js-toggle-nav" role="button">
