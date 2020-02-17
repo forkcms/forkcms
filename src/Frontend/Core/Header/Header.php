@@ -351,7 +351,8 @@ class Header extends KernelLoader
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
-        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
+        // @deprecated fallback to site_html_header as this was used in the past
+        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', '')) . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('fork.settings'),
             Model::getRequest()->getHttpHost(),

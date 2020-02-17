@@ -25,7 +25,8 @@ final class GoogleAnalytics
 
     private function shouldAddGoogleAnalyticsHtml(): bool
     {
-        $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_header', '');
+        // @deprecated fallback to site_html_header as this was used in the past
+        $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', ''));
         $siteHTMLFooter = (string) $this->modulesSettings->get('Core', 'site_html_footer', '');
         $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', null);
 

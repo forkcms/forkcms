@@ -64,9 +64,11 @@ class Index extends BackendBaseActionIndex
             'site_title',
             $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
+        // @deprecated fallback to site_html_header as this was used in the past.
+        $siteHtmlHeadValue =  $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', null));
         $this->form->addTextarea(
-            'site_html_header',
-            $this->get('fork.settings')->get('Core', 'site_html_header', null),
+            'site_html_head',
+            $siteHtmlHeadValue,
             'form-control code',
             'form-control danger code',
             true
@@ -354,8 +356,8 @@ class Index extends BackendBaseActionIndex
                 );
                 $this->get('fork.settings')->set(
                     'Core',
-                    'site_html_header',
-                    $this->form->getField('site_html_header')->getValue()
+                    'site_html_head',
+                    $this->form->getField('site_html_head')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
