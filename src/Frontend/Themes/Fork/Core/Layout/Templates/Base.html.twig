@@ -1,6 +1,9 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+{# Site wide HTML just after body tag #}
+{{ siteHTMLStartOfBody|raw }}
+
 <div id="root">
   {% block cookies %}
     {% include "Core/Layout/Templates/Cookies.html.twig" %}

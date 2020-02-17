@@ -51,6 +51,11 @@
             {% form_field site_html_head %} {% form_field_error site_html_head %}
             <span class="help-block">{{ 'msg.HelpScriptsHead'|trans|raw }}</span>
           </div>
+          <div class="form-group">
+            <label for="siteHtmlStartOfBody" class="control-label">{{ 'msg.HelpScriptsStartOfBodyLabel'|trans|raw }}</label>
+            {% form_field site_html_start_of_body %} {% form_field_error site_html_start_of_body %}
+            <span class="help-block">{{ 'msg.HelpScriptsStartOfBody'|trans|raw }}</span>
+          </div>
           <div class="form-group last">
             <label for="siteHtmlEndOfBody" class="control-label">{{ 'msg.HelpScriptsEndOfBodyLabel'|trans|raw }}</label>
             {% form_field site_html_end_of_body %} {% form_field_error site_html_end_of_body %}

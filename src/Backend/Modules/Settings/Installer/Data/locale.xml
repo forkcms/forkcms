@@ -428,9 +428,9 @@
         <translation language="en"><![CDATA[Paste code that needs to be loaded right after the opening <code>&lt;body&gt;</code> tag here.]]></translation>
       </item>
       <item type="message" name="HelpScriptsStartOfBodyLabel">
-        <translation language="nl"><![CDATA[<code>Start van &lt;body&gt;</code> script(s)]]></translation>
-        <translation language="en"><![CDATA[<code>Start of &lt;body&gt;</code> script(s)]]></translation>
-        <translation language="pl"><![CDATA[<code>Rozpoczęcie skryptu &lt;body&gt;</code>]]></translation>
+        <translation language="nl"><![CDATA[Start van <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[Start of <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="pl"><![CDATA[Rozpoczęcie skryptu <code>&lt;body&gt;</code>]]></translation>
       </item>
       <item type="message" name="HelpSendingEmails">
         <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>

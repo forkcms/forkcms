@@ -360,6 +360,7 @@ class Header extends KernelLoader
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->template->assignGlobal('siteHTMLStartOfBody', trim($this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', '')));
 
         $this->template->assignGlobal('pageTitle', $this->getPageTitle());
         $this->template->assignGlobal('contentTitle', $this->getContentTitle());

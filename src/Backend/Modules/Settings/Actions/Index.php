@@ -73,9 +73,10 @@ class Index extends BackendBaseActionIndex
             'form-control danger code',
             true
         );
+        $siteHtmlStartOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_start_of_body', $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null));
         $this->form->addTextarea(
-            'site_start_of_body_scripts',
-            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
+            'site_html_start_of_body',
+            $siteHtmlStartOfBodyValue,
             'form-control code',
             'form-control danger code',
             true
@@ -362,8 +363,8 @@ class Index extends BackendBaseActionIndex
                 );
                 $this->get('fork.settings')->set(
                     'Core',
-                    'site_start_of_body_scripts',
-                    $this->form->getField('site_start_of_body_scripts')->getValue()
+                    'site_html_start_of_body',
+                    $this->form->getField('site_html_start_of_body')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
