@@ -352,14 +352,14 @@ class Header extends KernelLoader
         $this->jsFiles->parse($this->template, 'jsFiles');
 
         // @deprecated fallback to site_html_header as this was used in the past
-        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', '')) . "\n";
-        $siteHTMLHeader .= new GoogleAnalytics(
+        $siteHTMLHead = (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', '')) . "\n";
+        $siteHTMLHead .= new GoogleAnalytics(
             $this->get('fork.settings'),
             Model::getRequest()->getHttpHost(),
             $this->get('fork.cookie')
         );
-        $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $siteHTMLHead .= "\n" . $this->jsData;
+        $this->template->assignGlobal('siteHTMLHead', trim($siteHTMLHead));
         $this->template->assignGlobal('siteHTMLStartOfBody', trim($this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', '')));
 
         $this->template->assignGlobal('pageTitle', $this->getPageTitle());
