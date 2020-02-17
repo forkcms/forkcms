@@ -27,7 +27,7 @@ final class GoogleAnalytics
     {
         // @deprecated fallback to site_html_header as this was used in the past
         $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', ''));
-        $siteHTMLFooter = (string) $this->modulesSettings->get('Core', 'site_html_footer', '');
+        $siteHTMLFooter = (string) $this->modulesSettings->get('Core', 'site_html_end_of_body', $this->modulesSettings->get('Core', 'site_html_footer', ''));
         $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', null);
 
         return $webPropertyId !== ''

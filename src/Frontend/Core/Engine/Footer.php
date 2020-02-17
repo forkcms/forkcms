@@ -43,7 +43,7 @@ class Footer extends KernelLoader
         $footerLinks = (array) Navigation::getFooterLinks();
         $this->template->assignGlobal('footerLinks', $footerLinks);
 
-        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
+        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
         $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
         // facebook admins given?

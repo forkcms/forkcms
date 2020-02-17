@@ -80,9 +80,10 @@ class Index extends BackendBaseActionIndex
             'form-control danger code',
             true
         );
+        $siteHtmlEndOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
         $this->form->addTextarea(
-            'site_html_footer',
-            $this->get('fork.settings')->get('Core', 'site_html_footer', null),
+            'site_html_end_of_body',
+            $siteHtmlEndOfBodyValue,
             'form-control code',
             'form-control danger code',
             true
@@ -366,8 +367,8 @@ class Index extends BackendBaseActionIndex
                 );
                 $this->get('fork.settings')->set(
                     'Core',
-                    'site_html_footer',
-                    $this->form->getField('site_html_footer')->getValue()
+                    'site_html_end_of_body',
+                    $this->form->getField('site_html_end_of_body')->getValue()
                 );
 
                 // facebook settings

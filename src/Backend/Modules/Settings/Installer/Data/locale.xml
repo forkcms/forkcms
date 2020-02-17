@@ -371,7 +371,7 @@
         <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες οι χρήστες θα κατευθύνονται αυτόματα ανάλογα με τη γλώσσα του φυλλομετρητή τους.]]></translation>
         <translation language="pl"><![CDATA[Wybierz języki, do których ludzie mogą automatycznie być przekierowywani na podstawie języka ich przeglądarki.]]></translation>
       </item>
-      <item type="message" name="HelpScriptsFoot">
+      <item type="message" name="HelpScriptsEndOfBody">
         <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
         <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code><body></code> tag here.]]></translation>
         <translation language="it"><![CDATA[Incolla qui il codice che vuoi caricare al termine del tag<code>&lt;body&gt;</code>.]]></translation>
@@ -384,7 +384,7 @@
         <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τέλος της ετικέτας <code><body></code>.]]></translation>
         <translation language="pl"><![CDATA[Wklej tutaj kod który musi się znajdować na końcu tagu <code><body></code>.]]></translation>
       </item>
-      <item type="message" name="HelpScriptsFootLabel">
+      <item type="message" name="HelpScriptsEndOfBodyLabel">
         <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="en"><![CDATA[End of <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="it"><![CDATA[Termine degli script(s) <code>&lt;body&gt;</code>]]></translation>
