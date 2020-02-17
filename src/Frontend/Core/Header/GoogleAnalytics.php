@@ -27,12 +27,26 @@ final class GoogleAnalytics
     {
         // @deprecated fallback to site_html_header as this was used in the past
         $siteHTMLHead = (string) $this->modulesSettings->get('Core', 'site_html_head', $this->modulesSettings->get('Core', 'site_html_header', ''));
+        $siteHTMLStartOfBody = (string) $this->modulesSettings->get('Core', 'site_html_start_of_body', $this->modulesSettings->get('Core', 'site_start_of_body_scripts', ''));
         $siteHTMLEndOfBody = (string) $this->modulesSettings->get('Core', 'site_html_end_of_body', $this->modulesSettings->get('Core', 'site_html_footer', ''));
-        $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', null);
 
-        return $webPropertyId !== ''
-               && mb_strpos($siteHTMLHead, $webPropertyId) === false
-               && mb_strpos($siteHTMLEndOfBody, $webPropertyId) === false;
+        $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', '');
+
+        // check if GTM is present, if so we expect Google Analytics to be added in GTM
+        $searchFor = 'GTM-';
+        if (mb_stripos($siteHTMLHead, $searchFor) !== false && mb_stripos($siteHTMLStartOfBody, $searchFor) !== false) {
+            return false;
+        }
+
+        // no web property, so we can't build an Analytics code.
+        if ($webPropertyId === '') {
+            return false;
+        }
+
+        // if the web property is not present in the site wide HTML we should parse add Analytics code.
+        return mb_strpos($siteHTMLHead, $webPropertyId) === false
+               && mb_strpos($siteHTMLEndOfBody, $webPropertyId) === false
+               && mb_strpos($siteHTMLStartOfBody, $webPropertyId) === false;
     }
 
     private function shouldAnonymize(): bool
