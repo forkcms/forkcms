@@ -13,24 +13,32 @@
           <h2>{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="card-body">
-          <p><small class="form-text text-muted">{{ 'msg.HelpTemplateLocation'|trans|raw }}</small></p>
-          <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
-          <label for="theme" class="d-none">{{ 'lbl.Theme'|trans|ucfirst }}</label>
-          <div class="form-inline form-group">
-            {% form_field theme %}
-            {% form_field_error theme %}
-            <code>/Core/Layout/Templates/</code>
-            {% form_field file %} {% form_field_error file %}
-          </div>
-          <div class="form-group">
-            <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
-            {% form_field label %} {% form_field_error label %}
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-lg-3">
-                <img src="#" class="img-thumbnail d-none" data-fork-cms-role="image-preview" data-id="{{ form_add.field('default_image').attributes.id }}" />
+          <fieldset>
+            <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
+            <label for="theme" class="d-none">{{ 'lbl.Theme'|trans|ucfirst }}</label>
+            <div class="form-inline form-group">
+              {% form_field theme %}
+              {% form_field_error theme %}
+              <code>/Core/Layout/Templates/</code>
+              {% form_field file %} {% form_field_error file %}
+            </div>
+            <p>
+              <small class="form-text text-muted">{{ 'msg.HelpTemplateLocation'|trans|raw }}</small>
+            </p>
+            <div class="form-group">
+              <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
+              {% form_field label %} {% form_field_error label %}
+            </div>
+          </fieldset>
+          <fieldset class="last">
+            <div class="form-group">
+              <label class="control-label">{{ 'lbl.Image'|trans|ucfirst }}</label>
+              <div class="form-check">
+                {% form_field image %} {% form_field_error image %}
+                <label for="image" class="form-check-label">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
               </div>
+            </div>
+            <div class="row">
               <div class="col-lg-9">
                 <div class="custom-file">
                   {% form_field default_image %}
@@ -38,12 +46,11 @@
                 </div>
                 {% form_field_error default_image %}
               </div>
+              <div class="col-lg-3">
+                <img src="#" class="img-thumbnail d-none" data-fork-cms-role="image-preview" data-id="{{ form_add.field('default_image').attributes.id }}" />
+              </div>
             </div>
-          </div>
-          <div class="form-check">
-            {% form_field image %} {% form_field_error image %}
-            <label for="image" class="form-check-label">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>
