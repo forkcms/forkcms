@@ -43,7 +43,7 @@
         <div class="card-footer mediaEditBox">
           <div class="btn-toolbar">
             <div class="btn-group pull-left" role="group">
-                <button type="button"{% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %}{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %} data-group-id="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
+                <button type="button"{% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %}{% if maximumItems is defined %} data-maximum-media-count="{{ maximumItems }}"{% endif %}{% if minimumItems is defined %} data-minimum-media-count="{{ minimumItems }}"{% endif %} data-group-id="{{ mediaGroup.id }}" class="addMediaButton btn btn-secondary" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
                 {{ macro.icon('plus-square') }}
                 <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
               </button>

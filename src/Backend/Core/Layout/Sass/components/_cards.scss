@@ -67,8 +67,12 @@
     text-decoration: underline;
   }
 
-  .card-footer .btn {
-    text-decoration: none;
+  .card-footer {
+    background-color: $gray-100;
+
+    .btn {
+      text-decoration: none;
+    }
   }
 }
 
