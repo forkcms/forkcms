@@ -1,0 +1,11 @@
+css/**/*.css
+js/**/*.js
+src/Backend/Core/Js/ckeditor/*
+src/Backend/Core/Js/ckfinder/*
+src/Backend/Core/Layout/Css/*
+src/Backend/Modules/MediaLibrary/Layout/Css/*
+src/ForkCMS/Bundle/InstallerBundle/Resources/public/css/*
+src/Frontend/Core/Layout/Css/*
+src/Frontend/Modules/**/Layout/Css/*
+src/Frontend/Themes/**/Core/Layout/Css/*
+vendor/*
