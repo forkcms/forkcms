@@ -7,7 +7,7 @@
   .card-heading {
     border-top-left-radius: $card-border-radius;
     border-top-right-radius: $card-border-radius;
-    padding: 8px 15px 10px;
+    padding: 8px 15px;
   }
 
   .card-body {
@@ -30,6 +30,10 @@
   .card-heading {
     background: $gray-100;
     border-bottom: 1px solid $gray-200;
+
+    input[type="checkbox"] {
+      margin-top: -3px;
+    }
 
     label,
     p,
@@ -90,16 +94,6 @@
   &:hover {
     border: 0;
     text-decoration: none;
-  }
-}
-
-.card-transparent {
-  background: $gray-100;
-  border: 1px solid $gray-300;
-
-  .card-heading {
-    border-bottom: 1px solid $gray-300;
-    margin-bottom: -1px;
   }
 }
 
@@ -184,8 +178,15 @@
   border-bottom: 1px solid $gray-200;
 }
 
-.card-collapse table {
-  border: 0;
+.card-collapse {
+
+  .card-heading {
+    border-bottom: 0;
+  }
+
+  table {
+    border: 0;
+  }
 }
 
 .fork-dashboard-column .card-default .card-body {

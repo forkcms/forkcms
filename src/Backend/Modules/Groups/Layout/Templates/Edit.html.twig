@@ -63,7 +63,7 @@
                 <div class="content-block">
                   <div class="card-group card-group-column" id="permissions" role="tablist" aria-multiselectable="true">
                     {% for permission in permissions %}
-                      <div class="card card-transparent jsGroupsPermissionsModule">
+                      <div class="card card-default card-collapse jsGroupsPermissionsModule">
                         <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
                           {{ permission.chk|raw }}
                           <h4 class="card-title mb-0">
