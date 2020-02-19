@@ -8,7 +8,7 @@ final class LinkButtonBlock extends AbstractBlock
     {
         return [
             'shortcut' => 'CMD+SHIFT+B',
-            'class' => 'BlockEditor.blocks.SingleButton',
+            'class' => 'BlockEditor.blocks.LinkButtonBlock',
         ];
     }
 
