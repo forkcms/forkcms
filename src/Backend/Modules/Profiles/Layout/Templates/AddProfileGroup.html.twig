@@ -1,5 +1,6 @@
 {% extends 'Layout/Templates/base.html.twig' %}
 {% import 'Layout/Templates/macros.html.twig' as macro %}
+
 {% block actionbar %}
 
 {% endblock %}
@@ -23,11 +24,11 @@
           </div>
           <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
           <div class="form-row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <span class="fas fa-calendar fa-fw" aria-hidden="true"></span>
+                    {{ macro.icon('calendar fa-fw') }}
                     <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
                   </span>
                 </div>
@@ -35,11 +36,11 @@
               </div>
               {% form_field_error expiration_date %}
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <span class="fas fa-clock-o fa-fw" aria-hidden="true"></span>
+                    {{ macro.icon('clock fa-fw') }}
                     <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
                   </span>
                 </div>

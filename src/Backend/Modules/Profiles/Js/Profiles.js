@@ -43,9 +43,13 @@ jsBackend.Profiles = {
       var $item = $('#newEmail')
       var checked = ($item.attr('checked') === 'checked')
       var $box = $('#newEmailBox')
+      var $input = $box.find('input')
 
-      $box.toggle(checked)
-      $box.find('input#email').focus()
+      if (checked) {
+        $input.removeClass('disabled').removeAttr('disabled').focus()
+      } else {
+        $input.addClass('disabled').prop('disabled', 'disabled')
+      }
     }
   },
 
