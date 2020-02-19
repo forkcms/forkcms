@@ -1,0 +1,3 @@
+* @forkcms/core-contributors
+*.html.twig @forkcms/frontenders
+*.php @forkcms/backenders
