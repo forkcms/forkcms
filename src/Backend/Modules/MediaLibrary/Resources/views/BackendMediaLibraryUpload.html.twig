@@ -21,7 +21,7 @@
           <div class="qq-progress-bar-container-selector qq-progress-bar-container">
             <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
           </div>
-          <span class="qq-upload-spinner-selector qq-upload-spinner"><i class="fas fa-spinner fa-spin fa-3x fa-fw"></i></span>
+          <span class="qq-upload-spinner-selector qq-upload-spinner">{{ macro.icon('spinner fa-spin fa-3x fa-fw') }}</span>
           <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
           <div class="qq-file-info">
             <div class="qq-file-name">
@@ -32,20 +32,20 @@
             <span class="qq-upload-size-selector qq-upload-size"></span>
             <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete btn btn-danger">
               <span class="sr-only">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-              <i class="fas fa-trash-alt"></i>
+              {{ macro.icon('trash-alt') }}
             </button>
             <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause btn btn-primary">
               <span class="sr-only">{{ 'lbl.Retry'|trans|ucfirst }}</span>
-              <i class="fas fa-redo-alt"></i>
+              {{ macro.icon('redo-alt') }}
             </button>
             <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue btn btn-primary">
-              <i class="fas fa-check"></i>
+              {{ macro.icon('check') }}
             </button>
           </div>
-          <button type="button" class="qq-upload-cancel-selector qq-upload-cancel btn btn-danger btn-icon-only ml-auto"><i class="fas fa-times"></i></button>
+          <button type="button" class="qq-upload-cancel-selector qq-upload-cancel btn btn-danger btn-icon-only ml-auto">{{ macro.icon('times') }}</button>
           <button type="button" class="btn btn-priamry btn-sm qq-upload-retry-selector qq-upload-retry ml-auto">
             <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
-            <i class="fas fa-redo-alt"></i>
+            {{ macro.icon('redo-alt') }}
             {{ 'lbl.Retry'|trans|ucfirst }}
           </button>
         </div>
