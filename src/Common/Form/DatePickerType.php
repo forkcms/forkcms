@@ -27,14 +27,14 @@ class DatePickerType extends DateType
         parent::buildForm($builder, $options);
 
         if ($this->header instanceof BackendHeader) {
-            $this->header->addJS('/js/vendors/bootstrap-datepicker.min.js', 'Core', false, true, true, Priority::core());
-            $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', 'Core', true, true, true, Priority::core());
+            $this->header->addJS('/js/vendors/bootstrap-datepicker.min.js', null, false, true, true, Priority::core());
+            $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', null, true, false, true, Priority::core());
 
             return;
         }
 
         $this->header->addJS('/js/vendors/bootstrap-datepicker.min.js', false, true, Priority::core());
-        $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', true, true, Priority::core());
+        $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', false, true, Priority::core());
     }
 
     public function configureOptions(OptionsResolver $resolver): void
