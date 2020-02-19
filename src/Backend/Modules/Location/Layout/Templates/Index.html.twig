@@ -45,14 +45,14 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+                <div class="form-group{% if not godUser %} d-none{% endif %}">
                   <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
                   {% form_field width %} {% form_field_error width %}
                   <small class="form-text text-muted">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</small>
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+                <div class="form-group{% if not godUser %} d-none{% endif %}">
                   <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
                   {% form_field height %} {% form_field_error height %}
                   <small class="form-text text-muted">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</small>
