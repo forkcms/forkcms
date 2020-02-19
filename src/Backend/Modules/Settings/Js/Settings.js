@@ -44,7 +44,7 @@ jsBackend.settings = {
     var $email = $('#settingsEmail')
 
     // show spinner
-    $spinner.show()
+    $spinner.removeClass('d-none')
 
     // hide previous results
     $error.hide()
@@ -60,7 +60,7 @@ jsBackend.settings = {
         data: $.extend({fork: {action: 'TestEmailConnection'}}, settings),
         success: function (data, textStatus) {
           // hide spinner
-          $spinner.hide()
+          $spinner.addClass('d-none')
 
           // show success
           if (data.code === 200) {
@@ -71,7 +71,7 @@ jsBackend.settings = {
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           // hide spinner
-          $spinner.hide()
+          $spinner.addClass('d-none')
 
           // show error
           jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '')
