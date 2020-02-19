@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\AbstractBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
+use Common\BlockEditor\Blocks\LinkButtonBlock;
 use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
@@ -63,6 +64,7 @@ class EditorType extends TextareaType
                     ParagraphBlock::class,
                     ListBlock::class,
                     MediaLibraryImageBlock::class,
+                    LinkButtonBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
