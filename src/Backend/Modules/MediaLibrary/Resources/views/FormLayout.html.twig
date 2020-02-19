@@ -22,22 +22,22 @@
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             <div class="mediaConnectedBox">
               <ul class="mediaConnectedItems ui-sortable" data-fork="connectedItems">
-              {% for connectedItem in mediaGroup.connectedItems %}
-                <li id="media-{{ connectedItem.item.id }}" class="ui-state-default">
-                  {{ mediaMacro.mediaItem(connectedItem) }}
-                </li>
-              {% endfor %}
-            </ul>
+                {% for connectedItem in mediaGroup.connectedItems %}
+                  <li id="media-{{ connectedItem.item.id }}" class="ui-state-default">
+                    {{ mediaMacro.mediaItem(connectedItem) }}
+                  </li>
+                {% endfor %}
+              </ul>
 
-            {% if not mediaGroup.connectedItems.count %}
-              <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
-            {% endif %}
-            {% if not form.vars.valid %}
-              <div class="media-group-type-errors">
-                {{ form_errors(form.mediaIds) }}
-              </div>
-            {% endif %}
-          </div>
+              {% if not mediaGroup.connectedItems.count %}
+                <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
+              {% endif %}
+              {% if not form.vars.valid %}
+                <div class="media-group-type-errors">
+                  {{ form_errors(form.mediaIds) }}
+                </div>
+              {% endif %}
+            </div>
           </div>
         </div>
         <div class="card-footer mediaEditBox">
@@ -47,20 +47,20 @@
                 {{ macro.icon('plus-square') }}
                 <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
               </button>
-              </div>
             </div>
+          </div>
 
           {% if not form.vars.valid %}
             {{- form_errors(form) -}}
           {% endif %}
-          </div>
+        </div>
 
-          {# Add hidden required fields #}
-          {{ form_row(form.id) }}
-          {{ form_row(form.mediaIds) }}
-          {{ form_row(form.type) }}
+        {# Add hidden required fields #}
+        {{ form_row(form.id) }}
+        {{ form_row(form.mediaIds) }}
+        {{ form_row(form.type) }}
+      </div>
     </div>
-  </div>
   </div>
 {% endblock %}
 
