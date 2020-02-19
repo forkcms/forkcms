@@ -40,13 +40,13 @@ jsBackend.FormBuilder = {
     });
   },
 
-  handleSuccessType: function() {
-    if ($('input[name="success_type"]:checked').val() == 'page') {
-      $('.js-success-page').removeClass('hide');
-      $('.js-success-message').addClass('hide');
+  handleSuccessType: function () {
+    if ($('input[name="success_type"]:checked').val() === 'page') {
+      $('[data-role="success-page"]').removeClass('d-none');
+      $('[data-role="success-message"]').addClass('d-none');
     } else {
-      $('.js-success-page').addClass('hide');
-      $('.js-success-message').removeClass('hide');
+      $('[data-role="success-page"]').addClass('d-none');
+      $('[data-role="success-message"]').removeClass('d-none');
     }
   },
 

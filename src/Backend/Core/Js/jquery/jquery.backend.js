@@ -1276,7 +1276,7 @@
         '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-primary">' +
+        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-secondary">' +
         '<span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></div>' +
@@ -1452,7 +1452,7 @@
 
         // no items and message given?
         if (elements.length === 0 && options.emptyMessage !== '') {
-          html = '<p class="helpTxt">' + options.emptyMessage + '</p>'
+          html = '<p class="form-text text-muted">' + options.emptyMessage + '</p>'
         } else {
           // start html
           html = '<div>'

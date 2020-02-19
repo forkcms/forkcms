@@ -72,17 +72,16 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group last">
-                      <ul class="list-unstyled">
-                        {% for option in success_type %}
-                          <li class="radio">
-                            <label for="{{ option.id }}">{{ option.rbtSuccessType|raw }} {{ option.label }}</label>
-                          </li>
-                        {% endfor %}
-                      </ul>
+                      {% for option in success_type %}
+                        <div class="form-check">
+                          {{ option.rbtSuccessType|raw }}
+                          <label class="form-check-label" for="{{ option.id }}">{{ option.label }}</label>
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
-                <div class="card card-default card-editor js-success-message">
+                <div class="card card-default card-editor" data-role="success-message">
                   <div class="card-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
@@ -100,7 +99,7 @@
                     </div>
                   {% endif %}
                 </div>
-                <div class="card card-default hide js-success-page">
+                <div class="card card-default d-none" data-role="success-page">
                   <div class="card-heading">
                     <label for="successPage" class="control-label">
                       {{ 'lbl.SuccessPage'|trans|ucfirst }}

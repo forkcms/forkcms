@@ -89,17 +89,16 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group last">
-                      <ul class="list-unstyled">
-                        {% for option in success_type %}
-                          <li class="radio">
-                            <label for="{{ option.id }}">{{ option.rbtSuccessType|raw }} {{ option.label }}</label>
-                          </li>
-                        {% endfor %}
-                      </ul>
+                      {% for option in success_type %}
+                        <div class="form-check">
+                          {{ option.rbtSuccessType|raw }}
+                          <label class="form-check-label" for="{{ option.id }}">{{ option.label }}</label>
+                        </div>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
-                <div class="card card-default card-editor">
+                <div class="card card-default card-editor" data-role="success-message">
                   <div class="card-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
@@ -115,7 +114,7 @@
                     </div>
                   {% endif %}
                 </div>
-                <div class="card card-default hide js-success-page">
+                <div class="card card-default d-none" data-role="success-page">
                   <div class="card-heading">
                     <label for="successPage" class="control-label">
                       {{ 'lbl.SuccessPage'|trans|ucfirst }}
@@ -198,33 +197,33 @@
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
                       </button>
                       <button id="datetimeSelector" data-field-id="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
+                        {{ macro.icon('calendar fa-fw') }}{{ 'lbl.Datetime'|trans|ucfirst }}
                       </button>
                       <button id="dropdownSelector" data-field-id="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
                       </button>
                       <button id="checkboxSelector" data-field-id="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
+                        {{ macro.icon('check-square fa-fw') }}{{ 'lbl.Checkbox'|trans|ucfirst }}
                       </button>
                       <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-dot-circle fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
+                        {{ macro.icon('dot-circle fa-fw') }}{{ 'lbl.Radiobutton'|trans|ucfirst }}
                       </button>
                       <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
-                        <i class="fas fa-redo-alt fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
+                        {{ macro.icon('redo-alt fa-fw') }}{{ 'lbl.Recaptcha'|trans|ucfirst }}
                       </button>
                       {% if showMailmotorOption %}
                         <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
-                          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>{{ 'lbl.Mailmotor'|trans|ucfirst }}
+                          {{ macro.icon('envelope fa-fw') }}{{ 'lbl.Mailmotor'|trans|ucfirst }}
                         </button>
                       {% endif %}
                     </div>
                     <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
                       <button id="headingSelector" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-heading fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
+                        {{ macro.icon('heading fa-fw') }}{{ 'lbl.Heading'|trans|ucfirst }}
                       </button>
                       <button id="paragraphSelector" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
-                        <i class="fas fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
+                        {{ macro.icon('paragraph fa-fw') }}{{ 'lbl.Paragraph'|trans|ucfirst }}
                       </button>
                     </div>
                   </div>

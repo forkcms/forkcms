@@ -41,15 +41,15 @@
     <div class="col-md-4">
       <div class="btn-toolbar d-flex">
         <div class="btn-group ml-auto" role="group">
-          <button class="btn btn-secondary btn-icon-only jsFieldEdit" data-field-id="{{ id }}" title="{{ 'lbl.Edit'|trans|ucfirst }}" aria-labelledby="edit-text-{{ id }} field{{ id }}-label">
+          <button class="btn btn-secondary btn-icon-only btn-sm jsFieldEdit" data-field-id="{{ id }}" title="{{ 'lbl.Edit'|trans|ucfirst }}" aria-labelledby="edit-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('pencil-alt fa-fw') }}
             <span class="sr-only" id="edit-text-{{ id }}">{{ 'lbl.Edit'|trans|ucfirst }}</span>
           </button>
-          <button class="btn btn-danger btn-icon-only jsFieldDelete" data-field-id="{{ id }}" title="{{ 'lbl.Delete'|trans|ucfirst }}" aria-labelledby="delete-text-{{ id }} field{{ id }}-label">
+          <button class="btn btn-danger btn-icon-only btn-sm jsFieldDelete" data-field-id="{{ id }}" title="{{ 'lbl.Delete'|trans|ucfirst }}" aria-labelledby="delete-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('trash-alt fa-fw') }}
             <span class="sr-only" id="delete-text-{{ id }}">{{ 'lbl.Delete'|trans|ucfirst }}</span>
           </button>
-          <button class="btn btn-default btn-icon-only dragAndDropHandle" aria-labelledby="move-text-{{ id }} field{{ id }}-label">
+          <button class="btn btn-default btn-icon-only btn-sm dragAndDropHandle" aria-labelledby="move-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('bars fa-fw') }}
             <span class="sr-only" id="move-text-{{ id }}">{{ 'lbl.Move'|trans|ucfirst }}</span>
           </button>
