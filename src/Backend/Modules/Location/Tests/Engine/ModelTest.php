@@ -7,7 +7,7 @@ use Common\WebTestCase;
 
 class ModelTest extends WebTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
