@@ -1,57 +1,162 @@
-class MediaLibraryImage {
-  constructor ({data}) {
-    this.data = data
+class LinkButtonBlock {
+  constructor({data, config, api}) {
+    this.api = api;
+    const capitalize = str => str[0].toUpperCase() + str.substr(1);
+
+    this.data = {
+      text: data.text || capitalize(jsBackend.locale.lbl('ChangeThisText')),
+      url: data.url || '#',
+      type: Object.values(LinkButtonBlock.TYPES).includes(data.type) && data.type || LinkButtonBlock.DEFAULT_TYPE
+    };
   }
 
-  static get toolbox () {
+  static get toolbox() {
     return {
-      title: 'Image',
-      icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>'
+      title: 'LinkButton',
+      icon: '<i class="fas fa-external-link-alt"></i>'
     }
   }
 
-  selectFromMediaLibrary () {
-    var mediaLibraryImageInstance = this
-    window.open(window.location.origin + jsData.MediaLibrary.browseActionImages)
+  static get TYPES() {
+    return {
+      default: 'default',
+      success: 'success',
+      info: 'info',
+      warning: 'warning',
+      danger: 'danger',
+    };
+  }
 
-    window.onmessage = function (event) {
-      if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
-        mediaLibraryImageInstance.src = event.data['media-url']
-        mediaLibraryImageInstance.id = event.data.id
-        mediaLibraryImageInstance.image.src = mediaLibraryImageInstance.src
-        mediaLibraryImageInstance.image.classList.remove('hidden')
+  static get DEFAULT_TYPE() {
+    return LinkButtonBlock.TYPES.default;
+  }
+
+  get settings() {
+    return Object.keys(LinkButtonBlock.TYPES).map(function(type) {
+      let textClass = type
+      if (textClass === LinkButtonBlock.DEFAULT_TYPE) {
+        textClass = 'muted'
       }
-    }
+
+      return {
+        name: type,
+        icon: `<i class="fas fa-circle text-${textClass}"></i>`
+      }
+    })
   }
 
-  render () {
-    this.wrapper = document.createElement('div')
-    this.wrapper.classList.add('media-library-image')
+  renderSettings() {
+    const wrapper = this._make('div', [this.api.styles.settingsWrapper], {});
+    const capitalize = str => str[0].toUpperCase() + str.substr(1);
 
-    this.image = document.createElement('img')
-    this.wrapper.appendChild(this.image)
-    $(this.image).on('click.media-library-edit-image', () => this.selectFromMediaLibrary(this))
-    this.image.classList.add('img-responsive')
-    this.image.style.cursor = 'pointer'
+    this.settings
+      .map(type => {
+        const el = this._make('div', this.api.styles.settingsButton, {
+          innerHTML: type.icon,
+          title: `${capitalize(type.name)} type`
+        });
 
-    if (this.data.src !== undefined) {
-      this.image.src = this.data.src
-      this.image.classList.remove('hidden')
-    } else {
-      this.image.src = '#'
-      this.image.classList.add('hidden')
-      this.selectFromMediaLibrary(this)
-    }
+        el.classList.toggle('border', type.name === this.data.type);
+        el.classList.toggle('border-primary', type.name === this.data.type);
 
-    return this.wrapper
+        wrapper.appendChild(el);
+
+        return el;
+      })
+      .forEach((element, index, elements) => {
+        element.addEventListener('click', () => {
+          this._changeStyle(this.settings[index].name);
+
+          elements.forEach((el, i) => {
+            const {name} = this.settings[i];
+
+            el.classList.toggle('border', name === this.data.type);
+            el.classList.toggle('border-primary', name === this.data.type);
+          });
+        });
+      });
+
+    return wrapper;
+  };
+
+  render() {
+    const capitalize = str => str[0].toUpperCase() + str.substr(1);
+
+    const container = this._make('div', [this.api.styles.block, 'cdx-link-button', 'p-1']);
+    const urlInputGroup = this._make('label', ['input-group', 'flex-nowrap']);
+    const urlInputGroupPrepend = this._make('div', ['input-group-prepend']);
+    const urlInputGroupPrependText = this._make('span', ['input-group-text']);
+    urlInputGroupPrependText.innerHTML = capitalize(jsBackend.locale.lbl('URL'))
+
+    this.preview = this._make('a', ['btn', 'btn-' + this.data.type, 'mb-1'], {
+      href: this.data.url,
+      contentEditable: true,
+    })
+    this.preview.innerHTML = this.data.text
+    this.textInput = this._make('input', [this.api.styles.input, 'form-control'], {
+      autocomplete: 'off',
+      value: this.data.text
+    });
+
+    this.urlInput = this._make('input', [this.api.styles.input, 'form-control'], {
+      autocomplete: 'off',
+      value: this.data.url
+    });
+
+    container.appendChild(this.preview)
+    container.appendChild(urlInputGroup);
+    urlInputGroup.appendChild(urlInputGroupPrepend);
+    urlInputGroupPrepend.appendChild(urlInputGroupPrependText);
+    urlInputGroup.appendChild(this.urlInput);
+
+    return container;
   }
 
-  save (blockContent) {
-    return {
-      'id': this.id,
-      'src': this.src
+  save(blockContent) {
+    this.preview.setAttribute('href', this.urlInput.value)
+
+    return Object.assign(this.data, {
+      text: this.preview.innerHTML,
+      url: this.urlInput.value
+    })
+  }
+
+  /**
+   * Change the buttons style
+   *
+   * @param {string} style
+   * @private
+   */
+  _changeStyle(style) {
+    this.preview.classList.toggle('btn-' + this.data.type)
+    this.data.type = style;
+    this.preview.classList.toggle('btn-' + this.data.type)
+  }
+
+  /**
+   * Helper for making Elements with attributes
+   *
+   * @param  {string} tagName           - new Element tag name
+   * @param  {array|string} classNames  - list or name of CSS classname(s)
+   * @param  {Object} attributes        - any attributes
+   * @return {Element}
+   */
+  _make(tagName, classNames = null, attributes = {}) {
+    let el = document.createElement(tagName);
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames);
     }
+    else if (classNames) {
+      el.classList.add(classNames);
+    }
+
+    for (let attrName in attributes) {
+      el[attrName] = attributes[attrName];
+    }
+
+    return el;
   }
 }
 
-export default MediaLibraryImage
+export default LinkButtonBlock
