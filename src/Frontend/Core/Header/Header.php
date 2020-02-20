@@ -353,11 +353,15 @@ class Header extends KernelLoader
 
         // @deprecated fallback to site_html_header as this was used in the past
         $siteHTMLHead = (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', '')) . "\n";
-        $siteHTMLHead .= new GoogleAnalytics(
-            $this->get('fork.settings'),
-            Model::getRequest()->getHttpHost(),
-            $this->get('fork.cookie')
-        );
+
+        $googleAnalyticsTrackingId = $this->get('fork.settings')->get('Core', 'google_tracking_google_analytics_tracking_id', '');
+        if ($googleAnalyticsTrackingId !== '') {
+            $siteHTMLHead .= new GoogleAnalytics(
+                $this->get('fork.settings'),
+                Model::getRequest()->getHttpHost(),
+                $this->get('fork.cookie')
+            );
+        }
         $siteHTMLHead .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHead', trim($siteHTMLHead));
 
