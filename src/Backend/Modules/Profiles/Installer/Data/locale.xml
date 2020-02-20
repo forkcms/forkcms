@@ -31,6 +31,10 @@
         <translation language="en"><![CDATA[filter groups]]></translation>
         <translation language="pl"><![CDATA[filtruj grupy]]></translation>
       </item>
+      <item type="label" name="AddProfile">
+        <translation language="nl"><![CDATA[profiel toevoegen]]></translation>
+        <translation language="en"><![CDATA[add profile]]></translation>
+      </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
         <translation language="en"><![CDATA[add group]]></translation>

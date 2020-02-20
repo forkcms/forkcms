@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
-      {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
+      {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.AddProfile'|trans|ucfirst) }}
       {% if showProfilesImport %}
         {{ macro.buttonIcon(geturl('import'), 'upload', 'lbl.Import'|trans|ucfirst) }}
       {% endif %}

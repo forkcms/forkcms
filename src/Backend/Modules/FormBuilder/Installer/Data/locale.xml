@@ -18,6 +18,10 @@
         <translation language="el"><![CDATA[Προσθήκη]]></translation>
         <translation language="pl"><![CDATA[dodaj]]></translation>
       </item>
+      <item type="label" name="AddForm">
+        <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
+        <translation language="en"><![CDATA[add form]]></translation>
+      </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
         <translation language="en"><![CDATA[add fields]]></translation>
