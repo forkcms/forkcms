@@ -82,7 +82,7 @@
 
 <div data-role="uploadMediaStep1">
   {# Choose type #}
-  <div class="row fork-module-content">
+  <div class="row">
     <div class="col-md-6 d-flex {% if mediaType is defined %} d-none{% endif %}" id="uploadMediaTypeBox">
       <div class="card card-default w-100">
         <div class="card-heading">
@@ -137,78 +137,72 @@
 
 <div data-role="uploadMediaStep2" style="display: none">
   {# Choose media to upload #}
-  <div id="uploadMediaBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="options">
-        {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
+  <div id="uploadMediaBox">
+    <div class="options">
+      {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
+    </div>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</h2>
       </div>
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</h2>
-        </div>
-        <div id="fine-uploader-gallery"></div>
+      <div id="fine-uploader-gallery"></div>
 
 
-        <div class="card-footer">
-          <div class="form-group last" data-role="cropper-is-mandatory-form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
-              <label class="form-check-label" for="enableCropperCheckbox">{{ 'lbl.EnableCropper'|trans|ucfirst }}</label>
-            </div>
-            <small class="form-text text-muted" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</small>
-            <small class="form-text text-muted d-none" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</small>
+      <div class="card-footer">
+        <div class="form-group last" data-role="cropper-is-mandatory-form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
+            <label class="form-check-label" for="enableCropperCheckbox">{{ 'lbl.EnableCropper'|trans|ucfirst }}</label>
           </div>
+          <small class="form-text text-muted" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</small>
+          <small class="form-text text-muted d-none" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</small>
         </div>
       </div>
     </div>
   </div>
 
   {# Adding a movie #}
-  <div id="addMovieBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'lbl.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
+  <div id="addMovieBox">
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'lbl.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
+          {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+          <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
         </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
-            {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
-            <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
-          </div>
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
-            <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
-          </div>
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control" />
-          </div>
+        <div class="form-group">
+          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
+          <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
+          <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
+        </div>
+        <div class="form-group">
+          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
+          <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control" />
         </div>
       </div>
-      <div class="btn-toolbar">
-        <div class="btn-group ml-auto" role="group">
-          <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
-            {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
-          </a>
-        </div>
+    </div>
+    <div class="btn-toolbar">
+      <div class="btn-group ml-auto" role="group">
+        <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+          {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+        </a>
       </div>
     </div>
   </div>
 
   {# Uploaded media #}
-  <div id="uploadedMediaBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>
-        </div>
-        <div class="card-body">
-          <p><small class="text-muted" id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</small></p>
-          <div class="mediaConnectedBox">
-            <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
-          </div>
+  <div id="uploadedMediaBox">
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>
+      </div>
+      <div class="card-body">
+        <p><small class="text-muted" id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</small></p>
+        <div class="mediaConnectedBox">
+          <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
         </div>
       </div>
     </div>

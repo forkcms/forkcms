@@ -7,54 +7,49 @@
 
 {% block content %}
   {% form addProfileGroup %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2>{{ 'lbl.Group'|trans|ucfirst }}</h2>
-        </div>
-        <div class="card-body">
-          <div class="form-row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-                {% form_field group %} {% form_field_error group %}
-              </div>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2>{{ 'lbl.Group'|trans|ucfirst }}</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
+              {% form_field group %} {% form_field_error group %}
             </div>
           </div>
-          <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
-          <div class="form-row">
-            <div class="col-lg-6">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    {{ macro.icon('calendar fa-fw') }}
-                    <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
-                  </span>
-                </div>
-                {% form_field expiration_date %}
+        </div>
+        <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  {{ macro.icon('calendar fa-fw') }}
+                  <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
+                </span>
               </div>
-              {% form_field_error expiration_date %}
+              {% form_field expiration_date %}
             </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    {{ macro.icon('clock fa-fw') }}
-                    <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
-                  </span>
-                </div>
-                {% form_field expiration_time %}
+            {% form_field_error expiration_date %}
+          </div>
+          <div class="col-lg-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  {{ macro.icon('clock fa-fw') }}
+                  <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
+                </span>
               </div>
-              {% form_field_error expiration_time %}
+              {% form_field expiration_time %}
             </div>
+            {% form_field_error expiration_time %}
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row fork-page-actions">
-    <div class="col-md-12">
+    <div class="fork-page-actions">
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ id ~ "#tabGroups", 'times', 'lbl.Cancel'|trans|ucfirst) }}
@@ -64,7 +59,6 @@
         </div>
       </div>
     </div>
-  </div>
   {% endform %}
 {% endblock %}
 

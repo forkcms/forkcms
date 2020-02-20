@@ -11,44 +11,38 @@
 
 {% block content %}
   {% form editComment %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="author" class="control-label">
-          {{ 'lbl.Author'|trans|ucfirst }}
-          {{ macro.required }}
-        </label>
-        {% form_field author %} {% form_field_error author %}
-      </div>
-      <div class="form-group">
-        <label for="email" class="control-label">
-          {{ 'lbl.Email'|trans|ucfirst }}
-          {{ macro.required }}
-        </label>
-        {% form_field email %} {% form_field_error email %}
-      </div>
-      <div class="form-group">
-        <label for="website" class="control-label">{{ 'lbl.Website'|trans|ucfirst }}</label>
-        {% form_field website %} {% form_field_error website %}
-      </div>
-      <div class="form-group">
-        <label for="text" class="control-label">
-          {{ 'lbl.Text'|trans|ucfirst }}
-          {{ macro.required }}
-        </label>
-        {% form_field text %} {% form_field_error text %}
-      </div>
-    </div>
+  <div class="form-group">
+    <label for="author" class="control-label">
+      {{ 'lbl.Author'|trans|ucfirst }}
+      {{ macro.required }}
+    </label>
+    {% form_field author %} {% form_field_error author %}
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group" role="group">
-          {{ macro.buttonIcon(geturl('Comments'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"edit", "id":"editButton"}) }}
-        </div>
+  <div class="form-group">
+    <label for="email" class="control-label">
+      {{ 'lbl.Email'|trans|ucfirst }}
+      {{ macro.required }}
+    </label>
+    {% form_field email %} {% form_field_error email %}
+  </div>
+  <div class="form-group">
+    <label for="website" class="control-label">{{ 'lbl.Website'|trans|ucfirst }}</label>
+    {% form_field website %} {% form_field_error website %}
+  </div>
+  <div class="form-group">
+    <label for="text" class="control-label">
+      {{ 'lbl.Text'|trans|ucfirst }}
+      {{ macro.required }}
+    </label>
+    {% form_field text %} {% form_field_error text %}
+  </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('Comments'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group pull-right" role="group">
+        {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"edit", "id":"editButton"}) }}
       </div>
     </div>
   </div>

@@ -7,103 +7,93 @@
 
 {% block content %}
   {% form add %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }} {{ macro.required }}</label>
-        {% form_field title %} {% form_field_error title %}
-        {% if detailURL %}
-          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>{% endif %}
-        {% if not detailURL %}
-          <p class="text-warning">{{ macro.icon('warning') }} {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
-        {% endif %}
-      </div>
-    </div>
+  <div class="form-group">
+    <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }} {{ macro.required }}</label>
+    {% form_field title %} {% form_field_error title %}
+    {% if detailURL %}
+      <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>{% endif %}
+    {% if not detailURL %}
+      <p class="text-warning">{{ macro.icon('warning') }} {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+    {% endif %}
   </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs justify-content-end" role="tablist">
-          <li class="nav-item mr-auto">
-            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
-            <div class="row">
-              <div class="col-md-8">
-                <div class="card card-default card-editor optionsRTE">
-                  <div class="card-heading">
-                    <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
-                      {{ macro.required }}<br>
-                    </label>
-                  </div>
-                  <div class="card-body">
-                    {% form_field answer %}
-                  </div>
-                  {% if txtAnswerError %}
-                    <div class="card-footer">
-                      {% form_field_error answer %}
-                    </div>
-                  {% endif %}
-                </div>
+  <div>
+    <ul class="nav nav-tabs justify-content-end" role="tablist">
+      <li class="nav-item mr-auto">
+        <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card card-default card-editor optionsRTE">
+              <div class="card-heading">
+                <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
+                  {{ macro.required }}<br>
+                </label>
               </div>
-              <div class="col-md-4">
-                <div class="card card-default">
-                  <div class="card-heading">
-                    <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-group last">
-                      <div class="form-group last">
-                        {% for _itr_9 in hidden %}
-                          <div class="form-check">
-                            {{ _itr_9.rbtHidden|raw }}
-                            <label class="form-check-label" for="{{ _itr_9.id }}">{{ _itr_9.label }}</label>
-                          </div>
-                        {% endfor %}
-                      </div>
-                    </div>
-                  </div>
+              <div class="card-body">
+                {% form_field answer %}
+              </div>
+              {% if txtAnswerError %}
+                <div class="card-footer">
+                  {% form_field_error answer %}
                 </div>
-                <div class="card card-default last">
-                  <div class="card-heading">
-                    <h2 class="card-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
-                      {% form_field category_id %} {% form_field_error category_id %}
-                    </div>
-                    <div class="form-group last">
-                      <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
-                      {% form_field tags %} {% form_field_error tags %}
-                      <small class="form-text text-muted">{{ 'msg.HelpTextTags'|trans }}</small>
-                    </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-default">
+              <div class="card-heading">
+                <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="form-group last">
+                  <div class="form-group last">
+                    {% for _itr_9 in hidden %}
+                      <div class="form-check">
+                        {{ _itr_9.rbtHidden|raw }}
+                        <label class="form-check-label" for="{{ _itr_9.id }}">{{ _itr_9.label }}</label>
+                      </div>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
-            {% seo %}
+            <div class="card card-default last">
+              <div class="card-heading">
+                <h2 class="card-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
+                  {% form_field category_id %} {% form_field_error category_id %}
+                </div>
+                <div class="form-group last">
+                  <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
+                  {% form_field tags %} {% form_field_error tags %}
+                  <small class="form-text text-muted">{{ 'msg.HelpTextTags'|trans }}</small>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
+        {% seo %}
+      </div>
     </div>
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group" role="group">
-          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
-        </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar">
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>
   </div>

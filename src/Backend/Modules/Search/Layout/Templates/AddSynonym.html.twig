@@ -7,38 +7,33 @@
 
 {% block content %}
   {% form addItem %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="term" class="control-label">
-          {{ 'lbl.Term'|trans|ucfirst }}
-          {{ macro.required }}
-        </label>
-        {% form_field term %} {% form_field_error term %}
-      </div>
-      <div class="form-group">
-        <div class="fakeP">
-          <div class="card card-default">
-            <div class="card-heading">
-              <h2>
-                <label for="addValue-synonym" class="control-label">
-                  {{ 'lbl.Synonyms'|trans|ucfirst }}
-                  {{ macro.required }}
-                </label>
-              </h2>
-            </div>
-            <div class="card-body">
-              <div class="itemAdder">
-                {% form_field synonym %} {% form_field_error synonym %}
-              </div>
+    <div class="form-group">
+      <label for="term" class="control-label">
+        {{ 'lbl.Term'|trans|ucfirst }}
+        {{ macro.required }}
+      </label>
+      {% form_field term %} {% form_field_error term %}
+    </div>
+    <div class="form-group">
+      <div class="fakeP">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2>
+              <label for="addValue-synonym" class="control-label">
+                {{ 'lbl.Synonyms'|trans|ucfirst }}
+                {{ macro.required }}
+              </label>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="itemAdder">
+              {% form_field synonym %} {% form_field_error synonym %}
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row fork-page-actions">
-    <div class="col-md-12">
+    <div class="fork-page-actions">
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Synonyms'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
@@ -48,6 +43,5 @@
         </div>
       </div>
     </div>
-  </div>
   {% endform %}
 {% endblock %}

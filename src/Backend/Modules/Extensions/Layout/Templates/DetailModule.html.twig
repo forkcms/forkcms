@@ -6,16 +6,14 @@
 
 {% block content %}
   {% if warnings %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        {% for warning in warnings %}
-          {{ macro.alert('warning', warning.message|raw) }}
-        {% endfor %}
-      </div>
+    <div class="fork-module-messages">
+      {% for warning in warnings %}
+        {{ macro.alert('warning', warning.message|raw) }}
+      {% endfor %}
     </div>
   {% endif %}
   {% if information %}
-    <div class="row fork-module-content">
+    <div class="row">
       <div class="col-md-8">
         {% if information.description %}
           <div class="card card-default">
@@ -81,26 +79,24 @@
     </div>
   {% endif %}
   {% if showInstallButton %}
-    <div class="row fork-module-actions">
-      <div class="col-12">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right" role="group">
-            {{ macro.buttonIcon('', 'file', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-toggle":"modal", "type":"button", "data-target":"#confirmInstall"}) }}
-          </div>
+    <div class="fork-module-actions">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          {{ macro.buttonIcon('', 'file', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-toggle":"modal", "type":"button", "data-target":"#confirmInstall"}) }}
         </div>
-        <div class="modal fade" id="confirmInstall" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstallTitle">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="confirmInstallTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
-              </div>
-              <div class="modal-body">
-                <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name)|raw }}</p>
-              </div>
-              <div class="modal-footer">
-                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal", "type":"button"}) }}
-                {{ macro.buttonIcon(geturl('install_module') ~ '&module=' ~ name, 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
-              </div>
+      </div>
+      <div class="modal fade" id="confirmInstall" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstallTitle">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="confirmInstallTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name)|raw }}</p>
+            </div>
+            <div class="modal-footer">
+              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal", "type":"button"}) }}
+              {{ macro.buttonIcon(geturl('install_module') ~ '&module=' ~ name, 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
             </div>
           </div>
         </div>

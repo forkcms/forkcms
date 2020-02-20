@@ -37,23 +37,19 @@
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, noItemsMessage) %}
-  <div class="row">
-    <div class="col-md-12">
-      {% if dataGrid %}
-        <div class="table-responsive">
-          {{ dataGrid|raw }}
-        </div>
-      {% else %}
-        <p>
-          {% if noItemsMessage %}
-            {{ noItemsMessage|raw }}
-          {% else %}
-            {{ 'msg.NoItems'|trans|raw }}
-          {% endif %}
-        </p>
-      {% endif %}
+  {% if dataGrid %}
+    <div class="table-responsive">
+      {{ dataGrid|raw }}
     </div>
-  </div>
+  {% else %}
+    <p>
+      {% if noItemsMessage %}
+        {{ noItemsMessage|raw }}
+      {% else %}
+        {{ 'msg.NoItems'|trans|raw }}
+      {% endif %}
+    </p>
+  {% endif %}
 {% endmacro %}
 
 {% macro alert(type, message, dismissable, id, extraAttributes = [], active = true, showIcon = true) %}

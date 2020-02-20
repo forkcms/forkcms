@@ -8,161 +8,149 @@
 {% block content %}
 
   {% form add %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
-        {% form_field title %} {% form_field_error title %}
-        {% if detailURL %}
-          <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
-        {% endif %}
-        {% if not detailURL %}
-          <p class="text-warning">{{ macro.icon('warning') }} {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
-        {% endif %}
-      </div>
-    </div>
+  <div class="form-group">
+    <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
+    {% form_field title %} {% form_field_error title %}
+    {% if detailURL %}
+      <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
+    {% endif %}
+    {% if not detailURL %}
+      <p class="text-warning">{{ macro.icon('warning') }} {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+    {% endif %}
   </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs justify-content-end" role="tablist">
-          <li class="nav-item mr-auto">
-            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab" aria-selected="false" id="comments-tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab" >
-            <div class="row">
-              <div class="col-md-8">
-                <div class="card card-default card-editor">
-                  <div class="card-heading">
-                    <h2>
-                      <label for="introduction">
-                        {{ 'lbl.Summary'|trans|ucfirst }}
-                        {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
-                      </label>
-                    </h2>
-                  </div>
-                  <div class="card-body">
-                    {% form_field introduction %}
-                  </div>
-                  {% if txtIntroductionError %}
-                    <div class="card-footer">
-                      {% form_field_error introduction %}
-                    </div>
-                  {% endif %}
+  <div>
+    <ul class="nav nav-tabs justify-content-end" role="tablist">
+      <li class="nav-item mr-auto">
+        <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab" aria-selected="false" id="comments-tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab" >
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card card-default card-editor">
+              <div class="card-heading">
+                <h2>
+                  <label for="introduction">
+                    {{ 'lbl.Summary'|trans|ucfirst }}
+                    {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
+                  </label>
+                </h2>
+              </div>
+              <div class="card-body">
+                {% form_field introduction %}
+              </div>
+              {% if txtIntroductionError %}
+                <div class="card-footer">
+                  {% form_field_error introduction %}
                 </div>
-                {% if imageIsAllowed %}
-                  <div class="card card-default">
-                    <div class="card-heading">
-                      <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-lg-3">
-                          <div data-fork-cms-role="image-preview-wrapper" data-id="image">
-                            <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
-                          </div>
-                        </div>
-                        <div class="col-lg-9">
-                          <div class="custom-file">
-                            {% form_field image %}
-                            <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
-                          </div>
-                          {% form_field_error image %}
-                        </div>
+              {% endif %}
+            </div>
+            {% if imageIsAllowed %}
+              <div class="card card-default">
+                <div class="card-heading">
+                  <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div data-fork-cms-role="image-preview-wrapper" data-id="image">
+                        <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
                       </div>
                     </div>
+                    <div class="col-lg-9">
+                      <div class="custom-file">
+                        {% form_field image %}
+                        <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                      </div>
+                      {% form_field_error image %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <div class="card card-default card-editor last">
+              <div class="card-heading">
+                <h2>
+                  <label for="text">
+                    {{ 'lbl.MainContent'|trans|ucfirst }}
+                    {{ macro.required }}
+                  </label>
+                </h2>
+              </div>
+              <div class="card-body">
+                {% form_field text %}
+              </div>
+              {% if txtTextError %}
+                <div class="card-footer">
+                  {% form_field_error text %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-default">
+              <div class="card-heading">
+                <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  {% for _itr_4 in hidden %}
+                    <div class="form-check">
+                      {{ _itr_4.rbtHidden|raw }}
+                      <label class="form-check-label" for="{{ _itr_4.id }}">{{ _itr_4.label }}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+                <div class="form-group last">
+                  <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
+                  {% form_field publish_on_date %} {% form_field_error publish_on_date %}
+                  <label for="publishOnTime" class="control-label">{{ 'lbl.At'|trans }}</label>
+                  {% form_field publish_on_time %} {% form_field_error publish_on_time %}
+                </div>
+              </div>
+            </div>
+            <div class="card card-default">
+              <div class="card-heading">
+                <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
+                  {% form_field category_id %} {% form_field_error category_id %}
+                </div>
+                <div class="form-group">
+                  <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
+                  {% form_field user_id %} {% form_field_error user_id %}
+                </div>
+                {% if showTagsIndex %}
+                  <div class="form-group last">
+                    <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
+                    {% form_field tags %} {% form_field_error tags %}
+                    <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
                   </div>
                 {% endif %}
-                <div class="card card-default card-editor last">
-                  <div class="card-heading">
-                    <h2>
-                      <label for="text">
-                        {{ 'lbl.MainContent'|trans|ucfirst }}
-                        {{ macro.required }}
-                      </label>
-                    </h2>
-                  </div>
-                  <div class="card-body">
-                    {% form_field text %}
-                  </div>
-                  {% if txtTextError %}
-                    <div class="card-footer">
-                      {% form_field_error text %}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card card-default">
-                  <div class="card-heading">
-                    <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      {% for _itr_4 in hidden %}
-                        <div class="form-check">
-                          {{ _itr_4.rbtHidden|raw }}
-                          <label class="form-check-label" for="{{ _itr_4.id }}">{{ _itr_4.label }}</label>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <div class="form-group last">
-                      <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
-                      {% form_field publish_on_date %} {% form_field_error publish_on_date %}
-                      <label for="publishOnTime" class="control-label">{{ 'lbl.At'|trans }}</label>
-                      {% form_field publish_on_time %} {% form_field_error publish_on_time %}
-                    </div>
-                  </div>
-                </div>
-                <div class="card card-default">
-                  <div class="card-heading">
-                    <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
-                      {% form_field category_id %} {% form_field_error category_id %}
-                    </div>
-                    <div class="form-group">
-                      <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
-                      {% form_field user_id %} {% form_field_error user_id %}
-                    </div>
-                    {% if showTagsIndex %}
-                      <div class="form-group last">
-                        <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
-                        {% form_field tags %} {% form_field_error tags %}
-                        <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabComments" aria-labelledby="comments-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group last">
-                  <div class="form-check">
-                    {% form_field allow_comments %}
-                    <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
-            {% seo %}
           </div>
         </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabComments" aria-labelledby="comments-tab">
+        <div class="form-group last">
+          <div class="form-check">
+            {% form_field allow_comments %}
+            <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
+        {% seo %}
       </div>
     </div>
   </div>

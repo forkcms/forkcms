@@ -7,171 +7,161 @@
 
 {% block content %}
   {% form settingsEmail %}
-  <div class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">
-            {{ 'lbl.Email'|trans|ucfirst }}
-          </h2>
-        </div>
-        <div class="card-body">
-        {% if isGod %}
-          <fieldset>
-            <legend>
-              {{ 'lbl.SendingEmails'|trans|ucfirst }}
-            </legend>
-            <div class="form-group">
-              <div class="form-row align-items-center">
-                <div class="col-lg-8">
-                  {% form_field mailer_type %} {% form_field_error mailer_type %}
-                </div>
-                <div class="col-lg-4">
-                  <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
-                </div>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">
+          {{ 'lbl.Email'|trans|ucfirst }}
+        </h2>
+      </div>
+      <div class="card-body">
+      {% if isGod %}
+        <fieldset>
+          <legend>
+            {{ 'lbl.SendingEmails'|trans|ucfirst }}
+          </legend>
+          <div class="form-group">
+            <div class="form-row align-items-center">
+              <div class="col-lg-8">
+                {% form_field mailer_type %} {% form_field_error mailer_type %}
               </div>
-              <small class="form-text text-muted">{{ 'msg.HelpSendingEmails'|trans }}</small>
-              <span id="testEmailConnectionSpinner pt-2 d-none">
-                {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
-                <span class="sr-only">{{ 'lbl.Loading' }}</span>
-              </span>
-            </div>
-            {{ macro.alert('danger', 'err.ErrorWhileSendingEmail'|trans, null, 'testEmailConnectionError', {'class': 'd-md-none'}, false) }}
-            {{ macro.alert('success', 'msg.TestWasSent'|trans, null, 'testEmailConnectionSuccess', {'class': 'd-md-none'}, false) }}
-          </fieldset>
-          {% endif %}
-          <fieldset>
-            <legend>
-              {{ 'lbl.From'|trans|ucfirst }}
-              <small class="form-text text-muted">{{ 'msg.HelpEmailFrom'|trans }}</small>
-            </legend>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="mailerFromName" class="control-label">
-                    {{ 'lbl.Name'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_from_name %} {% form_field_error mailer_from_name %}
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="mailerFromEmail" class="control-label">
-                    {{ 'lbl.Email'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
-                </div>
+              <div class="col-lg-4">
+                <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
               </div>
             </div>
-          </fieldset>
-          <fieldset>
-            <legend>
-              {{ 'lbl.To'|trans|ucfirst }}
-              <small class="form-text text-muted">{{ 'msg.HelpEmailTo'|trans }}</small>
-            </legend>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="mailerToName" class="control-label">
-                    {{ 'lbl.Name'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_to_name %} {% form_field_error mailer_to_name %}
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="mailerToEmail" class="control-label">
-                    {{ 'lbl.Email'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
-                </div>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset class="last">
-            <legend>
-              {{ 'lbl.ReplyTo'|trans|ucfirst }}
-            </legend>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="mailerReplyToName" class="control-label">
-                    {{ 'lbl.Name'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_reply_to_name %} {% form_field_error mailer_reply_to_name %}
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group last">
-                  <label for="mailerReplyToEmail" class="control-label">
-                    {{ 'lbl.Email'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
-                </div>
+            <small class="form-text text-muted">{{ 'msg.HelpSendingEmails'|trans }}</small>
+            <span id="testEmailConnectionSpinner pt-2 d-none">
+              {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
+              <span class="sr-only">{{ 'lbl.Loading' }}</span>
+            </span>
+          </div>
+          {{ macro.alert('danger', 'err.ErrorWhileSendingEmail'|trans, null, 'testEmailConnectionError', {'class': 'd-md-none'}, false) }}
+          {{ macro.alert('success', 'msg.TestWasSent'|trans, null, 'testEmailConnectionSuccess', {'class': 'd-md-none'}, false) }}
+        </fieldset>
+        {% endif %}
+        <fieldset>
+          <legend>
+            {{ 'lbl.From'|trans|ucfirst }}
+            <small class="form-text text-muted">{{ 'msg.HelpEmailFrom'|trans }}</small>
+          </legend>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mailerFromName" class="control-label">
+                  {{ 'lbl.Name'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_from_name %} {% form_field_error mailer_from_name %}
               </div>
             </div>
-          </fieldset>
-        </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mailerFromEmail" class="control-label">
+                  {{ 'lbl.Email'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>
+            {{ 'lbl.To'|trans|ucfirst }}
+            <small class="form-text text-muted">{{ 'msg.HelpEmailTo'|trans }}</small>
+          </legend>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mailerToName" class="control-label">
+                  {{ 'lbl.Name'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_to_name %} {% form_field_error mailer_to_name %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mailerToEmail" class="control-label">
+                  {{ 'lbl.Email'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            {{ 'lbl.ReplyTo'|trans|ucfirst }}
+          </legend>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mailerReplyToName" class="control-label">
+                  {{ 'lbl.Name'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_reply_to_name %} {% form_field_error mailer_reply_to_name %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group last">
+                <label for="mailerReplyToEmail" class="control-label">
+                  {{ 'lbl.Email'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
-  </div>
   {% if isGod %}
-    <div class="row fork-module-content">
-      <div class="col-12">
-        <div class="card card-default">
-          <div class="card-heading">
-            <h3 class="card-title">
-              {{ 'lbl.SMTP'|trans|ucfirst }}
-            </h3>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h3 class="card-title">
+          {{ 'lbl.SMTP'|trans|ucfirst }}
+        </h3>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
+          <div class="form-inline">
+            {% form_field smtp_server %}
+            <span class="mx-1">:</span>
+            {% form_field smtp_port %}
+            {% form_field_error smtp_port %} {% form_field_error smtp_server %}
           </div>
-          <div class="card-body">
+          <small class="form-text text-muted">{{ 'msg.HelpSMTPServer'|trans }}</small>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
             <div class="form-group">
-              <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
-              <div class="form-inline">
-                {% form_field smtp_server %}
-                <span class="mx-1">:</span>
-                {% form_field smtp_port %}
-                {% form_field_error smtp_port %} {% form_field_error smtp_server %}
-              </div>
-              <small class="form-text text-muted">{{ 'msg.HelpSMTPServer'|trans }}</small>
+              <label for="smtpUsername" class="control-label">{{ 'lbl.Username'|trans|ucfirst }}</label>
+              {% form_field smtp_username %} {% form_field_error smtp_username %}
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="smtpUsername" class="control-label">{{ 'lbl.Username'|trans|ucfirst }}</label>
-                  {% form_field smtp_username %} {% form_field_error smtp_username %}
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="smtpPassword" class="control-label">{{ 'lbl.Password'|trans|ucfirst }}</label>
-                  {% form_field smtp_password %} {% form_field_error smtp_password %}
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group last">
-                  <label for="smtpSecureLayer" class="control-label">{{ 'lbl.SmtpSecureLayer'|trans|ucfirst }}</label>
-                  {% form_field smtp_secure_layer %}
-                </div>
-              </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="smtpPassword" class="control-label">{{ 'lbl.Password'|trans|ucfirst }}</label>
+              {% form_field smtp_password %} {% form_field_error smtp_password %}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group last">
+              <label for="smtpSecureLayer" class="control-label">{{ 'lbl.SmtpSecureLayer'|trans|ucfirst }}</label>
+              {% form_field smtp_secure_layer %}
             </div>
           </div>
         </div>
       </div>
     </div>
   {% endif %}
-  <div class="row fork-module-actions">
-    <div class="col-12">
-      <div class="btn-toolbar">
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
-        </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar">
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
       </div>
     </div>
   </div>

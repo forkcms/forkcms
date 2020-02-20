@@ -36,14 +36,10 @@
 
 {% block content %}
   {{ form_start(form) }}
-  <div class="row fork-module-content">
-    <div class="col-12">
-      {% if form.url %}
-        {{ form_row(form.url) }}
-      {% endif %}
-      {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
-    </div>
-  </div>
+  {% if form.url %}
+    {{ form_row(form.url) }}
+  {% endif %}
+  {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
   <div class="fork-module-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">

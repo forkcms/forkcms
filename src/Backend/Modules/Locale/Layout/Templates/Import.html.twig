@@ -7,26 +7,24 @@
 
 {% block content %}
   {% form import %}
-    <div class="fork-module-content">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="form-group">
-            <div class="custom-file">
-              {% form_field file %}
-              <label for="file" class="custom-file-label">
-                {{ 'lbl.File'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-            </div>
-            {% form_field_error file %}
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <div class="custom-file">
+            {% form_field file %}
+            <label for="file" class="custom-file-label">
+              {{ 'lbl.File'|trans|ucfirst }}
+              {{ macro.required }}
+            </label>
           </div>
+          {% form_field_error file %}
         </div>
       </div>
-      <div class="form-group">
-        <div class="form-check">
-          {% form_field overwrite %}
-          <label for="overwrite" class="form-check-label">{{ 'msg.OverwriteConflicts'|trans }}</label>
-        </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        {% form_field overwrite %}
+        <label for="overwrite" class="form-check-label">{{ 'msg.OverwriteConflicts'|trans }}</label>
       </div>
     </div>
     <div class="fork-module-actions">

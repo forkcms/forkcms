@@ -21,22 +21,18 @@
 
 {% block content %}
   {% form themes %}
-  <div class="row fork-module-content">
-    <div class="col-12">
-      <div class="content-block">
-        <div class="content-title">
-          <h2>{{ 'lbl.Templates'|trans|ucfirst }} {{ 'lbl.For'|trans }} {% form_field theme %}</h2>
-        </div>
+    <div class="content-block">
+      <div class="content-title">
+        <h2>{{ 'lbl.Templates'|trans|ucfirst }} {{ 'lbl.For'|trans }} {% form_field theme %}</h2>
       </div>
-      {% if dataGrid %}
-        <div class="table-responsive">
-          {{ dataGrid|raw }}
-        </div>
-      {% endif %}
-      {% if not dataGrid %}
-        <p>{{ 'msg.NoItems'|trans }}</p>
-      {% endif %}
     </div>
-  </div>
+    {% if dataGrid %}
+      <div class="table-responsive">
+        {{ dataGrid|raw }}
+      </div>
+    {% endif %}
+    {% if not dataGrid %}
+      <p>{{ 'msg.NoItems'|trans }}</p>
+    {% endif %}
   {% endform %}
 {% endblock %}
