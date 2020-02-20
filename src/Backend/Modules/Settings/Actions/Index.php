@@ -64,6 +64,38 @@ class Index extends BackendBaseActionIndex
             'site_title',
             $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
+
+        // Google tracking settings
+        $googleTrackingAnalyticsTrackingId =  $this->get('fork.settings')->get(
+            'Core',
+            'google_tracking_google_analytics_tracking_id',
+            $this->get('fork.settings')->get('Analytics', 'web_property_id', '')
+        );
+        $this->form->addCheckbox(
+            'google_tracking_google_analytics_tracking_id_enabled',
+            ($googleTrackingAnalyticsTrackingId !== '')
+        );
+        $googleTrackingAnalyticsTrackingIdField = $this->form->addText(
+            'google_tracking_google_analytics_tracking_id',
+            $googleTrackingAnalyticsTrackingId
+        );
+        if ($googleTrackingAnalyticsTrackingId === '') {
+            $googleTrackingAnalyticsTrackingIdField->setAttribute('disabled', 'disabled');
+        }
+
+        $googleTrackingTagManagerContainerId =  $this->get('fork.settings')->get('Core', 'google_tracking_google_tag_manager_container_id', '');
+        $this->form->addCheckbox(
+            'google_tracking_google_tag_manager_container_id_enabled',
+            ($googleTrackingTagManagerContainerId !== '')
+        );
+        $googleTrackingTagManagerContainerIdField = $this->form->addText(
+            'google_tracking_google_tag_manager_container_id',
+            $googleTrackingTagManagerContainerId
+        );
+        if ($googleTrackingTagManagerContainerId === '') {
+            $googleTrackingTagManagerContainerIdField->setAttribute('disabled', 'disabled');
+        }
+
         // @deprecated fallback to site_html_header as this was used in the past.
         $siteHtmlHeadValue =  $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', null));
         $this->form->addTextarea(
@@ -294,6 +326,18 @@ class Index extends BackendBaseActionIndex
             // validate required fields
             $this->form->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
 
+            // Google Tracking options
+            if ($this->form->getField('google_tracking_google_analytics_tracking_id_enabled')->getChecked()) {
+                $this->form->getField('google_tracking_google_analytics_tracking_id')->isFilled(
+                    BL::err('FieldIsRequired')
+                );
+            }
+            if ($this->form->getField('google_tracking_google_tag_manager_container_id_enabled')->getChecked()) {
+                $this->form->getField('google_tracking_google_tag_manager_container_id')->isFilled(
+                    BL::err('FieldIsRequired')
+                );
+            }
+
             // date & time
             $this->form->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
             $this->form->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
@@ -356,6 +400,29 @@ class Index extends BackendBaseActionIndex
                     'site_title_' . BL::getWorkingLanguage(),
                     $this->form->getField('site_title')->getValue()
                 );
+
+                if ($this->form->getField('google_tracking_google_analytics_tracking_id_enabled')->isChecked()) {
+                    $googleTrackingAnalyticsTrackingId = $this->form->getField('google_tracking_google_analytics_tracking_id')->getValue();
+                } else {
+                    $googleTrackingAnalyticsTrackingId = '';
+                }
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'google_tracking_google_analytics_tracking_id',
+                    $googleTrackingAnalyticsTrackingId
+                );
+
+                if ($this->form->getField('google_tracking_google_tag_manager_container_id_enabled')->isChecked()) {
+                    $googleTrackingTagManagerContainerId = $this->form->getField('google_tracking_google_tag_manager_container_id')->getValue();
+                } else {
+                    $googleTrackingTagManagerContainerId = '';
+                }
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'google_tracking_google_tag_manager_container_id',
+                    $googleTrackingTagManagerContainerId
+                );
+
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_html_head',
@@ -465,7 +532,11 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // date & time formats
-                $this->get('fork.settings')->set('Core', 'time_format', $this->form->getField('time_format')->getValue());
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'time_format',
+                    $this->form->getField('time_format')->getValue()
+                );
                 $this->get('fork.settings')->set(
                     'Core',
                     'date_format_short',

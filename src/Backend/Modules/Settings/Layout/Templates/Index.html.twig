@@ -43,6 +43,42 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
+          <h2 class="panel-title">
+            {{ 'lbl.GoogleTrackingOptions'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="panel-body">
+          <p><small>{{ 'msg.HelpGoogleTrackingOptions'|trans }}</small></p>
+          <div class="form-group checkboxTextFieldCombo">
+            <label for="googleTrackingGoogleAnalyticsTrackingId" class="control-label">{{ 'lbl.GoogleAnalyticsTrackingId'|trans }}</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                {% form_field google_tracking_google_analytics_tracking_id_enabled %}
+              </div>
+              {% form_field google_tracking_google_analytics_tracking_id %}
+            </div>
+            {% form_field_error google_tracking_google_analytics_tracking_id %}
+            <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleAnalyticsTrackingId'|trans|raw }}</span>
+          </div>
+          <div class="form-group checkboxTextFieldCombo">
+            <label for="googleTrackingGoogleTagManagerContainerId" class="control-label">{{ 'lbl.GoogleTagManagerContainerId'|trans }}</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                {% form_field google_tracking_google_tag_manager_container_id_enabled %}
+              </div>
+              {% form_field google_tracking_google_tag_manager_container_id %}
+            </div>
+            {% form_field_error google_tracking_google_tag_manager_container_id %}
+            <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleTagManagerContainerId'|trans|raw }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
           <h2 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">

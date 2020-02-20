@@ -598,6 +598,30 @@
         <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
         <translation language="pl"><![CDATA[Serwer jest wymagany.]]></translation>
       </item>
+      <item type="label" name="GoogleTrackingOptions">
+        <translation language="nl"><![CDATA[Google tracking options]]></translation>
+        <translation language="en"><![CDATA[Google tracking options]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingOptions">
+        <translation language="nl"><![CDATA[Je hoeft maar één van onderstaande opties te kiezen.]]></translation>
+        <translation language="en"><![CDATA[You should only enable one option.]]></translation>
+      </item>
+      <item type="label" name="GoogleAnalyticsTrackingId">
+        <translation language="nl"><![CDATA[Google Analytics Tracking Id]]></translation>
+        <translation language="en"><![CDATA[Google Analytics Tracking Id]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingGoogleAnalyticsTrackingId">
+        <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/analytics/answer/1008080?hl=nl">Google Analytics</a>. Dit ziet er uit als UA-000000-2.]]></translation>
+        <translation language="en"><![CDATA[You can find the Tracking Id in <a href="https://support.google.com/analytics/answer/1008080?hl=en">Google Analytics</a>, it will look like: UA-000000-2.]]></translation>
+      </item>
+      <item type="label" name="GoogleTagManagerContainerId">
+        <translation language="nl"><![CDATA[Google Tag Manager Container Id]]></translation>
+        <translation language="en"><![CDATA[Google Tag Manager Container Id]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingGoogleTagManagerContainerId">
+        <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/tagmanager/answer/6103696?hl=nl">Google Tag Manager</a>. Dit ziet er uit als GTM-XXXXXX.]]></translation>
+        <translation language="en"><![CDATA[You can find the Container Id in <a href="https://support.google.com/tagmanager/answer/6103696?hl=en">Google Tag Manager</a>, it will look like: GTM-XXXXXX.]]></translation>
+      </item>
     </Settings>
   </Backend>
   <Frontend>
