@@ -227,3 +227,8 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    ForkCMS\Google\TagManager\TagManager:
+        public: true
+        arguments:
+            - "@fork.settings"
