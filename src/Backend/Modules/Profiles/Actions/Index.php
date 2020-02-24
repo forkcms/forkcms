@@ -51,19 +51,19 @@ class Index extends BackendBaseActionIndex
         $where = [];
 
         // add status
-        if (isset($this->filter['status'])) {
+        if (isset($this->filter['status']) && $this->filter['status']) {
             $where[] = 'p.status = ?';
             $parameters[] = $this->filter['status'];
         }
 
         // add email
-        if (isset($this->filter['email'])) {
+        if (isset($this->filter['email']) && $this->filter['email']) {
             $where[] = 'p.email LIKE ?';
             $parameters[] = '%' . $this->filter['email'] . '%';
         }
 
         // add group
-        if (isset($this->filter['group'])) {
+        if (isset($this->filter['group']) && $this->filter['group']) {
             $query .= ' INNER JOIN profiles_groups_rights AS pgr ON pgr.profile_id = p.id AND
                         (pgr.expires_on IS NULL OR pgr.expires_on > NOW())';
             $where[] .= 'pgr.group_id = ?';
