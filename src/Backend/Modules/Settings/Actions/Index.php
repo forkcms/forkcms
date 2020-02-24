@@ -281,8 +281,19 @@ class Index extends BackendBaseActionIndex
             );
         }
 
-        // cookies
+        // privacy
         $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+        $this->form->addText(
+            'privacy_consent_levels',
+            implode(
+                ',',
+                $this->get('fork.settings')->get(
+                    'Core',
+                    'privacy_consent_levels',
+                    ['functional']
+                )
+            )
+        );
     }
 
     protected function parse(): void
@@ -391,6 +402,22 @@ class Index extends BackendBaseActionIndex
                     'ckfinder_image_max_height'
                 )->isInteger(BL::err('InvalidInteger'));
             }
+
+            $privacyConsentLevelsField = $this->form->getField('privacy_consent_levels');
+            if ($this->form->getField('show_cookie_bar')->getChecked()) {
+                $privacyConsentLevelsField->isFilled(BL::err('FieldIsRequired'));
+            }
+
+            if ($privacyConsentLevelsField->isFilled()) {
+                $levels = explode(',', $privacyConsentLevelsField->getValue());
+                foreach ($levels as $level) {
+                    if (!preg_match('/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i', $level)) {
+                        $privacyConsentLevelsField->setError(sprintf(BL::err('InvalidVariableName'), $level));
+                        break;
+                    }
+                }
+            }
+
 
             // no errors ?
             if ($this->form->isCorrect()) {
@@ -589,10 +616,16 @@ class Index extends BackendBaseActionIndex
                 // save domains
                 $this->get('fork.settings')->set('Core', 'site_domains', $siteDomains);
 
+                // privacy
                 $this->get('fork.settings')->set(
                     'Core',
                     'show_cookie_bar',
                     $this->form->getField('show_cookie_bar')->getChecked()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'privacy_consent_levels',
+                    explode(',', $this->form->getField('privacy_consent_levels')->getValue())
                 );
 
                 // assign report
