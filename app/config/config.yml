@@ -228,7 +228,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    ForkCMS\Google\TagManager\DataLayer:
+        public: true
+
     ForkCMS\Google\TagManager\TagManager:
         public: true
         arguments:
             - "@fork.settings"
+            - "@ForkCMS\\Google\\TagManager\\DataLayer"
+            - "@fork.cookie"
+
