@@ -218,7 +218,7 @@ class PageRepository extends ServiceEntityRepository
 
         $result['extras'] = array_map(
             static function (array $extra): array {
-                $extraData = $result['data'] ?? [];
+                $extraData = $extra['data'] ?? [];
                 if (!empty($extraData)) {
                     $extra['data'] = unserialize($extraData, ['allowed_classes' => false]);
                 }
