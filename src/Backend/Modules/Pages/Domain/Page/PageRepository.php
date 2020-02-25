@@ -183,6 +183,10 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
 
+        $pageData = $result['data'] ?? [];
+        if (!empty($pageData)) {
+            $result['data'] = unserialize($pageData, ['allowed_classes' => false]);
+        }
         $result['blocks'] = array_map(
             static function (array $block): array {
                 $decodedHtml = json_decode($block['html'] ?? null, false);
@@ -212,7 +216,17 @@ class PageRepository extends ServiceEntityRepository
                 ]
             );
 
-        $result['extras'] = $qb->getQuery()->getArrayResult();
+        $result['extras'] = array_map(
+            static function (array $extra): array {
+                $extraData = $result['data'] ?? [];
+                if (!empty($extraData)) {
+                    $extra['data'] = unserialize($extraData, ['allowed_classes' => false]);
+                }
+
+                return $extra;
+            },
+            $qb->getQuery()->getArrayResult()
+        );
 
         return $result;
     }
