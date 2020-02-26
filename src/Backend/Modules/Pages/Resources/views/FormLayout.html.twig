@@ -207,7 +207,8 @@
     </fieldset>
     {% if form.parent.data.hreflang.children is not empty %}
       <fieldset class="last">
-        <legend>{{ form.parent.data.hreflang.vars.label|trans }}</legend>
+        <legend class="mb-0">{{ 'lbl.Languages'|trans|ucfirst }}</legend>
+        <p><small class="text-muted form-text">{{ 'msg.HelpHrefLang'|trans|ucfirst }}</small></p>
         {{ form_widget(form.parent.data.hreflang) }}
       </fieldset>
     {% endif %}

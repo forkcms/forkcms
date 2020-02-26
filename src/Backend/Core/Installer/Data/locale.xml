@@ -10930,6 +10930,10 @@
         <translation language="el"><![CDATA[Αντικαταστήστε την διεύθυνση URL που παρήχθη αυτόματα με μία φτιαχτή δική σας.]]></translation>
         <translation language="pl"><![CDATA[Zastąp automatycznie wygenerowany URL własnym, wybranym adresem URL.]]></translation>
       </item>
+      <item type="message" name="HelpHrefLang">
+        <translation language="nl"><![CDATA[Hreflang maakt zoekmachines duidelijk wat de relatie is tussen pagina’s in verschillende talen.]]></translation>
+        <translation language="en"><![CDATA[Hreflang tells search engines the relationship between pages in different languages.]]></translation>
+      </item>
       <item type="message" name="HelpNickname">
         <translation language="nl"><![CDATA[De naam waaronder je wilt publiceren (bijvoorbeeld als auteur van een blogartikel).]]></translation>
         <translation language="en"><![CDATA[The name you want to be published as (e.g. as the author of an article).]]></translation>
