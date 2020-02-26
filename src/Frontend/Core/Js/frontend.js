@@ -114,10 +114,22 @@ jsFrontend.consentDialog = {
         // store in jsData
         jsData.privacyConsent.visitorChoices[name] = isChecked
 
-        // store data in functional cookies for later usage
+        // store for Google Tag Manager
+        var niceName = name.charAt(0).toUpperCase() + name.slice(1)
+        if (typeof dataLayer !== 'undefined') {
+          if (isChecked) {
+            var gtmData = {}
+            gtmData['privacyConsentLevel' + niceName  + 'Agreed'] = isChecked
+            dataLayer.push(gtmData)
+            dataLayer.push({'event': 'privacyConsentLevel' + niceName  + 'Agreed'})
+          }
+        }
+
+          // store data in functional cookies for later usage
         utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0)
         utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash)
       }
+
       $consentDialog.hide();
     })
   }
