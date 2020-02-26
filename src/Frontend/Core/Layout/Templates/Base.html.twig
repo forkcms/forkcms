@@ -27,10 +27,6 @@
 {% endblock %}
 
 <div class="content container">
-  {% block cookies %}
-    {% include "Core/Layout/Templates/Cookies.html.twig" %}
-  {% endblock %}
-
   {% block breadcrumb %}
     {# Breadcrumb #}
     {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
@@ -45,10 +41,8 @@
     {% endif %}
   {% endblock %}
 
-
   {# Main content #}
   {% block main %}
-
   {% endblock %}
 
   {% block footer %}
