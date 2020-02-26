@@ -34,6 +34,13 @@ class TagManager
     private function addDefaultDataLayerVariables(): void
     {
         $this->dataLayer->set('anonymizeIp', $this->shouldAnonymizeIp());
+
+        // only if the consent dialog is enabled we should extra variables
+        if ($this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+            foreach ($this->consentDialog->getVisitorChoices() as $level => $choice) {
+                $this->dataLayer->set('privacyConsentLevel' . ucfirst($level) . 'Agreed', $choice);
+            }
+        }
     }
 
     private function shouldAnonymizeIp(): bool
