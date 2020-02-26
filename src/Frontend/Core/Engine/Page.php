@@ -107,9 +107,6 @@ class Page extends KernelLoader
      */
     public function load(): void
     {
-        // set tracking cookie
-        Model::getVisitorId();
-
         // create header instance
         $this->header = new Header($this->getKernel());
 
