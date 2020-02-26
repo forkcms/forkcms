@@ -27,6 +27,10 @@
 {% endblock %}
 
 <div class="content container">
+  {% block privacyConsentDialog %}
+    {% include "Core/Layout/Templates/PrivacyConsentDialog.html.twig" %}
+  {% endblock %}
+
   {% block breadcrumb %}
     {# Breadcrumb #}
     {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}

@@ -238,3 +238,8 @@ services:
             - "@ForkCMS\\Google\\TagManager\\DataLayer"
             - "@fork.cookie"
 
+    ForkCMS\Privacy\ConsentDialog:
+        public: true
+        arguments:
+            - "@fork.settings"
+            - "@fork.cookie"

@@ -4096,6 +4096,30 @@
         <translation language="sv"><![CDATA[laddar]]></translation>
         <translation language="el"><![CDATA[φόρτωση]]></translation>
       </item>
+      <item type="message" name="PrivacyConsentDialogTitle">
+        <translation language="nl"><![CDATA[Jouw privacy voorkeuren]]></translation>
+        <translation language="en"><![CDATA[Your privacy]]></translation>
+      </item>
+      <item type="message" name="PrivacyConsentDialogBefore">
+        <translation language="nl"><![CDATA[Deze website maakt gebruik van cookies. Je kan hieronder jouw voorkeuren instellen.]]></translation>
+        <translation language="en"><![CDATA[This website uses cookies. You can set your personal preferences below.]]></translation>
+      </item>
+      <item type="message" name="PrivacyConsentDialogAfter">
+        <translation language="nl"><![CDATA[Wil je meer weten? Dan kan je ons <a href="/disclaimer">privacy-beleid</a> nalezen.]]></translation>
+        <translation language="en"><![CDATA[If you need more information you find it in our <a href="/disclaimer">disclaimer</a>.]]></translation>
+      </item>
+      <item type="message" name="PrivacyConsentLevelFunctionalTitle">
+        <translation language="nl"><![CDATA[Functionele cookies]]></translation>
+        <translation language="en"><![CDATA[Functional cookies]]></translation>
+      </item>
+      <item type="message" name="PrivacyConsentLevelFunctionalText">
+        <translation language="nl"><![CDATA[Deze cookies zijn nodig om de website correct te laten werken. Dit is bijvoorbeeld je taalvoorkeur, &hellip;]]></translation>
+        <translation language="en"><![CDATA[These cookies are needed to let the website function correctly. For instance we store your language preference, &hellip;]]></translation>
+      </item>
+      <item type="message" name="PrivacyConsentDialogSave">
+        <translation language="nl"><![CDATA[Bewaar mijn voorkeuren]]></translation>
+        <translation language="en"><![CDATA[Save my preferences]]></translation>
+      </item>
     </Core>
   </Frontend>
   <Backend>

@@ -622,6 +622,10 @@
         <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/tagmanager/answer/6103696?hl=nl">Google Tag Manager</a>. Dit ziet er uit als GTM-XXXXXX.]]></translation>
         <translation language="en"><![CDATA[You can find the Container Id in <a href="https://support.google.com/tagmanager/answer/6103696?hl=en">Google Tag Manager</a>, it will look like: GTM-XXXXXX.]]></translation>
       </item>
+      <item type="message" name="ShowConsentDialog">
+        <translation language="nl"><![CDATA[Toon het privacy voorkeuren scherm]]></translation>
+        <translation language="en"><![CDATA[Show the privacy preferences dialog]]></translation>
+      </item>
       <item type="label" name="PrivacyConsents">
         <translation language="nl"><![CDATA[Privacy toestemmingen]]></translation>
         <translation language="en"><![CDATA[Privacy consents]]></translation>

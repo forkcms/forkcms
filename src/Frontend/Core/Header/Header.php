@@ -9,6 +9,7 @@ use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
 use ForkCMS\Google\TagManager\TagManager;
+use ForkCMS\Privacy\ConsentDialog;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
@@ -116,7 +117,13 @@ class Header extends KernelLoader
                 FRONTEND_CACHE_PATH . '/MinifiedJs/'
             )
         );
-        $this->jsData = new JsData(['LANGUAGE' => Locale::frontendLanguage()]);
+
+        $jsData = [
+            'LANGUAGE' => Locale::frontendLanguage(),
+            'privacyConsent' => $this->get(ConsentDialog::class)->getJsData(),
+        ];
+        $this->jsData = new JsData($jsData);
+
         $this->meta = new MetaCollection();
 
         // add some default CSS files

@@ -15,6 +15,9 @@ var jsFrontend = {
 
     jsFrontend.addModalEvents()
 
+    // init consent dialog
+    jsFrontend.consentDialog.init()
+
     // init controls
     jsFrontend.controls.init()
 
@@ -89,6 +92,36 @@ jsFrontend.controls = {
   }
 }
 
+/**
+ * Handles the privacy consent dialog
+ */
+jsFrontend.consentDialog = {
+  init: function () {
+    // if there is no consentDialog we shouldn't do anything
+    if ($('*[data-role=privacy_consent_dialog]').length === 0) return
+
+    var $consentDialog = $('*[data-role=privacy_consent_dialog]')
+    var $consentForm = $('form[data-role=privacy_consent_dialog_form]')
+
+    $consentForm.on('submit', function(e) {
+      e.preventDefault()
+
+      var $levels = $consentForm.find('input[data-role=privacy-level]')
+      for (var level of $levels) {
+        var name = $(level).data('value')
+        var isChecked = $(level).is(':checked')
+
+        // store in jsData
+        jsData.privacyConsent.visitorChoices[name] = isChecked
+
+        // store data in functional cookies for later usage
+        utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0)
+        utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash)
+      }
+      $consentDialog.hide();
+    })
+  }
+}
 
 /**
  * Data related methods

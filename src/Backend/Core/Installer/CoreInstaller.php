@@ -202,7 +202,7 @@ class CoreInstaller extends ModuleInstaller
         // Enable the cookie bar by default when the timezone is in europe
         $this->setSetting(
             'Core',
-            'show_cookie_bar',
+            'show_consent_dialog',
             date_default_timezone_get() && strpos(mb_strtolower(date_default_timezone_get()), 'europe') === 0
         );
     }

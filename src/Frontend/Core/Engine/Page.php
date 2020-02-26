@@ -4,6 +4,7 @@ namespace Frontend\Core\Engine;
 
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
+use ForkCMS\Privacy\ConsentDialog;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
@@ -189,13 +190,7 @@ class Page extends KernelLoader
             $this->template->assignGlobal('isPage' . $this->pageId, true);
             $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
-            // hide the cookiebar from within the code to prevent flickering
-            $this->template->assignGlobal(
-                'cookieBarHide',
-                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
-                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
-            );
-
+            $this->parsePrivacyConsents();
             $this->parsePositions();
 
             // assign empty positions
@@ -329,6 +324,14 @@ class Page extends KernelLoader
                 Language::getActiveLanguages()
             )
         );
+    }
+
+    protected function parsePrivacyConsents(): void
+    {
+        $consentDialog = $this->get(ConsentDialog::class);
+
+        $this->template->assignGlobal('privacyConsentDialogHide', !$consentDialog->shouldDialogBeShown());
+        $this->template->assignGlobal('privacyConsentDialogLevels', $consentDialog->getLevels());
     }
 
     protected function parsePositions(): void

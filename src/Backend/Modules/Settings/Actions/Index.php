@@ -282,7 +282,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // privacy
-        $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+        $this->form->addCheckbox('show_consent_dialog', $this->get('fork.settings')->get('Core', 'show_consent_dialog', false));
         $this->form->addText(
             'privacy_consent_levels',
             implode(
@@ -404,10 +404,6 @@ class Index extends BackendBaseActionIndex
             }
 
             $privacyConsentLevelsField = $this->form->getField('privacy_consent_levels');
-            if ($this->form->getField('show_cookie_bar')->getChecked()) {
-                $privacyConsentLevelsField->isFilled(BL::err('FieldIsRequired'));
-            }
-
             if ($privacyConsentLevelsField->isFilled()) {
                 $levels = explode(',', $privacyConsentLevelsField->getValue());
                 foreach ($levels as $level) {
@@ -619,8 +615,8 @@ class Index extends BackendBaseActionIndex
                 // privacy
                 $this->get('fork.settings')->set(
                     'Core',
-                    'show_cookie_bar',
-                    $this->form->getField('show_cookie_bar')->getChecked()
+                    'show_consent_dialog',
+                    $this->form->getField('show_consent_dialog')->getChecked()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
