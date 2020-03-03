@@ -613,8 +613,11 @@ jsBackend.mediaLibraryHelper.group = {
     })
 
     $(mediaItemTypes).each(function (index, type) {
-      var mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks"></span></th>' +
-        '<th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr></thead>' +
+      var mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks" title="Select all"></span></th>' +
+        (type === 'image' ? '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Image')) + '</th>' : '') +
+        '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Filename')) + '</th>' +
+        '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Title')) + '</th>' +
+        '</tr></thead>' +
         '<tbody>' + html[type] + '</tbody>'
       $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
       $('#mediaCount' + utils.string.ucfirst(type)).text('(' + counts[type] + ')')
