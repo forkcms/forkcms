@@ -874,7 +874,7 @@ jsBackend.controls = {
       var $this = $(this)
 
       // check or uncheck all the checkboxes in this datagrid
-      $this.closest('table').find('td input:checkbox').prop('checked', $this.is(':checked'))
+      $this.closest('table').find('td input:checkbox').prop('checked', $this.is(':checked')).change()
 
       // set selected class
       if ($this.is(':checked')) {

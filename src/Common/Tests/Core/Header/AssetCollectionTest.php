@@ -6,8 +6,9 @@ use Common\Core\Header\Asset;
 use Common\Core\Header\AssetCollection;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
+use PHPUnit\Framework\TestCase;
 
-class AssetCollectionTest extends \PHPUnit_Framework_TestCase
+class AssetCollectionTest extends TestCase
 {
     public function testAddAssetToCollection(): void
     {
@@ -26,17 +27,17 @@ class AssetCollectionTest extends \PHPUnit_Framework_TestCase
         $assetCollection->add($asset5, false);
 
         $unorderedAssets = $assetCollection->getAssets();
-        $this->assertEquals($asset1, $unorderedAssets[$asset1->getFile()]);
-        $this->assertEquals($asset2, $unorderedAssets[$asset2->getFile()]);
-        $this->assertEquals($asset3, $unorderedAssets[$asset3->getFile()]);
-        $this->assertEquals($asset4, $unorderedAssets[$asset4->getFile()]);
-        $this->assertEquals($asset5, $unorderedAssets[$asset5->getFile()]);
+        self::assertEquals($asset1, $unorderedAssets[$asset1->getFile()]);
+        self::assertEquals($asset2, $unorderedAssets[$asset2->getFile()]);
+        self::assertEquals($asset3, $unorderedAssets[$asset3->getFile()]);
+        self::assertEquals($asset4, $unorderedAssets[$asset4->getFile()]);
+        self::assertEquals($asset5, $unorderedAssets[$asset5->getFile()]);
 
         $orderedAssets = $assetCollection->getAssets(true);
-        $this->assertEquals($asset1, $orderedAssets[2]);
-        $this->assertEquals($asset2, $orderedAssets[3]);
-        $this->assertEquals($asset3, $orderedAssets[4]);
-        $this->assertEquals($asset4, $orderedAssets[0]);
-        $this->assertEquals($asset5, $orderedAssets[1]);
+        self::assertEquals($asset1, $orderedAssets[2]);
+        self::assertEquals($asset2, $orderedAssets[3]);
+        self::assertEquals($asset3, $orderedAssets[4]);
+        self::assertEquals($asset4, $orderedAssets[0]);
+        self::assertEquals($asset5, $orderedAssets[1]);
     }
 }

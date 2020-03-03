@@ -2,68 +2,62 @@
 
 namespace Frontend\Modules\Faq\Actions;
 
-use Common\WebTestCase;
+use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
+use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
+use Frontend\Core\Tests\FrontendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class CategoryTest extends WebTestCase
+class CategoryTest extends FrontendWebTestCase
 {
-    public function testCategoryHasPage(): void
+    public function testCategoryHasPage(Client $client): void
     {
-        $client = static::createClient();
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
-                'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
             ]
         );
 
-        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertStringStartsWith(
-            'Faq for tests',
-            $crawler->filter('title')->text()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/en/faq/category/' . LoadFaqCategories::FAQ_CATEGORY_SLUG,
+            [
+                '<title>' . LoadFaqCategories::FAQ_CATEGORY_TITLE,
+            ]
         );
     }
 
-    public function testNonExistingCategoryPostGives404(): void
+    public function testNonExistingCategoryPostGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/faq/category/non-existing');
-        $this->assertIs404($client);
+        self::assertHttpStatusCode404($client, '/en/faq/category/non-existing');
     }
 
-    public function testCategoryPageContainsQuestion(): void
+    public function testCategoryPageContainsQuestion(Client $client): void
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
-
-        self::assertContains('Is this a working test?', $client->getResponse()->getContent());
-        $link = $crawler->selectLink('Is this a working test?')->link();
-        $crawler = $client->click($link);
-
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
+            ]
         );
-        self::assertStringEndsWith(
-            '/en/faq/detail/is-this-a-working-test',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertStringStartsWith(
-            'Is this a working test?',
-            $crawler->filter('title')->text()
-        );
-    }
 
-    public function testNonExistingPageGives404(): void
-    {
-        $client = static::createClient();
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/en/faq/category/' . LoadFaqCategories::FAQ_CATEGORY_SLUG,
+            [
+                LoadFaqQuestions::FAQ_QUESTION_TITLE,
+            ]
+        );
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', ['page' => 34]);
-        $this->assertIs404($client);
+        self::assertClickOnLink(
+            $client,
+            LoadFaqQuestions::FAQ_QUESTION_TITLE,
+            [
+                '<title>' . LoadFaqQuestions::FAQ_QUESTION_TITLE,
+            ]
+        );
+        self::assertCurrentUrlEndsWith($client, '/en/faq/detail/' . LoadFaqQuestions::FAQ_QUESTION_SLUG);
     }
 }

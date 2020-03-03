@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class UrlValidatorTest extends TestCase
 {
-    public function testValidExternalUrlValidation()
+    public function testValidExternalUrlValidation(): void
     {
         $urlValidator = new UrlValidator();
 
@@ -17,11 +17,11 @@ class UrlValidatorTest extends TestCase
         ];
 
         foreach ($urls as $url) {
-            $this->assertTrue($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+            self::assertTrue($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
         }
     }
 
-    public function testInvalidExternalUrlValidation()
+    public function testInvalidExternalUrlValidation(): void
     {
         $urlValidator = new UrlValidator();
 
@@ -33,7 +33,7 @@ class UrlValidatorTest extends TestCase
         ];
 
         foreach ($urls as $url) {
-            $this->assertFalse($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+            self::assertFalse($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
         }
     }
 }

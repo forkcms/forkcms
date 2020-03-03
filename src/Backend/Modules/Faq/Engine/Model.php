@@ -439,7 +439,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createUrlForAction('EditCategory') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('EditCategory', 'Faq') . '&id=' . $item['id'],
             ]
         );
     }

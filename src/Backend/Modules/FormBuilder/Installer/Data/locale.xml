@@ -1213,6 +1213,10 @@
         <translation language="en"><![CDATA[Activate email validation to use this option.]]></translation>
         <translation language="pl"><![CDATA[Aktywuj sprawdzanie poczty e-mail, aby użyć tej opcji.]]></translation>
       </item>
+      <item type="label" name="SendConfirmationMail">
+        <translation language="nl"><![CDATA[verstuur bevestigingsmail]]></translation>
+        <translation language="en"><![CDATA[send confirmation mail]]></translation>
+      </item>
       <item type="label" name="SendConfirmationMailTo">
         <translation language="nl"><![CDATA[verstuur bevestigingsmail naar]]></translation>
         <translation language="en"><![CDATA[send confirmation mail to]]></translation>
@@ -1223,10 +1227,22 @@
         <translation language="en"><![CDATA[email subject]]></translation>
         <translation language="pl"><![CDATA[temat wiadomości]]></translation>
       </item>
+      <item type="label" name="ConfirmationMailMessage">
+        <translation language="nl"><![CDATA[bericht bevestigingsmail]]></translation>
+        <translation language="en"><![CDATA[message confirmation mail]]></translation>
+      </item>
       <item type="label" name="ConfirmationMailSubject">
         <translation language="nl"><![CDATA[onderwerp bevestigingsmail]]></translation>
         <translation language="en"><![CDATA[subject confirmation mail]]></translation>
         <translation language="pl"><![CDATA[temat emaila z potwierdzeniem]]></translation>
+      </item>
+      <item type="error" name="ConfirmationMessageIsEmpty">
+        <translation language="nl"><![CDATA[Gelieve een bericht in te geven]]></translation>
+        <translation language="en"><![CDATA[Please fill in a message]]></translation>
+      </item>
+      <item type="error" name="ConfirmationSubjectIsEmpty">
+        <translation language="nl"><![CDATA[Gelieve een onderwerp in te geven]]></translation>
+        <translation language="en"><![CDATA[Please fill in a subject]]></translation>
       </item>
       <item type="label" name="Autocomplete">
         <translation language="nl"><![CDATA[Autocomplete waarde]]></translation>

@@ -2,48 +2,29 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class DetailThemeTest extends WebTestCase
+class DetailThemeTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/detail_theme?theme=Fork');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fdetail_theme%3Ftheme%3DFork',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/detail_theme?theme=Fork');
-        self::assertContains(
-            'Core/Layout/Templates/Home.html.twig',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'class="positions">top, main',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Version',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Description',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/detail_theme?theme=Fork',
+            [
+                'Core/Layout/Templates/Home.html.twig',
+                'class="positions">top, main',
+                'Version',
+                'Description',
+            ]
         );
     }
 }

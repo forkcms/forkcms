@@ -95,6 +95,7 @@ class Edit extends BackendBaseActionEdit
         );
         $this->form->addCheckbox('textbox_send_confirmation_mail_to');
         $this->form->addText('textbox_confirmation_mail_subject');
+        $this->form->addEditor('textbox_confirmation_mail_message');
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
 

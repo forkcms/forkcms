@@ -11,22 +11,47 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
 use Backend\Core\Engine\Authentication;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * WebTestCase is the base class for functional tests.
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!defined('LANGUAGE')) {
+            define('LANGUAGE', 'en');
+        }
+
+        if (!defined('FRONTEND_LANGUAGE')) {
+            define('FRONTEND_LANGUAGE', 'en');
+        }
+
+        // Inject the client in the data
+        $client = static::createClient();
+        $data = $this->getProvidedData();
+        $data[] = $client;
+        $this->__construct($this->getName(), $data, $this->dataDescription());
+
+        $this->resetDataBase($client);
+    }
+
     /**
      * Attempts to guess the kernel location.
      *
      * When the Kernel is located, the file is required.
      *
-     * @todo Remove this when Fork has no custom Kernel class anymore
-     *
+     * @return string The Kernel class name
      * @throws \RuntimeException
      *
-     * @return string The Kernel class name
+     * @todo Remove this when Fork has no custom Kernel class anymore
+     *
      */
     protected static function getKernelClass(): string
     {
@@ -63,7 +88,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param SpoonDatabase $database
      */
-    protected function emptyTestDatabase(SpoonDatabase $database)
+    protected function emptyTestDatabase(SpoonDatabase $database): void
     {
         foreach ($database->getTables() as $table) {
             $database->execute(
@@ -78,12 +103,12 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param SpoonDatabase $database
      * @param string $sql
      */
-    protected function importSQL(SpoonDatabase $database, string $sql)
+    protected function importSQL(SpoonDatabase $database, string $sql): void
     {
         $database->execute(trim($sql));
     }
 
-    protected function loadFixtures(Client $client, array $fixtureClasses = [])
+    protected function resetDataBase(Client $client): void
     {
         $database = $client->getContainer()->get('database');
 
@@ -94,6 +119,11 @@ abstract class WebTestCase extends BaseWebTestCase
             $client->getContainer()->get('database'),
             file_get_contents($kernelDir . '/../tests/data/test_db.sql')
         );
+    }
+
+    protected function loadFixtures(Client $client, array $fixtureClasses = []): void
+    {
+        $database = $client->getContainer()->get('database');
 
         // load all the fixtures
         foreach ($fixtureClasses as $class) {
@@ -108,7 +138,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
-    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir)
+    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir): void
     {
         if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
             $filesystem->copy(
@@ -116,8 +146,13 @@ abstract class WebTestCase extends BaseWebTestCase
                 $kernelDir . '/config/parameters.yml~backup'
             );
         }
-        if ($filesystem->exists($kernelDir . '/cache/test')) {
-            $filesystem->remove($kernelDir . '/cache/test');
+
+        if ($filesystem->exists($kernelDir . '/../var/cache/test')) {
+            $filesystem->remove($kernelDir . '/../var/cache/test');
+        }
+
+        if ($filesystem->exists($kernelDir . '/../var/cache/test_install')) {
+            $filesystem->remove($kernelDir . '/../var/cache/test_install');
         }
     }
 
@@ -127,7 +162,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
-    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir)
+    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir): void
     {
         if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
             $filesystem->copy(
@@ -142,10 +177,18 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    protected function assertIs404(Client $client)
+    protected static function assertIs404(Client $client): void
     {
         self::assertEquals(
-            404,
+            Response::HTTP_NOT_FOUND,
+            $client->getResponse()->getStatusCode()
+        );
+    }
+
+    protected static function assertIs200(Client $client): void
+    {
+        self::assertEquals(
+            Response::HTTP_OK,
             $client->getResponse()->getStatusCode()
         );
     }
@@ -157,21 +200,31 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param Form $form
      * @param array $data
+     * @param bool $setValues set to true for symfony @TODO set default true in Fork 6
      */
-    protected function submitForm(Client $client, Form $form, array $data = []): void
+    protected function submitForm(Client $client, Form $form, array $data = [], bool $setValues = false): void
     {
-        // Get parameters should be set manually. Symfony uses the request object,
-        // but spoon still checks the $_GET and $_POST parameters
-        foreach ($data as $key => $value) {
-            $_GET[$key] = $value;
-            $_POST[$key] = $value;
+        $values = $data;
+        // @TODO remove this once SpoonForm has been removed
+        if (!$setValues) {
+            // Get parameters should be set manually. Symfony uses the request object,
+            // but spoon still checks the $_GET and $_POST parameters
+            foreach ($data as $key => $value) {
+                $_GET[$key] = $value;
+                $_POST[$key] = $value;
+            }
+
+            $values = [];
         }
 
-        $client->submit($form);
+        $client->submit($form, $values);
 
-        foreach ($data as $key => $value) {
-            unset($_GET[$key]);
-            unset($_POST[$key]);
+        // @TODO remove this once SpoonForm has been removed
+        if (!$setValues) {
+            foreach ($data as $key => $value) {
+                unset($_GET[$key]);
+                unset($_POST[$key]);
+            }
         }
     }
 
@@ -255,15 +308,18 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function login(Client $client): void
     {
         Authentication::tearDown();
-        $crawler = $client->request('GET', '/private/en/authentication');
-
-        $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, [
-            'form' => 'authenticationIndex',
-            'backend_email' => 'noreply@fork-cms.com',
-            'backend_password' => 'fork',
-            'form_token' => $form['form_token']->getValue(),
-        ]);
+        self::assertHttpStatusCode200($client, '/private/en/authentication');
+        $form = $this->getFormForSubmitButton($client, 'login');
+        $this->submitForm(
+            $client,
+            $form,
+            [
+                'form' => 'authenticationIndex',
+                'backend_email' => 'noreply@fork-cms.com',
+                'backend_password' => 'fork',
+                'form_token' => $form['form_token']->getValue(),
+            ]
+        );
     }
 
     /**
@@ -276,5 +332,154 @@ abstract class WebTestCase extends BaseWebTestCase
         $client->setMaxRedirects(-1);
         $client->request('GET', '/private/en/authentication/logout');
         Authentication::tearDown();
+    }
+
+    protected static function assertGetsRedirected(
+        Client $client,
+        string $initialUrl,
+        string $expectedUrl,
+        string $requestMethod = 'GET',
+        array $requestParameters = [],
+        int $maxRedirects = null,
+        int $expectedHttpResponseCode = Response::HTTP_OK
+    ): void {
+        $maxRedirects !== null ? $client->setMaxRedirects($maxRedirects) : $client->followRedirects();
+
+        $client->request($requestMethod, $initialUrl, $requestParameters);
+
+        $response = $client->getResponse();
+        self::assertNotNull($response, 'No response received');
+
+        self::assertCurrentUrlContains($client, $expectedUrl);
+        self::assertEquals($expectedHttpResponseCode, $response->getStatusCode());
+    }
+
+    /**
+     * @param Client $client
+     * @param string $url
+     * @param string[] $expectedContent
+     * @param int $httpStatusCode
+     * @param string $requestMethod
+     * @param array $requestParameters
+     */
+    protected static function assertPageLoadedCorrectly(
+        Client $client,
+        string $url,
+        array $expectedContent,
+        int $httpStatusCode = Response::HTTP_OK,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        self::assertHttpStatusCode($client, $url, $httpStatusCode, $requestMethod, $requestParameters);
+        $response = $client->getResponse();
+
+        self::assertNotNull($response, 'No response received');
+        self::assertResponseHasContent($response, ...$expectedContent);
+    }
+
+    /**
+     * @param Client $client
+     * @param string $linkText
+     * @param string[] $expectedContent
+     * @param int $httpStatusCode
+     * @param string $requestMethod
+     * @param array $requestParameters
+     */
+    protected static function assertClickOnLink(
+        Client $client,
+        string $linkText,
+        array $expectedContent,
+        int $httpStatusCode = Response::HTTP_OK,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        self::assertPageLoadedCorrectly(
+            $client,
+            $client->getCrawler()->selectLink($linkText)->link()->getUri(),
+            $expectedContent,
+            $httpStatusCode,
+            $requestMethod,
+            $requestParameters
+        );
+    }
+
+    protected static function assertResponseHasContent(Response $response, string ...$content): void
+    {
+        foreach ($content as $expectedContent) {
+            self::assertContains($expectedContent, $response->getContent());
+        }
+    }
+
+    protected static function assertResponseDoesNotHaveContent(Response $response, string ...$content): void
+    {
+        foreach ($content as $notExpectedContent) {
+            self::assertNotContains($notExpectedContent, $response->getContent());
+        }
+    }
+
+    protected static function assertCurrentUrlContains(Client $client, string ...$partialUrls): void
+    {
+        foreach ($partialUrls as $partialUrl) {
+            self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
+        }
+    }
+
+    protected static function assertCurrentUrlEndsWith(Client $client, string $partialUrl): void
+    {
+        self::assertStringEndsWith($partialUrl, $client->getHistory()->current()->getUri());
+    }
+
+    protected static function assertHttpStatusCode(
+        Client $client,
+        string $url,
+        int $httpStatusCode,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        $client->request($requestMethod, $url, $requestParameters);
+        $response = $client->getResponse();
+        self::assertNotNull($response, 'No response received');
+        self::assertEquals($httpStatusCode, $response->getStatusCode());
+    }
+
+    protected static function assertHttpStatusCode200(
+        Client $client,
+        string $url,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        self::assertHttpStatusCode(
+            $client,
+            $url,
+            Response::HTTP_OK,
+            $requestMethod,
+            $requestParameters
+        );
+    }
+
+    protected static function assertHttpStatusCode404(
+        Client $client,
+        string $url,
+        string $requestMethod = 'GET',
+        array $requestParameters = []
+    ): void {
+        self::assertHttpStatusCode(
+            $client,
+            $url,
+            Response::HTTP_NOT_FOUND,
+            $requestMethod,
+            $requestParameters
+        );
+    }
+
+    protected function getFormForSubmitButton(Client $client, string $buttonText, string $filterSelector = null): Form
+    {
+        $crawler = $client->getCrawler();
+
+        if ($filterSelector !== null) {
+            $crawler = $crawler->filter($filterSelector);
+        }
+
+        return $crawler->selectButton($buttonText)->form();
     }
 }

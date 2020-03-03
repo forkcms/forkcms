@@ -66,6 +66,7 @@ class SaveField extends BackendBaseAJAXAction
         $useToSubscribeWithMailmotor = $this->getRequest()->request->getBoolean('use_to_subscribe_with_mailmotor');
         $sendConfirmationMailTo = $this->getRequest()->request->getBoolean('send_confirmation_mail_to');
         $confirmationMailSubject = trim($this->getRequest()->request->get('confirmation_mail_subject'));
+        $confirmationMailMessage = trim($this->getRequest()->request->get('confirmation_mail_message'));
 
         // special fields for datetime
         $inputType = $this->getRequest()->request->get('input_type');
@@ -125,10 +126,17 @@ class SaveField extends BackendBaseAJAXAction
                     'ActivateEmailValidationToUseThisOption'
                 );
             }
-            if ($sendConfirmationMailTo && empty($confirmationMailSubject)) {
-                $errors['confirmation_mail_subject_error_message'] = BL::getError(
-                    'ConfirmationSubjectIsEmpty'
-                );
+            if ($sendConfirmationMailTo) {
+                if (empty($confirmationMailSubject)) {
+                    $errors['confirmation_mail_subject_error_message'] = BL::getError(
+                        'ConfirmationSubjectIsEmpty'
+                    );
+                }
+                if (empty($confirmationMailMessage)) {
+                    $errors['confirmation_mail_message_error_message'] = BL::getError(
+                        'ConfirmationMessageIsEmpty'
+                    );
+                }
             }
         } elseif ($type === 'textarea') {
             // validate textarea
@@ -276,6 +284,7 @@ class SaveField extends BackendBaseAJAXAction
             $settings['reply_to'] = $replyTo;
             $settings['send_confirmation_mail_to'] = $sendConfirmationMailTo;
             $settings['confirmation_mail_subject'] = $confirmationMailSubject;
+            $settings['confirmation_mail_message'] = $confirmationMailMessage;
             $settings['use_to_subscribe_with_mailmotor'] = $useToSubscribeWithMailmotor;
         }
 
