@@ -33,7 +33,7 @@ class EditTest extends BackendWebTestCase
 
         self::assertPageLoadedCorrectly($client, '/private/en/tags/index', [LoadTagsTags::TAGS_TAG_2_NAME]);
         self::assertClickOnLink($client, LoadTagsTags::TAGS_TAG_2_NAME, [LoadTagsTags::TAGS_TAG_2_NAME]);
-        self::assertCurrentUrlContains($client, '&id=2');
+        self::assertCurrentUrlContains($client, '&id=' . LoadTagsTags::TAGS_TAG_2_ID);
     }
 
     public function testEditingOurTag(Client $client): void

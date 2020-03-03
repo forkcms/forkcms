@@ -29,7 +29,7 @@ class EditTest extends BackendWebTestCase
 
         self::assertPageLoadedCorrectly($client, '/private/en/blog/index', [LoadBlogPosts::BLOG_POST_TITLE]);
         self::assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
-        self::assertCurrentUrlContains($client, '&id=1');
+        self::assertCurrentUrlContains($client, '&id=' . LoadBlogPosts::BLOG_POST_ID);
     }
 
     public function testEditingOurBlogPost(Client $client): void
