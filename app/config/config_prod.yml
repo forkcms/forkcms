@@ -4,3 +4,7 @@ imports:
 # Sentry configuration
 sentry:
   dsn: '%sentry.dsn%'
+
+framework:
+    session:
+        gc_probability: null
