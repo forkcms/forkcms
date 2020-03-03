@@ -6,6 +6,7 @@ use Common\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * @group installer
@@ -22,12 +23,12 @@ class InstallerControllerTest extends WebTestCase
         $this->kernelDir = $this->getProvidedData()[0]->getContainer()->getParameter('kernel.project_dir') . '/app';
     }
 
-    protected function onNotSuccessfulTest($e): void
+    protected function onNotSuccessfulTest(Throwable $throwable): void
     {
         // put back our parameters file
         $this->putParametersFileBack(new Filesystem(), $this->kernelDir);
 
-        parent::onNotSuccessfulTest($e);
+        parent::onNotSuccessfulTest($throwable);
     }
 
     public function testNoStepActionAction(): void
