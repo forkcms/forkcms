@@ -2,39 +2,27 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class UploadModuleTest extends WebTestCase
+class UploadModuleTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/upload_module');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fupload_module',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/upload_module');
     }
 
-    public function testUploadPage(): void
+    public function testUploadPage(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/upload_module');
-        self::assertContains(
-            'Install',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            '<label for="file" class="control-label">',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/upload_module',
+            [
+                'Install',
+                '<label for="file" class="control-label">',
+            ]
         );
     }
 }

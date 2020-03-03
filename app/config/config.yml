@@ -182,6 +182,7 @@ services:
         arguments:
             - "@database"
             - "@cache.pool"
+            - "%fork.is_installed%"
 
     fork.cookie:
         class: Common\Core\Cookie

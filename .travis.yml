@@ -19,10 +19,6 @@ before_script:
 after_script:
     - yarn test
 
-after_success:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
 after_failure:
     - cat var/logs/test.log
 
@@ -48,13 +44,22 @@ jobs:
         -   stage: test
             name: Functional
             php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=coverage.clover
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=functional.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover functional.clover
         -   stage: test
             name: Unit
             php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=unit.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover unit.clover
         -   stage: test
             name: Installer
             php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=coverage.clover
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=installer.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover installer.clover
 

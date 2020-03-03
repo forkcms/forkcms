@@ -16,7 +16,7 @@ class MetaCollectionTest extends TestCase
         $metaCollection->addMetaData(MetaData::forName('description', 'lorem ipsum'));
         $metaCollection->addMetaLink(MetaLink::canonical('http://fork-cms.com'));
 
-        $this->assertEquals(
+        self::assertEquals(
             '<meta content="lorem ipsum" name="description">
 <link href="http://fork-cms.com" rel="canonical">',
             (string) $metaCollection

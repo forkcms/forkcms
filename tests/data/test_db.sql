@@ -158,16 +158,6 @@ CREATE TABLE `blog_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-LOCK TABLES `blog_categories` WRITE;
-/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
-
-INSERT INTO `blog_categories` (`id`, `meta_id`, `language`, `title`)
-VALUES
-	(1,28,'en','Blog category for functional tests');
-
-/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
-UNLOCK TABLES;
-
 # Dump of table blog_comments
 # ------------------------------------------------------------
 
@@ -1632,7 +1622,7 @@ VALUES
 	(919, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstall', 'Are you sure you want to install the module \"%1$s\"?', '2017-08-31 14:28:21'),
 	(920, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmModuleInstallDefault', 'Are you sure you want to install the module?', '2017-08-31 14:28:21'),
 	(921, 1, 'en', 'Backend', 'Extensions', 'msg', 'ConfirmThemeInstall', 'Are you sure you want to install this theme?', '2017-08-31 14:28:21'),
-	(922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'The user can upload a file.', '2017-08-31 14:28:21'),
+	(922, 1, 'en', 'Backend', 'Extensions', 'msg', 'ShowImageForm', 'Allow the user to upload an image.', '2017-08-31 14:28:21'),
 	(923, 1, 'en', 'Backend', 'Extensions', 'msg', 'DeletedTemplate', 'The template \"%1$s\" was deleted.', '2017-08-31 14:28:21'),
 	(924, 1, 'en', 'Backend', 'Extensions', 'msg', 'EditedTemplate', 'The template \"%1$s\" was saved.', '2017-08-31 14:28:21'),
 	(925, 1, 'en', 'Backend', 'Extensions', 'msg', 'HelpInstallableThemes', 'Click a theme to install it.', '2017-08-31 14:28:21'),
@@ -2241,7 +2231,8 @@ VALUES
     (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopyThisPage', 'copy this page', '2017-08-31 14:28:26'),
     (1532, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopiedTitle', '%1$s copy', '2017-08-31 14:28:26'),
     (1533, 1, 'en', 'Backend', 'Pages', 'msg', 'CopySaveWarning', '<p><strong>Important:</strong> The copy hasn''t been saved yet.</p>', '2017-08-31 14:28:26'),
-    (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
+    (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26'),
+    (1535, 1, 'en', 'Backend', 'Core', 'err', 'NotFound', 'This page was lost at sea.', '2017-08-31 14:28:18');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2981,8 +2972,6 @@ CREATE TABLE `users_sessions` (
   KEY `idx_session_id_secret_key` (`session_id`(100),`secret_key`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-
 # Dump of table users_settings
 # ------------------------------------------------------------
 
@@ -3043,6 +3032,8 @@ VALUES
 /*!40000 ALTER TABLE `users_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `MediaFolder`;
+
 -- Create syntax for TABLE 'MediaFolder'
 CREATE TABLE `MediaFolder` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3055,6 +3046,8 @@ PRIMARY KEY (`id`),
 KEY `IDX_F8B3AB017897CFE7` (`parentMediaFolderId`),
 CONSTRAINT `FK_F8B3AB017897CFE7` FOREIGN KEY (`parentMediaFolderId`) REFERENCES `MediaFolder` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `MediaGallery`;
 
 -- Create syntax for TABLE 'MediaGallery'
 CREATE TABLE `MediaGallery` (
@@ -3072,6 +3065,8 @@ PRIMARY KEY (`id`),
 UNIQUE KEY `UNIQ_D5EDE7036776CC71` (`mediaGroupId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `MediaGroup`;
+
 -- Create syntax for TABLE 'MediaGroup'
 CREATE TABLE `MediaGroup` (
 `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:uuid)',
@@ -3080,6 +3075,8 @@ CREATE TABLE `MediaGroup` (
 `numberOfConnectedItems` int(11) NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `MediaGroupMediaItem`;
 
 -- Create syntax for TABLE 'MediaGroupMediaItem'
 CREATE TABLE `MediaGroupMediaItem` (
@@ -3094,6 +3091,8 @@ KEY `IDX_BCC51AD827759A6A` (`mediaItemId`),
 CONSTRAINT `FK_BCC51AD827759A6A` FOREIGN KEY (`mediaItemId`) REFERENCES `MediaItem` (`id`) ON DELETE CASCADE,
 CONSTRAINT `FK_BCC51AD86776CC71` FOREIGN KEY (`mediaGroupId`) REFERENCES `MediaGroup` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `MediaItem`;
 
 -- Create syntax for TABLE 'MediaItem'
 CREATE TABLE `MediaItem` (

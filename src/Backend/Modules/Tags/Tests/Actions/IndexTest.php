@@ -4,21 +4,17 @@ namespace Backend\Modules\Tags\Tests\Action;
 
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -26,40 +22,23 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/index');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        $this->assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Ftags%2Findex',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/tags/index');
     }
 
-    public function testIndexContainsTags(): void
+    public function testIndexContainsTags(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/tags/index');
-        $this->assertContains(
-            'test',
-            $client->getResponse()->getContent()
-        );
-
-        $this->assertContains(
-            'most used',
-            $client->getResponse()->getContent()
-        );
-
-        $this->assertContains(
-            '<a href="/private/en/tags/index?offset=0&order=num_tags',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/tags/index',
+            [
+                LoadTagsTags::TAGS_TAG_2_NAME,
+                LoadTagsTags::TAGS_TAG_1_NAME,
+                '<a href="/private/en/tags/index?offset=0&order=num_tags'
+            ]
         );
     }
 }

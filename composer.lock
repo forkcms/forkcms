@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3b7627cec17cb91e8a8bc3ceb7facaf",
+    "content-hash": "cb95dcdd9b0663e4f670030bccef4b51",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2570,9 +2570,9 @@
             "authors": [
                 {
                     "name": "Matthias Mullie",
+                    "role": "Developer",
                     "email": "pathconverter@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
-                    "role": "Developer"
+                    "homepage": "http://www.mullie.eu"
                 }
             ],
             "description": "Relative path converter",
@@ -5921,7 +5921,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-zip": "*"
     },
     "platform-dev": []
 }
