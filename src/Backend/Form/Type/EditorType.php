@@ -24,8 +24,6 @@ class EditorType extends TextareaType
         $header = Model::get('header');
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
-        $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
-        $header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {

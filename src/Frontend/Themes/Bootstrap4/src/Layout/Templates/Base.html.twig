@@ -25,7 +25,7 @@
   {# Stylesheets #}
   {% block stylesheets %}
     {% for css in cssFiles %}
-      <link rel="stylesheet" href="{{ css.file }}" />
+      <link rel="stylesheet" href="{{ css }}" />
     {% endfor %}
   {% endblock %}
 
@@ -129,8 +129,6 @@
     {% for jsFile in jsFiles %}
       <script src="{{ jsFile|raw }}"></script>
     {% endfor %}
-
-    <script src="{{ THEME_URL }}/Core/Js/bundle.js?t={{ LAST_MODIFIED_TIME }}"></script>
   {% endblock %}
 
 </body>

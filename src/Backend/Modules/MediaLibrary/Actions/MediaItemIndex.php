@@ -132,7 +132,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
-        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
+        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary');
     }
 
     private function parseMediaFolders(MediaFolder $mediaFolder = null): void
