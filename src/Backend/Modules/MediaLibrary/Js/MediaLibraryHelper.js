@@ -613,9 +613,18 @@ jsBackend.mediaLibraryHelper.group = {
     })
 
     $(mediaItemTypes).each(function (index, type) {
-      $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $('<tbody>' + html[type] + '</tbody>') : rowNoItems)
+      var mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks" title="Select all"></span></th>' +
+        (type === 'image' ? '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Image')) + '</th>' : '') +
+        '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Filename')) + '</th>' +
+        '<th>' + utils.string.ucfirst(jsBackend.locale.lbl('Title')) + '</th>' +
+        '</tr></thead>' +
+        '<tbody>' + html[type] + '</tbody>'
+      $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
       $('#mediaCount' + utils.string.ucfirst(type)).text('(' + counts[type] + ')')
     })
+
+    // Init toggle for mass-action checkbox
+    jsBackend.controls.bindMassCheckbox()
 
     // init $tabs
     var $tabs = $('#tabLibrary').find('.nav-tabs')
@@ -661,22 +670,25 @@ jsBackend.mediaLibraryHelper.group = {
     var $tables = $('.mediaTable')
 
     // bind change when connecting/disconnecting media
-    $tables.find('.toggleConnectedCheckbox').on('click', function () {
+    $tables.find('.toggleConnectedCheckbox').on('change', function () {
       // mediaId
       var mediaId = $(this).parent().parent().attr('id').replace('media-', '')
+
+      // Is the checkbox checked or unchecked?
+      var isChecked = $(this).is(':checked')
 
       // was already connected?
       var connected = utils.array.inArray(mediaId, currentMediaItemIds)
 
       // delete from array
-      if (connected) {
+      if (connected && !isChecked) {
         // loop all to find value and to delete it
         currentMediaItemIds.splice(currentMediaItemIds.indexOf(mediaId), 1)
 
         // update folder count
         jsBackend.mediaLibraryHelper.group.updateFolderCount(mediaFolderId, '-', 1)
         // add to array
-      } else {
+      } else if (!connected && isChecked) {
         currentMediaItemIds.push(mediaId)
 
         // update folder count
