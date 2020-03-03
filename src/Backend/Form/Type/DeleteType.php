@@ -35,7 +35,7 @@ class DeleteType extends AbstractType
         $resolver->setDefaults([
             'action' => 'Delete',
             'id_field_name' => 'id',
-            'get_parameters' => [],
+            'get_parameters' => [], // Get parameters to be added to the generated action url
         ]);
     }
 }
