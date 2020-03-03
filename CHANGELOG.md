@@ -1,3 +1,29 @@
+5.8.0  (2020-03-03)
+------------------
+
+Added:
+* Core: Allow get parameters to be set when creating an action for the DeleteType [#2973](https://github.com/forkcms/forkcms/pull/2973)
+* Core: Backport tests from Fork 6 to Fork 5 [#3025](https://github.com/forkcms/forkcms/pull/3025)
+* Core: Improve testsuite simplify testing [#3027](https://github.com/forkcms/forkcms/pull/3027)
+* FormBuilder: Formbuilder confirmation mail message [#2959](https://github.com/forkcms/forkcms/pull/2959)
+* MediaGallery: Add select-all checkbox to MediaGallery connect datagrid [#2965](https://github.com/forkcms/forkcms/pull/2965)
+* MediaLibrary: Add documentation about the SingleMediaGroupType  [#3004](https://github.com/forkcms/forkcms/pull/3004)
+
+Changed:
+* Core: Reduce file size of included images [#3020](https://github.com/forkcms/forkcms/pull/3020)
+* Core: Update composer packages [#3015](https://github.com/forkcms/forkcms/pull/3015) [#3022](https://github.com/forkcms/forkcms/pull/3022) [#3023](https://github.com/forkcms/forkcms/pull/3023) [#3024](https://github.com/forkcms/forkcms/pull/3024) [#3051](https://github.com/forkcms/forkcms/pull/3051) 
+
+Fixed:
+* Core: Fix timestamps for caching incorrect [#3006](https://github.com/forkcms/forkcms/pull/3006)
+* Core: Remove deprecated disableMagicQuotes method [#3021](https://github.com/forkcms/forkcms/pull/3021)
+* Core: Upgrade travis distribution [#3019](https://github.com/forkcms/forkcms/pull/3019)
+* Core: We should use a multibyte save version of ucfirst for translations [#3030](https://github.com/forkcms/forkcms/pull/3030)
+* FormBuilder: Add missing label for sending confirmation mail [#](https://github.com/forkcms/forkcms/pull/)
+* Pages: Fix page update error for an array offset on boolean value [#3031](https://github.com/forkcms/forkcms/pull/3031)
+* Profiles: Fix error when expiration date is null [#3033](https://github.com/forkcms/forkcms/pull/3033)
+* Profiles: Only filter profiles when a value is provided [#3046](https://github.com/forkcms/forkcms/pull/3046)
+
+
 5.7.1  (2019-12-05)
 ------------------
 
