@@ -23,7 +23,7 @@ class InstallerControllerTest extends WebTestCase
         $this->kernelDir = $this->getProvidedData()[0]->getContainer()->getParameter('kernel.project_dir') . '/app';
     }
 
-    protected function onNotSuccessfulTest(Throwable $throwable): void
+    protected function onNotSuccessfulTest($throwable): void
     {
         // put back our parameters file
         $this->putParametersFileBack(new Filesystem(), $this->kernelDir);
