@@ -2,61 +2,46 @@
 
 namespace Frontend\Modules\Blog\Tests\Actions;
 
-use Common\WebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Frontend\Core\Tests\FrontendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class ArchiveTest extends WebTestCase
+class ArchiveTest extends FrontendWebTestCase
 {
-    public function testArchiveContainsBlogPosts(): void
+    public function testArchiveContainsBlogPosts(Client $client): void
     {
-        $client = static::createClient();
-
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 
-        $client->request('GET', '/en/blog/archive/2015/02');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        self::assertPageLoadedCorrectly($client, '/en/blog/archive/2015/02', [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 
-    public function testArchiveWithOnlyYearsContainsBlogPosts(): void
+    public function testArchiveWithOnlyYearsContainsBlogPosts(Client $client): void
     {
-        $client = static::createClient();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
 
-        $client->request('GET', '/en/blog/archive/2015');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        self::assertPageLoadedCorrectly($client, '/en/blog/archive/2015', [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 
-    public function testArchiveWithWrongMonthsGives404(): void
+    public function testArchiveWithWrongMonthsGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog/archive/1990/07');
-        $this->assertIs404($client);
+        self::assertHttpStatusCode404($client, '/en/blog/archive/1990/07');
     }
 
-    public function testNonExistingPageGives404(): void
+    public function testNonExistingPageGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog/archive/2015/02', ['page' => 34]);
-        $this->assertIs404($client);
+        self::assertHttpStatusCode404($client, '/en/blog/archive/2015/02', 'GET', ['page' => 34]);
     }
 }

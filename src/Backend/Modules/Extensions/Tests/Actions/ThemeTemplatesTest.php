@@ -2,47 +2,33 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class ThemeTemplatesTest extends WebTestCase
+class ThemeTemplatesTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/theme_templates');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Ftheme_templates',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/theme_templates');
     }
 
-    public function testIndexHasTemplates(): void
+    public function testIndexHasTemplates(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->request('GET', '/private/en/extensions/theme_templates');
-        self::assertContains(
-            'Templates for',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/theme_templates',
+            [
+                'Templates for',
+                'Add template',
+                'Export',
+            ]
         );
-        self::assertNotContains(
-            '<a href="/private/en/extensions/edit_theme_template?token=68ozixmy4j&amp;id=3" title="">Default</a>',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Add template',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Export',
-            $client->getResponse()->getContent()
+        self::assertResponseDoesNotHaveContent(
+            $client->getResponse(),
+            '<a href="/private/en/extensions/edit_theme_template?token=68ozixmy4j&amp;id=3" title="">Default</a>'
         );
     }
 }

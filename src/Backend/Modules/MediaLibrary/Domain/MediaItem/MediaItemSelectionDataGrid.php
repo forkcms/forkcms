@@ -6,6 +6,7 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use SpoonFilter;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -35,16 +36,16 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
     {
         if ($type->isMovie()) {
             return [
-                'storageType' => ucfirst(Language::lbl('MediaStorageType')),
-                'url' => ucfirst(Language::lbl('MediaMovieId')),
-                'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'storageType' => SpoonFilter::ucfirst(Language::lbl('MediaStorageType')),
+                'url' => SpoonFilter::ucfirst(Language::lbl('MediaMovieId')),
+                'title' => SpoonFilter::ucfirst(Language::lbl('MediaMovieTitle')),
                 'directUrl' => '',
             ];
         }
 
         return [
             'type' => '',
-            'url' => ucfirst(Language::lbl('Image')),
+            'url' => SpoonFilter::ucfirst(Language::lbl('Image')),
             'directUrl' => '',
         ];
     }
@@ -137,7 +138,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                 '[id]',
                 $type,
                 '[storageType]',
-                '[directUrl]'
+                '[directUrl]',
             ],
             'directUrl',
             true
@@ -175,7 +176,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                 }
 
                 if ($storageType === StorageType::VIMEO) {
-                    $absoluteUrl =  Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
+                    $absoluteUrl = Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
                         Model::get('media_library.repository.item')->find($id)
                     );
 
@@ -194,6 +195,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         }
 
         return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
-            ucfirst(Language::lbl('Select')) . '</a>';
+               SpoonFilter::ucfirst(Language::lbl('Select')) . '</a>';
     }
 }

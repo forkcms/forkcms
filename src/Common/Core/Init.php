@@ -50,7 +50,7 @@ abstract class Init extends KernelLoader
             $lastModifiedTime = time();
         }
 
-        // define as a constant
+        /** @DEPRECATED */
         defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
     }
 }

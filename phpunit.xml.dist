@@ -9,6 +9,10 @@
          stderr="true"
 >
     <testsuites>
+        <testsuite name="installer">
+            <directory>src/ForkCMS/Bundle/InstallerBundle/Tests</directory>
+        </testsuite>
+
         <testsuite name="unit">
             <directory>src/*/*Bundle/Tests</directory>
             <directory>src/*/Bundle/*Bundle/Tests</directory>
@@ -41,6 +45,7 @@
             <exclude>src/Backend/Modules/Groups/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Locale/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Location/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Mailmotor/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Profiles/Tests/Actions</exclude>
@@ -50,9 +55,7 @@
             <exclude>src/Backend/Modules/Users/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>
-    </testsuites>
 
-    <testsuites>
         <testsuite name="functional">
             <directory>src/Backend/Modules/*/Tests/Actions</directory>
             <directory>src/*/*Bundle/Tests/Controller</directory>
@@ -60,6 +63,7 @@
             <directory>src/*Bundle/Tests/Controller</directory>
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
+            <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests</exclude>
         </testsuite>
     </testsuites>
 
@@ -67,20 +71,29 @@
         <server name="KERNEL_DIR" value="app/" />
     </php>
 
-
     <filter>
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*Bundle/Tests</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Tests</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Tests</directory>
+                <directory>src/*Bundle/Resources</directory>
+                <directory>src/*Bundle/Tests</directory>
                 <directory>src/Backend/Cache</directory>
                 <directory>src/Backend/Core/Js</directory>
+                <directory>src/Backend/Core/Tests</directory>
+                <directory>src/Backend/Core/Installer</directory>
+                <directory>src/Backend/Modules/*/DataFixtures</directory>
+                <directory>src/Backend/Modules/*/Installer</directory>
+                <directory>src/Backend/Modules/*/Tests</directory>
+                <directory>src/Common/Tests</directory>
                 <directory>src/Frontend/Cache</directory>
+                <directory>src/Frontend/Core/Tests</directory>
+                <directory>src/Frontend/Modules/*/DataFixtures</directory>
+                <directory>src/Frontend/Modules/*/Tests</directory>
+                <file>src/Common/WebTestCase.php</file>
             </exclude>
         </whitelist>
     </filter>

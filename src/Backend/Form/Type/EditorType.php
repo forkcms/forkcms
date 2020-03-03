@@ -29,16 +29,12 @@ class EditorType extends TextareaType
 
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
-            $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
-            );
             $header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
-                ) . '.js?m=' . $timestamp,
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js',
                 null,
                 false,
                 true,
-                false
+                true
             );
         }
     }

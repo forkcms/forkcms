@@ -6,6 +6,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use SpoonFilter;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
@@ -378,7 +379,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+            $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
         }
 
         // build array
@@ -391,7 +392,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+            $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
         }
 
         // build array
@@ -483,8 +484,8 @@ class Model
                 foreach ($items as $item) {
                     // attributes
                     $attributes = $item->attributes();
-                    $type = \SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
-                    $name = ucfirst(\SpoonFilter::getValue($attributes['name'], null, ''));
+                    $type = SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
+                    $name = SpoonFilter::ucfirst(SpoonFilter::getValue($attributes['name'], null, ''));
 
                     // missing attributes
                     if ($type == '' || $name == '') {
@@ -501,7 +502,7 @@ class Model
 
                         // attributes
                         $attributes = $translation->attributes();
-                        $language = \SpoonFilter::getValue(
+                        $language = SpoonFilter::getValue(
                             $attributes['language'],
                             $possibleLanguages[$application],
                             ''

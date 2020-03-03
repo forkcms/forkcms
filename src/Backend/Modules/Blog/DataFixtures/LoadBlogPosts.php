@@ -6,15 +6,31 @@ use SpoonDatabase;
 
 class LoadBlogPosts
 {
+    public const BLOG_POST_TITLE = 'Blogpost for functional tests';
+    public const BLOG_POST_SLUG = 'blogpost-for-functional-tests';
+    public const BLOG_POST_ID = 1;
+    public const BLOG_POST_DATA = [
+        'user_id' => 1,
+        'language' => 'en',
+        'title' => self::BLOG_POST_TITLE,
+        'introduction' => '<p>Lorem ipsum dolor sit amet</p>',
+        'text' => '<p>Lorem ipsum dolor sit amet</p>',
+        'status' => 'active',
+        'publish_on' => '2015-02-23 00:00:00',
+        'created_on' => '2015-02-23 00:00:00',
+        'edited_on' => '2015-02-23 00:00:00',
+        'num_comments' => 0,
+    ];
+
     public function load(SpoonDatabase $database): void
     {
         $metaId = $database->insert(
             'meta',
             [
-                'keywords' => 'Blogpost for functional tests',
-                'description' => 'Blogpost for functional tests',
-                'title' => 'Blogpost for functional tests',
-                'url' => 'blogpost-for-functional-tests',
+                'keywords' => self::BLOG_POST_TITLE,
+                'description' => self::BLOG_POST_TITLE,
+                'title' => self::BLOG_POST_TITLE,
+                'url' => self::BLOG_POST_SLUG,
             ]
         );
 
@@ -24,37 +40,23 @@ class LoadBlogPosts
              WHERE title = :title AND language = :language
              LIMIT 1',
             [
-                'title' => 'BlogCategory for tests',
+                'title' => LoadBlogCategories::BLOG_CATEGORY_TITLE,
                 'language' => 'en',
             ]
         );
 
         $database->insert(
             'blog_posts',
-            [
-                'id' => 1,
-                'meta_id' => $metaId,
-                'category_id' => $categoryId,
-                'user_id' => 1,
-                'language' => 'en',
-                'title' => 'Blogpost for functional tests',
-                'introduction' => '<p>Lorem ipsum dolor sit amet</p>',
-                'text' => '<p>Lorem ipsum dolor sit amet</p>',
-                'status' => 'active',
-                'publish_on' => '2015-02-23 00:00:00',
-                'created_on' => '2015-02-23 00:00:00',
-                'edited_on' => '2015-02-23 00:00:00',
-                'num_comments' => 0,
-            ]
+            ['meta_id' => $metaId, 'category_id' => $categoryId, 'id' => self::BLOG_POST_ID] + self::BLOG_POST_DATA
         );
 
         $database->insert(
             'search_index',
             [
                 'module' => 'Blog',
-                'other_id' => 1,
+                'other_id' => self::BLOG_POST_ID,
                 'field' => 'title',
-                'value' => 'Blogpost for functional tests',
+                'value' => self::BLOG_POST_TITLE,
                 'language' => 'en',
                 'active' => true,
             ]
