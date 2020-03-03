@@ -93,15 +93,14 @@ class InstallerControllerTest extends WebTestCase
     private function runTroughStep3(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
-        $form['install_modules[modules][9]']->tick();
-        $form['install_modules[modules][10]']->tick();
-        $form['install_modules[modules][11]']->tick();
-        $form['install_modules[modules][12]']->tick();
-        $form['install_modules[modules][13]']->tick();
-        $form['install_modules[modules][14]']->tick();
-        $form['install_modules[modules][15]']->tick();
-        $form['install_modules[modules][16]']->tick();
-        $form['install_modules[modules][17]']->tick();
+        $form['install_modules[modules][0]']->tick();
+        $form['install_modules[modules][1]']->tick();
+        $form['install_modules[modules][2]']->tick();
+        $form['install_modules[modules][3]']->tick();
+        $form['install_modules[modules][4]']->tick();
+        $form['install_modules[modules][5]']->tick();
+        $form['install_modules[modules][6]']->tick();
+        $form['install_modules[modules][7]']->tick();
         $client->submit($form, []);
         $crawler = $client->followRedirect();
 
