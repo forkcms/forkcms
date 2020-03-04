@@ -38,7 +38,7 @@ class CategoryTest extends FrontendWebTestCase
         );
 
         self::assertPageLoadedCorrectly($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, [LoadBlogCategories::BLOG_CATEGORY_TITLE]);
-        self::assertClickOnLink($client, LoadBlogPosts::BLOG_POST_TITLE, [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertClickOnLink($client, 'read more', [LoadBlogPosts::BLOG_POST_TITLE]);
         self::assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 
