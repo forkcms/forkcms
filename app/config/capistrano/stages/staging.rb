@@ -1,14 +1,14 @@
 ### DO NOT EDIT BELOW ###
 set :branch, "staging"
-set :document_root, "/home/sites/php72/#{fetch :client}/#{fetch :project}"
+set :document_root, "/home/sites/php73/#{fetch :client}/#{fetch :project}"
 set :deploy_to, "/home/sites/apps/#{fetch :client}/#{fetch :project}"
 set :keep_releases,  2
-set :url, "http://#{fetch :project}.#{fetch :client}.php72.sumocoders.eu"
-set :fcgi_connection_string, "/var/run/php_72_fpm_sites.sock"
-set :php_bin, "php7.2"
+set :url, "http://#{fetch :project}.#{fetch :client}.php73.sumocoders.eu"
+set :fcgi_connection_string, "/var/run/php_73_fpm_sites.sock"
+set :php_bin, "php7.3"
 set :php_bin_custom_path, fetch(:php_bin)
 set :opcache_reset_strategy, "fcgi"
-set :opcache_reset_fcgi_connection_string, "/var/run/php_72_fpm_sites.sock"
+set :opcache_reset_fcgi_connection_string, "/var/run/php_73_fpm_sites.sock"
 
 server "dev02.sumocoders.eu", user: "sites", roles: %w{app db web}
 
