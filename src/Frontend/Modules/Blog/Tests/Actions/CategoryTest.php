@@ -4,6 +4,7 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
 use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Frontend\Core\Language\Language;
 use Frontend\Core\Tests\FrontendWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
@@ -38,7 +39,7 @@ class CategoryTest extends FrontendWebTestCase
         );
 
         self::assertPageLoadedCorrectly($client, '/en/blog/category/' . LoadBlogCategories::BLOG_CATEGORY_SLUG, [LoadBlogCategories::BLOG_CATEGORY_TITLE]);
-        self::assertClickOnLink($client, 'read more', [LoadBlogPosts::BLOG_POST_TITLE]);
+        self::assertClickOnLink($client, Language::lbl('ReadMore'), [LoadBlogPosts::BLOG_POST_TITLE]);
         self::assertCurrentUrlEndsWith($client, '/en/blog/detail/' . LoadBlogPosts::BLOG_POST_SLUG);
     }
 
