@@ -17,7 +17,9 @@ run_functional_tests:
         - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
+        - touch src/Frontend/Core/Js/bundle.js
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+        - php bin/console forkcms:cache:clear -e test
     script:
         - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --testsuite=functional
     stage: test
@@ -38,7 +40,9 @@ run_unit_tests:
         - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
+        - touch src/Frontend/Core/Js/bundle.js
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+        - php bin/console forkcms:cache:clear -e test
     script:
         - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --testsuite=unit
     stage: test
