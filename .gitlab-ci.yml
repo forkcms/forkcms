@@ -8,7 +8,7 @@ before_script:
     - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 run_functional_tests:
-    image: sumocoders/fork-php71:latest
+    image: sumocoders/fork-php73:latest
     services:
         - mysql:5.5
     before_script:
@@ -19,18 +19,19 @@ run_functional_tests:
         - php bin/generate-parameters-gitlab
         - touch src/Frontend/Core/Js/bundle.js
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+        - php bin/console forkcms:cache:clear -e test
     script:
         - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --testsuite=functional
     stage: test
     tags:
-        - php71
+        - php73
         - docker
     variables:
         MYSQL_DATABASE: ci
         MYSQL_ROOT_PASSWORD: root
 
 run_unit_tests:
-    image: sumocoders/fork-php71:latest
+    image: sumocoders/fork-php73:latest
     services:
         - mysql:5.5
     before_script:
@@ -41,27 +42,28 @@ run_unit_tests:
         - php bin/generate-parameters-gitlab
         - touch src/Frontend/Core/Js/bundle.js
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+        - php bin/console forkcms:cache:clear -e test
     script:
         - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit --testsuite=unit
     stage: test
     tags:
-        - php71
+        - php73
         - docker
     variables:
         MYSQL_DATABASE: ci
         MYSQL_ROOT_PASSWORD: root
 
 code_styles:
-    image: sumocoders/fork-php71:latest
+    image: sumocoders/fork-php73:latest
     script:
         - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
     stage: code quality
     tags:
-        - php71
+        - php73
         - docker
 
 phpstan:
-    image: sumocoders/fork-php71:latest
+    image: sumocoders/fork-php73:latest
     services:
         - mysql:5.5
     before_script:
@@ -75,7 +77,7 @@ phpstan:
         - php -d memory_limit=-1 bin/phpstan analyze src
     stage: code quality
     tags:
-        - php71
+        - php73
         - docker
     variables:
         MYSQL_DATABASE: ci
