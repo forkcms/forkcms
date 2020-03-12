@@ -1,6 +1,6 @@
 stages:
-    - test
     - code quality
+    - test
 
 before_script:
     - curl -sS https://getcomposer.org/installer | php

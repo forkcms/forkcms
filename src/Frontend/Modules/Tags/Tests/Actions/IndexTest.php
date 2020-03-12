@@ -23,9 +23,9 @@ class IndexTest extends FrontendWebTestCase
             $client,
             '/en/tags',
             [
-                '<a href="/en/tags/detail/most-used" rel="tag">',
+                'href="/en/tags/detail/most-used" rel="tag">',
                 LoadTagsTags::TAGS_TAG_2_NAME,
-                '<span class="badge hidden-phone">6</span>',
+                '<span class="badge badge-pill badge-default">6</span>',
             ]
         );
     }

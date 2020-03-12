@@ -24,9 +24,10 @@ class DetailTest extends FrontendWebTestCase
             $client,
             LoadTagsTags::TAGS_TAG_2_NAME,
             [
-                '<a href="/en/tags" title="To tags overview">',
-                '<h2>Pages</h2>',
-                '<a href="/en/sitemap" rel="tag">',
+                '<a href="/en/tags"',
+                'To tags overview',
+                '<h4 class="mb-0">Pages</h4>',
+                '/en/sitemap',
                 '<title>most used - Tags',
             ]
         );
