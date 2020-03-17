@@ -170,6 +170,7 @@ class EditorType extends TextareaType
 
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
+        $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
 
         $currentLanguage = Language::getWorkingLanguage();
         // add the internal link lists-file
