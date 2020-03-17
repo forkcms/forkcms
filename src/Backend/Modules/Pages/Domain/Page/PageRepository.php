@@ -183,7 +183,21 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
 
-        $result['blocks'] = $blocks;
+        $pageData = $result['data'] ?? [];
+        if (!empty($pageData)) {
+            $result['data'] = unserialize($pageData, ['allowed_classes' => false]);
+        }
+        $result['blocks'] = array_map(
+            static function (array $block): array {
+                $decodedHtml = json_decode($block['html'] ?? null, false);
+                if ($decodedHtml !== null) {
+                    $block['html'] = $decodedHtml;
+                }
+
+                return $block;
+            },
+            $blocks
+        );
 
         $qb = $this
             ->getEntityManager()
@@ -202,7 +216,17 @@ class PageRepository extends ServiceEntityRepository
                 ]
             );
 
-        $result['extras'] = $qb->getQuery()->getArrayResult();
+        $result['extras'] = array_map(
+            static function (array $extra): array {
+                $extraData = $extra['data'] ?? [];
+                if (!empty($extraData)) {
+                    $extra['data'] = unserialize($extraData, ['allowed_classes' => false]);
+                }
+
+                return $extra;
+            },
+            $qb->getQuery()->getArrayResult()
+        );
 
         return $result;
     }
@@ -613,8 +637,7 @@ class PageRepository extends ServiceEntityRepository
             ->createQueryBuilder()
             ->from(PageBlock::class, 'b')
             ->where('b.extraId = :extraId')
-            ->groupBy('b.revisionId')
-        ;
+            ->groupBy('b.revisionId');
 
         $qb
             ->select('p')

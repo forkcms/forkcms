@@ -50,7 +50,9 @@ final class PageType extends AbstractType
                     'getData.getId',
                     'getData.getParentId',
                     'getData.isAction',
-                ]
+                ],
+                'title',
+                true
             )
         );
         $builder->add('navigation', PageNavigationType::class);
