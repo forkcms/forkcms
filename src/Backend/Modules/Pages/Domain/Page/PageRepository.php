@@ -185,6 +185,7 @@ class PageRepository extends ServiceEntityRepository
             ['allowed_classes' => false]
         );
 
+        // get the positions out of the mapping in sequence
         $positions = array_values(
             array_unique(
                 array_filter(
