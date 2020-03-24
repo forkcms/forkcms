@@ -123,7 +123,7 @@ final class PageEdit extends Action
 
     protected function parse(): void
     {
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true, true);
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->template->assign('tree', BackendPagesModel::getTreeHTML());
     }
 

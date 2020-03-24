@@ -130,7 +130,7 @@ class MediaItemIndex extends BackendBaseActionIndex
     private function parseJSFiles(): void
     {
         $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);
+        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary');
     }
 
     private function parseMediaFolders(MediaFolder $mediaFolder = null): void

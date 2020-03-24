@@ -27,13 +27,13 @@ class Lightbox extends FrontendMediaWidget
 
     private function addLightboxJS(): void
     {
-        $this->addJS('/js/vendors/photoswipe.min.js', true);
-        $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true);
+        $this->addJS('/js/vendors/photoswipe.min.js', true, false);
+        $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true, false);
     }
 
     private function addLightboxCSS(): void
     {
-        $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true, false);
-        $this->addCSS('/css/vendors/photoswipe/default-skin.css', true, false);
+        $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true);
+        $this->addCSS('/css/vendors/photoswipe/default-skin.css', true);
     }
 }

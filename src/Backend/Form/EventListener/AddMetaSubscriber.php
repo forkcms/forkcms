@@ -47,13 +47,17 @@ class AddMetaSubscriber implements EventSubscriberInterface
      */
     private $moduleForUrl;
 
+    /** @var bool */
+    private $customMetaTags;
+
     public function __construct(
         string $moduleForUrl,
         string $actionForUrl,
         string $generateUrlCallbackClass,
         string $generateUrlCallbackMethod,
         array $generateUrlCallbackParameterMethods,
-        string $baseFieldName = 'title'
+        string $baseFieldName = 'title',
+        bool $customMetaTags = false
     ) {
         $this->moduleForUrl = $moduleForUrl;
         $this->actionForUrl = $actionForUrl;
@@ -61,6 +65,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
         $this->generateUrlCallbackMethod = $generateUrlCallbackMethod;
         $this->generateUrlCallbackParameterMethods = $generateUrlCallbackParameterMethods;
         $this->baseFieldName = $baseFieldName;
+        $this->customMetaTags = $customMetaTags;
     }
 
     public static function getSubscribedEvents(): array
@@ -76,6 +81,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
             'meta',
             MetaType::class,
             [
+                'custom_meta_tags' => $this->customMetaTags,
                 'base_field_name' => $this->baseFieldName,
                 'detail_url' => $this->getDetailUrl(),
                 'generate_url_callback_class' => $this->generateUrlCallbackClass,
