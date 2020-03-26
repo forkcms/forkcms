@@ -37,7 +37,7 @@ abstract class AbstractImage extends AbstractFile
 
     public function getAbsolutePath(string $subDirectory = null): ?string
     {
-        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+        if (static::GENERATE_THUMBNAILS && $subDirectory === null) {
             $subDirectory = 'source';
         }
 
@@ -46,7 +46,7 @@ abstract class AbstractImage extends AbstractFile
 
     public function getWebPath(string $subDirectory = null): string
     {
-        if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
+        if (static::GENERATE_THUMBNAILS && $subDirectory === null) {
             $subDirectory = 'source';
         }
 
@@ -129,6 +129,6 @@ abstract class AbstractImage extends AbstractFile
 
     protected function writeFileToDisk(): void
     {
-        $this->getFile()->move($this->getUploadRootDir(self::GENERATE_THUMBNAILS ? 'source' : null), $this->fileName);
+        $this->getFile()->move($this->getUploadRootDir(static::GENERATE_THUMBNAILS ? 'source' : null), $this->fileName);
     }
 }
