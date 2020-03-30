@@ -66,7 +66,7 @@ class BaseTwigModifiers
         $pattern = '/<code>.*?<\/code>/is';
 
         // find matches
-        if (preg_match_all($pattern, $string, $matches)) {
+        if (preg_match_all($pattern, $string, $matches, PREG_SET_ORDER)) {
             // loop matches
             foreach ($matches[0] as $match) {
                 // encase content in highlight_string
