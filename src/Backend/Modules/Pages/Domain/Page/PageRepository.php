@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Domain\Page;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Extensions\Engine\Model as ExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
@@ -179,6 +180,30 @@ class PageRepository extends ServiceEntityRepository
             ]
         );
 
+        $templateData = unserialize(
+            ExtensionsModel::getTemplate($result['templateId'])['data'],
+            ['allowed_classes' => false]
+        );
+
+        // get the positions out of the mapping in sequence
+        $positions = array_values(
+            array_unique(
+                array_filter(
+                    explode(
+                        ',',
+                        preg_replace('/[^A-Za-z0-9,]/', '', $templateData['format'])
+                    )
+                )
+            )
+        );
+        foreach ($positions as $position => $name) {
+            $result['positions'][$position] = [
+                'name' => $name,
+                'sequence' => $position,
+                'blocks' => [],
+            ];
+        }
+        $positionMap = array_flip($positions);
         $blocks = $qb
             ->getQuery()
             ->getArrayResult();
@@ -187,17 +212,14 @@ class PageRepository extends ServiceEntityRepository
         if (!empty($pageData)) {
             $result['data'] = unserialize($pageData, ['allowed_classes' => false]);
         }
-        $result['blocks'] = array_map(
-            static function (array $block): array {
-                $decodedHtml = json_decode($block['html'] ?? null, false);
-                if ($decodedHtml !== null) {
-                    $block['html'] = $decodedHtml;
-                }
+        foreach ($blocks as $block) {
+            $decodedHtml = json_decode($block['html'] ?? null, false);
+            if ($decodedHtml !== null) {
+                $block['html'] = $decodedHtml;
+            }
 
-                return $block;
-            },
-            $blocks
-        );
+            $result['positions'][$positionMap[$block['position']]]['blocks'][] = $block;
+        }
 
         $qb = $this
             ->getEntityManager()

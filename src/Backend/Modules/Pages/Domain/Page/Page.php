@@ -74,6 +74,8 @@ class Page
     private $parentId;
 
     /**
+     * @TODO switch this over to the template entity
+     *
      * The template to use
      *
      * @var int
