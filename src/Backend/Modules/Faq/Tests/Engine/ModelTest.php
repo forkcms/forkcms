@@ -2,132 +2,118 @@
 
 namespace Backend\Modules\Faq\Tests\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
 use Backend\Modules\Faq\Engine\Model;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-final class ModelTest extends WebTestCase
+final class ModelTest extends BackendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-
-        $client = self::createClient();
-        $this->loadFixtures($client);
-    }
-
     public function testInsertingFaqCategory(): void
     {
-        $categoryId = $this->addCategory();
+        $categoryId = Model::insertCategory(
+            LoadFaqCategories::FAQ_CATEGORY_DATA,
+            LoadFaqCategories::FAQ_CATEGORY_META_DATA
+        );
 
-        $categoryData = $this->getCategoryData();
         $addedCategory = Model::getCategory($categoryId);
 
-        $this->assertEquals($categoryId, $addedCategory['id']);
-        $this->assertEquals($categoryData['language'], $addedCategory['language']);
-        $this->assertArrayHasKey('meta_id', $addedCategory);
-        $this->assertEquals($categoryData['title'], $addedCategory['title']);
-        $this->assertEquals($categoryData['sequence'], $addedCategory['sequence']);
+        self::assertEquals($categoryId, $addedCategory['id']);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['locale'], $addedCategory['language']);
+        self::assertArrayHasKey('meta_id', $addedCategory);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['title'], $addedCategory['title']);
+        self::assertEquals(LoadFaqCategories::FAQ_CATEGORY_DATA['sequence'], $addedCategory['sequence']);
     }
 
-    public function testIfCategoryExists(): void
+    public function testIfCategoryExists(Client $client): void
     {
-        $categoryId = $this->addCategory();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+            ]
+        );
 
-        $this->assertTrue(Model::existsCategory($categoryId));
-        $this->assertFalse(Model::existsCategory(99));
+        self::assertTrue(Model::existsCategory(LoadFaqCategories::getCategoryId()));
+        self::assertFalse(Model::existsCategory(99));
     }
 
-    public function testGeneratingCategoryUrl(): void
+    public function testGeneratingCategoryUrl(Client $client): void
     {
         // new url
-        $this->assertEquals('new-url', Model::getUrlForCategory('new-url'));
+        self::assertEquals(
+            LoadFaqCategories::FAQ_CATEGORY_SLUG,
+            Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG)
+        );
 
-        $categoryId = $this->addCategory();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+            ]
+        );
 
         // existing url, "2" is should be appended
-        $this->assertEquals('test-category-2', Model::getUrlForCategory('test-category'));
+        self::assertEquals(
+            LoadFaqCategories::FAQ_CATEGORY_SLUG . '-2',
+            Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG)
+        );
         // existing url with id
-        $this->assertEquals('test-category', Model::getUrlForCategory('test-category', $categoryId));
+        self::assertEquals(
+            LoadFaqCategories::FAQ_CATEGORY_SLUG,
+            Model::getUrlForCategory(LoadFaqCategories::FAQ_CATEGORY_SLUG, LoadFaqCategories::getCategoryId())
+        );
     }
 
-    public function testEditCategory(): void
+    public function testEditCategory(Client $client): void
     {
-        $categoryId = $this->addCategory();
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+            ]
+        );
 
-        $categoryData = $this->getUpdateCategoryData();
-        $categoryMetaData = $this->getUpdatedCategoryMetaData();
-
-        // update meta, there doesn't seems to be a function for this?
-        BackendModel::get('database')->update('meta', $categoryMetaData, 'id = ?', [$categoryMetaData['id']]);
-
-        Model::updateCategory($categoryData);
-
-        $editedCategory = Model::getCategory($categoryData['id']);
-
-        $this->assertEquals($categoryId, $editedCategory['id']);
-        $this->assertEquals($categoryMetaData['id'], $editedCategory['meta_id']);
-        $this->assertEquals($categoryData['language'], $editedCategory['language']);
-        $this->assertEquals($categoryData['title'], $editedCategory['title']);
-    }
-
-    public function testDeleteCategory(): void
-    {
-        $categoryId = $this->addCategory();
-
-        $this->assertTrue(Model::existsCategory($categoryId));
-        Model::deleteCategory(1);
-        $this->assertFalse(Model::existsCategory($categoryId));
-    }
-
-    private function addCategory(): int
-    {
-        $categoryData = $this->getCategoryData();
-        $categoryMetaData = $this->getCategoryMetaData();
-
-        return Model::insertCategory($categoryData, $categoryMetaData);
-    }
-
-    public function getCategoryData(): array
-    {
-        return [
+        $categoryData = [
+            'id' => LoadFaqCategories::getCategoryId(),
             'language' => 'en',
-            'title' => 'Test category',
-            'sequence' => 1,
+            'title' => 'Test edit category',
+            'extra_id' => 39,
         ];
-    }
 
-    private function getCategoryMetaData(): array
-    {
-        return [
-            'keywords' => 'Test category',
-            'description' => 'Test category',
-            'title' => 'Test category',
-            'url' => 'test-category',
-        ];
-    }
-
-    private function getUpdateCategoryData()
-    {
-        return [
-            'id' => 1,
-            'language' => 'en',
-            'title' => 'Test edit category'
-        ];
-    }
-
-    private function getUpdatedCategoryMetaData()
-    {
-        return [
-            'id' => 29,
+        $categoryMetaData = [
+            'id' => LoadFaqCategories::getMetaId(),
             'keywords' => 'Test edit category',
             'description' => 'Test edit category',
             'title' => 'Test edit category',
             'url' => 'test-edit-category',
         ];
+
+        // update meta, there doesn't seems to be a function for this?
+        $client->getContainer()->get('database')->update('meta', $categoryMetaData, 'id = ?', [$categoryMetaData['id']]);
+
+        Model::updateCategory($categoryData);
+
+        $editedCategory = Model::getCategory($categoryData['id']);
+
+        self::assertEquals($categoryData['id'], $editedCategory['id']);
+        self::assertEquals($categoryMetaData['id'], $editedCategory['meta_id']);
+        self::assertEquals($categoryData['language'], $editedCategory['language']);
+        self::assertEquals($categoryData['title'], $editedCategory['title']);
+    }
+
+    public function testDeleteCategory(Client $client): void
+    {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+            ]
+        );
+
+        $id = LoadFaqCategories::getCategoryId();
+        self::assertTrue(Model::existsCategory($id));
+        Model::deleteCategory($id);
+        self::assertFalse(Model::existsCategory($id));
     }
 }

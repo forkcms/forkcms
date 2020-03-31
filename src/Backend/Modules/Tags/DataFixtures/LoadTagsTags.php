@@ -6,24 +6,31 @@ use SpoonDatabase;
 
 class LoadTagsTags
 {
+    public const TAGS_TAG_1_NAME = 'test';
+    public const TAGS_TAG_1_ID = 1;
+    public const TAGS_TAG_1_SLUG = 'test';
+    public const TAGS_TAG_2_NAME = 'most used';
+    public const TAGS_TAG_2_ID = 2;
+    public const TAGS_TAG_2_SLUG = 'most-used';
+
     public function load(SpoonDatabase $database): void
     {
         $database->insert(
             'TagsTag',
             [
                 [
-                    'id' => 1,
+                    'id' => self::TAGS_TAG_1_ID,
                     'locale' => 'en',
-                    'tag' => 'test',
+                    'tag' => self::TAGS_TAG_1_NAME,
                     'numberOfTimesLinked' => 2,
-                    'url' => 'test',
+                    'url' => self::TAGS_TAG_1_SLUG,
                 ],
                 [
-                    'id' => 2,
+                    'id' => self::TAGS_TAG_2_ID,
                     'locale' => 'en',
-                    'tag' => 'most used',
+                    'tag' => self::TAGS_TAG_2_NAME,
                     'number' => 6,
-                    'url' => 'most-used',
+                    'url' => self::TAGS_TAG_2_SLUG,
                 ],
             ]
         );

@@ -328,7 +328,7 @@ class Model
         $groupRights = BackendModel::get('profile.repository.profile_group_right')->findByProfile($profile);
 
         return array_map(
-            function (GroupRight $groupRight) {
+            static function (GroupRight $groupRight) {
                 return [
                     'id' => $groupRight->getId(),
                     'group_id' => $groupRight->getGroup()->getId(),
@@ -594,7 +594,7 @@ class Model
             $profile['email'],
             $password,
             $status,
-            $profile['display_name'],
+            $profile['display_name'] ?? $profile['displayName'],
             $profile['url']
         );
 

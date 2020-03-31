@@ -11697,6 +11697,16 @@
         <translation language="el"><![CDATA[Δεν έχετε επαρκή δικαιώματα γιά αυτή την ενέργεια.]]></translation>
         <translation language="pl"><![CDATA[Nie masz wystarczających uprawnień do tego działania.]]></translation>
       </item>
+      <item type="error" name="NotFound">
+        <translation language="nl"><![CDATA[Deze pagina is verloren gegaan op zee.]]></translation>
+        <translation language="en"><![CDATA[This page was lost at sea.]]></translation>
+        <translation language="de"><![CDATA[Diese Seite ging auf See verloren.]]></translation>
+        <translation language="fr"><![CDATA[Cette page a été perdue en mer.]]></translation>
+        <translation language="es"><![CDATA[Esta página se perdió en el mar.]]></translation>
+        <translation language="it"><![CDATA[Questa pagina è stata persa in mare.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona została zagubiona na morzu.]]></translation>
+        <translation language="ru"><![CDATA[Эта страница была потеряна в море.]]></translation>
+      </item>
       <item type="error" name="AddingCategoryFailed">
         <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
         <translation language="en"><![CDATA[Something went wrong.]]></translation>

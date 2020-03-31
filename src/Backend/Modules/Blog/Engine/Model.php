@@ -790,7 +790,7 @@ class Model
         }
 
         $category = new Category(
-            Locale::fromString($item['language']),
+            Locale::fromString($item['language'] ?? $item['locale']),
             $item['title'],
             $meta
         );

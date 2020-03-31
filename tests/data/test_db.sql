@@ -286,7 +286,7 @@ CREATE TABLE `PagesModuleExtra` (
 
 LOCK TABLES `PagesModuleExtra` WRITE;
 /*!40000 ALTER TABLE `PagesModuleExtra` DISABLE KEYS */;
-INSERT INTO `PagesModuleExtra` VALUES (1,'Search','widget','SearchForm','Form',NULL,0,2001),(2,'Search','block','Search',NULL,NULL,0,2000),(3,'Pages','widget','Sitemap','Sitemap',NULL,0,1),(4,'Pages','widget','Navigation','PreviousNextNavigation',NULL,0,2),(5,'Pages','widget','Subpages','Subpages','a:1:{s:8:\"template\";s:25:\"SubpagesDefault.html.twig\";}',0,2),(6,'Tags','block','Tags',NULL,NULL,0,30),(7,'Tags','widget','TagCloud','TagCloud',NULL,0,31),(8,'Tags','widget','Related','Related',NULL,0,32),(9,'Blog','block','Blog',NULL,NULL,0,1000),(10,'Blog','widget','RecentComments','RecentComments',NULL,0,1001),(11,'Blog','widget','Categories','Categories',NULL,0,1002),(12,'Blog','widget','Archive','Archive',NULL,0,1003),(13,'Blog','widget','RecentArticlesFull','RecentArticlesFull',NULL,0,1004),(14,'Blog','widget','RecentArticlesList','RecentArticlesList',NULL,0,1005),(15,'Faq','block','Faq',NULL,NULL,0,3000),(16,'Faq','widget','MostReadQuestions','MostReadQuestions',NULL,0,3001),(17,'Faq','widget','AskOwnQuestion','AskOwnQuestion',NULL,0,3002),(18,'Faq','widget','Categories','Categories',NULL,0,3003),(19,'Faq','widget','Faq','CategoryList',NULL,0,3004),(21,'Location','block','Location',NULL,'a:1:{s:3:\"url\";s:34:\"/private/location/index?token=true\";}',0,5000),(23,'Mailmotor','block','SubscribeForm','Subscribe',NULL,0,3001),(24,'Mailmotor','block','UnsubscribeForm','Unsubscribe',NULL,0,3002),(25,'Mailmotor','widget','SubscribeForm','Subscribe',NULL,0,3003),(26,'Profiles','block','Activate','Activate',NULL,0,5000),(27,'Profiles','block','ForgotPassword','ForgotPassword',NULL,0,5001),(28,'Profiles','block','Dashboard',NULL,NULL,0,5002),(29,'Profiles','block','Login','Login',NULL,0,5003),(30,'Profiles','block','Logout','Logout',NULL,0,5004),(31,'Profiles','block','ChangeEmail','ChangeEmail',NULL,0,5005),(32,'Profiles','block','ChangePassword','ChangePassword',NULL,0,5006),(33,'Profiles','block','Settings','Settings',NULL,0,5007),(34,'Profiles','block','Register','Register',NULL,0,5008),(35,'Profiles','block','ResetPassword','ResetPassword',NULL,0,5008),(36,'Profiles','block','ResendActivation','ResendActivation',NULL,0,5009),(37,'Profiles','widget','LoginBox','LoginBox',NULL,0,5010),(38,'Profiles','widget','LoginLink','LoginLink',NULL,0,5011);
+INSERT INTO `PagesModuleExtra` VALUES (1,'Search','widget','SearchForm','Form',NULL,0,2001),(2,'Search','block','Search',NULL,NULL,0,2000),(3,'Pages','widget','Sitemap','Sitemap',NULL,0,1),(4,'Pages','widget','Navigation','PreviousNextNavigation',NULL,0,2),(5,'Pages','widget','Subpages','Subpages','a:1:{s:8:\"template\";s:25:\"SubpagesDefault.html.twig\";}',0,2),(6,'Tags','block','Tags',NULL,NULL,0,30),(7,'Tags','widget','TagCloud','TagCloud',NULL,0,31),(8,'Tags','widget','Related','Related',NULL,0,32),(9,'Blog','block','Blog',NULL,NULL,0,1000),(10,'Blog','widget','RecentComments','RecentComments',NULL,0,1001),(11,'Blog','widget','Categories','Categories',NULL,0,1002),(12,'Blog','widget','Archive','Archive',NULL,0,1003),(13,'Blog','widget','RecentArticlesFull','RecentArticlesFull',NULL,0,1004),(14,'Blog','widget','RecentArticlesList','RecentArticlesList',NULL,0,1005),(15,'Faq','block','Faq',NULL,NULL,0,3000),(16,'Faq','widget','MostReadQuestions','MostReadQuestions',NULL,0,3001),(17,'Faq','widget','AskOwnQuestion','AskOwnQuestion',NULL,0,3002),(18,'Faq','widget','Categories','Categories',NULL,0,3003),(19,'Faq','widget','Faq','CategoryList',NULL,0,3004),(21,'Location','block','Location',NULL,'a:1:{s:3:\"url\";s:34:\"/private/location/index?token=true\";}',0,5000),(23,'Mailmotor','block','SubscribeForm','Subscribe',NULL,0,3001),(24,'Mailmotor','block','UnsubscribeForm','Unsubscribe',NULL,0,3002),(25,'Mailmotor','widget','SubscribeForm','Subscribe',NULL,0,3003),(26,'Profiles','block','Activate','Activate',NULL,0,5000),(27,'Profiles','block','ForgotPassword','ForgotPassword',NULL,0,5001),(28,'Profiles','block','Dashboard',NULL,NULL,0,5002),(29,'Profiles','block','Login','Login',NULL,0,5003),(30,'Profiles','block','Logout','Logout',NULL,0,5004),(31,'Profiles','block','ChangeEmail','ChangeEmail',NULL,0,5005),(32,'Profiles','block','ChangePassword','ChangePassword',NULL,0,5006),(33,'Profiles','block','Settings','Settings',NULL,0,5007),(34,'Profiles','block','Register','Register',NULL,0,5008),(35,'Profiles','block','ResetPassword','ResetPassword',NULL,0,5008),(36,'Profiles','block','ResendActivation','ResendActivation',NULL,0,5009),(37,'Profiles','widget','LoginBox','LoginBox',NULL,0,5010),(38,'Profiles','widget','LoginLink','LoginLink',NULL,0,5011),(39,'Faq','widget','LoginLink','LoginLink',NULL,0,5011);
 /*!40000 ALTER TABLE `PagesModuleExtra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -716,15 +716,8 @@ CREATE TABLE `blog_categories` (
 -- Dumping data for table `blog_categories`
 --
 
-LOCK TABLES `blog_categories` WRITE;
-/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
-INSERT INTO `blog_categories` VALUES (1,28,'en','Blog category for functional tests');
-/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `blog_comments`
---
+# Dump of table blog_comments
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `blog_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1455,6 +1448,8 @@ CREATE TABLE `users_sessions` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+# Dump of table users_settings
+# ------------------------------------------------------------
 --
 -- Dumping data for table `users_sessions`
 --

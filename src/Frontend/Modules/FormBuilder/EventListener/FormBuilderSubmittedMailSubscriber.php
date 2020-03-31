@@ -6,6 +6,7 @@ use Common\Mailer\Message;
 use Swift_Mailer;
 use Common\ModulesSettings;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
 
@@ -47,10 +48,20 @@ final class FormBuilderSubmittedMailSubscriber
             if (array_key_exists('send_confirmation_mail_to', $field['settings']) &&
                 $field['settings']['send_confirmation_mail_to'] === true
             ) {
-                $email = $fieldData[$field['id']]['value'];
-                $this->mailer->send(
-                    $this->getMessage($form, $fieldData, $field['settings']['confirmation_mail_subject'], $email, true)
-                );
+                $to = $fieldData[$field['id']]['value'];
+                $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+                $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+                $message = Message::newInstance($field['settings']['confirmation_mail_subject'])
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo($to)
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+                    ->parseHtml(
+                        '/Core/Layout/Templates/Mails/Notification.html.twig',
+                        ['message' => $field['settings']['confirmation_mail_message']],
+                        true
+                    )
+                ;
+                $this->mailer->send($message);
             }
         }
     }

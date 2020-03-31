@@ -452,6 +452,7 @@ jsBackend.FormBuilder.Fields = {
                   $('#textboxSendConfirmationMailTo').prop('checked', true)
                 }
                 $('#textboxConfirmationMailSubject').val(utils.string.htmlDecode(data.data.field.settings.confirmation_mail_subject))
+                $('#textboxConfirmationMailMessage').val(data.data.field.settings.confirmation_mail_message)
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
@@ -1432,6 +1433,7 @@ jsBackend.FormBuilder.Fields = {
     var replyTo = $('#textboxReplyTo').is(':checked')
     var sendConfirmationMailTo = $('#textboxSendConfirmationMailTo').is(':checked')
     var confirmationMailSubject = $('#textboxConfirmationMailSubject').val()
+    var confirmationMailMessage = $('#textboxConfirmationMailMessage').val()
     var required = $('#textboxRequired').is(':checked')
     var requiredErrorMessage = $('#textboxRequiredErrorMessage').val()
     var validation = $('#textboxValidation').val()
@@ -1453,6 +1455,7 @@ jsBackend.FormBuilder.Fields = {
         use_to_subscribe_with_mailmotor: mailmotor,
         send_confirmation_mail_to: sendConfirmationMailTo,
         confirmation_mail_subject: confirmationMailSubject,
+        confirmation_mail_message: confirmationMailMessage,
         required: required,
         required_error_message: requiredErrorMessage,
         validation: validation,
@@ -1494,6 +1497,9 @@ jsBackend.FormBuilder.Fields = {
             }
             if (typeof data.data.errors.confirmation_mail_subject_error_message !== 'undefined') {
               $('#textboxConfirmationMailSubjectErrorMessageError').html(data.data.errors.confirmation_mail_subject_error_message)
+            }
+            if (typeof data.data.errors.confirmation_mail_message_error_message !== 'undefined') {
+              $('#textboxConfirmationMailMessageErrorMessageError').html(data.data.errors.confirmation_mail_message_error_message)
             }
 
             // toggle error messages

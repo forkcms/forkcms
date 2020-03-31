@@ -239,7 +239,7 @@ class Url extends KernelLoader
 
     private function getInterfaceLanguage(): string
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language', SITE_DEFAULT_LANGUAGE);
 
         if (Authentication::getUser()->isAuthenticated()) {
             return Authentication::getUser()->getSetting('interface_language', $default);

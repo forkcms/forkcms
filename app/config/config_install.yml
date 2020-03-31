@@ -32,6 +32,24 @@ monolog:
             level: debug
 
 services:
+    templating:
+        alias: templating.engine.twig
+
+    fork.settings:
+        class: Common\ModulesSettings
+        public: true
+        arguments:
+            - "@database"
+            - "@cache.pool"
+            - "%fork.is_installed%"
+
+    # dummy service during the installation
+    mailer_configurator:
+        class: stdClass
+
+    cache.pool:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+
     database:
         class: SpoonDatabase
         public: true

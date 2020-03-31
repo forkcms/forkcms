@@ -16,6 +16,7 @@
         "php": "^7.2",
         "ext-fileinfo": "*",
         "ext-json": "*",
+        "ext-zip": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",

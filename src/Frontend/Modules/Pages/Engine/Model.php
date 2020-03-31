@@ -151,7 +151,7 @@ class Model implements FrontendTagsInterface
 
         // prepare items for search
         foreach ($items as &$item) {
-            $pageBlock = $pageBlockRepository->findOneBy(['revisionId' => $item['text']]);
+            $pageBlock = $pageBlockRepository->findOneBy(['page' => $item['text']]);
 
             if (!$pageBlock instanceof PageBlock) {
                 throw new PageBlockNotFound();
