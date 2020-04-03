@@ -87,7 +87,7 @@ class ThumbnailsTest extends TestCase
     public function testClassMethods()
     {
         // Test thumbnail folders
-        $this->assertEquals(
+        self::assertEquals(
             [
                 [
                     'dirname' => self::ONLY_WIDTH,
@@ -130,13 +130,13 @@ class ThumbnailsTest extends TestCase
 
         // Test thumbnail generating
         $this->thumbnails->generate($this->rootPath, $this->rootPath . '/' . self::SOURCE . '/' . $this->filename);
-        $this->assertTrue(is_file($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
+        self::assertTrue(is_file($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
 
         // Test thumbnail deleting
         $this->thumbnails->delete($this->rootPath, $this->filename);
-        $this->assertFalse(is_file($this->rootPath . '/' . self::LANDSCAPE . '/' . $this->filename));
-        $this->assertFalse(is_file($this->rootPath . '/' . self::PORTRAIT . '/' . $this->filename));
-        $this->assertFalse(is_file($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
-        $this->assertTrue(is_file($this->rootPath . '/' . self::SOURCE . '/' . $this->filename));
+        self::assertFalse(is_file($this->rootPath . '/' . self::LANDSCAPE . '/' . $this->filename));
+        self::assertFalse(is_file($this->rootPath . '/' . self::PORTRAIT . '/' . $this->filename));
+        self::assertFalse(is_file($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
+        self::assertTrue(is_file($this->rootPath . '/' . self::SOURCE . '/' . $this->filename));
     }
 }

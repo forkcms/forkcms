@@ -2,45 +2,44 @@
 
 namespace Frontend\Modules\Faq\Tests\Actions;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
+use Backend\Modules\Faq\DataFixtures\LoadFaqCategories;
+use Backend\Modules\Faq\DataFixtures\LoadFaqQuestions;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class IndexTest extends WebTestCase
+class IndexTest extends FrontendWebTestCase
 {
-    public function testFaqIndexContainsCategories(): void
+    public function testFaqIndexContainsCategories(Client $client): void
     {
-        $client = static::createClient();
-
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
-                'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
             ]
         );
 
-        $client->request('GET', '/en/faq');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
-            'Faq for tests',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/en/faq',
+            [LoadFaqCategories::FAQ_CATEGORY_TITLE]
         );
     }
 
-    public function testFaqIndexContainsQuestions(): void
+    public function testFaqIndexContainsQuestions(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/faq');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadFaqCategories::class,
+                LoadFaqQuestions::class,
+            ]
         );
-        self::assertContains(
-            'Is this a working test?',
-            $client->getResponse()->getContent()
+
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/en/faq',
+            [LoadFaqQuestions::FAQ_QUESTION_TITLE]
         );
     }
 }

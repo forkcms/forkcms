@@ -11,15 +11,15 @@ class JsDataTest extends TestCase
     {
         $data = ['language' => 'en'];
 
-        $this->assertContains(json_encode($data), (string) new JsData($data));
+        self::assertContains(json_encode($data), (string) new JsData($data));
     }
 
     public function testJavascriptAssignment(): void
     {
         $jsData = new JsData();
 
-        $this->assertContains('<script>var jsData = ', (string) $jsData);
-        $this->assertContains('</script>', (string) $jsData);
+        self::assertContains('<script>var jsData = ', (string) $jsData);
+        self::assertContains('</script>', (string) $jsData);
     }
 
     public function testAddingData(): void
@@ -28,6 +28,6 @@ class JsDataTest extends TestCase
 
         $jsData->add('Blog', 'lorem', 'ipsum');
 
-        $this->assertContains(json_encode(['Blog' => ['lorem' => 'ipsum']]), (string) $jsData);
+        self::assertContains(json_encode(['Blog' => ['lorem' => 'ipsum']]), (string) $jsData);
     }
 }

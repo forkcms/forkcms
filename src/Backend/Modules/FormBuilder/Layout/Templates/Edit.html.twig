@@ -386,12 +386,19 @@
                         </li>
                       </ul>
                     </div>
-                    <div class="form-group last">
+                    <div class="form-group">
                       <label for="textboxConfirmationMailSubject" class="control-label">
                         {{ 'lbl.ConfirmationMailSubject'|trans|ucfirst }}
                       </label>
                       {% form_field textbox_confirmation_mail_subject %}
                       <p id="textboxConfirmationMailSubjectErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                    </div>
+                    <div class="form-group last">
+                      <label for="textboxConfirmationMailMessage" class="control-label">
+                        {{ 'lbl.ConfirmationMailMessage'|trans|ucfirst }}
+                      </label>
+                      {% form_field textbox_confirmation_mail_message %}
+                      <p id="textboxConfirmationMailMessageErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     </div>
                   </div>
                 </div>

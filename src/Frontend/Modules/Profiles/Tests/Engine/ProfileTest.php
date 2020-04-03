@@ -2,85 +2,31 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
-use Frontend\Modules\Profiles\Engine\Model;
-use Common\WebTestCase;
+use Backend\Modules\Profiles\DataFixtures\LoadProfilesProfile;
+use Frontend\Core\Tests\FrontendWebTestCase;
 use Frontend\Modules\Profiles\Engine\Profile;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-final class ProfileTest extends WebTestCase
+final class ProfileTest extends FrontendWebTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
-
-        if (!defined('LANGUAGE')) {
-            define('LANGUAGE', 'en');
-        }
-
-        $client = self::createClient();
-        $this->loadFixtures($client);
-    }
-
     public function testCreatingProfile(): void
     {
         $profile = new Profile();
 
-        $profile->setDisplayName('Fork CMS');
-        $this->assertEquals('Fork CMS', $profile->getDisplayName());
+        $profile->setDisplayName(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME, $profile->getDisplayName());
 
-        $profile->setEmail('info@fork-cms.com');
-        $this->assertEquals('info@fork-cms.com', $profile->getEmail());
+        $profile->setEmail(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL, $profile->getEmail());
 
-        $profile->setRegisteredOn(1234567890);
-        $this->assertEquals(1234567890, $profile->getRegisteredOn());
+        $profile->setRegisteredOn(LoadProfilesProfile::getDateOverAMonthAgo()->getTimestamp());
+        self::assertEquals(LoadProfilesProfile::getDateOverAMonthAgo()->getTimestamp(), $profile->getRegisteredOn());
 
         $profile->setStatus('random_status');
-        $this->assertEquals('random_status', $profile->getStatus());
+        self::assertEquals('random_status', $profile->getStatus());
 
-        $profile->setUrl('fork-cms');
-        $this->assertEquals('fork-cms', $profile->getUrl());
-
-        // @TODO These settings setters don't work because the profile doesn't have an ID, this should be fixed
-        /*$profile->setSettings(
-            [
-                'my_first_setting' => 'My first value',
-                'my_second_setting' => 'My second value',
-            ]
-        );
-        $this->assertEquals(
-            [
-                'my_first_setting' => 'My first value',
-                'my_second_setting' => 'My second value',
-            ],
-            $profile->getSettings()
-        );
-        $this->assertEquals('My first value', $profile->getSetting('my_first_setting'));
-
-        $profile->setSetting('my_second_setting', 'My updated value');
-        $this->assertEquals('My updated value', $profile->getSetting('my_second_setting'));
-
-        $profileArray = $profile->toArray();
-        $this->assertArrayHasKey('display_name', $profileArray);
-        $this->assertEquals('Fork CMS', $profileArray['display_name']);
-        $this->assertArrayHasKey('registered_on', $profileArray);
-        $this->assertEquals(1234567890, $profileArray['registered_on']);
-        */
-    }
-
-    public function testLoadingOfProfile(): void
-    {
-        $profileId = $this->addProfile();
-
-        $profile = new Profile($profileId);
-
-        $this->assertEquals('Fork CMS', $profile->getDisplayName());
-        $this->assertEquals('test@fork-cms.com', $profile->getEmail());
-        $this->assertEquals(1520243112, $profile->getRegisteredOn());
-        $this->assertEquals('active', $profile->getStatus());
-        $this->assertEquals('fork-cms', $profile->getUrl());
+        $profile->setUrl(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_URL);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_URL, $profile->getUrl());
 
         $profile->setSettings(
             [
@@ -88,40 +34,65 @@ final class ProfileTest extends WebTestCase
                 'my_second_setting' => 'My second value',
             ]
         );
-        $this->assertEquals(
+        self::assertEquals(
             [
                 'my_first_setting' => 'My first value',
                 'my_second_setting' => 'My second value',
             ],
             $profile->getSettings()
         );
-        $this->assertEquals('My first value', $profile->getSetting('my_first_setting'));
+        self::assertEquals('My first value', $profile->getSetting('my_first_setting'));
 
         $profile->setSetting('my_second_setting', 'My updated value');
-        $this->assertEquals('My updated value', $profile->getSetting('my_second_setting'));
+        self::assertEquals('My updated value', $profile->getSetting('my_second_setting'));
 
         $profileArray = $profile->toArray();
-        $this->assertArrayHasKey('display_name', $profileArray);
-        $this->assertEquals('Fork CMS', $profileArray['display_name']);
-        $this->assertArrayHasKey('registered_on', $profileArray);
-        $this->assertEquals(1520243112, $profileArray['registered_on']);
+        self::assertArrayHasKey('display_name', $profileArray);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME, $profileArray['display_name']);
+        self::assertArrayHasKey('registered_on', $profileArray);
+        self::assertEquals(LoadProfilesProfile::getDateOverAMonthAgo()->getTimestamp(), $profileArray['registered_on']);
     }
 
-    public function addProfile(): int
+    public function testLoadingOfProfile(Client $client): void
     {
-        return Model::insert($this->getProfileData());
-    }
+        $this->loadFixtures($client, [LoadProfilesProfile::class]);
 
-    public function getProfileData(): array
-    {
-        return [
-            'email' => 'test@fork-cms.com',
-            'password' => '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
-            'status' => 'active',
-            'display_name' => 'Fork CMS',
-            'url' => 'fork-cms',
-            'registered_on' => '2018-03-05 09:45:12',
-            'last_login' => '1970-01-01 00:00:00',
-        ];
+        $profile = new Profile(LoadProfilesProfile::getProfileActiveId());
+
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME, $profile->getDisplayName());
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_EMAIL, $profile->getEmail());
+        self::assertEquals(
+            LoadProfilesProfile::getDateWithinAMonthAgo()->getTimestamp(),
+            $profile->getRegisteredOn()
+        );
+        self::assertEquals('active', $profile->getStatus());
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_URL, $profile->getUrl());
+
+        $profile->setSettings(
+            [
+                'my_first_setting' => 'My first value',
+                'my_second_setting' => 'My second value',
+            ]
+        );
+        self::assertEquals(
+            [
+                'my_first_setting' => 'My first value',
+                'my_second_setting' => 'My second value',
+            ],
+            $profile->getSettings()
+        );
+        self::assertEquals('My first value', $profile->getSetting('my_first_setting'));
+
+        $profile->setSetting('my_second_setting', 'My updated value');
+        self::assertEquals('My updated value', $profile->getSetting('my_second_setting'));
+
+        $profileArray = $profile->toArray();
+        self::assertArrayHasKey('display_name', $profileArray);
+        self::assertEquals(LoadProfilesProfile::PROFILES_ACTIVE_PROFILE_DISPLAY_NAME, $profileArray['display_name']);
+        self::assertArrayHasKey('registered_on', $profileArray);
+        self::assertEquals(
+            LoadProfilesProfile::getDateWithinAMonthAgo()->getTimestamp(),
+            $profileArray['registered_on']
+        );
     }
 }
