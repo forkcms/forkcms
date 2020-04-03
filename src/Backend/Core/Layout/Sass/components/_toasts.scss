@@ -1,0 +1,86 @@
+.toast {
+  box-shadow: none;
+  max-width: none;
+  width: 100%;
+
+  .toast-logo {
+    height: 20px;
+  }
+
+  .close {
+    float: none;
+    opacity: 1;
+    position: absolute;
+    right: 2px;
+    text-shadow: none;
+    top: 3px;
+
+    .svg-inline--fa {
+      color: $body-color;
+      font-size: $close-font-size;
+    }
+  }
+}
+
+.toast-body {
+
+  p {
+    display: inline-block;
+    margin-bottom: 0;
+
+    + p {
+      margin-top: $spacer;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .svg-inline--fa {
+    margin-right: 5px;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .toast-#{$color} {
+    background: rgba(theme-color-level($color, $alert-bg-level), .6);
+    border-left: 5px solid $value;
+
+    .svg-inline--fa {
+      color: $value;
+    }
+
+    a {
+      color: theme-color-level($color, $alert-color-level);
+    }
+  }
+}
+
+.toast-messaging-wrapper {
+  padding: ($grid-gutter-width / 2) ($grid-gutter-width / 2) 0;
+  z-index: $zindex-fixed;
+
+  .toast {
+    box-shadow: $toast-box-shadow;
+    max-width: $toast-max-width;
+  }
+}
+
+
+@include media-breakpoint-up(md) {
+
+  .toast-messaging-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65vw;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+
+  .toast-messaging-wrapper {
+    width: $toast-max-width + $grid-gutter-width;
+  }
+}

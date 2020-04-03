@@ -55,28 +55,40 @@
 {% macro alert(type, message, dismissable, id, extraAttributes = [], active = true, showIcon = true) %}
   {% import _self as macro %}
 
-  {% set extraAttributes = extraAttributes|merge({'class': 'alert alert-' ~ type ~ (extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
+  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
 
   {% if active %}
-    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' active'}) %}
+    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
   {% endif %}
 
-  <div{% if id %} id="{{ id }}"{% endif %}{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="alert"{% if not active %} style="display: none;"{% endif %}>
-    {% if message %}
-      {% if type == 'danger' %}
-        {{ macro.icon('times-circle', 'far') }}
-      {% elseif type == 'success' %}
-        {{ macro.icon('check-circle', 'far') }}
-      {% elseif type == 'info' %}
-        {{ macro.icon('info-circle') }}
-      {% elseif type == 'warning' %}
-        {{ macro.icon('exclamation-triangle') }}
-      {% endif %}
+  {% set role = 'status' %}
+  {% set live = 'polite' %}
+
+  {% if type == 'danger' or type == 'warning' %}
+    {% set role = 'alert' %}
+    {% set role = 'assertive' %}
+  {% endif %}
+
+  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="false">
+    <div class="toast-body">
       {% if dismissable %}
-        <button type="button" class="close" data-dismiss="alert">×</button>
+      <button type="button" class="close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
       {% endif %}
-      {{ message|raw }}
-    {% endif %}
+      {% if message %}
+        {% if type == 'danger' %}
+          {{ macro.icon('times-circle', 'far') }}
+        {% elseif type == 'success' %}
+          {{ macro.icon('check-circle', 'far') }}
+        {% elseif type == 'info' %}
+          {{ macro.icon('info-circle') }}
+        {% elseif type == 'warning' %}
+          {{ macro.icon('exclamation-triangle') }}
+        {% endif %}
+        {{ message|raw }}
+      {% endif %}
+    </div>
   </div>
 {% endmacro %}
 

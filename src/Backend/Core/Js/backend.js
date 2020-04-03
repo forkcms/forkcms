@@ -1844,33 +1844,28 @@ jsBackend.locale = {
 jsBackend.messages = {
   timers: [],
 
-  // init, something like a constructor
-  init: function () {
-    // bind close button
-    $(document).on('click', '#messaging .formMessage .iconClose', function (e) {
-      e.preventDefault()
-      jsBackend.messages.hide($(this).parents('.formMessage'))
-    })
-  },
-
-  // hide a message
-  hide: function (element) {
-    // fade out
-    element.removeClass('active').delay(250).hide(1)
-  },
-
   // add a new message into the que
-  add: function (type, content, optionalClass) {
+  add: function (type, content, optionalClass = '', dismissable = false) {
     var uniqueId = 'e' + new Date().getTime().toString()
 
     // switch icon type
     var icon
+    var role = 'status'
+    var live = 'polite'
+    var dismissableClass = ' d-none'
+
     switch (type) {
       case 'danger':
         icon = 'far fa-times-circle'
+        role = 'alert'
+        live = 'assertive'
+        dismissableClass = ''
         break
       case 'warning':
         icon = 'fas fa-exclamation-circle'
+        role = 'alert'
+        live = 'assertive'
+        dismissableClass = ''
         break
       case 'success':
         icon = 'far fa-check-circle'
@@ -1880,29 +1875,35 @@ jsBackend.messages = {
         break
     }
 
-    var html = '<div role="alert" id="' + uniqueId + '" class="alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
-      '<i class="' + icon + '" aria-hidden="true"></i>' + ' ' +
-      content +
-      '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
-      '<span aria-hidden="true" class="fas fa-times"></span>' +
-      '</button>' +
+    if (dismissable) {
+      dismissableClass = ''
+    }
+
+    var html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="false">' +
+      '<div class="toast-body">' +
+        '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
+          '<span aria-hidden="true" class="fas fa-times"></span>' +
+        '</button>' +
+        '<i class="' + icon + '" aria-hidden="true"></i>' + ' ' +
+        content +
+        '</div>' +
       '</div>'
 
     // prepend
-    if (optionalClass === undefined || optionalClass !== 'alert-static') {
-      $('#messaging').prepend(html)
+    if (optionalClass === undefined || optionalClass !== 'toast-inline') {
+      $('[data-messaging-wrapper]').prepend(html)
     } else {
-      $('.content').prepend(html)
+      $('[data-content-container]').prepend(html)
     }
 
     // show
-    $('#' + uniqueId).addClass('active')
+    $('#' + uniqueId).toast('show')
 
     // timeout
-    if (optionalClass === undefined || optionalClass !== 'alert-static') {
+    if (optionalClass === undefined || optionalClass !== 'toast-inline') {
       if (type === 'info' || type === 'success') {
         setTimeout(function () {
-          jsBackend.messages.hide($('#' + uniqueId))
+          $('#' + uniqueId).toast('hide')
         }, 5000)
       }
     }
