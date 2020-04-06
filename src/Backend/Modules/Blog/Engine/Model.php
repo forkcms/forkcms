@@ -341,13 +341,12 @@ class Model
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+            'SELECT DISTINCT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
              WHERE i.status = ? AND i.locale = ?
-             GROUP BY i.id
              LIMIT ?, ?',
             [$status, BL::getWorkingLanguage(), $offset, $limit]
         );
@@ -790,7 +789,7 @@ class Model
         }
 
         $category = new Category(
-            Locale::fromString($item['language']),
+            Locale::fromString($item['language'] ?? $item['locale']),
             $item['title'],
             $meta
         );

@@ -7,6 +7,7 @@ use SpoonDatabase;
 
 /**
  * This is our module settings class
+ * @TODO make final in fork 6
  */
 class ModulesSettings
 {

@@ -290,9 +290,9 @@ class Location
     public static function fromArray(array $item): self
     {
         if (APPLICATION === 'Frontend') {
-            $locale = FrontendLocale::fromString($item['language']);
+            $locale = FrontendLocale::fromString($item['language'] ?? $item['locale']);
         } else {
-            $locale = BackendLocale::fromString($item['language']);
+            $locale = BackendLocale::fromString($item['language'] ?? $item['locale']);
         }
 
         return new self(
@@ -303,10 +303,10 @@ class Location
             $item['zip'],
             $item['city'],
             $item['country'],
-            $item['lat'],
-            $item['lng'],
-            $item['show_overview'] ?? true,
-            $item['extra_id'] ?? null
+            $item['lat'] ?? $item['latitude'],
+            $item['lng'] ?? $item['longitude'],
+            $item['show_overview'] ?? $item['showInOverview'] ?? true,
+            $item['extra_id'] ?? $item['extraId'] ?? null
         );
     }
 

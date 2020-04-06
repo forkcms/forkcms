@@ -60,7 +60,9 @@ final class UpdatePageHandler
 
         $data = $page->getData();
         $this->saveSearchIndex(
-            $data['remove_from_search_index'] ?? false || $data['internal_redirect']['page_id'] ?? false || ['external_redirect']['url'] ?? false,
+            ($data['remove_from_search_index'] ?? false)
+            || ($data['internal_redirect']['page_id'] ?? false)
+            || ($data['external_redirect']['url'] ?? false),
             $page
         );
 

@@ -2,48 +2,29 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class DetailModuleTest extends WebTestCase
+class DetailModuleTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/detail_module?module=Blog');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fdetail_module%3Fmodule%3DBlog',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_module?module=Blog');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/detail_module?module=Blog');
-        self::assertContains(
-            'The Blog (you could also call it \'News\') module features',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/detail_module?module=Blog',
+            [
+                'The Blog (you could also call it \'News\') module features',
+                'Version',
+                'automatic recommendation of related articles',
+            ]
         );
-        self::assertNotContains(
-            'Authors ',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Version',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'automatic recommendation of related articles',
-            $client->getResponse()->getContent()
-        );
+        self::assertResponseDoesNotHaveContent($client->getResponse(), 'Authors ');
     }
 }

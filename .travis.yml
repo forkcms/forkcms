@@ -2,9 +2,6 @@ language: php
 dist: xenial
 services:
     - mysql
-matrix:
-    include:
-        -   php: 7.1
 
 cache:
     directories:
@@ -22,17 +19,13 @@ before_script:
 after_script:
     - yarn test
 
-after_success:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
 after_failure:
     - cat var/logs/test.log
 
 jobs:
     include:
         -   stage: code quality
-            php: 7.1
+            php: 7.2
             name: PHP Static Analysis Tool
             before_script:
                 - mysql -e 'create database fork'
@@ -43,21 +36,30 @@ jobs:
             script: bin/phpstan analyze src
             after_success: skip
         -   stage: code quality
-            php: 7.1
+            php: 7.2
             name: PHP Code Sniffer
             before_script: composer install
             script: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
             after_success: skip
         -   stage: test
             name: Functional
-            php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=coverage.clover
+            php: 7.2
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=functional --coverage-clover=functional.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover functional.clover
         -   stage: test
             name: Unit
-            php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
+            php: 7.2
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=unit.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover unit.clover
         -   stage: test
             name: Installer
-            php: 7.1
-            script: travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=coverage.clover
+            php: 7.2
+            script:
+                - travis_wait 30 bin/simple-phpunit --testsuite=installer --coverage-clover=installer.clover
+                - wget https://scrutinizer-ci.com/ocular.phar
+                - php ocular.phar code-coverage:upload --format=php-clover installer.clover
 

@@ -313,7 +313,7 @@ class Model
         );
 
         $category = new Category(
-            Locale::fromString($item['language']),
+            Locale::fromString($item['language'] ?? $item['locale']),
             BackendModel::get('fork.repository.meta')->find($item['meta_id']),
             $item['title'],
             $item['sequence']

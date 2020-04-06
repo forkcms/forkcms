@@ -327,6 +327,61 @@
                     <label for="textboxRequired" class="form-check-label">
                       {{ 'lbl.RequiredField'|trans|ucfirst }}
                     </label>
+                    {% form_field textbox_confirmation_mail_subject %}
+                    <p id="textboxConfirmationMailSubjectErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                  </div>
+                  <div class="form-group">
+                    <label for="textboxConfirmationMailMessage" class="control-label">
+                      {{ 'lbl.ConfirmationMailMessage'|trans|ucfirst }}
+                    </label>
+                    {% form_field textbox_confirmation_mail_message %}
+                    <p id="textboxConfirmationMailMessageErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                  </div>
+                  <div class="jsValidation">
+                    <div class="form-group">
+                      <div class="form-check">
+                        {% form_field textbox_required %}
+                        <label for="textboxRequired" class="form-check-label">
+                          {{ 'lbl.RequiredField'|trans|ucfirst }}
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
+                      <label for="textboxRequiredErrorMessage" class="control-label">
+                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <p id="textboxRequiredErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                      {% form_field textbox_required_error_message %}
+                    </div>
+                  </div>
+                  <div class="jsValidation">
+                    <div class="form-group">
+                      <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
+                      {% form_field textbox_validation %}
+                    </div>
+                    <p id="textboxReplyToErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                    <p id="textboxMailmotorErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                    <p id="textboxSendConfirmationMailToErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                    <div class="form-group jsValidationParameter" style="display: none;">
+                      <label for="textboxValidationParameter" class="control-label">
+                        {{ 'lbl.Parameter'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      {% form_field textbox_validation_parameter %}
+                    </div>
+                    <div class="form-group jsValidationErrorMessage" style="display: none;">
+                      <label for="textareaErrorMessage" class="control-label">
+                        {{ 'lbl.ErrorMessage'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                      <p id="textboxErrorMessageError" class="invalid-feedback jsFieldError" style="display: none;"></p>
+                      {% form_field textbox_error_message %}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="textboxAutocomplete" class="control-label">{{ 'lbl.Autocomplete'|trans|ucfirst }}</label>
+                    {% form_field textbox_autocomplete %}
                   </div>
                 </div>
                 <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">

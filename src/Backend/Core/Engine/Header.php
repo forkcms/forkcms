@@ -156,7 +156,7 @@ final class Header extends KernelLoader
         string $module = null,
         bool $overwritePath = false,
         bool $minify = true,
-        bool $addTimestamp = false,
+        bool $addTimestamp = true,
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
@@ -193,7 +193,7 @@ final class Header extends KernelLoader
         string $module = null,
         bool $minify = true,
         bool $overwritePath = false,
-        bool $addTimestamp = false,
+        bool $addTimestamp = true,
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
