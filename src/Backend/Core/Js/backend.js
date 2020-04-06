@@ -1850,7 +1850,6 @@ jsBackend.messages = {
     // switch icon type
     var icon
     var role = 'status'
-    var role = 'status'
     var live = 'polite'
     var dismissableClass = ' d-none'
 

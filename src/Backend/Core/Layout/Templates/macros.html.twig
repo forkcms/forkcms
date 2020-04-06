@@ -59,6 +59,8 @@
 
   {% if active %}
     {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
+  {% else %}
+    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' hide'}) %}
   {% endif %}
 
   {% set role = 'status' %}
