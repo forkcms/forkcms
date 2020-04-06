@@ -110,6 +110,12 @@
     font-weight: $font-weight-medium;
     font-style: normal;
     color: $primary;
+
+    &.jstree-clicked,
+    &.jstree-hovered {
+      background: $blue-darker;
+      color: $white;
+    }
   }
 
   &.jstree-proton {
