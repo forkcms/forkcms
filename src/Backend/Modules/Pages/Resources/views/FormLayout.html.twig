@@ -289,9 +289,7 @@
             <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body" data-role="page-block-form-wrapper">
-            <div class="alert alert-warning mb-3">
-              {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans|raw }}
-            </div>
+            {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}
             {{ form_row(form.extraType) }}
             <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.blockExtraId) }}</div>

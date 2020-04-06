@@ -62,17 +62,27 @@
   {% endspaceless %}
 {%- endblock label_asterisk -%}
 
+{% block form_errors_list_content %}
+  <ul class="list-unstyled">
+    {%- for error in errors -%}
+      <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+    {%- endfor -%}
+  </ul>
+{% endblock %}
+
 {% block form_errors -%}
   {% import 'Layout/Templates/macros.html.twig' as macro %}
+
   {% if errors|length > 0 -%}
-    {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
-    <ul class="list-unstyled">
-      {%- for error in errors -%}
-        <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
-      {%- endfor -%}
-    </ul>
-    {% if form.parent %}</small>{% else %}</div>{% endif %}
+    {% if form.parent %}
+      <small class="form-text text-muted">
+        {{ block('form_errors_list_content') }}
+      </small>
+    {% else %}
+      {{ macro.alert('danger', block('form_errors_list_content')) }}
+    {% endif %}
   {%- endif %}
+
 {%- endblock form_errors %}
 
 {%- block meta_widget -%}

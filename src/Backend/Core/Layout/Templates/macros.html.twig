@@ -86,7 +86,13 @@
         {% elseif type == 'warning' %}
           {{ macro.icon('exclamation-triangle') }}
         {% endif %}
-        {{ message|raw }}
+        {% if '</p>' in message or '</ul>' in message %}
+          {{ message|raw }}
+        {% else %}
+          <p>
+            {{ message|raw }}
+          </p>
+        {% endif %}
       {% endif %}
     </div>
   </div>

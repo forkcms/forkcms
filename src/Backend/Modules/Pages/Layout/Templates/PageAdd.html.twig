@@ -5,9 +5,7 @@
 {% block pagesTree %}
   <div class="sub-navigation d-none d-sm-block">
     <div class="pages-tree">
-      <div class="alert alert-warning d-md-none">
-        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
-      </div>
+      {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans|ucfirst, null, null, {'class': 'd-md-none'}) }}
       <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>

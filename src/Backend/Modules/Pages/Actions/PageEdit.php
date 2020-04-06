@@ -62,7 +62,7 @@ final class PageEdit extends Action
 
             return;
         }
-dump($form->getData());die;
+
         $this->handleForm($form);
     }
 

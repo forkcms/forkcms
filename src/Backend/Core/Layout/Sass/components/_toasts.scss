@@ -23,13 +23,18 @@
 }
 
 .toast-body {
+  padding: $toast-padding-x $toast-padding-x $toast-padding-x 2.2rem;
+  position: relative;
 
   p {
     display: inline-block;
-    margin-bottom: 0;
+  }
 
-    + p {
-      margin-top: $spacer;
+  p,
+  ul {
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 
@@ -38,7 +43,9 @@
   }
 
   .svg-inline--fa {
-    margin-right: 5px;
+    position: absolute;
+    left: $toast-padding-x;
+    top: 1rem;
   }
 }
 
