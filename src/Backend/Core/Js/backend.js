@@ -45,7 +45,6 @@ var jsBackend =
       jsBackend.tabs.init()
       jsBackend.forms.init()
       jsBackend.layout.init()
-      jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
       if (jsData.Core.preferred_editor === 'ck-editor') {
@@ -1850,6 +1849,7 @@ jsBackend.messages = {
 
     // switch icon type
     var icon
+    var role = 'status'
     var role = 'status'
     var live = 'polite'
     var dismissableClass = ' d-none'
