@@ -19,7 +19,6 @@
   }
 }
 
-
 @include media-breakpoint-up(md) {
   .content-action-bar .btn-toolbar {
     margin-top: 0;
@@ -27,6 +26,11 @@
     .btn {
       padding: 0.5rem $btn-padding-x;
     }
+  }
+}
+@include media-breakpoint-down(lg) {
+  .content-action-bar .btn-toolbar .btn .svg-inline--fa {
+    margin: 0;
   }
 }
 

@@ -755,11 +755,9 @@
         <translation language="ru"><![CDATA[Невозможно переместить папки медиа.]]></translation>
         <translation language="pl"><![CDATA[Nie można przenosić katalogów media.]]></translation>
       </item>
-      <item type="message" name="MoveMediaToFolder">
-        <translation language="en"><![CDATA[Move media to this folder:]]></translation>
-        <translation language="nl"><![CDATA[Verplaats deze media naar volgende map:]]></translation>
-        <translation language="ru"><![CDATA[Переместить медиа в папку:]]></translation>
-        <translation language="pl"><![CDATA[Przenieś media do tego katalogu:]]></translation>
+      <item type="message" name="Destination">
+        <translation language="en"><![CDATA[destination]]></translation>
+        <translation language="nl"><![CDATA[bestemming]]></translation>
       </item>
       <item type="error" name="NonExistingMediaFolder">
         <translation language="en"><![CDATA[Folder does not exist.]]></translation>

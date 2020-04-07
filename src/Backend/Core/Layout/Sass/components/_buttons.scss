@@ -4,13 +4,17 @@
   -webkit-appearance: none;
 
   .svg-inline--fa {
-    margin: 0 6px 0 0;
+    margin: 0 map_get($spacers, 2) 0 0;
   }
 
   .btn-text {
     display: block;
     font-size: $font-size-xs;
     margin: 0 3px;
+
+    + .svg-inline--fa {
+      margin: 0 0 0 map_get($spacers, 2);
+    }
   }
 
   &.btn-sm {
