@@ -42,6 +42,10 @@
         <translation language="en"><![CDATA[add after reference page]]></translation>
         <translation language="pl"><![CDATA[dodaj po stronie odniesienia]]></translation>
       </item>
+      <item type="label" name="State">
+        <translation language="nl"><![CDATA[status]]></translation>
+        <translation language="en"><![CDATA[state]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>
         <translation language="en"><![CDATA[add]]></translation>

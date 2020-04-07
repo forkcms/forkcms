@@ -78,8 +78,25 @@
       </div>
     {% endif %}
     <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
-      {{ form_row(form.data.isAction) }}
-      {{ form_widget(form.settings) }}
+      <fieldset>
+        <legend>{{ 'lbl.Settings'|trans|ucfirst }}</legend>
+
+       <div class="form-group">
+         {{ form_widget(form.data.isAction) }}
+         {{ form_widget(form.settings.allowMove) }}
+         {{ form_widget(form.settings.allowChildren) }}
+         {{ form_widget(form.settings.allowEdit) }}
+         {{ form_widget(form.settings.allowDelete) }}
+       </div>
+      </fieldset>
+
+      <fieldset class="last">
+        <legend>{{ 'lbl.State'|trans|ucfirst }}</legend>
+        {{ form_row(form.settings.hidden) }}
+        {{ form_row(form.settings.publishOn) }}
+        {{ form_row(form.settings.publishUntil) }}
+      </fieldset>
+
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}
@@ -179,8 +196,9 @@
         <div class="form-group">
           {{ form_widget(form.urlOverwrite) }}
           {{ form_label(form.url) }}
-          <div class="form-inline">
-            <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
+
+          <div class="d-flex align-items-center">
+            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ml-2">{{ form_widget(form.url) }}</div>
           </div>
           {{ form_errors(form.url) }}
           <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
@@ -222,7 +240,9 @@
 
 {% block _page_data_redirect_redirect_entry_widget %}
   <div class="form-group">
-    {{ form_widget(form) }}
+    <div class="mb-2">
+      {{ form_widget(form) }}
+    </div>
     {% if form.vars.value == 'internal' %}
       {{ form_widget(form.parent.parent.internal_redirect) }}
     {% elseif form.vars.value == 'external' %}
