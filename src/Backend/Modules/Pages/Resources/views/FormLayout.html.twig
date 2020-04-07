@@ -233,7 +233,7 @@
 
 {% block page_content_widget %}
   <div class="row">
-    <div class="col-sm-6 col-md-12 col-lg-5 col-xl-4">
+    <div class="col-8 col-sm-6 col-md-4 col-lg-6 col-xl-4">
       {{ form_row(form.templateId) }}
     </div>
   </div>
@@ -257,7 +257,7 @@
 
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
-      <ul class="list-group list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
         {% for field in form %}
           <li class="list-group-item">
             {{ block('page_block_collection_item') }}
@@ -322,7 +322,7 @@
         </div>
       </div>
 
-      <div class="d-flex">
+      <div class="d-flex flex-wrap">
         <div class="btn-group">
           {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-icon-only btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
           {% if form.vars.allow_sequence %}

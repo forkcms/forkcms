@@ -1,0 +1,17 @@
+.list-group-pages {
+
+  .list-group-item {
+    padding: $list-group-item-padding-y;
+  }
+}
+
+
+@include media-breakpoint-up(xl) {
+
+  .list-group-pages {
+
+    .list-group-item {
+      padding: $list-group-item-padding-y $list-group-item-padding-x;
+    }
+  }
+}

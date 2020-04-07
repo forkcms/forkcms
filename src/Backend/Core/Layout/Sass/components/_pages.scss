@@ -8,7 +8,7 @@
 
   table {
     border-collapse: separate;
-    border-spacing: 2px;
+    //border-spacing: 2px;
     table-layout: fixed;
     width: 100%;
   }
@@ -49,22 +49,17 @@
   }
 }
 
-@include media-breakpoint-up(md) {
-  #templateVisualLarge {
-    margin: 0 -15px;
-
-    table {
-      border-spacing: 15px;
-    }
-  }
-}
-
-@include media-breakpoint-up(lg) {
+@include media-breakpoint-up(xl) {
   #templateVisualLarge table td {
     display: table-cell;
+    margin: 0 -15px;
 
     &.empty {
       display: table-cell;
+    }
+
+    table {
+      border-spacing: 15px;
     }
   }
 }
