@@ -24,6 +24,10 @@
   &.disabled {
     color: $gray-550;
   }
+
+  &[type="date"] + [type="time"] {
+    margin-left: map_get($spacers, 3);
+  }
 }
 
 label,

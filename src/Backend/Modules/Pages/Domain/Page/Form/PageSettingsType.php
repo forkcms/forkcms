@@ -35,6 +35,8 @@ final class PageSettingsType extends AbstractType
             DateTimeType::class,
             [
                 'label' => 'lbl.PublishOn',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
             ]
         );
         $builder->add(
@@ -43,6 +45,8 @@ final class PageSettingsType extends AbstractType
             [
                 'label' => 'lbl.PublishTill',
                 'required' => false,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text',
             ]
         );
 
