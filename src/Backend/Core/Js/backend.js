@@ -114,7 +114,7 @@ var jsBackend =
           if (typeof XMLHttpRequest.responseText !== 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message
 
           // show message
-          jsBackend.messages.add('danger', textStatus)
+          jsBackend.messages.add('danger', textStatus, '', true)
         }
       })
 
@@ -1881,9 +1881,9 @@ jsBackend.messages = {
     var html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="false">' +
       '<div class="toast-body">' +
         '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
-          '<span aria-hidden="true" class="fas fa-times"></span>' +
+          '<i class="fas fa-times"></i>' +
         '</button>' +
-        '<i class="' + icon + '" aria-hidden="true"></i>' + ' ' +
+        '<i class="toast-icon ' + icon + '" aria-hidden="true"></i>' + ' ' +
         content +
         '</div>' +
       '</div>'

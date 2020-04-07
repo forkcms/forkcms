@@ -65,28 +65,32 @@
 
   {% set role = 'status' %}
   {% set live = 'polite' %}
+  {% set dismissableClass = ' d-none' %}
 
   {% if type == 'danger' or type == 'warning' %}
     {% set role = 'alert' %}
     {% set role = 'assertive' %}
+    {% set dismissableClass = '' %}
+  {% endif %}
+
+  {% if dismissable %}
+    {% set dismissableClass = '' %}
   {% endif %}
 
   <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="false">
     <div class="toast-body">
-      {% if dismissable %}
-      <button type="button" class="close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="close{{ dismissableClass }}" data-dismiss="toast" aria-label="Close">
+        <i class="fas fa-times"></i>
       </button>
-      {% endif %}
       {% if message %}
         {% if type == 'danger' %}
-          {{ macro.icon('times-circle', 'far') }}
+          {{ macro.icon('times-circle toast-icon', 'far') }}
         {% elseif type == 'success' %}
-          {{ macro.icon('check-circle', 'far') }}
+          {{ macro.icon('check-circle toast-icon', 'far') }}
         {% elseif type == 'info' %}
-          {{ macro.icon('info-circle') }}
+          {{ macro.icon('info-circle toast-icon') }}
         {% elseif type == 'warning' %}
-          {{ macro.icon('exclamation-triangle') }}
+          {{ macro.icon('exclamation-triangle toast-icon') }}
         {% endif %}
         {% if '</p>' in message or '</ul>' in message %}
           {{ message|raw }}

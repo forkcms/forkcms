@@ -11,9 +11,9 @@
     float: none;
     opacity: 1;
     position: absolute;
-    right: 2px;
+    right: 5px;
     text-shadow: none;
-    top: 3px;
+    top: 5px;
 
     .svg-inline--fa {
       color: $body-color;
@@ -42,7 +42,7 @@
     text-decoration: underline;
   }
 
-  .svg-inline--fa {
+  .toast-icon {
     position: absolute;
     left: $toast-padding-x;
     top: 1rem;
@@ -66,7 +66,7 @@
 
 .toast-messaging-wrapper {
   padding: ($grid-gutter-width / 2) ($grid-gutter-width / 2) 0;
-  z-index: $zindex-fixed;
+  z-index: $zindex-modal-backdrop + 1;
 
   .toast {
     box-shadow: $toast-box-shadow;
