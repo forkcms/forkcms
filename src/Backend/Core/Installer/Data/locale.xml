@@ -9668,6 +9668,10 @@
         <translation language="el"><![CDATA[αναβάθμιση φίλτρου]]></translation>
         <translation language="pl"><![CDATA[aktualizuj filtr]]></translation>
       </item>
+      <item type="label" name="Filter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
       <item type="label" name="URL">
         <translation language="nl"><![CDATA[URL]]></translation>
         <translation language="en"><![CDATA[URL]]></translation>
