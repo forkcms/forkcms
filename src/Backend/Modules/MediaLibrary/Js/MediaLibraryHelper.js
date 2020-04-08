@@ -401,6 +401,7 @@ jsBackend.mediaLibraryHelper.group = {
               $(json.data.items).each(function (index, item) {
                 // add HTML for MediaItem to connect to holder
                 $holder.append(jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemToConnect(item))
+                jsBackend.mediaLibraryHelper.movieThumbUrl.set(item)
               })
             }
           }
@@ -569,6 +570,7 @@ jsBackend.mediaLibraryHelper.group = {
             if (id === item.id) {
               // Add HTML for MediaItem to Connect
               $currentItems.append(jsBackend.mediaLibraryHelper.templates.getHTMLForMediaItemToConnect(item))
+              jsBackend.mediaLibraryHelper.movieThumbUrl.set(item)
             }
           })
         })
@@ -1301,7 +1303,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
+            var $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
@@ -1462,6 +1464,10 @@ jsBackend.mediaLibraryHelper.templates = {
 
     if (mediaItem.type === 'image') {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
+    } else if (mediaItem.type === 'movie') {
+      html += '<img src="" alt="' + mediaItem.title + '" title="' + mediaItem.title + '" data-media-item-movie data-video-id="' + mediaItem.url + '"/>'
+      html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
+      html += '<div class="url">' + mediaItem.url + '</div>'
     } else {
       html += '<div class="icon"></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
@@ -1524,6 +1530,8 @@ jsBackend.mediaLibraryHelper.templates = {
    * @return {string}
    */
   getHTMLForUploadedMediaItem: function (mediaItem) {
+    jsBackend.mediaLibraryHelper.movieThumbUrl.set(mediaItem)
+
     // init html
     var html = ''
 
@@ -1535,6 +1543,10 @@ jsBackend.mediaLibraryHelper.templates = {
     if (mediaItem.type === 'image') {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
       // is file, movie or audio
+    } else if (mediaItem.type === 'movie') {
+      html += '<img src="" alt="' + mediaItem.title + '" title="' + mediaItem.title + '" data-media-item-movie data-video-id="' + mediaItem.url + '"/>'
+      html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
+      html += '<div class="url">' + mediaItem.url + '</div>'
     } else {
       html += '<div class="icon"><span class="fas fa-play-circle"></span></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
@@ -1570,6 +1582,33 @@ jsBackend.mediaLibraryHelper.modalSelection = {
     window.close()
   }
 };
+
+jsBackend.mediaLibraryHelper.movieThumbUrl = {
+  set: function (mediaItem) {
+    setTimeout(function () {
+      if (mediaItem.storageType === 'youtube') {
+        $('#media-' + mediaItem.id + ' [data-media-item-movie]').attr('src', 'https://img.youtube.com/vi/' + mediaItem.url + '/hqdefault.jpg')
+      } else {
+        jsBackend.mediaLibraryHelper.movieThumbUrl.vimeoLoadingThumb(mediaItem.url)
+      }
+    },100)
+  },
+
+  vimeoLoadingThumb: function (id) {
+    var url = 'https://vimeo.com/api/v2/video/' + id + '.json?callback=jsBackend.mediaLibraryHelper.movieThumbUrl.showThumb'
+
+    var script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = url
+
+    $('body').append(script)
+  },
+
+  showThumb: function (data) {
+    var $img = $('[data-video-id="' + data[0].id + '"]')
+    $img.attr('src', data[0].thumbnail_medium)
+  }
+}
 
 /** global: jsBackend */
 $(jsBackend.mediaLibraryHelper.init)

@@ -168,27 +168,33 @@
         <h2 class="card-title">{{ 'lbl.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
-          {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
-          <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
-        </div>
-        <div class="form-group">
-          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
-          <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
-          <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
+              {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+              <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
+              <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
+              <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
           <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control" />
         </div>
-      </div>
-    </div>
-    <div class="btn-toolbar">
-      <div class="btn-group ml-auto" role="group">
-        <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
-          {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
-        </a>
+        <div class="btn-toolbar">
+          <div class="btn-group ml-auto" role="group">
+            <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+              {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -141,10 +141,16 @@
 }
 
 .mediaHolderMovie {
-  min-height: 90px;
+  width: 200px;
 
   .icon {
     background-position: 0 -468px;
+  }
+
+  .url,
+  .icon {
+    color: $white;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
