@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[over]]></translation>
         <translation language="en"><![CDATA[about]]></translation>
       </item>
+      <item type="label" name="Filter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
         <translation language="en"><![CDATA[active]]></translation>

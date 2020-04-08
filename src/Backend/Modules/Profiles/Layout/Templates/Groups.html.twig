@@ -14,21 +14,20 @@
 {% block content %}
   {% form filter %}
     <div class="card card-default">
-      <div class="card-body">
+      <div class="card-heading">
+        <h2>{{ 'lbl.Filter'|trans|ucfirst }}</h2>
+      </div>
+      <div class="card-body p-3">
         <div class="row">
           <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group mb-md-0">
               <label for="name" class="control-label">{{ 'lbl.Name'|trans|ucfirst }}</label>
               {% form_field name %} {% form_field_error name %}
             </div>
           </div>
         </div>
-      </div>
-      <div class="card-footer">
-        <div class="btn-toolbar">
-          <div class="btn-group pull-right">
-            {{ macro.buttonIcon('', 'sync', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "id":"search", "type":"submit", "name":"search" }) }}
-          </div>
+        <div class="d-flex justify-content-end mt-3">
+          {{ macro.buttonIcon('', 'sync', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "id":"search", "type":"submit", "name":"search" }) }}
         </div>
       </div>
     </div>
