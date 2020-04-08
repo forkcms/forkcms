@@ -60,14 +60,12 @@
               </div>
               <div class="card-body">
                 <div class="form-group last">
-                  <div class="form-group">
-                    {% for _itr_10 in hidden %}
-                      <div class="form-check">
-                        {{ _itr_10.rbtHidden | raw }}
-                        <label for="{{ _itr_10.id }}">{{ _itr_10.label }}</label>
-                      </div>
-                    {% endfor %}
-                  </div>
+                  {% for _itr_10 in hidden %}
+                    <div class="form-check">
+                      {{ _itr_10.rbtHidden | raw }}
+                      <label class="form-check-label" for="{{ _itr_10.id }}">{{ _itr_10.label }}</label>
+                    </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
