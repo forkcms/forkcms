@@ -1858,13 +1858,11 @@ jsBackend.messages = {
         icon = 'far fa-times-circle'
         role = 'alert'
         live = 'assertive'
-        dismissableClass = ''
         break
       case 'warning':
         icon = 'fas fa-exclamation-circle'
         role = 'alert'
         live = 'assertive'
-        dismissableClass = ''
         break
       case 'success':
         icon = 'far fa-check-circle'

@@ -49,6 +49,14 @@
   }
 }
 
+.toast-xs .toast-body {
+  padding: 0.3rem 0.5rem 0.3rem 2.2rem;
+
+  .toast-icon {
+    top: 0.5rem;
+  }
+}
+
 @each $color, $value in $theme-colors {
   .toast-#{$color} {
     background: rgba(theme-color-level($color, $alert-bg-level), .6);

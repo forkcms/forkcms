@@ -128,10 +128,10 @@
       </div>
       <div role="tabpanel" class="tab-pane" id="tabFields" aria-labelledby="field-tab">
         <div class="fork-module-messages">
-          {{ macro.alert('warning', 'msg.ImportantImmediateUpdate'|trans|raw, null, null, {'class': 'alert-xs'}) }}
+          {{ macro.alert('warning', 'msg.ImportantImmediateUpdate'|trans|raw, null, null, {'class': 'toast-xs'}) }}
 
           {% if recaptchaMissing %}
-            {{ macro.alert('warning', 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw, null, null, {'class': 'alert-xs'}) }}
+            {{ macro.alert('warning', 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw, null, null, {'class': 'toast-xs'}) }}
           {% endif %}
         </div>
         <div class="row">
@@ -151,7 +151,7 @@
 
                 {# This row always needs to be here. We show/hide it with javascript #}
                 <div class="form-group field" {% if fields %} style="display: none;"{% endif %}>
-                  {{ macro.alert('info', 'msg.NoFields'|trans, null, null, {'class': 'alert-xs'}) }}
+                  {{ macro.alert('info', 'msg.NoFields'|trans, null, null, {'class': 'toast-xs'}) }}
                 </div>
 
                 {# Submit button is always here. Cannot be deleted or moved. #}

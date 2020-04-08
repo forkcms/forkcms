@@ -30,7 +30,7 @@
                 <a class="site-url" href="{{ detailURL }}/{{ categorySlug }}">{{ detailURL }}/<span id="generatedUrl">{{ categorySlug }}</span></a>
               </a>
             {% else %}
-              {{ macro.alert('warning', 'err.NoModuleLinked'|trans|ucfirst, null, null, {'class': 'alert-xs'}) }}
+              {{ macro.alert('warning', 'err.NoModuleLinked'|trans|ucfirst, null, null, {'class': 'toast-xs'}) }}
             {% endif %}
           </div>
         </div>

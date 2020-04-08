@@ -52,7 +52,7 @@
   {% endif %}
 {% endmacro %}
 
-{% macro alert(type, message, dismissable, id, extraAttributes = [], active = true, showIcon = true) %}
+{% macro alert(type, message, dismissable = false, id, extraAttributes = [], active = true, showIcon = true) %}
   {% import _self as macro %}
 
   {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
@@ -70,10 +70,9 @@
   {% if type == 'danger' or type == 'warning' %}
     {% set role = 'alert' %}
     {% set role = 'assertive' %}
-    {% set dismissableClass = '' %}
   {% endif %}
 
-  {% if dismissable %}
+  {% if dismissable == true %}
     {% set dismissableClass = '' %}
   {% endif %}
 
