@@ -2,12 +2,14 @@
 
 namespace ForkCMS\App;
 
+use Common\Exception\RedirectException;
 use PDOException;
 use Spoon;
 use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -131,6 +133,7 @@ abstract class Kernel extends BaseKernel
 
         $installedModules = $this->getInstalledModules($container);
 
+        $container->setParameter('site.domain', $this->getSiteDomainForCurrentLocale($container));
         $container->setParameter('installed_modules', $installedModules);
 
         foreach ($installedModules as $module) {
@@ -223,6 +226,50 @@ abstract class Kernel extends BaseKernel
     public function getCacheDir(): string
     {
         return dirname(__DIR__) . '/var/cache/' . $this->environment . '/' . $this->request->getHost();
+    }
+
+    private function setLocaleOnRequest(ContainerBuilder $container): void
+    {
+        $chunks = (array) explode('/', trim($this->request->getRequestUri(), '/'));
+        $defaultLocale = $container->getParameter('site.default_language');
+        $currentLocale = $chunks[0] ?? $defaultLocale;
+
+        $this->request->setLocale(strlen($defaultLocale) === 2 ? $currentLocale : $defaultLocale);
+        $this->request->setDefaultLocale($defaultLocale);
+    }
+
+    private function getSiteDomainForCurrentLocale(ContainerBuilder $container): string
+    {
+        if ($container->hasParameter('site.domain')) {
+            return $container->getParameter('site.domain');
+        }
+
+        $this->setLocaleOnRequest($container);
+
+        if ($container->hasParameter('site.domain.' . $this->request->getLocale())) {
+            return $this->verifyDomainMatchesLocale(
+                $container->getParameter('site.domain.' . $this->request->getLocale())
+            );
+        }
+
+        return $this->verifyDomainMatchesLocale(
+            $container->getParameter('site.domain.' . $this->request->getDefaultLocale())
+        );
+    }
+
+    private function verifyDomainMatchesLocale(string $domain): string
+    {
+        if ($this->request->getHttpHost() !== $domain) {
+            // remove the invalid container cache
+            $this->removeCurrentContainerCache();
+
+            throw new RedirectException(
+                'Domain and locale do not match',
+                new RedirectResponse($this->request->getScheme() . '://' . $domain . $this->request->getRequestUri())
+            );
+        }
+
+        return $domain;
     }
 
     private function removeCurrentContainerCache(): void
