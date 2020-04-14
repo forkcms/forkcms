@@ -158,6 +158,8 @@ class Url extends KernelLoader
         // sets the locale file
         Language::setLocale($language);
 
+        $this->redirectToCorrectDomainForLocaleIfNeeded();
+
         // remove language from query string
         if ($hasMultiLanguages) {
             $queryString = trim(mb_substr($queryString, mb_strlen($language)), '/');
@@ -358,5 +360,23 @@ class Url extends KernelLoader
         $url = trim($url, '/');
 
         return $url;
+    }
+
+    private function redirectToCorrectDomainForLocaleIfNeeded(): void
+    {
+        $container = $this->getContainer();
+        $request = Model::getRequest();
+        $domain = $container->getParameter('site.domain');
+
+        if ($container->hasParameter('site.domain.' . $request->getLocale())) {
+            $domain = $container->getParameter('site.domain.' . $request->getLocale());
+        }
+
+        if ($request->getHttpHost() !== $domain) {
+            throw new RedirectException(
+                'Domain and locale do not match',
+                new RedirectResponse($request->getScheme() . '://' . $domain . $request->getRequestUri())
+            );
+        }
     }
 }
