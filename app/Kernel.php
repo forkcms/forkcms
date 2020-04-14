@@ -125,7 +125,7 @@ abstract class Kernel extends BaseKernel
      *
      * @return ContainerBuilder The compiled service container
      */
-    protected function buildContainer()
+    protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
 
@@ -209,8 +209,7 @@ abstract class Kernel extends BaseKernel
     {
         // remove the cache dir when installing a module to trigger rebuilding the kernel
         if ($this->isInstallingModule()) {
-            $fileSystem = new Filesystem();
-            $fileSystem->remove($this->getCacheDir().'/'.$this->getContainerClass().'.php');
+            $this->removeCurrentContainerCache();
         }
 
         parent::initializeContainer();
@@ -224,5 +223,11 @@ abstract class Kernel extends BaseKernel
     public function getCacheDir(): string
     {
         return dirname(__DIR__) . '/var/cache/' . $this->environment;
+    }
+
+    private function removeCurrentContainerCache(): void
+    {
+        $fileSystem = new Filesystem();
+        $fileSystem->remove($this->getCacheDir().'/'.$this->getContainerClass().'.php');
     }
 }
