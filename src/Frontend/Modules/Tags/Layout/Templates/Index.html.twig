@@ -11,13 +11,13 @@
     {% if not tags %}
       {{ alerts.alert('info', 'msg.TagsNoItems'|trans) }}
     {% else %}
-      <ul>
+      <ul class="list-group">
         {% for tag in tags %}
-          <li>
+          <li class="list-group-item list-group-item-action">
             <a href="{{ geturlforblock('Tags','Detail') }}/{{ tag.url }}" rel="tag">
               {{ tag.name }}
             </a>
-            <span class="badge hidden-phone">{{ tag.number }}</span>
+            <span class="badge badge-primary">{{ tag.number }}</span>
           </li>
         {% endfor %}
       </ul>

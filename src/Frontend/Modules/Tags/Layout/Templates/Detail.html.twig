@@ -13,13 +13,13 @@
     <div class="block-body">
       {% if tagsModules %}
         {% for module in tagsModules %}
-          <section>
+          <section{% if not loop.first %} class="mt-4"{% endif %}>
             <header role="banner">
-              <h2>{{ module.label|ucfirst }}</h2>
+              <h2 class="h3">{{ module.label|ucfirst }}</h2>
             </header>
-            <ul>
+            <ul class="list-group">
               {% for item in module.items %}
-                <li>
+                <li class="list-group-item list-group-item-action">
                   <a href="{{ item.full_url }}" rel="tag">
                     {{ item.title }}
                   </a>
@@ -33,10 +33,10 @@
   {% endblock %}
 
   {% block block_footer %}
-    <nav class="block-footer" role="navigation">
-      <ul class="pager">
-        <li class="previous">
-          <a href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">
+    <nav aria-label="Page navigation tags" class="mt-5">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="{{ geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|ucfirst }}">
             ← {{ 'lbl.ToTagsOverview'|trans|ucfirst }}
           </a>
         </li>
