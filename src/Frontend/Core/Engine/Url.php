@@ -35,15 +35,17 @@ class Url extends KernelLoader
         // add ourself to the reference so other classes can retrieve us
         $this->getContainer()->set('url', $this);
 
+        $request = Model::getRequest();
+        $requestUri = $request->getRequestUri();
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen(Model::getRequest()->getRequestUri()) !== 1 &&
-            mb_substr(Model::getRequest()->getRequestUri(), -1) === '/'
+        if (mb_strlen($requestUri) !== 1 &&
+            mb_substr($requestUri, -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
-                    mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
-                    301
+                    mb_substr($requestUri, 0, -1),
+                    RedirectResponse::HTTP_MOVED_PERMANENTLY
                 )
             );
         }

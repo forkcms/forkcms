@@ -320,6 +320,11 @@ class Language
             throw new Exception('Invalid language (' . $language . ').');
         }
 
+        // set the locale on the symfony request object
+        $request = Model::getRequest();
+        $request->setLocale($language);
+        $request->setDefaultLocale(SITE_DEFAULT_LANGUAGE);
+
         // validate file, generate it if needed
         $filesystem = new Filesystem();
         if (!$filesystem->exists(FRONTEND_CACHE_PATH . '/Locale/en.json')) {
