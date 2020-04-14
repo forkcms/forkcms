@@ -12,35 +12,36 @@
   {% else %}
     {% block block_heading %}{% endblock %}
 
-    {% if allowMultipleCategories %}
+    {% if allowMultipleCategories and faqCategories|length > 1 %}
       {% block block_allow_multiple_categories %}
-        <nav class="block-list-categories">
-          <ul>
+        <div class="block-list-categories mb-4">
+          <ul class="nav nav-pills align-items-center">
+            <li class="nav-item mr-2">{{ 'lbl.Categories'|trans|ucfirst }}</li>
             {% for category in faqCategories %}
-              <li><a href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
+              <li class="nav-item mr-2"><a class="nav-link active py-1 px-2" href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
             {% endfor %}
           </ul>
-        </nav>
+        </div>
       {% endblock %}
     {% endif %}
 
     {% block block_body %}
       <div class="block-body">
         {% for category in faqCategories %}
-          <section class="faq-category">
+          <section class="faq-category mb-3">
             {% if allowMultipleCategories %}
               <header class="faq-category-heading">
                 {# do not remove the id as can be used as an achor #}
-                <h3 id="{{ category.url }}">
+                <h2 class="h3" id="{{ category.url }}">
                   <a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a>
-                </h3>
+                </h2>
               </header>
             {% endif %}
 
             <div class="faq-category-body">
-              <ul>
+              <ul class="list-group">
                 {% for question in category.questions %}
-                  <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+                  <li class="list-group-item list-group-item-action"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
                 {% endfor %}
               </ul>
             </div>

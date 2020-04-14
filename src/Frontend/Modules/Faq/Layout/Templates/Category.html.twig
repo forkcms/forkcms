@@ -6,7 +6,7 @@
 
 <section class="module-faq block-faq-category" itemscope itemtype="http://schema.org/Question">
   {% block block_heading %}
-    <header class="page-header">
+    <header class="block-heading page-header">
       <h1 itemprop="genre">{{ category.title }}</h1>
     </header>
   {% endblock %}
@@ -20,9 +20,9 @@
   {% else %}
     {% block block_body %}
       <div class="block-body">
-        <ul>
+        <ul class="list-group">
           {% for question in questions %}
-            <li itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+            <li class="list-group-item list-group-item-action" itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
           {% endfor %}
         </ul>
       </div>
@@ -30,10 +30,10 @@
   {% endif %}
 
   {% block block_footer %}
-    <nav class="block-footer">
-      <ul class="pager">
-        <li class="previous">
-          <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+    <nav class="block-footer mt-5">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
             ←
             {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
           </a>
