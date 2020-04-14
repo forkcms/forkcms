@@ -15,6 +15,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
 
 require_once __DIR__ . '/autoload.php';
 
+use Common\Exception\RedirectException;
 use ForkCMS\App\AppKernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,8 +56,16 @@ if ($debug) {
     Debug::enable();
 }
 
-$kernel = new AppKernel($env, $debug);
+try {
+    $kernel = new AppKernel($env, $debug);
+} catch (RedirectException $ex) {
+    $ex->getResponse()->send();
+
+    return;
+}
+
 $response = $kernel->handle($request);
+
 if ($response->getCharset() === null && $kernel->getContainer() instanceof ContainerInterface) {
     $response->setCharset(
         $kernel->getContainer()->getParameter('kernel.charset')
