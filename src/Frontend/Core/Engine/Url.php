@@ -5,6 +5,7 @@ namespace Frontend\Core\Engine;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -364,13 +365,8 @@ class Url extends KernelLoader
 
     private function redirectToCorrectDomainForLocaleIfNeeded(): void
     {
-        $container = $this->getContainer();
         $request = Model::getRequest();
-        $domain = $container->getParameter('site.domain');
-
-        if ($container->hasParameter('site.domain.' . $request->getLocale())) {
-            $domain = $container->getParameter('site.domain.' . $request->getLocale());
-        }
+        $domain = Locale::fromString($request->getLocale())->getDomain();
 
         if ($request->getHttpHost() !== $domain) {
             throw new RedirectException(

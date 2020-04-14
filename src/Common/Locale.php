@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use Common\Core\Model;
 use InvalidArgumentException;
 use JsonSerializable;
 use Serializable;
@@ -69,5 +70,16 @@ abstract class Locale implements Serializable, JsonSerializable
     public function jsonSerialize(): string
     {
         return $this->locale;
+    }
+
+    public function getDomain(): string
+    {
+        $container = Model::getContainer();
+
+        if ($container->hasParameter('site.domain.' . $this->locale)) {
+            return $container->getParameter('site.domain.' . $this->locale);
+        }
+
+        return $container->getParameter('site.domain');
     }
 }
