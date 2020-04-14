@@ -484,10 +484,10 @@ $input-border-radius-lg:                $border-radius-lg;
 $input-border-radius-sm:                $border-radius-sm;
 
 $input-focus-bg:                        $input-bg;
-$input-focus-border-color:              lighten($component-active-bg, 25%);
+$input-focus-border-color:              $component-active-bg;
 $input-focus-color:                     $input-color;
 $input-focus-width:                     $input-btn-focus-width;
-$input-focus-box-shadow:                $input-btn-focus-box-shadow;
+$input-focus-box-shadow:                0 0 0 1px $primary;
 
 $input-placeholder-color:               $gray-600;
 $input-plaintext-color:                 $body-color;

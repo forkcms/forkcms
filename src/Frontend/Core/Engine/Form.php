@@ -29,7 +29,7 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'inputFile');
+        $class = (string) ($class ?? 'custom-file-input');
         $classError = (string) ($classError ?? 'inputFileError error form-control-danger is-invalid');
 
         // create and return a file field
@@ -48,7 +48,7 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'inputFile inputImage');
+        $class = (string) ($class ?? 'custom-file-input');
         $classError = (string) ($classError ?? 'inputFileError error form-control-danger is-invalid inputImageError');
 
         // add element

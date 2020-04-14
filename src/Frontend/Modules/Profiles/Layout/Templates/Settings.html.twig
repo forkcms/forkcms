@@ -21,62 +21,57 @@
         <legend>{{ 'lbl.YourData'|trans|ucfirst }}</legend>
 
         <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="displayName">
+          <label class="control-label" for="displayName">
             {{ 'lbl.DisplayName'|trans|ucfirst }}{{ macro.required }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error display_name %}{% form_field display_name %}
-            <small class="helpTxt muted">{{ 'msg.HelpDisplayNameChanges'|trans|format(maxDisplayNameChanges, displayNameChangesLeft ) }}</small>
-          </div>
+          {% form_field display_name %}
+          <small class="helpTxt muted">{{ 'msg.HelpDisplayNameChanges'|trans|format(maxDisplayNameChanges, displayNameChangesLeft ) }}</small>
+          {% form_field_error display_name %}
         </div>
         <div class="form-group{% if txtEmailError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="email">
+          <label class="control-label" for="email">
             {{ 'lbl.Email'|trans|ucfirst }}{{ macro.required }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error email %}{% form_field email %}
-            <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
-          </div>
+            {% form_field email %}
+            <small class="form-text text-muted">
+              <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
+            </small>
+          {% form_field_error email %}
         </div>
         <div class="form-group{% if txtFirstNameError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="firstName">
+          <label class="control-label" for="firstName">
             {{ 'lbl.FirstName'|trans|ucfirst }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error first_name %}{% form_field first_name %}
-          </div>
+          {% form_field first_name %}
+          {% form_field_error first_name %}
         </div>
         <div class="form-group{% if txtLastNameError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="lastName">
+          <label class="control-label" for="lastName">
             {{ 'lbl.LastName'|trans|ucfirst }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error last_name %}{% form_field last_name %}
-          </div>
+          {% form_field last_name %}
+          {% form_field_error last_name %}
         </div>
         <div class="form-group{% if ddmGenderError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="gender">
+          <label class="control-label" for="gender">
             {{ 'lbl.Gender'|trans|ucfirst }}
           </label>
-          <div class="col-sm-2">
-            {% form_field_error gender %} {% form_field gender %}
-          </div>
+          {% form_field gender %}
+          {% form_field_error gender %}
         </div>
         <div class="birthDate form-group{% if ddmYearError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="day">
+          <label class="control-label" for="day">
             {{ 'lbl.BirthDate'|trans|ucfirst }}
           </label>
-          <div class="col-sm-6">
-            <div class="row">
-              <div class="col-xs-4">
-                {% form_field day %}
-              </div>
-              <div class="col-xs-4">
-                {% form_field month %}
-              </div>
-              <div class="col-xs-4">
-                {% form_field_error year %}{% form_field year %}
-              </div>
+          <div class="row">
+            <div class="col-4">
+              {% form_field day %}
+            </div>
+            <div class="col-4">
+              {% form_field month %}
+            </div>
+            <div class="col-4">
+              {% form_field_error year %}{% form_field year %}
             </div>
           </div>
         </div>
@@ -86,52 +81,49 @@
         <legend>{{ 'lbl.YourLocationData'|trans|ucfirst }}</legend>
 
         <div class="form-group{% if txtCityError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="city">
+          <label class="control-label" for="city">
             {{ 'lbl.City'|trans|ucfirst }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error city %}{% form_field city %}
-          </div>
+          {% form_field city %}
+          {% form_field_error city %}
         </div>
         <div class="form-group{% if ddmCountryError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="country">
+          <label class="control-label" for="country">
             {{ 'lbl.Country'|trans|ucfirst }}
           </label>
-          <div class="col-sm-6">
-            {% form_field_error country %} {% form_field country %}
-          </div>
+          {% form_field country %}
+          {% form_field_error country %}
         </div>
       </fieldset>
 
       <fieldset>
         <legend>{{ 'lbl.About'|trans|ucfirst }}</legend>
         <div class="form-group{% if txtAboutError %} has-error{% endif %}">
-          {% form_field_error about %} {% form_field about %}
+          {% form_field about %}
+          {% form_field_error about %}
         </div>
       </fieldset>
       <fieldset class="form-horizontal">
         <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
         <div class="form-group{% if fileAvatarError %} has-error{% endif %}">
-          <label class="control-label col-sm-2" for="avatar">
-            {{ 'lbl.Avatar'|trans|ucfirst }}
-          </label>
-          <div class="col-sm-6">
-            {% if avatar %}
-              <img src="{{ FRONTEND_FILES_URL }}/Profiles/Avatars/240x240/{{ avatar }}" class="img-circle" />
-              <br />
-            {% endif %}
-            {% form_field avatar %} {% form_field_error avatar %}
+          {% if avatar %}
+            <div class="row">
+              <div class="col-sm-6 col-lg-3">
+                <img src="{{ FRONTEND_FILES_URL }}/Profiles/Avatars/240x240/{{ avatar }}" class="img-circle" />
+              </div>
+            </div>
+          {% endif %}
+          <div class="custom-file">
+          {% form_field avatar %}
+            <label for="avatar" class="custom-file-label">{{ 'lbl.UploadAvatar'|trans|ucfirst }}</label>
           </div>
+          {% form_field_error avatar %}
         </div>
       </fieldset>
 
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-6">
-          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-        </div>
-        <div class="col-sm-4">
-          <a href="{{ geturlforblock('Profiles', 'ChangePassword') }}" class="btn btn-primary pull-right">{{ 'lbl.NewPassword'|trans|ucfirst }}</a>
-        </div>
+        <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
+        <a href="{{ geturlforblock('Profiles', 'ChangePassword') }}" class="btn btn-primary pull-right">{{ 'lbl.NewPassword'|trans|ucfirst }}</a>
       </div>
       {% endform %}
     </div>
