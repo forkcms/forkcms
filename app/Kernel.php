@@ -234,6 +234,10 @@ abstract class Kernel extends BaseKernel
         $defaultLocale = $container->getParameter('site.default_language');
         $currentLocale = $chunks[0] ?? $defaultLocale;
 
+        if ($currentLocale === 'private') {
+            $currentLocale = $chunks[1] ?? $defaultLocale;
+        }
+
         $this->request->setLocale(strlen($defaultLocale) === 2 ? $currentLocale : $defaultLocale);
         $this->request->setDefaultLocale($defaultLocale);
     }
