@@ -10,3 +10,9 @@ label {
 select.form-control[size] {
   height: $input-height;
 }
+
+.input-group .twitter-typeahead {
+  flex: 1 1 0%;
+  min-width: 0;
+  margin-bottom: 0;
+}
