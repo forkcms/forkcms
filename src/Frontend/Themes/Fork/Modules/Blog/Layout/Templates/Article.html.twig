@@ -1,0 +1,78 @@
+{% macro preview(item) %}
+  <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="interactionCount" content="UserComments:{{ item.comments_count }}">
+    <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
+    <header class="block-article-heading page-header" role="banner">
+      <h2 itemprop="name">
+        <a href="{{ item.full_url }}" title="{{ item.title }}">
+          {{ item.title }}
+        </a>
+      </h2>
+
+      <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+        <div>
+          {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
+          {{ 'lbl.On'|trans }}
+          <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s') }}">
+            {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
+          </time>
+        </div>
+        <div>
+          {% if item.allow_comments %}
+            {% if not item.comments %}
+              <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+              </a>
+            {% else %}
+              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                {% if item.comments_multiple %}
+                  {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                {% else %}
+                  {{ 'msg.BlogOneComment'|trans }}
+                {% endif %}
+              </a>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+        <div>
+          {{ 'lbl.Category'|trans|ucfirst }}
+          <a itemprop="genre" href="{{ item.category_full_url }}"
+            title="{{ item.category_title }}">{{ item.category_title }}</a>
+        </div>
+
+        <div>
+          {% if item.tags %}
+            {{ 'lbl.Tags'|trans|ucfirst }}:
+            <span itemprop="keywords">
+                  {% for tag in item.tags %}
+                    <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                      {{ tag.name }}
+                    </a>
+                  {% endfor %}
+                </span>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+    <div class="block-article-body" itemprop="articleBody">
+      <div class="row">
+        <div class="{% if item.image %} col-md-8{% else %} col-12{% endif %}">
+          {% if not item.introduction %}
+            {{ item.text|raw }}
+          {% else %}
+            {{ item.introduction|raw }}
+          {% endif %}
+        </div>
+        {% if item.image %}
+          <div class="col-md-4">
+            <a href="{{ item.full_url }}" title="{{ item.title }}"><img itemprop="image" class="img-responsive"
+                src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" /></a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+{% endmacro %}

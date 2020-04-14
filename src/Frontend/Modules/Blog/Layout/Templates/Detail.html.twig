@@ -78,7 +78,7 @@
     {% endblock %}
 
     {% block block_footer %}
-      <footer class="block-footer">
+      <footer class="block-footer mt-4">
         <nav aria-label="Page navigation blog">
           <ul class="pagination">
             {% if navigation.previous %}
@@ -104,7 +104,7 @@
 
   {% block block_article_comments %}
     {% if comments or item.allow_comments %}
-      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments mt-5">
+      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments mt-4">
         <header role="banner" class="block-blog-article-comments-heading">
           <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
         </header>
@@ -162,7 +162,7 @@
 
   {% if item.allow_comments %}
     {% block block_article_comment_form %}
-      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form mt-5 bg-light p-3">
+      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form mt-4 bg-light p-3">
         <header class="block-blog-article-comment-form-heading" role="banner">
           <h4>{{ 'msg.Comment'|trans|ucfirst }}</h4>
         </header>
