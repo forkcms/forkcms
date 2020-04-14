@@ -222,7 +222,7 @@ abstract class Kernel extends BaseKernel
 
     public function getCacheDir(): string
     {
-        return dirname(__DIR__) . '/var/cache/' . $this->environment;
+        return dirname(__DIR__) . '/var/cache/' . $this->environment . '/' . $this->request->getHost();
     }
 
     private function removeCurrentContainerCache(): void
