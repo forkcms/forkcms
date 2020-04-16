@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\BlockEditor\Blocks;
+
 use Common\Language;
 
 final class ParagraphBlock extends AbstractBlock
