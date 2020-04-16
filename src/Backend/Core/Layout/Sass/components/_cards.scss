@@ -83,7 +83,7 @@
 .card-editor {
 
   .card-body {
-    padding: 0;
+    padding: map_get($spacers, 3);
   }
 }
 

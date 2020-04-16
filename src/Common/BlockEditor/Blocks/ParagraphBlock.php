@@ -1,6 +1,7 @@
 <?php
 
 namespace Common\BlockEditor\Blocks;
+use Common\Language;
 
 final class ParagraphBlock extends AbstractBlock
 {
@@ -8,6 +9,9 @@ final class ParagraphBlock extends AbstractBlock
     {
         return [
             'class' => 'BlockEditor.blocks.Paragraph',
+            'config' => [
+                'placeholder' => Language::lbl('ClickHereToAddContent')
+            ]
         ];
     }
 
