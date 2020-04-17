@@ -62,5 +62,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "dependencies": {
+    "sortablejs": "^1.10.2"
   }
 }

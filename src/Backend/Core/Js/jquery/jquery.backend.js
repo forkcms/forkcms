@@ -1536,21 +1536,17 @@
       }
 
       $.each($sequenceInstances, function (index, element) {
-        var $sequenceBody = $(element)
+        var sortable = new Sortable(element, {
+          group: 'page',
 
-        $sequenceBody.sortable(
-          {
-            items: '.list-group-item',
-            handle: '[data-role="sequence-handle"]',
-            placeholder: 'dragAndDropPlaceholder',
-            forcePlaceholderSize: true,
-            stop: function (e, ui) {
-              CollectionSequence.saveNewSequence($(this).closest('[data-role=collection-sequence]'))
-            }
+          // Element dragging ended
+          onEnd: function (evt) {
+            var draggedItem = $(evt.item)
+            CollectionSequence.saveNewSequence(draggedItem.closest('[data-role=collection-sequence]'))
           }
-        )
+        })
 
-        $sequenceBody.on('click.fork.order-move', '[data-role="order-move"]', function (e) {
+        $(element).on('click.fork.order-move', '[data-role="order-move"]', function (e) {
           var $this = $(this)
           var $row = $this.closest('.list-group-item')
           var direction = $this.data('direction')
@@ -1568,10 +1564,10 @@
     },
 
     saveNewSequence: function ($sequenceBody) {
-      var $counter = 0
+      var counter = 0
       $.each($sequenceBody.find(sequenceField), function (index, element) {
-        $(element).val($counter)
-        $counter++
+        $(element).val(counter)
+        counter++
       })
     }
   }

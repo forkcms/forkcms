@@ -97,7 +97,8 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
     'node_modules/cropper/dist/cropper.js',
-    'node_modules/jstree/dist/jstree.js'
+    'node_modules/jstree/dist/jstree.js',
+    'node_modules/sortablejs/Sortable.min.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })
