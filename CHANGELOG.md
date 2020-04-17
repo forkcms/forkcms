@@ -1,3 +1,16 @@
+5.8.1  (2020-04-17)
+------------------
+Fixed:
+* Core: Cast the data value to string [#3055](https://github.com/forkcms/forkcms/pull/3055)
+* Core: Update composer packages [#3057](https://github.com/forkcms/forkcms/pull/3057) [#3060](https://github.com/forkcms/forkcms/pull/3060) [#3072](https://github.com/forkcms/forkcms/pull/3072) [#3071](https://github.com/forkcms/forkcms/pull/3071) [#3064](https://github.com/forkcms/forkcms/pull/3064) [#3060](https://github.com/forkcms/forkcms/pull/3060)
+* Docs: Change Transmit to FileZilla [#3069](https://github.com/forkcms/forkcms/pull/3069)
+* Users: Don't use profiels password encrypting for backend users [#3054](https://github.com/forkcms/forkcms/pull/3054)
+
+Security:
+* Core: Block direct access to twig files [#3052](https://github.com/forkcms/forkcms/pull/3052)
+* Profiles: Fix xss in profiles display name [#3073](https://github.com/forkcms/forkcms/pull/3073)
+
+
 5.8.0  (2020-03-03)
 ------------------
 
