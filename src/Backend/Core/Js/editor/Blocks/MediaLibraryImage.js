@@ -16,9 +16,9 @@ class MediaLibraryImage {
 
     window.onmessage = function (event) {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
-        mediaLibraryImageInstance.src = event.data['media-url']
-        mediaLibraryImageInstance.id = event.data.id
-        mediaLibraryImageInstance.image.src = mediaLibraryImageInstance.src
+        mediaLibraryImageInstance.data.src = event.data['media-url']
+        mediaLibraryImageInstance.data.id = event.data.id
+        mediaLibraryImageInstance.image.src = mediaLibraryImageInstance.data.src
         mediaLibraryImageInstance.image.classList.remove('hidden')
       }
     }
@@ -48,8 +48,8 @@ class MediaLibraryImage {
 
   save (blockContent) {
     return {
-      'id': this.id,
-      'src': this.src
+      'id': this.data.id,
+      'src': this.data.src
     }
   }
 }
