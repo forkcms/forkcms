@@ -49,6 +49,7 @@ deny from env=stayout
 
     # forbidden folders
     RewriteRule .*\.php - [F]
+    RewriteRule .*\.twig - [F]
     RewriteRule \.git - [F]
     RewriteRule vendor/.* - [F]
     RewriteRule bin/.* - [F]

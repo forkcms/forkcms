@@ -363,7 +363,7 @@ class Model extends \Common\Core\Model
                 function (?string $serializedData) use ($key, $value) {
                     $data = $serializedData === null ? [] : unserialize($serializedData);
 
-                    return isset($data[$key]) && $data[$key] === $value;
+                    return isset($data[$key]) && (string) $data[$key] === $value;
                 }
             )
         );
