@@ -85,16 +85,24 @@ class Thumbnails
 
                 if ($box->getWidth() < $width) {
                     $height = ($box->getHeight() / $box->getWidth()) * $width;
+                    if ($height < $folder['height']) {
+                        $height = $folder['height'];
+                        $width *= ($box->getWidth() / $box->getHeight());
+                    }
                     $image = $image->resize(new Box($width, $height));
                 } elseif ($box->getHeight() < $height) {
                     $width *= ($box->getWidth() / $box->getHeight());
+                    if ($width < $folder['width']) {
+                        $width = $folder['width'];
+                        $height = ($box->getHeight() / $box->getWidth()) * $width;
+                    }
                     $image = $image->resize(new Box($width, $height));
                 } else {
                     $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
                 }
 
-                // we center the crop in relation to the width
-                $cropPoint = new Point(0, 0);
+                // we center the crop in relation to the height
+                $cropPoint = new Point(max($width - $folder['width'], 0)/2, max($height - $folder['height'], 0)/2);
             } else {
                 $width  = $folder['width'];
                 $height =  $box->getHeight() * ($folder['width']/$box->getWidth());
