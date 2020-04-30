@@ -124,8 +124,9 @@ jsBackend.pages.extras = {
     $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function() {
       var $modal = $(this).closest('.modal')
       var separator = ' › '
-      var $pageBlockTitle = $modal.closest('[data-role="page-block-wrapper"]').find('[data-role="page-block-title"]')
-      var $pageBlockPreview = $modal.closest('[data-role="page-block-wrapper"]').find('[data-role="page-block-preview"]')
+      var $pageBlockWrapper = $modal.closest('[data-role="page-block-wrapper"]')
+      var $pageBlockTitle = $pageBlockWrapper.find('[data-role="page-block-title"]')
+      var $pageBlockPreview = $pageBlockWrapper.find('[data-role="page-block-preview"]')
       var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
       var title = $modal.find('[data-role="select-block-type"] option:selected').text()
 
