@@ -168,4 +168,41 @@ class Thumbnails
 
         return array_values($folders);
     }
+
+    public function calculateResizeBox(
+        int $width,
+        int $height,
+        ?int $desiredWidth,
+        ?int $desiredHeight
+    ): Box {
+        // calculate the desired width based on the aspect ratio if needed
+        if ($desiredWidth === null) {
+            $desiredWidth = (int) ($desiredHeight * ($height/$width));
+        }
+        // calculate the desired height based on the aspect ratio if needed
+        if ($desiredHeight=== null) {
+            $desiredHeight = (int) ($desiredWidth * ($width/$height));
+        }
+
+        // if the current width and height are already in the desired width and height we don't need to do anything
+        if ($width >= $desiredWidth && $height >= $desiredHeight) {
+            return new Box($width, $height);
+        }
+
+        // handle width too small
+        if ($width < $desiredWidth) {
+            $scaleRatio = $desiredWidth/$width;
+            $height *= $scaleRatio;
+            $width *= $scaleRatio;
+        }
+
+        // handle height too small
+        if ($height < $desiredHeight) {
+            $scaleRatio = $desiredHeight/$height;
+            $height *= $scaleRatio;
+            $width *= $scaleRatio;
+        }
+
+        return new Box($width, $height);
+    }
 }
