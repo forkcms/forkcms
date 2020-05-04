@@ -3,7 +3,6 @@
 namespace ForkCMS\Tests\Utility\Thumbnails;
 
 use ForkCMS\Utility\Thumbnails;
-use Imagine\Image\Box;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -203,6 +202,18 @@ class ThumbnailsTest extends TestCase
 
             // check if the thumbnail got generated
             $this->assertImageExistsInThumbnailFolders($filename);
+
+            foreach (self::IMAGE_FOLDERS as $imageFolder) {
+                [$width, $height] = getimagesize($this->realBaseFolder . '/' . $imageFolder . '/' . $filename);
+                $folderWidth = $this->getWidthFromFolder($imageFolder);
+                if ($folderWidth !== null) {
+                    $this->assertSame($width, $this->getWidthFromFolder($imageFolder));
+                }
+                $folderHeight = $this->getHeightFromFolder($imageFolder);
+                if ($folderHeight !== null) {
+                    $this->assertSame($height, $this->getHeightFromFolder($imageFolder));
+                }
+            }
         }
     }
 

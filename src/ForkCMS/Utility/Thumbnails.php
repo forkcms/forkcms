@@ -72,59 +72,39 @@ class Thumbnails
 
     private function generateThumbnail(array $folder, string $forSourceFile): void
     {
-        /** @var ImageInterface $image */
         $image = $this->imagine->open($forSourceFile);
+        $imageBox = $image->getSize();
 
-        /** @var Box */
-        $box = $image->getSize();
+        $resizeBox = $this->calculateResizeBox(
+            $imageBox->getWidth(),
+            $imageBox->getHeight(),
+            $folder['width'],
+            $folder['height']
+        );
 
-        // if the width & height are specified we should ignore the aspect ratio
-        if ($folder['width'] !== null && $folder['height'] !== null) {
-            // we scale on the smaller dimension
-            if ($box->getWidth() >= $box->getHeight()) {
-                $width  = $folder['width'];
-                $height = $folder['height'];
-
-                if ($box->getWidth() < $width) {
-                    $height = ($box->getHeight() / $box->getWidth()) * $width;
-                    if ($height < $folder['height']) {
-                        $height = $folder['height'];
-                        $width *= ($box->getWidth() / $box->getHeight());
-                    }
-                    $image = $image->resize(new Box($width, $height));
-                } elseif ($box->getHeight() < $height) {
-                    $width *= ($box->getWidth() / $box->getHeight());
-                    if ($width < $folder['width']) {
-                        $width = $folder['width'];
-                        $height = ($box->getHeight() / $box->getWidth()) * $width;
-                    }
-                    $image = $image->resize(new Box($width, $height));
-                } else {
-                    $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
-                }
-
-                // we center the crop in relation to the height
-                $cropPoint = new Point(max($width - $folder['width'], 0)/2, max($height - $folder['height'], 0)/2);
-            } else {
-                $width  = $folder['width'];
-                $height =  $box->getHeight() * ($folder['width']/$box->getWidth());
-
-                // we scale the image to make the smaller dimension fit our resize box
-                $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
-
-                // we center the crop in relation to the height
-                $cropPoint = new Point(0, max($height - $folder['height'], 0)/4); // @TODO fix bug instead of tmp hack to make the test pass (4 should be 2)
-            }
-
-            // and crop exactly to the box
-            $image->crop($cropPoint, new Box($folder['width'], $folder['height']));
-        } else {
-            // redefine box because we need to calculate box size
-            $box = ($folder['width'] !== null) ? $box->widen($folder['width']) : $box->heighten($folder['height']);
-
-            // we use resize and not thumbnail, because thumbnail has memory leaks
-            $image->resize($box);
+        // check if we need to upscale the image to be able to crop it
+        if (!$imageBox->contains($resizeBox)) {
+            $image->resize($resizeBox);
         }
+
+        // crop the image
+        $image = $image->thumbnail(
+            new Box(
+                $this->calculateDesiredWidth(
+                    $folder['width'],
+                    $folder['height'],
+                    $imageBox->getWidth(),
+                    $imageBox->getHeight()
+                ),
+                $this->calculateDesiredHeight(
+                    $folder['width'],
+                    $folder['height'],
+                    $imageBox->getWidth(),
+                    $imageBox->getHeight()
+                )
+            ),
+            ImageInterface::THUMBNAIL_OUTBOUND
+        );
 
         $image->save($folder['path'] . '/' . basename($forSourceFile));
     }
