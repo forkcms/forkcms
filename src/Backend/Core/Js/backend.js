@@ -1968,22 +1968,27 @@ jsBackend.tableSequenceByDragAndDrop = {
   // init, something like a constructor
   init: function () {
     // variables
-    var $sequenceBody = $('.sequenceByDragAndDrop tbody')
+    console.log($('.sequenceByDragAndDrop tbody'))
+    var $sequenceInstances = $('.sequenceByDragAndDrop tbody')
 
-    if ($sequenceBody.length > 0) {
-      $sequenceBody.sortable(
+    if ($sequenceInstances.length === 0) {
+      return
+    }
+
+    $.each($sequenceInstances, function (index, element) {
+
+      console.log('JS BACKEND SORTABLE INIT')
+
+      new Sortable(element,
         {
-          items: 'tr',
-          handle: 'td.dragAndDropHandle',
-          placeholder: 'dragAndDropPlaceholder',
-          forcePlaceholderSize: true,
-          stop: function (e, ui) {
-            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this).closest('table.jsDataGrid'))
+          onEnd: function (event) {
+            var $draggedItem = $(event.item)
+            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($draggedItem.closest('table.jsDataGrid'))
           }
         }
       )
 
-      $sequenceBody.find('[data-role="order-move"]').on('click.fork.order-move', function (e) {
+      $(element).find('[data-role="order-move"]').on('click.fork.order-move', function (e) {
         var $this = $(this)
         var $row = $this.closest('tr')
         var direction = $this.data('direction')
@@ -1998,7 +2003,7 @@ jsBackend.tableSequenceByDragAndDrop = {
 
         jsBackend.tableSequenceByDragAndDrop.saveNewSequence($row.closest('table'))
       })
-    }
+    })
   },
 
   saveNewSequence: function ($table) {

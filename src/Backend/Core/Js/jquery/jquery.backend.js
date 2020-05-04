@@ -1540,8 +1540,8 @@
           group: 'page',
 
           // Element dragging ended
-          onEnd: function (evt) {
-            var draggedItem = $(evt.item)
+          onEnd: function (event) {
+            var draggedItem = $(event.item)
             CollectionSequence.saveNewSequence(draggedItem.closest('[data-role=collection-sequence]'))
           }
         })
@@ -1553,8 +1553,7 @@
 
           if (direction === 'up') {
             $row.prev().insertAfter($row)
-          }
-          else if (direction === 'down') {
+          } else if (direction === 'down') {
             $row.next().insertBefore($row)
           }
 

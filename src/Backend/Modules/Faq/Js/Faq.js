@@ -7,11 +7,11 @@ jsBackend.faq = {
     // index stuff
     if ($('.jsDataGridQuestionsHolder').length > 0) {
       // destroy default drag and drop
-      $('.sequenceByDragAndDrop tbody').sortable('destroy')
+      //$('.sequenceByDragAndDrop tbody').sortable('destroy')
 
       // drag and drop
-      jsBackend.faq.bindDragAndDropQuestions()
-      jsBackend.faq.checkForEmptyCategories()
+      //jsBackend.faq.bindDragAndDropQuestions()
+      //jsBackend.faq.checkForEmptyCategories()
     }
 
     // do meta
@@ -129,7 +129,7 @@ jsBackend.faq = {
     $.each($('div.jsDataGridQuestionsHolder'), function () {
       var $this = $(this)
       // make them sortable
-      $this.sortable({
+      new Sortable($this, {
         items: 'table.jsDataGrid tbody tr',        // set the elements that user can sort
         handle: 'td.dragAndDropHandle',            // set the element that user can grab
         tolerance: 'pointer',                    // give a more natural feeling
