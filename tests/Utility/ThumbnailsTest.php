@@ -228,32 +228,6 @@ class ThumbnailsTest extends TestCase
         }
     }
 
-    public function testCalculatingResizeBox(): void
-    {
-        foreach (self::EXPECTED_RESIZE_RESULTS as $type => $expectedResults) {
-            foreach ($expectedResults as $filename => $expectedResult) {
-                $expectedWidth = $this->getWidthFromFolder($expectedResult);
-                $expectedHeight = $this->getWidthFromFolder($expectedResult);
-                $desiredResult = new Box($expectedWidth, $expectedHeight);
-                $dynamicDimensionPosition = strpos($type, '*');
-
-                $calculatedResult = $this->thumbnails->calculateResizeBox(
-                    $this->getWidthFromFolder(self::IMAGE_DIMENSIONS[$filename]),
-                    $this->getHeightFromFolder(self::IMAGE_DIMENSIONS[$filename]),
-                    // don't pass the expected result when the width is dynamic
-                    $dynamicDimensionPosition === 0 ? null : $expectedWidth,
-                    // don't pass the expected result when the height is dynamic
-                    $dynamicDimensionPosition === 2 ? null : $expectedHeight
-                );
-
-                $this->assertTrue(
-                    $calculatedResult->contains($desiredResult),
-                    'Desired: ' . $desiredResult . ' Calculated: ' . $calculatedResult
-                );
-            }
-        }
-    }
-
     private function assertImageExistsInThumbnailFolders(string $filename): void
     {
         foreach (self::IMAGE_FOLDERS as $imageFolder) {

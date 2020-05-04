@@ -5,7 +5,6 @@ namespace ForkCMS\Utility;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -169,20 +168,66 @@ class Thumbnails
         return array_values($folders);
     }
 
-    public function calculateResizeBox(
+    /**
+     * Calculate the desired width based on the aspect ratio if needed
+     *
+     * @param int|null $desiredWidth
+     * @param int|null $desiredHeight
+     * @param int $currentWidth
+     * @param int $currentHeight
+     * @return int
+     */
+    private function calculateDesiredWidth(
+        ?int $desiredWidth,
+        ?int $desiredHeight,
+        int $currentWidth,
+        int $currentHeight
+    ): int {
+        if ($desiredWidth !== null) {
+            return $desiredWidth;
+        }
+
+        if ($desiredHeight === null) {
+            throw new \RuntimeException('A desired height is needed to calculate the desired width');
+        }
+
+        return $desiredHeight * ($currentWidth/$currentHeight);
+    }
+
+    /**
+     * Calculate the desired height based on the aspect ratio if needed
+     *
+     * @param int|null $desiredWidth
+     * @param int|null $desiredHeight
+     * @param $currentWidth
+     * @param $currentHeight
+     * @return int
+     */
+    private function calculateDesiredHeight(
+        ?int $desiredWidth,
+        ?int $desiredHeight,
+        int $currentWidth,
+        int $currentHeight
+    ): int {
+        if ($desiredHeight !== null) {
+            return $desiredHeight;
+        }
+
+        if ($desiredWidth === null) {
+            throw new \RuntimeException('A desired width is needed to calculate the desired height');
+        }
+
+        return $desiredWidth * ($currentHeight/$currentWidth);
+    }
+
+    private function calculateResizeBox(
         int $width,
         int $height,
         ?int $desiredWidth,
         ?int $desiredHeight
     ): Box {
-        // calculate the desired width based on the aspect ratio if needed
-        if ($desiredWidth === null) {
-            $desiredWidth = (int) ($desiredHeight * ($height/$width));
-        }
-        // calculate the desired height based on the aspect ratio if needed
-        if ($desiredHeight=== null) {
-            $desiredHeight = (int) ($desiredWidth * ($width/$height));
-        }
+        $desiredWidth = $this->calculateDesiredWidth($desiredWidth, $desiredHeight, $width, $height);
+        $desiredHeight = $this->calculateDesiredHeight($desiredWidth, $desiredHeight, $width, $height);
 
         // if the current width and height are already in the desired width and height we don't need to do anything
         if ($width >= $desiredWidth && $height >= $desiredHeight) {
