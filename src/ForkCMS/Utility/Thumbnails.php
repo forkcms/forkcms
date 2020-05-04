@@ -9,6 +9,9 @@ use Imagine\Image\Point;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @TODO make this class final
+ */
 class Thumbnails
 {
     /** @var Filesystem */
