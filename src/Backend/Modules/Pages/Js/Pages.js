@@ -124,15 +124,21 @@ jsBackend.pages.extras = {
     $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function() {
       var $modal = $(this).closest('.modal')
       var separator = ' › '
-      var $pageBlockTitle = $modal.closest('[data-role="page-block-wrapper"]').find('[data-role="page-block-title"]')
+      var $pageBlockWrapper = $modal.closest('[data-role="page-block-wrapper"]')
+      var $pageBlockTitle = $pageBlockWrapper.find('[data-role="page-block-title"]')
+      var $pageBlockPreview = $pageBlockWrapper.find('[data-role="page-block-preview"]')
       var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
       var title = $modal.find('[data-role="select-block-type"] option:selected').text()
 
-      if (selectedBlockType === 'block' ||selectedBlockType === 'widget') {
+      if (selectedBlockType === 'block' || selectedBlockType === 'widget') {
         title += separator + jsBackend.pages.extras.extractExtraTitle(
           separator,
           $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
         )
+      }
+
+      if (selectedBlockType === 'rich_text' && $modal.find('.ce-block').length > 0) {
+        $pageBlockPreview.html(jsBackend.pages.extras.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]'))))
       }
 
       $pageBlockTitle.text(title)
@@ -140,6 +146,32 @@ jsBackend.pages.extras = {
     })
 
     $('[data-role="page-content-tab"] [data-role="page-block-save"]').trigger('click')
+  },
+
+  getBlockPreview: function ($elements) {
+    var previewText = ''
+    var prefix = '<p>'
+    var affix = '</p>'
+    var length = 100
+    var addHellip = function(string) {
+      if (string.length === 0) {
+        return string
+      }
+
+      if (string.length > length) {
+        --length
+        affix = '…' + affix
+      }
+
+      return  prefix + string.substring(0, length) + affix
+    }
+
+    do {
+      previewText += ' ' + $elements.shift().innerText
+      previewText = previewText.trim()
+    } while (previewText.length < length && $elements.length > 0)
+
+    return addHellip(previewText)
   },
 
   extractExtraTitle: function (separator, $selectedOption) {
