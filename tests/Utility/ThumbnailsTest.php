@@ -111,13 +111,15 @@ class ThumbnailsTest extends TestCase
             foreach (self::IMAGE_FOLDERS as $imageFolder) {
                 [$width, $height] = getimagesize($this->realBaseFolder . '/' . $imageFolder . '/' . $filename);
                 $folderWidth = $this->getWidthFromFolder($imageFolder);
-                if ($folderWidth !== null) {
-                    $this->assertSame($width, $this->getWidthFromFolder($imageFolder));
-                }
                 $folderHeight = $this->getHeightFromFolder($imageFolder);
-                if ($folderHeight !== null) {
-                    $this->assertSame($height, $this->getHeightFromFolder($imageFolder));
+                if ($folderWidth === null) {
+                    $folderWidth = (int) ($folderHeight * ($width/$height));
                 }
+                $this->assertSame($width, $folderWidth);
+                if ($folderHeight === null) {
+                    $folderHeight = (int) ($folderWidth * ($height/$width));
+                }
+                $this->assertSame($height, $folderHeight);
             }
         }
     }
