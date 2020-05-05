@@ -91,16 +91,16 @@ class Thumbnails
         $image = $image->thumbnail(
             new Box(
                 $this->calculateDesiredWidth(
-                    $folder['width'],
-                    $folder['height'],
                     $imageBox->getWidth(),
-                    $imageBox->getHeight()
+                    $imageBox->getHeight(),
+                    $folder['width'],
+                    $folder['height']
                 ),
                 $this->calculateDesiredHeight(
-                    $folder['width'],
-                    $folder['height'],
                     $imageBox->getWidth(),
-                    $imageBox->getHeight()
+                    $imageBox->getHeight(),
+                    $folder['width'],
+                    $folder['height']
                 )
             ),
             ImageInterface::THUMBNAIL_OUTBOUND
@@ -148,20 +148,11 @@ class Thumbnails
         return array_values($folders);
     }
 
-    /**
-     * Calculate the desired width based on the aspect ratio if needed
-     *
-     * @param int|null $desiredWidth
-     * @param int|null $desiredHeight
-     * @param int $currentWidth
-     * @param int $currentHeight
-     * @return int
-     */
     private function calculateDesiredWidth(
-        ?int $desiredWidth,
-        ?int $desiredHeight,
         int $currentWidth,
-        int $currentHeight
+        int $currentHeight,
+        ?int $desiredWidth,
+        ?int $desiredHeight
     ): int {
         if ($desiredWidth !== null) {
             return $desiredWidth;
@@ -174,20 +165,11 @@ class Thumbnails
         return $desiredHeight * ($currentWidth/$currentHeight);
     }
 
-    /**
-     * Calculate the desired height based on the aspect ratio if needed
-     *
-     * @param int|null $desiredWidth
-     * @param int|null $desiredHeight
-     * @param $currentWidth
-     * @param $currentHeight
-     * @return int
-     */
     private function calculateDesiredHeight(
-        ?int $desiredWidth,
-        ?int $desiredHeight,
         int $currentWidth,
-        int $currentHeight
+        int $currentHeight,
+        ?int $desiredWidth,
+        ?int $desiredHeight
     ): int {
         if ($desiredHeight !== null) {
             return $desiredHeight;
@@ -206,8 +188,8 @@ class Thumbnails
         ?int $desiredWidth,
         ?int $desiredHeight
     ): Box {
-        $desiredWidth = $this->calculateDesiredWidth($desiredWidth, $desiredHeight, $width, $height);
-        $desiredHeight = $this->calculateDesiredHeight($desiredWidth, $desiredHeight, $width, $height);
+        $desiredWidth = $this->calculateDesiredWidth($width, $height, $desiredWidth, $desiredHeight);
+        $desiredHeight = $this->calculateDesiredHeight($width, $height, $desiredWidth, $desiredHeight);
 
         // if the current width and height are already in the desired width and height we don't need to do anything
         if ($width >= $desiredWidth && $height >= $desiredHeight) {
