@@ -5418,6 +5418,10 @@
         <translation language="de"><![CDATA[aktuelles Passwort]]></translation>
         <translation language="pl"><![CDATA[obecne hasło]]></translation>
       </item>
+      <item type="label" name="Current">
+        <translation language="nl"><![CDATA[huidig]]></translation>
+        <translation language="en"><![CDATA[current]]></translation>
+      </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
         <translation language="en"><![CDATA[custom URL]]></translation>
