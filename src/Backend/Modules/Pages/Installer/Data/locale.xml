@@ -794,6 +794,14 @@
         <translation language="en"><![CDATA[Select language]]></translation>
         <translation language="nl"><![CDATA[Selecteer taal]]></translation>
       </item>
+      <item type="label" name="PageEdit">
+        <translation language="en"><![CDATA[edit page]]></translation>
+        <translation language="nl"><![CDATA[pagina aanpassen]]></translation>
+      </item>
+      <item type="label" name="PageAdd">
+        <translation language="en"><![CDATA[add page]]></translation>
+        <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
+      </item>
     </Pages>
     <Core>
       <item type="error" name="CantBeMoved">
