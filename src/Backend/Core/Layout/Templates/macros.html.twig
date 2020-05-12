@@ -65,18 +65,27 @@
 
   {% set role = 'status' %}
   {% set live = 'polite' %}
+  {% set autohide = false %}
   {% set dismissableClass = ' d-none' %}
+
+  {% if type == 'success' or type == 'info' %}
+    {% set autohide = true %}
+  {% endif %}
 
   {% if type == 'danger' or type == 'warning' %}
     {% set role = 'alert' %}
     {% set role = 'assertive' %}
   {% endif %}
 
+  {% if type == 'danger' %}
+    {% set dismissableClass = '' %}
+  {% endif %}
+
   {% if dismissable == true %}
     {% set dismissableClass = '' %}
   {% endif %}
 
-  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="false">
+  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="{{ autohide }}" data-delay="5000">
     <div class="toast-body">
       <button type="button" class="close{{ dismissableClass }}" data-dismiss="toast" aria-label="Close">
         <i class="fas fa-times"></i>
