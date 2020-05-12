@@ -299,8 +299,14 @@
 
 {% block page_block_widget %}
   {% import 'Layout/Templates/macros.html.twig' as macro %}
-  <div id="{{ form.vars.id }}">
-    {{ form_widget(form.visible, {'label': 'lbl.VisibleOnSite'|trans}) }}
+  <div id="{{ form.vars.id }}" data-role="page-block-wrapper" class="mb-1">
+    {% set blockTitle = form.vars.data.extraType.label %}
+    {{ form_widget(form.visible, {'label': 'lbl.VisibleOnSite'|trans}), 'label_attr': {'class' : 'font-weight-bold custom-control-label mb-1', 'data-role' : 'page-block-title'}}) }}
+    <div data-role="page-block-preview">
+      {% if form.vars.data.extraType.isRichText and form.vars.data.html %}
+        <p>{{ form.vars.data.html|parse_blocks|truncate(100) }}</p>
+      {% endif %}
+    </div>
 
     <div id="editBlockModal{{ form.vars.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editBlockModalTitle{{ form.vars.id }}" aria-hidden="true">
       <div class="modal-dialog modal-xl" role="document">
