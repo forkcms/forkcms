@@ -6,13 +6,13 @@
   </div>
   <div class="card-body">
     {% if blogNumCommentsToModerate %}
-      <div class="card-body">
-        <div class="pull-left">
+      <div class="d-flex mb-3">
+        <p class="mb-0">
           {{ 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate)|raw }}
-        </div>
-        <div class="pull-right">
+        </p>
+        <p class="mb-0 ml-auto">
           <a href="{{ geturl('comments','blog') }}#tabModeration"><span>{{ 'lbl.Moderate'|trans|ucfirst }}</span></a>
-        </div>
+        </p>
       </div>
     {% endif %}
     {% if blogComments %}
