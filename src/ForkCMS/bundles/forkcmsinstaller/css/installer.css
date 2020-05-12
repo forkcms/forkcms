@@ -1,0 +1,23 @@
+#installer h2,
+#installer h3 {
+    float: none;
+}
+
+#installer h4 {
+	font-size: 14px;
+}
+
+#step2 .list-group-item-success h4,
+#step2 .list-group-item-danger h4  {
+    color: white;
+}
+
+#step2 .list-group-item-success a,
+#step2 .list-group-item-danger a  {
+    color: white;
+}
+
+.help-block.errorMessage,
+.has-error .control-label {
+    color: #d0021b;
+}

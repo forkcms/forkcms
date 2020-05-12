@@ -14,6 +14,7 @@
     {% block pagesTree %}
     {% endblock %}
   </div>
+  {% include "Layout/Templates/messaging.html.twig" %}
   <div id="root">
     <main id="content" class="content-wrapper">
 
@@ -24,10 +25,10 @@
             <div class="row align-items-center fork-module-heading">
               {% set _block = block('actionbar')|trim %}
               {% if _block is not empty %}
-                <div class="col-12 col-sm-6">
+                <div class="col-sm-6">
                   {% include "Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
                 </div>
-                <div class="col-12 col-sm-6">
+                <div class="col-sm-6">
                   {% block actionbar %}{% endblock %}
                 </div>
               {% endif %}
@@ -56,23 +57,6 @@
   </div>
 </div>
 
-<div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="jsConfirmationDeleteDialogTitle">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="jsConfirmationDeleteDialogTitle" class="modal-title">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
-      </div>
-      <div class="modal-body">
-        <p class="jsConfirmationMessage">{{ 'msg.Confirmation'|trans }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'lbl.Cancel'|trans|ucfirst }}</button>
-        <a href="#" class="btn btn-primary jsConfirmationSubmit">
-          {{ 'lbl.OK'|trans|ucfirst }}
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+{% include 'Layout/Templates/deleteConfirmationModal.html.twig' %}
 </body>
 </html>

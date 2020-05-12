@@ -6,141 +6,137 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" href="#tabPublished" aria-controls="tabPublished" role="tab" data-toggle="tab" aria-selected="true" id="published-tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab" aria-selected="false" id="moderation-tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab" aria-selected="false" id="spam-tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane show active" id="tabPublished" aria-labelledby="published-tab">
-            {% if dgPublished %}
-              <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
-                <input type="hidden" name="from" value="published" />
-                <div class="table-responsive">
-                  {{ dgPublished|raw }}
-                </div>
-                <div class="modal fade" id="confirmPublishedToSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmPublishedToSpamTitle">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title" id="confirmPublishedToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
-                      </div>
-                      <div class="modal-footer">
-                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-                        {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', {"type":"submit"}) }}
-                      </div>
-                    </div>
+  <div>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#tabPublished" aria-controls="tabPublished" role="tab" data-toggle="tab" aria-selected="true" id="published-tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab" aria-selected="false" id="moderation-tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab" aria-selected="false" id="spam-tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane show active" id="tabPublished" aria-labelledby="published-tab">
+        {% if dgPublished %}
+          <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
+            <input type="hidden" name="from" value="published" />
+            <div class="table-responsive">
+              {{ dgPublished|raw }}
+            </div>
+            <div class="modal fade" id="confirmPublishedToSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmPublishedToSpamTitle">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="confirmPublishedToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                    {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', {"type":"submit"}) }}
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeletePublished" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeletePublishedTitle">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title" id="confirmDeletePublishedTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
-                      </div>
-                      <div class="modal-footer">
-                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-                        {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
-                      </div>
-                    </div>
+              </div>
+            </div>
+            <div class="modal fade" id="confirmDeletePublished" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeletePublishedTitle">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="confirmDeletePublishedTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                    {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
                   </div>
                 </div>
-              </form>
-            {% endif %}
-            {% if not dgPublished %}
-              <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
-            {% endif %}
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabModeration" aria-labelledby="moderation-tab">
-            {% if dgModeration %}
-              <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
-                <input type="hidden" name="from" value="moderation" />
-                <div class="table-responsive">
-                  {{ dgModeration|raw }}
-                </div>
-                <div class="modal fade" id="confirmModerationToSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmModerationToSpamTitle">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title" id="confirmModerationToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
-                      </div>
-                      <div class="modal-footer">
-                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-                        {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', {"type":"submit"}) }}
-                      </div>
-                    </div>
+              </div>
+            </div>
+          </form>
+        {% endif %}
+        {% if not dgPublished %}
+          <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabModeration" aria-labelledby="moderation-tab">
+        {% if dgModeration %}
+          <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
+            <input type="hidden" name="from" value="moderation" />
+            <div class="table-responsive">
+              {{ dgModeration|raw }}
+            </div>
+            <div class="modal fade" id="confirmModerationToSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmModerationToSpamTitle">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="confirmModerationToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                    {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', {"type":"submit"}) }}
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeleteModeration" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteModerationTitle">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title" id="confirmDeleteModerationTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
-                      </div>
-                      <div class="modal-footer">
-                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-                        {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
-                      </div>
-                    </div>
+              </div>
+            </div>
+            <div class="modal fade" id="confirmDeleteModeration" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteModerationTitle">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="confirmDeleteModerationTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                    {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
                   </div>
                 </div>
-              </form>
-            {% endif %}
-            {% if not dgModeration %}
-              <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
-            {% endif %}
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabSpam" aria-labelledby="spam-tab">
-            {% if dgSpam %}
-              <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsSpam">
-                <input type="hidden" name="from" value="spam" />
-                <div class="table-responsive">
-                  {{ dgSpam|raw }}
-                </div>
-                <div class="modal fade" id="confirmDeleteSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteSpamTitle">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h4 class="modal-title" id="confirmDeleteSpamTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
-                      </div>
-                      <div class="modal-footer">
-                        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-                        {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
-                      </div>
-                    </div>
+              </div>
+            </div>
+          </form>
+        {% endif %}
+        {% if not dgModeration %}
+          <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
+        {% endif %}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabSpam" aria-labelledby="spam-tab">
+        {% if dgSpam %}
+          <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsSpam">
+            <input type="hidden" name="from" value="spam" />
+            <div class="table-responsive">
+              {{ dgSpam|raw }}
+            </div>
+            <div class="modal fade" id="confirmDeleteSpam" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteSpamTitle">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="confirmDeleteSpamTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="modal-footer">
+                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                    {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
                   </div>
                 </div>
-              </form>
-            {% endif %}
-            {% if not dgSpam %}
-              <p>{{ 'msg.NoSpam'|trans }}</p>
-            {% endif %}
-          </div>
-        </div>
+              </div>
+            </div>
+          </form>
+        {% endif %}
+        {% if not dgSpam %}
+          <p>{{ 'msg.NoSpam'|trans }}</p>
+        {% endif %}
       </div>
     </div>
   </div>

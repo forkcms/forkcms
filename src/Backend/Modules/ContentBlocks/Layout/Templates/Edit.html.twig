@@ -10,77 +10,65 @@
 
   {{ form_row(form.title) }}
 
-  <div class="row fork-module-content">
-    <div class="col-12">
-      <div>
-        <ul class="nav nav-tabs justify-content-end" role="tablist">
-          <li class="nav-item mr-auto">
-            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
-            <div class="fork-module-content">
-              <div class="row">
-                <div class="col-lg-8">
-                  {{ form_row(form.text) }}
-                </div>
-                <div class="col-lg-4">
-                  <div class="card card-default">
-                    <div class="card-heading">
-                      <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
-                    </div>
-                    <div class="card-body">
-                      {{ form_widget(form.isVisible) }}
-                    </div>
-                  </div>
-                </div>
+  <div>
+    <ul class="nav nav-tabs justify-content-end" role="tablist">
+      <li class="nav-item mr-auto">
+        <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
+        <div class="row">
+          <div class="col-lg-8">
+            {{ form_row(form.text) }}
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-default">
+              <div class="card-heading">
+                <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
               </div>
+              <div class="card-body">
+                {{ form_widget(form.isVisible) }}
+              </div>
+            </div>
+          </div>
+        </div>
 
-              {{ form_rest(form) }}
-            </div>
+        {{ form_rest(form) }}
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
+        <div class="content-block">
+          <div class="content-title">
+            <h2>
+              {{ 'lbl.PreviousVersions'|trans|ucfirst }}
+              {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
+            </h2>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
-            <div class="row">
-              <div class="col-12">
-                <div class="content-block">
-                  <div class="content-title">
-                    <h2>
-                      {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
-                    </h2>
-                  </div>
-                  {% if revisions %}
-                    <div class="table-responsive">
-                      {{ revisions|raw }}
-                    </div>
-                  {% endif %}
-                  {% if not revisions %}
-                    <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
-                  {% endif %}
-                </div>
-              </div>
+          {% if revisions %}
+            <div class="table-responsive">
+              {{ revisions|raw }}
             </div>
-          </div>
+          {% endif %}
+          {% if not revisions %}
+            <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
-  <div class="row fork-page-actions">
-    <div class="col-12">
-      <div class="btn-toolbar d-flex">
-        <div class="btn-group" role="group">
-          {% if showContentBlocksDelete %}
-            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
-          {% endif %}
-          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
-        </div>
+  <div class="fork-page-actions">
+    <div class="btn-toolbar d-flex">
+      <div class="btn-group" role="group">
+        {% if showContentBlocksDelete %}
+          {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+        {% endif %}
+        {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
       </div>
     </div>
   </div>

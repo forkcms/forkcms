@@ -15,7 +15,7 @@
     "@editorjs/list": "^1.4.0",
     "@editorjs/paragraph": "^2.6.0",
     "babel-loader": "^8.0.6",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",

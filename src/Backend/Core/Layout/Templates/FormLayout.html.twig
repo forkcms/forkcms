@@ -1,9 +1,16 @@
 {% extends 'bootstrap_4_layout.html.twig' %}
 
-{% block form_widget_simple %}
-  {{ parent() }}
+{% block form_widget_simple -%}
+  {% if type is not defined or type != 'hidden' %}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control' ~ (type|default('') == 'file' ? '-file custom-file-input' : ''))|trim}) -%}
+  {% endif %}
+  {%- if type is defined and (type == 'range' or type == 'color') %}
+    {# Attribute "required" is not supported #}
+    {%- set required = false -%}
+  {% endif %}
+  {{- parent() -}}
   {{ block('help') }}
-{% endblock %}
+{%- endblock form_widget_simple %}
 
 {%- block form_label -%}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
@@ -20,7 +27,7 @@
       {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
-      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? '  required' : ' optional') }) %}
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       </label>
@@ -62,17 +69,27 @@
   {% endspaceless %}
 {%- endblock label_asterisk -%}
 
+{% block form_errors_list_content %}
+  <ul class="list-unstyled">
+    {%- for error in errors -%}
+      <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+    {%- endfor -%}
+  </ul>
+{% endblock %}
+
 {% block form_errors -%}
   {% import 'Layout/Templates/macros.html.twig' as macro %}
+
   {% if errors|length > 0 -%}
-    {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
-    <ul class="list-unstyled">
-      {%- for error in errors -%}
-        <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
-      {%- endfor -%}
-    </ul>
-    {% if form.parent %}</small>{% else %}</div>{% endif %}
+    {% if form.parent %}
+      <small class="form-text text-muted">
+        {{ block('form_errors_list_content') }}
+      </small>
+    {% else %}
+      {{ macro.alert('danger', block('form_errors_list_content')) }}
+    {% endif %}
   {%- endif %}
+
 {%- endblock form_errors %}
 
 {%- block meta_widget -%}
@@ -368,12 +385,11 @@
   </div>
 {%- endblock %}
 
-{% block choice_widget_collapsed -%}
-  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) %}
+{%- block choice_widget_collapsed -%}
   {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
     {% set required = false %}
   {%- endif -%}
-  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="custom-select">
     {%- if placeholder is not none -%}
       <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
     {%- endif -%}
@@ -387,9 +403,22 @@
     {%- set options = choices -%}
     {{- block('choice_widget_options') -}}
   </select>
-{%- endblock %}
+{%- endblock choice_widget_collapsed -%}
 
 {% block tags_widget -%}
   {{ form_widget(form) }}
   <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
 {%- endblock %}
+
+{% block checkbox_widget -%}
+  {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
+  {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
+  <div class="custom-control custom-checkbox{{ 'checkbox-inline' in parent_label_class ? ' custom-control-inline' }}">
+    {{- form_label(form, null, { widget: block('fork_custom_checkbox_widget'), label_attr: {'class': 'custom-control-label'} }) -}}
+  </div>
+{%- endblock checkbox_widget %}
+
+{% block fork_custom_checkbox_widget %}
+  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) %}
+  <input type="checkbox" {% with { attr: attr} %}{{ block('widget_attributes') }}{% endwith %}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{% endblock fork_custom_checkbox_widget %}

@@ -7,110 +7,88 @@
 
 {% block content %}
   {% form edit %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#tabUsers" aria-controls="tabUsers" role="tab" data-toggle="tab" aria-selected="false" id="users-tab">{{ 'lbl.Users'|trans|ucfirst }}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane show active" id="tabName" aria-labelledby="name-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group last">
-                  <label for="name" class="control-label">
-                    {{ 'lbl.Name'|trans|ucfirst }}
-                    {{ macro.required }}
-                  </label>
-                  {% form_field name %} {% form_field_error name %}
+  <div>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tabUsers" aria-controls="tabUsers" role="tab" data-toggle="tab" aria-selected="false" id="users-tab">{{ 'lbl.Users'|trans|ucfirst }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane show active" id="tabName" aria-labelledby="name-tab">
+        <div class="form-group last">
+          <label for="name" class="control-label">
+            {{ 'lbl.Name'|trans|ucfirst }}
+            {{ macro.required }}
+          </label>
+          {% form_field name %} {% form_field_error name %}
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabDashboard" aria-labelledby="dashboard-tab">
+        <div class="content-block">
+          <div class="content-title">
+            <h2>{{ 'lbl.DisplayWidgets'|trans|ucfirst }}</h2>
+          </div>
+          <div class="jsGroupsWidgets">
+            {% if widgets %}
+              {{ widgets|raw }}
+            {% endif %}
+            {% if not widgets %}
+              {{ 'msg.NoWidgets'|trans|ucfirst }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabPermissions" aria-labelledby="permissions-tab">
+        <div class="content-block">
+          <div class="card-group card-group-column" id="permissions" role="tablist" aria-multiselectable="true">
+            {% for permission in permissions %}
+              <div class="card card-default card-collapse jsGroupsPermissionsModule">
+                <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
+                  {{ permission.chk|raw }}
+                  <h4 class="card-title mb-0">
+                    <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                        {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
+                    </a>
+                  </h4>
+                </div>
+                <div id="permission-list-{{ permission.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
+                  {{ permission.actions.dataGrid|raw }}
                 </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabDashboard" aria-labelledby="dashboard-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="content-block">
-                  <div class="content-title">
-                    <h2>{{ 'lbl.DisplayWidgets'|trans|ucfirst }}</h2>
-                  </div>
-                  <div class="jsGroupsWidgets">
-                    {% if widgets %}
-                      {{ widgets|raw }}
-                    {% endif %}
-                    {% if not widgets %}
-                      {{ 'msg.NoWidgets'|trans|ucfirst }}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabPermissions" aria-labelledby="permissions-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="content-block">
-                  <div class="card-group card-group-column" id="permissions" role="tablist" aria-multiselectable="true">
-                    {% for permission in permissions %}
-                      <div class="card card-transparent jsGroupsPermissionsModule">
-                        <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
-                          {{ permission.chk|raw }}
-                          <h4 class="card-title mb-0">
-                            <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
-                                {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="permission-list-{{ permission.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
-                          {{ permission.actions.dataGrid|raw }}
-                        </div>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabUsers" aria-labelledby="users-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="content-block">
-                  {% if dataGridUsers %}
-                    {{ dataGridUsers|raw }}
-                  {% endif %}
-                  {% if not dataGridUsers %}
-                    <p>{{ 'msg.NoUsers'|trans|ucfirst }}</p>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tabUsers" aria-labelledby="users-tab">
+        <div class="content-block">
+          {% if dataGridUsers %}
+            {{ dataGridUsers|raw }}
+          {% endif %}
+          {% if not dataGridUsers %}
+            <p>{{ 'msg.NoUsers'|trans|ucfirst }}</p>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
-  <div class="row fork-page-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar d-flex">
-        <div class="btn-group" role="group">
-          {% if showGroupsDelete and allowGroupsDelete %}
-            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
-          {% endif %}
-        </div>
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
-        </div>
+  <div class="fork-page-actions">
+    <div class="btn-toolbar d-flex">
+      <div class="btn-group" role="group">
+        {% if showGroupsDelete and allowGroupsDelete %}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+        {% endif %}
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
       </div>
     </div>
   </div>

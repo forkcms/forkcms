@@ -14,6 +14,7 @@ use Doctrine\ORM\QueryBuilder;
 use SpoonFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -54,7 +55,7 @@ final class PageBlockType extends AbstractType
         );
         $builder->add(
             'visible',
-            SwitchType::class,
+            CheckboxType::class,
             [
                 'label' => 'lbl.Visible',
                 'required' => false,

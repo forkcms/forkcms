@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[over]]></translation>
         <translation language="en"><![CDATA[about]]></translation>
       </item>
+      <item type="label" name="Filter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
         <translation language="en"><![CDATA[active]]></translation>
@@ -30,6 +34,10 @@
         <translation language="nl"><![CDATA[filter groepen]]></translation>
         <translation language="en"><![CDATA[filter groups]]></translation>
         <translation language="pl"><![CDATA[filtruj grupy]]></translation>
+      </item>
+      <item type="label" name="AddProfile">
+        <translation language="nl"><![CDATA[profiel toevoegen]]></translation>
+        <translation language="en"><![CDATA[add profile]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>

@@ -6,20 +6,16 @@
 
 {% block content %}
   {% if warnings %}
-    <div class="row fork-module-messages">
-      <div class="col-12">
-        {% for warning in warnings %}
-          <div class="content-block content-block-pb">
-            <div class="alert alert-warning" role="alert">
-              {{ macro.icon('exclamation-triangle') }}{{ warning.message }}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+    <div class="fork-module-messages">
+      {% for warning in warnings %}
+        <div class="content-block content-block-pb">
+          {{ macro.alert('warning', warning.message|raw) }}
+        </div>
+      {% endfor %}
     </div>
   {% endif %}
   {% if information %}
-    <div class="row fork-module-content">
+    <div class="row">
       <div class="col-md-8">
         {% if information.description %}
           <div class="card card-default">
@@ -97,8 +93,7 @@
     </div>
   {% endif %}
   {% if showInstallButton %}
-    <div class="row fork-module-actions">
-      <div class="col-12">
+    <div class="fork-module-actions">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
@@ -122,7 +117,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
   {% endif %}
 {% endblock %}

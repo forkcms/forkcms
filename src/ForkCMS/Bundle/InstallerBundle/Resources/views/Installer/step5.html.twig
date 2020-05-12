@@ -19,36 +19,58 @@
         <h3 class="card-title">Settings</h3>
       </div>
       <div class="card-body">
-        <p>Enter the e-mail address and password you'd like to use to log in.</p>
-        {{ form_row(form.email) }}
+        <fieldset class="last">
+          <legend>
+            Enter the e-mail address and password you'd like to use to log in.
+          </legend>
+          <div class="form-group{% if form.email.vars.errors|length %} has-error{% endif %}">
+            <label for="install_login_email">Email</label>
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+          </div>
 
-        <div class="form-group{% if form.password.first.vars.errors|length %} has-error{% endif %}">
-          {{ form_label(form.password.first) }}
-          <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
-            <tr>
-              <td class="strength" id="passwordStrength">
-                <p class="strength none">
-                  <span class="label label-default">None</span>
-                </p>
-                <p class="strength weak">
-                  <span class="label label-danger">Weak</span>
-                </p>
-                <p class="strength average">
-                  <span class="label label-warning">Average</span>
-                </p>
-                <p class="strength strong">
-                  <span class="label label-success">Strong</span>
-                </p>
-              </td>
-              <td>
-                <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
-              </td>
-            </tr>
-          </table>
-          {{ form_widget(form.password.first) }}
-          {{ form_errors(form.password.first) }}
-        </div>
-        {{ form_row(form.password.second) }}
+          <div class="form-group{% if form.password.first.vars.errors|length %} has-error{% endif %}">
+            {{ form_label(form.password.first) }}
+           {# <table id="passwordStrengthMeter" class="passwordStrength" data-id="install_login_password_first">
+              <tr>
+                <td class="strength" id="passwordStrength">
+                  <p class="strength none">
+                    <span class="label label-default">None</span>
+                  </p>
+                  <p class="strength weak">
+                    <span class="label label-danger">Weak</span>
+                  </p>
+                  <p class="strength average">
+                    <span class="label label-warning">Average</span>
+                  </p>
+                  <p class="strength strong">
+                    <span class="label label-success">Strong</span>
+                  </p>
+                </td>
+                <td>
+                  <p class="help-block">&nbsp;Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
+                </td>
+              </tr>
+            </table>#}
+
+
+            <div class="mb-2">
+              <span class="passwordStrength ml-auto" data-id="install_login_password_first" data-role="password-strength-meter">
+                <span class="strength strength-none none badge" data-role="password-strength" data-strength="none">None</span>
+                <span class="strength strength-weak weak badge" data-role="password-strength" data-strength="weak">Weak</span>
+                <span class="strength strength-average average badge" data-role="password-strength" data-strength="average">Average</span>
+                <span class="strength strength-strong strong badge" data-role="password-strength" data-strength="strong">Strong</span>
+              </span>
+              <small class="text-muted form-text">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</small>
+            </div>
+
+            {{ form_widget(form.password.first) }}
+            {{ form_errors(form.password.first) }}
+          </div>
+
+          {{ form_row(form.password.second) }}
+
+        </fieldset>
       </div>
       <div class="card-footer">
         <div class="btn-toolbar justify-content-between">

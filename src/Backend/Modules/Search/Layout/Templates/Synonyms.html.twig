@@ -12,16 +12,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      {% if dataGrid %}
-        <div class="table-responsive">
-          {{ dataGrid|raw }}
-        </div>
-      {% endif %}
-      {% if not dataGrid %}
-        <p>{{ 'msg.NoSynonyms'|trans|format(geturl('add_synonym'))|raw }}</p>
-      {% endif %}
+  {% if dataGrid %}
+    <div class="table-responsive">
+      {{ dataGrid|raw }}
     </div>
-  </div>
+  {% endif %}
+  {% if not dataGrid %}
+    <p>{{ 'msg.NoSynonyms'|trans|format(geturl('add_synonym'))|raw }}</p>
+  {% endif %}
 {% endblock %}

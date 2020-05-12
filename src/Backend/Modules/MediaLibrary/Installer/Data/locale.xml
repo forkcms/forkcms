@@ -436,10 +436,11 @@
         <translation language="pl"><![CDATA[wideo]]></translation>
       </item>
       <item type="message" name="MediaUploaded">
-        <translation language="en"><![CDATA[Uploaded media.]]></translation>
-        <translation language="nl"><![CDATA[Opgeladen media.]]></translation>
-        <translation language="ru"><![CDATA[Загруженные медиа файлы.]]></translation>
-        <translation language="pl"><![CDATA[Przesłane media.]]></translation>
+        <translation language="en"><![CDATA[Uploaded media]]></translation>
+        <translation language="nl"><![CDATA[Opgeladen media]]></translation>
+        <translation language="ru"><![CDATA[Загруженные медиа файлы]]></translation>
+        <translation language="pl"><![CDATA[Przesłane media]]></translation>
+        <translation language="pl"><![CDATA[Przesłane media]]></translation>
       </item>
       <item type="message" name="MediaUploadedSuccess">
         <translation language="en"><![CDATA[%1$s file(s) successful uploaded.]]></translation>
@@ -648,10 +649,10 @@
         <translation language="pl"><![CDATA[biblioteka]]></translation>
       </item>
       <item type="message" name="MediaDeleted">
-        <translation language="en"><![CDATA[Media deleted.]]></translation>
-        <translation language="nl"><![CDATA[Media verwijderd.]]></translation>
-        <translation language="ru"><![CDATA[Медиа-файл удален.]]></translation>
-        <translation language="pl"><![CDATA[Media usuniete.]]></translation>
+        <translation language="en"><![CDATA[Media deleted]]></translation>
+        <translation language="nl"><![CDATA[Media verwijderd]]></translation>
+        <translation language="ru"><![CDATA[Медиа-файл удален]]></translation>
+        <translation language="pl"><![CDATA[Media usuniete]]></translation>
       </item>
       <item type="label" name="MediaFolderDelete">
         <translation language="en"><![CDATA[Delete folder]]></translation>
@@ -755,11 +756,9 @@
         <translation language="ru"><![CDATA[Невозможно переместить папки медиа.]]></translation>
         <translation language="pl"><![CDATA[Nie można przenosić katalogów media.]]></translation>
       </item>
-      <item type="message" name="MoveMediaToFolder">
-        <translation language="en"><![CDATA[Move media to this folder:]]></translation>
-        <translation language="nl"><![CDATA[Verplaats deze media naar volgende map:]]></translation>
-        <translation language="ru"><![CDATA[Переместить медиа в папку:]]></translation>
-        <translation language="pl"><![CDATA[Przenieś media do tego katalogu:]]></translation>
+      <item type="message" name="Destination">
+        <translation language="en"><![CDATA[destination]]></translation>
+        <translation language="nl"><![CDATA[bestemming]]></translation>
       </item>
       <item type="error" name="NonExistingMediaFolder">
         <translation language="en"><![CDATA[Folder does not exist.]]></translation>
@@ -807,6 +806,10 @@
         <translation language="nl"><![CDATA[Bent u zeker dat u de media wilt verwijderen?]]></translation>
         <translation language="ru"><![CDATA[Вы уверены, что хотите удалить носитель?]]></translation>
         <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć nośnik?]]></translation>
+      </item>
+      <item type="label" name="Retry">
+        <translation language="en"><![CDATA[retry]]></translation>
+        <translation language="nl"><![CDATA[opnieuw]]></translation>
       </item>
     </MediaLibrary>
   </Backend>

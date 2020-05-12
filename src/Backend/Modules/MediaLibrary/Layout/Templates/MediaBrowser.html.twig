@@ -12,81 +12,73 @@
       <div class="content-main content-main-tree">
         <div class="content">
           <div class="container-fluid container-fluid-large">
-            <div class="row">
-              <div class="col-sm-12">
-                <ul class="nav nav-tabs justify-content-end" role="tablist">
-                  <li class="nav-item mr-auto">
-                    <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab"
-                      data-toggle="tab" aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab"
-                      data-toggle="tab" aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
-                  </li>
-                </ul>
-                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection" aria-labelledby="upload-media-tab">
-                    {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+            <ul class="nav nav-tabs justify-content-end" role="tablist">
+              <li class="nav-item mr-auto">
+                <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab"
+                  data-toggle="tab" aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab"
+                  data-toggle="tab" aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection" aria-labelledby="upload-media-tab">
+                {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+              </div>
+              <div role="tabpanel" class="tab-pane show active" id="tabLibrary" aria-labelledby="library-tab">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div id="mediaTree">
+                      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+                        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+                      </button>
+                      <div class="form-group">
+                        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+                        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
+                      </div>
+                      <div id="tree">
+                        {{ tree|raw }}
+                      </div>
+                    </div>
                   </div>
-                  <div role="tabpanel" class="tab-pane show active" id="tabLibrary" aria-labelledby="library-tab">
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div id="mediaTree">
-                          <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
-                            <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
-                          </button>
-                          <div class="form-group">
-                            <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
-                            <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
-                          </div>
-                          <div id="tree">
-                            {{ tree|raw }}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-9">
-                        {% set alreadyOneActive = false %}
-                        <ul class="nav nav-tabs" role="tablist">
-                          {% for dataGrid in dataGrids %}
-                            <li class="nav-item">
-                              <a class="nav-link{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} active{% set alreadyOneActive = true %}{% endif %}" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab"
-                                data-toggle="tab"{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} aria-selected="true"{% endif %} id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
-                            </li>
-                          {% endfor %}
-                        </ul>
-                        <div class="tab-content">
-                          {% set alreadyOneActive = false %}
-                          {% for dataGrid in dataGrids %}
-                            <div role="tabpanel"
-                              class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
-                              id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
-                              <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}"
-                                method="get" class="forkForms">
-                                <div class="row">
-                                  <div class="col-12">
-                                    <div class="table-responsive">
-                                      <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
-                                      <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden"
-                                        name="move_to_folder_id" value="" />
-                                      {% if mediaFolder %}
-                                        <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
-                                      {% endif %}
-                                      {{ dataGrid.html|raw }}
-                                    </div>
-                                  </div>
-                                </div>
-                              </form>
-                              {% if not dataGrid.numberOfResults %}
-                                {% if mediaFolder %}
-                                  <p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>
-                                {% else %}
-                                  <p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>
-                                {% endif %}
+                  <div class="col-sm-9">
+                    {% set alreadyOneActive = false %}
+                    <ul class="nav nav-tabs" role="tablist">
+                      {% for dataGrid in dataGrids %}
+                        <li class="nav-item">
+                          <a class="nav-link{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} active{% set alreadyOneActive = true %}{% endif %}" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab"
+                            data-toggle="tab"{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} aria-selected="true"{% endif %} id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                      {% set alreadyOneActive = false %}
+                      {% for dataGrid in dataGrids %}
+                        <div role="tabpanel"
+                          class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
+                          id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
+                          <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}"
+                            method="get" class="forkForms">
+                            <div class="table-responsive">
+                              <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
+                              <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden"
+                                name="move_to_folder_id" value="" />
+                              {% if mediaFolder %}
+                                <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
                               {% endif %}
+                              {{ dataGrid.html|raw }}
                             </div>
-                          {% endfor %}
+                          </form>
+                          {% if not dataGrid.numberOfResults %}
+                            {% if mediaFolder %}
+                              <p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>
+                            {% else %}
+                              <p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>
+                            {% endif %}
+                          {% endif %}
                         </div>
-                      </div>
+                      {% endfor %}
                     </div>
                   </div>
                 </div>
@@ -99,6 +91,5 @@
   </div>
 </div>
 
-{# Scripts should be placed here #}
 </body>
 </html>

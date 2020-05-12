@@ -9,6 +9,10 @@
       </item>
     </Core>
     <MediaGalleries>
+      <item type="label" name="AddGallery">
+        <translation language="en"><![CDATA[add gallery]]></translation>
+        <translation language="nl"><![CDATA[gallerij toevoegen]]></translation>
+      </item>
       <item type="label" name="Action">
         <translation language="en"><![CDATA[view]]></translation>
         <translation language="nl"><![CDATA[weergave]]></translation>

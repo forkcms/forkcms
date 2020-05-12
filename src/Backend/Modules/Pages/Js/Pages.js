@@ -110,6 +110,9 @@ jsBackend.pages.extras = {
     jsBackend.pages.extras.blockTypeSwitcher()
     jsBackend.pages.extras.saveBlock()
     jsBackend.pages.extras.newBlock()
+
+    // bind events
+    $(document).on('click', '[data-role="page-block-visibility"]', jsBackend.pages.extras.toggleVisibilityBlock)
   },
 
   newBlock: function () {
@@ -121,7 +124,7 @@ jsBackend.pages.extras = {
   },
 
   saveBlock: function () {
-    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function() {
+    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-save"]', function () {
       var $modal = $(this).closest('.modal')
       var separator = ' › '
       var $pageBlockWrapper = $modal.closest('[data-role="page-block-wrapper"]')
@@ -201,6 +204,25 @@ jsBackend.pages.extras = {
     }
 
     $allBlockOptions.not($selectedBlockOption).attr('disabled', 'disabled')
+  },
+
+  toggleVisibilityBlock: function (e) {
+    // get checkbox
+    var $checkbox = $(e.currentTarget)
+    var $blackWrapper = $checkbox.parents('[data-role="page-block-wrapper"]')
+    var $label = $blackWrapper.find('label[for="' + $checkbox.attr('id') + '"]')
+
+    if ($blackWrapper.hasClass('block-not-visible')) {
+      // make visible
+      $blackWrapper.removeClass('block-not-visible')
+      $label.find('[data-fa-i2svg]').attr('data-icon', 'eye')
+      $label.find('.sr-only').html(jsBackend.locale.lbl('Hide'))
+    } else {
+      // make invisible
+      $blackWrapper.addClass('block-not-visible')
+      $label.find('[data-fa-i2svg]').attr('data-icon', 'eye-slash')
+      $label.find('.sr-only').html(jsBackend.locale.lbl('Show'))
+    }
   }
 }
 

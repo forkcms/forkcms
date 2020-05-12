@@ -19,31 +19,37 @@
         <h3 class="card-title">Settings</h3>
       </div>
       <div class="card-body">
-        <h3 class="noPadding">Modules</h3>
-        <p>Which modules would you like to install?</p>
-        <ul id="moduleList" class="list-unstyled">
-          {{ form_widget(form.modules) }}
-        </ul>
-        <h3>Example data</h3>
-        <p>If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</p>
-        <ul class="list-unstyled">
-          <li class="checkbox">
-            <p class="help-block">(The blog-module is required and will be installed)</p>
+        <fieldset>
+          <legend>Modules</legend>
+          <label>Which modules would you like to install?</label>
+          <div id="moduleList" class="form-group">
+            {{ form_widget(form.modules) }}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>
+            Example data
+            <small class="text-muted form-text">If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</small>
+            <small class="text-muted form-text">(The blog-module is required and will be installed)</small>
+          </legend>
+          <div class="form-group">
             {{ form_row(form.example_data) }}
-          </li>
-        </ul>
-        <h3>Debug mode</h3>
-        <p>Warning: debug mode is only useful when developing on Fork CMS.</p>
-        <p>You can enable debug mode by adding "<code>SetEnv FORK_DEBUG 1</code>" in your virtualhosts file.</p>
-        <ul class="list-unstyled">
-          <li class="checkbox">
-            <p class="help-block">(Exception emails will be sent to this email address)</p>
+          </div>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            Debug mode
+            <small class="text-muted form-text">Warning: debug mode is only useful when developing on Fork CMS.</small>
+            <small class="text-muted form-text">You can enable debug mode by adding "<code>SetEnv FORK_DEBUG 1</code>" in your virtualhosts file.</small>
+            <small class="text-muted form-text">(Exception emails will be sent to this email address)</small>
+          </legend>
+          <div class="form-group last">
             {{ form_row(form.different_debug_email) }}
-          </li>
-          <li id="debugEmailHolder">
-            {{ form_widget(form.debug_email) }}
-          </li>
-        </ul>
+            <div id="debugEmailHolder">
+              {{ form_widget(form.debug_email) }}
+            </div>
+          </div>
+        </fieldset>
       </div>
       <div class="card-footer">
         <div class="btn-toolbar justify-content-between">

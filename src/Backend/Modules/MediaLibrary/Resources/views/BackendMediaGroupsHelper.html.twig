@@ -23,13 +23,13 @@
             <div role="tabpanel" class="tab-pane" id="tabUploadMedia" aria-labelledby="upload-media-tab">
               {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabLibrary" aria-labelledby="library-tab">
+            <div role="tabpanel" class="tab-pane active show" id="tabLibrary" aria-labelledby="library-tab">
               <div class="options">
                 <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
                 <select id="mediaFolders"></select>
               </div>
               <div class="options">
-                <div class="alert alert-warning d-none" data-role="fork-media-count-error"></div>
+                {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
               </div>
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">

@@ -5418,6 +5418,10 @@
         <translation language="de"><![CDATA[aktuelles Passwort]]></translation>
         <translation language="pl"><![CDATA[obecne hasło]]></translation>
       </item>
+      <item type="label" name="Current">
+        <translation language="nl"><![CDATA[huidig]]></translation>
+        <translation language="en"><![CDATA[current]]></translation>
+      </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
         <translation language="en"><![CDATA[custom URL]]></translation>
@@ -9668,6 +9672,10 @@
         <translation language="el"><![CDATA[αναβάθμιση φίλτρου]]></translation>
         <translation language="pl"><![CDATA[aktualizuj filtr]]></translation>
       </item>
+      <item type="label" name="Filter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
       <item type="label" name="URL">
         <translation language="nl"><![CDATA[URL]]></translation>
         <translation language="en"><![CDATA[URL]]></translation>
@@ -10929,6 +10937,10 @@
         <translation language="sv"><![CDATA[Byt ut automatiskt genererade URL: en genom en anpassad en.]]></translation>
         <translation language="el"><![CDATA[Αντικαταστήστε την διεύθυνση URL που παρήχθη αυτόματα με μία φτιαχτή δική σας.]]></translation>
         <translation language="pl"><![CDATA[Zastąp automatycznie wygenerowany URL własnym, wybranym adresem URL.]]></translation>
+      </item>
+      <item type="message" name="HelpHrefLang">
+        <translation language="nl"><![CDATA[Hreflang maakt zoekmachines duidelijk wat de relatie is tussen pagina’s in verschillende talen.]]></translation>
+        <translation language="en"><![CDATA[Hreflang tells search engines the relationship between pages in different languages.]]></translation>
       </item>
       <item type="message" name="HelpNickname">
         <translation language="nl"><![CDATA[De naam waaronder je wilt publiceren (bijvoorbeeld als auteur van een blogartikel).]]></translation>

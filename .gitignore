@@ -29,3 +29,6 @@ docker-compose.override.yml
 
 # Symfony's dotenv
 /.env.local
+
+# PHP version locking
+/.php-version

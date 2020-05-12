@@ -3,46 +3,40 @@
 
 {% block content %}
   {{ form_start(form) }}
-    <div class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">
-          {{ 'lbl.Settings'|trans|capitalize }}
-          </h2>
-        </div>
-        <div class="card-body">
-          {{ form_row(form.mailEngine) }}
-          <div class="mail-engine-selected">
-            {{ form_row(form.apiKey) }}
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">
+        {{ 'lbl.Settings'|trans|capitalize }}
+        </h2>
+      </div>
+      <div class="card-body">
+        {{ form_row(form.mailEngine) }}
+        <div class="mail-engine-selected">
+          {{ form_row(form.apiKey) }}
 
-            <div class="card form-group card-default">
-              <div class="card-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
-              <div class="card-body">
-                <div class="form-group">
-                  {{ form_row(form.listId) }}
-                </div>
-                {% for languageListIdForm in form.languageListIds %}
-                  <div class="form-group{% if loop.last %} last{% endif %}">
-                    {{ form_label(languageListIdForm, languageListIdForm.vars.name|upper|tolabel) }}
-                    {{ form_widget(languageListIdForm) }}
-                    {{ form_errors(languageListIdForm) }}
-                  </div>
-                {% endfor %}
+          <div class="card form-group card-default">
+            <div class="card-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
+            <div class="card-body">
+              <div class="form-group">
+                {{ form_row(form.listId) }}
               </div>
+              {% for languageListIdForm in form.languageListIds %}
+                <div class="form-group{% if loop.last %} last{% endif %}">
+                  {{ form_label(languageListIdForm, languageListIdForm.vars.name|upper|tolabel) }}
+                  {{ form_widget(languageListIdForm) }}
+                  {{ form_errors(languageListIdForm) }}
+                </div>
+              {% endfor %}
             </div>
           </div>
-          {{ form_rest(form) }}
         </div>
+        {{ form_rest(form) }}
       </div>
     </div>
-    </div>
-    <div class="row fork-module-actions">
-      <div class="col-12">
-        <div class="btn-toolbar">
-          <div class="btn-group ml-auto" role="group">
-            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"save", "name":"save"} ) }}
-          </div>
+    <div class="fork-module-actions">
+      <div class="btn-toolbar">
+        <div class="btn-group ml-auto" role="group">
+          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"save", "name":"save"} ) }}
         </div>
       </div>
     </div>

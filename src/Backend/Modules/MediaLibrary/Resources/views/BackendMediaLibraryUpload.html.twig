@@ -13,41 +13,40 @@
     </div>
     <span class="qq-drop-processing-selector qq-drop-processing">
       <span>Processing dropped files...</span>
-      <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"><i class="fas fa-spinner fa-spin fa-3x fa-fw"></i></span>
+      <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
     </span>
     <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
       <li>
-        <div class="d-flex">
-          <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
-          <span class="qq-upload-spinner-selector qq-upload-spinner"><i class="fas fa-spinner fa-spin fa-3x fa-fw"></i></span>
-        </div>
-        <div class="qq-progress-bar-container-selector qq-progress-bar-container">
-          <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
-        </div>
-        <div class="qq-thumbnail-wrapper">
-          <img class="qq-thumbnail-selector" qq-max-size="140" qq-server-scale>
-        </div>
-        <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
-        <button type="button" class="qq-upload-retry-selector qq-upload-retry">
-          <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
-          Retry
-        </button>
-
-        <div class="qq-file-info">
-          <div class="qq-file-name">
-            <span class="qq-upload-file-selector qq-upload-file"></span>
-            <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+        <div class="d-flex align-items-center">
+          <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
           </div>
-          <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
-          <span class="qq-upload-size-selector qq-upload-size"></span>
-          <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">
-            <span class="qq-btn qq-delete-icon" aria-label="Delete"></span>
-          </button>
-          <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause">
-            <span class="qq-btn qq-pause-icon" aria-label="Pause"></span>
-          </button>
-          <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue">
-            <span class="qq-btn qq-continue-icon" aria-label="Continue"></span>
+          <span class="qq-upload-spinner-selector qq-upload-spinner">{{ macro.icon('spinner fa-spin fa-3x fa-fw') }}</span>
+          <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+          <div class="qq-file-info">
+            <div class="qq-file-name">
+              <span class="qq-upload-file-selector qq-upload-file"></span>
+              <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+            </div>
+            <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+            <span class="qq-upload-size-selector qq-upload-size"></span>
+            <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete btn btn-danger">
+              <span class="sr-only">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+              {{ macro.icon('trash-alt') }}
+            </button>
+            <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause btn btn-primary">
+              <span class="sr-only">{{ 'lbl.Retry'|trans|ucfirst }}</span>
+              {{ macro.icon('redo-alt') }}
+            </button>
+            <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue btn btn-primary">
+              {{ macro.icon('check') }}
+            </button>
+          </div>
+          <button type="button" class="qq-upload-cancel-selector qq-upload-cancel btn btn-danger btn-icon-only ml-auto">{{ macro.icon('times') }}</button>
+          <button type="button" class="btn btn-priamry btn-sm qq-upload-retry-selector qq-upload-retry ml-auto">
+            <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
+            {{ macro.icon('redo-alt') }}
+            {{ 'lbl.Retry'|trans|ucfirst }}
           </button>
         </div>
       </li>
@@ -83,7 +82,7 @@
 
 <div data-role="uploadMediaStep1">
   {# Choose type #}
-  <div class="row fork-module-content">
+  <div class="row">
     <div class="col-md-6 d-flex {% if mediaType is defined %} d-none{% endif %}" id="uploadMediaTypeBox">
       <div class="card card-default w-100">
         <div class="card-heading">
@@ -138,76 +137,78 @@
 
 <div data-role="uploadMediaStep2" style="display: none">
   {# Choose media to upload #}
-  <div id="uploadMediaBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="options">
-        <div class="alert alert-warning d-none" data-role="fork-media-count-error"></div>
+  <div id="uploadMediaBox">
+    <div class="options">
+      {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
+    </div>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</h2>
       </div>
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</h2>
-        </div>
-        <div id="fine-uploader-gallery"></div>
-        <div class="card-footer">
-          <div class="form-group last" data-role="cropper-is-mandatory-form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
-              <label class="form-check-label" for="enableCropperCheckbox">{{ 'lbl.EnableCropper'|trans|ucfirst }}</label>
-            </div>
-            <small class="form-text text-muted" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</small>
-            <small class="form-text text-muted d-none" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</small>
+      <div id="fine-uploader-gallery"></div>
+
+
+      <div class="card-footer">
+        <div class="form-group last" data-role="cropper-is-mandatory-form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
+            <label class="form-check-label" for="enableCropperCheckbox">{{ 'lbl.EnableCropper'|trans|ucfirst }}</label>
           </div>
+          <small class="form-text text-muted" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</small>
+          <small class="form-text text-muted d-none" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</small>
         </div>
       </div>
     </div>
   </div>
 
   {# Adding a movie #}
-  <div id="addMovieBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'lbl.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
-            {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
-            <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
-          </div>
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
-            <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
-          </div>
-          <div class="form-group">
-            <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control" />
-          </div>
-        </div>
+  <div id="addMovieBox">
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'lbl.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
       </div>
-      <div class="btn-toolbar">
-        <div class="btn-group ml-auto" role="group">
-          <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
-            {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
-          </a>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
+              {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+              <select class="form-control" id="mediaMovieStorageType" name="media_movie_source"></select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
+              <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control" />
+              <small class="form-text text-muted">{{ 'msg.MediaMovieIdHelp'|trans }}</small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
+          <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control" />
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group ml-auto" role="group">
+            <a href="#" id="addMediaMovie" class="btn btn-primary" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+              {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   {# Uploaded media #}
-  <div id="uploadedMediaBox" class="row fork-module-content">
-    <div class="col-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>
-        </div>
-        <div class="card-body">
-          <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
-          <div class="mediaConnectedBox">
-            <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
-          </div>
+  <div id="uploadedMediaBox">
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>
+      </div>
+      <div class="card-body">
+        <p><small class="text-muted" id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</small></p>
+        <div class="mediaConnectedBox">
+          <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
         </div>
       </div>
     </div>

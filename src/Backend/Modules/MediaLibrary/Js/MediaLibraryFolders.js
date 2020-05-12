@@ -7,7 +7,6 @@ jsBackend.mediaLibraryFolders = {
   init: function () {
     var $addFolderSubmit = $('#addFolderSubmit')
     var $addFolderDialog = $('#addFolderDialog')
-    var $folderTitleError = $('#folderTitleError')
 
     // start or not
     if ($addFolderDialog.length === 0 || $addFolderSubmit.length === 0) {
@@ -23,9 +22,6 @@ jsBackend.mediaLibraryFolders = {
     }
 
     $addFolderSubmit.click(function () {
-      // hide errors
-      $folderTitleError.hide()
-
       // get selected folder
       selectedFolderId = ($('#uploadMediaFolderId').val()) ? $('#uploadMediaFolderId').val() : selectedFolderId
 
@@ -44,9 +40,6 @@ jsBackend.mediaLibraryFolders = {
             if (jsBackend.debug) {
               window.alert(textStatus)
             }
-
-            // show message
-            $('#descriptionTitleError').show()
 
             return
           }

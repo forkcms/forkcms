@@ -7,32 +7,26 @@
 
 {% block content %}
   {% form settings %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="card card-default">
-        <div class="card-heading">
-          <h2 class="card-title">
-            {{ 'lbl.MetaNavigation'|trans|ucfirst }}
-          </h2>
+  <div class="card card-default">
+    <div class="card-heading">
+      <h2 class="card-title">
+        {{ 'lbl.MetaNavigation'|trans|ucfirst }}
+      </h2>
+    </div>
+    <div class="card-body">
+      <div class="form-group last">
+        <div class="form-check">
+          {% form_field meta_navigation %}
+          <label for="metaNavigation" class="form-check-label">{{ 'msg.MetaNavigation'|trans|ucfirst }}</label>
         </div>
-        <div class="card-body">
-          <div class="form-group last">
-            <div class="form-check">
-              {% form_field meta_navigation %}
-              <label for="metaNavigation" class="form-check-label">{{ 'msg.MetaNavigation'|trans|ucfirst }}</label>
-            </div>
-            <small class="form-text text-muted">{{ 'msg.HelpMetaNavigation'|trans }}</small>
-          </div>
-        </div>
+        <small class="form-text text-muted">{{ 'msg.HelpMetaNavigation'|trans }}</small>
       </div>
     </div>
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
-        </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar">
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
       </div>
     </div>
   </div>

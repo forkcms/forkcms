@@ -18,24 +18,17 @@
 
 {% block content %}
   {% form edit %}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
-        {% form_field title %} {% form_field_error title %}
-        {% if detailURL %}
-          <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
-        {% endif %}
-        {% if not detailURL %}
-          <p class="alert alert-warning alert-xs">
-            {{ macro.icon('exclamation-triangle') }}{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
-        {% endif %}
-      </div>
-    </div>
+  <div class="form-group">
+    <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
+    {% form_field title %} {% form_field_error title %}
+    {% if detailURL %}
+      <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
+    {% endif %}
+    {% if not detailURL %}
+      {{ macro.alert('warning', 'err.NoModuleLinked'|trans|ucfirst, null, null, {'class': 'toast-xs'}) }}
+    {% endif %}
   </div>
-  <div class="row fork-module-content">
-    <div class="col-md-12">
-      <div>
+  <div>
         <ul class="nav nav-tabs justify-content-end" role="tablist">
           <li class="nav-item mr-auto">
             <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
@@ -169,67 +162,55 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabVersions" aria-labelledby="versions-tab">
-            <div class="row">
-              <div class="col-md-12">
-                {% if drafts %}
-                  <div class="content-block">
-                    <div class="content-title">
-                      <h2>{{ 'lbl.Drafts'|trans|ucfirst }}
-                        {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
-                      </h2>
-                    </div>
-                    {{ drafts|raw }}
-                  </div>
-                {% endif %}
-                <div class="content-block">
-                  <div class="content-title">
-                    <h2>
-                      {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
-                    </h2>
-                  </div>
-                  {% if revisions %}
-                    {{ revisions|raw }}
-                  {% endif %}
-                  {% if not revisions %}
-                    <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
-                  {% endif %}
+            {% if drafts %}
+              <div class="content-block">
+                <div class="content-title">
+                  <h2>{{ 'lbl.Drafts'|trans|ucfirst }}
+                    {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
+                  </h2>
                 </div>
+                {{ drafts|raw }}
               </div>
+            {% endif %}
+            <div class="content-block">
+              <div class="content-title">
+                <h2>
+                  {{ 'lbl.PreviousVersions'|trans|ucfirst }}
+                  {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
+                </h2>
+              </div>
+              {% if revisions %}
+                {{ revisions|raw }}
+              {% endif %}
+              {% if not revisions %}
+                <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
+              {% endif %}
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabComments" aria-labelledby="comments-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group last">
+            <div class="form-group last">
                   <div class="form-check">
                     {% form_field allow_comments %}
                     <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
                   </div>
                 </div>
-              </div>
-            </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
           </div>
         </div>
-      </div>
-    </div>
   </div>
-  <div class="row fork-module-actions">
-    <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group" role="group">
-          {% if showBlogDelete %}
-            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
-          {% endif %}
-          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
-        </div>
-        <div class="btn-group ml-auto" role="group">
-          {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
-          {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
-        </div>
+  <div class="fork-module-actions">
+    <div class="btn-toolbar">
+      <div class="btn-group" role="group">
+        {% if showBlogDelete %}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
+        {% endif %}
+        {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+      <div class="btn-group ml-auto" role="group">
+        {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
+        {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
       </div>
     </div>
   </div>

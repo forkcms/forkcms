@@ -51,10 +51,6 @@
     margin-left: -430px;
     padding-left: 430px;
     position: absolute;
-    -webkit-transition: padding 250ms, margin 250ms;
-    -moz-transition: padding 250ms, margin 250ms;
-    -ms-transition: padding 250ms, margin 250ms;
-    -o-transition: padding 250ms, margin 250ms;
     transition: padding 250ms, margin 250ms;
     width: 100%;
   }
@@ -73,10 +69,6 @@
     #footer {
       margin-left: -240px;
       padding-left: 240px;
-      -webkit-transition: padding 250ms, margin 250ms;
-      -moz-transition: padding 250ms, margin 250ms;
-      -ms-transition: padding 250ms, margin 250ms;
-      -o-transition: padding 250ms, margin 250ms;
       transition: padding 250ms, margin 250ms;
     }
 

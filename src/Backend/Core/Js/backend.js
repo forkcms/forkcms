@@ -45,7 +45,6 @@ var jsBackend =
       jsBackend.tabs.init()
       jsBackend.forms.init()
       jsBackend.layout.init()
-      jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
       if (jsData.Core.preferred_editor === 'ck-editor') {
@@ -115,7 +114,7 @@ var jsBackend =
           if (typeof XMLHttpRequest.responseText !== 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message
 
           // show message
-          jsBackend.messages.add('danger', textStatus)
+          jsBackend.messages.add('danger', textStatus, '', true)
         }
       })
 
@@ -1844,70 +1843,63 @@ jsBackend.locale = {
 jsBackend.messages = {
   timers: [],
 
-  // init, something like a constructor
-  init: function () {
-    // bind close button
-    $(document).on('click', '#messaging .formMessage .iconClose', function (e) {
-      e.preventDefault()
-      jsBackend.messages.hide($(this).parents('.formMessage'))
-    })
-  },
-
-  // hide a message
-  hide: function (element) {
-    // fade out
-    element.removeClass('active').delay(250).hide(1)
-  },
-
   // add a new message into the que
-  add: function (type, content, optionalClass) {
+  add: function (type, content, optionalClass = '', dismissable = false) {
     var uniqueId = 'e' + new Date().getTime().toString()
 
     // switch icon type
     var icon
+    var role = 'status'
+    var live = 'polite'
+    var dismissableClass = ' d-none'
+    var autohide = false
+
     switch (type) {
       case 'danger':
-        icon = 'times'
+        icon = 'far fa-times-circle'
+        role = 'alert'
+        live = 'assertive'
+        dismissableClass = ''
         break
       case 'warning':
-        icon = 'exclamation-triangle'
+        icon = 'fas fa-exclamation-circle'
+        role = 'alert'
+        live = 'assertive'
         break
       case 'success':
-        icon = 'check'
+        icon = 'far fa-check-circle'
+        autohide = true
         break
       case 'info':
-        icon = 'info'
+        icon = 'fas fa-info-circle'
+        autohide = true
         break
     }
 
-    var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
-      '<div class="container-fluid">' +
-      '<i class="fas fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
-      content +
-      '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
-      '<span aria-hidden="true" class="fas fa-times"></span>' +
-      '</button>' +
-      '</div>' +
+    // overrule dismissableClass if custom dismissable is true
+    if (dismissable) {
+      dismissableClass = ''
+    }
+
+    var html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="' + autohide + '" data-delay="5000">' +
+      '<div class="toast-body">' +
+        '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
+          '<i class="fas fa-times"></i>' +
+        '</button>' +
+        '<i class="toast-icon ' + icon + '" aria-hidden="true"></i>' + ' ' +
+        content +
+        '</div>' +
       '</div>'
 
     // prepend
-    if (optionalClass === undefined || optionalClass !== 'alert-static') {
-      $('#messaging').prepend(html)
+    if (optionalClass === undefined || optionalClass !== 'toast-inline') {
+      $('[data-messaging-wrapper]').prepend(html)
     } else {
-      $('.content').prepend(html)
+      $('[data-content-container]').prepend(html)
     }
 
     // show
-    $('#' + uniqueId).addClass('active')
-
-    // timeout
-    if (optionalClass === undefined || optionalClass !== 'alert-static') {
-      if (type === 'info' || type === 'success') {
-        setTimeout(function () {
-          jsBackend.messages.hide($('#' + uniqueId))
-        }, 5000)
-      }
-    }
+    $('#' + uniqueId).toast('show')
   }
 }
 

@@ -21,25 +21,18 @@
         </div>
 
         {% if hasError %}
-          <div class="alert alert-danger">
-            <p>{{ 'err.InvalidEmailPasswordCombination'|trans|raw }}</p>
-          </div>
+          {{ macro.alert('danger', 'err.InvalidEmailPasswordCombination'|trans|raw) }}
         {% endif %}
         {% if hasTooManyAttemps %}
-          <div class="alert alert-danger">
-            <p>{{ 'err.TooManyLoginAttempts'|trans|raw }}</p>
-          </div>
+          {{ macro.alert('danger', 'err.TooManyLoginAttempts'|trans|raw) }}
         {% endif %}
         {% if txt.BackendEmailForgotError %}
-          <div class="alert alert-danger">
-            <p>{{ 'txt.BackendEmailForgotError'|trans|raw }}</p>
-          </div>
+          {{ macro.alert('danger', 'txt.BackendEmailForgotError'|trans|raw) }}
         {% endif %}
         {% if isForgotPasswordSuccess %}
-          <div class="alert alert-success">
-            <p>{{ 'msg.LoginFormForgotPasswordSuccess'|trans|raw }}</p>
-          </div>
+          {{ macro.alert('success', 'msg.LoginFormForgotPasswordSuccess'|trans|raw) }}
         {% endif %}
+
         {% form authenticationIndex %}
         <div class="login-form">
           <div class="form-group">

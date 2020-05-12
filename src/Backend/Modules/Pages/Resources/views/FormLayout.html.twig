@@ -78,8 +78,25 @@
       </div>
     {% endif %}
     <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
-      {{ form_row(form.data.isAction) }}
-      {{ form_widget(form.settings) }}
+      <fieldset>
+        <legend>{{ 'lbl.Settings'|trans|ucfirst }}</legend>
+
+       <div class="form-group">
+         {{ form_widget(form.data.isAction) }}
+         {{ form_widget(form.settings.allowMove) }}
+         {{ form_widget(form.settings.allowChildren) }}
+         {{ form_widget(form.settings.allowEdit) }}
+         {{ form_widget(form.settings.allowDelete) }}
+       </div>
+      </fieldset>
+
+      <fieldset class="last">
+        <legend>{{ 'lbl.State'|trans|ucfirst }}</legend>
+        {{ form_row(form.settings.hidden) }}
+        {{ form_row(form.settings.publishOn) }}
+        {{ form_row(form.settings.publishUntil) }}
+      </fieldset>
+
     </div>
     <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
       {{ form_widget(form.meta) }}
@@ -179,8 +196,9 @@
         <div class="form-group">
           {{ form_widget(form.urlOverwrite) }}
           {{ form_label(form.url) }}
-          <div class="form-inline">
-            <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
+
+          <div class="d-flex align-items-center">
+            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ml-2">{{ form_widget(form.url) }}</div>
           </div>
           {{ form_errors(form.url) }}
           <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
@@ -207,7 +225,8 @@
     </fieldset>
     {% if form.parent.data.hreflang.children is not empty %}
       <fieldset class="last">
-        <legend>{{ form.parent.data.hreflang.vars.label|trans }}</legend>
+        <legend class="mb-0">{{ 'lbl.Languages'|trans|ucfirst }}</legend>
+        <p><small class="text-muted form-text">{{ 'msg.HelpHrefLang'|trans|ucfirst }}</small></p>
         {{ form_widget(form.parent.data.hreflang) }}
       </fieldset>
     {% endif %}
@@ -221,7 +240,9 @@
 
 {% block _page_data_redirect_redirect_entry_widget %}
   <div class="form-group">
-    {{ form_widget(form) }}
+    <div class="mb-2">
+      {{ form_widget(form) }}
+    </div>
     {% if form.vars.value == 'internal' %}
       {{ form_widget(form.parent.parent.internal_redirect) }}
     {% elseif form.vars.value == 'external' %}
@@ -231,7 +252,11 @@
 {% endblock %}
 
 {% block page_content_widget %}
-  {{ form_row(form.templateId) }}
+  <div class="row">
+    <div class="col-8 col-sm-6 col-md-4 col-lg-6 col-xl-4">
+      {{ form_row(form.templateId) }}
+    </div>
+  </div>
   <div id="templateVisualLarge">
     {{ include(template_from_string(selectedTemplate.htmlLarge|replace({'&quot;': '"'}), 'page template: ' ~ selectedTemplate.label), {'form': form}) }}
   </div>
@@ -245,85 +270,29 @@
       {% if style is defined %}
         {% set prototype_vars = prototype_vars|merge({'style': style}) %}
       {% endif %}
-      {% set prototype_html = '<div class="row">' %}
-      {% if form.vars.allow_sequence %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-group-vertical p-0">' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
-      {% endif %}
-      {% set prototype_html = prototype_html ~ '<div class="col">' %}
-      {% set prototype_html = prototype_html ~ form_widget(prototype, prototype_vars) %}
-      {% set prototype_html = prototype_html ~ '<div class="btn-toolbar justify-content-center"><div class="btn-group">' ~ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal__id__', 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) %}
-      {% if form.vars.allow_sequence %}
-        {% set prototype_html = prototype_html ~ '<span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('arrows-alt') ~ '</span>' %}
-      {% endif %}
-      {% if form.vars.allow_delete %}
-        {% set prototype_html = prototype_html ~ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock__id__', 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) %}
-      {% endif %}
-      {% set prototype_html = prototype_html ~ '</div></div></div></div>' %}
-      {% if form.vars.allow_delete %}
-        {% set prototype_html = prototype_html ~ '<div class="modal" id="confirmDeleteBlock__id__" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle__id__"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title" id="confirmDeleteBlockTitle__id__">' ~ 'lbl.DeleteBlock'|trans|ucfirst ~ '</h4></div><div class="modal-body"><p>' ~ 'msg.ConfirmDeleteBlock'|trans ~ '</p></div><div class="modal-footer">' ~ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) ~ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-dismiss":"modal", 'data-field': '__id__', 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) ~ '</div></div></div></div>' %}
-      {% endif %}
-      {% set prototype_html = prototype_html ~ '</div>' %}
 
-      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+      {% set field = prototype %}
+      {% set attr = attr|merge({'data-prototype': block('page_block_collection_item') }) %}
       {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
-      <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
         {% for field in form %}
           <li class="list-group-item">
-            <div class="row">
-              {% if form.vars.allow_sequence %}
-                <div class="btn-group-vertical p-0">
-                  {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
-                  {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
-                </div>
-              {% endif %}
-              <div class="col">
-                {{ form_widget(field) }}
-                {{ form_errors(field) }}
-                <div class="btn-toolbar justify-content-center">
-                  <div class="btn-group">
-                    {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-justified', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}) }}
-                    {% if form.vars.allow_sequence %}
-                      <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('arrows-alt') }}</span>
-                    {% endif %}
-
-                    {% if form.vars.allow_delete %}
-                      {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% if form.vars.allow_delete %}
-              <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="confirmDeleteBlockTitle{{ field.vars.id }}">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
-                    </div>
-                    <div class="modal-body">
-                      <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
-                    </div>
-                    <div class="modal-footer">
-                      {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
-                      {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-dismiss":"modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endif %}
+            {{ block('page_block_collection_item') }}
           </li>
         {% endfor %}
       </ul>
-      <div class="card-footer justify-content-center d-flex">
-        {% if form.vars.allow_add %}
+
+      {% if form.vars.allow_add %}
+        <div class="d-flex justify-content-center mt-2">
           <div class="btn-group">
-            {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-success btn-small', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
+            {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-wider', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
           </div>
-        {% endif %}
-        {{ form_errors(form) }}
-      </div>
+        </div>
+      {% endif %}
+      {{ form_errors(form) }}
     </div>
   {% endspaceless %}
 {% endblock %}
@@ -332,7 +301,7 @@
   {% import 'Layout/Templates/macros.html.twig' as macro %}
   <div id="{{ form.vars.id }}" data-role="page-block-wrapper" class="mb-1">
     {% set blockTitle = form.vars.data.extraType.label %}
-    {{ form_widget(form.visible, {'label': blockTitle, 'label_attr': {'class' : 'font-weight-bold custom-control-label mb-1', 'data-role' : 'page-block-title'}}) }}
+    {{ form_widget(form.visible, {'label': 'lbl.VisibleOnSite'|trans}), 'label_attr': {'class' : 'font-weight-bold custom-control-label mb-1', 'data-role' : 'page-block-title'}}) }}
     <div data-role="page-block-preview">
       {% if form.vars.data.extraType.isRichText and form.vars.data.html %}
         <p>{{ form.vars.data.html|parse_blocks|truncate(100) }}</p>
@@ -346,9 +315,7 @@
             <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body" data-role="page-block-form-wrapper">
-            <div class="alert alert-warning mb-3">
-              {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans|raw }}
-            </div>
+            {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}
             {{ form_row(form.extraType) }}
             <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.blockExtraId) }}</div>
@@ -364,8 +331,76 @@
   </div>
 {% endblock %}
 
+{% block page_block_collection_item %}
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+    <div data-role="page-block-wrapper{% if not field.children.visible.vars.checked %} block-not-visible{% endif %}">
+      <div class="d-flex">
+        <div class="block-info mb-2">
+          <p data-role="page-block-title" class="page-block-title mb-0 font-weight-bold">{{ field.vars.data.extraType.label }}</p>
+          {% if field.vars.data.extraType.isRichText and field.vars.data.html %}
+            <p class="page-block-description mb-0">{{ field.vars.data.html|truncate(80) }}</p>
+          {% endif %}
+        </div>
+
+        <div class="ml-auto">
+          {{ form_widget(field) }}
+          {{ form_errors(field) }}
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <div class="btn-group">
+          {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-icon-only btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
+          {% if form.vars.allow_sequence %}
+            <span class="btn btn-default btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('arrows-alt') }}</span>
+          {% endif %}
+
+          {% if form.vars.allow_delete %}
+            {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-icon-only btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
+          {% endif %}
+        </div>
+
+        {% if form.vars.allow_sequence %}
+          <div class="btn-group d-flex justify-content-end p-0 ml-auto">
+            {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-default btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
+            {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-default btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if form.vars.allow_delete %}
+        <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="confirmDeleteBlockTitle{{ field.vars.id }}">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
+              </div>
+              <div class="modal-body">
+                <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
+              </div>
+              <div class="modal-footer">
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+                {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-dismiss":"modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+{% endblock %}
+
+
 {% block _page_saveAsDraft_widget %}
   {% import 'Layout/Templates/macros.html.twig' as macro %}
   {%- set attr = attr|merge({class: (attr.class|default('btn-default') ~ ' btn')|trim}) -%}
   <button type="submit" {{ block('button_attributes') }}>{{ macro.icon('file') }}<span class="btn-text">{{ label|trans|ucfirst }}</span></button>
 {% endblock %}
+
+{% block _page_content_page_block_collection_entry_visible_widget -%}
+  <div class="custom-control custom-visible-switch">
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %} data-role="page-block-visibility" />
+
+    <label for="{{ form.vars.id }}">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="sr-only">{{ form.vars.label|trans }}</span></label>
+  </div>
+{%- endblock %}

@@ -24,6 +24,10 @@
         <translation language="de"><![CDATA[der Karte hinzufügen]]></translation>
         <translation language="pl"><![CDATA[dodaj do mapy]]></translation>
       </item>
+      <item type="label" name="AddLocation">
+        <translation language="nl"><![CDATA[locatie toevoegen]]></translation>
+        <translation language="en"><![CDATA[add location]]></translation>
+      </item>
       <item type="label" name="Auto">
         <translation language="nl"><![CDATA[automatisch]]></translation>
         <translation language="en"><![CDATA[automatic]]></translation>

@@ -4,9 +4,7 @@
 {% block pagesTree %}
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
-      <div class="alert alert-warning d-lg-none">
-        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
-      </div>
+      {{ macro.alert('warning', 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst, null, null, {'class': 'd-lg-none'}) }}
       <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
@@ -38,14 +36,10 @@
 
 {% block content %}
   {{ form_start(form) }}
-  <div class="row fork-module-content">
-    <div class="col-12">
-      {% if form.url %}
-        {{ form_row(form.url) }}
-      {% endif %}
-      {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
-    </div>
-  </div>
+  {% if form.url %}
+    {{ form_row(form.url) }}
+  {% endif %}
+  {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
   <div class="fork-module-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">

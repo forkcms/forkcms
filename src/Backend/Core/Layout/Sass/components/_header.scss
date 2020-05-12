@@ -27,11 +27,16 @@
     border-color: $primary;
     color: $primary;
     margin-left: 5px;
+
+    @include hover-focus {
+      border-color: $link-hover-color;
+      color: $link-hover-color;
+    }
   }
 }
 
 .site-title {
-  font-weight: 600;
+  font-weight: $font-weight-medium;
   margin: 0;
   padding: 0;
 }
@@ -40,6 +45,23 @@
   border-bottom: 1px solid $gray-700;
   color: $gray-700;
   font-size: $font-size-sm;
+  margin-right: 1rem;
+  position: relative;
+
+  &:after {
+    content: "\f35d";
+    display: none;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+  }
+
+  .svg-inline--fa {
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
 
   @include hover-focus {
     border-color: $primary;

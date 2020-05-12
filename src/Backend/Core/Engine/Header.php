@@ -116,7 +116,6 @@ final class Header extends KernelLoader
     {
         $this->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true, true, true, Priority::core());
         $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
-        $this->addCSS('/css/vendors/bootstrap-accessibility.css', 'Core', true, true, true, Priority::core());
         $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
         $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
         $this->addCSS('/css/vendors/select2.css', 'Core', true, true, true, Priority::core());

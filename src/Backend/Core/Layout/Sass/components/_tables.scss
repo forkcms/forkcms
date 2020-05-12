@@ -62,7 +62,7 @@
       font-size: $font-size-sm;
 
       &.title a {
-        font-weight: 600;
+        font-weight: $font-weight-medium;
       }
 
       a {
@@ -73,7 +73,7 @@
     th {
       color: $gray-700;
       font-size: $font-size-sm;
-      font-weight: 600;
+      font-weight: $font-weight-medium;
 
       a {
         color: $body-color;

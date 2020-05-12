@@ -19,7 +19,7 @@
 
   h4 {
     font-size: $font-size-base;
-    font-weight: 600;
+    font-weight: $font-weight-medium;
   }
 }
 
@@ -83,7 +83,7 @@
 
     // Don't show hover effects while drag and dropping.
     .jstree-dnd-parent .jstree-hovered {
-      background: #FFF;
+      background: $white;
       color: inherit;
       border: none;
       box-shadow: none;
@@ -107,9 +107,15 @@
   }
 
   li .jstree-search {
-    font-weight: 600;
+    font-weight: $font-weight-medium;
     font-style: normal;
     color: $primary;
+
+    &.jstree-clicked,
+    &.jstree-hovered {
+      background: $blue-darker;
+      color: $white;
+    }
   }
 
   &.jstree-proton {
