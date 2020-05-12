@@ -20,15 +20,11 @@
           <h2>{{ 'msg.ModulesWarnings'|trans|ucfirst }}</h2>
         </div>
         <div class="card-body">
+          <strong>{{ warnings.module|raw }}</strong>
           <ul>
-            <li>
-              <strong>{{ warnings.module|raw }}</strong>
-              <ul>
-                {% for warning in warnings.warnings %}
-                  <li>- {{ warning.message|raw }}</li>
-                {% endfor %}
-              </ul>
-            </li>
+            {% for warning in warnings.warnings %}
+              <li>- {{ warning.message|raw }}</li>
+            {% endfor %}
           </ul>
         </div>
       </div>
