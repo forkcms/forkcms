@@ -1,3 +1,20 @@
+5.8.2  (2020-05-12)
+------------------
+
+Fixed:
+* Core: Fix upscale cropping [#3079](https://github.com/forkcms/forkcms/pull/3079)
+* Core: Remove last slash in url after hreflang [#3080](https://github.com/forkcms/forkcms/pull/3080)
+* Core: Update composer packages [#3078](https://github.com/forkcms/forkcms/pull/3078) [#3077](https://github.com/forkcms/forkcms/pull/3077) [#3076](https://github.com/forkcms/forkcms/pull/3076)
+* Docs: Fix MailChimp Url [#3083](https://github.com/forkcms/forkcms/pull/3083)
+* Docs: Typo in Headline [#3082](https://github.com/forkcms/forkcms/pull/3082)
+* Docs: Update old docs link, with the new one [#3085](https://github.com/forkcms/forkcms/pull/3085)
+* Pages: Fix notice when deleting page [#3074](https://github.com/forkcms/forkcms/pull/3074)
+* Pages: Use single quotes for background images [#3067](https://github.com/forkcms/forkcms/pull/3067)
+
+Security:
+* Core: Bump jquery from 3.4.1 to 3.5.0 [#3089](https://github.com/forkcms/forkcms/pull/3089)
+
+
 5.8.1  (2020-04-17)
 ------------------
 Fixed:
