@@ -1088,7 +1088,7 @@ jsBackend.pages.extras = {
       $img = $placeholder.find('#user-template-image-background-' + key + ' img')
 
       $element.attr('data-src', $img.attr('src'))
-      $element.css('background-image', 'url("' + $img.attr('src') + '")')
+      $element.css('background-image\'' + $img.attr('src') + '\')')
 
       return
     }
