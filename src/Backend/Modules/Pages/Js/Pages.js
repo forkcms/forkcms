@@ -183,12 +183,12 @@ jsBackend.pages.extras = {
     if ($blackWrapper.hasClass('block-not-visible')) {
       // make visible
       $blackWrapper.removeClass('block-not-visible')
-      $label.find('[data-fa-i2svg]').removeClass('fa-eye-slash').addClass('fa-eye')
+      $label.find('[data-fa-i2svg]').attr('data-icon', 'eye')
       $label.find('.sr-only').html(jsBackend.locale.lbl('Hide'))
     } else {
       // make invisible
       $blackWrapper.addClass('block-not-visible')
-      $label.find('[data-fa-i2svg]').removeClass('fa-eye').addClass('fa-eye-slash')
+      $label.find('[data-fa-i2svg]').attr('data-icon', 'eye-slash')
       $label.find('.sr-only').html(jsBackend.locale.lbl('Show'))
     }
   }
