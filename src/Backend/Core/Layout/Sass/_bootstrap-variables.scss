@@ -173,7 +173,7 @@ $body-color:                $gray-700;
 
 $link-color:                theme-color("primary");
 $link-decoration:           none;
-$link-hover-color:          darken($link-color, 15%);
+$link-hover-color:          darken($link-color, 25%);
 $link-hover-decoration:     underline;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
 $emphasized-link-hover-darken-percentage: 15% !default;
