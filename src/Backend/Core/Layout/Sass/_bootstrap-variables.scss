@@ -109,7 +109,7 @@ $escaped-characters: (
     ("<","%3c"),
     (">","%3e"),
     ("#","%23"),
-) !default;
+);
 
 // Options
 //
@@ -120,14 +120,14 @@ $enable-rounded:                              true;
 $enable-shadows:                              false;
 $enable-gradients:                            false;
 $enable-transitions:                          true;
-$enable-prefers-reduced-motion-media-query:   true !default;
+$enable-prefers-reduced-motion-media-query:   true;
 $enable-hover-media-query:                    false; // Deprecated, no longer affects any compiled CSS
 $enable-grid-classes:                         true;
-$enable-pointer-cursor-for-buttons:           true !default;
+$enable-pointer-cursor-for-buttons:           true;
 $enable-print-styles:                         true;
-$enable-responsive-font-sizes:                false !default;
-$enable-validation-icons:                     true !default;
-$enable-deprecation-messages:                 true !default;
+$enable-responsive-font-sizes:                false;
+$enable-validation-icons:                     true;
+$enable-deprecation-messages:                 true;
 
 
 // Spacing
@@ -176,7 +176,7 @@ $link-decoration:           none;
 $link-hover-color:          darken($link-color, 25%);
 $link-hover-decoration:     underline;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
-$emphasized-link-hover-darken-percentage: 15% !default;
+$emphasized-link-hover-darken-percentage: 15%;
 
 // Paragraphs
 //
@@ -229,7 +229,7 @@ $container-max-widths: (
 
 $grid-columns:                12;
 $grid-gutter-width:           30px;
-$grid-row-columns:            6 !default;
+$grid-row-columns:            6;
 
 // Components
 //
@@ -245,24 +245,24 @@ $border-radius:               .25rem;
 $border-radius-lg:            .375rem;
 $border-radius-sm:            .1875rem;
 
-$rounded-pill:                50rem !default;
+$rounded-pill:                50rem;
 
-$box-shadow-sm:               0 .125rem .25rem rgba($black, .075) !default;
-$box-shadow:                  0 .5rem 1rem rgba($black, .15) !default;
-$box-shadow-lg:               0 1rem 3rem rgba($black, .175) !default;
+$box-shadow-sm:               0 .125rem .25rem rgba($black, .075);
+$box-shadow:                  0 .5rem 1rem rgba($black, .15);
+$box-shadow-lg:               0 1rem 3rem rgba($black, .175);
 
 $component-active-color:      $white;
 $component-active-bg:         theme-color("primary");
 
 $caret-width:                 .3em;
-$caret-vertical-align:        $caret-width * .85 !default;
-$caret-spacing:               $caret-width * .85 !default;
+$caret-vertical-align:        $caret-width * .85;
+$caret-spacing:               $caret-width * .85;
 
 $transition-base:             all .2s ease-in-out;
 $transition-fade:             opacity .15s linear;
 $transition-collapse:         height .35s ease;
 
-$embed-responsive-aspect-ratios: () !default;
+$embed-responsive-aspect-ratios: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 $embed-responsive-aspect-ratios: join(
       (
@@ -290,12 +290,12 @@ $font-size-lg:                ($font-size-base * 1.125); // ~18px
 $font-size-sm:                ($font-size-base * .75); // ~12px
 $font-size-xs:                ($font-size-base * .625); // ~10px
 
-$font-weight-lighter:         lighter !default;
+$font-weight-lighter:         lighter;
 $font-weight-light:           300;
 $font-weight-normal:          400;
 $font-weight-medium:          600;
 $font-weight-bold:            700;
-$font-weight-bolder:          bolder !default;
+$font-weight-bolder:          bolder;
 
 $font-weight-base:            $font-weight-normal;
 $line-height-base:            1.5;
@@ -335,7 +335,7 @@ $small-font-size:             80%;
 $text-muted:                  $gray-600;
 
 $blockquote-small-color:      $gray-600;
-$blockquote-small-font-size:  $small-font-size !default;
+$blockquote-small-font-size:  $small-font-size;
 $blockquote-font-size:        ($font-size-base * 1.25);
 
 $hr-border-color:             rgba($black, .1);
