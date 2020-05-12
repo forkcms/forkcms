@@ -1184,7 +1184,7 @@ class Model
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
         // does the parent have extras?
-        if (!$isAction && isset($parentPageInfo['has_extra']) && $parentPageInfo['has_extra']) {
+        if (!$isAction && is_array($parentPageInfo) && isset($parentPageInfo['has_extra']) && $parentPageInfo['has_extra']) {
             // set locale
             FrontendLanguage::setLocale(BL::getWorkingLanguage(), true);
 
