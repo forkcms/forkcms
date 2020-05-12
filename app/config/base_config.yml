@@ -104,7 +104,7 @@ liip_imagine:
         media_library_one_image_large:
             filters:
                 thumbnail: { size : [1600, 500], mode : inbound }
-        content_block_image:
+        media_library_editor_image:
             filters:
                 scale: { dim: [2400, 2400] }
 
