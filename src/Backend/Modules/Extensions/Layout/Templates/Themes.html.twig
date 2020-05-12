@@ -54,10 +54,7 @@
                               <span>{{ 'lbl.UseThisTheme'|trans|ucfirst }}</span>
                             </div>
                           </button>
-                          <a href="{{ geturl('detail_theme') }}&theme={{ installedTheme.value }}" class="btn btn-default" role="button" title="{{ installedTheme.label|ucfirst }}">
-                            {{ macro.icon('eye') }}&nbsp;
-                            <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
-                          </a>
+                          {{ macro.buttonIcon(geturl('detail_theme') ~ '&theme=' ~ installedTheme.value, 'eye', 'lbl.Details'|trans|ucfirst) }}
                         </div>
                       </div>
                     {% endif %}
