@@ -360,12 +360,12 @@
       position: absolute;
       right: -3px;
       top: 26px;
-      transform: rotate(90deg);
-      transition: all 250ms;
       width: 20px;
 
       .fa-angle-right {
         color: $white;
+        transform: rotate(90deg);
+        transition: all 250ms;
       }
     }
 
