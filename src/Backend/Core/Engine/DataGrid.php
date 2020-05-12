@@ -4,7 +4,6 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
-use Backend\Core\Language\Language as BL;
 use SpoonDatagridSource;
 use SpoonFilter;
 use SpoonFormDropdown;
@@ -289,7 +288,7 @@ class DataGrid extends \SpoonDataGrid
         $this->addColumn('dragAndDropHandle', null, '<span class="fas fa-bars" aria-hidden="true"></span>');
         $this->addColumn(
             'sortHandle',
-            \SpoonFilter::ucfirst(BL::lbl('Move')),
+            \SpoonFilter::ucfirst(BackendLanguage::lbl('Move')),
             '<div class="btn-group"><button data-role="order-move" data-direction="up" class="btn btn-default btn-icon-only btn-sm" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
                      <span class="fas fa-arrow-up" aria-hidden="true"></span>
                    </button>
