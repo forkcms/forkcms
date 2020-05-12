@@ -1852,12 +1852,14 @@ jsBackend.messages = {
     var role = 'status'
     var live = 'polite'
     var dismissableClass = ' d-none'
+    var autohide = false
 
     switch (type) {
       case 'danger':
         icon = 'far fa-times-circle'
         role = 'alert'
         live = 'assertive'
+        dismissableClass = ''
         break
       case 'warning':
         icon = 'fas fa-exclamation-circle'
@@ -1866,17 +1868,20 @@ jsBackend.messages = {
         break
       case 'success':
         icon = 'far fa-check-circle'
+        autohide = true
         break
       case 'info':
         icon = 'fas fa-info-circle'
+        autohide = true
         break
     }
 
+    // overrule dismissableClass if custom dismissable is true
     if (dismissable) {
       dismissableClass = ''
     }
 
-    var html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="false">' +
+    var html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="' + autohide + '" data-delay="5000">' +
       '<div class="toast-body">' +
         '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
           '<i class="fas fa-times"></i>' +
@@ -1895,15 +1900,6 @@ jsBackend.messages = {
 
     // show
     $('#' + uniqueId).toast('show')
-
-    // timeout
-    if (optionalClass === undefined || optionalClass !== 'toast-inline') {
-      if (type === 'info' || type === 'success') {
-        setTimeout(function () {
-          $('#' + uniqueId).toast('hide')
-        }, 5000)
-      }
-    }
   }
 }
 
