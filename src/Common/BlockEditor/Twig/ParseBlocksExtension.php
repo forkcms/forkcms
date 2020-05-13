@@ -34,7 +34,7 @@ final class ParseBlocksExtension extends AbstractExtension
     {
         $data = json_decode($json, true);
 
-        if ($data === false || !array_key_exists('blocks', $data) || !array_key_exists('time', $data)) {
+        if ($data === false || !is_array($data) || !array_key_exists('blocks', $data) || !array_key_exists('time', $data)) {
             return $json;
         }
 
