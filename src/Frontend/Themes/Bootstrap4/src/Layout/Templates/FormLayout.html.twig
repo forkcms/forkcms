@@ -85,7 +85,7 @@
   {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
   {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
   <div class="custom-control custom-radio{{ 'radio-inline' in parent_label_class ? ' custom-control-inline' }}">
-    {{- form_label(form, null, { widget: block('sumo_custom_checkbox_widget'), label_attr: {'class': 'custom-control-label'} }) -}}
+    {{- form_label(form, null, { widget: block('sumo_custom_radio_widget'), label_attr: {'class': 'custom-control-label'} }) -}}
   </div>
 {%- endblock radio_widget %}
 
@@ -93,3 +93,8 @@
   {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) %}
   <input type="checkbox" {% with { attr: attr} %}{{ block('widget_attributes') }}{% endwith %}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
 {% endblock sumo_custom_checkbox_widget %}
+
+{% block sumo_custom_radio_widget %}
+  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) %}
+  <input type="radio" {% with { attr: attr} %}{{ block('widget_attributes') }}{% endwith %}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{% endblock sumo_custom_radio_widget %}
