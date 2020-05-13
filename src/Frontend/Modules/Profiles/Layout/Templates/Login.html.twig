@@ -31,7 +31,8 @@
         <label class="control-label" for="password">
           {{ 'lbl.Password'|trans|ucfirst }}{{ macro.required }}
         </label>
-        {% form_field_error password %}{% form_field password %}
+        {% form_field password %}
+        {% form_field_error password %}
       </div>
       <div class="form-group">
         <div class="form-check">
