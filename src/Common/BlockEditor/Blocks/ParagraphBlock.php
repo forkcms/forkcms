@@ -2,12 +2,17 @@
 
 namespace Common\BlockEditor\Blocks;
 
+use Common\Language;
+
 final class ParagraphBlock extends AbstractBlock
 {
     public function getConfig(): array
     {
         return [
             'class' => 'BlockEditor.blocks.Paragraph',
+            'config' => [
+                'placeholder' => Language::lbl('ClickHereToAddContent')
+            ]
         ];
     }
 
