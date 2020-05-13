@@ -18,7 +18,7 @@
           <ul class="nav nav-pills align-items-center">
             <li class="nav-item mr-2">{{ 'lbl.Categories'|trans|ucfirst }}</li>
             {% for category in faqCategories %}
-              <li class="nav-item mr-2"><a class="nav-link active py-1 px-2" href="#{{ category.url }}" title="{{ category.title }}">{{ category.title }}</a></li>
+              <li class="nav-item mr-2"><a class="nav-link active py-1 px-2" href="#{{ category.url }}">{{ category.title }}</a></li>
             {% endfor %}
           </ul>
         </div>
@@ -33,7 +33,7 @@
               <header class="faq-category-heading">
                 {# do not remove the id as can be used as an achor #}
                 <h2 class="h3" id="{{ category.url }}">
-                  <a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a>
+                  <a href="{{ category.full_url }}">{{ category.title }}</a>
                 </h2>
               </header>
             {% endif %}

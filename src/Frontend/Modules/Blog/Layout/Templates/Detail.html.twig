@@ -30,13 +30,13 @@
         <div class="row">
           <div class="col-md-6">
             {{ 'lbl.Category'|trans|ucfirst }}
-            <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}
+            <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}
 
             {% if item.tags %}
               {{ 'lbl.Tags'|trans }}:
               <span itemprop="keywords">
                       {% for tag in item.tags %}
-                      <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                      <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag">
                         {{ tag.name }}
                         </a>{% if not loop.last %},{% endif %}
                       {% endfor %}
@@ -81,14 +81,14 @@
           <ul class="pagination">
             {% if navigation.previous %}
               <li class="page-item">
-                <a class="page-link" href="{{ navigation.previous.url }}" title="{{ navigation.previous.title }}">&larr;
+                <a class="page-link" href="{{ navigation.previous.url }}">&larr;
                   <span class="sr-only">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.previous.title }}</span></a>
               </li>
             {% endif %}
             {% if navigation.next %}
               <li class="page-item ml-auto">
-                <a class="page-link" href="{{ navigation.next.url }}" title="{{ navigation.next.title }}">
+                <a class="page-link" href="{{ navigation.next.url }}">
                   <span class="sr-only">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.next.title }}</span> &rarr;
                 </a>

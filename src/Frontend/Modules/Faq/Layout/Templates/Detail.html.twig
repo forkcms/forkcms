@@ -108,7 +108,7 @@
         <ul>
           {% for inSameCategory in inSameCategory %}
             <li>
-              <a href="{{ inSameCategory.full_url }}" title="{{ inSameCategory.question }}">
+              <a href="{{ inSameCategory.full_url }}">
                 {{ inSameCategory.question }}
               </a>
             </li>
@@ -128,7 +128,7 @@
     <div class="block-faq-related-body">
       <ul class="list-group">
         {% for related in related %}
-          <li class="list-group-item list-group-item-action"><a href="{{ related.full_url }}" title="{{ related.question }}">{{ related.question }}</a></li>
+          <li class="list-group-item list-group-item-action"><a href="{{ related.full_url }}">{{ related.question }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -139,7 +139,7 @@
   <nav class="block-footer mt-5" aria-label="{{ 'lbl.FaqPageNavigationAriaLabel'|trans }}">
     <ul class="pagination">
       <li class="page-item">
-        <a class="page-link" href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+        <a class="page-link" href="{{ geturlforblock('Faq') }}">
           ← {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
         </a>
       </li>

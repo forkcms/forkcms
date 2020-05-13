@@ -22,7 +22,7 @@
 
             <header class="block-article-heading page-header" role="banner">
               <h2 itemprop="name">
-                <a href="{{ item.full_url }}" title="{{ item.title }}">
+                <a href="{{ item.full_url }}">
                   {{ item.title }}
                 </a>
               </h2>
@@ -59,7 +59,7 @@
               <div class="row">
                 <div class="col-md-6">
                   {{ 'lbl.Category'|trans|ucfirst }}
-                  <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+                  <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
                 </div>
 
                 <div class="col-md-6">
@@ -68,7 +68,7 @@
                       {{ 'lbl.Tags'|trans|ucfirst }}:
                       <span itemprop="keywords">
                         {% for tag in item.tags %}
-                        <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                        <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag">
                           {{ tag.name }}
                           </a>{% if not loop.last %},{% endif %}
                         {% endfor %}
