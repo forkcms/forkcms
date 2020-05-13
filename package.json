@@ -28,7 +28,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.9.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
     "jstree": "^3.3.8",
