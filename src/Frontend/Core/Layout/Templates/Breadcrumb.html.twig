@@ -6,7 +6,7 @@
         itemtype="https://schema.org/ListItem">
         {% if breadcrumb.url and not loop.last %}
           {# set the full url or the item link will not validate #}
-          <a href="{{ SITE_URL }}{{ breadcrumb.url }}" title="{{ breadcrumb.title }}" itemtype="http://schema.org/Thing"
+          <a href="{{ SITE_URL }}{{ breadcrumb.url }}" itemtype="http://schema.org/Thing"
             itemprop="item">
             <span itemprop="name">{{ breadcrumb.title }}</span>
           </a>
