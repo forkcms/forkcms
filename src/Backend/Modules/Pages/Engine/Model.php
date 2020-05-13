@@ -310,7 +310,7 @@ class Model
             // loop elements
             foreach ($navigation[$navigationType][$depth][$parentId] as $key => $aValue) {
                 $html .= "\t<li>" . "\n";
-                $html .= "\t\t" . '<a href="#">' . $aValue['navigation_title'] . '</a>' . "\n";
+                $html .= "\t\t" . '<a href="#">' . htmlspecialchars($aValue['navigation_title']) . '</a>' . "\n";
 
                 // insert recursive here!
                 if (isset($navigation[$navigationType][$depth + 1][$key])) {
@@ -844,7 +844,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // get childs
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -971,7 +971,7 @@ class Model
                         null,
                         null,
                         ['id' => $page['page_id']]
-                    ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1006,7 +1006,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1040,7 +1040,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
