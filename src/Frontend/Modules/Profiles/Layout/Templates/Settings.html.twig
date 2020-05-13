@@ -17,7 +17,7 @@
   {% block block_body %}
     <div class="block-body">
       {% form updateSettings %}
-      <fieldset class="form-horizontal">
+      <fieldset>
         <legend>{{ 'lbl.YourData'|trans|ucfirst }}</legend>
 
         <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
@@ -78,7 +78,7 @@
         </div>
       </fieldset>
 
-      <fieldset class="form-horizontal">
+      <fieldset>
         <legend>{{ 'lbl.YourLocationData'|trans|ucfirst }}</legend>
 
         <div class="form-group{% if txtCityError %} has-error{% endif %}">
@@ -104,7 +104,7 @@
           {% form_field_error about %}
         </div>
       </fieldset>
-      <fieldset class="form-horizontal">
+      <fieldset>
         <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
         <div class="form-group{% if fileAvatarError %} has-error{% endif %}">
           {% if avatar %}
@@ -124,7 +124,7 @@
 
       <div class="form-group">
         <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-        <a href="{{ geturlforblock('Profiles', 'ChangePassword') }}" class="btn btn-primary pull-right">{{ 'lbl.NewPassword'|trans|ucfirst }}</a>
+        <a href="{{ geturlforblock('Profiles', 'ChangePassword') }}" class="btn btn-primary">{{ 'lbl.NewPassword'|trans|ucfirst }}</a>
       </div>
       {% endform %}
     </div>
