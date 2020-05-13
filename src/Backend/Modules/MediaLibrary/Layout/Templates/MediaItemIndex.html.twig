@@ -12,6 +12,7 @@
         <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
         <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
       </div>
+      {{ macro.buttonIcon( geturl('MediaItemIndex'), 'photo-video', 'lbl.AllMedia'|trans|capitalize, 'btn-default btn-sm mb-2') }}
       <div id="tree">
         {{ tree|raw }}
       </div>
