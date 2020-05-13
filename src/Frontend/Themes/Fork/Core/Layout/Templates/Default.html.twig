@@ -1,8 +1,8 @@
 {% extends 'Core/Layout/Templates/Base.html.twig' %}
 
 {% block breadcrumb %}
- <div class="row">
-   <div class="col-lg-offset-2 col-lg-8">
+ <div class="row justify-content-center">
+   <div class="col-lg-8">
      {% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
    </div>
  </div>
@@ -18,11 +18,11 @@
 
   {% if renderSection %}
   <div class="section-default">
-    <div class="row">
+    <div class="row justify-content-center">
       {# Main positions #}
       {% for content in positions.main %}
         {% if content.html %}
-          <div class="col-lg-offset-2 col-lg-8">
+          <div class="col-lg-8">
             {{ content.html|raw }}
           </div>
         {% endif %}

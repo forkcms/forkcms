@@ -387,6 +387,10 @@
         <translation language="el"><![CDATA[Όλες οι κατηγορίες]]></translation>
         <translation language="pl"><![CDATA[wszystkie kategorie]]></translation>
       </item>
+      <item type="label" name="FaqPageNavigationAriaLabel">
+        <translation language="nl"><![CDATA[Page navigation faq]]></translation>
+        <translation language="en"><![CDATA[Page navigation faq]]></translation>
+      </item>
     </Core>
   </Frontend>
 </locale>

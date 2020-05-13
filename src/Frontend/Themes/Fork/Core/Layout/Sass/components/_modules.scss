@@ -1,13 +1,13 @@
 .block-heading,
 .block-article-heading {
   border-bottom: 0;
-  color: $brand-primary;
-  font-size: $font-size-small;
+  color: $primary;
+  font-size: $font-size-sm;
   padding: 0 0 15px;
   margin: 0;
 
   h1 {
-    font-size: $font-size-h2;
+    font-size: $font-size-base * 3;
   }
 
   h2,

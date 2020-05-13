@@ -453,6 +453,10 @@
         <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
         <translation language="it"><![CDATA[articoli correlati]]></translation>
       </item>
+      <item type="label" name="BlogPageNavigationAriaLabel">
+        <translation language="nl"><![CDATA[Page navigation blog]]></translation>
+        <translation language="en"><![CDATA[Page navigation blog]]></translation>
+      </item>
     </Core>
   </Frontend>
 </locale>

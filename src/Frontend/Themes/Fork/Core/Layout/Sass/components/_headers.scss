@@ -1,15 +1,15 @@
 .header {
   background-size: cover;
   background-position: center;
+  min-height: 250px;
 
   .page-header {
     border-bottom: 0;
     text-align: center;
     padding: 0;
-    margin: 100px 0;
 
     h1 {
-      font-size: $font-size-h2;
+      font-size: $h2-font-size;
       color: $white;
       -webkit-font-smoothing: antialiased;
       margin: 0;
@@ -17,29 +17,24 @@
   }
 
   &.header-blue {
-    background-color: $brand-primary-dark;
+    background-color: $blue-dark;
   }
 }
 
-@media screen and (min-width: $screen-md) {
+@include media-breakpoint-up(lg) {
 
-  .header .page-header {
-    margin: 150px 0;
+  .header {
+    min-height: 500px;
 
-    h1 {
-      font-size: $font-size-h1;
+    .page-header h1 {
+      font-size: $h1-font-size;
     }
   }
 }
 
+@include media-breakpoint-up(xl) {
 
-@media screen and (min-width: $screen-lg) {
-
-  .header .page-header {
-    margin: 200px 0;
-
-    h1 {
-      font-size: $font-size-h1;
-    }
+  .header {
+    min-height: 600px;
   }
 }

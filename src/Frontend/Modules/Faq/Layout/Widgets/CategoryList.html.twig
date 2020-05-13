@@ -6,16 +6,16 @@
   <aside class="module-faq widget-faq-category-list">
     {% block widget_heading %}
       <header class="widget-heading">
-        <h3>{{ 'lbl.Faq'|trans }}: {{ widgetFaqCategory.title }}</h3>
+        <h2 class="h3">{{ 'lbl.Faq'|trans }}: {{ widgetFaqCategory.title }}</h2>
       </header>
     {% endblock %}
 
     {% block widget_body %}
       <div class="widget-body">
-        <ul>
+        <ul class="list-group">
           {% for widgetFaqCategoryList in widgetFaqCategoryList %}
-            <li>
-              <a href="{{ widgetFaqCategoryList.full_url }}" title="{{ widgetFaqCategoryList.question }}">
+            <li class="list-group-item list-group-item-action">
+              <a href="{{ widgetFaqCategoryList.full_url }}">
                 {{ widgetFaqCategoryList.question }}
               </a>
             </li>

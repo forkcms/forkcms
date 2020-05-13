@@ -6,53 +6,47 @@
       {{ item.title }}
     </h1>
 
-    <div class="row">
-      <div class="col-xs-12 col-md-6">
+    <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+      <div>
         {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
         {{ 'lbl.On'|trans }}
         <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s') }}">
           {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
         </time>
       </div>
-      <div class="col-xs-12 col-md-6">
-        <div class="pull-right">
-          {% if item.allow_comments %}
+      <div>
+        {% if item.allow_comments %}
+          <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
             {% if not item.comments %}
-              <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
-                {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
-              </a>
+              {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
             {% else %}
-              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
-                {% if item.comments_multiple %}
-                  {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
-                {% else %}
-                  {{ 'msg.BlogOneComment'|trans }}
-                {% endif %}
-              </a>
+              {% if item.comments_multiple %}
+                {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+              {% else %}
+                {{ 'msg.BlogOneComment'|trans }}
+              {% endif %}
             {% endif %}
-          {% endif %}
-        </div>
+          </a>
+        {% endif %}
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-xs-12 col-md-6">
+    <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+      <div>
         {{ 'lbl.Category'|trans|ucfirst }}
         <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
       </div>
-      <div class="col-xs-12 col-md-6">
-        <div class="pull-right">
-          {% if item.tags %}
-            {{ 'lbl.Tags'|trans|ucfirst }}:
-            <span itemprop="keywords">
-              {% for tag in item.tags %}
-                <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
-                  {{ tag.name }}
-                </a>
-              {% endfor %}
-            </span>
-          {% endif %}
-        </div>
+      <div>
+        {% if item.tags %}
+          {{ 'lbl.Tags'|trans|ucfirst }}:
+          <span itemprop="keywords">
+            {% for tag in item.tags %}
+              <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                {{ tag.name }}
+              </a>
+            {% endfor %}
+          </span>
+        {% endif %}
       </div>
     </div>
   </header>

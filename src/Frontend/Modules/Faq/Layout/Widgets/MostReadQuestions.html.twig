@@ -3,19 +3,19 @@
   - {{ widgetFaqMostRead }}: contains an array with all posts, each element contains data about the post
 #}
 {% if widgetFaqMostRead %}
-  <aside class="module-faq widget-faq-most-read-questions">
+  <aside class="module-faq widget-faq-most-read-questions mt-4">
     {% block widget_heading %}
       <header class="widget-heading">
-        <h3>{{ 'lbl.MostReadQuestions'|trans|ucfirst }}</h3>
+        <h2 class="h3">{{ 'lbl.MostReadQuestions'|trans|ucfirst }}</h2>
       </header>
     {% endblock %}
 
     {% block widget_body %}
       <div class="widget-body">
-        <ul>
+        <ul class="list-group">
           {% for widgetFaqMostRead in widgetFaqMostRead %}
-            <li>
-              <a href="{{ widgetFaqMostRead.full_url }}" title="{{ widgetFaqMostRead.question }}">
+            <li class="list-group-item list-group-item-action">
+              <a href="{{ widgetFaqMostRead.full_url }}">
                 {{ widgetFaqMostRead.question }}
               </a>
             </li>

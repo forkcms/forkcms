@@ -1,18 +1,19 @@
 <span class="sr-only">{{ 'lbl.YouAreHere'|trans }}</span>
-<ul class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList" role="navigation">
-  {% for breadcrumb in breadcrumb %}
-    <li{% if loop.last %} class="active"{% endif %} itemprop="itemListElement" itemscope
-      itemtype="https://schema.org/ListItem">
-      {% if breadcrumb.url and not loop.last %}
-        {# set the full url or the item link will not validate #}
-        <a href="{{ SITE_URL }}{{ breadcrumb.url }}" title="{{ breadcrumb.title }}" itemtype="http://schema.org/Thing"
-          itemprop="item">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {% for breadcrumb in breadcrumb %}
+      <li class="breadcrumb-item{% if loop.last %} active{% endif %}"{% if loop.last %} aria-current="page"{% endif %} itemprop="itemListElement" itemscope
+        itemtype="https://schema.org/ListItem">
+        {% if breadcrumb.url and not loop.last %}
+          {# set the full url or the item link will not validate #}
+          <a href="{{ SITE_URL }}{{ breadcrumb.url }}" itemtype="http://schema.org/Thing"
+            itemprop="item">
+            <span itemprop="name">{{ breadcrumb.title }}</span>
+          </a>
+        {% else %}
           <span itemprop="name">{{ breadcrumb.title }}</span>
-        </a>
-      {% else %}
-        <span itemprop="name">{{ breadcrumb.title }}</span>
-      {% endif %}
-      <meta itemprop="position" content="{{ loop.index }}" />
-    </li>
-  {% endfor %}
-</ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>

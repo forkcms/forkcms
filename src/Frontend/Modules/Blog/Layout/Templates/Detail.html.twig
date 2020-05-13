@@ -19,26 +19,24 @@
           {{ item.title }}
         </h1>
 
-        <div class="row">
-          <div class="col-xs-12">
-            {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
-            {{ 'lbl.On'|trans }}
-            <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
-              {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
-            </time>
-          </div>
+        <div>
+          {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
+          {{ 'lbl.On'|trans }}
+          <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
+            {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
+          </time>
         </div>
 
         <div class="row">
-          <div class="col-xs-12 col-md-6">
+          <div class="col-md-6">
             {{ 'lbl.Category'|trans|ucfirst }}
-            <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}
+            <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>{% if item.tags %},{% endif %}
 
             {% if item.tags %}
               {{ 'lbl.Tags'|trans }}:
               <span itemprop="keywords">
                       {% for tag in item.tags %}
-                      <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                      <a class="badge badge-primary" href="{{ tag.full_url }}" rel="tag">
                         {{ tag.name }}
                         </a>{% if not loop.last %},{% endif %}
                       {% endfor %}
@@ -48,7 +46,7 @@
           </div>
 
           {% if item.allow_comments %}
-            <div class="col-xs-12 col-md-6">
+            <div class="col-md-6">
               {% if not item.comments %}
                 <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
                   {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
@@ -78,19 +76,19 @@
     {% endblock %}
 
     {% block block_footer %}
-      <footer class="block-footer">
-        <nav>
-          <ul class="pager" role="navigation">
+      <footer class="block-footer mt-4">
+        <nav aria-label="{{ 'lbl.BlogPageNavigationAriaLabel'|trans }}">
+          <ul class="pagination">
             {% if navigation.previous %}
-              <li class="previous">
-                <a href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">&larr;
+              <li class="page-item">
+                <a class="page-link" href="{{ navigation.previous.url }}">&larr;
                   <span class="sr-only">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.previous.title }}</span></a>
               </li>
             {% endif %}
             {% if navigation.next %}
-              <li class="next">
-                <a href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}">
+              <li class="page-item ml-auto">
+                <a class="page-link" href="{{ navigation.next.url }}">
                   <span class="sr-only">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.next.title }}</span> &rarr;
                 </a>
@@ -104,7 +102,7 @@
 
   {% block block_article_comments %}
     {% if comments or item.allow_comments %}
-      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments">
+      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments mt-4">
         <header role="banner" class="block-blog-article-comments-heading">
           <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
         </header>
@@ -119,23 +117,23 @@
           {% for comment in comments %}
             {# Do not alter the id! It is used as an anchor #}
             <div
-              id="comment-{{ comment.id }}" class="block-blog-article-comments-comment row"
+              id="comment-{{ comment.id }}" class="block-blog-article-comments-comment d-flex"
               itemprop="comment"
               itemscope
               itemtype="http://schema.org/UserComments"
             >
-              <div class="col-sm-1 block-blog-article-comments-comment-avatar">
+              <div class="block-blog-article-comments-comment-avatar">
                 <meta itemprop="discusses" content="{{ item.title }}" />
                 {% if comment.website %}
                 <a href="{{ comment.website }}">
                   {% endif %}
-                  <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
+                  <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar rounded-circle mr-3" data-gravatar-id="{{ comment.gravatar_id }}" />
                   {% if comment.website %}
                 </a>
                 {% endif %}
               </div>
 
-              <div class="col-sm-7">
+              <div>
                 <div class="block-blog-article-comments-comment-meta" itemscope itemtype="http://schema.org/Person">
                   {% if comment.website %}
                   <a href="{{ comment.website }}" itemprop="url">
@@ -162,9 +160,9 @@
 
   {% if item.allow_comments %}
     {% block block_article_comment_form %}
-      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form">
+      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form mt-4 bg-light p-3">
         <header class="block-blog-article-comment-form-heading" role="banner">
-          <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>
+          <h4>{{ 'msg.Comment'|trans|ucfirst }}</h4>
         </header>
 
         <div class="block-blog-article-comment-form-alerts">
@@ -182,8 +180,8 @@
         <div class="block-blog-article-comment-form-body">
           {% form commentsForm %}
           <div class="row">
-            <div class="col-sm-7">
-              <div class="control-group {% if txtMessageError %}error{% endif %}">
+            <div class="col-md-7">
+              <div class="form-group {% if txtMessageError %}error{% endif %}">
                 <label class="control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}
                   {{ macro.required }}</label>
                 <div class="controls">
@@ -191,26 +189,23 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-5 authorInfo">
-              <div class="control-group {% if txtAuthorError %}error{% endif %}">
+            <div class="col-md-5 authorInfo">
+              <div class="form-group {% if txtAuthorError %}error{% endif %}">
                 <label class="control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}
                   {{ macro.required }}</label>
-                <div class="controls">
-                  {% form_field author %} {% form_field_error author %}
-                </div>
+                {% form_field author %}
+                {% form_field_error author %}
               </div>
-              <div class="control-group {% if txtEmailError %}error{% endif %}">
+              <div class="form-group {% if txtEmailError %}error{% endif %}">
                 <label class="control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}
                   {{ macro.required }}</label>
-                <div class="controls">
-                  {% form_field email %} {% form_field_error email %}
-                </div>
+                {% form_field email %}
+                {% form_field_error email %}
               </div>
-              <div class="control-group {% if txtWebsiteError %}error{% endif %}">
+              <div class="form-group {% if txtWebsiteError %}error{% endif %}">
                 <label class="control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
-                <div class="controls">
-                  {% form_field website %} {% form_field_error website %}
-                </div>
+                {% form_field website %}
+                {% form_field_error website %}
               </div>
             </div>
           </div>

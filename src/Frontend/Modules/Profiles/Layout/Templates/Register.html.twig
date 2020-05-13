@@ -21,36 +21,30 @@
         {% form register %}
         <fieldset class="form-horizontal">
           <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
-            <label class="control-label col-sm-2" for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
+            <label class="control-label" for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
               {{ macro.required }}</label>
-            <div class="col-sm-6">
-              {% form_field_error display_name %}{% form_field display_name %}
-            </div>
+            {% form_field display_name %}
+            {% form_field_error display_name %}
           </div>
           <div class="form-group{% if txtEmailError %} has-error{% endif %}">
-            <label class="control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|ucfirst }}
+            <label class="control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}
               {{ macro.required }}</label>
-            <div class="col-sm-6">
-              {% form_field_error email %}{% form_field email %}
-            </div>
+            {% form_field email %}
+            {% form_field_error email %}
           </div>
           <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
-            <label class="control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|ucfirst }}
+            <label class="control-label" for="password">{{ 'lbl.Password'|trans|ucfirst }}
               {{ macro.required }}</label>
-            <div class="col-sm-6">
-              {% form_field_error password %}{% form_field password %}
-            </div>
+            {% form_field password %}
+            {% form_field_error password %}
           </div>
           <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-6">
-              <label for="showPassword">{% form_field show_password %} {{ 'lbl.ShowPassword'|trans|ucfirst }} </label>
+            <div class="form-check">
+              {% form_field show_password %}
+              <label class="form-check-label" for="showPassword">{{ 'lbl.ShowPassword'|trans|ucfirst }} </label>
             </div>
           </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-6">
-              <input class="btn btn-primary" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
-            </div>
-          </div>
+          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
         </fieldset>
         {% endform %}
       {% endif %}

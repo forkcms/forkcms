@@ -39,7 +39,7 @@
           <div class="input-group">
             {{ form_widget(form.email) }}
             <div class="input-group-btn">
-              <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-default">{{ form.subscribe.vars.label|trans }}</button>
+              <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-primary">{{ form.subscribe.vars.label|trans }}</button>
               {% do form.subscribe.setRendered %}
             </div>
           </div>

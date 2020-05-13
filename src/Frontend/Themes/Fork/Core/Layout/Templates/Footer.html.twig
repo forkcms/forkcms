@@ -1,16 +1,14 @@
 <footer id="footer">
   <div class="container">
-    <nav>
-      <ul class="nav nav-pills" role="navigation">
-        <li><a href="/">© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
-        {% for footerLink in footerLinks %}
-          <li>
-            <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
-              {{ footerLink.navigation_title }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </nav>
+    <ul class="nav nav-pills justify-content-center">
+      <li class="nav-item"><a class="nav-link" href="/">© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
+      {% for footerLink in footerLinks %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
+            {{ footerLink.navigation_title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
   </div>
 </footer>

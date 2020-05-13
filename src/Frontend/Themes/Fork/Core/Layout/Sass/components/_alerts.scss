@@ -1,0 +1,8 @@
+.alert {
+  color: $white;
+
+  a:not(.btn) {
+    color: $white;
+    text-decoration: underline;
+  }
+}

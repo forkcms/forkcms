@@ -2007,6 +2007,10 @@
         <translation language="ru"><![CDATA[Аватар]]></translation>
         <translation language="pl"><![CDATA[Twój awatar]]></translation>
       </item>
+      <item type="label" name="UploadAvatar">
+        <translation language="nl"><![CDATA[upload avatar]]></translation>
+        <translation language="en"><![CDATA[upload avatar]]></translation>
+      </item>
       <item type="label" name="YourData">
         <translation language="nl"><![CDATA[uw gegevens]]></translation>
         <translation language="en"><![CDATA[your data]]></translation>

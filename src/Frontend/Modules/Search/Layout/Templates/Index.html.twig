@@ -8,18 +8,20 @@
   {% block block_heading %}{% endblock %}
 
   {% block block_body %}
-    {% form search %}
-    <label for="q">
-      {{ 'lbl.SearchTerm'|trans|ucfirst }}{{ macro.required }}
-    </label>
-    <div class="input-group{% if txtQError %} error{% endif %}">
-      {% form_field q %}
-      <span class="input-group-btn">
+    <div class="mb-5">
+      {% form search %}
+        <label for="q">
+          {{ 'lbl.SearchTerm'|trans|ucfirst }}{{ macro.required }}
+        </label>
+        <div class="input-group{% if txtQError %} error{% endif %}">
+          {% form_field q %}
+          <span class="input-group-append">
         <input id="submit" class="btn btn-primary" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
       </span>
+        </div>
+      {% form_field_error q %}
+      {% endform %}
     </div>
-    {% form_field_error q %}
-    {% endform %}
   {% endblock %}
 
   {% block block_footer %}{% endblock %}

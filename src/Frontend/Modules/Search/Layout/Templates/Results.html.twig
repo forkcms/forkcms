@@ -16,24 +16,27 @@
 
       {% block block_body %}
         <div class="block-body">
-          <div class="media">
-            {% for result in searchResults %}
-              <section class="media-body">
-                <header role="banner">
-                  <h3 class="media-heading" itemprop="name">
-                    <a href="{{ result.full_url }}" itemprop="url">
-                      {{ result.title }}
-                    </a>
-                  </h3>
-                </header>
-                {% if not result.introduction %}
-                  <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
-                {% else %}
-                  <div itemprop="description">{{ result.introduction|raw }}</div>
-                {% endif %}
-              </section>
-            {% endfor %}
-          </div>
+          {% for result in searchResults %}
+            <section{% if not loop.last %} class="border-bottom mb-4"{% endif %}>
+              <header role="banner">
+               <div class="d-flex">
+                 <h2 class="h4 media-heading" itemprop="name">
+                   <a href="{{ result.full_url }}" itemprop="url">
+                     {{ result.title }}
+                   </a>
+                 </h2>
+                 <div class="ml-auto">
+                  <span class="badge badge-primary">{{ result.module }}</span>
+                 </div>
+               </div>
+              </header>
+              {% if not result.introduction %}
+                <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
+              {% else %}
+                <div itemprop="description">{{ result.introduction|raw }}</div>
+              {% endif %}
+            </section>
+          {% endfor %}
         </div>
       {% endblock %}
 

@@ -20,7 +20,7 @@ class Form extends FrontendBaseWidget
         $this->addCSS('Search.css');
 
         $form = new FrontendForm('search', FrontendNavigation::getUrlForBlock('Search'), 'get', null, false);
-        $form->setParameter('class', 'navbar-form');
+        $form->setParameter('class', 'form-inline my-2 my-lg-0 ml-2');
         $form->setParameter('role', 'search');
         $form->addText('q_widget')->setAttributes(
             [

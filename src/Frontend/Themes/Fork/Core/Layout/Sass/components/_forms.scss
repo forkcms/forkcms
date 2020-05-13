@@ -1,12 +1,18 @@
-.form-control {
-  box-shadow: none;
+label {
 
-  &:focus {
-    box-shadow: none;
+  abbr[title],
+  abbr[data-original-title] {
+    border: none;
+    text-decoration: none;
   }
 }
 
-.alert-danger:hover,
-.alert-danger {
-  color: $white !important;
+select.form-control[size] {
+  height: $input-height;
+}
+
+.input-group .twitter-typeahead {
+  flex: 1 1 0%;
+  min-width: 0;
+  margin-bottom: 0;
 }
