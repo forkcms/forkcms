@@ -57,39 +57,29 @@
         <div class="block-faq-feedback-form-body">
           {% if form_feedback %}
             {% form feedback %}
-            <div class="well">
-              <div class="row">
+            <div class="card">
+              <div class="card-body">
                 {{ hidQuestionId|raw }}
-                <div class="col-md-3">
-                  {{ 'msg.Feedback'|trans|ucfirst }}
+                <p><strong>{{ 'msg.Feedback'|trans|ucfirst }}</strong></p>
+                {{ hidQuestionId|raw }}
+                <div class="form-group">
+                  {% for useful in useful %}
+                    <div class="form-check form-check-inline">
+                      {{ useful.rbtUseful|raw }}
+                      <label class="form-check-label" for="{{ useful.id }}">{{ useful.label|ucfirst }}</label>
+                    </div>
+                  {% endfor %}
                 </div>
-                <div class="col-md-9">
-                  <div class="row">
-                    {{ hidQuestionId|raw }}
-                  </div>
-                  <div class="col-md-9">
-                    <div class="row">
-                      {% for useful in useful %}
-                        <div class="col-md-2">
-                          {{ useful.rbtUseful|raw }}
-                          <label for="{{ useful.id }}">{{ useful.label|ucfirst }}</label>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12" data-role="fork-feedback-container" {% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
-                        <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-                          <label for="message">
-                            {{ 'msg.HowToImprove'|trans|ucfirst }}
-                            {{ macro.required }}
-                          </label>
-                          {% form_field message %} {% form_field_error message %}
-                        </p>
-                        <p>
-                          <input class="btn btn-primary" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />
-                      </div>
-                    </div>
-                  </div>
+                <div data-role="fork-feedback-container" {% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
+                  <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
+                    <label for="message">
+                      {{ 'msg.HowToImprove'|trans|ucfirst }}
+                      {{ macro.required }}
+                    </label>
+                    {% form_field message %} {% form_field_error message %}
+                  </p>
+                  <p>
+                  <input class="btn btn-primary" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />
                 </div>
               </div>
             </div>
