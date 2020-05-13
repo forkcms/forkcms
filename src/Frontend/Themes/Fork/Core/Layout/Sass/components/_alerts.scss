@@ -1,12 +1,8 @@
-@each $color, $value in $theme-colors {
-  .alert-#{$color} {
-    background: $value;
-    border-color: $value;
-    color: $white;
+.alert {
+  color: $white;
 
-    a:not(.btn) {
-      color: $white;
-      text-decoration: underline;
-    }
+  a:not(.btn) {
+    color: $white;
+    text-decoration: underline;
   }
 }
