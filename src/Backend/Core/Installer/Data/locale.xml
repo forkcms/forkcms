@@ -12673,6 +12673,10 @@
         <translation language="nl"><![CDATA[Deze pagina kan geen subpagina's bevatten]]></translation>
         <translation language="en"><![CDATA[This page can not have subpages]]></translation>
       </item>
+      <item type="label" name="ClickHereToAddContent">
+        <translation language="nl"><![CDATA[klik hier om inhoud toe te voegen]]></translation>
+        <translation language="en"><![CDATA[click here to add content]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>
