@@ -14,6 +14,7 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css',
     'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css',
+    'node_modules/select2/dist/css/select2.css',
     'node_modules/cropper/dist/cropper.css'
   ])
   .pipe(gulp.dest('./css/vendors'))
