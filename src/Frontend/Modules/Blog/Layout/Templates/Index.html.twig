@@ -28,14 +28,14 @@
               </h2>
 
               <div class="row">
-                <div class="col-12 col-md-8">
+                <div class="col-md-8">
                   {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
                   {{ 'lbl.On'|trans }}
                   <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s' ) }}">
                     {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
                   </time>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-md-4">
                   {% if item.allow_comments %}
                     <div class="pull-right">
                       {% if not item.comments %}
@@ -57,12 +57,12 @@
               </div>
 
               <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-md-6">
                   {{ 'lbl.Category'|trans|ucfirst }}
                   <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="col-md-6">
                   <div class="pull-right">
                     {% if item.tags %}
                       {{ 'lbl.Tags'|trans|ucfirst }}:
