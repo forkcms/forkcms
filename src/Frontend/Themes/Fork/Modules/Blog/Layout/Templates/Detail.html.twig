@@ -16,19 +16,17 @@
       </div>
       <div>
         {% if item.allow_comments %}
-          {% if not item.comments %}
-            <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+          <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+            {% if not item.comments %}
               {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
-            </a>
-          {% else %}
-            <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+            {% else %}
               {% if item.comments_multiple %}
                 {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
               {% else %}
                 {{ 'msg.BlogOneComment'|trans }}
               {% endif %}
-            </a>
-          {% endif %}
+            {% endif %}
+          </a>
         {% endif %}
       </div>
     </div>
