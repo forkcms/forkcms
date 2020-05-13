@@ -32,6 +32,9 @@
           {{ 'lbl.Password'|trans|ucfirst }}{{ macro.required }}
         </label>
         {% form_field password %}
+        <small class="form-text text-muted">
+          <a href="{{ geturlforblock('Profiles','ForgotPassword') }}">{{ 'msg.ForgotPassword'|trans }}</a>
+        </small>
         {% form_field_error password %}
       </div>
       <div class="form-group">
@@ -45,9 +48,6 @@
       </div>
       <div class="form-group">
         <input class="btn btn-primary" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
-        <small>
-          <a href="{{ geturlforblock('Profiles','ForgotPassword') }}">{{ 'msg.ForgotPassword'|trans }}</a>
-        </small>
       </div>
     </fieldset>
     {% endform %}
