@@ -149,13 +149,6 @@ class MediaItemDataGrid extends DataGridDatabase
             );
         }
 
-        $this->setColumnURL(
-            'num_connected',
-            $editActionUrl
-            . '&id=[id]'
-            . ($folderId ? '&folder=' . $folderId : '')
-        );
-
         // If we have an image, show the image
         if ($type->isImage()) {
             // Add image url

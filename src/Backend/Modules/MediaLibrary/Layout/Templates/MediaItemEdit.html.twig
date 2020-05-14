@@ -2,21 +2,7 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation">
-    <div id="mediaTree" class="pages-tree">
-      {{ macro.alert('warning', 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst, null, null, {'class': 'd-lg-none'}) }}
-      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
-        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
-      </button>
-      <div class="form-group">
-        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
-        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
-      </div>
-      <div id="tree">
-        {{ tree|raw }}
-      </div>
-    </div>
-  </div>
+  {% include 'MediaLibrary/Layout/Templates/MediaFolderTree.html.twig' %}
 {% endblock %}
 
 {% block actionbar %}
@@ -36,10 +22,29 @@
 
 {% block content %}
   {{ form_start(form) }}
+
   {% if form.url %}
     {{ form_row(form.url) }}
   {% endif %}
+
   {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-6">
+        {% if form.vars.value.mediaItemEntity.type == 'image' %}
+          <label>{{ 'lbl.Image'|trans|ucfirst }}</label>
+          <img src="{{ form.vars.value.mediaItemEntity.webpath() }}" alt="">
+        {% elseif form.vars.value.mediaItemEntity.type == 'movie'  %}
+          <label>{{ 'lbl.MediaMovie'|trans|ucfirst }}</label>
+          <div class="embed-responsive embed-responsive-16by9">
+            {{ form.vars.value.mediaItemEntity.getIncludeHTML()|raw }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
   <div class="fork-module-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">

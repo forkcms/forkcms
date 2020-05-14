@@ -143,6 +143,12 @@
         <translation language="ru"><![CDATA[папка]]></translation>
         <translation language="pl"><![CDATA[katalog]]></translation>
       </item>
+      <item type="label" name="MediaCurrentFolder">
+        <translation language="en"><![CDATA[current folder]]></translation>
+        <translation language="nl"><![CDATA[huidige map]]></translation>
+        <translation language="ru"><![CDATA[текущая папка]]></translation>
+        <translation language="pl"><![CDATA[obecny katalog]]></translation>
+      </item>
       <item type="message" name="MediaGroupEdited">
         <translation language="en"><![CDATA[The media is changed correctly.<br/><strong>Attention:</strong> these changes will be used after saving.]]></translation>
         <translation language="nl"><![CDATA[Correct gewijzigd!<br/><strong>Opgelet</strong>: nog opslaan om te bevestigen.]]></translation>
@@ -283,6 +289,14 @@
         <translation language="nl"><![CDATA[video's]]></translation>
         <translation language="ru"><![CDATA[видео]]></translation>
         <translation language="pl"><![CDATA[filmy]]></translation>
+      </item>
+      <item type="label" name="MediaMovie">
+        <translation language="de"><![CDATA[Video]]></translation>
+        <translation language="en"><![CDATA[movie]]></translation>
+        <translation language="fr"><![CDATA[vidéo]]></translation>
+        <translation language="nl"><![CDATA[video]]></translation>
+        <translation language="ru"><![CDATA[кино]]></translation>
+        <translation language="pl"><![CDATA[film]]></translation>
       </item>
       <item type="label" name="MediaMovieSource">
         <translation language="en"><![CDATA[source]]></translation>

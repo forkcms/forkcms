@@ -163,6 +163,10 @@ jsBackend.mediaLibrary.tree = {
     // Init folder tree
     var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
+    if ($('[data-clear-tree]').length > 0) {
+      jsTreeInstance.jstree('clear_state')
+    }
+
     jsTreeInstance.on('move_node.jstree', function (event, data) {
       jsBackend.mediaLibrary.tree.onMove(event, data, jsTreeInstance)
     })
