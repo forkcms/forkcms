@@ -12,7 +12,9 @@
         <table class="table table-striped">
           <tr>
             <td rowspan="{% if not record.settings.last_failed_login_attempt %}5{% endif %}{% if record.settings.last_failed_login_attempt %}6{% endif %}" class="text-center align-middle">
-              <img class="rounded-circle rounded-circle-size-user{% if not record.settings.avatar %} d-none{% endif %}" src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ record.settings.avatar }}" alt="" data-fork-cms-role="image-preview" data-id="avatar" />
+              <label for="avatar">
+                <img class="rounded-circle rounded-circle-size-user" src="{% if record.settings.avatar %}{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ record.settings.avatar }}{% else %}{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg{% endif %}" alt="" data-fork-cms-role="image-preview" data-id="avatar" />
+              </label>
             </td>
             <th>{{ 'lbl.Name'|trans|ucfirst }}:</th>
             <td><strong>{{ record.settings.name }} {{ record.settings.surname }}</strong></td>

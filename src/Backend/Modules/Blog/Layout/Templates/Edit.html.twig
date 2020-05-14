@@ -70,12 +70,14 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-lg-3">
-                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                          <label for="image">
+                            <img src="{% if item.image %}{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}{% else %}{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg{% endif %}" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                          </label>
                         </div>
                         <div class="col-lg-9">
                           <div class="custom-file">
                             {% form_field image %}
-                            <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                            <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
                           </div>
                           {% form_field_error image %}
                           {% if item.image %}
