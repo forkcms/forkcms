@@ -49,8 +49,8 @@ class Index extends BackendBaseActionIndex
             ['delete' => BL::lbl('Delete')],
             'delete',
             false,
-            'form-control',
-            'form-control danger'
+            'form-control form-control-sm',
+            'form-control form-control-sm danger'
         );
         $ddmMassAction->setOptionAttributes('delete', [
             'data-target' => '#confirmDelete',
