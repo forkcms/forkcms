@@ -12,7 +12,8 @@
     margin: 0;
 
     &.field-submit {
-      padding: 15px 25px;
+      border: 0;
+      padding: $spacer 0 0;
     }
   }
 
