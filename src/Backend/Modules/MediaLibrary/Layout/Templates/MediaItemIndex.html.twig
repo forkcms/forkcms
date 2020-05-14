@@ -2,27 +2,13 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation">
-    <div id="mediaTree" class="pages-tree">
-      {{ macro.alert('warning', 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst, null, null, {'class': 'd-lg-none'}) }}
-      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
-        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
-      </button>
-      <div class="form-group">
-        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
-        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
-      </div>
-      {{ macro.buttonIcon( geturl('MediaItemIndex'), 'photo-video', 'lbl.AllMedia'|trans|capitalize, 'btn-default btn-sm mb-2') }}
-      <div id="tree">
-        {{ tree|raw }}
-      </div>
-    </div>
-  </div>
+  {% include 'MediaLibrary/Layout/Templates/MediaFolderTree.html.twig' %}
 {% endblock %}
 
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
+      {{ macro.buttonIcon( geturl('MediaItemIndex'), 'photo-video', 'lbl.AllMedia'|trans|capitalize, 'btn-default btn-sm') }}
       {% if showMediaLibraryMediaItemUpload %}
         {% if mediaFolder %}
           {{ macro.buttonIcon( geturl('MediaItemUpload', null, '&folder='~mediaFolder.id), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
