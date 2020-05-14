@@ -290,6 +290,14 @@
         <translation language="ru"><![CDATA[видео]]></translation>
         <translation language="pl"><![CDATA[filmy]]></translation>
       </item>
+      <item type="label" name="MediaMovie">
+        <translation language="de"><![CDATA[Video]]></translation>
+        <translation language="en"><![CDATA[movie]]></translation>
+        <translation language="fr"><![CDATA[vidéo]]></translation>
+        <translation language="nl"><![CDATA[video]]></translation>
+        <translation language="ru"><![CDATA[кино]]></translation>
+        <translation language="pl"><![CDATA[film]]></translation>
+      </item>
       <item type="label" name="MediaMovieSource">
         <translation language="en"><![CDATA[source]]></translation>
         <translation language="nl"><![CDATA[bron]]></translation>

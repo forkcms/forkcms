@@ -36,10 +36,29 @@
 
 {% block content %}
   {{ form_start(form) }}
+
   {% if form.url %}
     {{ form_row(form.url) }}
   {% endif %}
+
   {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-6">
+        {% if form.vars.value.mediaItemEntity.type == 'image' %}
+          <label>{{ 'lbl.Image'|trans|ucfirst }}</label>
+          <img src="{{ form.vars.value.mediaItemEntity.webpath() }}" alt="">
+        {% elseif form.vars.value.mediaItemEntity.type == 'movie'  %}
+          <label>{{ 'lbl.MediaMovie'|trans|ucfirst }}</label>
+          <div class="embed-responsive embed-responsive-16by9">
+            {{ form.vars.value.mediaItemEntity.getIncludeHTML()|raw }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
   <div class="fork-module-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
