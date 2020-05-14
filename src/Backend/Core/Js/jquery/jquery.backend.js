@@ -1276,7 +1276,7 @@
         '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-secondary">' +
+        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-secondary' + (options.showIconOnly ? ' btn-icon-only' : '') + '">' +
         '<span class="fas fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></div>' +

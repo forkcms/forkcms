@@ -1,6 +1,6 @@
 .btn {
   border-radius: 3px;
-  font-size: $font-size-base * 0.875;
+  font-size: $btn-font-size;
   -webkit-appearance: none;
 
   .svg-inline--fa {
@@ -115,7 +115,7 @@ a.btn {
 
   .btn .btn-text {
     display: inline-block;
-    font-size: $font-size-base * 0.875;
+    font-size: $btn-font-size;
     margin: 0;
   }
 }
