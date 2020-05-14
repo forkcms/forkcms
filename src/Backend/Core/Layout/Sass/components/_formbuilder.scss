@@ -7,9 +7,8 @@
 
   .field {
     border-bottom: 1px solid $gray-200;
-    border-radius: $border-radius-sm;
     background-color: $white;
-    padding: 25px;
+    padding: $spacer * 1.5 0;
     margin: 0;
 
     &.field-submit {

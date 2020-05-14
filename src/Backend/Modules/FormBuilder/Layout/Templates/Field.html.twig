@@ -31,8 +31,9 @@
       <div class="col-md-5">
         <ul class="list-unstyled">
           {% for item in items %}
-            <li class="checkbox">
-              <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label|raw }}</label>
+            <li class="form-check">
+              {{ item.field|raw }}
+              <label class="form-check-label" for="{{ item.id }}">{{ item.label|raw }}</label>
             </li>
           {% endfor %}
         </ul>
