@@ -125,7 +125,7 @@ class Settings extends FrontendBaseBlock
 
     private function displayNameCanStillBeChanged(): bool
     {
-        return $this->getAmountOfDisplayNameChanges() < FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES;
+        return FrontendProfilesModel::displayNameCanStillBeChanged($this->profile);
     }
 
     private function validateForm(): bool
