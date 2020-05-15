@@ -120,10 +120,10 @@ var jsBackend =
 
       // spinner stuff
       $(document).ajaxStart(function () {
-        $ajaxSpinner.show()
+        $ajaxSpinner.removeClass('d-none')
       })
       $(document).ajaxStop(function () {
-        $ajaxSpinner.hide()
+        $ajaxSpinner.addClass('d-none')
       })
     }
   }
