@@ -1,0 +1,15 @@
+<div class="sub-navigation d-none d-sm-block">
+  <div class="pages-tree">
+    {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans|ucfirst, null, null, {'class': 'd-md-none'}) }}
+    <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+      <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+    </button>
+    <div class="form-group">
+      <label for="pagetree-search" class="sr-only">{{ 'lbl.search'|trans|ucfirst }}</label>
+      <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text form-control-sm js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+    </div>
+    <div id="tree" {% if overview %} data-clear-tree{% endif %}>
+      {{ tree|raw }}
+    </div>
+  </div>
+</div>
