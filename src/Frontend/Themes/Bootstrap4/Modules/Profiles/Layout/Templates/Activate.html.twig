@@ -1,4 +1,5 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 {% if activationSuccess %}
+  <h1>{{ 'lbl.ActivateProfile'|trans|ucfirst }}</h1>
   {{ alerts.alert('success', 'msg.ActivationIsSuccess'|trans) }}
 {% endif %}
