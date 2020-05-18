@@ -50,7 +50,11 @@
       <div role="tabpanel" class="tab-pane" id="tabAuthentication" aria-labelledby="authentication-tab {% if form.data.authentication.required.vars.value %} show{% endif %}">
         {{ form_row(form.data.authentication.required) }}
         <div data-role="authentication-options" class="collapse{% if form.data.authentication.required.vars.checked %} show{% endif %}">
-          {{ form_rest(form.data.authentication) }}
+          {{ form_row(form.data.authentication.removeFromSearchIndex) }}
+          {{ form_label(form.data.authentication.groups) }}
+          {{ form_widget(form.data.authentication.groups) }}
+          {{ form_errors(form.data.authentication.groups) }}
+          <small class="help-text text-muted">{{ 'lbl.HelpAuthenticationGroups'|trans|ucfirst }}Only users in the selected groups will be able to access this page</small>
         </div>
       </div>
     {% else %}
@@ -238,6 +242,17 @@
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
+{% block _page_data_hreflang_widget %}
+  <div class="row">
+    {% for child in form.children %}
+      <div class="col-lg-4">
+        {{ form_row(child) }}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+
 {% block _page_data_redirect_redirect_entry_widget %}
   <div class="form-group">
     <div class="mb-2">
@@ -310,14 +325,14 @@
             <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body" data-role="page-block-form-wrapper">
-            {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}
             {{ form_row(form.extraType) }}
             <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.blockExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="rich_text">{{ form_row(form.html) }}</div>
             {{ form_rest(form) }}
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-flex">
+            <div class="mr-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
             {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
           </div>
         </div>

@@ -136,10 +136,12 @@ select[size="1"] {
 
 fieldset {
   border-bottom: 1px solid $gray-200;
-  margin-bottom: 15px;
+  margin-bottom: $spacer * 2;
+  padding-bottom: $spacer;
 
   legend {
     border: 0;
+    color: $black;
     font-size: $font-size-lg;
     margin-bottom: 15px;
 
