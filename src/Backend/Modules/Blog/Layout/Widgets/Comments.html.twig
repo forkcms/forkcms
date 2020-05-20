@@ -16,7 +16,7 @@
     {% if blogComments %}
       <ul class="list-unstyled">
         {% for blogComment in blogComments %}
-          <li>
+          <li{% if not loop.last %} class="mb-3"{% endif %}>
             {{ blogComment.author }} <span class="text-medium">{{ 'lbl.CommentedOnWithUrl'|trans|format(blogComment.full_url, blogComment.title)|raw }}</span>
           </li>
         {% endfor %}

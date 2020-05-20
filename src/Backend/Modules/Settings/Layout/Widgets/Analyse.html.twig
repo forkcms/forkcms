@@ -1,12 +1,12 @@
 {% if warnings %}
-  <div id="widgetSettingsAnalyse" class="card card-default">
+  <div id="widgetSettingsAnalyse" class="card card-primary">
     <div class="card-heading">
       <h2 class="card-title">{{ 'lbl.Analysis'|trans|ucfirst }}</h2>
     </div>
     <div class="card-body">
-      <ul>
+      <ul class="list-unstyled">
         {% for warning in warnings %}
-          <li>{{ warning.message | raw }}</li>
+          <li{% if not loop.last %} class="mb-3"{% endif %}>{{ warning.message | raw }}</li>
         {% endfor %}
       </ul>
     </div>
