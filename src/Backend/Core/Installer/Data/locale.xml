@@ -10400,20 +10400,20 @@
         <translation language="pl"><![CDATA[Komentarze zostały oznaczone jako spam.]]></translation>
       </item>
       <item type="message" name="CommentsToModerate">
-        <translation language="nl"><![CDATA[%1$s reactie(s) te modereren.]]></translation>
-        <translation language="en"><![CDATA[%1$s comment(s) to moderate.]]></translation>
-        <translation language="hu"><![CDATA[%1$s komment moderálva.]]></translation>
-        <translation language="it"><![CDATA[%1$s commento/i da moderare.]]></translation>
-        <translation language="ru"><![CDATA[%1$s коммент. ждут модерации.]]></translation>
-        <translation language="zh"><![CDATA[有%1$s条评论待审核]]></translation>
-        <translation language="fr"><![CDATA[%1$s commentaire(s) à modérer.]]></translation>
-        <translation language="de"><![CDATA[%1$s Kommentar(e) zu moderieren.]]></translation>
-        <translation language="es"><![CDATA[%1$s comentario(s) a moderación.]]></translation>
-        <translation language="lt"><![CDATA[%1$s komentarai(-ų) laukia patvirtinimo.]]></translation>
-        <translation language="uk"><![CDATA[%1$s коментарів чакає на перевірку.]]></translation>
-        <translation language="sv"><![CDATA[%1$s kommentera (er) till moderering.]]></translation>
-        <translation language="el"><![CDATA[Υπάρχουν %1$s σχόλια γιά έγκριση.]]></translation>
-        <translation language="pl"><![CDATA[%1$s komentarzy do mederacji.]]></translation>
+        <translation language="nl"><![CDATA[%1$s reactie(s) te <a href="%2$s">modereren</a>.]]></translation>
+        <translation language="en"><![CDATA[%1$s comment(s) to <a href="%2$s">moderate</a>.]]></translation>
+        <translation language="hu"><![CDATA[%1$s komment <a href="%2$s">moderálva</a>.]]></translation>
+        <translation language="it"><![CDATA[%1$s commento/i da <a href="%2$s">moderare</a>.]]></translation>
+        <translation language="ru"><![CDATA[%1$s коммент. ждут <a href="%2$s">модерации</a>.]]></translation>
+        <translation language="zh"><![CDATA[有%1$s条评论<a href="%2$s">待审</a>核]]></translation>
+        <translation language="fr"><![CDATA[%1$s commentaire(s) à <a href="%2$s">modérer</a>.]]></translation>
+        <translation language="de"><![CDATA[%1$s Kommentar(e) zu <a href="%2$s">moderieren</a>.]]></translation>
+        <translation language="es"><![CDATA[%1$s comentario(s) a <a href="%2$s">moderación</a>.]]></translation>
+        <translation language="lt"><![CDATA[%1$s komentarai(-ų) laukia <a href="%2$s">patvirtinimo</a>.]]></translation>
+        <translation language="uk"><![CDATA[%1$s коментарів чакає на <a href="%2$s">перевірку</a>.]]></translation>
+        <translation language="sv"><![CDATA[%1$s kommentera (er) till <a href="%2$s">moderering</a>.]]></translation>
+        <translation language="el"><![CDATA[Υπάρχουν %1$s σχόλια γιά <a href="%2$s">έγκριση</a>.]]></translation>
+        <translation language="pl"><![CDATA[%1$s komentarzy do <a href="%2$s">mederacji</a>.]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
