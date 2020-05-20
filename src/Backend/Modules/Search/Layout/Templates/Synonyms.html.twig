@@ -16,8 +16,7 @@
     <div class="table-responsive">
       {{ dataGrid|raw }}
     </div>
-  {% endif %}
-  {% if not dataGrid %}
-    <p>{{ 'msg.NoSynonyms'|trans|format(geturl('add_synonym'))|raw }}</p>
+  {% else %}
+    {{ macro.emptyState(geturl('add_synonym'), 'msg.AddASynonyms'|trans|ucfirst, 'msg.NoSynonyms'|trans) }}
   {% endif %}
 {% endblock %}

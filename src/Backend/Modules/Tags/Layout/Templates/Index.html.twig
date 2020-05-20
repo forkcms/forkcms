@@ -28,8 +28,7 @@
         </div>
       </div>
     </form>
-  {% endif %}
-  {% if not dataGrid %}
-    <p>{{ 'msg.NoItems'|trans|ucfirst }}</p>
+  {% else %}
+    {{ macro.emptyState(null, null, 'msg.NoItems'|trans|ucfirst) }}
   {% endif %}
 {% endblock %}
