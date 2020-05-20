@@ -97,35 +97,29 @@
           <small class="form-text text-muted">{{ 'msg.FeedbackInfo'|trans }}</small>
         </div>
         {% if feedback %}
-          <div class="card-group" id="feedback" role="tablist" aria-multiselectable="false">
-            {% for _itr_11 in feedback %}
-              <div class="card card-default">
-                <div class="card-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
-                  <h4 class="card-title">
-                    <a data-toggle="collapse" data-parent="#_itr_11" href="#_itr_11-collapse-{{ _itr_11.id }}" aria-expanded="true" aria-controls="_itr_11-collapse-{{ _itr_11.id }}">
-                      {{ macro.icon('caret-right fa-fw') }}{{ _itr_11.text|truncate(150) }}
-                    </a>
-                  </h4>
-                </div>
-                <div id="_itr_11-collapse-{{ _itr_11.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="_itr_11-heading-{{ _itr_11.id }}">
-                  <div class="card-body">
-                    {{ _itr_11.text }}
-                  </div>
-                  {% if showFaqDeleteFeedback %}
-                    <div class="card-footer">
-                      <div class="btn-toolbar">
-                        <div class="btn-group pull-left" role="group">
-                          {{ macro.buttonIcon('#', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', 'data-id=' ~ _itr_11.id ~ ' data-role=delete-feedback') }}
+          <div id="feedback" role="tablist" aria-multiselectable="false">
+            <div class="row">
+              {% for _itr_11 in feedback %}
+                <div class="col-lg-6 col-xl-4">
+                  <div class="card card-default">
+                    <div class="card-body pb-2">
+                      <p>
+                        {{ _itr_11.text }}
+                      </p>
+                      {% if showFaqDeleteFeedback %}
+                        <div class="btn-toolbar">
+                          <div class="btn-group ml-auto" role="group">
+                            {{ macro.buttonIcon('#', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger btn-sm', 'data-id=' ~ _itr_11.id ~ ' data-role=delete-feedback', false, true) }}
+                          </div>
                         </div>
-                      </div>
+                      {% endif %}
                     </div>
-                  {% endif %}
+                  </div>
                 </div>
-              </div>
-            {% endfor %}
+              {% endfor %}
+            </div>
           </div>
-        {% endif %}
-        {% if not feedback %}
+        {% else %}
           <p>{{ 'msg.NoFeedbackItems'|trans }}</p>
         {% endif %}
       </div>
