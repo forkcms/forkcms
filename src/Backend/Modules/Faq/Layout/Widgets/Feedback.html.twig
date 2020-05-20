@@ -1,7 +1,8 @@
-<div id="widgetFaqFeedback" class="card card-default">
+<div id="widgetFaqFeedback" class="card card-primary">
   <div class="card-heading">
-    <h2 class="card-title">
+    <h2 class="card-title d-flex justify-content-between">
       <a href="{{ geturl('index','faq') }}">{{ 'lbl.Faq'|trans|ucfirst }}: {{ 'lbl.Feedback'|trans|ucfirst }}</a>
+      <a href="{{ geturl('index','faq') }}"><i class="fas fa-arrow-right"></i></a>
     </h2>
   </div>
   {% if faqFeedback %}
@@ -22,7 +23,4 @@
       <p>{{ 'msg.NoFeedback'|trans }}</p>
     </div>
   {% endif %}
-  <div class="card-footer">
-    <a href="{{ geturl('index','faq') }}"><span>{{ 'lbl.AllQuestions'|trans|ucfirst }}</span></a>
-  </div>
 </div>
