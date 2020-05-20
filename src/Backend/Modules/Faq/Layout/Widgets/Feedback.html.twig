@@ -7,15 +7,15 @@
   </div>
   {% if faqFeedback %}
     <div class="card-body">
-      <table class="table table-striped dataGrid">
-        <tbody>
-          {% for _itr_12 in faqFeedback %}
-            <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-              <td><a href="{{ _itr_12.full_url }}">{{ _itr_12.text|truncate(150) }}</a></td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <ul class="list-unstyled">
+        {% for _itr_12 in faqFeedback %}
+          <li{% if not loop.last %} class="mb-3"{% endif %}>
+            <a href="{{ _itr_12.full_url }}">"{{ _itr_12.text|truncate(40) }}"</a>
+            <span class="text-medium">{{ 'lbl.FeedbackGivenOn'|trans }}</span>
+            <a href="{{ _itr_12.full_url }}">{{ _itr_12.question|truncate(40) }}</a>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
   {% endif %}
   {% if not faqFeedback %}

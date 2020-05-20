@@ -122,6 +122,7 @@ class Feedback
         return [
             'id' => $this->getId(),
             'question_id' => $this->getQuestion()->getId(),
+            'question' => $this->getQuestion()->getQuestion(),
             'text' => $this->getText(),
             'processed' => $this->isProcessed(),
             'created_on' => $this->getCreatedOn(),

@@ -363,6 +363,14 @@
         <translation language="pl"><![CDATA[Informacja zwrotna została przetworzona.]]></translation>
       </item>
     </Faq>
+    <Core>
+      <item type="label" name="FeedbackGivenOn">
+        <translation language="nl"><![CDATA[feedback gegeven op]]></translation>
+        <translation language="en"><![CDATA[feedback given on]]></translation>
+        <translation language="fr"><![CDATA[rétroaction donnée sur]]></translation>
+        <translation language="de"><![CDATA[Feedback gegeben am]]></translation>
+      </item>
+    </Core>
   </Backend>
   <Frontend>
     <Core>
