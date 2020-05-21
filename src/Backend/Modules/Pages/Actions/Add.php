@@ -226,6 +226,9 @@ class Add extends BackendBaseActionAdd
             }
 
             $this->form->addMultiCheckbox('allow', $values, $checked);
+
+            // css link class
+            $this->form->addText('link_class');
         }
 
         // build prototype block
@@ -603,6 +606,7 @@ class Add extends BackendBaseActionAdd
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
+                    $page['link_class'] = $this->form->getField('link_class')->getValue();
                 }
 
                 // set navigation title

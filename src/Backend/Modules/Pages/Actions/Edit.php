@@ -369,6 +369,9 @@ class Edit extends BackendBaseActionEdit
             }
 
             $this->form->addMultiCheckbox('allow', $values, $checked);
+
+            // css link class
+            $page['link_class'] = $this->form->addText('link_class', $this->record['link_class']);
         }
 
         // build prototype block
@@ -748,6 +751,7 @@ class Edit extends BackendBaseActionEdit
             'navigation_title_overwrite' => $this->form->getField('navigation_title_overwrite')->isChecked(),
             'hidden' => $this->form->getField('hidden')->getValue(),
             'status' => $status,
+            'link_class' => $this->form->getField('link_class')->getValue(),
             'publish_on' => BackendModel::getUTCDate(null, $this->record['publish_on']),
             'created_on' => BackendModel::getUTCDate(null, $this->record['created_on']),
             'edited_on' => BackendModel::getUTCDate(),

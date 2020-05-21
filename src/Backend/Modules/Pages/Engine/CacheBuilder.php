@@ -150,6 +150,7 @@ class CacheBuilder
             'has_children' => (bool) $page['has_children'],
             'allow_children' => (bool) $page['allow_children'],
             'data' => $page['data'],
+            'link_class' => $page['link_class'],
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);

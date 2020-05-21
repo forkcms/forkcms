@@ -878,7 +878,7 @@ class Model
         // get data
         $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT
-                 i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
+                 i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data, i.link_class,
                 m.url, m.data AS meta_data, m.seo_follow, m.seo_index, i.allow_children,
                 IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
                 GROUP_CONCAT(b.extra_id) AS extra_ids,
