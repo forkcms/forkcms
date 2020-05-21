@@ -195,6 +195,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
 
         // our JS needs to know an id, so we can highlight it
         $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
@@ -600,6 +601,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
+        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
