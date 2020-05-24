@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `status` varchar(243) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
   `publish_on` datetime NOT NULL,
   `data` text COLLATE utf8mb4_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
-  `link_class` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   `allow_move` tinyint(1) NOT NULL DEFAULT '1',

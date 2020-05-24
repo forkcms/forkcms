@@ -556,6 +556,9 @@ class Add extends BackendBaseActionAdd
                     }
                 }
 
+                // link class
+                $data['link_class'] = $this->form->getField('link_class')->getValue();
+
                 // build page record
                 $page = [];
                 $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
@@ -606,7 +609,6 @@ class Add extends BackendBaseActionAdd
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
-                    $page['link_class'] = $this->form->getField('link_class')->getValue();
                 }
 
                 // set navigation title
