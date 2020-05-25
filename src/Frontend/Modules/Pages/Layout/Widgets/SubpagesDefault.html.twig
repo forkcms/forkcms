@@ -17,9 +17,9 @@
     {% block widget_body %}
       <div class="widget-body media">
         {% for subpage in widgetSubpages %}
-          <div class="media-body{% if subpage.data.link_class %} {{ subpage.data.link_class }}{% endif %}">
+          <div class="media-body">
             <h3>
-              <a href="{{ subpage.full_url }}" title="{{ subpage.title }}">
+              <a href="{{ subpage.full_url }}" title="{{ subpage.title }}"{% if subpage.data.link_class %} class="{{ subpage.data.link_class }}"{% endif %}>
                 {{ subpage.title }}
               </a>
             </h3>
