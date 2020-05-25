@@ -1413,6 +1413,22 @@ class Model
     }
 
     /**
+     * @param array $page
+     */
+    public static function updateByIdAndRevisionId(array $page): void
+    {
+        // get database
+        $database = BackendModel::getContainer()->get('database');
+
+        $database->update(
+            'pages',
+            $page,
+            'id = ? AND revision_id = ?',
+            [(int) $page['id'], (int) $page['revision_id']]
+        );
+    }
+    
+    /**
      * Switch templates for all existing pages
      *
      * @param int $oldTemplateId The id of the new template to replace.
