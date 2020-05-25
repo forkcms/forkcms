@@ -282,6 +282,18 @@
         <translation language="de"><![CDATA[Mindestens %1$spx und maximal %2$spx]]></translation>
         <translation language="pl"><![CDATA[minimum %1$spx i maksimum %2$spx]]></translation>
       </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen locaties.]]></translation>
+        <translation language="en"><![CDATA[There are no locations yet.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore d'emplacements.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Standorte.]]></translation>
+      </item>
+      <item type="message" name="AddItem">
+        <translation language="nl"><![CDATA[Voeg een locatie toe]]></translation>
+        <translation language="en"><![CDATA[Add a location]]></translation>
+        <translation language="fr"><![CDATA[Ajouter un emplacement]]></translation>
+        <translation language="de"><![CDATA[Füge einen Ort hinzu]]></translation>
+      </item>
     </Location>
   </Backend>
   <Frontend>
