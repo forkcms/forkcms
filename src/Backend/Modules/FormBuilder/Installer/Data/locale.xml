@@ -22,6 +22,10 @@
         <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
         <translation language="en"><![CDATA[add form]]></translation>
       </item>
+      <item type="message" name="AddAForm">
+        <translation language="nl"><![CDATA[voeg een formulier toe]]></translation>
+        <translation language="en"><![CDATA[add a form]]></translation>
+      </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
         <translation language="en"><![CDATA[add fields]]></translation>

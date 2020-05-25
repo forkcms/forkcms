@@ -104,7 +104,7 @@
         <translation language="pl"><![CDATA[Brak szablonu]]></translation>
       </item>
       <item type="message" name="NoItems">
-        <translation language="nl"><![CDATA[Er zijn nog geen inhoudsblok.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen inhoudsblokken.]]></translation>
         <translation language="en"><![CDATA[There are no content blocks yet.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de blocs de contenu.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Inhaltsblöcke.]]></translation>
