@@ -39,32 +39,38 @@
     </div>
   {% endif %}
 
-  {% if dgRecent %}
-    <div class="content-block content-block-pb">
-      <div class="content-title">
-        <h2>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</h2>
+  {% if dgRecent or dgDrafts or dgPosts %}
+    {% if dgRecent %}
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <h2>{{ 'lbl.RecentlyEdited'|trans|ucfirst }}</h2>
+        </div>
+        {{ macro.dataGrid(dgRecent) }}
       </div>
-      {{ macro.dataGrid(dgRecent, 'msg.NoItems'|trans|format(geturl('add'))) }}
-    </div>
-  {% endif %}
-
-  {% if dgDrafts %}
-  <div class="content-block content-block-pb">
-    <div class="content-title">
-      <h2>{{ 'lbl.Drafts'|trans|ucfirst }}</h2>
-    </div>
-    {{ macro.dataGrid(dgDrafts, 'msg.NoItems'|trans|format(geturl('add'))) }}
-  </div>
-  {% endif %}
-
-  <div class="content-block content-block-pb">
-    <div class="content-title">
-      <h2>{{ 'lbl.PublishedArticles'|trans|ucfirst }}</h2>
-    </div>
-    {% if filterCategory %}
-      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add', null, '&category=#{filterCategory.id}'))) }}
-    {% else %}
-      {{ macro.dataGrid(dgPosts, 'msg.NoItems'|trans|format(geturl('add'))) }}
     {% endif %}
-  </div>
+
+    {% if dgDrafts %}
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <h2>{{ 'lbl.Drafts'|trans|ucfirst }}</h2>
+        </div>
+        {{ macro.dataGrid(dgDrafts) }}
+      </div>
+    {% endif %}
+
+    {% if dgPosts %}
+      <div class="content-block content-block-pb">
+        <div class="content-title">
+          <h2>{{ 'lbl.PublishedArticles'|trans|ucfirst }}</h2>
+        </div>
+        {% if filterCategory %}
+          {{ macro.dataGrid(dgPosts, geturl('add', null, '&category=#{filterCategory.id}'), 'msg.AddAnArticle'|trans, 'msg.NoItems'|trans) }}
+        {% else %}
+          {{ macro.dataGrid(dgPosts, geturl('add'), 'msg.AddAnArticle'|trans, 'msg.NoItems'|trans) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% else %}
+    {{ macro.emptyState(geturl('add'), 'msg.AddAnArticle'|trans, 'msg.NoItems'|trans) }}
+  {% endif %}
 {% endblock %}

@@ -16,8 +16,7 @@
     <div class="table-responsive">
       {{ dataGrid|raw }}
     </div>
-  {% endif %}
-  {% if not dataGrid %}
-    <p>{{ 'msg.NoCategoryItems'|trans|format(geturl('add_category'))|raw }}</p>
+  {% else %}
+    {{ macro.emptyState(geturl('add_category'), 'msg.AddACategory'|trans, 'msg.NoCategoryItems'|trans) }}
   {% endif %}
 {% endblock %}
