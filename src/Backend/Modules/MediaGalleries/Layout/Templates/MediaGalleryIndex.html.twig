@@ -6,7 +6,7 @@
       <div class="btn-toolbar justify-content-end">
         <div class="btn-group" role="group">
           {% if showMediaGalleriesMediaGalleryAdd %}
-            {{ macro.buttonIcon( geturl('MediaGalleryAdd'), 'plus-square', 'lbl.AddGallery'|trans|capitalize, '', { "id":"addMediaGroupType" }) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.AddGallery'|trans|capitalize, '', { "data-target":"#addMediaGroupTypeDialog", "data-toggle":"modal" }) }}
           {% endif %}
         </div>
       </div>
@@ -36,9 +36,8 @@
         {{ dataGrid|raw }}
       </div>
     </div>
-    {% endif %}
-    {% if not dataGrid %}
-      <p>{{ 'msg.NoItems'|trans }}</p>
+    {% else %}
+      {{ macro.emptyState('#', 'msg.AddAGallery'|trans, 'msg.NoGalleries'|trans|ucfirst, { "data-target":"#addMediaGroupTypeDialog", "data-toggle":"modal" }) }}
     {% endif %}
 
     <div class="modal fade" id="addMediaGroupTypeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addMediaGroupTypeDialogTitle">
@@ -55,7 +54,7 @@
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-            {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addMediaGroupTypeSubmit" } ) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit" } ) }}
           </div>
         </div>
       </div>
