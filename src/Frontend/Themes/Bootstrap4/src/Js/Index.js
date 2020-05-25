@@ -1,5 +1,5 @@
 /* Bootstrap imports */
-import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 
 /* Utilities imports */
