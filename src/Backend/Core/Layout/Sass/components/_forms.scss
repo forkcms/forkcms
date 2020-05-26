@@ -63,7 +63,7 @@ label,
     padding: 6px 12px 7px;
 
     &.btn-sm {
-      padding: 2px 8px;
+      padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
     }
   }
 }

@@ -34,7 +34,7 @@ class DataGrid extends \SpoonDataGrid
         'delete' => 'fa-trash-alt',
         'detail' => 'fa-eye',
         'details' => 'fa-eye',
-        'approve' => 'fa-thumbs-o-up',
+        'approve' => 'fa-thumbs-up',
         'mark_as_spam' => 'fa-ban',
         'install' => 'fa-download',
         'use_revision' => 'fa-file',
@@ -495,7 +495,7 @@ class DataGrid extends \SpoonDataGrid
             SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
             '</label>' .
             $actionDropDown->parse() .
-            '<button type="button" class="btn btn-default ml-2 jsMassActionSubmit">' .
+            '<button type="button" class="btn btn-default btn-sm ml-2 jsMassActionSubmit">' .
             '   <span>' . SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
             '</button>';
 

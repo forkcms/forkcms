@@ -37,9 +37,6 @@
             <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab" aria-selected="false" id="comments-tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
@@ -73,12 +70,14 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-lg-3">
-                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                          <label for="image">
+                            <img src="{% if item.image %}{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}{% else %}{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg{% endif %}" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                          </label>
                         </div>
                         <div class="col-lg-9">
                           <div class="custom-file">
                             {% form_field image %}
-                            <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                            <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
                           </div>
                           {% form_field_error image %}
                           {% if item.image %}
@@ -138,6 +137,19 @@
                 </div>
                 <div class="card card-default">
                   <div class="card-heading">
+                    <h2>{{ 'lbl.Comments'|trans|ucfirst }}</h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group last">
+                      <div class="form-check">
+                        {% form_field allow_comments %}
+                        <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-default">
+                  <div class="card-heading">
                     <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
                   <div class="card-body">
@@ -186,14 +198,6 @@
                 <p>{{ 'msg.NoRevisions'|trans|ucfirst }}</p>
               {% endif %}
             </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabComments" aria-labelledby="comments-tab">
-            <div class="form-group last">
-                  <div class="form-check">
-                    {% form_field allow_comments %}
-                    <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
-                  </div>
-                </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}

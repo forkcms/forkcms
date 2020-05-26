@@ -12,10 +12,14 @@
         <a class="nav-link active" href="#tabPublished" aria-controls="tabPublished" role="tab" data-toggle="tab" aria-selected="true" id="published-tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab" aria-selected="false" id="moderation-tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab" aria-selected="false" id="moderation-tab">
+          {{ 'lbl.WaitingForModeration'|trans|ucfirst }} <span class="badge badge-primary">{{ numModeration }}</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab" aria-selected="false" id="spam-tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab" aria-selected="false" id="spam-tab">
+          {{ 'lbl.Spam'|trans|ucfirst }} <span class="badge badge-primary">{{ numSpam }}</span>
+        </a>
       </li>
     </ul>
     <div class="tab-content">

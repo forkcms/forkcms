@@ -408,7 +408,7 @@ $input-btn-focus-width:       .2rem;
 $input-btn-focus-color:       rgba($component-active-bg, .25);
 $input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color;
 
-$input-btn-padding-y-sm:      .25rem;
+$input-btn-padding-y-sm:      .35rem;
 $input-btn-padding-x-sm:      .5rem;
 $input-btn-font-size-sm:      $font-size-sm;
 $input-btn-line-height-sm:    $line-height-sm;
@@ -433,7 +433,7 @@ $btn-line-height:             $input-btn-line-height;
 $btn-white-space:             null; // Set to `nowrap` to prevent text wrapping
 
 $btn-padding-y-sm:            .125rem;
-$btn-padding-x-sm:            $input-btn-padding-x-sm;
+$btn-padding-x-sm:            .5rem;
 $btn-font-size-sm:            $input-btn-font-size-sm;
 $btn-line-height-sm:          $input-btn-line-height-sm;
 
