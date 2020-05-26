@@ -467,6 +467,20 @@
         <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
         <translation language="it"><![CDATA[articoli correlati]]></translation>
       </item>
+      <item type="label" name="CommentedOnWithUrl">
+        <translation language="nl"><![CDATA[reageerde op <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[commented on <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="it"><![CDATA[commentato su <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="ru"><![CDATA[Прокомментировал <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="zh"><![CDATA[評論了 <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="hu"><![CDATA[kommentálta <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[commenté sur <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="de"><![CDATA[kommentiert zu <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="es"><![CDATA[comentado en <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="sv"><![CDATA[kommenterte på <en href="%1$s">%2$s</en>]]></translation>
+        <translation language="el"><![CDATA[Σχολίασε <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="pl"><![CDATA[skomentował <a href="%1$s">%2$s</a>]]></translation>
+      </item>
     </Core>
   </Backend>
   <Frontend>

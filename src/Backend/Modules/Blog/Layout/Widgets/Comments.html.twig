@@ -1,39 +1,31 @@
-<div id="widgetBlogComments" class="card card-default">
+{% import 'Layout/Templates/macros.html.twig' as macro %}
+
+<div id="widgetBlogComments" class="card card-primary">
   <div class="card-heading">
-    <h2 class="card-title">
+    <h2 class="card-title d-flex justify-content-between">
       <a href="{{ geturl('comments','blog') }}">{{ 'lbl.Blog'|trans|ucfirst }}: {{ 'lbl.LatestComments'|trans|ucfirst }}</a>
+      <a href="{{ geturl('comments','blog') }}"><i class="fas fa-arrow-right"></i></a>
     </h2>
   </div>
   <div class="card-body">
     {% if blogNumCommentsToModerate %}
       <div class="d-flex mb-3">
-        <p class="mb-0">
-          {{ 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate)|raw }}
-        </p>
-        <p class="mb-0 ml-auto">
-          <a href="{{ geturl('comments','blog') }}#tabModeration"><span>{{ 'lbl.Moderate'|trans|ucfirst }}</span></a>
-        </p>
+        {{ macro.alert('warning', 'msg.CommentsToModerate'|trans|format(blogNumCommentsToModerate, geturl('comments','blog') ~ '#tabModeration')|raw, null, null, {'class': 'toast-xs'}) }}
       </div>
     {% endif %}
     {% if blogComments %}
-      <table class="table table-striped dataGrid">
-        <tbody>
-          {% for blogComment in blogComments %}
-            <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-              <td class="title"><a href="{{ blogComment.full_url }}">{{ blogComment.title }}</a></td>
-              <td class="name">{{ blogComment.author }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <ul class="list-unstyled">
+        {% for blogComment in blogComments %}
+          <li{% if not loop.last %} class="mb-3"{% endif %}>
+            {{ blogComment.author }} <span class="text-medium">{{ 'lbl.CommentedOnWithUrl'|trans|format(blogComment.full_url, blogComment.title)|raw }}</span>
+          </li>
+        {% endfor %}
+      </ul>
     {% endif %}
     {% if not blogComments %}
       <div class="card-body">
         <p>{{ 'msg.NoPublishedComments'|trans }}</p>
       </div>
     {% endif %}
-  </div>
-  <div class="card-footer">
-    <a href="{{ geturl('comments','blog') }}"><span>{{ 'lbl.AllComments'|trans|ucfirst }}</span></a>
   </div>
 </div>

@@ -1,42 +1,42 @@
-<div id="widgetUsersStatistics" class="card card-default">
+<div id="widgetUsersStatistics" class="card card-primary">
   <div class="card-heading">
-    <h2 class="card-title">
+    <h2 class="card-title d-flex justify-content-between">
       <a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.Users'|trans|ucfirst }}: {{ 'lbl.Statistics'|trans|ucfirst }}</a>
+      <a href="{{ authenticatedUserEditUrl }}"><i class="fas fa-arrow-right"></i></a>
     </h2>
   </div>
   <div class="card-body">
-    <table class="table table-striped">
-      <tr>
-        <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
-        <td>
+    <ul class="list-unstyled">
+      <li>
+        <p>
+          <strong class="text-black">{{ 'lbl.LastLogin'|trans|ucfirst }}</strong><br>
           {% if authenticatedUserLastLogin %}{{ authenticatedUserLastLogin|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }} {% endif %}
           {% if not authenticatedUserLastLogin %}{{ 'lbl.NoPreviousLogin'|trans|ucfirst }}{% endif %}
-        </td>
-      </tr>
+        </p>
+      </li>
       {% if authenticatedUserLastFailedLoginAttempt %}
-        <tr>
-          <th>{{ 'lbl.LastFailedLoginAttempt'|trans|ucfirst }}:</th>
-          <td>{{ authenticatedUserLastFailedLoginAttempt|spoondate( authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}</td>
-        </tr>
+        <li>
+          <p>
+            <strong class="text-black">{{ 'lbl.LastFailedLoginAttempt'|trans|ucfirst }}</strong><br>
+            {{ authenticatedUserLastFailedLoginAttempt|spoondate( authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}
+          </p>
+        </li>
       {% endif %}
-      <tr>
-        <th>{{ 'lbl.LastPasswordChange'|trans|ucfirst }}:</th>
-        <td>
+      <li>
+        <p>
+          <strong class="text-black">{{ 'lbl.LastPasswordChange'|trans|ucfirst }}</strong><br>
           {% if authenticatedUserLastPasswordChange %}{{ authenticatedUserLastPasswordChange|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
           {% if not authenticatedUserLastPasswordChange %}{{ 'lbl.Never'|trans|ucfirst }}{% endif %}
-        </td>
-      </tr>
+        </p>
+      </li>
       {% if showPasswordStrength %}
-        <tr>
-          <th>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</th>
-          <td>{{ passwordStrengthLabel }}</td>
-        </tr>
+        <li>
+          <p>
+            <strong class="text-black">{{ 'lbl.PasswordStrength'|trans|ucfirst }}</strong><br>
+            {{ passwordStrengthLabel }}
+          </p>
+        </li>
       {% endif %}
-    </table>
-  </div>
-  <div class="card-footer">
-    <a href="{{ authenticatedUserEditUrl }}">
-      <span>{{ 'lbl.EditProfile'|trans|ucfirst }}</span>
-    </a>
+    </ul>
   </div>
 </div>
