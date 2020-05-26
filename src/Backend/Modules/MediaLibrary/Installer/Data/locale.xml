@@ -419,6 +419,18 @@
         <translation language="ru"><![CDATA[В папке нет медиа файлов.]]></translation>
         <translation language="pl"><![CDATA[Nie ma żadnych mediów w tym katalogu.]]></translation>
       </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er is nog geen media.]]></translation>
+        <translation language="en"><![CDATA[There are no media yet.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de média.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Medien.]]></translation>
+      </item>
+      <item type="message" name="AddAMediaItem">
+        <translation language="nl"><![CDATA[Voeg een media item toe]]></translation>
+        <translation language="en"><![CDATA[Add an media item]]></translation>
+        <translation language="fr"><![CDATA[Ajouter un élément multimédia]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie ein Medienelement hinzu]]></translation>
+      </item>
       <item type="label" name="MediaAddNewMediaFolder">
         <translation language="en"><![CDATA[add new folder]]></translation>
         <translation language="nl"><![CDATA[nieuwe map toevoegen]]></translation>

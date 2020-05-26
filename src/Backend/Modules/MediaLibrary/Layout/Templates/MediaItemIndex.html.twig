@@ -61,8 +61,11 @@
               </div>
             </form>
             {% if not dataGrid.numberOfResults %}
-              {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
-              {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
+              {% if mediaFolder %}
+                {{ macro.emptyState(geturl('MediaItemUpload', null, '&folder='~mediaFolder.id), 'msg.AddAMediaItem'|trans, 'msg.NoItems'|trans|ucfirst) }}
+              {% else %}
+                {{ macro.emptyState(geturl('MediaItemUpload'), 'msg.AddAMediaItem'|trans, 'msg.NoItems'|trans|ucfirst) }}
+              {% endif %}
             {% endif %}
           </div>
         {% endfor %}

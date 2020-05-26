@@ -56,7 +56,7 @@
                       {% set alreadyOneActive = false %}
                       {% for dataGrid in dataGrids %}
                         <div role="tabpanel"
-                          class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
+                          class="tab-pane {% if not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
                           id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
                           <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}"
                             method="get" class="forkForms">
@@ -72,9 +72,9 @@
                           </form>
                           {% if not dataGrid.numberOfResults %}
                             {% if mediaFolder %}
-                              <p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>
+                              {{ macro.emptyState(null, null, 'msg.NoItems'|trans|ucfirst) }}
                             {% else %}
-                              <p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>
+                              {{ macro.emptyState(null, null, 'msg.NoItems'|trans|ucfirst) }}
                             {% endif %}
                           {% endif %}
                         </div>
