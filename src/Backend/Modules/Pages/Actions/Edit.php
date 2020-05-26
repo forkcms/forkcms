@@ -19,6 +19,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -859,7 +860,7 @@ class Edit extends BackendBaseActionEdit
         if ($redirectValue === 'internal') {
             $data['internal_redirect'] = [
                 'page_id' => $this->form->getField('internal_redirect')->getValue(),
-                'code' => '301',
+                'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
         }
         if ($redirectValue === 'external') {
@@ -867,7 +868,7 @@ class Edit extends BackendBaseActionEdit
                 'url' => BackendPagesModel::getEncodedRedirectUrl(
                     $this->form->getField('external_redirect')->getValue()
                 ),
-                'code' => '301',
+                'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
         }
         if (array_key_exists('image', $this->templates[$templateId]['data'])) {
