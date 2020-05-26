@@ -89,6 +89,11 @@ class Helper
                 // get content
                 $fieldHTML = $datetime->parse();
             } elseif ($field['type'] === 'radiobutton') {
+                // make disabled
+                foreach ($values as &$value) {
+                    $value['attributes']['disabled'] = true;
+                }
+
                 // create element
                 $rbt = $form->addRadiobutton($fieldName, $values, $defaultValues);
 
@@ -98,7 +103,7 @@ class Helper
                 // rebuild values
                 $newValues = [];
                 foreach ((array) $values as $value) {
-                    $newValues[] = ['label' => $value, 'value' => $value];
+                    $newValues[] = ['label' => $value, 'value' => $value, 'attributes' => ['disabled' => true]];
                 }
 
                 // create element

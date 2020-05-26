@@ -123,6 +123,10 @@ select[size="1"] {
 
   .input-group-append .btn {
     padding: 7px 9px 8px;
+
+    &.btn-icon-only {
+      font-size: $btn-font-size;
+    }
   }
 }
 

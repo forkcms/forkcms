@@ -240,7 +240,7 @@ jsBackend.FormBuilder.Fields = {
               errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-              showIconOnly: true,
+              showIconOnly: false,
               afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
             })
           } else if (id === 'radiobuttonDialog') {
@@ -250,7 +250,7 @@ jsBackend.FormBuilder.Fields = {
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
               errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-              showIconOnly: true,
+              showIconOnly: false,
               afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
             })
           } else if (id === 'checkboxDialog') {
@@ -260,7 +260,7 @@ jsBackend.FormBuilder.Fields = {
               addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
               removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
               errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-              showIconOnly: true,
+              showIconOnly: false,
               afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
             })
           } else if (id === 'datetimeDialog') {

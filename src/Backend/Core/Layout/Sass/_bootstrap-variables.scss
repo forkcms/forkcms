@@ -428,7 +428,7 @@ $input-btn-border-width:      $border-width;
 $btn-padding-y:               0.5625rem;
 $btn-padding-x:               0.625rem;
 $btn-font-family:             $input-btn-font-family;
-$btn-font-size:               $input-btn-font-size;
+$btn-font-size:               $font-size-base * 0.875;
 $btn-line-height:             $input-btn-line-height;
 $btn-white-space:             null; // Set to `nowrap` to prevent text wrapping
 

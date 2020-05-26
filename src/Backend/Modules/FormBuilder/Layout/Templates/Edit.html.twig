@@ -248,7 +248,7 @@
   {# Dialog for a textbox #}
 
   <div class="modal fade jsFieldDialog" id="textboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textboxDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="textboxDialogTitle">{{ 'lbl.Textbox'|trans|ucfirst }}</h4>
@@ -441,7 +441,7 @@
 
   {# Dialog for a textarea #}
   <div class="modal fade jsFieldDialog" id="textareaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textareaDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="textareaDialogTitle">{{ 'lbl.Textarea'|trans|ucfirst }}</h4>
@@ -535,7 +535,7 @@
 
   {# Dialog for a datetime #}
   <div class="modal fade jsFieldDialog" id="datetimeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="datetimeDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="datetimeDialogTitle">{{ 'lbl.Datetime'|trans|ucfirst }}</h4>
@@ -630,7 +630,7 @@
 
   {# Dialog for a dropdown #}
   <div class="modal fade jsFieldDialog" id="dropdownDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="dropdownDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="dropdownDialogTitle">{{ 'lbl.Dropdown'|trans|ucfirst }}</h4>
@@ -704,7 +704,7 @@
 
   {# Dialog for a radiobutton #}
   <div class="modal fade jsFieldDialog" id="radiobuttonDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="radiobuttonDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="radiobuttonDialogTitle">{{ 'lbl.Radiobutton'|trans|ucfirst }}</h4>
@@ -746,11 +746,11 @@
                 <div class="form-group">
                   <div class="form-check">
                     {% form_field radiobutton_required %}
-                    <label for="checkboxRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
+                    <label for="radiobuttonRequired" class="form-check-label">{{ 'lbl.RequiredField'|trans|ucfirst }}</label>
                   </div>
                 </div>
                 <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
-                  <label for="checkboxRequiredErrorMessage" class="control-label">
+                  <label for="radiobuttonRequiredErrorMessage" class="control-label">
                     {{ 'lbl.ErrorMessage'|trans|ucfirst }}
                     {{ macro.required }}
                   </label>
@@ -777,7 +777,7 @@
 
   {# Dialog for a checkbox #}
   <div class="modal fade jsFieldDialog" id="checkboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="checkboxDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="checkboxDialogTitle">{{ 'lbl.Checkbox'|trans|ucfirst }}</h4>
@@ -850,7 +850,7 @@
 
   {# Dialog for the submit button #}
   <div class="modal fade jsFieldDialog" id="submitDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="submitDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="submitDialogTitle">{{ 'lbl.SubmitButton'|trans|ucfirst }}</h4>
@@ -876,7 +876,7 @@
 
   {# Dialog for a heading #}
   <div class="modal fade jsFieldDialog" id="headingDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="headingDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="headingDialogTitle">{{ 'lbl.Heading'|trans|ucfirst }}</h4>
@@ -902,7 +902,7 @@
   {% if showMailmotorOption %}
     {# Dialog for a mailmotor #}
     <div class="modal fade jsFieldDialog" id="mailmotorDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="mailmotorDialogTitle">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="mailmotorDialogTitle">{{ 'lbl.Mailmotor'|trans|ucfirst }}</h4>
@@ -935,7 +935,7 @@
 
   {# Dialog for a paragraph #}
   <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="paragraphDialogTitle">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="paragraphDialogTitle">{{ 'lbl.Content'|trans|ucfirst }}</h4>
