@@ -222,7 +222,6 @@ class DataGrid extends \SpoonDataGrid
             $name,
             [
                 'class' => 'fork-data-grid-action action' . SpoonFilter::toCamelCase($name),
-                'style' => 'width: 10%;',
             ]
         );
 

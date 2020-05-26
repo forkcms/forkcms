@@ -332,6 +332,10 @@ jsBackend.pages.tree = {
     // Init page tree
     var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
 
+    if ($('[data-clear-tree]').length > 0) {
+      jsTreeInstance.jstree('clear_state')
+    }
+
     jsTreeInstance.on('move_node.jstree', function (event, data) {
       jsBackend.pages.tree.onMove(event, data, jsTreeInstance)
     })

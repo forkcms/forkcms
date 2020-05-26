@@ -4,8 +4,12 @@
     margin-bottom: 0;
   }
 
-  .fork-data-grid-action .btn {
-    white-space: nowrap;
+  .fork-data-grid-action {
+    min-width: 10%;
+
+    .btn {
+      white-space: nowrap;
+    }
   }
 
   td.text {

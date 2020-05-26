@@ -28,7 +28,7 @@ final class PageType extends AbstractType
     {
         $builder->add('title', TitleType::class);
         if ($this->authenticatedUserIsAllowedToSeeAndEditTags()) {
-            $builder->add('tags', TagsType::class, ['label' => 'msg.AddTagsHere', 'required' => false]);
+            $builder->add('tags', TagsType::class, ['label' => 'lbl.Tags', 'required' => false]);
         }
         $builder->add(
             'image',
