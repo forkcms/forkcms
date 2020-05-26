@@ -134,7 +134,7 @@
   {% if noItems %}
     <div class="card card-default">
       <div class="card-body">
-        <p>{{ 'msg.NoItemsFilter'|trans|format(addURL)|raw }}</p>
+        {{ macro.emptyState(addURL, 'msg.AddFirstTranslation'|trans, 'msg.NoItemsFilter'|trans|ucfirst) }}
       </div>
     </div>
   {% endif %}
