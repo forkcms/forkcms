@@ -2437,21 +2437,6 @@
         <translation language="zh"><![CDATA["%1$s"有一条回复]]></translation>
         <translation language="pl"><![CDATA[Jest komentarz do "%1$s"]]></translation>
       </item>
-      <item type="message" name="FaqNoItems">
-        <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
-        <translation language="en"><![CDATA[There are no questions yet.]]></translation>
-        <translation language="ru"><![CDATA[Пока нет вопросов.]]></translation>
-        <translation language="fr"><![CDATA[Il n'ya pas encore de questions.]]></translation>
-        <translation language="es"><![CDATA[No hay preguntas aun.]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Fragen.]]></translation>
-        <translation language="lt"><![CDATA[Kolkas klausimų nėra.]]></translation>
-        <translation language="uk"><![CDATA[Запитань ще немає]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga frågor än.]]></translation>
-        <translation language="hu"><![CDATA[Nincs még kérdés.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ερωτήσεις.]]></translation>
-        <translation language="zh"><![CDATA[还没有人提问。]]></translation>
-        <translation language="pl"><![CDATA[Brak pytań.]]></translation>
-      </item>
       <item type="message" name="FaqOwnQuestionSubject">
         <translation language="nl"><![CDATA[Een vraag van %1$s.]]></translation>
         <translation language="en"><![CDATA[A question from %1$s.]]></translation>
@@ -11325,6 +11310,21 @@
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη αντικείμενα.]]></translation>
         <translation language="pl"><![CDATA[Brak pozycji.]]></translation>
       </item>
+      <item type="message" name="AddItem">
+        <translation language="nl"><![CDATA[Voeg een item toe]]></translation>
+        <translation language="en"><![CDATA[Add an item]]></translation>
+        <translation language="hu"><![CDATA[Adjon hozzá egy elemet]]></translation>
+        <translation language="ru"><![CDATA[Добавить предмет]]></translation>
+        <translation language="it"><![CDATA[Aggiungi un oggetto]]></translation>
+        <translation language="zh"><![CDATA[新增項目]]></translation>
+        <translation language="fr"><![CDATA[Ajouter un élément]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie einen Artikel hinzu]]></translation>
+        <translation language="es"><![CDATA[Agregar un artículo]]></translation>
+        <translation language="lt"><![CDATA[Pridėti elementą]]></translation>
+        <translation language="uk"><![CDATA[Додати елемент]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε ένα αντικείμενο]]></translation>
+        <translation language="pl"><![CDATA[Dodaj element]]></translation>
+      </item>
       <item type="message" name="NoKeywords">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
         <translation language="en"><![CDATA[There are no keywords yet.]]></translation>
@@ -12676,6 +12676,12 @@
       <item type="label" name="ClickHereToAddContent">
         <translation language="nl"><![CDATA[klik hier om inhoud toe te voegen]]></translation>
         <translation language="en"><![CDATA[click here to add content]]></translation>
+      </item>
+      <item type="message" name="AddACategory">
+        <translation language="nl"><![CDATA[voeg een categorie toe]]></translation>
+        <translation language="en"><![CDATA[add a category]]></translation>
+        <translation language="de"><![CDATA[eine Kategorie hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une catégorie]]></translation>
       </item>
     </Core>
   </Backend>

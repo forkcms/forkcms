@@ -23,23 +23,6 @@ jsBackend.mediaGalleries.dialogs = {
     }
 
     jsBackend.mediaGalleries.dialogs.addMediaGroupTypeDialog($addMediaGroupTypeDialog)
-  },
-
-    /**
-     * @param {jQuery} $dialog
-     */
-  addMediaGroupTypeDialog: function ($dialog) {
-        // Bind click to open the dialog
-    $('#addMediaGroupType').on('click', function (e) {
-      e.preventDefault()
-      $dialog.modal('show')
-    })
-
-        // When clicked in dialog, close it
-    $('#addMediaGroupTypeSubmit').on('click', function () {
-      $dialog.find('form').submit()
-      $dialog.modal('hide')
-    })
   }
 }
 

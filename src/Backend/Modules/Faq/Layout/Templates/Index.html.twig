@@ -15,23 +15,19 @@
   {% if dataGrids %}
     {% for dataGrid in dataGrids %}
       <div id="dataGrid-{{ dataGrid.id }}" class="content-block content-block-pb jsDataGridQuestionsHolder">
-        <div class="content-title">
-          <h2>{{ dataGrid.title }}</h2>
-        </div>
         {% if dataGrid.content %}
+          <div class="content-title">
+            <h2>{{ dataGrid.title }}</h2>
+          </div>
           <div class="table-responsive">
             {{ dataGrid.content | raw }}
           </div>
-        {% endif %}
-        {% if not dataGrid.content %}
-          <div class="table-responsive">
-            {{ emptyDatagrid | raw }}
-          </div>
+        {% else %}
+          {{ macro.emptyState(geturl('add'), 'msg.AddAQuestion'|trans, 'msg.NoItems'|trans|ucfirst) }}
         {% endif %}
       </div>
     {% endfor %}
-  {% endif %}
-  {% if not dataGrids %}
-    <p>{{ 'msg.NoItems'|trans }}</p>
+  {% else %}
+    {{ macro.emptyState(null, null, 'msg.NoItems'|trans|ucfirst) }}
   {% endif %}
 {% endblock %}

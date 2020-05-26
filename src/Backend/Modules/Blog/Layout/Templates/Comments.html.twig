@@ -59,9 +59,8 @@
               </div>
             </div>
           </form>
-        {% endif %}
-        {% if not dgPublished %}
-          <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
+        {% else %}
+          {{ macro.emptyState(null, null, 'msg.NoComments'|trans|ucfirst) }}
         {% endif %}
       </div>
       <div role="tabpanel" class="tab-pane" id="tabModeration" aria-labelledby="moderation-tab">
@@ -104,9 +103,8 @@
               </div>
             </div>
           </form>
-        {% endif %}
-        {% if not dgModeration %}
-          <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
+        {% else %}
+          {{ macro.emptyState(null, null, 'msg.NoComments'|trans|ucfirst) }}
         {% endif %}
       </div>
       <div role="tabpanel" class="tab-pane" id="tabSpam" aria-labelledby="spam-tab">
@@ -133,9 +131,8 @@
               </div>
             </div>
           </form>
-        {% endif %}
-        {% if not dgSpam %}
-          <p>{{ 'msg.NoSpam'|trans }}</p>
+        {% else %}
+          {{ macro.emptyState(null, null, 'msg.NoSpam'|trans|ucfirst) }}
         {% endif %}
       </div>
     </div>

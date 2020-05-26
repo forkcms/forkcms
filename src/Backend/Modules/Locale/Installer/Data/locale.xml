@@ -567,18 +567,32 @@
         <translation language="pl"><![CDATA[Nie znaleziono brakujących tłu,aczeń.]]></translation>
       </item>
       <item type="message" name="NoItemsFilter">
-        <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
-        <translation language="en"><![CDATA[There are no translations yet for this filter. <a href="%1$s">Add the first translation</a>.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora traduzioni per questo filtro. <a href="%1$s">Aggiungi la prima traduzione</a>.]]></translation>
-        <translation language="ru"><![CDATA[Нет значений для этого фильтра. <a href="%1$s">Добавить</a>.]]></translation>
-        <translation language="zh"><![CDATA[这个滤镜结果下还没有翻译。There are no translations yet. <a href="%1$s">添加一个新翻译</a>。]]></translation>
-        <translation language="hu"><![CDATA[Még nincsenek fordítások ebben a szűrőben. <a href="%1$s">Első fordítás hozzáadása</a>.]]></translation>
-        <translation language="fr"><![CDATA[Il n'y a pas encore de traduction pour ce filtre <a href="%1$s">Ajouter la première</a>.]]></translation>
-        <translation language="de"><![CDATA[Mit diesem Filter konnten keine Übersetzungen gefunden werden. <a href="%1$s"> Füge die erste Übersetzung hinzu</a>.]]></translation>
-        <translation language="es"><![CDATA[No hay traducción apra este filtro aun. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
-        <translation language="uk"><![CDATA[Немає значень для цього фільтра. <a href="%1$s">Додати</a>.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
-        <translation language="pl"><![CDATA[Nie ma jeszcze tłumaczenia dla tego filtra. <a href="%1$s"> Dodaj pierwsze tłumaczenie </a>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter.]]></translation>
+        <translation language="en"><![CDATA[There are no translations yet for this filter.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora traduzioni per questo filtro.]]></translation>
+        <translation language="ru"><![CDATA[Нет значений для этого фильтра.]]></translation>
+        <translation language="zh"><![CDATA[这个滤镜结果下还没有翻译。There are no translations yet.]]></translation>
+        <translation language="hu"><![CDATA[Még nincsenek fordítások ebben a szűrőben.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de traduction pour ce filtre]]></translation>
+        <translation language="de"><![CDATA[Mit diesem Filter konnten keine Übersetzungen gefunden werden.]]></translation>
+        <translation language="es"><![CDATA[No hay traducción apra este filtro aun.]]></translation>
+        <translation language="uk"><![CDATA[Немає значень для цього фільтра.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο.]]></translation>
+        <translation language="pl"><![CDATA[Nie ma jeszcze tłumaczenia dla tego filtra.]]></translation>
+      </item>
+      <item type="message" name="AddFirstTranslation">
+        <translation language="nl"><![CDATA[Voeg de eerste vertaling toe]]></translation>
+        <translation language="en"><![CDATA[Add the first translation]]></translation>
+        <translation language="it"><![CDATA[Aggiungi la prima traduzione]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
+        <translation language="zh"><![CDATA[添加一个新翻译<]]></translation>
+        <translation language="hu"><![CDATA[Első fordítás hozzáadása]]></translation>
+        <translation language="fr"><![CDATA[Ajouter la première]]></translation>
+        <translation language="de"><![CDATA[Füge die erste Übersetzung hinzu]]></translation>
+        <translation language="es"><![CDATA[Agrega la primera traducción]]></translation>
+        <translation language="uk"><![CDATA[Додати]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε την πρώτη μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Dodaj pierwsze tłumaczenie]]></translation>
       </item>
       <item type="message" name="StartSearch">
         <translation language="nl"><![CDATA[Start uw zoekopdracht.]]></translation>

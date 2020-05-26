@@ -39,6 +39,22 @@
         <translation language="nl"><![CDATA[profiel toevoegen]]></translation>
         <translation language="en"><![CDATA[add profile]]></translation>
       </item>
+      <item type="message" name="AddAProfile">
+        <translation language="nl"><![CDATA[voeg een profiel toe]]></translation>
+        <translation language="en"><![CDATA[add a profile]]></translation>
+      </item>
+      <item type="message" name="NoProfiles">
+        <translation language="nl"><![CDATA[Er zijn nog geen profielen.]]></translation>
+        <translation language="en"><![CDATA[There are no profiles yet.]]></translation>
+      </item>
+      <item type="message" name="AddAGroup">
+        <translation language="nl"><![CDATA[voeg een goep toe]]></translation>
+        <translation language="en"><![CDATA[add a group]]></translation>
+      </item>
+      <item type="message" name="NoGroups">
+        <translation language="nl"><![CDATA[Er zijn nog geen groepen.]]></translation>
+        <translation language="en"><![CDATA[There are no groups yet.]]></translation>
+      </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
         <translation language="en"><![CDATA[add group]]></translation>

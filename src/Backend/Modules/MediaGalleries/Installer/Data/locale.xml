@@ -98,6 +98,18 @@
         <translation language="nl"><![CDATA[Als developer kan u zelf eenvoudig widgets aanmaken in /src/Frontend/Modules/MediaLibrary/Widgets/. Elke widget die u toevoegt komt hier automatisch in deze keuzelijst te staan en kan in de Frontend elk z'n eigen afbeeldingsformaten hebben.]]></translation>
         <translation language="pl"><![CDATA[Jako programista możesz łatwo tworzyć widżety w /src/Frontend/Modules/MediaLibrary/Widgets/. Każdy dodawany widget pojawi się automatycznie na tej liście rozwijanej i może mieć własne formaty obrazu w interfejsie użytkownika.]]></translation>
       </item>
+      <item type="message" name="NoGalleries">
+        <translation language="nl"><![CDATA[Er zijn nog geen gallerijen.]]></translation>
+        <translation language="en"><![CDATA[There are no galleries yet.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a aucune galerie pour l'instant.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Galerien.]]></translation>
+      </item>
+      <item type="message" name="AddAGallery">
+        <translation language="nl"><![CDATA[Voeg een gallerij toe]]></translation>
+        <translation language="en"><![CDATA[Add a gallery]]></translation>
+        <translation language="fr"><![CDATA[Ajouter une galerie]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie eine Galerie hinzu]]></translation>
+      </item>
     </MediaGalleries>
   </Backend>
 </locale>
