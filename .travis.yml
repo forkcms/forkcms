@@ -75,7 +75,6 @@ jobs:
                 - travis_retry docker-compose up -d && sleep 30
                 - docker-compose ps "app" | grep -q "Up"
                 - curl -s -L -o /dev/null -w "%{http_code}" http://localhost:80 | grep -q '200'
-                - curl -s -L http://localhost:80
                 - curl -s -L http://localhost:80 | grep -q 'Install Fork CMS'
             after_script:
                 - docker-compose down -v
