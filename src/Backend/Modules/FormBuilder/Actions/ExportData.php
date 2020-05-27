@@ -86,6 +86,7 @@ class ExportData extends BackendBaseAction
 
     public function execute(): void
     {
+        $this->checkToken();
         $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
