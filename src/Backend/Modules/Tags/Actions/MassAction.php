@@ -5,6 +5,7 @@ namespace Backend\Modules\Tags\Actions;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * This action is used to perform mass actions on tags (delete, ...)
@@ -14,6 +15,10 @@ class MassAction extends BackendBaseAction
     public function execute(): void
     {
         parent::execute();
+
+        if ($this->getRequest()->query->get('token') !== BackendModel::getToken()) {
+            throw new BadRequestHttpException('Invalid csrf token');
+        }
 
         // action to execute
         $action = $this->getRequest()->query->get('action');
