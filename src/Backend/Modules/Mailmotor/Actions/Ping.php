@@ -17,6 +17,8 @@ final class Ping extends ActionIndex
     {
         parent::execute();
 
+        $this->checkToken();
+
         // Successful API connection
         if ($this->ping()) {
             $this->redirect($this->getBackLink(['report' => 'successful-mail-engine-api-connection']));
