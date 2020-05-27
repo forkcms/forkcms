@@ -144,7 +144,8 @@ gulp.task('build:frontend:assets:copy-js-vendors', function () {
   return gulp.src([
     'node_modules/photoswipe/dist/photoswipe.min.js',
     'node_modules/photoswipe/dist/photoswipe-ui-default.min.js',
-    'node_modules/slick-carousel/slick/slick.min.js'
+    'node_modules/slick-carousel/slick/slick.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js'
   ])
     .pipe(gulp.dest('js/vendors'))
 })
