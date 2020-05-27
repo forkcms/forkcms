@@ -65,13 +65,17 @@ jobs:
                 - php ocular.phar code-coverage:upload --format=php-clover installer.clover
         -   stage: test
             name: Docker
-            script:
+            before_script:
+                - sudo /etc/init.d/mysql stop
+                - composer install
                 - docker info
                 - docker-compose version
+            script:
                 - docker-compose build
                 - travis_retry docker-compose up -d && sleep 30
                 - docker-compose ps "app" | grep -q "Up"
                 - curl -s -L -o /dev/null -w "%{http_code}" http://localhost:80 | grep -q '200'
+                - curl -s -L http://localhost:80
                 - curl -s -L http://localhost:80 | grep -q 'Install Fork CMS'
             after_script:
                 - docker-compose down -v
