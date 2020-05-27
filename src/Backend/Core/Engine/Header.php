@@ -80,6 +80,7 @@ final class Header extends KernelLoader
             [
                 'interface_language' => $this->getInterfaceLanguage(),
                 'debug' => $this->getContainer()->getParameter('kernel.debug'),
+                'csrf-token' => Model::getToken(),
             ]
         );
 

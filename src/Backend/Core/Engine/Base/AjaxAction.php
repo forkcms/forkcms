@@ -3,7 +3,10 @@
 namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\Model;
+use Backend\Core\Language\Language;
+use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +22,7 @@ class AjaxAction extends KernelLoader
 
     public function execute(): void
     {
+        $this->checkCsrfTokenInHeader();
     }
 
     /**
@@ -70,5 +74,23 @@ class AjaxAction extends KernelLoader
     public function getModule(): string
     {
         return $this->get('url')->getModule();
+    }
+
+    protected function checkCsrfTokenInHeader(): void
+    {
+        $fromSession = Model::getSession()->get('csrf_token', '');
+        $fromHeader = $this->getRequest()->headers->get('X-CSRF-Token', '');
+
+        if ($fromSession !== '' && $fromHeader !== '' && $fromSession === $fromHeader) {
+            return;
+        }
+
+        // clear the token
+        Model::getSession()->set('csrf_token', '');
+
+        throw new RedirectException(
+            'Invalid csrf token',
+            JsonResponse::create(Language::err('Csrf'), JsonResponse::HTTP_FORBIDDEN)
+        );
     }
 }
