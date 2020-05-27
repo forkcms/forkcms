@@ -131,10 +131,10 @@ jsBackend.pages.extras = {
       var $pageBlockTitle = $pageBlockWrapper.find('[data-role="page-block-title"]')
       var $pageBlockPreview = $pageBlockWrapper.find('[data-role="page-block-preview"]')
       var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
-      var title = $modal.find('[data-role="select-block-type"] option:selected').text()
+      var title = ''
 
       if (selectedBlockType === 'block' || selectedBlockType === 'widget') {
-        title += separator + jsBackend.pages.extras.extractExtraTitle(
+        title += jsBackend.pages.extras.extractExtraTitle(
           separator,
           $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
         )

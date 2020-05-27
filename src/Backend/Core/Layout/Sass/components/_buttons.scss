@@ -45,6 +45,7 @@
     align-items: center;
     align-content: center;
     display: flex;
+    font-size: $font-size-base;
     height: 32px;
     justify-content: center;
     padding: 0;
@@ -92,6 +93,25 @@
 
   @include hover-focus {
     color: $primary;
+  }
+}
+
+.btn-move {
+  color: $gray-450;
+
+  &.btn-move-click {
+
+    @include hover-focus {
+      border-color: $black;
+    }
+  }
+
+  &.btn-move-drag {
+    font-size: $font-size-lg;
+  }
+
+  @include hover-focus {
+    color: $black;
   }
 }
 

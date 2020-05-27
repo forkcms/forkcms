@@ -7,20 +7,27 @@
 
 .strength-none.badge {
   background-color: $gray-550;
-  color: $white;
 }
 
 .strength-weak.badge {
   background-color: $danger;
-  color: $white;
 }
 
 .strength-average.badge {
   background-color: $warning;
-  color: $white;
 }
 
 .strength-strong.badge {
   background-color: $success;
-  color: $white;
+}
+
+.strength-none,
+.strength-weak,
+.strength-average,
+.strength-strong {
+
+  &.badge {
+    color: $white;
+    padding: 0.3rem $badge-padding-x;
+  }
 }
