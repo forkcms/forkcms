@@ -33,6 +33,8 @@ class MediaItemMassAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         /** @var Type $selectedType */
         $selectedType = $this->getSelectedType();
 
