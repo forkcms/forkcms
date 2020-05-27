@@ -22,6 +22,8 @@ class InstallModule extends BackendBaseActionIndex
 
     public function execute(): void
     {
+        $this->checkToken();
+
         // get parameters
         $this->currentModule = $this->getRequest()->query->get('module', '');
 
