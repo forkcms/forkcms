@@ -39,4 +39,11 @@ abstract class BackendWebTestCase extends WebTestCase
             $method
         );
     }
+
+    protected function appendCsrfTokenToUrl(Client $client, string $url): string
+    {
+        $connectionSymbol = (strpos($url, '?') !== false) ? '&' : '?';
+
+        return $url . $connectionSymbol . 'token=' . $client->getRequest()->getSession()->get('csrf_token');
+    }
 }
