@@ -24,7 +24,10 @@ class MassActionTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/tags/mass_action');
+        self::assertAuthenticationIsNeeded(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action')
+        );
     }
 
     public function testActionIsRequired(Client $client): void
@@ -32,7 +35,7 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action');
+        self::assertHttpStatusCode200($client, $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action'));
         self::assertCurrentUrlEndsWith($client, '&error=no-action-selected');
     }
 
@@ -41,7 +44,10 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete');
+        self::assertHttpStatusCode200(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action?action=delete')
+        );
         self::assertCurrentUrlEndsWith($client, '&error=no-selection');
     }
 
@@ -50,7 +56,10 @@ class MassActionTest extends BackendWebTestCase
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        self::assertHttpStatusCode200($client, '/private/en/tags/mass_action?action=delete&id[]=2');
+        self::assertHttpStatusCode200(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action?action=delete&id[]=2')
+        );
         self::assertCurrentUrlEndsWith($client, '&report=deleted');
         $response = $client->getResponse();
         self::assertResponseHasContent(
@@ -70,8 +79,11 @@ class MassActionTest extends BackendWebTestCase
         $client->setMaxRedirects(1);
         self::assertHttpStatusCode200(
             $client,
-            '/private/en/tags/mass_action?action=delete&id[]=' . LoadTagsTags::TAGS_TAG_1_ID
-            . '&id[]=' . LoadTagsTags::TAGS_TAG_2_ID
+            $this->appendCsrfTokenToUrl(
+                $client,
+                '/private/en/tags/mass_action?action=delete&id[]=' . LoadTagsTags::TAGS_TAG_1_ID
+                . '&id[]=' . LoadTagsTags::TAGS_TAG_2_ID
+            )
         );
         self::assertCurrentUrlEndsWith($client, '&report=deleted');
 
