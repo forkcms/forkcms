@@ -18,6 +18,7 @@ services:
             - .:/var/www/html:cached
             - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
             - fork-cms-cache:/var/www/html/var/cache
+            - fork-cms-logs:/var/www/html/var/logs
         env_file:
           - ./var/docker/.env
 
@@ -41,5 +42,6 @@ services:
             - ./var/docker/db/scripts:/docker-entrypoint-initdb.d:ro
 
 volumes:
-    fork-cms-cache:
+    fork-cms-cache: {}
+    fork-cms-logs: {}
     db-data: {}
