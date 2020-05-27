@@ -8,6 +8,7 @@ use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -100,7 +101,7 @@ class Action extends KernelLoader
 
         $this->redirect(
             BackendModel::createUrlForAction(
-                'Index',
+                $this->url->getDefaultActionForCurrentModule(),
                 null,
                 null,
                 [
