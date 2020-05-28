@@ -18,11 +18,11 @@
       </div>
       <div class="card-body">
         {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'mediaGroup' }) %}
-        <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        <div id="group-{{ mediaGroup.id }}" data-media-group data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           <div class="mediaConnectedBox">
-            <ul class="mediaConnectedItems ui-sortable" data-fork="connectedItems">
+            <ul class="mediaConnectedItems ui-sortable" data-fork="connectedItems" data-sequence-drag-and-drop="media-connected">
               {% for connectedItem in mediaGroup.connectedItems %}
-                <li id="media-{{ connectedItem.item.id }}" class="ui-state-default">
+                <li id="media-{{ connectedItem.item.id }}" class="ui-state-default" data-id="{{ connectedItem.item.id }}">
                   {{ mediaMacro.mediaItem(connectedItem) }}
                 </li>
               {% endfor %}
@@ -37,6 +37,11 @@
               </div>
             {% endif %}
           </div>
+
+          {# Add hidden required fields #}
+          {{ form_row(form.id) }}
+          {{ form_row(form.mediaIds) }}
+          {{ form_row(form.type) }}
         </div>
       </div>
       <div class="card-footer mediaEditBox">
@@ -53,11 +58,6 @@
           {{- form_errors(form) -}}
         {% endif %}
       </div>
-
-      {# Add hidden required fields #}
-      {{ form_row(form.id) }}
-      {{ form_row(form.mediaIds) }}
-      {{ form_row(form.type) }}
     </div>
   </div>
 {% endblock %}

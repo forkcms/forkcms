@@ -61,42 +61,26 @@ jsBackend.mediaLibraryHelper.group = {
     var prevSequence = ''
     var newSequence = ''
 
+    var element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
+
     // bind drag'n drop to media
-    $('.mediaConnectedBox .ui-sortable').sortable({
-      opacity: 0.6,
-      cursor: 'move',
-      start: function (e, ui) {
+    var sortable = new Sortable(element, {
+      onStart: function (event) {
         // redefine previous and new sequence
         prevSequence = newSequence = $('#group-' + currentMediaGroupId + ' .mediaIds').first().val()
-
-        // don't prevent the click
-        ui.item.removeClass('preventClick')
       },
-      update: function () {
+      onUpdate: function () {
         // set group i
-        currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
+        currentMediaGroupId = $(this).parents('[data-media-group]').data('media-group-id')
 
         // prepare correct new sequence value for hidden input
-        newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
+        newSequence = sortable.toArray().join(',')
 
         // add value to hidden input
         $('#group-' + currentMediaGroupId + ' .mediaIds').first().val(newSequence)
       },
-      stop: function (e, ui) {
-        // prevent click
-        ui.item.addClass('preventClick')
+      onEnd: function (e, ui) {
 
-        // new sequence: de-select this item + update sequence
-        if (prevSequence !== newSequence) {
-          // remove selected class
-          ui.item.removeClass('selected')
-
-          return
-        }
-
-        // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
-        // don't prevent the click, click handler does the rest
-        ui.item.removeClass('preventClick')
       }
     })
 
@@ -1460,7 +1444,7 @@ jsBackend.mediaLibraryHelper.templates = {
    * @returns {string}
    */
   getHTMLForMediaItemToConnect: function (mediaItem) {
-    var html = '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
+    var html = '<li id="media-' + mediaItem.id + '" class="ui-state-default" data-id="' + mediaItem.id + '">'
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     if (mediaItem.type === 'image') {
