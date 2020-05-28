@@ -52,7 +52,12 @@ class ChangePassword extends FrontendBaseBlock
         $this->form->addPassword('old_password')->makeRequired();
         $this->form->addPassword('new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
         $this->form->addPassword('verify_new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
-        $this->form->addCheckbox('show_password')->setAttribute('data-role', 'fork-toggle-visible-password');
+        $this->form->addCheckbox('show_password')->setAttributes(
+            [
+                'data-role' => 'fork-toggle-visible-password',
+                'class' => 'custom-control-input',
+            ]
+        );
     }
 
     private function parse(): void
