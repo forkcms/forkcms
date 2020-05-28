@@ -142,7 +142,7 @@
                   {{ 'lbl.Preview'|trans|ucfirst }}
                 </h2>
               </div>
-              <div id="fieldsHolder" class="card-body" data-sequence-drag-and-drop>
+              <div id="fieldsHolder" class="card-body" data-sequence-drag-and-drop="fields-formbuilder">
                 {% if fields %}
                   {% for field in fields %}
                     {{ field.field|raw }}

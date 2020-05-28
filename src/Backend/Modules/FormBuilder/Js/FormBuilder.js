@@ -334,19 +334,13 @@ jsBackend.FormBuilder.Fields = {
    * Drag and drop fields
    */
   bindDragAndDrop: function () {
-    // bind sortable
-    $('#fieldsHolder').sortable({
-      items: 'div.jsField',
-      handle: 'button.dragAndDropHandle',
-      containment: '#fieldsHolder',
-      cancel: '',
-      stop: function (e, ui) {
-        // init var
-        var rowIds = $(this).sortable('toArray')
-        var newIdSequence = []
+    var element = document.querySelector('[data-sequence-drag-and-drop="fields-formbuilder"]')
 
-        // loop rowIds
-        for (var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1])
+    // bind sortable
+    new Sortable(element, {
+      onEnd: function () {
+        // init var
+        var newIdSequence = jsBackend.FormBuilder.Fields.getSequence($(element))
 
         // make ajax call
         $.ajax({
@@ -370,8 +364,8 @@ jsBackend.FormBuilder.Fields = {
             }
           },
           error: function (XMLHttpRequest, textStatus, errorThrown) {
-            // revert
-            $(this).sortable('cancel')
+            // refresh page
+            location.reload()
 
             // show message
             jsBackend.messages.add('danger', 'alter sequence failed.')
@@ -384,6 +378,18 @@ jsBackend.FormBuilder.Fields = {
         })
       }
     })
+  },
+
+  getSequence: function (wrapper) {
+    var sequence = []
+    var rows = $(wrapper).find('[data-field-wrapper]')
+
+    $.each(rows, function (index, element) {
+      var id = $(element).attr('id').split('-')[1]
+      sequence.push(id)
+    })
+
+    return sequence
   },
 
   /**
