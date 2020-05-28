@@ -20,8 +20,9 @@ class IndexTest extends BackendWebTestCase
             $client,
             '/private/en/content_blocks/index',
             [
-                'There are no items yet.',
+                'There are no content blocks yet.',
                 'Add content block',
+                'Add a content block',
             ]
         );
     }
