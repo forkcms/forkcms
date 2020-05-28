@@ -55,7 +55,6 @@ class EditorType extends TextareaType
                         && is_array($data)
                         && array_key_exists('blocks', $data)
                         && array_key_exists('time', $data)) {
-
                         return $json;
                     }
 
