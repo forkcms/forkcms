@@ -1021,6 +1021,31 @@
         <translation language="pl">
           <![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny.]]></translation>
       </item>
+      <item type="label" name="ActivateProfile">
+        <translation language="nl"><![CDATA[activeer je profiel]]></translation>
+        <translation language="en"><![CDATA[activate your profile]]></translation>
+        <translation language="fr"><![CDATA[activer votre profil]]></translation>
+      </item>
+      <item type="label" name="ForgotPassword">
+        <translation language="nl"><![CDATA[wachtwoord vergeten]]></translation>
+        <translation language="en"><![CDATA[forgot password]]></translation>
+        <translation language="fr"><![CDATA[mot de passe oublié]]></translation>
+      </item>
+      <item type="label" name="ChangePassword">
+        <translation language="nl"><![CDATA[wachtwoord wijzigen]]></translation>
+        <translation language="en"><![CDATA[change password]]></translation>
+        <translation language="fr"><![CDATA[changer le mot de passe]]></translation>
+      </item>
+      <item type="label" name="ResendActivation">
+        <translation language="nl"><![CDATA[stuur activatiemail opnieuw]]></translation>
+        <translation language="en"><![CDATA[resend activation email]]></translation>
+        <translation language="fr"><![CDATA[renvoyer l'e-mail d'activation]]></translation>
+      </item>
+      <item type="label" name="ResetPassword">
+        <translation language="nl"><![CDATA[wachtwoord opnieuw instellen]]></translation>
+        <translation language="en"><![CDATA[reset password]]></translation>
+        <translation language="fr"><![CDATA[réinitialiser le mot de passe]]></translation>
+      </item>
     </Core>
   </Frontend>
 </locale>

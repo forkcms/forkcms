@@ -42,7 +42,7 @@ class Login extends FrontendBaseBlock
         $this->form = new FrontendForm('login', $action, 'post', 'loginForm');
         $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
         $this->form->addPassword('password')->makeRequired();
-        $this->form->addCheckbox('remember', true);
+        $this->form->addCheckbox('remember', true)->setAttribute('class', 'custom-control-input');
     }
 
     private function parse(): void

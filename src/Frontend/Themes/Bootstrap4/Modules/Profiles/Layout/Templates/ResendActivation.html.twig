@@ -1,5 +1,6 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 <section id="resendActivationForm" class="profiles">
+  <h1>{{ 'lbl.ResendActivation'|trans|ucfirst }}</h1>
   {% if resendActivationSuccess %}
     {{ alerts.alert('success', 'msg.ResendActivationIsSuccess'|trans) }}
   {% endif %}
@@ -11,13 +12,11 @@
     {% form resendActivation %}
     <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
       <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }} <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
-      <div class="input-group">
-        {% form_field email %}
-        <span class="input-group-btn">
-            <input class="btn btn-primary" type="submit" value="{{ 'lbl.Send'|trans|ucfirst }}" />
-          </span>
-      </div>
+      {% form_field email %}
       {% form_field_error email %}
+    </div>
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="{{ 'lbl.Send'|trans|ucfirst }}" />
     </div>
     {% endform %}
   {% endif %}

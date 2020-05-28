@@ -1,6 +1,7 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section id="updateEmailForm" class="profiles">
+  <h1>{{ 'msg.ChangeEmail'|trans|ucfirst }}</h1>
   {% if updateEmailSuccess %}
     {{ alerts.alert('success', 'msg.UpdateEmailIsSuccess'|trans) }}
   {% endif %}
@@ -9,23 +10,23 @@
   {% endif %}
 
   {% form updateEmail %}
-    <fieldset class="form-horizontal">
-      <div class="form-group row{% if txtPasswordError %} has-danger{% endif %}">
-        <label class="form-control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
-        <div class="col-sm-6">
-          {% form_field_error password %}{% form_field password %}
+    <fieldset>
+      <div class="form-group{% if txtPasswordError %} has-danger{% endif %}">
+        <label class="form-control-label" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <div>
+          {% form_field password %}
+          {% form_field_error password %}
         </div>
       </div>
-      <div class="form-group row{% if txtEmailError %} has-danger{% endif %}">
-        <label class="form-control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
-        <div class="col-sm-6">
-          {% form_field_error email %}{% form_field email %}
+      <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
+        <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <div>
+          {% form_field email %}
+          {% form_field_error email %}
         </div>
       </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-6">
-          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-        </div>
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
       </div>
     </fieldset>
   {% endform %}
