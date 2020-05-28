@@ -39,7 +39,7 @@ class Model
         $question = BackendModel::get('faq.repository.question')->find($id);
 
         BackendTagsModel::saveTags($id, '', 'Faq');
-        BackendModel::get('faq.repository.category')->remove($question);
+        BackendModel::get('faq.repository.question')->remove($question);
     }
 
     public static function deleteCategory(int $id): void
@@ -349,25 +349,17 @@ class Model
             return;
         }
 
-        $questionData = $question->getQuestion();
-        if (!array_key_exists('question', $item)) {
-            $questionData = $item['question'];
-        }
-        $answer = $question->getAnswer();
-        if (!array_key_exists('answer', $item)) {
-            $answer = $item['answer'];
-        }
-        $hidden = $question->isHidden();
-        if (!array_key_exists('hidden', $item)) {
-            $hidden = $item['hidden'];
-        }
-        $sequence = $question->getSequence();
-        if (!array_key_exists('sequence', $item)) {
-            $sequence = $item['sequence'];
+        $questionData = $item['question'] ?? $question->getQuestion();
+        $answer = $item['answer'] ?? $question->getAnswer();
+        $hidden = $item['hidden'] ?? $question->isHidden();
+        $sequence = $item['sequence'] ?? $question->getSequence();
+        $category = $question->getCategory();
+        if (array_key_exists('category_id', $item) && $item['category_id'] !== $category->getId()) {
+            $category = BackendModel::get('faq.repository.category')->find($item['category_id']);
         }
 
         $question->update(
-            BackendModel::get('faq.repository.category')->find($item['category_id']),
+            $category,
             $questionData,
             $answer,
             $hidden,
