@@ -134,7 +134,7 @@ class Add extends BackendBaseActionAdd
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['success_type'] = $rbtSuccessType->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['success_page'] = $ddmSuccessPage->getValue();
+                $values['success_page'] = (int) $ddmSuccessPage->getValue(); // refactor this so we use null instead of 0
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
