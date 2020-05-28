@@ -15,6 +15,8 @@ class MassCommentAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         // current status
         $from = $this->getRequest()->query->get('from');
         if (!in_array($from, ['published', 'moderation', 'spam'])) {

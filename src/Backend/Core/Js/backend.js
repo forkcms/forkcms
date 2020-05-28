@@ -87,6 +87,9 @@ var jsBackend =
           type: 'POST',
           dataType: 'json',
           timeout: 10000,
+          beforeSend: function (jqXHR) {
+            jqXHR.setRequestHeader('X-CSRF-Token', jsBackend.data.get('csrf-token'));
+          },
           data: {
             fork: {
               module: jsBackend.current.module,

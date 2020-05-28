@@ -49,7 +49,7 @@
         <div class="tab-content">
           {% for dataGrid in dataGrids %}
           <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}">
-            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
+            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="post" class="forkForms">
               <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
