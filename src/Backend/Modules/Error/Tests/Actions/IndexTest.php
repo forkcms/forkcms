@@ -43,6 +43,7 @@ class IndexTest extends BackendWebTestCase
 
     public function testNotFound(Client $client): void
     {
+        Language::setLocale('en');
         self::assertPageLoadedCorrectly(
             $client,
             '/private/en/error/index?type=not-found',
