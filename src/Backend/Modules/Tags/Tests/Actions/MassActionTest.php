@@ -88,7 +88,7 @@ class MassActionTest extends BackendWebTestCase
         self::assertCurrentUrlEndsWith($client, '&report=deleted');
 
         $response = $client->getResponse();
-        self::assertResponseHasContent($response, '<p>There are no tags yet.</p>');
+        self::assertResponseHasContent($response, '<strong>There are no tags yet.</strong>');
         self::assertResponseDoesNotHaveContent(
             $response,
             'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>',
