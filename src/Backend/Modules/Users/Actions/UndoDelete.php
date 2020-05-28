@@ -14,6 +14,8 @@ class UndoDelete extends BackendBaseAction
 {
     public function execute(): void
     {
+        $this->checkToken();
+
         $email = $this->getRequest()->query->get('email', '');
 
         // does the user exist

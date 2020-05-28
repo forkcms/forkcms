@@ -1156,6 +1156,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
           this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId)
+          this.setCustomHeaders({'X-CSRF-Token': jsBackend.data.get('csrf-token')})
         },
         onComplete: function (id, name, responseJSON) {
           // add file to uploaded box

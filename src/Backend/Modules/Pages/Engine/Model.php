@@ -347,7 +347,7 @@ class Model
                 $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
                 $parentTitle = str_replace([$homepageTitle . ' → ', $homepageTitle], '', $titles[$parentID] ?? '');
-                $titles[$pageID] = trim($parentTitle . ' → ' . $page['title'], ' → ');
+                $titles[$pageID] = htmlspecialchars(trim($parentTitle . ' → ' . $page['title'], ' → '));
             }
         }
 
@@ -377,7 +377,7 @@ class Model
 
         foreach ($navigation['page'][$parentId] as $page) {
             $pageId = $page['page_id'];
-            $pageTitle = $parentTitle . ' → ' . $page['navigation_title'];
+            $pageTitle = htmlspecialchars($parentTitle . ' → ' . $page['navigation_title']);
             $tree['pages'][$pageId] = $pageTitle;
             $tree['attributes'][$pageId] = $attributesFunction($page);
 

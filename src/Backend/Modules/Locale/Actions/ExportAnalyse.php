@@ -50,6 +50,7 @@ class ExportAnalyse extends BackendBaseActionIndex
 
     public function execute(): void
     {
+        $this->checkToken();
         $this->setFilter();
         $this->setItems();
     }

@@ -23,6 +23,8 @@ class InstallTheme extends BackendBaseActionIndex
 
     public function execute(): void
     {
+        $this->checkToken();
+
         // get parameters
         $this->currentTheme = $this->getRequest()->query->get('theme', '');
 

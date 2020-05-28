@@ -15,6 +15,8 @@ class MassDataAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['delete'])) {

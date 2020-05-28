@@ -58,8 +58,7 @@
                         <div role="tabpanel"
                           class="tab-pane {% if not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
                           id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
-                          <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}"
-                            method="get" class="forkForms">
+                          <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="post" class="forkForms">
                             <div class="table-responsive">
                               <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
                               <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden"
