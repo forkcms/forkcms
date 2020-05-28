@@ -78,9 +78,9 @@
               <div class="row">
                 <div class="{% if item.image %} col-md-8{% else %} col-12{% endif %}">
                  {% if not item.introduction %}
-                   {{ item.text|raw }}
+                   {{ item.text|parse_blocks }}
                  {% else %}
-                   {{ item.introduction|raw }}
+                   {{ item.introduction|parse_blocks }}
                  {% endif %}
                 </div>
                   {% if item.image %}

@@ -83,9 +83,9 @@
               {% if item.image %}
                 <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
               {% if not item.introduction %}
-                {{ item.text|raw }}
+                {{ item.text|parse_blocks }}
               {% else %}
-                {{ item.introduction|raw }}
+                {{ item.introduction|parse_blocks }}
               {% endif %}
             </div>
           </article>
