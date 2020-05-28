@@ -5,12 +5,12 @@ jsBackend.faq = {
   // init, something like a constructor
   init: function () {
     // index stuff
-    if ($('.jsDataGridQuestionsHolder').length > 0) {
+    if ($('[data-sequence-drag-and-drop="data-grid-faq"]').length > 0) {
       // destroy default drag and drop
       //$('.sequenceByDragAndDrop tbody').sortable('destroy')
 
       // drag and drop
-      //jsBackend.faq.bindDragAndDropQuestions()
+      jsBackend.faq.bindDragAndDropQuestions()
       //jsBackend.faq.checkForEmptyCategories()
     }
 
@@ -52,16 +52,10 @@ jsBackend.faq = {
     }
   },
 
-  saveNewQuestionSequence: function ($wrapper, questionId, toCategoryId) {
-    // vars we will need
-    var fromCategoryId = $wrapper.attr('id').substring(9)
-    var fromCategorySequence = $wrapper.sortable('toArray').join(',')
-    var toCategorySequence = $('#dataGrid-' + toCategoryId).sortable('toArray').join(',')
-
-      // make ajax call
+  saveNewQuestionSequence: function (questionId, fromCategoryId, toCategoryId, fromCategorySequence, toCategorySequence) {
+    // make ajax call
     $.ajax({
       data: {
-
         fork: {action: 'SequenceQuestions'},
         questionId: questionId,
         fromCategoryId: fromCategoryId,
@@ -98,8 +92,8 @@ jsBackend.faq = {
           // show message
           jsBackend.messages.add('success', data.message)
         } else {
-          // not a success so revert the changes
-          $(this).sortable('cancel')
+          // refresh page
+          location.reload()
 
           // show message
           jsBackend.messages.add('danger', 'alter sequence failed.')
@@ -109,8 +103,8 @@ jsBackend.faq = {
         if (data.code !== 200 && jsBackend.debug) { window.alert(data.message) }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
-        // revert
-        $(this).sortable('cancel')
+        // refresh page
+        location.reload()
 
         // show message
         jsBackend.messages.add('danger', 'alter sequence failed.')
@@ -126,27 +120,32 @@ jsBackend.faq = {
    */
   bindDragAndDropQuestions: function () {
     // go over every dataGrid
-    $.each($('div.jsDataGridQuestionsHolder'), function () {
-      var $this = $(this)
+    $.each($('[data-sequence-drag-and-drop="data-grid-faq"] tbody'), function (index, element) {
+
       // make them sortable
-      new Sortable($this, {
-        items: 'table.jsDataGrid tbody tr',        // set the elements that user can sort
-        handle: 'td.dragAndDropHandle',            // set the element that user can grab
-        tolerance: 'pointer',                    // give a more natural feeling
-        connectWith: 'div.jsDataGridQuestionsHolder',        // this is what makes dragging between categories possible
-        stop: function (e, ui) {
+      new Sortable(element, {
+        group: 'faqIndex', // this is what makes dragging between categories possible
+        onEnd: function (event) {
           jsBackend.faq.saveNewQuestionSequence(
-            $(this),
-            ui.item.attr('id'),
-            ui.item.parents('.jsDataGridQuestionsHolder').attr('id').substring(9)
+            $(event.item).attr('id'),
+            $(event.from).parents('[data-questions-holder]').attr('id').substring(9),
+            $(event.to).parents('[data-questions-holder]').attr('id').substring(9),
+            jsBackend.faq.getSequence($(event.from)),
+            jsBackend.faq.getSequence($(event.to))
           )
         }
       })
-      $this.find('[data-role="order-move"]').off('click.fork.order-move').on('click.fork.order-move', function (e) {
+
+      // move with arrows
+      $(element).find('[data-role="order-move"]').off('click.fork.order-move').on('click.fork.order-move', function () {
+        // vars we will need
         var $this = $(this)
         var $row = $this.closest('tr')
         var direction = $this.data('direction')
-        var $holder = $row.closest('.jsDataGridQuestionsHolder')
+        var questionId = $row.attr('id')
+        var fromCategoryId = $this.parents('[data-questions-holder]').attr('id').substring(9)
+        var toCategoryId = fromCategoryId
+        var fromCategorySequence = jsBackend.faq.getSequence($(element))
 
         if (direction === 'up') {
           $row.prev().insertAfter($row)
@@ -154,9 +153,30 @@ jsBackend.faq = {
           $row.next().insertBefore($row)
         }
 
-        jsBackend.faq.saveNewQuestionSequence($holder, $row.attr('id'), $holder.attr('id').substring(9))
+        // set to category sequence after it's moved
+        var toCategorySequence = jsBackend.faq.getSequence($(element))
+
+        jsBackend.faq.saveNewQuestionSequence(
+          questionId,
+          fromCategoryId,
+          toCategoryId,
+          fromCategorySequence,
+          toCategorySequence
+        )
       })
     })
+  },
+
+  getSequence: function (wrapper) {
+    var sequence = []
+    var rows = $(wrapper).find('tr')
+
+    $.each(rows, function (index, element) {
+      var id = $(element).data('id')
+      sequence.push(id)
+    })
+
+    return sequence.join(',')
   }
 }
 

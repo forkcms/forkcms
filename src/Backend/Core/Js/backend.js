@@ -1968,17 +1968,13 @@ jsBackend.tableSequenceByDragAndDrop = {
   // init, something like a constructor
   init: function () {
     // variables
-    console.log($('.sequenceByDragAndDrop tbody'))
-    var $sequenceInstances = $('.sequenceByDragAndDrop tbody')
+    var $sequenceInstances = $('[data-sequence-drag-and-drop="data-grid"] tbody')
 
     if ($sequenceInstances.length === 0) {
       return
     }
 
     $.each($sequenceInstances, function (index, element) {
-
-      console.log('JS BACKEND SORTABLE INIT')
-
       new Sortable(element,
         {
           onEnd: function (event) {

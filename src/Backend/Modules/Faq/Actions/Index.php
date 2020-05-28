@@ -66,6 +66,13 @@ class Index extends BackendBaseActionIndex
                 );
             }
 
+            $dataGrid->setAttributes(
+                [
+                    'class' => 'table table-hover table-striped fork-data-grid jsDataGrid',
+                    'data-sequence-drag-and-drop' => 'data-grid-faq',
+                ]
+            );
+
             // add dataGrid to list
             $this->dataGrids[] = [
                 'id' => $categoryId,
@@ -82,7 +89,12 @@ class Index extends BackendBaseActionIndex
                 'edit' => '',
             ]]
         );
-        $this->emptyDatagrid->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid']);
+        $this->emptyDatagrid->setAttributes(
+            [
+                'class' => 'table table-hover table-striped fork-data-grid jsDataGrid emptyGrid',
+                'data-sequence-drag-and-drop' => 'data-grid-faq',
+            ]
+        );
         $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null]);
     }
 

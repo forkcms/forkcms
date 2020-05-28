@@ -267,9 +267,9 @@ class DataGrid extends \SpoonDataGrid
                         'table-striped',
                         'fork-data-grid',
                         'jsDataGrid',
-                        'sequenceByDragAndDrop',
                     ]
                 ),
+                'data-sequence-drag-and-drop' => 'data-grid',
             ]
         );
 

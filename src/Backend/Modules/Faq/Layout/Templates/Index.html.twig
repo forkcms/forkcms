@@ -14,7 +14,7 @@
 {% block content %}
   {% if dataGrids %}
     {% for dataGrid in dataGrids %}
-      <div id="dataGrid-{{ dataGrid.id }}" class="content-block content-block-pb jsDataGridQuestionsHolder">
+      <div id="dataGrid-{{ dataGrid.id }}" class="content-block content-block-pb" data-questions-holder>
         {% if dataGrid.content %}
           <div class="content-title">
             <h2>{{ dataGrid.title }}</h2>
