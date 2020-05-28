@@ -87,10 +87,12 @@
 
        <div class="form-group">
          {{ form_widget(form.data.isAction) }}
-         {{ form_widget(form.settings.allowMove) }}
-         {{ form_widget(form.settings.allowChildren) }}
-         {{ form_widget(form.settings.allowEdit) }}
-         {{ form_widget(form.settings.allowDelete) }}
+         {% if form.settings.allowMove is defined %} {# Only god-users can see these#}
+           {{ form_widget(form.settings.allowMove) }}
+           {{ form_widget(form.settings.allowChildren) }}
+           {{ form_widget(form.settings.allowEdit) }}
+           {{ form_widget(form.settings.allowDelete) }}
+         {% endif %}
        </div>
       </fieldset>
 
