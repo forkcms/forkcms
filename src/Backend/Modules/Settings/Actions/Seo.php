@@ -121,18 +121,15 @@ class Seo extends BackendBaseActionIndex
                     // save the linked pages for each language
                     foreach ($this->workingLanguagePages as $pageId => $pageTitle) {
                         $pageData = BackendPagesModel::get($pageId);
-                        $update['id'] = (int)$pageData['id'];
-                        $update['revision_id'] = (int)$pageData['revision_id'];
-                        $update['data'] = $pageData['data'];
+                        $data['data'] = $pageData['data'];
 
                         foreach ($this->languages as $lang => $language) {
                             if ($lang != BL::getWorkingLanguage()) {
-                                $update['data']['hreflang_' . $lang] = $this->form->getField('page_' . $lang . '_' . $pageId)->getValue();
+                                $data['data']['hreflang_' . $lang] = $this->form->getField('page_' . $lang . '_' . $pageId)->getValue();
                             }
                         }
 
-                        $update['data'] = serialize($update['data']);
-                        BackendPagesModel::updateByIdAndRevisionId($update);
+                        BackendPagesModel::updateRevisionData($pageData['id'], $pageData['revision_id'], $data);
                     }
                 }
 

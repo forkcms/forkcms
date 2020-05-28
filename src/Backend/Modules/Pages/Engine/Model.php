@@ -840,11 +840,11 @@ class Model
 
                 // insert link
                 $html .= '    <a href="' . BackendModel::createUrlForAction(
-                    'Edit',
-                    null,
-                    null,
-                    ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
+                        'Edit',
+                        null,
+                        null,
+                        ['id' => $page['page_id']]
+                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // get childs
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -937,11 +937,11 @@ class Model
         // create homepage anchor from title
         $homePage = self::get(BackendModel::HOME_PAGE_ID);
         $html .= '            <a href="' . BackendModel::createUrlForAction(
-            'Edit',
-            null,
-            null,
-            ['id' => BackendModel::HOME_PAGE_ID]
-        ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
+                'Edit',
+                null,
+                null,
+                ['id' => BackendModel::HOME_PAGE_ID]
+            ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
@@ -967,11 +967,11 @@ class Model
 
                     // insert link
                     $html .= '            <a href="' . BackendModel::createUrlForAction(
-                        'Edit',
-                        null,
-                        null,
-                        ['id' => $page['page_id']]
-                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
+                            'Edit',
+                            null,
+                            null,
+                            ['id' => $page['page_id']]
+                        ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1002,11 +1002,11 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' . BackendModel::createUrlForAction(
-                    'Edit',
-                    null,
-                    null,
-                    ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
+                        'Edit',
+                        null,
+                        null,
+                        ['id' => $page['page_id']]
+                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1036,11 +1036,11 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' . BackendModel::createUrlForAction(
-                    'Edit',
-                    null,
-                    null,
-                    ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
+                        'Edit',
+                        null,
+                        null,
+                        ['id' => $page['page_id']]
+                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1415,19 +1415,22 @@ class Model
     /**
      * @param array $page
      */
-    public static function updateByIdAndRevisionId(array $page): void
+    public static function updateRevisionData(int $pageId, int $revisionId, array $data): void
     {
         // get database
         $database = BackendModel::getContainer()->get('database');
 
+        // serialize the data
+        $data['data'] = serialize($data['data']);
+
         $database->update(
             'pages',
-            $page,
+            $data,
             'id = ? AND revision_id = ?',
-            [(int) $page['id'], (int) $page['revision_id']]
+            [$pageId, $revisionId]
         );
     }
-    
+
     /**
      * Switch templates for all existing pages
      *
@@ -1583,11 +1586,11 @@ class Model
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
             $newSequence = (int) $database->getVar(
-                'SELECT MAX(i.sequence)
+                    'SELECT MAX(i.sequence)
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                [$newParent, $language, 'active']
-            ) + 1;
+                    [$newParent, $language, 'active']
+                ) + 1;
 
             $database->update(
                 'pages',
