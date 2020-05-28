@@ -39,7 +39,7 @@ class Model
         $question = BackendModel::get('faq.repository.question')->find($id);
 
         BackendTagsModel::saveTags($id, '', 'Faq');
-        BackendModel::get('faq.repository.category')->remove($question);
+        BackendModel::get('faq.repository.question')->remove($question);
     }
 
     public static function deleteCategory(int $id): void
