@@ -4,6 +4,7 @@ namespace Backend\Core\Tests;
 
 use Common\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 abstract class BackendWebTestCase extends WebTestCase
 {
@@ -44,6 +45,13 @@ abstract class BackendWebTestCase extends WebTestCase
     {
         $connectionSymbol = (strpos($url, '?') !== false) ? '&' : '?';
 
-        return $url . $connectionSymbol . 'token=' . $client->getRequest()->getSession()->get('csrf_token');
+        $session = $client->getContainer()->get('session');
+
+        if (!$session instanceof Session) {
+            // no session so no csrf token
+            return $url;
+        }
+
+        return $url . $connectionSymbol . 'token=' . $session->get('csrf_token');
     }
 }
