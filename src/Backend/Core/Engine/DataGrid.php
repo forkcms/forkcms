@@ -53,7 +53,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid']);
+        $this->setAttributes(['class' => 'table table-striped fork-data-grid jsDataGrid']);
 
         // id gets special treatment
         if (in_array('id', $this->getColumns(), true)) {
