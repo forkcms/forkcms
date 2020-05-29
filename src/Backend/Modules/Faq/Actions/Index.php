@@ -68,7 +68,7 @@ class Index extends BackendBaseActionIndex
 
             $dataGrid->setAttributes(
                 [
-                    'class' => 'table table-hover table-striped fork-data-grid jsDataGrid',
+                    'class' => 'table table-striped fork-data-grid jsDataGrid',
                     'data-sequence-drag-and-drop' => 'data-grid-faq',
                 ]
             );
@@ -92,7 +92,7 @@ class Index extends BackendBaseActionIndex
         );
         $this->emptyDatagrid->setAttributes(
             [
-                'class' => 'table table-hover table-striped fork-data-grid jsDataGrid emptyGrid',
+                'class' => 'table table-striped fork-data-grid jsDataGrid emptyGrid',
                 'data-sequence-drag-and-drop' => 'data-grid-faq',
             ]
         );

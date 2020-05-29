@@ -263,7 +263,6 @@ class DataGrid extends \SpoonDataGrid
                     ' ',
                     [
                         'table',
-                        'table-hover',
                         'table-striped',
                         'fork-data-grid',
                         'jsDataGrid',
