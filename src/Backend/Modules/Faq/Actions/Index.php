@@ -85,6 +85,7 @@ class Index extends BackendBaseActionIndex
         $this->emptyDatagrid = new BackendDataGridArray(
             [[
                 'dragAndDropHandle' => '',
+                'move' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
                 'edit' => '',
             ]]

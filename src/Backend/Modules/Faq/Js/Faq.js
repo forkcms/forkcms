@@ -6,12 +6,9 @@ jsBackend.faq = {
   init: function () {
     // index stuff
     if ($('[data-sequence-drag-and-drop="data-grid-faq"]').length > 0) {
-      // destroy default drag and drop
-      //$('.sequenceByDragAndDrop tbody').sortable('destroy')
-
       // drag and drop
       jsBackend.faq.bindDragAndDropQuestions()
-      //jsBackend.faq.checkForEmptyCategories()
+      jsBackend.faq.checkForEmptyCategories()
     }
 
     // do meta
@@ -27,7 +24,7 @@ jsBackend.faq = {
       $(this).find('td').parent().remove()
       $(this).append(
         '<tr class="noQuestions">' +
-        '<td colspan="' + $(this).find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
+          '<td colspan="' + $(this).find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
         '</tr>'
       )
       $(this).removeClass('emptyGrid')
@@ -35,16 +32,6 @@ jsBackend.faq = {
 
     // when there are empty categories
     if ($('tr.noQuestions').length > 0) {
-      // make dataGrid droppable
-      $('table.jsDataGrid').droppable({
-        // only accept table rows
-        accept: 'table.jsDataGrid tr',
-        drop: function (e, ui) {
-          // remove the no questions in category message
-          $(this).find('tr.noQuestions').remove()
-        }
-      })
-
       // cleanup remaining no questions
       $('table.jsDataGrid').each(function () {
         if ($(this).find('tr').length > 2) $(this).find('tr.noQuestions').remove()
@@ -66,13 +53,20 @@ jsBackend.faq = {
       success: function (data, textStatus) {
         // successfully saved reordering sequence
         if (data.code === 200) {
-          // change count in title (if any)
-          $('div#dataGrid-' + fromCategoryId + ' .content-title h2').html($('div#dataGrid-' + fromCategoryId + ' .content-title h2').html().replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
+          var $fromWrapper = $('div#dataGrid-' + fromCategoryId)
+          var $fromWrapperTitle = $fromWrapper.find('.content-title h2')
+
+          var $toWrapper = $('div#dataGrid-' + toCategoryId)
+          var $toWrapperTitle = $toWrapper.find('.content-title h2')
+
+          // change count in title of from wrapper (if any)
+          $fromWrapperTitle.html($fromWrapperTitle.html().replace(/\(([0-9]*)\)$/, '(' + ($fromWrapper.find('table.jsDataGrid tr').length - 1) + ')'))
 
           // if there are no records -> show message
-          if ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length === 1) {
-            $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append('<tr class="noQuestions">' +
-              '<td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
+          if ($fromWrapper.find('table.jsDataGrid tr').length === 1) {
+            $fromWrapper.find('table.jsDataGrid').append('' +
+              '<tr class="noQuestions">' +
+                '<td colspan="' + $fromWrapper.find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
               '</tr>'
             )
           }
@@ -86,8 +80,8 @@ jsBackend.faq = {
           table.find('tr:even').addClass('even')
           table.find('tr:odd').addClass('odd')
 
-          // change count in title (if any)
-          $('div#dataGrid-' + toCategoryId + ' .content-title h2').html($('div#dataGrid-' + toCategoryId + ' .content-title h2').html().replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
+          // change count in title of to wrapper (if any)
+          $toWrapperTitle.html($toWrapperTitle.html().replace(/\(([0-9]*)\)$/, '(' + ($toWrapper.find('table.jsDataGrid tr').length - 1) + ')'))
 
           // show message
           jsBackend.messages.add('success', data.message)
