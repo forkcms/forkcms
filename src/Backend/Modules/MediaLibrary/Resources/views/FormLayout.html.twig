@@ -20,9 +20,9 @@
         {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'mediaGroup' }) %}
         <div id="group-{{ mediaGroup.id }}" data-media-group data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           <div class="mediaConnectedBox">
-            <ul class="mediaConnectedItems ui-sortable" data-fork="connectedItems" data-sequence-drag-and-drop="media-connected">
+            <ul class="mediaConnectedItems" data-fork="connectedItems" data-sequence-drag-and-drop="media-connected">
               {% for connectedItem in mediaGroup.connectedItems %}
-                <li id="media-{{ connectedItem.item.id }}" class="ui-state-default" data-id="{{ connectedItem.item.id }}">
+                <li id="media-{{ connectedItem.item.id }}" class="media-item fork-data-grid-sortable" data-id="{{ connectedItem.item.id }}">
                   {{ mediaMacro.mediaItem(connectedItem) }}
                 </li>
               {% endfor %}

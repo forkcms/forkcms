@@ -1444,7 +1444,7 @@ jsBackend.mediaLibraryHelper.templates = {
    * @returns {string}
    */
   getHTMLForMediaItemToConnect: function (mediaItem) {
-    var html = '<li id="media-' + mediaItem.id + '" class="ui-state-default" data-id="' + mediaItem.id + '">'
+    var html = '<li id="media-' + mediaItem.id + '" class="media-item fork-data-grid-sortable" data-id="' + mediaItem.id + '">'
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     if (mediaItem.type === 'image') {
@@ -1521,7 +1521,7 @@ jsBackend.mediaLibraryHelper.templates = {
     var html = ''
 
     // create element
-    html += '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
+    html += '<li id="media-' + mediaItem.id + '" class="media-item">'
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     // is image

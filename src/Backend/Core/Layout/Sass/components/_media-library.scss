@@ -45,13 +45,17 @@
   padding: 0;
   margin: 0;
 
-  .ui-state-default {
+  .media-item {
     background-color: transparent;
     border: 0;
     box-shadow: 0 1px 9px 0 rgba($black, 0.2);
     display: inline-block;
     margin: 10px 20px 10px 0;
     vertical-align: top;
+
+    &.fork-data-grid-sortable .mediaHolder {
+      cursor: move;
+    }
   }
 }
 
