@@ -294,7 +294,7 @@
 
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
-      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% if form.vars.sequence_group %} data-sequence-group="{{ form.vars.sequence_group }}"{% endif %}{% endif %}>
         {% for field in form %}
           <li class="list-group-item">
             {{ block('page_block_collection_item') }}
