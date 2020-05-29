@@ -2033,7 +2033,9 @@ jsBackend.tableSequenceByDragAndDrop = {
       success: function (data) {
         // not a success so revert the changes
         if (data.code !== 200) {
-          $table.sortable('cancel')
+          // refresh page
+          location.reload()
+
           jsBackend.messages.add('danger', jsBackend.locale.err('AlterSequenceFailed'))
         }
 

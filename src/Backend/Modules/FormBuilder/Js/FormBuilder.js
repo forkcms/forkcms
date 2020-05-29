@@ -352,8 +352,8 @@ jsBackend.FormBuilder.Fields = {
           success: function (data, textStatus) {
             // not a success so revert the changes
             if (data.code !== 200) {
-              // revert
-              $(this).sortable('cancel')
+              // refresh page
+              location.reload()
 
               // show message
               jsBackend.messages.add('danger', 'alter sequence failed.')
