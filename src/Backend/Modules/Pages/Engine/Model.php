@@ -1430,7 +1430,7 @@ class Model
             [$pageId, $revisionId]
         );
     }
-
+    
     /**
      * Switch templates for all existing pages
      *
