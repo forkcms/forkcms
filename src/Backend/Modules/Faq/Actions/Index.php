@@ -85,7 +85,7 @@ class Index extends BackendBaseActionIndex
         $this->emptyDatagrid = new BackendDataGridArray(
             [[
                 'dragAndDropHandle' => '',
-                'move' => '',
+                'sortHandle' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
                 'edit' => '',
             ]]
@@ -96,7 +96,7 @@ class Index extends BackendBaseActionIndex
                 'data-sequence-drag-and-drop' => 'data-grid-faq',
             ]
         );
-        $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null]);
+        $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null, 'sortHandle' => ucfirst(BL::lbl('Move'))]);
     }
 
     protected function parse(): void
