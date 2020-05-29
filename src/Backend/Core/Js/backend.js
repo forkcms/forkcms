@@ -1977,6 +1977,7 @@ jsBackend.tableSequenceByDragAndDrop = {
     $.each($sequenceInstances, function (index, element) {
       new Sortable(element,
         {
+          handle: '[data-role="drag-and-drop-handle"]',
           onEnd: function (event) {
             var $draggedItem = $(event.item)
             jsBackend.tableSequenceByDragAndDrop.saveNewSequence($draggedItem.closest('table.jsDataGrid'))

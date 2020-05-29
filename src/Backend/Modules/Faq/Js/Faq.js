@@ -118,6 +118,7 @@ jsBackend.faq = {
 
       // make them sortable
       new Sortable(element, {
+        handle: '[data-role="drag-and-drop-handle"]',
         group: 'faqIndex', // this is what makes dragging between categories possible
         onEnd: function (event) {
           jsBackend.faq.saveNewQuestionSequence(

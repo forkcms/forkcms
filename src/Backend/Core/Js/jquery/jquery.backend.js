@@ -1537,6 +1537,7 @@
 
       $.each($sequenceInstances, function (index, element) {
         new Sortable(element, {
+          handle: '[data-role="sequence-handle"]',
           group: typeof $sequenceInstances.attr('data-sequence-group') !== 'undefined' ? $sequenceInstances.data('sequence-group') : '',
 
           // Element dragging ended

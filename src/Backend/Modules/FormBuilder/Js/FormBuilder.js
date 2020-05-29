@@ -338,6 +338,7 @@ jsBackend.FormBuilder.Fields = {
 
     // bind sortable
     new Sortable(element, {
+      handle: '[data-role="drag-and-drop-handle"]',
       onEnd: function () {
         // init var
         var newIdSequence = jsBackend.FormBuilder.Fields.getSequence($(element))
