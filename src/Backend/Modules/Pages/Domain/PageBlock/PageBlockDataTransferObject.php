@@ -67,7 +67,12 @@ class PageBlockDataTransferObject
     /**
      * @var string
      */
-    public $label;
+    public $extraModule;
+
+    /**
+     * @var string
+     */
+    public $extraLabel;
 
     public function __construct(PageBlock $pageBlock = null)
     {
