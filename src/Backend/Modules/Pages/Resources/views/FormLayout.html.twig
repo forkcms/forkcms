@@ -354,7 +354,7 @@
         {% if field.vars.data.extraType.isRichText %}
           <div data-role="page-block-preview" class="mb-2">
             {% if field.vars.data.html %}
-              <p class="page-block-description mb-0">{{ field.vars.data.html|parse_blocks|truncate(200) }}</p>
+              <p class="page-block-description mb-0">{{ field.vars.data.html|parse_blocks|truncate(75) }}</p>
             {% endif %}
           </div>
         {% else %}
