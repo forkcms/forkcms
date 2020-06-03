@@ -5,29 +5,7 @@
   }
 }
 
-.strength-none.badge {
-  background-color: $gray-550;
+.badge-sm {
+  padding: 0.3rem $badge-padding-x;
 }
 
-.strength-weak.badge {
-  background-color: $danger;
-}
-
-.strength-average.badge {
-  background-color: $warning;
-}
-
-.strength-strong.badge {
-  background-color: $success;
-}
-
-.strength-none,
-.strength-weak,
-.strength-average,
-.strength-strong {
-
-  &.badge {
-    color: $white;
-    padding: 0.3rem $badge-padding-x;
-  }
-}
