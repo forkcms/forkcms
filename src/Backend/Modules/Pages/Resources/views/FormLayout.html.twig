@@ -351,18 +351,24 @@
       {% endif %}
 
       <div>
-        {% if field.vars.data.extraType.isRichText %}
-          <div data-role="page-block-preview" class="mb-2">
+        <div data-role="page-block-preview" class="mb-2{% if not field.vars.data.extraType.isRichText %} d-none{% endif %}">
+          <p class="page-block-description mb-0">
             {% if field.vars.data.html %}
-              <p class="page-block-description mb-0">{{ field.vars.data.html|parse_blocks|truncate(75) }}</p>
+              {{ field.vars.data.html|parse_blocks|truncate(75) }}
+            {% else %}
+              {{ 'lbl.NoContentToShow'|trans|ucfirst }}
             {% endif %}
-          </div>
-        {% else %}
-          <div class="block-info mb-2">
-            <p class="badge badge-middle mb-2">{{ field.vars.data.extraType.label }}</p>
-            <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">{{ field.vars.data.extraType.label }}</p>
-          </div>
-        {% endif %}
+          </p>
+        </div>
+        <div class="block-info mb-2{% if field.vars.data.extraType.isRichText %} d-none{% endif %}" data-role="page-block-title-wrapper">
+          <p class="badge badge-middle mb-2" data-role="page-block-type">{{ field.vars.data.extraType.label }}</p>
+          <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">
+            {% if field.vars.data.extraModule %}
+              {{ field.vars.data.extraModule }}
+              › {{ field.vars.data.extraLabel }}
+            {% endif %}
+          </p>
+        </div>
 
         <div class="d-flex flex-wrap">
           <div class="btn-group">
@@ -372,10 +378,8 @@
               {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
             {% endif %}
           </div>
-
         </div>
       </div>
-
 
       <div class="ml-auto">
         {{ form_widget(field) }}
