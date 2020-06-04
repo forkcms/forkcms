@@ -13,8 +13,7 @@ services:
         volumes:
             - .:/var/www/html:cached
             - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
-            - fork-cms-cache:/var/www/html/var/cache
-            - fork-cms-logs:/var/www/html/var/logs
+            - fork-cms-var:/var/www/html/var
 
     db:
         image: "mariadb:latest"
@@ -36,6 +35,5 @@ services:
             - ./var/docker/db/scripts:/docker-entrypoint-initdb.d:ro
 
 volumes:
-    fork-cms-cache: {}
-    fork-cms-logs: {}
+    fork-cms-var: {}
     db-data: {}
