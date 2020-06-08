@@ -6,6 +6,7 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksT
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
@@ -665,7 +666,7 @@ class Model
         $keys = [];
         $pages = [];
         $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $language);
-        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? SpoonFilter::ucfirst(BL::lbl('Home'));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {
@@ -929,7 +930,7 @@ class Model
         $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // start HTML
-        $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
+        $html = '<h4>' . SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
         $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home">';
@@ -954,7 +955,7 @@ class Model
         // only show meta if needed
         if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
             // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
+            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
             $html .= '    <ul>' . "\n";
 
@@ -987,7 +988,7 @@ class Model
         }
 
         // footer pages
-        $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
+        $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
 
         // start
         $html .= '<div class="clearfix" data-tree="footer">' . "\n";
@@ -1023,7 +1024,7 @@ class Model
         // are there any root pages
         if (isset($navigation['root'][0]) && !empty($navigation['root'][0])) {
             // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
+            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
 
             // start
             $html .= '<div class="clearfix" data-tree="root">' . "\n";
@@ -1295,8 +1296,8 @@ class Model
         string $tree,
         string $language = null
     ): bool {
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
-        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
+        $typeOfDrop = SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
+        $tree = SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
         // When dropping on the main navigation it should be added as a child of the home page
