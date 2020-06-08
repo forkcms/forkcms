@@ -772,7 +772,7 @@ class Model
         array $page,
         array $navigation
     ): array {
-        $tree['pages'][$branchLabel][$page['page_id']] = $page['navigation_title'];
+        $tree['pages'][$branchLabel][$page['page_id']] = SpoonFilter::htmlentities($page['navigation_title']);
         $tree['attributes'][$page['page_id']] = $attributesFunction($page);
 
         return self::mergeTreeForDropdownArrays(
