@@ -13,7 +13,9 @@ use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +34,37 @@ class EditorType extends TextareaType
     {
         $this->container = $container;
         $this->preferredEditor = Model::getPreferredEditor();
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        if ($this->preferredEditor !== 'block-editor') {
+            return;
+        }
+
+        $builder->addModelTransformer(
+            new CallbackTransformer(
+                static function (?string $json): ?string {
+                    if ($json === null) {
+                        return null;
+                    }
+
+                    $data = json_decode($json, true);
+
+                    if ($data !== false
+                        && is_array($data)
+                        && array_key_exists('blocks', $data)
+                        && array_key_exists('time', $data)) {
+                        return $json;
+                    }
+
+                    return EditorBlocks::createJsonFromHtml($json);
+                },
+                static function (?string $json): ?string {
+                    return $json;
+                }
+            )
+        );
     }
 
     public function configureOptions(OptionsResolver $optionsResolver): void

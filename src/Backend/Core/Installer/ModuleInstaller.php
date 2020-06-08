@@ -16,6 +16,7 @@ use Backend\Modules\Pages\Domain\PageBlock\PageBlock;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Pages\Domain\PageBlock\Type as PageBlockType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\BlockEditor\EditorBlocks;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Uri as CommonUri;
@@ -793,7 +794,7 @@ class ModuleInstaller
 
             // get the html from the template file if it is defined
             if ($html !== null && $html !== '') {
-                $html = file_get_contents($block['html']);
+                $html = EditorBlocks::createJsonFromHtml(file_get_contents($block['html']));
             }
 
             $pageBlock = new PageBlock(

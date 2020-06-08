@@ -14,6 +14,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-zip": "*",

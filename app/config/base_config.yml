@@ -241,7 +241,7 @@ services:
             - { name: twig.extension }
 
     Common\BlockEditor\Twig\ParseBlocksExtension:
-        public: false
+        public: true
         autowire: true
         tags:
             - { name: twig.extension }

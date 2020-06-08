@@ -81,9 +81,9 @@
                 <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ post.image }}" alt="{{ post.title }}" />
               {% endif %}
               {% if not post.introduction %}
-                {{ post.text|raw }}
+                {{ post.text|parse_blocks }}
               {% else %}
-                {{ post.introduction|raw }}
+                {{ post.introduction|parse_blocks }}
               {% endif %}
             </div>
           </article>

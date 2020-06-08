@@ -57,6 +57,6 @@
     {% if item.image %}
       <img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />
     {% endif %}
-    {{ item.text|raw }}
+    {{ item.text|parse_blocks }}
   </div>
 {% endblock %}
