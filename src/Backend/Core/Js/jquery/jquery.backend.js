@@ -1564,6 +1564,7 @@
       })
     },
 
+    // TODO This might be deleted now we have saveNewGroup
     saveNewSequence: function ($sequenceBody) {
       var counter = 0
       $.each($sequenceBody.find(sequenceField), function (index, element) {
