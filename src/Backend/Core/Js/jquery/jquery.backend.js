@@ -1544,6 +1544,7 @@
           onEnd: function (event) {
             var draggedItem = $(event.item)
             CollectionSequence.saveNewSequence(draggedItem.closest('[data-role=collection-sequence]'))
+            CollectionSequence.saveNewGroup(event)
           }
         })
 
@@ -1568,6 +1569,37 @@
       $.each($sequenceBody.find(sequenceField), function (index, element) {
         $(element).val(counter)
         counter++
+      })
+    },
+
+    saveNewGroup: function (event) {
+      var fromBlockName = $(event.from).data('position')
+      var toBlockName = $(event.to).data('position')
+
+      $(event.item).find('[id*="' + fromBlockName + '"]').each(function (index, item) {
+        var oldId = $(item).attr('id')
+        var newId = oldId.replace(fromBlockName, toBlockName)
+
+        $(item).attr('id', newId)
+      })
+
+      $(event.item).find('[aria-labelledby*="' + fromBlockName + '"]').each(function (index, item) {
+        var oldLabel = $(item).attr('aria-labelledby')
+        var newLabel = oldLabel.replace(fromBlockName, toBlockName)
+
+        $(item).attr('aria-labelledby', newLabel)
+      })
+
+      $(event.item).find('[name*="' + fromBlockName + '"]').each(function (index, item) {
+        var oldName = $(item).attr('name')
+        var newName = oldName.replace(fromBlockName, toBlockName)
+
+        $(item).attr('name', newName)
+      })
+
+      $('[data-position="' + toBlockName + '"] li.list-group-item').each(function (index, item) {
+        console.log($(item).find('[data-role="sequence"]'))
+        $(item).find('[data-role="sequence"]').val(index)
       })
     }
   }
