@@ -1,3 +1,6 @@
+// Todo check if v8 works, otherwise use v4.1.1
+// import Highcharts from 'highcharts';
+
 /**
  * Interaction for the analytics module
  */

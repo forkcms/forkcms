@@ -32,6 +32,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.9.1",
+    "highcharts": "^8.1.2",
     "jquery": "^3.5.1",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
@@ -69,8 +70,6 @@
     ],
     "ignore": [
       "/js/",
-      "src/Backend/Core/Js/ckeditor/",
-      "src/Backend/Core/Js/highcharts.js",
       "src/Backend/Core/Layout/EditorTemplates/templates.js",
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
