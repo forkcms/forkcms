@@ -54,7 +54,6 @@ class MediaBrowser extends BackendBaseAction
 
     protected function parseJsFiles(): void
     {
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
         $this->header->addJS('MediaLibraryHelper.js', 'MediaLibrary');
     }
 

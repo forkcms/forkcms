@@ -1,3 +1,5 @@
+//import 'jstree/dist/jstree'
+
 /**
  * Interaction for the media module
  * global jsBackend

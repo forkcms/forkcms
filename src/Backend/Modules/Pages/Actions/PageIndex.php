@@ -29,9 +29,6 @@ class PageIndex extends BackendBaseActionIndex
     {
         parent::execute();
 
-        // add js
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-
         // load the dgRecentlyEdited
         $this->loadDataGrids();
 

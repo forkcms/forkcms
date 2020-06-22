@@ -1,20 +1,8 @@
-/*
-
-    Tree layout
-    Based on basic tree skin
-
-    @package      backend
-    @subpackage   core
-
-    @since        2.0
-
-*/
 .pages-tree {
   padding: 20px 25px;
 }
 
 #tree {
-  // Hide on page-load to avoid FOUC. When DOM is ready, we show the page tree.
   display: none;
 
   h4 {
