@@ -7,7 +7,10 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 
 // component imports
+import { Ajax } from './components/ajax'
 import { Data } from './components/data'
+import { Locale } from './components/locale'
+import { Modal } from './components/Modal'
 import { StringUtil } from './components/stringUtil'
 
 export class Backend {
@@ -47,9 +50,14 @@ export class Backend {
     // set defaults
     if (!this.current.module) this.current.module = 'Dashboard'
     if (!this.current.action) this.current.action = 'index'
+
+    // init components
+    this.ajax = new Ajax(this)
+    this.locale = new Locale(this)
+    this.modal = new Modal()
   }
 }
 
 $(window).on('load', () => {
-  new Backend()
+  window.backend = new Backend()
 })

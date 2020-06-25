@@ -41,8 +41,8 @@ var jsBackend =
       if (!jsBackend.current.action) jsBackend.current.action = 'index'
 
       // init stuff
-      jsBackend.initAjax()
-      jsBackend.addModalEvents()
+      //jsBackend.initAjax()
+      //jsBackend.addModalEvents()
       jsBackend.balloons.init()
       jsBackend.controls.init()
       jsBackend.effects.init()
@@ -65,7 +65,7 @@ var jsBackend =
       if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()
     },
 
-    addModalEvents: function () {
+    /*addModalEvents: function () {
       var $modals = $('[role=dialog].modal')
 
       if ($modals.length === 0) {
@@ -80,9 +80,9 @@ var jsBackend =
         $('#ajaxSpinner').removeClass('light')
         $(this).attr('aria-hidden', 'true')
       })
-    },
+    },*/
 
-    // init ajax
+    /*// init ajax
     initAjax: function () {
       // variables
       var $ajaxSpinner = $('#ajaxSpinner')
@@ -133,7 +133,7 @@ var jsBackend =
       $(document).ajaxStop(function () {
         $ajaxSpinner.hide()
       })
-    }
+    }*/
   }
 
 /**
@@ -1782,7 +1782,7 @@ jsBackend.layout = {
 /**
  * Locale
  */
-jsBackend.locale = {
+/*jsBackend.locale = {
   initialized: false,
   data:        {},
 
@@ -1858,7 +1858,7 @@ jsBackend.locale = {
     if (typeof module === 'undefined') module = jsBackend.current.module
     return jsBackend.locale.get('msg', key, module)
   }
-}
+}*/
 
 /**
  * Handle form messages (action feedback: success, error, ...)
