@@ -43,7 +43,7 @@ var jsBackend =
       // init stuff
       //jsBackend.initAjax()
       //jsBackend.addModalEvents()
-      jsBackend.balloons.init()
+      //jsBackend.balloons.init()
       jsBackend.controls.init()
       jsBackend.effects.init()
       jsBackend.tabs.init()
@@ -267,6 +267,7 @@ jsBackend.navigation = {
 /**
  * Handle form messages (action feedback: success, error, ...)
  */
+/*
 jsBackend.balloons = {
   // init, something like a constructor
   init: function () {
@@ -338,6 +339,7 @@ jsBackend.balloons = {
     element.css('position', 'absolute').css('top', topValue).css('left', leftValue)
   }
 }
+*/
 
 /**
  * CK Editor related objects
