@@ -56,6 +56,7 @@ class Index extends BackendBaseActionIndex
             'nickname',
             false
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[nickname]'], 'nickname');
     }
 
     protected function parse(): void
