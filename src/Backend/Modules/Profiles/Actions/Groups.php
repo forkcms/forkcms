@@ -83,6 +83,7 @@ class Groups extends BackendBaseActionIndex
 
         // create datagrid
         $this->dgGroups = new BackendDataGridDatabase($query, $parameters);
+        $this->dgGroups->setColumnFunction('htmlspecialchars', ['[name]'], 'name');
 
         // overrule default URL
         $this->dgGroups->setURL(
