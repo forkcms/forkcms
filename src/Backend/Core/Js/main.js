@@ -10,6 +10,7 @@ import 'select2/dist/js/select2.full'
 import { Ajax } from './components/ajax'
 import { Controls } from './components/controls'
 import { Data } from './components/data'
+import { Effects } from './components/effects'
 import { Locale } from './components/locale'
 import { Modal } from './components/Modal'
 import { StringUtil } from './components/stringUtil'
@@ -57,6 +58,7 @@ export class Backend {
     this.controls = new Controls(this)
     this.locale = new Locale(this)
     this.modal = new Modal()
+    this.effects = new Effects()
   }
 }
 

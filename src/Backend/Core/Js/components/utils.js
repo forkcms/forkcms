@@ -139,17 +139,17 @@ utils.form = {
 /**
  * Functions related to strings
  */
-utils.string = {
+/*utils.string = {
   // data member
   div: false,
 
-  /**
+  /!**
    * Camelcases a string
    *
    * @param string input
    * @param string splitchar
    * @return string
-   */
+   *!/
   camelCase: function (input, splitChar) {
     splitChar = typeof splitChar !== 'undefined' ? splitChar : '_'
     var regex = new RegExp(splitChar + '(.)', 'g')
@@ -158,12 +158,12 @@ utils.string = {
     })
   },
 
-  /**
+  /!**
    * Fix a HTML5-chunk, so IE can render it
    *
    * @return string
    * @param string html
-   */
+   *!/
   html5: function (html) {
     var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ')
     var i = 0
@@ -183,7 +183,7 @@ utils.string = {
       }
     }
 
-    html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    html = html.replace(/^\s\s*!/, '').replace(/\s\s*$/, '')
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
 
     // fix for when in a table
@@ -209,46 +209,46 @@ utils.string = {
     return returnedFragment
   },
 
-  /**
+  /!**
    * Encode the string as HTML
    *
    * @return string
    * @param string value
-   */
+   *!/
   htmlEncode: function (value) {
     return $('<div/>').text(value).html()
   },
 
-  /**
+  /!**
    * Decode the string as HTML
    *
    * @return string
    * @param string value
-   */
+   *!/
   htmlDecode: function (value) {
     return $('<div/>').html(value).text()
   },
 
-  /**
+  /!**
    * Replace all occurences of one string into a string
    *
    * @return string
    * @param string value
    * @param string needle
    * @param string replacement
-   */
+   *!/
   replaceAll: function (value, needle, replacement) {
     if (typeof value === 'undefined') return ''
     return value.replace(new RegExp(needle, 'g'), replacement)
   },
 
-  /**
+  /!**
    * Sprintf replaces all arguments that occur in the string (%1$s, %2$s, ...)
    *
    * @return string
    * @param string value
    * @params string arguments
-   */
+   *!/
   sprintf: function (value) {
     if (arguments.length < 2) {
       return value
@@ -265,22 +265,22 @@ utils.string = {
     return value
   },
 
-  /**
+  /!**
    * Strip HTML tags
    *
    * @return string
-   */
+   *!/
   stripTags: function (value) {
     return value.replace(/<[^>]*>/ig, '')
   },
 
-  /**
+  /!**
    * Strip whitespace from the beginning and end of a string
    *
    * @return string
    * @param string value
    * @param string charlist
-   */
+   *!/
   trim: function (value, charlist) {
     if (typeof value === 'undefined') return ''
     if (typeof charlist === 'undefined') charlist = ' '
@@ -289,54 +289,54 @@ utils.string = {
     return value.replace(pattern, '')
   },
 
-  /**
+  /!**
    * Ucfirst a string
    *
    * @return string
    * @param string value
-   */
+   *!/
   ucfirst: function (value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
   },
 
-  /**
+  /!**
    * PHP-like urlencode
    *
    * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
    * @return string
    * @param string value
-   */
+   *!/
   urlEncode: function (value) {
-    return encodeURIComponent(value).replace(/%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/~/g, '%7E')
+    return encodeURIComponent(value).replace(/%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*!/g, '%2A').replace(/~/g, '%7E')
   },
 
-  /**
+  /!**
    * PHP-like urlencode
    *
    * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
    * @return string
    * @param string value
-   */
+   *!/
   urlDecode: function (value) {
     return decodeURIComponent(value.replace(/\+/g, '%20').replace(/%21/g, '!').replace(/%27/g, '\'').replace(/%28/g, '(').replace(/%29/g, ')').replace(/%2A/g, '*').replace(/%7E/g, '~'))
   },
 
-  /**
+  /!**
    * Tags cannot contain ", < and >
    *
    * @return string
    * @param string value
-   */
+   *!/
   stripForTag: function (value) {
     return value.replace(/"/g, '\'').replace(/(<|>)/g, '')
   },
 
-  /**
+  /!**
    * Urlise a string (cfr. SpoonFilter::urlise)
    *
    * @return string
    * @param string value
-   */
+   *!/
   urlise: function (value) {
     // reserved characters (RFC 3986)
     var reservedCharacters = [
@@ -370,12 +370,12 @@ utils.string = {
     return utils.string.trim(value, '-')
   },
 
-  /**
+  /!**
    * Convert a HTML string to a XHTML string.
    *
    * @return string
    * @param string value
-   */
+   *!/
   xhtml: function (value) {
     // break tags should end with a slash
     value = value.replace(/<br>/g, '<br />')
@@ -396,7 +396,7 @@ utils.string = {
     // XHTML
     return value
   }
-}
+}*/
 
 /**
  * Functions related to the current url

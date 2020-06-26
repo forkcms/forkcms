@@ -44,7 +44,7 @@ var jsBackend =
       //jsBackend.initAjax()
       //jsBackend.addModalEvents()
       //jsBackend.balloons.init()
-      jsBackend.controls.init()
+      //jsBackend.controls.init()
       jsBackend.effects.init()
       jsBackend.tabs.init()
       jsBackend.forms.init()
@@ -615,7 +615,7 @@ jsBackend.blockEditor = {
 /**
  * Handle form functionality
  */
-jsBackend.controls = {
+/*jsBackend.controls = {
   // init, something like a constructor
   init: function () {
     jsBackend.controls.bindCheckboxDropdownCombo()
@@ -1146,7 +1146,7 @@ jsBackend.controls = {
       document.location.href = url
     })
   }
-}
+}*/
 
 /**
  * Data related methods
@@ -1221,7 +1221,7 @@ jsBackend.effects = {
     }
   },
 
-  // Adds classes to collapsible panels
+  /*// Adds classes to collapsible panels
   panels: function () {
     $('.panel .collapse').on({
       'show.bs.collapse': function () {
@@ -1236,7 +1236,7 @@ jsBackend.effects = {
         $(this).parent('.panel').removeClass('open')
       }
     })
-  }
+  }*/
 }
 
 /**
