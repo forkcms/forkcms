@@ -1276,7 +1276,7 @@ jsBackend.pages.template = {
     $('#templateVisualLarge').html(current.htmlLarge)
     $('#templateVisualFallback .linkedBlocks').children().remove()
     $('#templateId').val(selected)
-    $('#templateLabel, #tabTemplateLabel').html(current.label)
+    $('#templateLabel, #tabTemplateLabel').html(utils.string.htmlEncode(current.label))
 
     // make new positions sortable
     jsBackend.pages.extras.sortable($('#templateVisualLarge div.linkedBlocks'))
