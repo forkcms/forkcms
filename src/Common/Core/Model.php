@@ -346,4 +346,21 @@ class Model extends BaseModel
 
         return $fileSize . ' bytes';
     }
+
+    public static function recursiveHtmlspecialchars(array $data): array
+    {
+        array_walk_recursive(
+            $data,
+            static function (&$key, &$value) {
+                if (is_string($key)) {
+                    $key = htmlspecialchars($key);
+                }
+                if (is_string($value)) {
+                    $value = htmlspecialchars($value);
+                }
+            }
+        );
+
+        return $data;
+    }
 }

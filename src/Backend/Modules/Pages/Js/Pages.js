@@ -267,9 +267,9 @@ jsBackend.pages.extras = {
 
     // create html to be appended in template-view
     var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
-      '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>'
+      '<span class="templateTitle" id="templateTitle' + index + '">' + utils.string.htmlEncode(title) + '</span>'
     if (title !== description) {
-      blockHTML += '<span class="templateDescription">' + description + '</span>'
+      blockHTML += '<span class="templateDescription">' + utils.string.htmlEncode(description) + '</span>'
     }
     blockHTML += '<div class="btn-group buttonHolder">' +
       '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
