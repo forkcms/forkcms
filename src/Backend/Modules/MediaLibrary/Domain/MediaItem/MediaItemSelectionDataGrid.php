@@ -151,6 +151,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             'createdOn',
             true
         );
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
     }
 
     private function addDataAttributes(): void
