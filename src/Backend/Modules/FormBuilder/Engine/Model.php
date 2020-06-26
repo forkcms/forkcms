@@ -281,7 +281,13 @@ class Model
      */
     public static function formatRecipients(string $string): string
     {
-        return implode(', ', (array) @unserialize((string) $string));
+        return implode(
+            ', ',
+            (array) array_map(
+                'htmlspecialchars',
+                @unserialize($string, ['allowed_classes' => false])
+            )
+        );
     }
 
     /**
