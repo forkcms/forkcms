@@ -90,6 +90,8 @@ class Index extends BackendBaseActionIndex
             BackendLocationModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[address]'], 'address');
         $this->dataGrid->setSortingColumns(['address', 'title'], 'address');
         $this->dataGrid->setSortParameter('ASC');
 
