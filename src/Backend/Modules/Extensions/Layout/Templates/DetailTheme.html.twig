@@ -113,7 +113,7 @@
                 <h4 class="modal-title" id="confirmInstallTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmThemeInstall'|trans|format(name)|raw }}</p>
+                <p>{{ 'msg.ConfirmThemeInstall'|trans|format(name|e)|raw }}</p>
               </div>
               <div class="modal-footer">
                 {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
