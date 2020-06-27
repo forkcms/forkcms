@@ -139,7 +139,7 @@ final class FormBuilderSubmittedMailSubscriber
     {
         return array_map(
             function ($item) : array {
-                $value = unserialize($item['value']);
+                $value = unserialize($item['value'], ['allowed_classes' => false]);
 
                 return [
                     'label' => $item['label'],

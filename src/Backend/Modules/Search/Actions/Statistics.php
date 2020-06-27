@@ -48,7 +48,7 @@ class Statistics extends Action
 
     public static function parseRefererInDataGrid(string $data): string
     {
-        $data = unserialize($data);
+        $data = unserialize($data, ['allowed_classes' => false]);
         if (!isset($data['server']['HTTP_REFERER'])) {
             return '';
         }

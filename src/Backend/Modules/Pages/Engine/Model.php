@@ -470,7 +470,7 @@ class Model
 
         // unserialize data
         if ($return['data'] !== null) {
-            $return['data'] = unserialize($return['data']);
+            $return['data'] = unserialize($return['data'], ['allowed_classes' => false]);
         }
 
         // return
@@ -1424,7 +1424,7 @@ class Model
     {
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
-        $newTemplate['data'] = @unserialize($newTemplate['data']);
+        $newTemplate['data'] = @unserialize($newTemplate['data'], ['allowed_classes' => false]);
 
         // fetch all pages
         $pages = (array) BackendModel::getContainer()->get('database')->getRecords(
