@@ -1,4 +1,4 @@
-import { StringUtil } from './stringUtil'
+import { StringUtil } from './StringUtil'
 
 export class Controls {
   constructor (Backend) {

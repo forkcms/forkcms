@@ -7,14 +7,14 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 
 // component imports
-import { Ajax } from './components/ajax'
-import { Controls } from './components/controls'
-import { Data } from './components/data'
-import { Effects } from './components/effects'
-import { Locale } from './components/locale'
-import { Modal } from './components/modal'
-import { StringUtil } from './components/stringUtil'
-import { Tabs } from './components/tabs'
+import { Ajax } from './components/Ajax'
+import { Controls } from './components/Controls'
+import { Data } from './components/Data'
+import { Effects } from './components/Effects'
+import { Locale } from './components/Locale'
+import { Modal } from './components/Modal'
+import { StringUtil } from './components/StringUtil'
+import { Tabs } from './components/Tabs'
 
 export class Backend {
   constructor () {
