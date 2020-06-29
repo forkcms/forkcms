@@ -46,7 +46,7 @@ var jsBackend =
       //jsBackend.balloons.init()
       //jsBackend.controls.init()
       //jsBackend.effects.init()
-      jsBackend.tabs.init()
+      //jsBackend.tabs.init()
       jsBackend.forms.init()
       jsBackend.layout.init()
       jsBackend.tooltip.init()
@@ -1931,7 +1931,7 @@ jsBackend.layout = {
 /**
  * Apply tabs
  */
-jsBackend.tabs = {
+/*jsBackend.tabs = {
   // init, something like a constructor
   init: function () {
     if ($('.nav-tabs').length > 0) {
@@ -1971,7 +1971,7 @@ jsBackend.tabs = {
       $('a[href="' + hash + '"]').tab('show')
     }
   }
-}
+}*/
 
 /**
  * Apply tooltip

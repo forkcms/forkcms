@@ -14,6 +14,7 @@ import { Effects } from './components/effects'
 import { Locale } from './components/locale'
 import { Modal } from './components/modal'
 import { StringUtil } from './components/stringUtil'
+import { Tabs } from './components/tabs'
 
 export class Backend {
   constructor () {
@@ -59,6 +60,7 @@ export class Backend {
     this.locale = new Locale(this)
     this.modal = new Modal()
     this.effects = new Effects()
+    this.tabs = new Tabs()
   }
 }
 
