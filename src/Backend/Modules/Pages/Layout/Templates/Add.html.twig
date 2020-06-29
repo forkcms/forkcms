@@ -155,6 +155,16 @@
                       {% endfor %}
                     </ul>
                   </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">{{ 'lbl.LinkCssClass'|trans|ucfirst }}</h2>
+                    </div>
+                    <div class="panel-body">
+                      <div class="form-group last">
+                        {% form_field link_class %}{% form_field_error link_class %}
+                      </div>
+                    </div>
+                  </div>
                 {% endif %}
               </div>
             </div>
