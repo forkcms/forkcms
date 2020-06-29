@@ -68,7 +68,7 @@ class ThemeTemplates extends BackendBaseActionEdit
             [$this->selectedTheme]
         );
 
-        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditThemeTemplate')) {

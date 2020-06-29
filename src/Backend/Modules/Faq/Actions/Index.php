@@ -49,7 +49,7 @@ class Index extends BackendBaseActionIndex
                 BackendFaqModel::QUERY_DATAGRID_BROWSE,
                 [BL::getWorkingLanguage(), $categoryId]
             );
-            $dataGrid->setColumnFunction('htmlspecialchars', ['[question]'], 'question');
+            $dataGrid->setColumnFunction('htmlspecialchars', ['[question]'], 'question', false);
             $dataGrid->enableSequenceByDragAndDrop();
             $dataGrid->setColumnsHidden(['category_id', 'sequence']);
             $dataGrid->setColumnAttributes('question', ['class' => 'title']);

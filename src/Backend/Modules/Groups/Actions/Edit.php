@@ -264,7 +264,7 @@ class Edit extends BackendBaseActionEdit
     private function loadDataGrids(): void
     {
         $this->dataGridUsers = new BackendDataGridDatabase(BackendGroupsModel::QUERY_ACTIVE_USERS, [$this->id, false]);
-        $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[email]'], 'email');
+        $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[email]'], 'email', false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit', 'Users')) {
@@ -283,9 +283,9 @@ class Edit extends BackendBaseActionEdit
             $this->dataGridUsers->setColumnFunction([new BackendUsersModel(), 'getSetting'], ['[id]', 'surname'], 'surname', false);
             $this->dataGridUsers->setColumnFunction([new BackendUsersModel(), 'getSetting'], ['[id]', 'name'], 'name', false);
             $this->dataGridUsers->setColumnFunction([new BackendUsersModel(), 'getSetting'], ['[id]', 'nickname'], 'nickname', false);
-            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[nickname]'], 'nickname');
-            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[surname]'], 'surname');
-            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[name]'], 'name');
+            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[nickname]'], 'nickname', false);
+            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[surname]'], 'surname', false);
+            $this->dataGridUsers->setColumnFunction('htmlspecialchars', ['[name]'], 'name', false);
         }
     }
 

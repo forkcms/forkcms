@@ -38,7 +38,7 @@ class Statistics extends Action
             'time',
             true
         );
-        $dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term');
+        $dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term', false);
 
         $dataGrid->setSortingColumns(['time', 'term'], 'time');
         $dataGrid->setSortParameter('desc');

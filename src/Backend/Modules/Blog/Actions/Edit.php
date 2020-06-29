@@ -124,7 +124,7 @@ class Edit extends BackendBaseActionEdit
             ['draft', $this->record['id'], BL::getWorkingLanguage()]
         );
 
-        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // hide columns
         $this->dgDrafts->setColumnsHidden(['id', 'revision_id']);
@@ -226,7 +226,7 @@ class Edit extends BackendBaseActionEdit
             BackendBlogModel::QUERY_DATAGRID_BROWSE_REVISIONS,
             ['archived', $this->record['id'], BL::getWorkingLanguage()]
         );
-        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // hide columns
         $this->dgRevisions->setColumnsHidden(['id', 'revision_id']);

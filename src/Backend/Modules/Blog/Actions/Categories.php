@@ -30,7 +30,7 @@ class Categories extends BackendBaseActionIndex
             ['active', BL::getWorkingLanguage()]
         );
 
-        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // set headers
         $this->dataGrid->setHeaderLabels([

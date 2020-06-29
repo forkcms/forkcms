@@ -33,7 +33,7 @@ class Index extends BackendBaseActionIndex
             'sent_forms' => '',
         ]);
 
-        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[name]'], 'name');
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[name]'], 'name', false);
         $this->dataGrid->setSortingColumns(['name', 'email', 'method', 'sent_forms'], 'name');
         $this->dataGrid->setColumnFunction(
             [new BackendFormBuilderModel(), 'formatRecipients'],
