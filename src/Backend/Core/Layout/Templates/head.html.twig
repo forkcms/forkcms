@@ -19,17 +19,4 @@
   <script src="/src/Backend/Core/build/main.js"></script>
 
   {{ jsData|raw }}
-
-  <script>
-    //<![CDATA[
-    // reports
-      (function() {
-        {% if form_error %} jsBackend.messages.add('danger', "{{ 'err.FormError'|trans|addslashes|raw }}", '');{% endif %}
-        {% if usingRevision %} jsBackend.messages.add('info', '{{ 'msg.UsingARevision'|trans|addslashes|raw }}', 'toast-inline');{% endif %}
-        {% if usingDraft %} jsBackend.messages.add('info', '{{ 'msg.UsingADraft'|trans|addslashes|raw }}', 'toast-inline');{% endif %}
-        {% if report %} jsBackend.messages.add('success', '{{ reportMessage|addslashes|raw }}', '');{% endif %}
-        {% if errorMessage %} jsBackend.messages.add('danger', '{{ errorMessage|addslashes|raw }}', '');{% endif %}
-      }());
-    //]]>
-  </script>
 </head>

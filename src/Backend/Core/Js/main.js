@@ -12,7 +12,7 @@ import { Controls } from './components/controls'
 import { Data } from './components/data'
 import { Effects } from './components/effects'
 import { Locale } from './components/locale'
-import { Modal } from './components/Modal'
+import { Modal } from './components/modal'
 import { StringUtil } from './components/stringUtil'
 
 export class Backend {

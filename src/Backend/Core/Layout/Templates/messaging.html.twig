@@ -6,4 +6,10 @@
   </noscript>
 
   {{ macro.alert('danger', 'err.CookiesNotEnabled'|trans|ucfirst, null, 'noCookies', [], false) }}
+
+  {% if form_error %}{{ macro.alert('danger', 'err.FormError'|trans|ucfirst) }}{% endif %}
+  {% if usingRevision %}{{ macro.alert('info', 'msg.UsingARevision'|trans|ucfirst, null, null, {'class': 'toast-inline'}) }}{% endif %}
+  {% if usingDraft %}{{ macro.alert('info', 'msg.UsingADraft'|trans|ucfirst, null, null, {'class': 'toast-inline'}) }}{% endif %}
+  {% if report %}{{ macro.alert('success', reportMessage|raw) }}{% endif %}
+  {% if errorMessage %}{{ macro.alert('danger', errorMessage|raw) }}{% endif %}
 </div>

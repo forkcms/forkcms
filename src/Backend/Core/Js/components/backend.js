@@ -45,7 +45,7 @@ var jsBackend =
       //jsBackend.addModalEvents()
       //jsBackend.balloons.init()
       //jsBackend.controls.init()
-      jsBackend.effects.init()
+      //jsBackend.effects.init()
       jsBackend.tabs.init()
       jsBackend.forms.init()
       jsBackend.layout.init()
@@ -1186,7 +1186,7 @@ jsBackend.blockEditor = {
 /**
  * Backend effects
  */
-jsBackend.effects = {
+/*jsBackend.effects = {
   // init, something like a constructor
   init: function () {
     jsBackend.effects.bindHighlight()
@@ -1221,7 +1221,7 @@ jsBackend.effects = {
     }
   },
 
-  /*// Adds classes to collapsible panels
+  /!*!// Adds classes to collapsible panels
   panels: function () {
     $('.panel .collapse').on({
       'show.bs.collapse': function () {
@@ -1236,8 +1236,8 @@ jsBackend.effects = {
         $(this).parent('.panel').removeClass('open')
       }
     })
-  }*/
-}
+  }*!/
+}*/
 
 /**
  * Backend forms
@@ -1865,8 +1865,7 @@ jsBackend.layout = {
 /**
  * Handle form messages (action feedback: success, error, ...)
  */
-jsBackend.messages = {
-  timers: [],
+/*jsBackend.messages = {
 
   // add a new message into the que
   add: function (type, content, optionalClass = '', dismissable = false) {
@@ -1927,7 +1926,7 @@ jsBackend.messages = {
     // show
     $('#' + uniqueId).toast('show')
   }
-}
+}*/
 
 /**
  * Apply tabs
