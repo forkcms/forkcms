@@ -21,7 +21,6 @@
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
     "ckeditor": "^4.12.1",
-    "clean-webpack-plugin": "^3.0.0",
     "cropper": "^3.0.0-rc.2",
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
@@ -53,7 +52,8 @@
     "standard": "^10.0.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "webpack-entry-plus": "^1.0.18"
   },
   "scripts": {
     "test": "standard",

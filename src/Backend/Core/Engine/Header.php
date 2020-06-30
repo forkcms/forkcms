@@ -91,7 +91,7 @@ final class Header extends KernelLoader
             return '/src/Backend/Core/' . $subDirectory . '/' . $fileName;
         }
 
-        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . $fileName;
+        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . 'index.js';
     }
 
     /**
@@ -129,7 +129,7 @@ final class Header extends KernelLoader
 
         $this->cssFiles->add(
             new Asset(
-                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
+                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'build'),
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
@@ -164,9 +164,10 @@ final class Header extends KernelLoader
         $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
         $minify = $minify && !$isExternalUrl;
 
+        dump($this->buildPathForModule($file, $module ?? $this->url->getModule(), 'build'));
         $this->jsFiles->add(
             new Asset(
-                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
+                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'build'),
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
