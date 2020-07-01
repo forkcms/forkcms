@@ -1,5 +1,8 @@
+import { Config } from './Config'
+import { Data } from './Data'
+
 export class Ajax {
-  constructor (Backend) {
+  constructor () {
     // variables
     const $ajaxSpinner = $('#ajaxSpinner')
 
@@ -12,13 +15,13 @@ export class Ajax {
         dataType: 'json',
         timeout: 10000,
         beforeSend: (jqXHR) => {
-          jqXHR.setRequestHeader('X-CSRF-Token', Backend.data.get('csrf-token'))
+          jqXHR.setRequestHeader('X-CSRF-Token', Data.get('csrf-token'))
         },
         data: {
           fork: {
-            module: Backend.current.module,
-            action: Backend.current.action,
-            language: Backend.current.language
+            module: Config.getCurrentModule(),
+            action: Config.getCurrentAction(),
+            language: Config.getCurrentLanguage()
           }
         }
       }

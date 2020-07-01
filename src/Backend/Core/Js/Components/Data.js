@@ -1,29 +1,15 @@
 export class Data {
-  constructor () {
-    this.initialized = false
-    this.data = {}
+  static exists (key) {
+    return (typeof Data.get(key) !== 'undefined')
   }
 
-  init () {
-    // check if var is available
+  static get (key) {
+    // init if needed
     if (typeof jsData === 'undefined') throw new Error('jsData is not available')
 
-    // populate
-    this.data = jsData
-    this.initialized = true
-  }
-
-  exists (key) {
-    return (typeof this.get(key) !== 'undefined')
-  }
-
-  get (key) {
-    // init if needed
-    if (!this.initialized) this.init()
-
-    var keys = key.split('.')
-    var data = this.data
-    for (var i = 0; i < keys.length; i++) {
+    const keys = key.split('.')
+    let data = jsData
+    for (let i = 0; i < keys.length; i++) {
       data = data[keys[i]]
     }
 

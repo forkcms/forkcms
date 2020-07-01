@@ -9,11 +9,9 @@ import 'select2/dist/js/select2.full'
 // component imports
 import { Ajax } from './components/Ajax'
 import { Controls } from './components/Controls'
-import { Data } from './components/Data'
 import { Effects } from './components/Effects'
 import { Locale } from './components/Locale'
 import { Modal } from './components/Modal'
-import { StringUtil } from './components/StringUtil'
 import { Tabs } from './components/Tabs'
 
 export class Backend {
@@ -29,35 +27,13 @@ export class Backend {
   }
 
   initBackend () {
-    // initializers
-    this.data = new Data()
-
-    // get url and split into chunks
-    let chunks = document.location.pathname.split('/')
-
     // set some properties
-    this.debug = this.data.get('debug')
-    this.current.language = chunks[2]
     if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block')
-    if (typeof chunks[3] === 'undefined') {
-      this.current.module = null
-    } else {
-      this.current.module = StringUtil.ucfirst(StringUtil.camelCase(chunks[3]))
-    }
-    if (typeof chunks[4] === 'undefined') {
-      this.current.action = null
-    } else {
-      this.current.action = StringUtil.ucfirst(StringUtil.camelCase(chunks[4]))
-    }
-
-    // set defaults
-    if (!this.current.module) this.current.module = 'Dashboard'
-    if (!this.current.action) this.current.action = 'index'
 
     // init components
-    this.ajax = new Ajax(this)
-    this.controls = new Controls(this)
-    this.locale = new Locale(this)
+    this.ajax = new Ajax()
+    this.controls = new Controls()
+    this.locale = new Locale()
     this.modal = new Modal()
     this.effects = new Effects()
     this.tabs = new Tabs()

@@ -1,15 +1,16 @@
+import { Config } from './Config'
+import { Data } from './Data'
+
 export class Locale {
   constructor (Backend) {
     this.initialized = false
     this.data = {}
-    this.backend = Backend
-
     this.init()
   }
 
   init () {
     $.ajax({
-      url: '/src/Backend/Cache/Locale/' + this.backend.data.get('interface_language') + '.json',
+      url: '/src/Backend/Cache/Locale/' + Data.get('interface_language') + '.json',
       type: 'GET',
       dataType: 'json',
       async: false,
@@ -58,13 +59,13 @@ export class Locale {
 
   // get an error
   err (key, module) {
-    if (typeof module === 'undefined') module = this.backend.current.module
+    if (typeof module === 'undefined') module = Config.getCurrentModule()
     return this.get('err', key, module)
   }
 
   // get a label
   lbl (key, module) {
-    if (typeof module === 'undefined') module = this.backend.current.module
+    if (typeof module === 'undefined') module = Config.getCurrentModule()
     return this.get('lbl', key, module)
   }
 
@@ -75,7 +76,7 @@ export class Locale {
 
   // get a message
   msg (key, module) {
-    if (typeof module === 'undefined') module = this.backend.current.module
+    if (typeof module === 'undefined') module = Config.getCurrentModule()
     return this.get('msg', key, module)
   }
 }
