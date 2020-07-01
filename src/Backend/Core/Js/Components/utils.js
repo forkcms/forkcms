@@ -454,14 +454,14 @@ utils.url = {
 /**
  * Functions related to the events
  */
-utils.events = {
-  /**
+/*utils.events = {
+  /!**
    * http://davidwalsh.name/javascript-debounce-function
    * @param func
    * @param wait
    * @param immediate
    * @returns {Function}
-   */
+   *!/
   debounce: function (func, wait, immediate) {
     var timeout
     return function () {
@@ -477,4 +477,4 @@ utils.events = {
       if (callNow) func.apply(context, args)
     }
   }
-}
+}*/

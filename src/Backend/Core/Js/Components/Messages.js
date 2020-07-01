@@ -53,8 +53,7 @@ export class Messages {
     // prepend
     if (optionalClass === undefined || optionalClass !== 'toast-inline') {
       $('[data-messaging-wrapper]').prepend(html)
-    }
-    else {
+    } else {
       $('[data-content-container]').prepend(html)
     }
 

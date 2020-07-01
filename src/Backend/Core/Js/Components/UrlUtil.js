@@ -2,7 +2,7 @@
  * Functions related to the current url
  */
 
-export class urlUtil {
+export class UrlUtil {
   static extractParamFromUri (uri, paramName) {
     if (!uri) return
     uri = uri.split('#')[0]
