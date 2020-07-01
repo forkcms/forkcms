@@ -1,9 +1,7 @@
 import { StringUtil } from './StringUtil'
-import { Locale } from './Locale'
 
 export class Controls {
   constructor () {
-    this.locale = new Locale
     this.bindCheckboxDropdownCombo()
     this.bindCheckboxTextfieldCombo()
     this.bindRadioButtonFieldCombo()
@@ -147,7 +145,7 @@ export class Controls {
       let message = $this.data('message')
 
       if (typeof message === 'undefined') {
-        message = this.locale.msg('ConfirmDefault')
+        message = window.backend.locale.msg('ConfirmDefault')
       }
 
       // the first is necessary to prevent multiple popups showing after a previous modal is dismissed without
@@ -345,7 +343,7 @@ export class Controls {
         numbers: false,
         lowercase: true,
         uppercase: true,
-        generateLabel: StringUtil.ucfirst(this.locale.lbl('Generate'))
+        generateLabel: StringUtil.ucfirst(window.backend.locale.lbl('Generate'))
       })
     }
   }

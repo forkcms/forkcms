@@ -41,6 +41,5 @@ export class Backend {
 }
 
 $(window).on('load', () => {
-  console.log('window on load')
   window.backend = new Backend()
 })

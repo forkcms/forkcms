@@ -2,7 +2,7 @@ import { Config } from './Config'
 import { Data } from './Data'
 
 export class Locale {
-  constructor (Backend) {
+  constructor () {
     this.initialized = false
     this.data = {}
     this.init()

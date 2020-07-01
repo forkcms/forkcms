@@ -1,4 +1,4 @@
-import { urlUtil } from './UrlUtil'
+import { UrlUtil } from './UrlUtil'
 
 export class Effects {
   constructor () {
@@ -8,7 +8,7 @@ export class Effects {
   // if a var highlight exists in the url it will be highlighted
   bindHighlight () {
     // get highlight from url
-    const highlightId = urlUtil.getGetValue('highlight')
+    const highlightId = UrlUtil.getGetValue('highlight')
 
     // id is set
     if (highlightId !== '') {

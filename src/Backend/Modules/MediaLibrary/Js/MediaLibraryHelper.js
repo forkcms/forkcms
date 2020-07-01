@@ -1,28 +1,32 @@
 import { Group } from './Helper/Group'
 import { ModalSelection } from './Helper/ModalSelection'
 import { Upload } from './Helper/Upload'
-import { Templates } from './Helper/Templates'
 import { Data } from '../../../Core/Js/Components/Data'
+import { Cropper } from './Helper/Cropper'
+import { MovieThumbUrl } from './Helper/MovieThumbUrl'
 
 export class MediaLibraryHelper {
   constructor () {
     // main variables
-    this.media = {}
-    this.mediaFolders = false
-    this.mediaGroups = {}
-    this.currentMediaGroupId = 0
-    this.mediaFolderId = null
-    this.currentAspectRatio = false
-    this.minimumMediaItemsCount = false
-    this.maximumMediaItemsCount = false
-    this.currentMediaItemIds = []
+    let config = {
+      media: {},
+      mediaFolders: false,
+      mediaGroups: {},
+      currentMediaGroupId: 0,
+      mediaFolderId: null,
+      currentAspectRatio: false,
+      minimumMediaItemsCount: false,
+      maximumMediaItemsCount: false,
+      currentMediaItemIds: []
+    }
 
     // init
     this.buildMovieStorageTypeDropdown()
-    this.group = new Group()
-    this.upload = new Upload()
-    this.templates = new Templates()
-    this.modalSelection = new ModalSelection()
+    this.group = new Group(config)
+    this.upload = new Upload(config)
+    this.modalSelection = new ModalSelection(config)
+    this.cropper = new Cropper(config)
+    this.mediaThumbUrl = new MovieThumbUrl()
   }
 
   buildMovieStorageTypeDropdown () {

@@ -1,3 +1,6 @@
+//import '../Sass/index.scss'
+import 'fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min'
+
 import { Library } from './Components/Library'
 import { Controls } from './Components/Controls'
 import { Tree } from './Components/Tree'
@@ -15,5 +18,5 @@ export class MediaLibrary {
 }
 
 $(window).on('load', () => {
-  new MediaLibrary()
+  window.mediaLibrary = new MediaLibrary()
 })

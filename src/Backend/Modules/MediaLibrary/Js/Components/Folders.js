@@ -1,6 +1,6 @@
 import { Messages } from '../../../../Core/Js/Components/Messages'
 import { UrlUtil } from '../../../../Core/Js/Components/UrlUtil'
-import { Backend } from '../../../../Core/Js/Backend'
+import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Folders {
   constructor () {
@@ -36,7 +36,7 @@ export class Folders {
         success: (json, textStatus) => {
           if (json.code !== 200) {
             // show error if needed
-            if (jsBackend.debug) {
+            if (Config.isDebug()) {
               window.alert(textStatus)
             }
 
@@ -47,7 +47,7 @@ export class Folders {
           $('#mediaConnectedId').append('<option value="' + json.data.id + '">' + json.data.name + '</option>')
 
           // show message
-          Messages.add('success', Backend.locale.msg('FolderIsAdded'))
+          Messages.add('success', window.backend.locale.msg('FolderIsAdded'))
 
           // update folders
           this.updateFolders(json.data.id)
@@ -95,7 +95,7 @@ export class Folders {
       success: (json, textStatus) => {
         if (json.code !== 200) {
           // show error if needed
-          if (jsBackend.debug) {
+          if (Config.isDebug()) {
             window.alert(textStatus)
           }
 
@@ -120,13 +120,13 @@ export class Folders {
           }
 
           // update boxes
-          if (typeof jsBackend.mediaLibraryHelper !== 'undefined') {
-            jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
+          if (typeof window.mediaLibrary.helper !== 'undefined') {
+            window.mediaLibrary.helper.upload.toggleUploadBoxes()
           }
         }
 
         // add folders to dropdown
-        $('#addFolderParentId').html('<option value="0">' + jsBackend.locale.lbl('MediaFolderRoot') + '</option>' + html)
+        $('#addFolderParentId').html('<option value="0">' + window.backend.locale.lbl('MediaFolderRoot') + '</option>' + html)
 
         // select the new folder
         if (selectFolderId) {

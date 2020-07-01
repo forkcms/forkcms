@@ -11,6 +11,8 @@ export class Duplicator {
       return
     }
 
+    const cropper = new Cropper()
+
     // create canvas
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d')
@@ -23,7 +25,7 @@ export class Duplicator {
       context.drawImage(this, 0, 0)
 
       // enable cropper
-      Cropper.enableCropper()
+      cropper.enableCropper()
 
       // switch from "library"-tab to "upload"-tab
       $('.nav-tabs a[href="#tabUploadMedia"]').tab('show')

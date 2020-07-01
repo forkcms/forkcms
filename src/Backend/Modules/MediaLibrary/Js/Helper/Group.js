@@ -1,12 +1,13 @@
 import { Messages } from '../../../../Core/Js/Components/Messages'
-import { Backend } from '../../../../Core/Js/Backend'
-import { MediaLibraryHelper } from '../MediaLibraryHelper'
 import { Duplicator } from './Duplicator'
 import { Templates } from './Templates'
-import { MovieThumbUrl } from './MovieThumbUrl'
+import { Config } from '../../../../Core/Js/Components/Config'
+import { Data } from '../../../../Core/Js/Components/Data'
 
 export class Group {
-  constructor () {
+  constructor (configSet) {
+    this.config = configSet
+
     // start or not
     if ($('[data-role=media-library-add-dialog]').length === 0) {
       return
@@ -28,20 +29,20 @@ export class Group {
       cursor: 'move',
       start: (e, ui) => {
         // redefine previous and new sequence
-        prevSequence = newSequence = $('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val()
+        prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
 
         // don't prevent the click
         ui.item.removeClass('preventClick')
       },
       update: () => {
         // set group i
-        MediaLibraryHelper.currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
+        this.config.currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
 
         // prepare correct new sequence value for hidden input
         newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
 
         // add value to hidden input
-        $('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val(newSequence)
+        $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val(newSequence)
       },
       stop: (e, ui) => {
         // prevent click
@@ -81,13 +82,13 @@ export class Group {
 
     $addMediaSubmit.on('click', () => {
       // add uploaded media to current group
-      MediaLibraryHelper.upload.addUploadedMediaToGroup()
+      this.config.upload.addUploadedMediaToGroup()
 
       // push media to group
       this.updateGroupMedia()
 
       // show message
-      Messages.add('success', Backend.locale.msg('MediaGroupEdited'))
+      Messages.add('success', window.backend.locale.msg('MediaGroupEdited'))
 
       // close the dialog
       $addMediaDialog.modal('hide')
@@ -99,33 +100,33 @@ export class Group {
       e.preventDefault()
 
       // redefine folderId when clicked on other group
-      if ($(e.currentTarget).data('groupId') !== MediaLibraryHelper.currentMediaGroupId || $(e.currentTarget).data('aspectRatio') !== MediaLibraryHelper.currentAspectRatio) {
+      if ($(e.currentTarget).data('groupId') !== this.config.currentMediaGroupId || $(e.currentTarget).data('aspectRatio') !== this.config.currentAspectRatio) {
         // clear folders cache
         this.clearFoldersCache()
       }
 
       // define groupId
-      MediaLibraryHelper.currentMediaGroupId = $(this).data('groupId')
-      MediaLibraryHelper.currentAspectRatio = $(this).data('aspectRatio')
-      if (MediaLibraryHelper.currentAspectRatio === undefined) {
-        MediaLibraryHelper.currentAspectRatio = false
+      this.config.currentMediaGroupId = $(this).data('groupId')
+      this.config.currentAspectRatio = $(this).data('aspectRatio')
+      if (this.config.currentAspectRatio === undefined) {
+        this.config.currentAspectRatio = false
       }
-      MediaLibraryHelper.maximumMediaItemsCount = $(this).data('maximumMediaCount')
-      if (MediaLibraryHelper.maximumMediaItemsCount === undefined) {
-        MediaLibraryHelper.maximumMediaItemsCount = false
+      this.config.maximumMediaItemsCount = $(this).data('maximumMediaCount')
+      if (this.config.maximumMediaItemsCount === undefined) {
+        this.config.maximumMediaItemsCount = false
       }
-      MediaLibraryHelper.minimumMediaItemsCount = $(this).data('minimumMediaCount')
-      if (MediaLibraryHelper.minimumMediaItemsCount === undefined) {
-        MediaLibraryHelper.minimumMediaItemsCount = false
+      this.config.minimumMediaItemsCount = $(this).data('minimumMediaCount')
+      if (this.config.minimumMediaItemsCount === undefined) {
+        this.config.minimumMediaItemsCount = false
       }
 
       // get current media for group
-      const $currentMediaGroupMediaIds = $('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds')
-      MediaLibraryHelper.currentMediaItemIds = ($currentMediaGroupMediaIds.length > 0 && $currentMediaGroupMediaIds.first().val() !== '')
-        ? $.trim($('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+      const $currentMediaGroupMediaIds = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds')
+      this.config.currentMediaItemIds = ($currentMediaGroupMediaIds.length > 0 && $currentMediaGroupMediaIds.first().val() !== '')
+        ? $.trim($('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
       // set the group media
-      MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].media = MediaLibraryHelper.currentMediaItemIds
+      this.config.mediaGroups[this.config.currentMediaGroupId].media = this.config.currentMediaItemIds
 
       // load and add folders
       this.getFolders()
@@ -137,7 +138,7 @@ export class Group {
       this.getMedia()
 
       // toggle upload boxes
-      MediaLibraryHelper.upload.toggleUploadBoxes()
+      this.config.upload.toggleUploadBoxes()
 
       // open dialog
       $addMediaDialog.modal('show')
@@ -146,7 +147,7 @@ export class Group {
     // bind change when selecting other folder
     $('#mediaFolders').on('change', (e) => {
       // cache current folder id
-      MediaLibraryHelper.mediaFolderId = $(e.currentTarget).val()
+      this.config.mediaFolderId = $(e.currentTarget).val()
 
       // get media for this folder
       this.getMedia()
@@ -157,7 +158,7 @@ export class Group {
    * Clear the folders cache when necessary
    */
   clearFoldersCache () {
-    MediaLibraryHelper.mediaFolders = false
+    this.config.mediaFolders = false
   }
 
   /**
@@ -169,10 +170,10 @@ export class Group {
    */
   disconnectMediaFromGroup (mediaId, folderId, groupId) {
     // define currentMediaGroupId
-    MediaLibraryHelper.currentMediaGroupId = groupId
+    this.config.currentMediaGroupId = groupId
 
     // current ids
-    let currentIds = $.trim($('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val()).split(',')
+    let currentIds = $.trim($('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()).split(',')
 
     // remove from array
     currentIds = jQuery.grep(currentIds, (value) => {
@@ -180,10 +181,10 @@ export class Group {
     })
 
     // redefine current media group
-    MediaLibraryHelper.currentMediaItemIds = currentIds
+    this.config.currentMediaItemIds = currentIds
 
     // only get new folder counts on startup
-    if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].id !== 0 && MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count === undefined) {
+    if (this.config.mediaGroups[this.config.currentMediaGroupId].id !== 0 && this.config.mediaGroups[this.config.currentMediaGroupId].count === undefined) {
       // load folder counts for group using ajax
       $.ajax({
         data: {
@@ -191,12 +192,12 @@ export class Group {
             module: 'MediaLibrary',
             action: 'MediaFolderGetCountsForGroup'
           },
-          group_id: MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].id
+          group_id: this.config.mediaGroups[this.config.currentMediaGroupId].id
         },
         success: (json, textStatus) => {
           if (json.code !== 200) {
             // show error if needed
-            if (Backend.debug) {
+            if (Config.isDebug()) {
               window.alert(textStatus)
             }
 
@@ -204,7 +205,7 @@ export class Group {
           }
 
           // cache folder counts
-          MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count = json.data
+          this.config.mediaGroups[this.config.currentMediaGroupId].count = json.data
 
           // update group media
           this.updateGroupMedia()
@@ -237,7 +238,7 @@ export class Group {
    */
   getFolderCountsForGroup () {
     // only get new folder counts on startup
-    if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].id !== 0 && MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count === undefined) {
+    if (this.config.mediaGroups[this.config.currentMediaGroupId].id !== 0 && this.config.mediaGroups[this.config.currentMediaGroupId].count === undefined) {
       // load folder counts for group using ajax
       $.ajax({
         data: {
@@ -245,17 +246,17 @@ export class Group {
             module: 'MediaLibrary',
             action: 'MediaFolderGetCountsForGroup'
           },
-          group_id: MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].id
+          group_id: this.config.mediaGroups[this.config.currentMediaGroupId].id
         },
         success: (json, textStatus) => {
           if (json.code !== 200) {
             // show error if needed
-            if (Backend.debug) {
+            if (Config.isDebug()) {
               window.alert(textStatus)
             }
           } else {
             // cache folder counts
-            MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count = json.data
+            this.config.mediaGroups[this.config.currentMediaGroupId].count = json.data
 
             // update folders
             this.updateFolders()
@@ -269,7 +270,7 @@ export class Group {
    * Load in the folders and add numConnected from the group
    */
   getFolders () {
-    if (MediaLibraryHelper.mediaFolders) {
+    if (this.config.mediaFolders) {
       return
     }
 
@@ -284,7 +285,7 @@ export class Group {
       success: (json, textStatus) => {
         if (json.code !== 200) {
           // show error if needed
-          if (Backend.debug) {
+          if (Config.isDebug()) {
             window.alert(textStatus)
           }
 
@@ -292,7 +293,7 @@ export class Group {
         }
 
         // cache folders
-        MediaLibraryHelper.mediaFolders = json.data
+        this.config.mediaFolders = json.data
 
         // update folders
         this.updateFolders()
@@ -329,7 +330,7 @@ export class Group {
         ? $.trim($('#group-' + mediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
       // Push ids to array
-      MediaLibraryHelper.mediaGroups[mediaGroupId] = {
+      this.config.mediaGroups[mediaGroupId] = {
         'id': mediaGroupId,
         'media': mediaIds,
         'type': type
@@ -348,7 +349,7 @@ export class Group {
           success: (json, textStatus) => {
             if (json.code !== 200) {
               // show error if needed
-              if (Backend.debug) {
+              if (Config.isDebug()) {
                 window.alert(textStatus)
               }
             } else {
@@ -362,7 +363,7 @@ export class Group {
               $(json.data.items).each((index, item) => {
                 // add HTML for MediaItem to connect to holder
                 $holder.append(Templates.getHTMLForMediaItemToConnect(item))
-                MovieThumbUrl.set(item)
+                window.mediaLibrary.mediaThumbUrl.set(item)
               })
             }
           }
@@ -377,7 +378,7 @@ export class Group {
    * @param {int} groupId [optional]
    */
   getItems (groupId) {
-    const id = (groupId) || MediaLibraryHelper.currentMediaGroupId
+    const id = (groupId) || this.config.currentMediaGroupId
     return $('#group-' + id).find('.mediaConnectedItems')
   }
 
@@ -386,7 +387,7 @@ export class Group {
    */
   getMedia () {
     // Load media from cache
-    if (MediaLibraryHelper.mediaFolderId === null || !MediaLibraryHelper.media[MediaLibraryHelper.mediaFolderId]) {
+    if (this.config.mediaFolderId === null || !this.config.media[this.config.mediaFolderId]) {
       this.updateMedia()
     }
 
@@ -397,14 +398,14 @@ export class Group {
           module: 'MediaLibrary',
           action: 'MediaItemFindAll'
         },
-        group_id: (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId]) ? MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].id : null,
-        folder_id: MediaLibraryHelper.mediaFolderId,
-        aspect_ratio: MediaLibraryHelper.currentAspectRatio
+        group_id: (this.config.mediaGroups[this.config.currentMediaGroupId]) ? this.config.mediaGroups[this.config.currentMediaGroupId].id : null,
+        folder_id: this.config.mediaFolderId,
+        aspect_ratio: this.config.currentAspectRatio
       },
       success: (json, textStatus) => {
         if (json.code !== 200) {
           // show error if needed
-          if (Backend.debug) {
+          if (Config.isDebug()) {
             window.alert(textStatus)
           }
 
@@ -414,13 +415,13 @@ export class Group {
         // only do this when current folder is different
         if (json.data.folder !== 0) {
           // redefine folder id
-          MediaLibraryHelper.mediaFolderId = json.data.folder
+          this.config.mediaFolderId = json.data.folder
 
           // cache media
-          MediaLibraryHelper.media[MediaLibraryHelper.mediaFolderId] = json.data.media
+          this.config.media[this.config.mediaFolderId] = json.data.media
           // redefine current folder as none
         } else {
-          MediaLibraryHelper.mediaFolderId = 0
+          this.config.mediaFolderId = 0
         }
 
         // update media
@@ -432,7 +433,7 @@ export class Group {
   getMediaItemForId (mediaItemId) {
     let foundMediaItem = false
 
-    $.each(MediaLibraryHelper.media, (index, mediaFolder) => {
+    $.each(this.config.media, (index, mediaFolder) => {
       $.each(mediaFolder, (index, mediaItem) => {
         if (mediaItem.id === mediaItemId) {
           foundMediaItem = mediaItem
@@ -447,7 +448,7 @@ export class Group {
 
   updateFolderSelected () {
     // select the current media folder
-    $('#mediaFolders').val(MediaLibraryHelper.mediaFolderId)
+    $('#mediaFolders').val(this.config.mediaFolderId)
   }
 
   /**
@@ -459,7 +460,7 @@ export class Group {
    */
   updateFolderCount (folderId, updateCount, updateWithValue) {
     // count not found - add it
-    if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count === undefined) {
+    if (this.config.mediaGroups[this.config.currentMediaGroupId].count === undefined) {
       // define new object
       const obj = {}
 
@@ -467,17 +468,17 @@ export class Group {
       obj[folderId] = 0
 
       // add object to count
-      MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count = obj
+      this.config.mediaGroups[this.config.currentMediaGroupId].count = obj
     }
 
     // folder not found - add it to object
-    if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count[folderId] === undefined) {
+    if (this.config.mediaGroups[this.config.currentMediaGroupId].count[folderId] === undefined) {
       // update object to count
-      MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count[folderId] = 0
+      this.config.mediaGroups[this.config.currentMediaGroupId].count[folderId] = 0
     }
 
     // init count
-    let count = parseInt(MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count[folderId])
+    let count = parseInt(this.config.mediaGroups[this.config.currentMediaGroupId].count[folderId])
 
     // subtract or add value
     count = (updateCount === '-') ? (count - updateWithValue) : (count + updateWithValue)
@@ -486,12 +487,12 @@ export class Group {
     if (count < 0) {
       count = 0
       // redefine amount when max has reached
-    } else if (MediaLibraryHelper.mediaFolders[folderId] !== undefined && count > MediaLibraryHelper.mediaFolders[folderId].numMedia) {
-      count = MediaLibraryHelper.mediaFolders[folderId].numMedia
+    } else if (this.config.mediaFolders[folderId] !== undefined && count > this.config.mediaFolders[folderId].numMedia) {
+      count = this.config.mediaFolders[folderId].numMedia
     }
 
     // update count
-    MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].count[folderId] = count
+    this.config.mediaGroups[this.config.currentMediaGroupId].count[folderId] = count
 
     // update folders
     this.updateFolders()
@@ -499,7 +500,7 @@ export class Group {
 
   updateFolders () {
     // add folders to dropdown
-    $('#mediaFolders').html(Templates.getHTMLForMediaFolders(MediaLibraryHelper.mediaFolders))
+    $('#mediaFolders').html(Templates.getHTMLForMediaFolders(this.config.mediaFolders))
 
     // select the correct folder
     this.updateFolderSelected()
@@ -513,25 +514,25 @@ export class Group {
     const $currentItems = this.getItems()
 
     // current ids
-    let currentIds = ($('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val() !== '')
-      ? $.trim($('#group-' + MediaLibraryHelper.currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+    let currentIds = ($('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val() !== '')
+      ? $.trim($('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
     // define empty
-    const empty = (MediaLibraryHelper.currentMediaItemIds.length === 0)
+    const empty = (this.config.currentMediaItemIds.length === 0)
 
     // check which items to add
-    $(MediaLibraryHelper.currentMediaItemIds).each((i, id) => {
+    $(this.config.currentMediaItemIds).each((i, id) => {
       // add item
       if (!utils.array.inArray(id, currentIds)) {
         // loop media folders
-        $.each(MediaLibraryHelper.media, (index, items) => {
+        $.each(this.config.media, (index, items) => {
           // loop media items in folder
           $.each(items, (index, item) => {
             // item found
             if (id === item.id) {
               // Add HTML for MediaItem to Connect
               $currentItems.append(Templates.getHTMLForMediaItemToConnect(item))
-              MovieThumbUrl.set(item)
+              window.mediaLibrary.mediaThumbUrl.set(item)
             }
           })
         })
@@ -550,22 +551,22 @@ export class Group {
     })
 
     // update the group media
-    MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].media = MediaLibraryHelper.currentMediaItemIds
+    this.config.mediaGroups[this.config.currentMediaGroupId].media = this.config.currentMediaItemIds
 
     // add empty media paragraph
     if (empty) {
-      this.getItems().after('<p class="mediaNoItems helpTxt">' + Backend.locale.msg('MediaNoItemsConnected') + '</p>')
+      this.getItems().after('<p class="mediaNoItems helpTxt">' + window.backend.locale.msg('MediaNoItemsConnected') + '</p>')
       // delete empty media paragraph
     } else {
-      $('#group-' + MediaLibraryHelper.currentMediaGroupId).find('.mediaNoItems').remove()
-      $('#group-' + MediaLibraryHelper.currentMediaGroupId).find('.media-group-type-errors').remove()
+      $('#group-' + this.config.currentMediaGroupId).find('.mediaNoItems').remove()
+      $('#group-' + this.config.currentMediaGroupId).find('.media-group-type-errors').remove()
     }
 
     // update the hidden group field for media
-    $('#group-' + MediaLibraryHelper.currentMediaGroupId).find('.mediaIds').first().val(MediaLibraryHelper.currentMediaItemIds.join(','))
+    $('#group-' + this.config.currentMediaGroupId).find('.mediaIds').first().val(this.config.currentMediaItemIds.join(','))
 
     // redefine
-    MediaLibraryHelper.currentMediaItemIds = []
+    this.config.currentMediaItemIds = []
   }
 
   /**
@@ -573,7 +574,7 @@ export class Group {
    */
   updateMedia () {
     // init constiables
-    const mediaItemTypes = Backend.data.get('MediaLibrary.mediaItemTypes')
+    const mediaItemTypes = Data.get('MediaLibrary.mediaItemTypes')
     const html = {}
     const counts = {}
     const rowNoItems = Templates.getHTMLForEmptyTableRow()
@@ -584,9 +585,9 @@ export class Group {
     })
 
     // loop media
-    $.each(MediaLibraryHelper.media[MediaLibraryHelper.mediaFolderId], (i, item) => {
+    $.each(this.config.media[this.config.mediaFolderId], (i, item) => {
       // check if media is connected or not
-      const connected = (typeof MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId] === 'undefined') ? false : utils.array.inArray(item.id, MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].media)
+      const connected = (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') ? false : utils.array.inArray(item.id, this.config.mediaGroups[this.config.currentMediaGroupId].media)
 
       // Redefine
       html[item.type] += Templates.getHTMLForMediaItemTableRow(item, connected)
@@ -595,9 +596,9 @@ export class Group {
 
     $(mediaItemTypes).each((index, type) => {
       const mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks" title="Select all"></span></th>' +
-        (type === 'image' ? '<th>' + utils.string.ucfirst(Backend.locale.lbl('Image')) + '</th>' : '') +
-        '<th>' + utils.string.ucfirst(Backend.locale.lbl('Filename')) + '</th>' +
-        '<th>' + utils.string.ucfirst(Backend.locale.lbl('Title')) + '</th>' +
+        (type === 'image' ? '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Image')) + '</th>' : '') +
+        '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Filename')) + '</th>' +
+        '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Title')) + '</th>' +
         '</tr></thead>' +
         '<tbody>' + html[type] + '</tbody>'
       $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
@@ -605,7 +606,7 @@ export class Group {
     })
 
     // Init toggle for mass-action checkbox
-    Backend.controls.bindMassCheckbox()
+    window.backend.controls.bindMassCheckbox()
 
     // init $tabs
     const $tabs = $('#tabLibrary').find('.nav-tabs')
@@ -614,7 +615,7 @@ export class Group {
     $tabs.find('.active').removeClass('active')
 
     // not in connect-to-group modus (just uploading)
-    if (typeof MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId] === 'undefined') {
+    if (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') {
       return false
     }
 
@@ -625,20 +626,20 @@ export class Group {
     let enabled = '.nav-item:eq(0)'
 
     // we have an image group
-    if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'image') {
+    if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image') {
       disabled = '.nav-item:gt(0)'
-    } else if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'file') {
+    } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'file') {
       disabled = '.nav-item:eq(0), .nav-item:eq(2), .nav-item:eq(3)'
       enabled = '.nav-item:eq(1)'
-    } else if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'movie') {
+    } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'movie') {
       disabled = '.nav-item:eq(0), .nav-item:eq(1), .nav-item:eq(3)'
       enabled = '.nav-item:eq(2)'
-    } else if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'audio') {
+    } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'audio') {
       disabled = '.nav-item:lt(3)'
       enabled = '.nav-item:eq(3)'
-    } else if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'image-file') {
+    } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image-file') {
       disabled = '.nav-item:eq(2), .nav-item:eq(3)'
-    } else if (MediaLibraryHelper.mediaGroups[MediaLibraryHelper.currentMediaGroupId].type === 'image-movie') {
+    } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image-movie') {
       disabled = '.nav-item:eq(1), .nav-item:eq(3)'
     }
 
@@ -659,21 +660,21 @@ export class Group {
       const isChecked = $(e.currentTarget).is(':checked')
 
       // was already connected?
-      const connected = utils.array.inArray(mediaId, MediaLibraryHelper.currentMediaItemIds)
+      const connected = utils.array.inArray(mediaId, this.config.currentMediaItemIds)
 
       // delete from array
       if (connected && !isChecked) {
         // loop all to find value and to delete it
-        MediaLibraryHelper.currentMediaItemIds.splice(MediaLibraryHelper.currentMediaItemIds.indexOf(mediaId), 1)
+        this.config.currentMediaItemIds.splice(this.config.currentMediaItemIds.indexOf(mediaId), 1)
 
         // update folder count
-        this.updateFolderCount(MediaLibraryHelper.mediaFolderId, '-', 1)
+        this.updateFolderCount(this.config.mediaFolderId, '-', 1)
         // add to array
       } else if (!connected && isChecked) {
-        MediaLibraryHelper.currentMediaItemIds.push(mediaId)
+        this.config.currentMediaItemIds.push(mediaId)
 
         // update folder count
-        this.updateFolderCount(MediaLibraryHelper.mediaFolderId, '+', 1)
+        this.updateFolderCount(this.config.mediaFolderId, '+', 1)
       }
 
       // validate the minimum and maximum count
@@ -697,19 +698,19 @@ export class Group {
    * Runs the validation for the minimum and maximum count of connected media
    */
   validateMinimumMaximumCount () {
-    const totalMediaCount = MediaLibraryHelper.upload.uploadedCount + MediaLibraryHelper.currentMediaItemIds.length
+    const totalMediaCount = this.config.upload.uploadedCount + this.config.currentMediaItemIds.length
     const $minimumCountError = $('[data-role="fork-media-count-error"]')
     const $submitButton = $('#addMediaSubmit')
 
-    if (MediaLibraryHelper.maximumMediaItemsCount !== false && totalMediaCount > MediaLibraryHelper.maximumMediaItemsCount) {
-      $minimumCountError.html(Backend.locale.err('MaximumConnectedItems').replace('{{ limit }}', MediaLibraryHelper.maximumMediaItemsCount)).removeClass('d-none')
+    if (this.config.maximumMediaItemsCount !== false && totalMediaCount > this.config.maximumMediaItemsCount) {
+      $minimumCountError.html(window.backend.locale.err('MaximumConnectedItems').replace('{{ limit }}', this.config.maximumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return
     }
 
-    if (MediaLibraryHelper.minimumMediaItemsCount !== false && totalMediaCount < MediaLibraryHelper.minimumMediaItemsCount) {
-      $minimumCountError.html(Backend.locale.err('MinimumConnectedItems').replace('{{ limit }}', MediaLibraryHelper.minimumMediaItemsCount)).removeClass('d-none')
+    if (this.config.minimumMediaItemsCount !== false && totalMediaCount < this.config.minimumMediaItemsCount) {
+      $minimumCountError.html(window.backend.locale.err('MinimumConnectedItems').replace('{{ limit }}', this.config.minimumMediaItemsCount)).removeClass('d-none')
       $submitButton.addClass('disabled').attr('disabled', true)
 
       return

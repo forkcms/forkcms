@@ -7,51 +7,38 @@ export class Config {
   }
 
   static getCurrentModule () {
-    let module
+    // set default
+    let module = 'Dashboard'
 
     // get url and split into chunks
     let chunks = document.location.pathname.split('/')
 
     // set some properties
-    if (typeof chunks[3] === 'undefined') {
-      module = null
-    } else {
+    if (typeof chunks[3] !== 'undefined') {
       module = StringUtil.ucfirst(StringUtil.camelCase(chunks[3]))
     }
-
-    // set defaults
-    if (!module) module = 'Dashboard'
 
     return module
   }
 
   static getCurrentAction () {
-    let action
+    // set default
+    let action = 'index'
 
     // get url and split into chunks
     let chunks = document.location.pathname.split('/')
 
-    if (typeof chunks[4] === 'undefined') {
-      action = null
-    } else {
+    if (typeof chunks[4] !== 'undefined') {
       action = StringUtil.ucfirst(StringUtil.camelCase(chunks[4]))
     }
-
-    // set defaults
-    if (!action) action = 'index'
 
     return action
   }
 
   static getCurrentLanguage () {
-    let language
-
     // get url and split into chunks
     let chunks = document.location.pathname.split('/')
 
-    // set some properties
-    language = chunks[2]
-
-    return language
+    return chunks[2]
   }
 }

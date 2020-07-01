@@ -1,7 +1,6 @@
-import { MediaLibraryHelper } from '../MediaLibraryHelper'
-
 export class Cropper {
-  constructor () {
+  constructor (configSet) {
+    this.config = configSet
     this.cropperQueue = []
     this.isCropping = false
     this.scaleY = 1
@@ -99,8 +98,8 @@ export class Cropper {
       config.ready = readyCallback
     }
 
-    if (MediaLibraryHelper.currentAspectRatio !== false) {
-      config.aspectRatio = MediaLibraryHelper.currentAspectRatio
+    if (this.config.currentAspectRatio !== false) {
+      this.config.aspectRatio = this.config.currentAspectRatio
     }
 
     return config
