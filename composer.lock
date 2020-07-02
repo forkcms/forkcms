@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.133.27",
+            "version": "3.139.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5527195465ac42cb5127a60b84eb2d8dc3b0d5c9"
+                "reference": "31fc7fc73d550e237b34f7c6802250fd4ade9a01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5527195465ac42cb5127a60b84eb2d8dc3b0d5c9",
-                "reference": "5527195465ac42cb5127a60b84eb2d8dc3b0d5c9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/31fc7fc73d550e237b34f7c6802250fd4ade9a01",
+                "reference": "31fc7fc73d550e237b34f7c6802250fd4ade9a01",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-03-02T19:20:19+00:00"
+            "time": "2020-06-02T18:12:38+00:00"
         },
         {
             "name": "beberlei/assert",
@@ -1529,23 +1529,24 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.5.2",
+            "version": "6.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
+                "reference": "aab4ebd862aa7d04f01a4b51849d657db56d882e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
-                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/aab4ebd862aa7d04f01a4b51849d657db56d882e",
+                "reference": "aab4ebd862aa7d04f01a4b51849d657db56d882e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.0",
                 "guzzlehttp/psr7": "^1.6.1",
-                "php": ">=5.5"
+                "php": ">=5.5",
+                "symfony/polyfill-intl-idn": "^1.11"
             },
             "require-dev": {
                 "ext-curl": "*",
@@ -1553,7 +1554,6 @@
                 "psr/log": "^1.1"
             },
             "suggest": {
-                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
@@ -1592,7 +1592,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-12-23T11:57:10+00:00"
+            "time": "2020-04-18T10:38:46+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2142,16 +2142,16 @@
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "1.0.24",
+            "version": "1.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "4382036bde5dc926f9b8b337e5bdb15e5ec7b570"
+                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/4382036bde5dc926f9b8b337e5bdb15e5ec7b570",
-                "reference": "4382036bde5dc926f9b8b337e5bdb15e5ec7b570",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/d409b97a50bf85fbde30cbc9fc10237475e696ea",
+                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea",
                 "shasum": ""
             },
             "require": {
@@ -2185,7 +2185,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2020-02-23T13:31:58+00:00"
+            "time": "2020-06-02T18:41:58+00:00"
         },
         {
             "name": "league/flysystem-cached-adapter",
