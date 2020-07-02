@@ -686,4 +686,18 @@ jsFrontend.twitter = {
   }
 }
 
+/* Service Worker */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    console.log('ServiceWorker registration in progress.')
+    navigator.serviceWorker.register('/sw_offline.js').then(function (registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope)
+    }, function (error) {
+      // registration failed
+      console.log('ServiceWorker registration failed --', error)
+    })
+  })
+}
+
 $(jsFrontend.init)
