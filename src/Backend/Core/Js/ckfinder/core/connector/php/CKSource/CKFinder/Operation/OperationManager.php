@@ -218,7 +218,7 @@ class OperationManager
         if ($this->isValidOperationId($operationId)) {
             $filePath = $this->getFilePath($operationId);
             if (file_exists($filePath)) {
-                return unserialize(file_get_contents($filePath));
+                return unserialize(file_get_contents($filePath), ['allowed_classes' => false]);
             }
         }
 

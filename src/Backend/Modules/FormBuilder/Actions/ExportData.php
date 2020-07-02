@@ -177,7 +177,7 @@ class ExportData extends BackendBaseAction
             }
 
             // value is serialized
-            $value = unserialize($row['value']);
+            $value = unserialize($row['value'], ['allowed_classes' => false]);
 
             // flatten arrays
             if (is_array($value)) {

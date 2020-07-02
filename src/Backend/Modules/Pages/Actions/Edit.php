@@ -196,7 +196,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
-        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // our JS needs to know an id, so we can highlight it
         $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
@@ -602,7 +602,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
-        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title');
+        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -638,7 +638,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('isGod', $this->isGod);
         $this->template->assign('templates', $this->templates);
         $this->template->assign('positions', $this->positions);
-        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasData', json_encode(BackendModel::recursiveHtmlspecialchars(BackendExtensionsModel::getExtrasData())));
         $this->template->assign('extrasById', json_encode($this->extras));
         $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->template->assign('formErrors', (string) $this->form->getErrors());

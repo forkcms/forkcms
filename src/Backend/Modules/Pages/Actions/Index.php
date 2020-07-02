@@ -68,6 +68,7 @@ class Index extends BackendBaseActionIndex
             ['[edited_on]'],
             'edited_on'
         );
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // set headers
         $this->dgDrafts->setHeaderLabels(
@@ -109,6 +110,7 @@ class Index extends BackendBaseActionIndex
 
         // hide columns
         $this->dgRecentlyEdited->setColumnsHidden(['id']);
+        $this->dgRecentlyEdited->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // set functions
         $this->dgRecentlyEdited->setColumnFunction(

@@ -169,7 +169,7 @@ jsBackend.mediaLibraryFolders.templates = {
    * @returns {string}
    */
   getHTMLForMediaFolder: function (mediaFolder) {
-    var html = '<option value="' + mediaFolder.id + '">' + mediaFolder.slug + '</option>'
+    var html = '<option value="' + mediaFolder.id + '">' + utils.string.htmlEncode(mediaFolder.slug) + '</option>'
 
     if (mediaFolder.numberOfChildren > 0) {
       html += jsBackend.mediaLibraryFolders.templates.getHTMLForMediaFolders(mediaFolder.children)

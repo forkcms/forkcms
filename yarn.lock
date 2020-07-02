@@ -320,7 +320,7 @@ bootstrap-sass@>=3.4.1:
 
 "bootstrap-tagsinput@https://github.com/mathiashelin/bootstrap-tagsinput.git":
   version "0.8.0"
-  resolved "https://github.com/mathiashelin/bootstrap-tagsinput.git#652eaeb6858bf35c8871430bef2ff2327ed29bfe"
+  resolved "https://github.com/mathiashelin/bootstrap-tagsinput.git#c3ae68ee3ac242e754a425bcd08a893861a95ee7"
 
 brace-expansion@^1.0.0, brace-expansion@^1.1.7:
   version "1.1.11"

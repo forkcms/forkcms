@@ -151,7 +151,7 @@ class Model extends \Common\Core\Model
         // loop found extras
         foreach ($extras as $extra) {
             // get extra data
-            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
+            $extraData = $extra['data'] !== null ? (array) unserialize($extra['data'], ['allowed_classes' => false]) : null;
 
             // if we have $data parameter set and $extraData not null we should not delete such extra
             if ($data !== null && $extraData === null) {
@@ -361,7 +361,7 @@ class Model extends \Common\Core\Model
             array_filter(
                 $moduleExtras,
                 function (?string $serializedData) use ($key, $value) {
-                    $data = $serializedData === null ? [] : unserialize($serializedData);
+                    $data = $serializedData === null ? [] : unserialize($serializedData, ['allowed_classes' => false]);
 
                     return isset($data[$key]) && (string) $data[$key] === $value;
                 }
@@ -906,7 +906,7 @@ class Model extends \Common\Core\Model
             [$id]
         );
 
-        $data = empty($serializedData) ? [] : unserialize($serializedData);
+        $data = empty($serializedData) ? [] : unserialize($serializedData, ['allowed_classes' => false]);
         $data[$key] = $value;
         $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
