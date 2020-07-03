@@ -12,8 +12,8 @@ var currentCache = {
   offline: 'offline-cache' + cacheVersion
 };
 const offlineUrl = '/offline/offline.html';
-const offlineStyle = '/offline/css/offline.css';
 const offlineScreen = '/src/Frontend/Themes/Fork/Core/Layout/Css/screen.css?m=1593680880';
+const offlineImage = '/offline/offline.png';
 
 this.addEventListener('install', event => {
   event.waitUntil(
@@ -21,7 +21,8 @@ this.addEventListener('install', event => {
       return cache.addAll([
         offlineUrl,
         offlineStyle,
-        offlineScreen
+        offlineScreen,
+        offlineImage
       ]);
     })
   );
