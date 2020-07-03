@@ -8,12 +8,12 @@ var utils = {
 /**
  * Functions related to arrays
  */
-utils.array = {
-  /**
+/*utils.array = {
+  /!**
    * Is the given value present in the array
    *
    * @return bool
-   */
+   *!/
   inArray: function (needle, array) {
     // loop values
     for (var i in array) {
@@ -23,7 +23,7 @@ utils.array = {
     // fallback
     return false
   }
-}
+}*/
 
 /**
  * Function related to cookies

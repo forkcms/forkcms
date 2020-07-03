@@ -16,13 +16,6 @@ import { Tabs } from './components/Tabs'
 
 export class Backend {
   constructor () {
-    this.debug = false
-    this.current = {
-      module: null,
-      action: null,
-      language: null
-    }
-
     this.initBackend()
   }
 
