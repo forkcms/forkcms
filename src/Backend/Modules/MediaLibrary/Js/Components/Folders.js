@@ -13,7 +13,7 @@ export class Folders {
     }
 
     // get folder from id
-    let selectedFolderId = (UrlUtil.getGetValue('folder')) ? utils.url.getGetValue('folder') : ''
+    let selectedFolderId = (UrlUtil.getGetValue('folder')) ? UrlUtil.getGetValue('folder') : ''
 
     // add folders on startup
     if ($('#uploadMediaFolderId').length > 0 || $('#addFolderParentId').length > 0) {

@@ -10,7 +10,7 @@ export class MovieThumbUrl {
   }
 
   vimeoLoadingThumb (id) {
-    const url = 'https://vimeo.com/api/v2/video/' + id + '.json?callback=jsBackend.mediaLibraryHelper.movieThumbUrl.showThumb'
+    const url = 'https://vimeo.com/api/v2/video/' + id + '.json?callback=window.mediaLibrary.helper.movieThumbUrl.showThumb'
 
     const script = document.createElement('script')
     script.type = 'text/javascript'

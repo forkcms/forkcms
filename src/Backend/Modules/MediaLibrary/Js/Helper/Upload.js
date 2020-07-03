@@ -1,5 +1,6 @@
 import { Messages } from '../../../../Core/Js/Components/Messages'
 import { Data } from '../../../../Core/Js/Components/Data'
+import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Upload {
   constructor (configSet) {
@@ -33,7 +34,7 @@ export class Upload {
           this.config.mediaFolderId = $('#uploadMediaFolderId').val()
 
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
-          $fineUploaderGallery.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + this.config.mediaFolderId)
+          $fineUploaderGallery.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + Config.getCurrentLanguage() + '&folder_id=' + this.config.mediaFolderId)
           $fineUploaderGallery.setCustomHeaders({'X-CSRF-Token': Data.get('csrf-token')})
         },
         onComplete: (id, name, responseJSON) => {
@@ -191,7 +192,7 @@ export class Upload {
       success: (json, textStatus) => {
         if (json.code !== 200) {
           // show error if needed
-          if (jsBackend.debug) {
+          if (Config.isDebug()) {
             window.alert(textStatus)
           }
         } else {

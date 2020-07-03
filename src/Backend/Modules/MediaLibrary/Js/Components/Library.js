@@ -1,4 +1,5 @@
 import { Messages } from '../../../../Core/Js/Components/Messages'
+import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Library {
   constructor () {
@@ -39,7 +40,7 @@ export class Library {
         success: (json, textStatus) => {
           if (json.code !== 200) {
             // show error if needed
-            if (jsBackend.debug) {
+            if (Config.isDebug()) {
               window.alert(textStatus)
             }
 

@@ -1,5 +1,5 @@
-//import '../Sass/index.scss'
 import 'fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min'
+import 'cropper/dist/cropper'
 
 import { Library } from './Components/Library'
 import { Controls } from './Components/Controls'

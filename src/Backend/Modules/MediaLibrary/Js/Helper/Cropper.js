@@ -145,7 +145,7 @@ export class Cropper {
   }
 
   getCloseEventFunction ($dialog, resizeInfo, reject) {
-    return function () {
+    return () => {
       $dialog.off('hidden.bs.modal.media-library-cropper.close')
 
       $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas').cropper('destroy')
@@ -155,7 +155,7 @@ export class Cropper {
   }
 
   getCropEventFunction ($dialog, resizeInfo, resolve) {
-    return function () {
+    return () => {
       const context = resizeInfo.targetCanvas.getContext('2d')
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       const cropBoxData = $cropper.cropper('getCroppedCanvas')
@@ -185,7 +185,7 @@ export class Cropper {
   }
 
   getRotateEventFunction () {
-    return function () {
+    return () => {
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       $cropper.cropper('rotate', $(this).data('degrees'))
       $cropper.cropper('crop')
@@ -193,7 +193,7 @@ export class Cropper {
   }
 
   getZoomEventFunction () {
-    return function () {
+    return () => {
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       $cropper.cropper('zoom', $(this).data('zoom'))
       $cropper.cropper('crop')
@@ -201,7 +201,7 @@ export class Cropper {
   }
 
   getMoveEventFunction () {
-    return function () {
+    return () => {
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       $cropper.cropper('move', $(this).data('x'), $(this).data('y'))
       $cropper.cropper('crop')
@@ -209,7 +209,7 @@ export class Cropper {
   }
 
   getFlipEventFunction () {
-    return function () {
+    return () => {
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       const isHorizontal = $(this).data('direction') === 'horizontal'
       const method = isHorizontal ? 'scaleX' : 'scaleY'
@@ -221,7 +221,7 @@ export class Cropper {
   }
 
   getResetEventFunction () {
-    return function () {
+    return () => {
       this.resetScaleSettings()
       const $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       $cropper.cropper('reset')

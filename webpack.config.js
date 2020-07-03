@@ -52,6 +52,7 @@ const rules = {
     }
   ]
 }
+
 const plugins = [
   new MiniCssExtractPlugin({
     filename: '[name].css',
@@ -68,24 +69,24 @@ const plugins = [
 
 module.exports = [
   {
-    name: 'modules',
-    mode: 'development',
-    entry: entryObject,
-    output: {
-      filename: '[name]/build/index.js',
-      path: path.resolve(__dirname, '')
-    },
-    module: rules,
-    plugins: plugins,
-    watch: true
-  },
-  {
     name: 'backend',
     mode: 'development',
     entry: './src/Backend/Core/Js/Backend.js',
     output: {
       path: path.resolve(__dirname, './src/Backend/Core/build'),
       filename: 'backend.bundle.js'
+    },
+    module: rules,
+    plugins: plugins,
+    watch: true
+  },
+  {
+    name: 'modules',
+    mode: 'development',
+    entry: entryObject,
+    output: {
+      filename: '[name]/build/index.js',
+      path: path.resolve(__dirname, '')
     },
     module: rules,
     plugins: plugins,

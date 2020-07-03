@@ -1,6 +1,8 @@
 /**
  * Handle form messages (action feedback: success, error, ...)
  */
+import { StringUtil } from './StringUtil'
+
 export class Messages {
   // add a new message into the que
   static add (type, content, optionalClass = '', dismissable = false) {
@@ -42,7 +44,7 @@ export class Messages {
 
     const html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="' + autohide + '" data-delay="5000">' +
       '<div class="toast-body">' +
-      '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
+      '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + StringUtil.ucfirst(window.backend.locale.lbl('Close')) + '">' +
       '<i class="fas fa-times"></i>' +
       '</button>' +
       '<i class="toast-icon ' + icon + '" aria-hidden="true"></i>' + ' ' +

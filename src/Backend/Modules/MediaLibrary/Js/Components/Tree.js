@@ -2,6 +2,7 @@ import 'jstree/dist/jstree'
 import { EventUtil } from '../../../../Core/Js/Components/EventUtil'
 import { Messages } from '../../../../Core/Js/Components/Messages'
 import { Backend } from '../../../../Core/Js/Backend'
+import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Tree {
   constructor () {
@@ -119,12 +120,12 @@ export class Tree {
         dropped_on: droppedOnPageID
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
-        if (jsBackend.debug) window.alert(textStatus)
+        if (Config.isDebug()) window.alert(textStatus)
         allowMove = false
       },
       success: function (json, textStatus) {
         if (json.code !== 200) {
-          if (jsBackend.debug) window.alert(textStatus)
+          if (Config.isDebug()) window.alert(textStatus)
           allowMove = false
         } else {
           // is page allowed to move
@@ -132,7 +133,7 @@ export class Tree {
             allowMove = true
           } else {
             jsTreeInstance.jstree('refresh')
-            jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'))
+            Messages.add('danger', window.backend.locale.err('CantBeMoved'))
             allowMove = false
           }
         }
@@ -154,10 +155,10 @@ export class Tree {
       },
       success: (json, textStatus) => {
         if (json.code !== 200) {
-          if (jsBackend.debug) window.alert(textStatus)
+          if (Config.isDebug()) window.alert(textStatus)
 
           // show message
-          Messages.add('danger', jsBackend.locale.err('CantBeMoved'))
+          Messages.add('danger', window.backend.locale.err('CantBeMoved'))
 
           // rollback
           jsTreeInstance.jstree('refresh')
