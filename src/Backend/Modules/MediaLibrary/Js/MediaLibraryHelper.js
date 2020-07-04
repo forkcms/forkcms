@@ -1069,6 +1069,25 @@ jsBackend.mediaLibraryHelper.upload = {
     var $fineUploaderGallery = $('#fine-uploader-gallery')
     $fineUploaderGallery.fineUploader({
       template: 'qq-template-gallery',
+      options: {
+        request: {
+          omitDefaultParams: true
+        }
+      },
+      chunking: {
+        enabled: true,
+        success: {
+          endpoint: function() {
+            var mediaFolderId = $('#uploadMediaFolderId').val()
+
+            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]='
+              + jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
+          }
+        },
+        concurrent: {
+          enabled: true
+        },
+      },
       thumbnails: {
         placeholders: {
           waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
@@ -1082,8 +1101,7 @@ jsBackend.mediaLibraryHelper.upload = {
       callbacks: {
         onUpload: function (event) {
           // redefine media folder id
-          mediaFolderId = $('#uploadMediaFolderId').val()
-
+          var mediaFolderId = $('#uploadMediaFolderId').val()
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
           this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId)
           this.setCustomHeaders({'X-CSRF-Token': jsBackend.data.get('csrf-token')})
