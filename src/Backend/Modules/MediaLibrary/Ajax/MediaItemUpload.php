@@ -84,11 +84,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         $result = $this->uploadHandler->handleUpload($this->uploadDirectory);
 
-        if (array_key_exists('error', $result)
-            || (array_key_exists('success', $result)
-                && !$this->request->query->has('done')
-                && $this->request->request->getInt('qqtotalparts', 1) > 1
-            )) {
+        if (array_key_exists('error', $result) || $this->stillWaitingForMoreChunks($result)) {
             $this->sendResponseForResult($result);
         }
 
@@ -231,5 +227,12 @@ class MediaItemUpload extends BackendBaseAJAXAction
         if ($combineChunksResult['success'] === false) {
             $this->sendResponseForResult($combineChunksResult);
         }
+    }
+
+    public function stillWaitingForMoreChunks(array $result): bool
+    {
+        return array_key_exists('success', $result)
+               && !$this->request->query->has('done')
+               && $this->request->request->getInt('qqtotalparts', 1) > 1;
     }
 }
