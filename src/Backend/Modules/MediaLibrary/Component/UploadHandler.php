@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Component;
 
 use Backend\Modules\MediaLibrary\Manager\FileManager;
 use Exception;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,7 +36,7 @@ class UploadHandler
 
     public function getName(): string
     {
-        $fileName = $this->request->request->get('qqfilename');
+        $fileName = basename($this->request->request->get('qqfilename'));
         if ($fileName !== null) {
             return $fileName;
         }
@@ -43,7 +44,7 @@ class UploadHandler
         /** @var UploadedFile|null $file */
         $file = $this->request->files->get($this->inputName);
         if ($file instanceof UploadedFile) {
-            return $file->getClientOriginalName();
+            return basename($file->getClientOriginalName());
         }
     }
 
@@ -102,7 +103,7 @@ class UploadHandler
             $this->checkMaximumSize();
             $this->checkUploadDirectory($uploadDirectory);
             $this->checkType();
-            $file = $this->getFile();
+            $file = $this->getFile($uploadDirectory);
             $size = $this->getSize($file);
 
             if ($this->sizeLimit !== null && $size > $this->sizeLimit) {
@@ -111,7 +112,9 @@ class UploadHandler
 
             $name = $this->getRedefinedName($name);
             $this->checkFileExtension($name);
-            $this->checkFileMimeType($file);
+            if ($this->request->request->getInt('qqtotalparts', 1) === 1) {
+                $this->checkFileMimeType($file);
+            }
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -120,6 +123,9 @@ class UploadHandler
 
         // Chunked upload
         if ($this->request->request->getInt('qqtotalparts', 1) > 1) {
+            if ($this->request->query->has('done')) {
+                return ['success' => true, 'uuid' => $uuid];
+            }
             $chunksFolder = $this->chunksFolder;
             $partIndex = $this->request->request->getInt('qqpartindex');
 
@@ -134,7 +140,8 @@ class UploadHandler
             }
 
             $target = $targetFolder . '/' . $partIndex;
-            $success = move_uploaded_file($file->getRealPath(), $target);
+            $from = $file->getRealPath();
+            $success = move_uploaded_file($from, $target);
 
             return ['success' => $success, 'uuid' => $uuid];
         }
@@ -191,14 +198,14 @@ class UploadHandler
         }
     }
 
-    private function checkType()
+    private function checkType(): void
     {
         $type = $this->request->server->get('HTTP_CONTENT_TYPE', $this->request->server->get('CONTENT_TYPE'));
         if ($type === null) {
             throw new Exception('No files were uploaded.');
         }
 
-        if (strpos(strtolower($type), 'multipart/') !== 0) {
+        if (strpos(strtolower($type), 'multipart/') !== 0 && !$this->request->query->has('done')) {
             throw new Exception(
                 'Server error. Not a multipart request. Please set forceMultipart to default value (true).'
             );
@@ -254,8 +261,19 @@ class UploadHandler
         }
     }
 
-    private function getFile(): UploadedFile
+    private function getFile(string $uploadDirectory): UploadedFile
     {
+        if ($this->request->query->has('done')) {
+            $name = basename($this->getName());
+            $uploadedPath = implode(
+                DIRECTORY_SEPARATOR,
+                [$uploadDirectory, basename($this->request->request->get('qquuid')), $name]
+            );
+            $mimeType = (new MimeTypeExtensionGuesser())->guess($uploadedPath);
+
+            return new UploadedFile($uploadedPath, $name, $mimeType, filesize($uploadedPath));
+        }
+
         /** @var UploadedFile|null $file */
         $file = $this->request->files->get($this->inputName);
 
@@ -291,54 +309,6 @@ class UploadHandler
         }
 
         return $size;
-    }
-
-    /**
-     * Returns a path to use with this upload. Check that the name does not exist,
-     * and appends a suffix otherwise.
-     *
-     * @param string $uploadDirectory Target directory
-     * @param string $filename The name of the file to use.
-     *
-     * @return false|string
-     */
-    protected function getUniqueTargetPath(string $uploadDirectory, string $filename)
-    {
-        // Allow only one process at the time to get a unique file name, otherwise
-        // if multiple people would upload a file with the same name at the same time
-        // only the latest would be saved.
-        if (function_exists('sem_acquire')) {
-            $lock = sem_get(ftok(__FILE__, 'u'));
-            sem_acquire($lock);
-        }
-
-        $pathinfo = pathinfo($filename);
-        $base = $pathinfo['filename'];
-        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : '';
-        $ext = $ext === '' ? $ext : '.' . $ext;
-
-        $unique = $base;
-        $suffix = 0;
-
-        // Get unique file name for the file, by appending random suffix.
-        while ($this->fileManager->exists($uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext)) {
-            $suffix += random_int(1, 999);
-            $unique = $base . '-' . $suffix;
-        }
-
-        $result = $uploadDirectory . DIRECTORY_SEPARATOR . $unique . $ext;
-
-        // Create an empty target file
-        if (!touch($result)) {
-            // Failed
-            $result = false;
-        }
-
-        if (function_exists('sem_acquire')) {
-            sem_release($lock);
-        }
-
-        return $result;
     }
 
     /**
