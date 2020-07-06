@@ -58,7 +58,8 @@
   },
   "scripts": {
     "test": "standard",
-    "dev": "webpack --config ./webpack.config.js"
+    "devBackend": "webpack  --config-name backend",
+    "devFrontend": "webpack  --config-name frontend"
   },
   "standard": {
     "globals": [

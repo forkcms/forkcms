@@ -14,7 +14,7 @@ import { Locale } from './components/Locale'
 import { Modal } from './components/Modal'
 import { Tabs } from './components/Tabs'
 
-export class Backend {
+export class Index {
   constructor () {
     this.initBackend()
   }
@@ -34,5 +34,5 @@ export class Backend {
 }
 
 $(window).on('load', () => {
-  window.backend = new Backend()
+  window.backend = new Index()
 })
