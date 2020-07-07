@@ -58,7 +58,7 @@
   },
   "scripts": {
     "test": "standard",
-    "devBackend": "webpack  --config-name backend",
+    "devBackend": "webpack  --config-name backend --watch",
     "devFrontend": "webpack  --config-name frontend"
   },
   "standard": {

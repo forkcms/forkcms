@@ -14,6 +14,10 @@ import { Locale } from './components/Locale'
 import { Modal } from './components/Modal'
 import { Tabs } from './components/Tabs'
 
+// modules imports
+import { Pages } from '../../Modules/Pages/Js/Pages'
+import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
+
 export class Index {
   constructor () {
     this.initBackend()
@@ -30,6 +34,10 @@ export class Index {
     this.modal = new Modal()
     this.effects = new Effects()
     this.tabs = new Tabs()
+
+    // init modules
+    this.pages = new Pages()
+    this.mediaLibrary = new MediaLibrary()
   }
 }
 

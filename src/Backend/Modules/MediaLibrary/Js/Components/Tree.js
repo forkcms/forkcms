@@ -1,14 +1,13 @@
 import 'jstree/dist/jstree'
 import { EventUtil } from '../../../../Core/Js/Components/EventUtil'
 import { Messages } from '../../../../Core/Js/Components/Messages'
-import { Index } from '../../../../Core/Js/Backend'
 import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Tree {
   constructor () {
     this.pageID = null
 
-    if ($('#tree').find('> [data-tree]').length === 0) return false
+    if ($('[data-tree-media-libreary]').find('> [data-tree]').length === 0) return false
 
     // jsTree options
     const options = {
@@ -39,7 +38,7 @@ export class Tree {
     }
 
     // Init folder tree
-    const jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
+    const jsTreeInstance = $('[data-tree-media-libreary]').find('> [data-tree]').jstree(options)
 
     if ($('[data-clear-tree]').length > 0) {
       jsTreeInstance.jstree('clear_state')
@@ -178,13 +177,13 @@ export class Tree {
       const $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
 
       if (collapsed) {
-        $buttonText.html(Index.locale.lbl('OpenTreeNavigation'))
+        $buttonText.html(window.backend.locale.lbl('OpenTreeNavigation'))
         jsTreeInstance.jstree('close_all')
 
         return
       }
 
-      $buttonText.html(Index.locale.lbl('CloseTreeNavigation'))
+      $buttonText.html(window.backend.locale.lbl('CloseTreeNavigation'))
       jsTreeInstance.jstree('open_all')
     })
   }

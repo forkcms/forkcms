@@ -5,7 +5,7 @@ import { Messages } from '../../../../Core/Js/Components/Messages'
 
 export class Tree {
   constructor () {
-    if ($('#tree').find('> [data-tree]').length === 0) return
+    if ($('[data-tree-pages]').find('> [data-tree]').length === 0) return
 
     let openedIds = []
     if (typeof pageID !== 'undefined') {
@@ -62,7 +62,7 @@ export class Tree {
     }
 
     // Init page tree
-    const jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options)
+    const jsTreeInstance = $('[data-tree-pages]').find('> [data-tree]').jstree(options)
 
     if ($('[data-clear-tree]').length > 0) {
       jsTreeInstance.jstree('clear_state')
