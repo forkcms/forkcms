@@ -28,12 +28,12 @@ var utils = {
 /**
  * Function related to cookies
  */
-utils.cookies = {
-  /**
+/*utils.cookies = {
+  /!**
    * Are cookies enabled?
    *
    * @return bool
-   */
+   *!/
   isEnabled: function () {
     // try to grab the property
     var cookiesEnabled = !!(navigator.cookieEnabled)
@@ -49,11 +49,11 @@ utils.cookies = {
     return cookiesEnabled
   },
 
-  /**
+  /!**
    * Read a cookie
    *
    * @return mixed
-   */
+   *!/
   readCookie: function (name) {
     // get cookies
     var cookies = document.cookie.split(';')
@@ -77,7 +77,7 @@ utils.cookies = {
     expireDate.setDate(expireDate.getDate() + days)
     document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/' + (secure ? ';secure=true' : '')
   }
-}
+}*/
 
 /**
  * Functions related to forms

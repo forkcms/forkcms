@@ -7,22 +7,20 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 
 // component imports
-import { Ajax } from './components/Ajax'
-import { Controls } from './components/Controls'
-import { Effects } from './components/Effects'
-import { Locale } from './components/Locale'
-import { Modal } from './components/Modal'
-import { Tabs } from './components/Tabs'
+import { Ajax } from './Components/Ajax'
+import { Controls } from './Components/Controls'
+import { Effects } from './Components/Effects'
+import { Locale } from './Components/Locale'
+import { Modal } from './Components/Modal'
+import { Tabs } from './Components/Tabs'
+import { Resize } from './Components/Resize'
+import { Navigation } from './Components/Navigation'
 
 // modules imports
 import { Pages } from '../../Modules/Pages/Js/Pages'
 import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
 
-export class Index {
-  constructor () {
-    this.initBackend()
-  }
-
+export class Backend {
   initBackend () {
     // set some properties
     if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block')
@@ -34,6 +32,8 @@ export class Index {
     this.modal = new Modal()
     this.effects = new Effects()
     this.tabs = new Tabs()
+    this.resize = new Resize()
+    this.navigation = new Navigation()
 
     // init modules
     this.pages = new Pages()
@@ -42,5 +42,6 @@ export class Index {
 }
 
 $(window).on('load', () => {
-  window.backend = new Index()
+  window.backend = new Backend()
+  window.backend.initBackend()
 })

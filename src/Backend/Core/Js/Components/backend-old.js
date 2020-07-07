@@ -57,8 +57,8 @@ var jsBackend =
       else if (jsData.Core.preferred_editor === 'block-editor') {
         jsBackend.blockEditor.init()
       }
-      jsBackend.resizeFunctions.init()
-      jsBackend.navigation.init()
+      //jsBackend.resizeFunctions.init()
+      //jsBackend.navigation.init()
       jsBackend.session.init()
 
       // do not move, should be run as the last item.
@@ -140,7 +140,7 @@ var jsBackend =
  * Navigation controls
  */
 
-jsBackend.navigation = {
+/*jsBackend.navigation = {
   init: function () {
     jsBackend.navigation.mobile()
     jsBackend.navigation.toggleCollapse()
@@ -262,7 +262,7 @@ jsBackend.navigation = {
     var $navbarNav = $('.navbar-dark .navbar-nav')
     return this.calculateWindowWidth() - this.calculateNavbarWidth() - parseInt($navbarNav.css('left')) - offset
   }
-}
+}*/
 
 /**
  * Handle form messages (action feedback: success, error, ...)
@@ -2094,7 +2094,7 @@ jsBackend.tableSequenceByDragAndDrop = {
   }
 }
 
-window.requestAnimationFrame = (function () {
+/*window.requestAnimationFrame = (function () {
   var lastTime
   lastTime = 0
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback,
@@ -2137,7 +2137,7 @@ jsBackend.resizeFunctions = {
       return tick()
     })
   }
-}
+}*/
 
 jsBackend.session = {
   init: function () {

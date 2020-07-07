@@ -70,7 +70,7 @@ const frontend = {
 // backend config
 const backend = {
   name: 'backend',
-  entry: './src/Backend/Core/Js/Index.js',
+  entry: './src/Backend/Core/Js/Backend.js',
   output: {
     path: path.resolve(__dirname, './src/Backend/Core/build'),
     filename: 'backend.bundle.js'
