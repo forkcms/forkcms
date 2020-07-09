@@ -39,7 +39,7 @@ export class Upload {
         },
         onComplete: (id, name, responseJSON) => {
           // add file to uploaded box
-          $('#uploadedMedia').append(window.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(responseJSON))
+          $('#uploadedMedia').append(window.backend.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(responseJSON))
 
           // update counter
           this.uploadedCount += 1
@@ -54,7 +54,7 @@ export class Upload {
             const $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' +
               responseJSON.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
 
-            $link.on('click', window.mediaLibrary.helper.modalSelection.sendToParent)
+            $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder')
               .append($link)
           }
@@ -67,7 +67,7 @@ export class Upload {
           }
 
           // load and add media for group
-          window.mediaLibrary.helper.group.getMedia()
+          window.backend.mediaLibrary.helper.group.getMedia()
 
           // everything uploaded, show success message
           if (failed.length === 0) {
@@ -98,7 +98,7 @@ export class Upload {
     $('#uploadedMedia').on('click', '[data-fork=disconnect]', (e) => {
       $(e.currentTarget).parent().parent().remove()
       --this.uploadedCount
-      window.mediaLibrary.helper.group.validateMinimumMaximumCount()
+      window.backend.mediaLibrary.helper.group.validateMinimumMaximumCount()
     })
   }
 
@@ -134,7 +134,7 @@ export class Upload {
       ],
       customResizer: function (resizeInfo) {
         return new Promise(function (resolve, reject) {
-          window.mediaLibrary.helper.cropper.passToCropper(resizeInfo, resolve, reject)
+          window.backend.mediaLibrary.helper.cropper.passToCropper(resizeInfo, resolve, reject)
         })
       }
     }
@@ -197,7 +197,7 @@ export class Upload {
           }
         } else {
           // add uploaded movie
-          $('#uploadedMedia').append(window.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(json.data))
+          $('#uploadedMedia').append(window.backend.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(json.data))
 
           // update counter
           this.uploadedCount += 1
@@ -212,7 +212,7 @@ export class Upload {
           }
 
           // load and add media for group
-          window.mediaLibrary.helper.group.getMedia()
+          window.backend.mediaLibrary.helper.group.getMedia()
 
           // Clear the fields
           $id.val('')
@@ -224,7 +224,7 @@ export class Upload {
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
             const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
-            $link.on('click', window.mediaLibrary.helper.modalSelection.sendToParent)
+            $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
           }

@@ -35,8 +35,8 @@ export class Templates {
     let count = 0
 
     // redefine count
-    if (window.mediaLibrary.helper.config.mediaGroups[window.mediaLibrary.helper.config.currentMediaGroupId].count && window.mediaLibrary.helper.config.mediaGroups[window.mediaLibrary.helper.config.currentMediaGroupId].count[window.mediaLibrary.helper.config.mediaFolder.id]) {
-      count = window.mediaLibrary.helper.config.mediaGroups[window.mediaLibrary.helper.config.currentMediaGroupId].count[window.mediaLibrary.helper.config.mediaFolder.id]
+    if (window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count && window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolder.id]) {
+      count = window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolder.id]
     }
 
     // add to html
@@ -129,7 +129,7 @@ export class Templates {
    * @return {string}
    */
   static getHTMLForUploadedMediaItem (mediaItem) {
-    window.mediaLibrary.helper.config.movieThumbUrl.set(mediaItem)
+    window.backend.mediaLibrary.helper.config.movieThumbUrl.set(mediaItem)
 
     // init html
     let html = ''

@@ -120,8 +120,8 @@ export class Folders {
           }
 
           // update boxes
-          if (typeof window.mediaLibrary.helper !== 'undefined') {
-            window.mediaLibrary.helper.upload.toggleUploadBoxes()
+          if (typeof window.backend.mediaLibrary.helper !== 'undefined') {
+            window.backend.mediaLibrary.helper.upload.toggleUploadBoxes()
           }
         }
 
