@@ -5,6 +5,8 @@ import '../Layout/Sass/screen.scss'
 import 'bootstrap'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
+//TODO WEBPACK remove jquery ui, now used for sortable
+import 'jquery-ui-dist/jquery-ui'
 
 // component imports
 import { Ajax } from './Components/Ajax'
