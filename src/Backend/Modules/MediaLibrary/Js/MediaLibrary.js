@@ -16,7 +16,3 @@ export class MediaLibrary {
     this.helper = new MediaLibraryHelper()
   }
 }
-
-$(window).on('load', () => {
-  window.mediaLibrary = new MediaLibrary()
-})

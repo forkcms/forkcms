@@ -22,7 +22,3 @@ export class Pages {
     }
   }
 }
-
-$(window).on('load', () => {
-  new Pages()
-})
