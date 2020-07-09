@@ -17,6 +17,7 @@ import { Modal } from './Components/Modal'
 import { Tabs } from './Components/Tabs'
 import { Resize } from './Components/Resize'
 import { Navigation } from './Components/Navigation'
+import { Collection } from './Components/Collection'
 
 // modules imports
 import { Pages } from '../../Modules/Pages/Js/Pages'
@@ -36,6 +37,7 @@ export class Backend {
     this.tabs = new Tabs()
     this.resize = new Resize()
     this.navigation = new Navigation()
+    this.collection = new Collection()
 
     // init modules
     this.pages = new Pages()

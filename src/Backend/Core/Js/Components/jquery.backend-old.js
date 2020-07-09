@@ -1513,7 +1513,7 @@
 /**
  * Collection class
  */
-(function ($) {
+/*(function ($) {
   var addField = '[data-addfield="collection"]'
   var removeField = '[data-removefield="collection"]'
   var sequenceField = '[data-role="sequence"]'
@@ -1665,4 +1665,4 @@
   $(document).on('click.removefield.data-api', removeField, CollectionRemove.prototype.removeField)
 
   $(CollectionSequence.init)
-})(jQuery)
+})(jQuery)*/
