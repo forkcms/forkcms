@@ -27,6 +27,7 @@ import { Tooltip } from './Components/Tooltip'
 import { Pages } from '../../Modules/Pages/Js/Pages'
 import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
 import { Blog } from '../../Modules/Blog/Js/Blog'
+import { Analytics } from '../../Modules/Analytics/Js/Analytics'
 
 export class Backend {
   initBackend () {
@@ -51,6 +52,7 @@ export class Backend {
     this.pages = new Pages()
     this.mediaLibrary = new MediaLibrary()
     this.blog = new Blog()
+    this.analytics = new Analytics()
   }
 }
 
