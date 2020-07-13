@@ -1,19 +1,6 @@
 export class Layout {
   constructor () {
     this.showBrowserWarning()
-    this.dataGrid()
-  }
-
-  // data grid layout
-  dataGrid () {
-    if (jQuery.browser.msie) {
-      $('.jsDataGrid tr td:last-child').addClass('lastChild')
-      $('.jsDataGrid tr td:first-child').addClass('firstChild')
-    }
-
-    // dynamic striping
-    $('.dynamicStriping.jsDataGrid tr:nth-child(2n)').addClass('even')
-    $('.dynamicStriping.jsDataGrid tr:nth-child(2n+1)').addClass('odd')
   }
 
   // if the browser isn't supported, show a warning
@@ -22,36 +9,36 @@ export class Layout {
     let version = ''
 
     // check firefox
-    if (jQuery.browser.mozilla) {
+    if (window.navigator.userAgent.indexOf('Firefox') !== -1) {
       // get version
-      version = parseInt(jQuery.browser.version.substr(0, 3).replace(/\./g, ''))
+      version = parseInt(window.navigator.appVersion.substr(0, 3).replace(/\./g, ''))
 
       // lower than 19?
       if (version < 19) showWarning = true
     }
 
     // check opera
-    if (jQuery.browser.opera) {
+    if (window.navigator.userAgent.indexOf('OPR') !== -1) {
       // get version
-      version = parseInt(jQuery.browser.version.substr(0, 1))
+      version = parseInt(window.navigator.appVersion.substr(0, 1))
 
       // lower than 9?
       if (version < 9) showWarning = true
     }
 
     // check safari, should be webkit when using 1.4
-    if (jQuery.browser.safari) {
+    if (window.navigator.userAgent.indexOf('Safari') !== -1 && window.navigator.userAgent.indexOf('Chrome') === -1) {
       // get version
-      version = parseInt(jQuery.browser.version.substr(0, 3))
+      version = parseInt(window.navigator.appVersion.substr(0, 3))
 
       // lower than 1.4?
       if (version < 400) showWarning = true
     }
 
     // check IE
-    if (jQuery.browser.msie) {
+    if (window.navigator.userAgent.indexOf('MSIE') === -1) {
       // get version
-      version = parseInt(jQuery.browser.version.substr(0, 1))
+      version = parseInt(window.navigator.appVersion.substr(0, 1))
 
       // lower or equal than 6
       if (version <= 6) showWarning = true
