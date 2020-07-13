@@ -20,6 +20,8 @@ import { Resize } from './Components/Resize'
 import { Navigation } from './Components/Navigation'
 import { Collection } from './Components/Collection'
 import { Forms } from './Components/Forms'
+import { Layout } from './Components/Layout'
+import { Tooltip } from './Components/Tooltip'
 
 // modules imports
 import { Pages } from '../../Modules/Pages/Js/Pages'
@@ -41,6 +43,8 @@ export class Backend {
     this.navigation = new Navigation()
     this.collection = new Collection()
     this.forms = new Forms()
+    this.layout = new Layout()
+    this.tooltip = new Tooltip()
 
     // init modules
     this.pages = new Pages()

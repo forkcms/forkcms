@@ -48,8 +48,8 @@ var jsBackend =
       //jsBackend.effects.init()
       //jsBackend.tabs.init()
       //jsBackend.forms.init()
-      jsBackend.layout.init()
-      jsBackend.tooltip.init()
+      //jsBackend.layout.init()
+      //jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
       if (jsData.Core.preferred_editor === 'ck-editor') {
         jsBackend.ckeditor.init()
@@ -1680,7 +1680,7 @@ jsBackend.blockEditor = {
 /**
  * Do custom layout/interaction stuff
  */
-jsBackend.layout = {
+/*jsBackend.layout = {
   // init, something like a constructor
   init: function () {
     // hovers
@@ -1779,7 +1779,7 @@ jsBackend.layout = {
     // show warning if needed
     if (showWarning) $('#showBrowserWarning').show()
   }
-}
+}*/
 
 /**
  * Locale
@@ -1976,7 +1976,7 @@ jsBackend.layout = {
 /**
  * Apply tooltip
  */
-jsBackend.tooltip = {
+/*jsBackend.tooltip = {
   // init, something like a constructor
   init: function () {
     // variables
@@ -1987,7 +1987,7 @@ jsBackend.tooltip = {
       $tooltip.tooltip()
     }
   }
-}
+}*/
 
 /**
  * Enable setting of sequence by drag & drop
