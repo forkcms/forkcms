@@ -3,9 +3,10 @@ import '../Layout/Sass/screen.scss'
 
 // import plugins
 import 'bootstrap'
+import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
-//TODO WEBPACK remove jquery ui, now used for sortable
+//TODO WEBPACK remove jquery ui, now used for sortable and datepicker
 import 'jquery-ui-dist/jquery-ui'
 
 // component imports
@@ -18,6 +19,7 @@ import { Tabs } from './Components/Tabs'
 import { Resize } from './Components/Resize'
 import { Navigation } from './Components/Navigation'
 import { Collection } from './Components/Collection'
+import { Forms } from './Components/Forms'
 
 // modules imports
 import { Pages } from '../../Modules/Pages/Js/Pages'
@@ -38,6 +40,7 @@ export class Backend {
     this.resize = new Resize()
     this.navigation = new Navigation()
     this.collection = new Collection()
+    this.forms = new Forms()
 
     // init modules
     this.pages = new Pages()

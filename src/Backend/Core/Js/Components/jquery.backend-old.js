@@ -6,7 +6,7 @@
 /**
  * Meta-handler
  */
-(function ($) {
+/*(function ($) {
   $.fn.doMeta = function (options) {
     // define defaults
     var defaults = {
@@ -126,7 +126,7 @@
       }
     })
   }
-})(jQuery);
+})(jQuery);*/
 
 /**
  * Password generator

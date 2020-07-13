@@ -47,7 +47,7 @@ var jsBackend =
       //jsBackend.controls.init()
       //jsBackend.effects.init()
       //jsBackend.tabs.init()
-      jsBackend.forms.init()
+      //jsBackend.forms.init()
       jsBackend.layout.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
@@ -1242,7 +1242,7 @@ jsBackend.blockEditor = {
 /**
  * Backend forms
  */
-jsBackend.forms = {
+/*jsBackend.forms = {
   stringified: '',
 
   // init, something like a constructor
@@ -1675,7 +1675,7 @@ jsBackend.forms = {
       }
     )
   }
-}
+}*/
 
 /**
  * Do custom layout/interaction stuff
