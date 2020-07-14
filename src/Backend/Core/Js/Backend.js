@@ -28,6 +28,7 @@ import { Pages } from '../../Modules/Pages/Js/Pages'
 import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
 import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Analytics } from '../../Modules/Analytics/Js/Analytics'
+import { Extensions } from '../../Modules/Extensions/Js/Extensions'
 
 export class Backend {
   initBackend () {
@@ -53,6 +54,7 @@ export class Backend {
     this.mediaLibrary = new MediaLibrary()
     this.blog = new Blog()
     this.analytics = new Analytics()
+    this.extensions = new Extensions()
   }
 }
 
