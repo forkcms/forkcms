@@ -30,6 +30,7 @@ import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Analytics } from '../../Modules/Analytics/Js/Analytics'
 import { Extensions } from '../../Modules/Extensions/Js/Extensions'
 import { Faq } from '../../Modules/Faq/Js/Faq'
+import { Formbuilder } from '../../Modules/FormBuilder/Js/Formbuilder'
 
 export class Backend {
   initBackend () {
@@ -57,6 +58,7 @@ export class Backend {
     this.analytics = new Analytics()
     this.extensions = new Extensions()
     this.faq = new Faq()
+    this.formbuilder = new Formbuilder()
   }
 }
 

@@ -1,275 +1,194 @@
-/* global defaultErrorMessages */
+import { Messages } from '../../../../Core/Js/Components/Messages'
+import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
+import { Config } from '../../../../Core/Js/Components/Config'
+import { MultiTextBox } from '../../../../Core/Js/Components/MultiTextBox'
 
-jsBackend.FormBuilder = {
-  /**
-   * Current form
-   */
-  formId: null,
+export class Fields {
+  constructor () {
+    this.formId = $('#formId').val()
+    this.lockEditRequest = false
 
-  /**
-   * Initialization
-   */
-  init: function () {
-    // variables
-    var $selectMethod = $('select#method')
-    var $formId = $('#formId')
-
-    // fields handler
-    jsBackend.FormBuilder.Fields.init()
-
-    // get form id
-    jsBackend.FormBuilder.formId = $formId.val()
-
-    // hide or show the email based on the method
-    if ($selectMethod.length > 0) {
-      jsBackend.FormBuilder.handleMethodField()
-      $(document).on('change', 'select#method', jsBackend.FormBuilder.handleMethodField)
-    }
-
-    $('#email').multipleTextbox({
-      emptyMessage: jsBackend.locale.msg('NoEmailaddresses'),
-      addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add', 'Core')),
-      removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-      errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-      canAddNew: true
-    })
-
-    jsBackend.FormBuilder.handleSuccessType()
-    $('input[name="success_type"]').change(function(e) {
-      jsBackend.FormBuilder.handleSuccessType()
-    });
-  },
-
-  handleSuccessType: function () {
-    if ($('input[name="success_type"]:checked').val() === 'page') {
-      $('[data-role="success-page"]').removeClass('d-none');
-      $('[data-role="success-message"]').addClass('d-none');
-    } else {
-      $('[data-role="success-page"]').addClass('d-none');
-      $('[data-role="success-message"]').removeClass('d-none');
-    }
-  },
-
-  /**
-   * Toggle email field based on the method value
-   */
-  handleMethodField: function () {
-    // variables
-    var $selectMethod = $('select#method')
-    var $emailWrapper = $('#emailWrapper')
-
-    if ($selectMethod.val() === 'database_email' || $selectMethod.val() === 'email') {
-      // show email field
-      $emailWrapper.slideDown()
-
-      return
-    }
-
-    // hide email field
-    $emailWrapper.slideUp()
-  }
-}
-
-jsBackend.FormBuilder.Fields = {
-  /**
-   * Default error messages
-   */
-  defaultErrorMessages: {},
-
-  /**
-   * Ajax params
-   */
-  paramsDelete: '',
-  paramsGet: '',
-  paramsSave: '',
-  paramsSequence: '',
-
-  /**
-   * Is set to true while an edit AJAX request has been sent to server
-   */
-  lockEditRequest: false,
-
-  /**
-   * Initialization
-   */
-  init: function () {
     // set urls
-    jsBackend.FormBuilder.Fields.paramsDelete = {fork: {action: 'DeleteField'}}
-    jsBackend.FormBuilder.Fields.paramsGet = {fork: {action: 'GetField'}}
-    jsBackend.FormBuilder.Fields.paramsSave = {fork: {action: 'SaveField'}}
-    jsBackend.FormBuilder.Fields.paramsSequence = {fork: {action: 'Sequence'}}
+    this.paramsDelete = {fork: {action: 'DeleteField'}}
+    this.paramsGet = {fork: {action: 'GetField'}}
+    this.paramsSave = {fork: {action: 'SaveField'}}
+    this.paramsSequence = {fork: {action: 'Sequence'}}
 
     // init errors
+    this.defaultErrorMessages = {}
     if (typeof defaultErrorMessages !== 'undefined') {
-      jsBackend.FormBuilder.Fields.defaultErrorMessages = defaultErrorMessages
+      this.defaultErrorMessages = defaultErrorMessages
     }
 
     // submit detection handler for the main form and modal field form
-    jsBackend.FormBuilder.Fields.bindFromSubmit()
+    this.bindFromSubmit()
 
     // bind
-    jsBackend.FormBuilder.Fields.bindDialogs()
-    jsBackend.FormBuilder.Fields.bindValidation()
-    jsBackend.FormBuilder.Fields.bindEdit()
-    jsBackend.FormBuilder.Fields.bindDelete()
-    jsBackend.FormBuilder.Fields.bindDragAndDrop()
-  },
+    this.bindDialogs()
+    this.bindValidation()
+    this.bindEdit()
+    this.bindDelete()
+    this.bindDragAndDrop()
+  }
 
   /**
    * Bind the form submit action
    */
-  bindFromSubmit: function () {
-    $('#edit').submit(function (e) {
+  bindFromSubmit () {
+    $('#edit').submit(() => {
       // check if a modal window is already open
-      $('.jsFieldDialog').each(function () {
+      $('.jsFieldDialog').each((index, fieldDialog) => {
         // if a modal window is open we prevent the event from propagating
-        if ($(this).css('display') !== 'none') {
-          $(this).find('.jsFieldDialogSubmit').trigger('click')
+        if ($(fieldDialog).css('display') !== 'none') {
+          $(fieldDialog).find('.jsFieldDialogSubmit').trigger('click')
 
           return false
         }
       })
     })
-  },
+  }
 
   /**
    * Bind delete actions
    */
-  bindDelete: function () {
+  bindDelete () {
     // get all delete buttons
-    $(document).on('click', '.jsFieldDelete', function (e) {
+    $(document).on('click', '.jsFieldDelete', (e) => {
       // prevent default
       e.preventDefault()
 
       // get id
-      var id = $(this).attr('data-field-id')
+      const id = $(e.currentTarget).attr('data-field-id')
 
       // only when set
       if (id !== '') {
         // make the call
         $.ajax({
-          data: $.extend({}, jsBackend.FormBuilder.Fields.paramsDelete,
+          data: $.extend({}, this.paramsDelete,
             {
-              form_id: jsBackend.FormBuilder.formId,
+              form_id: this.formId,
               field_id: id
             }),
-          success: function (data, textStatus) {
+          success: (data, textStatus) => {
             // success
             if (data.code === 200) {
               // delete from list
-              $('#fieldHolder-' + id).fadeOut(200, function () {
+              $('#fieldHolder-' + id).fadeOut(200, () => {
                 // remove item
-                $(this).remove()
+                $('#fieldHolder-' + id).remove()
 
                 // no items message
-                jsBackend.FormBuilder.Fields.toggleNoItems()
+                this.toggleNoItems()
               })
             } else {
               // show error message
-              jsBackend.messages.add('danger', textStatus)
+              Messages.add('danger', textStatus)
             }
 
             // alert the user
-            if (data.code !== 200 && jsBackend.debug) {
+            if (data.code !== 200 && Config.isDebug()) {
               window.alert(data.message)
             }
           }
         })
       }
     })
-  },
+  }
 
   /**
    * Bind the dialogs and bind click event to add links
    */
-  bindDialogs: function () {
+  bindDialogs () {
     // initialize
-    $('.jsFieldDialog').each(function () {
+    $('.jsFieldDialog').each((index, fieldDialog) => {
       // get id
-      var id = $(this).attr('id')
+      const id = $(fieldDialog).attr('id')
 
       // only when set
       if (id !== '') {
-        var $dialog = $('#' + id)
+        const $dialog = $('#' + id)
 
-        $dialog.find('.jsFieldDialogSubmit').on('click', function (e) {
+        $dialog.find('.jsFieldDialogSubmit').on('click', (e) => {
           e.preventDefault()
 
           // save/validate by type
           // @todo must be refactored
           switch (id) {
             case 'textboxDialog':
-              jsBackend.FormBuilder.Fields.saveTextbox()
+              this.saveTextbox()
               break
             case 'textareaDialog':
-              jsBackend.FormBuilder.Fields.saveTextarea()
+              this.saveTextarea()
               break
             case 'datetimeDialog':
-              jsBackend.FormBuilder.Fields.saveDatetime()
+              this.saveDatetime()
               break
             case 'headingDialog':
-              jsBackend.FormBuilder.Fields.saveHeading()
+              this.saveHeading()
               break
             case 'paragraphDialog':
-              jsBackend.FormBuilder.Fields.saveParagraph()
+              this.saveParagraph()
               break
             case 'submitDialog':
-              jsBackend.FormBuilder.Fields.saveSubmit()
+              this.saveSubmit()
               break
             case 'dropdownDialog':
-              jsBackend.FormBuilder.Fields.saveDropdown()
+              this.saveDropdown()
               break
             case 'radiobuttonDialog':
-              jsBackend.FormBuilder.Fields.saveRadiobutton()
+              this.saveRadiobutton()
               break
             case 'mailmotorDialog':
-              jsBackend.FormBuilder.Fields.saveMailmotorbutton()
+              this.saveMailmotorbutton()
               break
             case 'checkboxDialog':
-              jsBackend.FormBuilder.Fields.saveCheckbox()
+              this.saveCheckbox()
               break
           }
         })
 
-        $dialog.on('shown.bs.modal', function (e) {
+        $dialog.on('shown.bs.modal', (e) => {
           // bind special boxes
           if (id === 'dropdownDialog') {
-            $('input#dropdownValues').multipleTextbox({
+            const options = {
               splitChar: '|',
-              emptyMessage: jsBackend.locale.msg('NoValues'),
-              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-              addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-              removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+              emptyMessage: window.backend.locale.msg('NoValues'),
+              errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
+              addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+              removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
               showIconOnly: false,
-              afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
-            })
+              afterBuild: this.multipleTextboxCallback
+            }
+            MultiTextBox.multipleTextbox(options, $('input#dropdownValues'))
           } else if (id === 'radiobuttonDialog') {
-            $('input#radiobuttonValues').multipleTextbox({
+            const options = {
               splitChar: '|',
-              emptyMessage: jsBackend.locale.msg('NoValues'),
-              addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-              removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
+              emptyMessage: window.backend.locale.msg('NoValues'),
+              addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+              removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
+              errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
               showIconOnly: false,
-              afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
-            })
+              afterBuild: this.multipleTextboxCallback
+            }
+            MultiTextBox.multipleTextbox(options, $('input#radiobuttonValues'))
           } else if (id === 'checkboxDialog') {
-            $('input#checkboxValues').multipleTextbox({
+            const options = {
               splitChar: '|',
-              emptyMessage: jsBackend.locale.msg('NoValues'),
-              addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-              removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-              errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
+              emptyMessage: window.backend.locale.msg('NoValues'),
+              addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+              removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
+              errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
               showIconOnly: false,
-              afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
-            })
+              afterBuild: this.multipleTextboxCallback
+            }
+            MultiTextBox.multipleTextbox(options, $('input#checkboxValues'))
           } else if (id === 'datetimeDialog') {
-            $('#datetimeType').change(function () {
-              if ($(this).val() === 'time') {
+            $('#datetimeType').change((event) => {
+              if ($(event.currentTarget).val() === 'time') {
                 $('#datetimeDialog').find('.jsDefaultValue').hide()
                 $('#datetimeValidation').val('time')
                 $('.jsValidationErrorMessage').show()
-                $('#datetimeErrorMessage').val(jsBackend.locale.err('TimeIsInvalid'))
+                $('#datetimeErrorMessage').val(window.backend.locale.err('TimeIsInvalid'))
               } else {
                 $('#datetimeDialog').find('.jsDefaultValue').show()
                 $('.jsValidationErrorMessage').hide()
@@ -278,8 +197,8 @@ jsBackend.FormBuilder.Fields = {
               }
             }).trigger('change')
 
-            $('#datetimeValueType').change(function () {
-              if ($(this).val() === 'today') {
+            $('#datetimeValueType').change((event) => {
+              if ($(event.currentTarget).val() === 'today') {
                 $('#datetimeValueAmount').prop('disabled', true).val('')
               } else {
                 $('#datetimeValueAmount').prop('disabled', false)
@@ -288,34 +207,34 @@ jsBackend.FormBuilder.Fields = {
           }
 
           // focus on first input element
-          if ($(this).find(':input:visible').length > 0) {
-            $(this).find(':input:visible')[0].focus()
+          if ($(e.currentTarget).find(':input:visible').length > 0) {
+            $(e.currentTarget).find(':input:visible')[0].focus()
           }
 
           // toggle error messages
-          jsBackend.FormBuilder.Fields.toggleValidationErrors(id)
+          this.toggleValidationErrors(id)
         })
 
-        $dialog.on('hide.bs.modal', function (e) {
+        $dialog.on('hide.bs.modal', (e) => {
           // no items message
-          jsBackend.FormBuilder.Fields.toggleNoItems()
+          this.toggleNoItems()
 
           // reset
-          jsBackend.FormBuilder.Fields.resetDialog(id)
+          this.resetDialog(id)
 
           // toggle error messages
-          jsBackend.FormBuilder.Fields.toggleValidationErrors(id)
+          this.toggleValidationErrors(id)
         })
       }
     })
 
     // bind clicks
-    $('.jsFieldDialogTrigger').on('click', function (e) {
+    $('.jsFieldDialogTrigger').on('click', (e) => {
       // prevent default
       e.preventDefault()
 
       // get id
-      var id = $(this).attr('data-field-id')
+      const id = $(e.currentTarget).attr('data-field-id')
 
       // bind
       if (id !== '') {
@@ -323,98 +242,98 @@ jsBackend.FormBuilder.Fields = {
       }
     })
 
-    $('.jsRecaptchaTrigger').on('click', function (e) {
+    $('.jsRecaptchaTrigger').on('click', (e) => {
       e.preventDefault()
 
-      jsBackend.FormBuilder.Fields.saveRecaptcha()
+      this.saveRecaptcha()
     })
-  },
+  }
 
   /**
    * Drag and drop fields
    */
-  bindDragAndDrop: function () {
+  bindDragAndDrop () {
     // bind sortable
     $('#fieldsHolder').sortable({
       items: 'div.jsField',
       handle: 'button.dragAndDropHandle',
       containment: '#fieldsHolder',
       cancel: '',
-      stop: function (e, ui) {
+      stop (e, ui) {
         // init var
-        var rowIds = $(this).sortable('toArray')
-        var newIdSequence = []
+        const rowIds = $(this).sortable('toArray')
+        const newIdSequence = []
 
         // loop rowIds
-        for (var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1])
+        for (const i in rowIds) newIdSequence.push(rowIds[i].split('-')[1])
 
         // make ajax call
         $.ajax({
-          data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSequence, {
-            form_id: jsBackend.FormBuilder.formId,
+          data: $.extend({}, this.paramsSequence, {
+            form_id: this.formId,
             new_id_sequence: newIdSequence.join('|')
           }),
-          success: function (data, textStatus) {
+          success (data, textStatus) {
             // not a success so revert the changes
             if (data.code !== 200) {
               // revert
               $(this).sortable('cancel')
 
               // show message
-              jsBackend.messages.add('danger', 'alter sequence failed.')
+              Messages.add('danger', 'alter sequence failed.')
             }
 
             // alert the user
-            if (data.code !== 200 && jsBackend.debug) {
+            if (data.code !== 200 && Config.isDebug()) {
               window.alert(data.message)
             }
           },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
+          error (XMLHttpRequest, textStatus, errorThrown) {
             // revert
             $(this).sortable('cancel')
 
             // show message
-            jsBackend.messages.add('danger', 'alter sequence failed.')
+            Messages.add('danger', 'alter sequence failed.')
 
             // alert the user
-            if (jsBackend.debug) {
+            if (Config.isDebug()) {
               window.alert(textStatus)
             }
           }
         })
       }
     })
-  },
+  }
 
   /**
    * Bind edit actions
    */
-  bindEdit: function () {
+  bindEdit () {
     // get all delete buttons
-    $(document).on('click', '.jsFieldEdit', function (e) {
+    $(document).on('click', '.jsFieldEdit', (e) => {
       // prevent default
       e.preventDefault()
 
       // checking if a request has been sent to load field that needs to be edited
-      if (jsBackend.FormBuilder.Fields.lockEditRequest) {
+      if (this.lockEditRequest) {
         return
       }
 
       // else we lock editing and continue processing the request
-      jsBackend.FormBuilder.Fields.lockEditRequest = true
+      this.lockEditRequest = true
 
       // get id
-      var id = $(this).attr('data-field-id')
+      const id = $(e.currentTarget).attr('data-field-id')
 
       // only when set
       if (id !== '') {
         // make the call
         $.ajax({
-          data: $.extend({}, jsBackend.FormBuilder.Fields.paramsGet, {
-            form_id: jsBackend.FormBuilder.formId,
+          data: $.extend({}, this.paramsGet, {
+            form_id: this.formId,
             field_id: id
           }),
-          success: function (data, textStatus) {
+          success: (data, textStatus) => {
             // success
             if (data.code === 200) {
               // init default values
@@ -425,17 +344,17 @@ jsBackend.FormBuilder.Fields = {
                 data.data.field.settings.default_values = ''
               }
 
-              var html = ''
+              let html = ''
 
               // textbox edit
               if (data.data.field.type === 'textbox') {
                 // fill in form
                 $('#textboxId').val(data.data.field.id)
-                $('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
-                $('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values))
-                $('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder))
-                $('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
-                $('#textboxAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete))
+                $('#textboxLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
+                $('#textboxValue').val(StringUtil.htmlDecode(data.data.field.settings.default_values))
+                $('#textboxPlaceholder').val(StringUtil.htmlDecode(data.data.field.settings.placeholder))
+                $('#textboxClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
+                $('#textboxAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete))
                 if (data.data.field.settings.reply_to &&
                   data.data.field.settings.reply_to === true
                 ) {
@@ -451,7 +370,7 @@ jsBackend.FormBuilder.Fields = {
                 ) {
                   $('#textboxSendConfirmationMailTo').prop('checked', true)
                 }
-                $('#textboxConfirmationMailSubject').val(utils.string.htmlDecode(data.data.field.settings.confirmation_mail_subject))
+                $('#textboxConfirmationMailSubject').val(StringUtil.htmlDecode(data.data.field.settings.confirmation_mail_subject))
                 $('#textboxConfirmationMailMessage').val(data.data.field.settings.confirmation_mail_message)
                 $.each(
                   data.data.field.validations,
@@ -459,14 +378,14 @@ jsBackend.FormBuilder.Fields = {
                     // required checkbox
                     if (k === 'required') {
                       $('#textboxRequired').prop('checked', true)
-                      $('#textboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#textboxRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#textboxValidation').val(v.type)
-                    $('#textboxErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#textboxErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -476,24 +395,24 @@ jsBackend.FormBuilder.Fields = {
                 // textarea edit
                 // fill in form
                 $('#textareaId').val(data.data.field.id)
-                $('#textareaLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
-                $('#textareaValue').val(utils.string.htmlDecode(data.data.field.settings.default_values))
-                $('#textareaPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder))
-                $('#textareaClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#textareaLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
+                $('#textareaValue').val(StringUtil.htmlDecode(data.data.field.settings.default_values))
+                $('#textareaPlaceholder').val(StringUtil.htmlDecode(data.data.field.settings.placeholder))
+                $('#textareaClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
                     // required checkbox
                     if (k === 'required') {
                       $('#textareaRequired').prop('checked', true)
-                      $('#textareaRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#textareaRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#textareaValidation').val(v.type)
-                    $('#textareaErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#textareaErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -503,26 +422,26 @@ jsBackend.FormBuilder.Fields = {
                 // datetime edit
                 // fill in form
                 $('#datetimeId').val(data.data.field.id)
-                $('#datetimeLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
-                $('#datetimeValueAmount').val(utils.string.htmlDecode(data.data.field.settings.value_amount))
-                $('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type))
-                $('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type))
-                $('#datetimeClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
-                $('#datetimeAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete));
+                $('#datetimeLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
+                $('#datetimeValueAmount').val(StringUtil.htmlDecode(data.data.field.settings.value_amount))
+                $('#datetimeValueType').val(StringUtil.htmlDecode(data.data.field.settings.value_type))
+                $('#datetimeType').val(StringUtil.htmlDecode(data.data.field.settings.input_type))
+                $('#datetimeClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
+                $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete));
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
                     // required checkbox
                     if (k === 'required') {
                       $('#datetimeRequired').prop('checked', true)
-                      $('#datetimeRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#datetimeRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#datetimeValidation').val(v.type)
-                    $('#datetimeErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#datetimeErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -532,23 +451,23 @@ jsBackend.FormBuilder.Fields = {
                 // dropdown edit
                 // fill in form
                 $('#dropdownId').val(data.data.field.id)
-                $('#dropdownLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
+                $('#dropdownLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
                 $('#dropdownValues').val(data.data.field.settings.values.join('|'))
-                $('#dropdownClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#dropdownClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
                     // required checkbox
                     if (k === 'required') {
                       $('#dropdownRequired').prop('checked', true)
-                      $('#dropdownRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#dropdownRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#dropdownValidation').val(v.type)
-                    $('#dropdownErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#dropdownErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -567,23 +486,23 @@ jsBackend.FormBuilder.Fields = {
                 // radiobutton edit
                 // fill in form
                 $('#radiobuttonId').val(data.data.field.id)
-                $('#radiobuttonLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
+                $('#radiobuttonLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
                 $('#radiobuttonValues').val(data.data.field.settings.values.join('|'))
-                $('#radiobuttonClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#radiobuttonClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
                     // required checkbox
                     if (k === 'required') {
                       $('#radiobuttonRequired').prop('checked', true)
-                      $('#radiobuttonRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#radiobuttonRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#radiobuttonValidation').val(v.type)
-                    $('#radiobuttonErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#radiobuttonErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -602,23 +521,23 @@ jsBackend.FormBuilder.Fields = {
                 // checkbox edit
                 // fill in form
                 $('#checkboxId').val(data.data.field.id)
-                $('#checkboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
+                $('#checkboxLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
                 $('#checkboxValues').val(data.data.field.settings.values.join('|'))
-                $('#checkboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#checkboxClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
                     // required checkbox
                     if (k === 'required') {
                       $('#checkboxRequired').prop('checked', true)
-                      $('#checkboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                      $('#checkboxRequiredErrorMessage').val(StringUtil.htmlDecode(v.error_message))
 
                       return
                     }
 
                     // dropdown
                     $('#checkboxValidation').val(v.type)
-                    $('#checkboxErrorMessage').val(utils.string.htmlDecode(v.error_message))
+                    $('#checkboxErrorMessage').val(StringUtil.htmlDecode(v.error_message))
                   }
                 )
 
@@ -637,8 +556,8 @@ jsBackend.FormBuilder.Fields = {
                 // mailmotor edit
                 // fill in form
                 $('#mailmotorId').val(data.data.field.id)
-                $('#mailmotorLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
-                $('#mailmotorListId').val(utils.string.htmlDecode(data.data.field.settings.list_id))
+                $('#mailmotorLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
+                $('#mailmotorListId').val(StringUtil.htmlDecode(data.data.field.settings.list_id))
 
                 // show dialog
                 $('#mailmotorDialog').modal('show')
@@ -646,7 +565,7 @@ jsBackend.FormBuilder.Fields = {
                 // heading edit
                 // fill in form
                 $('#headingId').val(data.data.field.id)
-                $('#heading').val(utils.string.htmlDecode(data.data.field.settings.values))
+                $('#heading').val(StringUtil.htmlDecode(data.data.field.settings.values))
 
                 // show dialog
                 $('#headingDialog').modal('show')
@@ -662,61 +581,61 @@ jsBackend.FormBuilder.Fields = {
                 // submit edit
                 // fill in form
                 $('#submitId').val(data.data.field.id)
-                $('#submit').val(utils.string.htmlDecode(data.data.field.settings.values))
+                $('#submit').val(StringUtil.htmlDecode(data.data.field.settings.values))
 
                 // show dialog
                 $('#submitDialog').modal('show')
               }
 
               // validation form
-              jsBackend.FormBuilder.Fields.handleValidation('.jsValidation')
+              this.handleValidation('.jsValidation')
             } else {
               // show error message
-              jsBackend.messages.add('danger', textStatus)
+              Messages.add('danger', textStatus)
             }
 
             // alert the user
-            if (data.code !== 200 && jsBackend.debug) {
+            if (data.code !== 200 && Config.isDebug()) {
               window.alert(data.message)
             }
 
             // unlocks editing whatever server response is
-            jsBackend.FormBuilder.Fields.lockEditRequest = false
+            this.lockEditRequest = false
           }
         })
       }
     })
-  },
+  }
 
   /**
    * Bind validation dropdown
    */
-  bindValidation: function () {
+  bindValidation () {
     // loop all validation wrappers
-    $('.jsValidation').each(function () {
+    $('.jsValidation').each((index, element) => {
       // validation wrapper
-      var wrapper = this
+      const wrapper = element
 
       // init
-      jsBackend.FormBuilder.Fields.handleValidation(wrapper)
+      this.handleValidation(wrapper)
 
       // on change @todo test me plz.
-      $(wrapper).find('select:first').on('change', function () {
-        jsBackend.FormBuilder.Fields.handleValidation(wrapper)
+      $(wrapper).find('select:first').on('change', () => {
+        this.handleValidation(wrapper)
       })
-      $(wrapper).find('input:checkbox').on('change', function () {
-        jsBackend.FormBuilder.Fields.handleValidation(wrapper)
+      $(wrapper).find('input:checkbox').on('change', () => {
+        this.handleValidation(wrapper)
       })
     })
-  },
+  }
 
   /**
    * Handle validation status
    */
-  handleValidation: function (wrapper) {
+  handleValidation (wrapper) {
     // get dropdown
-    var required = $(wrapper).find('input:checkbox')
-    var validation = $(wrapper).find('select').first()
+    const required = $(wrapper).find('input:checkbox')
+    const validation = $(wrapper).find('select').first()
 
     // toggle required error message
     if ($(required).is(':checked')) {
@@ -725,7 +644,7 @@ jsBackend.FormBuilder.Fields = {
 
       // error message empty so add default
       if ($(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val() === '') {
-        $(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages.required)
+        $(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val(this.defaultErrorMessages.required)
       }
     } else {
       $(wrapper).find('.jsValidationRequiredErrorMessage').slideUp()
@@ -737,30 +656,30 @@ jsBackend.FormBuilder.Fields = {
       $(wrapper).find('.jsValidationErrorMessage').slideDown()
 
       // default error message
-      $(wrapper).find('.jsValidationErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages[$(validation).val()])
+      $(wrapper).find('.jsValidationErrorMessage input:visible:first').val(this.defaultErrorMessages[$(validation).val()])
     } else {
       $(wrapper).find('.jsValidationErrorMessage').slideUp()
     }
-  },
+  }
 
   /**
    * Fill up the default values dropdown after rebuilding the multipleTextbox
    */
-  multipleTextboxCallback: function (id) {
+  multipleTextboxCallback (id) {
     // init
-    var items = $('#' + id).val().split('|')
-    var defaultElement = $('select[rel=' + id + ']')
-    var selectedValue = $(defaultElement).find(':selected').val()
+    const items = $('#' + id).val().split('|')
+    const defaultElement = $('select[rel=' + id + ']')
+    const selectedValue = $(defaultElement).find(':selected').val()
 
     // clear values except the first empty one
     $(defaultElement).find('option[value!=""]').remove()
 
     // add items
-    $(items).each(function (k, v) {
+    $(items).each((k, v) => {
       // values is not empty
       if (v !== '') {
         // build html
-        var html = '<option value="' + v + '"'
+        let html = '<option value="' + v + '"'
         if (selectedValue === v) {
           html += ' selected="selected"'
         }
@@ -770,17 +689,17 @@ jsBackend.FormBuilder.Fields = {
         $(defaultElement).append(html)
       }
     })
-  },
+  }
 
   /**
    * Reset a dialog by emptying the form fields and removing errors
    */
-  resetDialog: function (id) {
+  resetDialog (id) {
     // clear all form fields
     $('#' + id).find(':input').prop('checked', false).removeAttr('checked').removeAttr('selected').val('')
 
     // bind validation
-    jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation')
+    this.handleValidation('#' + id + ' .jsValidation')
 
     // clear form errors
     $('#' + id + ' .jsFieldError').html('')
@@ -790,26 +709,26 @@ jsBackend.FormBuilder.Fields = {
 
     // select first tab
     $('#' + id + ' .nav-tabs .nav-link:first').tab('show')
-  },
+  }
 
   /**
    * Handle checkbox save
    */
-  saveCheckbox: function () {
+  saveCheckbox () {
     // init vars
-    var fieldId = $('#checkboxId').val()
-    var type = 'checkbox'
-    var label = $('#checkboxLabel').val()
-    var values = $('#checkboxValues').val()
-    var defaultValue = $('#checkboxDefaultValue').val()
-    var required = $('#checkboxRequired').is(':checked')
-    var requiredErrorMessage = $('#checkboxRequiredErrorMessage').val()
-    var classname = $('#checkboxClassname').val()
+    const fieldId = $('#checkboxId').val()
+    const type = 'checkbox'
+    const label = $('#checkboxLabel').val()
+    const values = $('#checkboxValues').val()
+    const defaultValue = $('#checkboxDefaultValue').val()
+    const required = $('#checkboxRequired').is(':checked')
+    const requiredErrorMessage = $('#checkboxRequiredErrorMessage').val()
+    const classname = $('#checkboxClassname').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
@@ -819,7 +738,7 @@ jsBackend.FormBuilder.Fields = {
         required_error_message: requiredErrorMessage,
         classname: classname
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -842,51 +761,51 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('checkboxDialog')
+            this.toggleValidationErrors('checkboxDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#checkboxDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle text box save
    */
-  saveDatetime: function () {
+  saveDatetime () {
     // init vars
-    var fieldId = $('#datetimeId').val()
-    var type = 'datetime'
-    var label = $('#datetimeLabel').val()
-    var valueAmount = $('#datetimeValueAmount').val()
-    var valueType = $('#datetimeValueType').val()
-    var inputType = $('#datetimeType').val()
-    var required = $('#datetimeRequired').is(':checked')
-    var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val()
-    var validation = $('#datetimeValidation').val()
-    var errorMessage = $('#datetimeErrorMessage').val()
-    var classname = $('#datetimeClassname').val()
-    var autocomplete = $('#datetimeAutocomplete').val()
+    const fieldId = $('#datetimeId').val()
+    const type = 'datetime'
+    const label = $('#datetimeLabel').val()
+    const valueAmount = $('#datetimeValueAmount').val()
+    const valueType = $('#datetimeValueType').val()
+    const inputType = $('#datetimeType').val()
+    const required = $('#datetimeRequired').is(':checked')
+    const requiredErrorMessage = $('#datetimeRequiredErrorMessage').val()
+    const validation = $('#datetimeValidation').val()
+    const errorMessage = $('#datetimeErrorMessage').val()
+    const classname = $('#datetimeClassname').val()
+    const autocomplete = $('#datetimeAutocomplete').val()
 
     // make the call
     $.ajax(
       {
-        data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-          form_id: jsBackend.FormBuilder.formId,
+        data: $.extend({}, this.paramsSave, {
+          form_id: this.formId,
           field_id: fieldId,
           type: type,
           label: label,
@@ -900,7 +819,7 @@ jsBackend.FormBuilder.Fields = {
           classname: classname,
           autocomplete: autocomplete
         }),
-        success: function (data, textStatus) {
+        success: (data, textStatus) => {
           // success
           if (data.code === 200) {
             // clear errors
@@ -923,46 +842,46 @@ jsBackend.FormBuilder.Fields = {
               }
 
               // toggle error messages
-              jsBackend.FormBuilder.Fields.toggleValidationErrors('datetimeDialog')
+              this.toggleValidationErrors('datetimeDialog')
             } else {
               // saved!
               // append field html
-              jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+              this.setField(data.data.field_id, data.data.field_html)
 
               // close console box
               $('#datetimeDialog').modal('hide')
             }
           } else {
             // show error message
-            jsBackend.messages.add('error', textStatus)
+            Messages.add('error', textStatus)
           }
 
           // alert the user
-          if (data.code !== 200 && jsBackend.debug) {
+          if (data.code !== 200 && Config.isDebug()) {
             window.alert(data.message)
           }
         }
       })
-  },
+  }
 
   /**
    * Handle dropdown save
    */
-  saveDropdown: function () {
+  saveDropdown () {
     // init vars
-    var fieldId = $('#dropdownId').val()
-    var type = 'dropdown'
-    var label = $('#dropdownLabel').val()
-    var values = $('#dropdownValues').val()
-    var defaultValue = $('#dropdownDefaultValue').val()
-    var required = $('#dropdownRequired').is(':checked')
-    var requiredErrorMessage = $('#dropdownRequiredErrorMessage').val()
-    var classname = $('#dropdownClassname').val()
+    const fieldId = $('#dropdownId').val()
+    const type = 'dropdown'
+    const label = $('#dropdownLabel').val()
+    const values = $('#dropdownValues').val()
+    const defaultValue = $('#dropdownDefaultValue').val()
+    const required = $('#dropdownRequired').is(':checked')
+    const requiredErrorMessage = $('#dropdownRequiredErrorMessage').val()
+    const classname = $('#dropdownClassname').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
@@ -972,7 +891,7 @@ jsBackend.FormBuilder.Fields = {
         required_error_message: requiredErrorMessage,
         classname: classname
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -995,46 +914,46 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('dropdownDialog')
+            this.toggleValidationErrors('dropdownDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#dropdownDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle heading save
    */
-  saveHeading: function () {
+  saveHeading () {
     // init vars
-    var fieldId = $('#headingId').val()
-    var type = 'heading'
-    var value = $('#heading').val()
+    const fieldId = $('#headingId').val()
+    const type = 'heading'
+    const value = $('#heading').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         values: value
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1048,46 +967,46 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('headingDialog')
+            this.toggleValidationErrors('headingDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#headingDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle paragraph save
    */
-  saveParagraph: function () {
+  saveParagraph () {
     // init vars
-    var fieldId = $('#paragraphId').val()
-    var type = 'paragraph'
-    var value = $('#paragraph').val()
+    const fieldId = $('#paragraphId').val()
+    const type = 'paragraph'
+    const value = $('#paragraph').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         values: value
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1101,44 +1020,44 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('paragraphDialog')
+            this.toggleValidationErrors('paragraphDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#paragraphDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) window.alert(data.message)
+        if (data.code !== 200 && Config.isDebug()) window.alert(data.message)
       }
     })
-  },
+  }
 
   /**
    * Handle radiobutton save
    */
-  saveRadiobutton: function () {
+  saveRadiobutton () {
     // init vars
-    var fieldId = $('#radiobuttonId').val()
-    var type = 'radiobutton'
-    var label = $('#radiobuttonLabel').val()
-    var values = $('#radiobuttonValues').val()
-    var defaultValue = $('#radiobuttonDefaultValue').val()
-    var required = $('#radiobuttonRequired').is(':checked')
-    var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val()
-    var classname = $('#radiobuttonClassname').val()
+    const fieldId = $('#radiobuttonId').val()
+    const type = 'radiobutton'
+    const label = $('#radiobuttonLabel').val()
+    const values = $('#radiobuttonValues').val()
+    const defaultValue = $('#radiobuttonDefaultValue').val()
+    const required = $('#radiobuttonRequired').is(':checked')
+    const requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val()
+    const classname = $('#radiobuttonClassname').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
@@ -1148,7 +1067,7 @@ jsBackend.FormBuilder.Fields = {
         required_error_message: requiredErrorMessage,
         classname: classname
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1174,48 +1093,48 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('radiobuttonDialog')
+            this.toggleValidationErrors('radiobuttonDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#radiobuttonDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle mailmotorButton save
    */
-  saveMailmotorbutton: function () {
+  saveMailmotorbutton () {
     // init vars
-    var fieldId = $('#mailmotorId').val()
-    var type = 'mailmotor'
-    var label = $('#mailmotorLabel').val()
-    var listId = $('#mailmotorListId').val()
+    const fieldId = $('#mailmotorId').val()
+    const type = 'mailmotor'
+    const label = $('#mailmotorLabel').val()
+    const listId = $('#mailmotorListId').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
         list_id: listId
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1233,46 +1152,46 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('mailmotorDialog')
+            this.toggleValidationErrors('mailmotorDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#mailmotorDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle submit save
    */
-  saveSubmit: function () {
+  saveSubmit () {
     // init vars
-    var fieldId = $('#submitId').val()
-    var type = 'submit'
-    var value = $('#submit').val()
+    const fieldId = $('#submitId').val()
+    const type = 'submit'
+    const value = $('#submit').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         values: value
       }),
-      success: function (data, textStatus) {
+      success (data, textStatus) {
         // success
         if (data.code === 200) {
           // form contains errors
@@ -1283,7 +1202,7 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog')
+            this.toggleValidationErrors('submitDialog')
           } else {
             // saved!
             // set value
@@ -1294,69 +1213,69 @@ jsBackend.FormBuilder.Fields = {
           }
 
           // toggle error messages
-          jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog')
+          this.toggleValidationErrors('submitDialog')
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle recaptcha save
    */
-  saveRecaptcha: function () {
+  saveRecaptcha () {
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         type: 'recaptcha'
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // append field html
-          jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+          this.setField(data.data.field_id, data.data.field_html)
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle textarea save
    */
-  saveTextarea: function () {
+  saveTextarea () {
     // init vars
-    var fieldId = $('#textareaId').val()
-    var type = 'textarea'
-    var label = $('#textareaLabel').val()
-    var value = $('#textareaValue').val()
-    var placeholder = $('#textareaPlaceholder').val()
-    var required = $('#textareaRequired').is(':checked')
-    var requiredErrorMessage = $('#textareaRequiredErrorMessage').val()
-    var validation = $('#textareaValidation').val()
-    var validationParameter = $('#textareaValidationParameter').val()
-    var errorMessage = $('#textareaErrorMessage').val()
-    var classname = $('#textareaClassname').val()
+    const fieldId = $('#textareaId').val()
+    const type = 'textarea'
+    const label = $('#textareaLabel').val()
+    const value = $('#textareaValue').val()
+    const placeholder = $('#textareaPlaceholder').val()
+    const required = $('#textareaRequired').is(':checked')
+    const requiredErrorMessage = $('#textareaRequiredErrorMessage').val()
+    const validation = $('#textareaValidation').val()
+    const validationParameter = $('#textareaValidationParameter').val()
+    const errorMessage = $('#textareaErrorMessage').val()
+    const classname = $('#textareaClassname').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
@@ -1369,7 +1288,7 @@ jsBackend.FormBuilder.Fields = {
         placeholder: placeholder,
         classname: classname
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1398,55 +1317,55 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('textareaDialog')
+            this.toggleValidationErrors('textareaDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#textareaDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Handle text box save
    */
-  saveTextbox: function () {
+  saveTextbox () {
     // init vars
-    var fieldId = $('#textboxId').val()
-    var type = 'textbox'
-    var label = $('#textboxLabel').val()
-    var value = $('#textboxValue').val()
-    var placeholder = $('#textboxPlaceholder').val()
-    var replyTo = $('#textboxReplyTo').is(':checked')
-    var sendConfirmationMailTo = $('#textboxSendConfirmationMailTo').is(':checked')
-    var confirmationMailSubject = $('#textboxConfirmationMailSubject').val()
-    var confirmationMailMessage = $('#textboxConfirmationMailMessage').val()
-    var required = $('#textboxRequired').is(':checked')
-    var requiredErrorMessage = $('#textboxRequiredErrorMessage').val()
-    var validation = $('#textboxValidation').val()
-    var validationParameter = $('#textboxValidationParameter').val()
-    var errorMessage = $('#textboxErrorMessage').val()
-    var classname = $('#textboxClassname').val()
-    var mailmotor = $('#textboxMailmotor').is(':checked')
-    var autocomplete = $('#textboxAutocomplete').val()
+    const fieldId = $('#textboxId').val()
+    const type = 'textbox'
+    const label = $('#textboxLabel').val()
+    const value = $('#textboxValue').val()
+    const placeholder = $('#textboxPlaceholder').val()
+    const replyTo = $('#textboxReplyTo').is(':checked')
+    const sendConfirmationMailTo = $('#textboxSendConfirmationMailTo').is(':checked')
+    const confirmationMailSubject = $('#textboxConfirmationMailSubject').val()
+    const confirmationMailMessage = $('#textboxConfirmationMailMessage').val()
+    const required = $('#textboxRequired').is(':checked')
+    const requiredErrorMessage = $('#textboxRequiredErrorMessage').val()
+    const validation = $('#textboxValidation').val()
+    const validationParameter = $('#textboxValidationParameter').val()
+    const errorMessage = $('#textboxErrorMessage').val()
+    const classname = $('#textboxClassname').val()
+    const mailmotor = $('#textboxMailmotor').is(':checked')
+    const autocomplete = $('#textboxAutocomplete').val()
 
     // make the call
     $.ajax({
-      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
-        form_id: jsBackend.FormBuilder.formId,
+      data: $.extend({}, this.paramsSave, {
+        form_id: this.formId,
         field_id: fieldId,
         type: type,
         label: label,
@@ -1465,7 +1384,7 @@ jsBackend.FormBuilder.Fields = {
         classname: classname,
         autocomplete: autocomplete
       }),
-      success: function (data, textStatus) {
+      success: (data, textStatus) => {
         // success
         if (data.code === 200) {
           // clear errors
@@ -1503,32 +1422,32 @@ jsBackend.FormBuilder.Fields = {
             }
 
             // toggle error messages
-            jsBackend.FormBuilder.Fields.toggleValidationErrors('textboxDialog')
+            this.toggleValidationErrors('textboxDialog')
           } else {
             // saved!
             // append field html
-            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+            this.setField(data.data.field_id, data.data.field_html)
 
             // close console box
             $('#textboxDialog').modal('hide')
           }
         } else {
           // show error message
-          jsBackend.messages.add('danger', textStatus)
+          Messages.add('danger', textStatus)
         }
 
         // alert the user
-        if (data.code !== 200 && jsBackend.debug) {
+        if (data.code !== 200 && Config.isDebug()) {
           window.alert(data.message)
         }
       }
     })
-  },
+  }
 
   /**
    * Append the field to the form or update it on its current location
    */
-  setField: function (fieldId, fieldHTML) {
+  setField (fieldId, fieldHTML) {
     // exist
     if ($('#fieldHolder-' + fieldId).length >= 1) {
       // add new one just before old one
@@ -1549,14 +1468,14 @@ jsBackend.FormBuilder.Fields = {
 
     // highlight
     $('#fieldHolder-' + fieldId).effect('highlight', {color: '#D9E5F3'}, 1500)
-  },
+  }
 
   /**
    * Toggle the no items message based on the amount of rows
    */
-  toggleNoItems: function () {
+  toggleNoItems () {
     // count the rows
-    var rowCount = $('#fieldsHolder .jsField').length
+    const rowCount = $('#fieldsHolder .jsField').length
 
     // got items (always 1 item in it)
     if (rowCount >= 1) {
@@ -1565,40 +1484,38 @@ jsBackend.FormBuilder.Fields = {
       // no items
       $('#noFields').show()
     }
-  },
+  }
 
   /**
    * Toggle validation errors
    */
-  toggleValidationErrors: function (id) {
+  toggleValidationErrors (id) {
     // remove highlights
     $('#' + id + ' .jsFieldTabsNav li').removeClass('danger')
 
     // loop tabs
-    $('#' + id + ' .jsFieldTab').each(function () {
+    $('#' + id + ' .jsFieldTab').each((index, tab) => {
       // tab
-      var tabId = $(this).attr('id')
+      const tabId = $(tab).attr('id')
 
       // loop tab errors
-      $(this).find('.jsFieldError').each(function () {
+      $(tab).find('.jsFieldError').each((index, error) => {
         // has a message so highlight tab
-        if ($(this).html() !== '') {
+        if ($(error).html() !== '') {
           $('#' + id + ' .jsFieldTabsNav a[href="#' + tabId + '"]').closest('li').addClass('danger')
         }
       })
     })
 
     // loop error fields
-    $('#' + id).find('.jsFieldError').each(function () {
+    $('#' + id).find('.jsFieldError').each((index, error) => {
       // has a message
-      if ($(this).html() !== '') {
-        $(this).show()
+      if ($(error).html() !== '') {
+        $(error).show()
       } else {
         // no message
-        $(this).hide()
+        $(error).hide()
       }
     })
   }
 }
-
-$(jsBackend.FormBuilder.init)

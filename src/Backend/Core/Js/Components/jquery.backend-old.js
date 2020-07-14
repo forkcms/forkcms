@@ -1213,7 +1213,7 @@
 /**
  * Multiple text box
  */
-(function ($) {
+/*(function ($) {
   $.fn.multipleTextbox = function (options) {
     // define defaults
     var defaults = {
@@ -1508,7 +1508,7 @@
       }
     })
   }
-})(jQuery);
+})(jQuery);*/
 
 /**
  * Collection class
