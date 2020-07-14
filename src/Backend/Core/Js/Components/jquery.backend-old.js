@@ -277,7 +277,7 @@
 /**
  * Inline editing
  */
-(function ($) {
+/*(function ($) {
   $.fn.inlineTextEdit = function (options) {
     // define defaults
     var defaults = {
@@ -451,7 +451,7 @@
       }
     })
   }
-})(jQuery);
+})(jQuery);*/
 
 /**
  * key-value-box
