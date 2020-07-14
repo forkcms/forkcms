@@ -24,13 +24,14 @@ import { Layout } from './Components/Layout'
 import { Tooltip } from './Components/Tooltip'
 
 // modules imports
-import { Pages } from '../../Modules/Pages/Js/Pages'
-import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
-import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Analytics } from '../../Modules/Analytics/Js/Analytics'
+import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Extensions } from '../../Modules/Extensions/Js/Extensions'
 import { Faq } from '../../Modules/Faq/Js/Faq'
 import { Formbuilder } from '../../Modules/FormBuilder/Js/Formbuilder'
+import { Groups } from '../../Modules/Groups/Js/Groups'
+import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
+import { Pages } from '../../Modules/Pages/Js/Pages'
 
 export class Backend {
   initBackend () {
@@ -52,13 +53,14 @@ export class Backend {
     this.tooltip = new Tooltip()
 
     // init modules
-    this.pages = new Pages()
-    this.mediaLibrary = new MediaLibrary()
-    this.blog = new Blog()
     this.analytics = new Analytics()
+    this.blog = new Blog()
     this.extensions = new Extensions()
     this.faq = new Faq()
     this.formbuilder = new Formbuilder()
+    this.groups = new Groups()
+    this.mediaLibrary = new MediaLibrary()
+    this.pages = new Pages()
   }
 }
 

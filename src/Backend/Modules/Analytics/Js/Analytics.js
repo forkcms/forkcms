@@ -5,8 +5,6 @@ import { ChartLine } from './Components/ChartLine'
 
 export class Analytics {
   constructor () {
-    console.log('ANALYTICS')
-
     this.chartPie = new ChartPie()
     this.chartLine = new ChartLine()
   }
