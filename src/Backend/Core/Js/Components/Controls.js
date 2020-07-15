@@ -1,4 +1,5 @@
 import { StringUtil } from './StringUtil'
+import { PasswordGenerator } from './PasswordGenerator'
 
 export class Controls {
   constructor () {
@@ -338,13 +339,14 @@ export class Controls {
     const $passwordGenerator = $('.passwordGenerator')
 
     if ($passwordGenerator.length > 0) {
-      $passwordGenerator.passwordGenerator({
+      const options = {
         length: 8,
         numbers: false,
         lowercase: true,
         uppercase: true,
         generateLabel: StringUtil.ucfirst(window.backend.locale.lbl('Generate'))
-      })
+      }
+      PasswordGenerator.generator(options, $passwordGenerator)
     }
   }
 

@@ -131,7 +131,7 @@
 /**
  * Password generator
  */
-(function ($) {
+/*(function ($) {
   $.fn.passwordGenerator = function (options) {
     // define defaults
     var defaults = {
@@ -272,7 +272,7 @@
       }
     })
   }
-})(jQuery);
+})(jQuery);*/
 
 /**
  * Inline editing

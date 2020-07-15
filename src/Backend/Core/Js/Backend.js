@@ -39,6 +39,7 @@ import { Profiles } from '../../Modules/Profiles/Js/Profiles'
 import { Search } from '../../Modules/Search/Js/Search'
 import { Settings } from '../../Modules/Settings/Js/Settings'
 import { Tags } from '../../Modules/Tags/Js/Tags'
+import { Users } from '../../Modules/Users/Js/Users'
 
 export class Backend {
   initBackend () {
@@ -46,9 +47,9 @@ export class Backend {
     if (!navigator.cookieEnabled) $('#noCookies').addClass('active').css('display', 'block')
 
     // init components
+    this.locale = new Locale()
     this.ajax = new Ajax()
     this.controls = new Controls()
-    this.locale = new Locale()
     this.modal = new Modal()
     this.effects = new Effects()
     this.tabs = new Tabs()
@@ -75,6 +76,7 @@ export class Backend {
     this.search = new Search()
     this.settings = new Settings()
     this.tags = new Tags()
+    this.users = new Users()
   }
 }
 
