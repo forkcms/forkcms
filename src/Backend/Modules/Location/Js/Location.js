@@ -1,49 +1,49 @@
-/**
- * Interaction for the location module
- */
-/* global google, mapOptions, markers, MAPS_CONFIG */
-jsBackend.location = {
-  // base values
-  bounds: null,
-  center: null,
-  centerLat: null,
-  centerLng: null,
-  height: null,
-  map: null,
-  mapId: null,
-  panorama: null,
-  showDirections: false,
-  showLink: false,
-  showOverview: true,
-  type: null,
-  style: null,
-  width: null,
-  zoomLevel: null,
+import { Stylers } from './components/Stylers'
 
-  init: function () {
+export class Location {
+  constructor () {
+    // base values
+    this.bounds = null
+    this.center = null
+    this.centerLat = null
+    this.centerLng = null
+    this.height = null
+    this.map = null
+    this.mapId = null
+    this.panorama = null
+    this.showDirections = false
+    this.showLink = false
+    this.showOverview = true
+    this.type = null
+    this.style = null
+    this.width = null
+    this.zoomLevel = null
+
     // only show a map when there are options and markers given
     if ($('#map').length > 0 && typeof markers !== 'undefined' && typeof mapOptions !== 'undefined') {
-      jsBackend.location.showMap()
+      this.showMap()
 
       // add listeners for the zoom level and terrain
-      google.maps.event.addListener(jsBackend.location.map, 'maptypeid_changed', jsBackend.location.setDropdownTerrain)
-      google.maps.event.addListener(jsBackend.location.map, 'zoom_changed', jsBackend.location.setDropdownZoom)
+      google.maps.event.addListener(this.map, 'maptypeid_changed', this.setDropdownTerrain)
+      google.maps.event.addListener(this.map, 'zoom_changed', this.setDropdownZoom)
 
       // if the zoom level or map type changes in the dropdown, the map needs to change
-      $('#zoomLevel').bind('change', function () { jsBackend.location.setMapZoom($('#zoomLevel').val()) })
-      $('#mapType').bind('change', jsBackend.location.setMapTerrain)
-      $('#mapStyle').bind('change', jsBackend.location.setMapStyle)
+      $('#zoomLevel').bind('change', () => {
+        this.setMapZoom($('#zoomLevel').val())
+      })
+      $('#mapType').bind('change', $.proxy(this.setMapTerrain, this))
+      $('#mapStyle').bind('change', $.proxy(this.setMapStyle, this))
 
       // the panning save option
-      $('#saveLiveData').bind('click', function (e) {
+      $('#saveLiveData').bind('click', (e) => {
         e.preventDefault()
 
         // save the live map data
-        jsBackend.location.getMapData()
-        jsBackend.location.saveLiveData()
+        this.getMapData()
+        this.saveLiveData()
       })
     }
-  },
+  }
 
   /**
    * Add marker to the map
@@ -52,12 +52,12 @@ jsBackend.location = {
    * @param object bounds
    * @param object object
    */
-  addMarker: function (map, bounds, object) {
-    var position = new google.maps.LatLng(object.lat, object.lng)
+  addMarker (map, bounds, object) {
+    const position = new google.maps.LatLng(object.lat, object.lng)
     bounds.extend(position)
 
     // add marker
-    var marker = new google.maps.Marker(
+    const marker = new google.maps.Marker(
       {
         position: position,
         map: map,
@@ -69,7 +69,7 @@ jsBackend.location = {
 
       // add event listener
       google.maps.event.addListener(marker, 'dragend', function () {
-        jsBackend.location.updateMarker(marker)
+        this.updateMarker(marker)
       })
     }
 
@@ -81,43 +81,43 @@ jsBackend.location = {
           content: '<h1>' + object.title + '</h1>' + object.text
         }).open(map, marker)
     })
-  },
+  }
 
   /**
    * Get map data
    */
-  getMapData: function () {
+  getMapData () {
     // get the live data
-    jsBackend.location.zoomLevel = jsBackend.location.map.getZoom()
-    jsBackend.location.type = jsBackend.location.map.getMapTypeId()
-    jsBackend.location.style = jsBackend.location.getMapStyle()
-    jsBackend.location.center = jsBackend.location.map.getCenter()
-    jsBackend.location.centerLat = jsBackend.location.center.lat()
-    jsBackend.location.centerLng = jsBackend.location.center.lng()
+    this.zoomLevel = this.map.getZoom()
+    this.type = this.map.getMapTypeId()
+    this.style = this.getMapStyle()
+    this.center = this.map.getCenter()
+    this.centerLat = this.center.lat()
+    this.centerLng = this.center.lng()
 
     // get the form data
-    jsBackend.location.mapId = parseInt($('#mapId').val())
-    jsBackend.location.height = parseInt($('#height').val())
-    jsBackend.location.width = parseInt($('#width').val())
+    this.mapId = parseInt($('#mapId').val())
+    this.height = parseInt($('#height').val())
+    this.width = parseInt($('#width').val())
 
-    jsBackend.location.showDirections = ($('#directions').attr('checked') === 'checked')
-    jsBackend.location.showLink = ($('#fullUrl').attr('checked') === 'checked')
-    jsBackend.location.showOverview = ($('#markerOverview').attr('checked') === 'checked')
-  },
+    this.showDirections = ($('#directions').attr('checked') === 'checked')
+    this.showLink = ($('#fullUrl').attr('checked') === 'checked')
+    this.showOverview = ($('#markerOverview').attr('checked') === 'checked')
+  }
 
   /**
    * Panorama visibility changed
    */
-  panoramaVisibilityChanged: function (e) {
+  panoramaVisibilityChanged (e) {
     // panorama is now invisible
-    if (!jsBackend.location.panorama.getVisible()) {
+    if (!this.panorama.getVisible()) {
       // select default map type
       $('#mapType option:first-child').attr('selected', 'selected')
 
       // set map terrain
-      jsBackend.location.setMapTerrain()
+      this.setMapTerrain()
     }
-  },
+  }
 
   /**
    * Refresh page refresh the page and display a certain message
@@ -127,45 +127,45 @@ jsBackend.location = {
   /**
    * Get map style
    */
-  getMapStyle: function () {
+  getMapStyle () {
     return $('#mapStyle').find('option:selected').val()
-  },
+  }
 
   // this will refresh the page and display a certain message
-  refreshPage: function (message) {
-    var currLocation = window.location
-    var reloadLocation = (currLocation.search.indexOf('?') >= 0) ? '&' : '?'
+  refreshPage (message) {
+    const currLocation = window.location
+    let reloadLocation = (currLocation.search.indexOf('?') >= 0) ? '&' : '?'
     reloadLocation = currLocation + reloadLocation + 'report=' + message
 
     // cleanly redirect so we can display a message
     window.location = reloadLocation
-  },
+  }
 
   /**
    * Save live data will save the setting in database
    */
-  saveLiveData: function () {
+  saveLiveData () {
     $.ajax({
       data: {
         fork: {module: 'Location', action: 'SaveLiveLocation'},
-        zoom: jsBackend.location.zoomLevel,
-        type: jsBackend.location.type,
-        style: jsBackend.location.style,
-        centerLat: jsBackend.location.centerLat,
-        centerLng: jsBackend.location.centerLng,
-        height: jsBackend.location.height,
-        width: jsBackend.location.width,
-        id: jsBackend.location.mapId,
-        link: jsBackend.location.showLink,
-        directions: jsBackend.location.showDirections,
-        showOverview: jsBackend.location.showOverview
+        zoom: this.zoomLevel,
+        type: this.type,
+        style: this.style,
+        centerLat: this.centerLat,
+        centerLng: this.centerLng,
+        height: this.height,
+        width: this.width,
+        id: this.mapId,
+        link: this.showLink,
+        directions: this.showDirections,
+        showOverview: this.showOverview
       },
-      success: function (json, textStatus) {
+      success: (json, textStatus) => {
         // reload the page on success
         if (json.code === 200) {
           // no redirect given, refresh the page
           if (typeof $('input#redirect').val() === 'undefined') {
-            jsBackend.location.refreshPage('map-saved')
+            this.refreshPage('map-saved')
           }
 
           $('input#redirect').val('edit')
@@ -173,153 +173,151 @@ jsBackend.location = {
         }
       }
     })
-  },
+  }
 
   /**
    * Set dropdown terrain will set the terrain type of the map to the dropdown
    */
-  setDropdownTerrain: function () {
-    jsBackend.location.getMapData()
-    $('#mapType').val(jsBackend.location.type.toUpperCase())
-  },
+  setDropdownTerrain () {
+    this.getMapData()
+    $('#mapType').val(this.type.toUpperCase())
+  }
 
   /**
    * Set dropdown zoom will set the zoom level of the map to the dropdown
    */
-  setDropdownZoom: function () {
-    jsBackend.location.getMapData()
-    $('#zoomLevel').val(jsBackend.location.zoomLevel)
-  },
+  setDropdownZoom () {
+    this.getMapData()
+    $('#zoomLevel').val(this.zoomLevel)
+  }
 
   // this will set the theme style of the map to the dropdown
-  setMapStyle: function () {
-    jsBackend.location.style = $('#mapStyle').val()
-    jsBackend.location.map.setOptions({'styles': MAPS_CONFIG[jsBackend.location.style]})
-  },
+  setMapStyle () {
+    this.style = $('#mapStyle').val()
+    this.map.setOptions({'styles': Stylers.styles[this.style]})
+  }
 
   /**
    * Set map terrain will set the terrain type of the map to the dropdown
    */
-  setMapTerrain: function () {
+  setMapTerrain () {
     // init previous type
-    var previousType = jsBackend.location.type.toLowerCase()
+    const previousType = this.type.toLowerCase()
 
     // redefine type
-    jsBackend.location.type = $('#mapType').val().toLowerCase()
+    this.type = $('#mapType').val().toLowerCase()
 
     // do something when we have street view
-    if (previousType === 'street_view' || jsBackend.location.type === 'street_view') {
+    if (previousType === 'street_view' || this.type === 'street_view') {
       // init showPanorama if not yet initialised
-      if (jsBackend.location.panorama === null) {
+      if (this.panorama === null) {
         // init panorama street view
-        jsBackend.location.showPanorama()
+        this.showPanorama()
       }
 
       // toggle visiblity
-      jsBackend.location.panorama.setVisible((jsBackend.location.type === 'street_view'))
+      this.panorama.setVisible((this.type === 'street_view'))
     }
 
     // set map type
-    jsBackend.location.map.setMapTypeId(jsBackend.location.type)
-  },
+    this.map.setMapTypeId(this.type)
+  }
 
   /**
    * Set map zoom will set the zoom level of the map to the dropdown
    *
    * @param int zoomlevel
    */
-  setMapZoom: function (zoomlevel) {
-    jsBackend.location.zoomLevel = zoomlevel
+  setMapZoom (zoomlevel) {
+    this.zoomLevel = zoomlevel
 
     // set zoom automatically, defined by points (if allowed)
     if (zoomlevel === 'auto') {
-      jsBackend.location.map.fitBounds(jsBackend.location.bounds)
+      this.map.fitBounds(this.bounds)
     } else {
-      jsBackend.location.map.setZoom(parseInt(zoomlevel))
+      this.map.setZoom(parseInt(zoomlevel))
     }
-  },
+  }
 
   /**
    * Show map
    */
-  showMap: function () {
+  showMap () {
     // create boundaries
-    jsBackend.location.bounds = new google.maps.LatLngBounds()
+    this.bounds = new google.maps.LatLngBounds()
 
     // define type if not already set
-    if (jsBackend.location.type === null) jsBackend.location.type = mapOptions.type
+    if (this.type === null) this.type = mapOptions.type
 
     // define options
-    var options = {
+    const options = {
       center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
-      mapTypeId: google.maps.MapTypeId[jsBackend.location.type],
-      styles: MAPS_CONFIG[mapOptions.style]
+      mapTypeId: google.maps.MapTypeId[this.type],
+      styles: Stylers.styles[mapOptions.style]
     }
 
     // create map
-    jsBackend.location.map = new google.maps.Map(document.getElementById('map'), options)
+    this.map = new google.maps.Map(document.getElementById('map'), options)
 
     // we want street view
-    if (jsBackend.location.type === 'STREET_VIEW') {
-      jsBackend.location.showPanorama()
-      jsBackend.location.panorama.setVisible(true)
+    if (this.type === 'STREET_VIEW') {
+      this.showPanorama()
+      this.panorama.setVisible(true)
     }
 
     // loop the markers
-    for (var i in markers) {
-      jsBackend.location.addMarker(
-        jsBackend.location.map, jsBackend.location.bounds, markers[i]
+    for (const i in markers) {
+      this.addMarker(
+        this.map, this.bounds, markers[i]
       )
     }
 
-    jsBackend.location.setMapZoom(mapOptions.zoom)
-  },
+    this.setMapZoom(mapOptions.zoom)
+  }
 
   /**
    * Show panorama - adds panorama to the map
    */
-  showPanorama: function () {
+  showPanorama () {
     // get street view data from map
-    jsBackend.location.panorama = jsBackend.location.map.getStreetView()
+    this.panorama = this.map.getStreetView()
 
     // define position
-    jsBackend.location.panorama.setPosition(new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng))
+    this.panorama.setPosition(new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng))
 
     // define heading (horizontal °) and pitch (vertical °)
-    jsBackend.location.panorama.setPov({
+    this.panorama.setPov({
       heading: 200,
       pitch: 8,
       zoom: 1
     })
 
     // bind event listeners (possible functions: pano_changed, position_changed, pov_changed, links_changed, visible_changed)
-    google.maps.event.addListener(jsBackend.location.panorama, 'visible_changed', jsBackend.location.panoramaVisibilityChanged)
-  },
+    google.maps.event.addListener(this.panorama, 'visible_changed', this.panoramaVisibilityChanged)
+  }
 
   /**
    * Update marker will re-set the position of a marker
    *
    * @param object marker
    */
-  updateMarker: function (marker) {
-    jsBackend.location.getMapData()
+  updateMarker (marker) {
+    this.getMapData()
 
-    var lat = marker.getPosition().lat()
-    var lng = marker.getPosition().lng()
+    const lat = marker.getPosition().lat()
+    const lng = marker.getPosition().lng()
 
     $.ajax({
       data: {
         fork: {module: 'Location', action: 'UpdateMarker'},
-        id: jsBackend.location.mapId,
+        id: this.mapId,
         lat: lat,
         lng: lng
       },
-      success: function (json, textStatus) {
+      success: (json, textStatus) => {
         // reload the page on success
-        if (json.code === 200) jsBackend.location.saveLiveData()
+        if (json.code === 200) this.saveLiveData()
       }
     })
   }
 }
-
-$(jsBackend.location.init)
