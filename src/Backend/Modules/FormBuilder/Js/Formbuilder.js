@@ -28,7 +28,7 @@ export class Formbuilder {
       canAddNew: true
     }
 
-    MultiTextBox.multipleTextbox(options, $('#email'))
+    MultiTextBox.multipleTextbox(options, $('[data-role="formbuilder-recipient"]'))
 
     this.handleSuccessType()
 
