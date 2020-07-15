@@ -32,6 +32,7 @@ import { Formbuilder } from '../../Modules/FormBuilder/Js/Formbuilder'
 import { Groups } from '../../Modules/Groups/Js/Groups'
 import { LocaleModule } from '../../Modules/Locale/Js/Locale'
 import { Location } from '../../Modules/Location/Js/Location'
+import { Mailmotor } from '../../Modules/Mailmotor/Js/Mailmotor'
 import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
 import { Pages } from '../../Modules/Pages/Js/Pages'
 
@@ -63,9 +64,9 @@ export class Backend {
     this.groups = new Groups()
     this.localeModule = new LocaleModule()
     this.location = new Location()
+    this.mailmotor = new Mailmotor()
     this.mediaLibrary = new MediaLibrary()
     this.pages = new Pages()
-
   }
 }
 

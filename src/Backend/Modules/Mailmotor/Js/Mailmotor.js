@@ -1,29 +1,21 @@
-/**
- * Interaction for the MailMotor module
- */
-jsBackend.MailMotor = {
-  // init, something like a constructor
-  init: function () {
-    jsBackend.MailMotor.controls.init()
+export class Mailmotor {
+  constructor () {
+    this.controls()
   }
-}
-
-jsBackend.MailMotor.controls = {
-  init: function () {
+  
+  controls () {
     // stop here because mail engine not found
     if ($('#settings_mailEngine').length === 0) {
       return
     }
 
     // bind change to mailEngine dropdown
-    $('#settings_mailEngine').on('change', function () {
+    $('#settings_mailEngine').on('change', (event) => {
       // define selected value
-      var selectedValue = $(this).find('option:selected').val()
+      const selectedValue = $(event.currentTarget).find('option:selected').val()
 
       // toggle api key and list id
       $('.mail-engine-selected').toggle(selectedValue !== 'not_implemented')
     }).trigger('change')
   }
 }
-
-$(jsBackend.MailMotor.init)
