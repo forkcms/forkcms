@@ -22,6 +22,7 @@ import { Collection } from './Components/Collection'
 import { Forms } from './Components/Forms'
 import { Layout } from './Components/Layout'
 import { Tooltip } from './Components/Tooltip'
+import { TableSequenceDragAndDrop } from './Components/TableSequenceDragAndDrop'
 
 // modules imports
 import { Analytics } from '../../Modules/Analytics/Js/Analytics'
@@ -59,6 +60,7 @@ export class Backend {
     this.forms = new Forms()
     this.layout = new Layout()
     this.tooltip = new Tooltip()
+    this.tableSequenceDragAndDrop = new TableSequenceDragAndDrop()
 
     // init modules
     this.analytics = new Analytics()

@@ -50,7 +50,7 @@ var jsBackend =
       //jsBackend.forms.init()
       //jsBackend.layout.init()
       //jsBackend.tooltip.init()
-      jsBackend.tableSequenceByDragAndDrop.init()
+      //jsBackend.tableSequenceByDragAndDrop.init()
       if (jsData.Core.preferred_editor === 'ck-editor') {
         jsBackend.ckeditor.init()
       }
@@ -1992,7 +1992,7 @@ jsBackend.blockEditor = {
 /**
  * Enable setting of sequence by drag & drop
  */
-jsBackend.tableSequenceByDragAndDrop = {
+/*jsBackend.tableSequenceByDragAndDrop = {
   // init, something like a constructor
   init: function () {
     // variables
@@ -2092,7 +2092,7 @@ jsBackend.tableSequenceByDragAndDrop = {
       }
     })
   }
-}
+}*/
 
 /*window.requestAnimationFrame = (function () {
   var lastTime

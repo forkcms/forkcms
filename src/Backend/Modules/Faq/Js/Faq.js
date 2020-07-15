@@ -72,7 +72,7 @@ export class Faq {
         fromCategorySequence: fromCategorySequence,
         toCategorySequence: toCategorySequence
       },
-      success (data, textStatus) {
+      success: (data, textStatus) => {
         // successfully saved reordering sequence
         if (data.code === 200) {
           // change count in title (if any)
@@ -137,7 +137,7 @@ export class Faq {
         handle: 'td.dragAndDropHandle',            // set the element that user can grab
         tolerance: 'pointer',                    // give a more natural feeling
         connectWith: 'div.jsDataGridQuestionsHolder',        // this is what makes dragging between categories possible
-        stop (e, ui) {
+        stop: (e, ui) => {
           this.saveNewQuestionSequence(
             $(element),
             ui.item.attr('id'),
