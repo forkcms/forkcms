@@ -59,7 +59,7 @@ var jsBackend =
       }
       //jsBackend.resizeFunctions.init()
       //jsBackend.navigation.init()
-      jsBackend.session.init()
+      //jsBackend.session.init()
 
       // do not move, should be run as the last item.
       if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()
@@ -2139,7 +2139,7 @@ jsBackend.resizeFunctions = {
   }
 }*/
 
-jsBackend.session = {
+/*jsBackend.session = {
   init: function () {
     jsBackend.session.sessionTimeoutPopup()
   },
@@ -2150,6 +2150,6 @@ jsBackend.session = {
       window.alert(jsBackend.locale.msg('SessionTimeoutWarning'))
     }, (jsData.Core.session_timeout - 60) * 1000)
   }
-}
+}*/
 
 $(jsBackend.init)
