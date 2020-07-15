@@ -37,6 +37,7 @@ import { MediaLibrary } from '../../Modules/MediaLibrary/Js/MediaLibrary'
 import { Pages } from '../../Modules/Pages/Js/Pages'
 import { Profiles } from '../../Modules/Profiles/Js/Profiles'
 import { Search } from '../../Modules/Search/Js/Search'
+import { Settings } from '../../Modules/Settings/Js/Settings'
 
 export class Backend {
   initBackend () {
@@ -71,6 +72,7 @@ export class Backend {
     this.pages = new Pages()
     this.profiles = new Profiles()
     this.search = new Search()
+    this.settings = new Settings()
   }
 }
 
