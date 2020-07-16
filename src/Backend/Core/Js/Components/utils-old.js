@@ -401,6 +401,7 @@ utils.form = {
 /**
  * Functions related to the current url
  */
+/*
 utils.url = {
   extractParamFromUri: function (uri, paramName) {
     if (!uri) return
@@ -418,12 +419,12 @@ utils.url = {
     }
   },
 
-  /**
+  /!**
    * Get a GET parameter
    *
    * @return string
    * @param string name
-   */
+   *!/
   getGetValue: function (name) {
     // init return value
     var getValue = ''
@@ -450,6 +451,7 @@ utils.url = {
     return getValue
   }
 }
+*/
 
 /**
  * Functions related to the events

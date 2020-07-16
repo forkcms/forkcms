@@ -191,7 +191,7 @@ export class Tree {
       },
       error: (XMLHttpRequest, textStatus, errorThrown) => {
         window.location.reload()
-      },
+      }
     })
   }
 
