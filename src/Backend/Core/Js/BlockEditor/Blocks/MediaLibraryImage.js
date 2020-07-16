@@ -11,15 +11,14 @@ class MediaLibraryImage {
   }
 
   selectFromMediaLibrary () {
-    var mediaLibraryImageInstance = this
     window.open(window.location.origin + jsData.MediaLibrary.browseActionImages)
 
     window.onmessage = function (event) {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
-        mediaLibraryImageInstance.data.src = event.data['media-url']
-        mediaLibraryImageInstance.data.id = event.data.id
-        mediaLibraryImageInstance.image.src = mediaLibraryImageInstance.data.src
-        mediaLibraryImageInstance.image.classList.remove('hidden')
+        this.data.src = event.data['media-url']
+        this.data.id = event.data.id
+        this.image.src = this.data.src
+        this.image.classList.remove('hidden')
       }
     }
   }

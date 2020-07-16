@@ -16,7 +16,7 @@ var jsBackend =
 
     // init, something like a constructor
     init: function () {
-      // get url and split into chunks
+     /* // get url and split into chunks
       var chunks = document.location.pathname.split('/')
 
       // set some properties
@@ -38,7 +38,7 @@ var jsBackend =
 
       // set defaults
       if (!jsBackend.current.module) jsBackend.current.module = 'Dashboard'
-      if (!jsBackend.current.action) jsBackend.current.action = 'index'
+      if (!jsBackend.current.action) jsBackend.current.action = 'index'*/
 
       // init stuff
       //jsBackend.initAjax()
@@ -51,12 +51,12 @@ var jsBackend =
       //jsBackend.layout.init()
       //jsBackend.tooltip.init()
       //jsBackend.tableSequenceByDragAndDrop.init()
-      if (jsData.Core.preferred_editor === 'ck-editor') {
+      /*if (jsData.Core.preferred_editor === 'ck-editor') {
         jsBackend.ckeditor.init()
-      }
-      else if (jsData.Core.preferred_editor === 'block-editor') {
+      }*/
+      /*else if (jsData.Core.preferred_editor === 'block-editor') {
         jsBackend.blockEditor.init()
-      }
+      }*/
       //jsBackend.resizeFunctions.init()
       //jsBackend.navigation.init()
       //jsBackend.session.init()
@@ -585,7 +585,7 @@ jsBackend.ckeditor = {
 /**
  * Block editor related objects
  */
-jsBackend.blockEditor = {
+/*jsBackend.blockEditor = {
 
   // initialize the editor
   init: function () {
@@ -610,7 +610,7 @@ jsBackend.blockEditor = {
       jsBackend.blockEditor.initEditors($(formCollectionItem).find('textarea.inputBlockEditor'))
     })
   }
-}
+}*/
 
 /**
  * Handle form functionality

@@ -5,7 +5,40 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
 
-class BlockEditor {
+export class BlockEditor {
+  constructor () {
+    this.initEditors($('textarea.inputBlockEditor'))
+    this.loadEditorsInCollections()
+
+    if (this.blocks === undefined) {
+      this.blocks = {}
+    }
+
+    this.blocks.Header = Header
+    this.blocks.Embed = Embed
+    this.blocks.List = List
+    this.blocks.Paragraph = Paragraph
+    this.blocks.MediaLibraryImage = MediaLibraryImage
+  }
+
+  initEditors (editors) {
+    if (editors.length > 0) {
+      editors.each((index, editor) => {
+        this.createEditor($(editor))
+      })
+    }
+  }
+
+  createEditor ($element) {
+    BlockEditor.fromJson($element, $element.attr('fork-block-editor-config'))
+  }
+
+  loadEditorsInCollections () {
+    $('[data-addfield="collection"]').on('collection-field-added', (event, formCollectionItem) => {
+      this.initEditors($(formCollectionItem).find('textarea.inputBlockEditor'))
+    })
+  }
+
   static getClassFromVariableName (string) {
     let scope = window
     let scopeSplit = string.split('.')
@@ -23,10 +56,10 @@ class BlockEditor {
   static fromJson ($element, jsonConfig) {
     let config = JSON.parse(jsonConfig)
     for (const name of Object.keys(config)) {
-      config[name].class = this.getClassFromVariableName(config[name].class)
+      config[name].class = BlockEditor.getClassFromVariableName(config[name].class)
     }
 
-    this.create($element, config)
+    BlockEditor.create($element, config)
   }
 
   static create ($element, tools) {
@@ -55,16 +88,3 @@ class BlockEditor {
     })
   }
 }
-
-if (window.BlockEditor === undefined) {
-  window.BlockEditor = {blocks: {}}
-}
-if (window.BlockEditor.blocks === undefined) {
-  window.BlockEditor.blocks = {}
-}
-window.BlockEditor.editor = BlockEditor
-window.BlockEditor.blocks.Header = Header
-window.BlockEditor.blocks.Embed = Embed
-window.BlockEditor.blocks.List = List
-window.BlockEditor.blocks.Paragraph = Paragraph
-window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage

@@ -25,6 +25,9 @@ import { Tooltip } from './Components/Tooltip'
 import { TableSequenceDragAndDrop } from './Components/TableSequenceDragAndDrop'
 import { Session } from './Components/Session'
 
+// block editor imports
+import { BlockEditor } from './BlockEditor/BlockEditor'
+
 // modules imports
 import { Analytics } from '../../Modules/Analytics/Js/Analytics'
 import { Blog } from '../../Modules/Blog/Js/Blog'
@@ -63,6 +66,9 @@ export class Backend {
     this.tooltip = new Tooltip()
     this.tableSequenceDragAndDrop = new TableSequenceDragAndDrop()
     this.session = new Session()
+
+    // init block editor
+    this.blockEditor = new BlockEditor()
 
     // init modules
     this.analytics = new Analytics()

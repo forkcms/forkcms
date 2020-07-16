@@ -1,5 +1,6 @@
 import { Config } from './Config'
 import { Data } from './Data'
+import { Messages } from './Messages'
 
 export class Ajax {
   constructor () {
@@ -41,7 +42,7 @@ export class Ajax {
         if (typeof XMLHttpRequest.responseText !== 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message
 
         // show message
-        jsBackend.messages.add('danger', textStatus, '', true)
+        Messages.add('danger', textStatus, '', true)
       }
     })
 
