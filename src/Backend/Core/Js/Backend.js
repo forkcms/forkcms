@@ -45,6 +45,7 @@ import { Search } from '../../Modules/Search/Js/Search'
 import { Settings } from '../../Modules/Settings/Js/Settings'
 import { Tags } from '../../Modules/Tags/Js/Tags'
 import { Users } from '../../Modules/Users/Js/Users'
+import { Config } from './Components/Config'
 
 export class Backend {
   initBackend () {
@@ -87,6 +88,9 @@ export class Backend {
     this.settings = new Settings()
     this.tags = new Tags()
     this.users = new Users()
+
+    // do not move, should be run as the last item.
+    if (!Config.isDebug()) this.forms.unloadWarning()
   }
 }
 

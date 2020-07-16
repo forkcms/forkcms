@@ -61,8 +61,8 @@ var jsBackend =
       //jsBackend.navigation.init()
       //jsBackend.session.init()
 
-      // do not move, should be run as the last item.
-      if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()
+      /*// do not move, should be run as the last item.
+      if (!jsBackend.data.get('debug')) jsBackend.forms.unloadWarning()*/
     },
 
     /*addModalEvents: function () {
