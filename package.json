@@ -20,6 +20,7 @@
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
     "ckeditor": "^4.12.1",
+    "clean-webpack-plugin": "^3.0.0",
     "cropper": "^3.0.0-rc.2",
     "css-loader": "^3.6.0",
     "file-loader": "^6.0.0",
@@ -59,8 +60,9 @@
   },
   "scripts": {
     "test": "standard",
-    "devBackend": "webpack  --config-name backend --watch",
-    "devFrontend": "webpack  --config-name frontend"
+    "watchBackend": "webpack --config-name backend --mode=development --watch",
+    "watchFrontend": "webpack --config-name frontend --mode=development --watch",
+    "build": "webpack --config-name --mode=production"
   },
   "standard": {
     "globals": [

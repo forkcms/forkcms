@@ -1,10 +1,10 @@
 const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 // common config
 const common = {
-  mode: 'development',
   module: {
     rules: [
       {
@@ -48,6 +48,8 @@ const common = {
       chunkFilename: '[id].css'
     }),
 
+    new CleanWebpackPlugin(),
+
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
       $: 'jquery',
@@ -57,28 +59,33 @@ const common = {
   ]
 }
 
-// frontend config
-const frontend = {
-  name: 'frontend',
-  entry: './src/Frontend/Core/Js/Index.js',
-  output: {
-    path: path.resolve(__dirname, './src/Frontend/Core/build'),
-    filename: 'frontend.bundle.js'
+// export configs
+module.exports = (env, argv) => {
+  let isDevelopment = false
+  if (argv.mode === 'development') isDevelopment = true
+
+  // frontend config
+  const frontend = {
+    name: 'frontend',
+    entry: './src/Frontend/Core/Js/Index.js',
+    output: {
+      path: path.resolve(__dirname, './src/Frontend/Core/build'),
+      filename: isDevelopment ? 'frontend.bundle.js' : 'frontend.bundle.[contenthash].js'
+    }
   }
-}
 
 // backend config
-const backend = {
-  name: 'backend',
-  entry: './src/Backend/Core/Js/Backend.js',
-  output: {
-    path: path.resolve(__dirname, './src/Backend/Core/build'),
-    filename: 'backend.bundle.js'
+  const backend = {
+    name: 'backend',
+    entry: './src/Backend/Core/Js/Backend.js',
+    output: {
+      path: path.resolve(__dirname, './src/Backend/Core/build'),
+      filename: isDevelopment ? 'backend.bundle.js' : 'backend.bundle.[contenthash].js'
+    }
   }
-}
 
-// export configs
-module.exports = [
-  Object.assign({}, common, frontend),
-  Object.assign({}, common, backend)
-]
+  return [
+    Object.assign({}, common, frontend),
+    Object.assign({}, common, backend)
+  ]
+}
