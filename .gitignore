@@ -22,7 +22,7 @@
 /bundles/*
 /css/*.css
 /js/*.js
-/Backend/Core/build
+/src/Backend/Core/build
 
 # Docker
 var/docker/db/data/*
