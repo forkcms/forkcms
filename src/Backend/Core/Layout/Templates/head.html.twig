@@ -16,7 +16,8 @@
     <script src="{{ jsFile }}"></script>{{ CRLF }}{{ TAB }}
   {% endfor %}
 
-  <script src="/src/Backend/Core/build/backend.bundle.js"></script>
+  {{ encore_entry_script_tags('backend', null, 'backendConfig') }}
+  {{ encore_entry_link_tags('screen', null, 'backendConfig') }}
 
   {{ jsData|raw }}
 </head>

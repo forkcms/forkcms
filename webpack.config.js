@@ -1,91 +1,43 @@
-const webpack = require('webpack')
-const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const Encore = require('@symfony/webpack-encore')
 
-// common config
-const common = {
-  module: {
-    rules: [
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      },
-      {
-        test: /\.(css|scss)$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader
-          },
-          'css-loader', // translates CSS into CommonJS
-          'postcss-loader', // Apply PostCSS plugins defined in postcss.config.js
-          'resolve-url-loader',
-          'sass-loader' // compiles Sass to CSS, using Node Sass by default
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    }),
+Encore
+  .setOutputPath('src/Backend/Core/build/')
+  .setPublicPath('/src/Backend/Core/build')
+  .addEntry('backend', './src/Backend/Core/Js/Backend.js')
+  .addStyleEntry('screen', './src/Backend/Core/Layout/Sass/screen.scss')
+  .enableSassLoader((options) => {}, {
+    resolveUrlLoader: false
+  })
+  .enablePostCssLoader()
+  // enables @babel/preset-env polyfills
+  .autoProvidejQuery()
+  .copyFiles({
+    from: '/src/Backend/Core/images',
+    to: '/src/Backend/Core/Build/images/[path][name].[ext]'
+  })
+  .enableSourceMaps(!Encore.isProduction())
 
-    new CleanWebpackPlugin(),
+// build the first configuration
+const backendConfig = Encore.getWebpackConfig()
 
-    new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-      $: 'jquery',
-      'window.jQuery': 'jquery',
-      'window.$': 'jquery'
-    })
-  ]
-}
+// Set a unique name for the config (needed later!)
+backendConfig.name = 'backendConfig'
 
-// export configs
-module.exports = (env, argv) => {
-  let isDevelopment = false
-  if (argv.mode === 'development') isDevelopment = true
+// reset Encore to build the second config
+Encore.reset()
 
-  // frontend config
-  const frontend = {
-    name: 'frontend',
-    entry: './src/Frontend/Core/Js/Index.js',
-    output: {
-      path: path.resolve(__dirname, './src/Frontend/Core/build'),
-      filename: isDevelopment ? 'frontend.bundle.js' : 'frontend.bundle.[contenthash].js'
-    }
-  }
+// define the second configuration
+Encore
+  .setOutputPath('src/Frontend/Core/build/')
+  .setPublicPath('/src/Frontend/Core/build')
+  .addEntry('frontend', './src/Frontend/Core/Js/Index.js')
+  .autoProvidejQuery()
+  .enableSourceMaps(!Encore.isProduction())
 
-// backend config
-  const backend = {
-    name: 'backend',
-    entry: './src/Backend/Core/Js/Backend.js',
-    output: {
-      path: path.resolve(__dirname, './src/Backend/Core/build'),
-      filename: isDevelopment ? 'backend.bundle.js' : 'backend.bundle.[contenthash].js'
-    }
-  }
+// build the second configuration
+const frontendConfig = Encore.getWebpackConfig()
 
-  return [
-    Object.assign({}, common, frontend),
-    Object.assign({}, common, backend)
-  ]
-}
+// Set a unique name for the config (needed later!)
+frontendConfig.name = 'frontendConfig'
+
+module.exports = [backendConfig, frontendConfig]

@@ -1,5 +1,5 @@
 // import styling
-import '../Layout/Sass/screen.scss'
+//import '../Layout/Sass/screen.scss'
 
 // import plugins
 import 'bootstrap'

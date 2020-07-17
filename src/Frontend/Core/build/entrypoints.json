@@ -1,0 +1,9 @@
+{
+  "entrypoints": {
+    "frontend": {
+      "js": [
+        "/src/Frontend/Core/build/frontend.js"
+      ]
+    }
+  }
+}

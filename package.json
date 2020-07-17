@@ -14,6 +14,7 @@
     "@editorjs/header": "^2.3.1",
     "@editorjs/list": "^1.4.0",
     "@editorjs/paragraph": "^2.6.0",
+    "@symfony/webpack-encore": "^0.30.2",
     "babel-loader": "^8.1.0",
     "bootstrap": "^4.4.1",
     "bootstrap-datepicker": "^1.9.0",
@@ -38,6 +39,7 @@
     "jstree": "^3.3.10",
     "jstree-bootstrap-theme": "^1.0.1",
     "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "photoswipe": "^4.1.1",
     "popper.js": "^1.16.0",
     "postcss-clean": "^1.1.0",
@@ -45,7 +47,6 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "requestanimationframe": "0.0.23",
-    "resolve-url-loader": "^3.1.1",
     "sass-loader": "^8.0.2",
     "select2": "^4.0.12",
     "select2-theme-bootstrap4": "^0.2.0-beta.4",
@@ -53,16 +54,18 @@
     "slick-carousel": "^1.6.0",
     "standard": "^10.0.3",
     "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^3.0.7",
     "typeahead.js": "^0.11.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.9",
-    "webpack-entry-plus": "^1.0.18"
+    "webpack-entry-plus": "^1.0.18",
+    "webpack-manifest-plugin": "^2.2.0"
   },
   "scripts": {
     "test": "standard",
-    "watchBackend": "webpack --config-name backend --mode=development --watch",
-    "watchFrontend": "webpack --config-name frontend --mode=development --watch",
-    "build": "webpack --config-name --mode=production"
+    "dev:backend": "encore dev --config-name backendConfig",
+    "dev:frontend": "encore dev --config-name frontendConfig",
+    "build": "encore production"
   },
   "standard": {
     "globals": [
