@@ -125,11 +125,7 @@
               <div class="block-blog-article-comments-comment-avatar">
                 <meta itemprop="discusses" content="{{ item.title }}" />
                 {% if comment.website %}
-                <a href="{{ comment.website }}">
-                  {% endif %}
-                  <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar rounded-circle mr-3" data-gravatar-id="{{ comment.gravatar_id }}" />
-                  {% if comment.website %}
-                </a>
+                  <a href="{{ comment.website }}">{{ comment.website }}</a>
                 {% endif %}
               </div>
 

@@ -1,0 +1,15 @@
+{
+  "entrypoints": {
+    "frontend": {
+      "js": [
+        "/src/Frontend/Themes/Fork/Core/build/runtime.js",
+        "/src/Frontend/Themes/Fork/Core/build/frontend.js"
+      ]
+    },
+    "screen": {
+      "js": [
+        "/src/Frontend/Themes/Fork/Core/build/runtime.js"
+      ]
+    }
+  }
+}

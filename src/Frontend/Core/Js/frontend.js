@@ -11,7 +11,7 @@ var jsFrontend = {
     jsFrontend.current.language = jsFrontend.data.get('LANGUAGE')
 
     // init stuff
-    jsFrontend.initAjax()
+    //jsFrontend.initAjax()
 
     jsFrontend.addModalEvents()
 
@@ -48,7 +48,7 @@ var jsFrontend = {
     })
   },
 
-  // init
+  /*// init
   initAjax: function () {
     // set defaults for AJAX
     $.ajaxSetup({
@@ -59,7 +59,7 @@ var jsFrontend = {
       timeout: 10000,
       data: {fork: {module: null, action: null, language: jsFrontend.current.language}}
     })
-  }
+  }*/
 }
 
 /**
@@ -125,7 +125,7 @@ jsFrontend.cookieBar = {
 /**
  * Data related methods
  */
-jsFrontend.data = {
+/*jsFrontend.data = {
   initialized: false,
   data: {},
 
@@ -154,7 +154,7 @@ jsFrontend.data = {
 
     return data
   }
-}
+}*/
 
 /**
  * Facebook related

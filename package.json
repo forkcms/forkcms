@@ -62,6 +62,7 @@
     "dev:frontend": "encore dev --config-name frontendConfig --watch",
     "build": "encore production"
   },
+  "theme": "Fork",
   "standard": {
     "globals": [
       "$",

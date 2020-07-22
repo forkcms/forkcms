@@ -1,10 +1,12 @@
+import { Ajax } from '../../../../Core/Js/Components/Ajax'
+
 export class Index {
   constructor () {
     this.initFrontend()
   }
 
   initFrontend () {
-    console.log('INIT FRONTEND')
+    this.ajax = new Ajax()
   }
 }
 
