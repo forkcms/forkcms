@@ -23,6 +23,8 @@
 /css/*.css
 /js/*.js
 /src/Backend/Core/build
+/src/Frontend/Core/build
+/src/Frontend/Themes/*/Core/build
 
 # Docker
 var/docker/db/data/*
