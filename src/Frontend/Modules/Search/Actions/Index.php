@@ -167,8 +167,6 @@ class Index extends FrontendBaseBlock
 
     private function parse(): void
     {
-        $this->addCSS('Search.css');
-
         $this->form->parse($this->template);
 
         if (!$this->searchTerm) {

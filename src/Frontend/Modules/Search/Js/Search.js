@@ -1,26 +1,23 @@
-/**
- * Interaction for the search module
- */
-/* global Bloodhound */
+import Bloodhound from 'typeahead.js/dist/bloodhound'
+import { StringUtil } from '../../../../Backend/Core/Js/Components/StringUtil'
+import { Config } from '../../../Core/Js/Components/Config'
 
-jsFrontend.search =
-{
-  // init, something like a constructor
-  init: function () {
+export class Search {
+  constructor () {
     // auto suggest (search widget)
-    if ($('input[data-role=fork-widget-search-field]').length > 0) jsFrontend.search.autosuggest(55)
+    if ($('input[data-role=fork-widget-search-field]').length > 0) this.autosuggest(55)
 
     // autocomplete (search results page: autocomplete based on known search terms)
-    if ($('input[data-role=fork-search-field][data-autocomplete=enabled]').length > 0) jsFrontend.search.autocomplete()
+    if ($('input[data-role=fork-search-field][data-autocomplete=enabled]').length > 0) this.autocomplete()
 
     // live suggest (search results page: live feed of matches)
-    if ($('input[data-role=fork-search-field][data-live-suggest=enabled]').length > 0 && $('[data-role="search-results-container"]').length > 0) jsFrontend.search.livesuggest()
-  },
+    if ($('input[data-role=fork-search-field][data-live-suggest=enabled]').length > 0 && $('[data-role="search-results-container"]').length > 0) this.livesuggest()
+  }
 
   // autocomplete (search results page: autocomplete based on known search terms)
-  autocomplete: function () {
-    var input = $('input[data-role=fork-search-field][data-autocomplete=enabled]')
-    var searchEngine = jsFrontend.search.getSuggestionEngine('Autocomplete')
+  autocomplete () {
+    const input = $('input[data-role=fork-search-field][data-autocomplete=enabled]')
+    const searchEngine = this.getSuggestionEngine('Autocomplete')
 
     // autocomplete (based on saved search terms) on results page
     // Init the typeahead search
@@ -31,7 +28,7 @@ jsFrontend.search =
       limit: 5,
       source: searchEngine,
       templates: {
-        suggestion: function (data) {
+        suggestion (data) {
           return '<a><strong>' + data.value + '</strong></a>'
         }
       }
@@ -40,26 +37,26 @@ jsFrontend.search =
     })
 
     // when we have been typing in the search textfield and we blur out of it, we're ready to save it
-    input.on('blur', function () {
-      if ($(this).val() !== '') {
+    input.on('blur', (e) => {
+      if ($(e.currentTarget).val() !== '') {
         // ajax call!
         $.ajax({
           data: {
             fork: {module: 'Search', action: 'Save'},
-            term: $(this).val()
+            term: $(e.currentTarget).val()
           }
         })
       }
     })
-  },
+  }
 
   // auto suggest (search widget)
-  autosuggest: function (length) {
+  autosuggest (length) {
     // set default values
     if (typeof length === 'undefined') length = 100
 
-    var input = $('input[data-role=fork-widget-search-field]')
-    var searchEngine = jsFrontend.search.getSuggestionEngine('Autosuggest', length)
+    const input = $('input[data-role=fork-widget-search-field]')
+    const searchEngine = this.getSuggestionEngine('Autosuggest', length)
 
     // Init the typeahead search
     input.typeahead(null, {
@@ -69,39 +66,39 @@ jsFrontend.search =
       limit: 5,
       source: searchEngine,
       templates: {
-        suggestion: function (data) {
+        suggestion (data) {
           return '<a><strong>' + data.value + '</strong><p>' + data.description + '</p></a>'
         }
       }
-    }).bind('typeahead:select', function (ev, suggestion) {
+    }).bind('typeahead:select', (ev, suggestion) => {
       window.location.href = suggestion.url
     })
 
     // when we have been typing in the search textfield and we blur out of it, we're ready to save it
-    input.on('blur', function () {
-      if ($(this).val() !== '') {
+    input.on('blur', (e) => {
+      if ($(e.currentTarget).val() !== '') {
         // ajax call!
         $.ajax({
           data: {
             fork: {module: 'Search', action: 'Save'},
-            term: $(this).val()
+            term: $(e.currentTarget).val()
           }
         })
       }
     })
-  },
+  }
 
   // livesuggest (search results page: live feed of matches)
-  livesuggest: function () {
+  livesuggest () {
     // check if calls for live suggest are allowed
-    var allowCall = true
+    let allowCall = true
 
     // grab element
-    var $input = $('input[data-role=fork-search-field][data-live-suggest=enabled]')
+    const $input = $('input[data-role=fork-search-field][data-live-suggest=enabled]')
 
     // change in input = do the dance: live search results completion
-    $input.on('keyup', function () {
-      var $searchContainer = $('*[data-role=search-results-container]')
+    $input.on('keyup', (e) => {
+      const $searchContainer = $('*[data-role=search-results-container]')
 
       // make sure we're allowed to do the call (= previous call is no longer processing)
       if (allowCall) {
@@ -115,24 +112,24 @@ jsFrontend.search =
         $.ajax({
           data: {
             fork: {module: 'Search', action: 'Livesuggest'},
-            term: $(this).val()
+            term: $(e.currentTarget).val()
           },
-          success: function (data, textStatus) {
+          success (data, textStatus) {
             // allow for new calls
             allowCall = true
 
             // alert the user
-            if (data.code !== 200 && jsFrontend.debug) { window.alert(data.message) }
+            if (data.code !== 200 && Config.isDebug()) { window.alert(data.message) }
 
             if (data.code === 200) {
               // replace search results
-              $searchContainer.html(utilsOld.string.html5(data.data))
+              $searchContainer.html(StringUtil.html5(data.data))
 
               // fade in
               $searchContainer.fadeTo(0, 1)
             }
           },
-          error: function () {
+          error () {
             // allow for new calls
             allowCall = true
 
@@ -145,32 +142,32 @@ jsFrontend.search =
         })
       }
     })
-  },
+  }
 
   // Construct the search suggestion engine
-  getSuggestionEngine: function (action, length) {
-    var searchEngine = new Bloodhound({
+  getSuggestionEngine (action, length) {
+    const searchEngine = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         url: $.ajaxSettings.url,
-        prepare: function (query, settings) {
+        prepare (query, settings) {
           settings.type = 'POST'
           settings.contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
           settings.data = {
             fork: {
               module: 'Search',
               action: action,
-              language: jsFrontend.current.language
+              language: Config.getCurrentLanguage()
             },
             term: query,
             length: length
           }
           return settings
         },
-        filter: function (searchResults) {
+        filter (searchResults) {
           // Map the remote source JSON array to a JavaScript array
-          return $.map(searchResults.data, function (result) {
+          return $.map(searchResults.data, (result) => {
             if (action === 'Autocomplete') {
               return {
                 value: result.term,
@@ -192,5 +189,3 @@ jsFrontend.search =
     return searchEngine
   }
 }
-
-$(jsFrontend.search.init)
