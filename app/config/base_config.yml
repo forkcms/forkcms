@@ -35,6 +35,7 @@ webpack_encore:
     builds:
         backendConfig: '%kernel.project_dir%/src/Backend/Core/build'
         frontendConfig: '%kernel.project_dir%/src/Frontend/Core/build'
+        frontendThemeConfig: '%kernel.project_dir%/src/Frontend/Themes/%env(resolve:THEME)%/Core/build'
 
 # Assetic Configuration
 assetic:

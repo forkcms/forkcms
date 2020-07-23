@@ -119,12 +119,12 @@ class Header extends KernelLoader
         $this->meta = new MetaCollection();
 
         // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
+       // $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
-        if ($container->getParameter('kernel.debug')) {
-            $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css', true, true, Priority::debug());
-        }
+        //if ($container->getParameter('kernel.debug')) {
+         //   $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css', true, true, Priority::debug());
+        //}
 
         // add default javascript-files
         //$this->addJS('/js/vendors/jquery.min.js', false, true, Priority::core());

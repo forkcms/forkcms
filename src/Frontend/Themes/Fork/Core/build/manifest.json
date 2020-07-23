@@ -1,4 +1,5 @@
 {
   "src/Frontend/Themes/Fork/Core/build/frontend.js": "/src/Frontend/Themes/Fork/Core/build/frontend.js",
-  "src/Frontend/Themes/Fork/Core/build/runtime.js": "/src/Frontend/Themes/Fork/Core/build/runtime.js"
+  "src/Frontend/Themes/Fork/Core/build/runtime.js": "/src/Frontend/Themes/Fork/Core/build/runtime.js",
+  "src/Frontend/Themes/Fork/Core/build/screen.css": "/src/Frontend/Themes/Fork/Core/build/screen.css"
 }

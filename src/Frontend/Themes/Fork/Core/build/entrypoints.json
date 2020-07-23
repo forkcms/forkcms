@@ -9,6 +9,9 @@
     "screen": {
       "js": [
         "/src/Frontend/Themes/Fork/Core/build/runtime.js"
+      ],
+      "css": [
+        "/src/Frontend/Themes/Fork/Core/build/screen.css"
       ]
     }
   }

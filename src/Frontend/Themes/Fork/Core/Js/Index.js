@@ -1,15 +1,18 @@
 import { Ajax } from '../../../../Core/Js/Components/Ajax'
+import { Modal } from '../../../../Core/Js/Components/Modal'
 
 export class Index {
   constructor () {
-    this.initFrontend()
+    this.initTheme()
   }
 
-  initFrontend () {
+  initTheme () {
     this.ajax = new Ajax()
+    this.modal = new Modal()
   }
 }
 
 $(window).on('load', () => {
-  window.frontend = new Index()
+  window.theme = new Index()
+  window.theme.initTheme()
 })

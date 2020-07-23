@@ -1,3 +1,5 @@
 {
-  "src/Frontend/Core/build/frontend.js": "/src/Frontend/Core/build/frontend.js"
+  "src/Frontend/Core/build/frontend.js": "/src/Frontend/Core/build/frontend.js",
+  "src/Frontend/Core/build/runtime.js": "/src/Frontend/Core/build/runtime.js",
+  "src/Frontend/Core/build/screen.css": "/src/Frontend/Core/build/screen.css"
 }

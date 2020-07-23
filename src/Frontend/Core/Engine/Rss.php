@@ -39,6 +39,7 @@ class Rss extends \SpoonFeedRSS
         $this->setLanguage(LANGUAGE);
         $this->setCopyright(\SpoonDate::getDate('Y') . ' ' . $siteTitle);
         $this->setGenerator($siteTitle);
+        $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
 
         // theme was set
         if (Model::get('fork.settings')->get('Core', 'theme', null) === null) {

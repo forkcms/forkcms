@@ -2,7 +2,16 @@
   "entrypoints": {
     "frontend": {
       "js": [
+        "/src/Frontend/Core/build/runtime.js",
         "/src/Frontend/Core/build/frontend.js"
+      ]
+    },
+    "screen": {
+      "js": [
+        "/src/Frontend/Core/build/runtime.js"
+      ],
+      "css": [
+        "/src/Frontend/Core/build/screen.css"
       ]
     }
   }
