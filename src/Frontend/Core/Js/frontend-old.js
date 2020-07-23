@@ -21,16 +21,16 @@ var jsFrontend = {
     //jsFrontend.controls.init()
 
     // init form
-    jsFrontend.forms.init()
+    //jsFrontend.forms.init()
 
     // init gravatar
-    jsFrontend.gravatar.init()
+    //jsFrontend.gravatar.init()
 
     // init statistics
-    jsFrontend.statistics.init()
+    //jsFrontend.statistics.init()
 
     // init twitter
-    jsFrontend.twitter.init()
+    //jsFrontend.twitter.init()
   },
 
   /*addModalEvents: function () {
@@ -200,7 +200,7 @@ var jsFrontend = {
 /**
  * Form related javascript
  */
-jsFrontend.forms = {
+/*jsFrontend.forms = {
   // init, something like a constructor
   init: function () {
     jsFrontend.forms.placeholders()
@@ -484,7 +484,7 @@ jsFrontend.forms = {
       }
     )
   }
-}
+}*/
 
 /**
  * Gravatar related javascript
@@ -521,7 +521,7 @@ jsFrontend.gravatar = {
 /**
  * Locale
  */
-jsFrontend.locale = {
+/*jsFrontend.locale = {
   initialized: false,
   initializing: false,
   data: {},
@@ -599,12 +599,12 @@ jsFrontend.locale = {
   msg: function (key) {
     return jsFrontend.locale.get('msg', key)
   }
-}
+}*/
 
 /**
  * Google analytics related javascript
  */
-jsFrontend.statistics = {
+/*jsFrontend.statistics = {
   // init, something like a constructor
   init: function () {
     jsFrontend.statistics.trackOutboundLinks()
@@ -655,12 +655,12 @@ jsFrontend.statistics = {
       })
     }
   }
-}
+}*/
 
 /**
  * Twitter related stuff
  */
-jsFrontend.twitter = {
+/*jsFrontend.twitter = {
   init: function () {
     // if GA is integrated and a tweet button is used
     if (typeof twttr === 'object' && (typeof _gaq === 'object' || typeof ga === 'object')) {
@@ -684,6 +684,6 @@ jsFrontend.twitter = {
       })
     }
   }
-}
+}*/
 
 $(jsFrontend.init)
