@@ -1,5 +1,4 @@
-import { Ajax } from './Components/Ajax'
-import { Modal } from './Components/Modal'
+import { Components } from './Components'
 
 export class Frontend {
   constructor () {
@@ -7,8 +6,7 @@ export class Frontend {
   }
 
   initFrontend () {
-    this.ajax = new Ajax()
-    this.modal = new Modal()
+    this.components = new Components()
   }
 }
 

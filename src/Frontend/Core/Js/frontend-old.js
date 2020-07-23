@@ -94,7 +94,7 @@ jsFrontend.controls = {
 /**
  * Handles the cookieBar
  */
-jsFrontend.cookieBar = {
+/*jsFrontend.cookieBar = {
   init: function () {
     // if there is no cookiebar we shouldn't do anything
     if ($('#cookie-bar').length === 0) return
@@ -120,7 +120,7 @@ jsFrontend.cookieBar = {
       $cookieBar.hide()
     })
   }
-}
+}*/
 
 /**
  * Data related methods

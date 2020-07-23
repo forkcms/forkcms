@@ -1,5 +1,4 @@
-import { Ajax } from '../../../../Core/Js/Components/Ajax'
-import { Modal } from '../../../../Core/Js/Components/Modal'
+import { Components } from '../../../../Core/Js/Components'
 
 export class Index {
   constructor () {
@@ -7,8 +6,7 @@ export class Index {
   }
 
   initTheme () {
-    this.ajax = new Ajax()
-    this.modal = new Modal()
+    this.components = new Components()
   }
 }
 
