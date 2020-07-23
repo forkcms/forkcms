@@ -317,7 +317,7 @@
 /**
  * HTML5 validation
  */
-(function ($) {
+/*(function ($) {
   $.fn.html5validation = function (options) {
     // define defaults
     var $input = $(this)
@@ -358,4 +358,4 @@
       e.target.checkValidity()
     })
   }
-})(jQuery)
+})(jQuery)*/

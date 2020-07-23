@@ -1,6 +1,3 @@
-// import styling
-//import '../Layout/Sass/screen.scss'
-
 // import plugins
 import 'bootstrap'
 import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'

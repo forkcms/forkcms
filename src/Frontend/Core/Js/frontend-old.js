@@ -15,10 +15,10 @@ var jsFrontend = {
 
     //jsFrontend.addModalEvents()
 
-    jsFrontend.cookieBar.init()
+    //jsFrontend.cookieBar.init()
 
     // init controls
-    jsFrontend.controls.init()
+    //jsFrontend.controls.init()
 
     // init form
     jsFrontend.forms.init()
@@ -65,7 +65,7 @@ var jsFrontend = {
 /**
  * Controls related javascript
  */
-jsFrontend.controls = {
+/*jsFrontend.controls = {
   // init, something like a constructor
   init: function () {
     jsFrontend.controls.bindTargetBlank()
@@ -89,7 +89,7 @@ jsFrontend.controls = {
       $button.find('[data-role=label]').text(jsFrontend.locale.lbl($button.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
     }).find('[data-role=label]').text(jsFrontend.locale.lbl($navToggle.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
   }
-}
+}*/
 
 /**
  * Handles the cookieBar
@@ -159,7 +159,7 @@ jsFrontend.controls = {
 /**
  * Facebook related
  */
-jsFrontend.facebook = {
+/*jsFrontend.facebook = {
   // will be called after Facebook is initialized
   afterInit: function () {
     // is GA available?
@@ -195,7 +195,7 @@ jsFrontend.facebook = {
       FB.Event.subscribe('message.send', function (targetUrl) { ga('send', 'social', 'facebook', 'send', targetUrl) })
     }
   }
-}
+}*/
 
 /**
  * Form related javascript

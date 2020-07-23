@@ -1,16 +1,17 @@
+// import plugins
+import 'bootstrap'
+
+// component imports
 import { Components } from '../../../../Core/Js/Components'
 
 export class Index {
-  constructor () {
-    this.initTheme()
-  }
-
-  initTheme () {
+  initFrontend () {
     this.components = new Components()
+    this.components.initComponents()
   }
 }
 
 $(window).on('load', () => {
-  window.theme = new Index()
-  window.theme.initTheme()
+  window.frontend = new Index()
+  window.frontend.initFrontend()
 })

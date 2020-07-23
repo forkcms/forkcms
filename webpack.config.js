@@ -7,7 +7,7 @@ if (env.error) {
   throw env.error
 }
 
-const paths = {
+const themePaths = {
   build: `src/Frontend/Themes/${env.parsed.THEME}/Core/build`,
   core: `src/Frontend/Themes/${env.parsed.THEME}/Core`
 }
@@ -167,12 +167,12 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-  .setOutputPath(`${paths.build}`)
-  .setPublicPath(`/${paths.build}/`)
-  .setManifestKeyPrefix(`${paths.build}`)
+  .setOutputPath(`${themePaths.build}`)
+  .setPublicPath(`/${themePaths.build}/`)
+  .setManifestKeyPrefix(`${themePaths.build}`)
 
-  .addEntry('frontend', `./${paths.core}/Js/Index.js`)
-  .addStyleEntry('screen', `./${paths.core}/Layout/Sass/screen.scss`)
+  .addEntry('frontend', `./${themePaths.core}/Js/Index.js`)
+  .addStyleEntry('screen', `./${themePaths.core}/Layout/Sass/screen.scss`)
 
   .cleanupOutputBeforeBuild()
 
@@ -190,8 +190,8 @@ Encore
   .enableVersioning(Encore.isProduction())
 
   .copyFiles({
-    from: `/${paths.core}/Layout/Images`,
-    to: `/${paths.build}/images/[path][name].[ext]`
+    from: `/${themePaths.core}/Layout/Images`,
+    to: `/${themePaths.build}/images/[path][name].[ext]`
   })
 
   .autoProvidejQuery()

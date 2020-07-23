@@ -1,12 +1,13 @@
+// import plugins
+import 'bootstrap'
+
+// component imports
 import { Components } from './Components'
 
 export class Frontend {
-  constructor () {
-    this.initFrontend()
-  }
-
   initFrontend () {
     this.components = new Components()
+    this.components.initComponents()
   }
 }
 
