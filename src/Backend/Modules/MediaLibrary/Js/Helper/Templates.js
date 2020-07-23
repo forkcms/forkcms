@@ -59,7 +59,7 @@ export class Templates {
    */
   static getHTMLForMediaItemToConnect (mediaItem) {
     let html = '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
-    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
+    html += '<div class="mediaHolder mediaHolder' + utilsOld.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     if (mediaItem.type === 'image') {
       html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
@@ -72,8 +72,8 @@ export class Templates {
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
     html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
-    html += 'title="' + utils.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
-    html += '<span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += 'title="' + utilsOld.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
+    html += '<span class="sr-only">' + utilsOld.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '<i class="fas fa-times"></i>'
     html += '</button>'
     html += '</div>'
@@ -90,7 +90,7 @@ export class Templates {
    * @returns {string}
    */
   static getHTMLForMediaItemTableRow (mediaItem, connected) {
-    let html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">'
+    let html = '<tr id="media-' + mediaItem.id + '" class="row' + utilsOld.string.ucfirst(mediaItem.type) + '">'
     html += '<td class="check">'
     html += '<input type="checkbox" autocomplete="off" class="toggleConnectedCheckbox" id="media-' + mediaItem.id + '-checkbox"'
 
@@ -112,7 +112,7 @@ export class Templates {
     html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.title + '</label></td>'
     if (mediaItem.type === 'image') {
       html += '<td class="duplicate">'
-      html += '<button type="button" data-media-item-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary btn-icon-only" title="' + utils.string.ucfirst(window.backend.locale.lbl('MediaItemDuplicate')) + '">'
+      html += '<button type="button" data-media-item-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary btn-icon-only" title="' + utilsOld.string.ucfirst(window.backend.locale.lbl('MediaItemDuplicate')) + '">'
       html += '<span class="fa fa-copy" aria-hidden="true"></span>'
       html += '</button>'
       html += '</td>'
@@ -136,7 +136,7 @@ export class Templates {
 
     // create element
     html += '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
-    html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
+    html += '<div class="mediaHolder mediaHolder' + utilsOld.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     // is image
     if (mediaItem.type === 'image') {
@@ -152,9 +152,9 @@ export class Templates {
     }
 
     html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
-    html += 'title="' + utils.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
+    html += 'title="' + utilsOld.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
     html += '<i class="fas fa-times"></i>'
-    html += '<span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += '<span class="sr-only">' + utilsOld.string.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'
     html += '</div>'
     html += '</li>'

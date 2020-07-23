@@ -52,7 +52,7 @@ export class Upload {
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
             const $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' +
-              responseJSON.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
+              responseJSON.direct_url + '"><span class="sr-only">' + utilsOld.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
 
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder')
@@ -71,10 +71,10 @@ export class Upload {
 
           // everything uploaded, show success message
           if (failed.length === 0) {
-            Messages.add('success', utils.string.sprintf(window.backend.locale.msg('MediaUploadedSuccess'), succeeded.length))
+            Messages.add('success', utilsOld.string.sprintf(window.backend.locale.msg('MediaUploadedSuccess'), succeeded.length))
             // not everything is uploaded successful, show error message
           } else {
-            Messages.add('danger', utils.string.sprintf(window.backend.locale.err('MediaUploadedError'), (succeeded.length + '","' + failed.length)))
+            Messages.add('danger', utilsOld.string.sprintf(window.backend.locale.err('MediaUploadedError'), (succeeded.length + '","' + failed.length)))
           }
         }
       }
@@ -223,7 +223,7 @@ export class Upload {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utils.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
+            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + utilsOld.string.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)

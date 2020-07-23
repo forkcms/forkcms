@@ -1,19 +1,19 @@
 /**
  * Utilities; useful scripts
  */
-var utils = {
+var utilsOld = {
   debug: false
 }
 
 /**
  * Functions related to arrays
  */
-utils.array = {
-  /**
+/*utils.array = {
+  /!**
    * Is the given value present in the array
    *
    * @return bool
-   */
+   *!/
   inArray: function (needle, array) {
     // loop values
     for (var i in array) {
@@ -23,7 +23,7 @@ utils.array = {
     // fallback
     return false
   }
-}
+}*/
 
 /**
  * Function related to cookies
@@ -82,73 +82,74 @@ utils.array = {
 /**
  * Functions related to forms
  */
-utils.form = {
-  /**
+/*utils.form = {
+  /!**
    * Is a checkbox checked?
    *
    * @return bool
    * @param object element
-   */
+   *!/
   isChecked: function (element) {
     return ($('input[name="' + element.attr('name') + '"]:checked').length >= 1)
   },
 
-  /**
+  /!**
    * Is the value inside the element a valid email address
    *
    * @return bool
    * @param object element
-   */
+   *!/
   isEmail: function (element) {
     var regexp = /^[a-z0-9!#$%&'*+-/=?^_`{|}.~]+@([a-z0-9]+([-]+[a-z0-9]+)*\.)+[a-z]{2,7}$/i
     return regexp.test(element.val())
   },
 
-  /**
+  /!**
    * Is the element filled
    *
    * @return bool
    * @param object element
-   */
+   *!/
   isFilled: function (element) {
     return (utils.string.trim(element.val()) !== '')
   },
 
-  /**
+  /!**
    * Is the value inside the element a valid number
    *
    * @return bool
    * @param object element
-   */
+   *!/
   isNumber: function (element) {
     return (!isNaN(element.val()) && element.val() !== '')
   },
 
-  /**
+  /!**
    * Is the value inside the element a valid URL
    *
    * @return bool
    * @param object element
-   */
+   *!/
   isURL: function (element) {
     var regexp = /^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z#%@./_-]+)?(\?[0-9a-zA-Z%@/&=_-]+)?)?)$/i
     return regexp.test(element.val())
   }
-}
+}*/
 
 /**
  * Functions related to strings
  */
+/*
 utils.string = {
   // data member
   div: false,
 
-  /**
+  /!**
    * Fix a HTML5-chunk, so IE can render it
    *
    * @return string
    * @param string html
-   */
+   *!/
   html5: function (html) {
     var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ')
     var i = 0
@@ -168,7 +169,7 @@ utils.string = {
       }
     }
 
-    html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+    html = html.replace(/^\s\s*!/, '').replace(/\s\s*$/, '')
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
 
     // fix for when in a table
@@ -194,46 +195,46 @@ utils.string = {
     return returnedFragment
   },
 
-  /**
+  /!**
    * Encode the string as HTML
    *
    * @return string
    * @param string value
-   */
+   *!/
   htmlEncode: function (value) {
     return $('<div/>').text(value).html()
   },
 
-  /**
+  /!**
    * Decode the string as HTML
    *
    * @return string
    * @param string value
-   */
+   *!/
   htmlDecode: function (value) {
     return $('<div/>').html(value).text()
   },
 
-  /**
+  /!**
    * Replace all occurences of one string into a string
    *
    * @return string
    * @param string value
    * @param string needle
    * @param string replacement
-   */
+   *!/
   replaceAll: function (value, needle, replacement) {
     if (typeof value === 'undefined') return ''
     return value.replace(new RegExp(needle, 'g'), replacement)
   },
 
-  /**
+  /!**
    * Sprintf replaces all arguments that occur in the string (%1$s, %2$s, ...)
    *
    * @return string
    * @param string value
    * @params    string arguments
-   */
+   *!/
   sprintf: function (value) {
     if (arguments.length < 2) {
       return value
@@ -250,22 +251,22 @@ utils.string = {
     return value
   },
 
-  /**
+  /!**
    * Strip HTML tags
    *
    * @return string
-   */
+   *!/
   stripTags: function (value) {
     return value.replace(/<[^>]*>/ig, '')
   },
 
-  /**
+  /!**
    * Strip whitespace from the beginning and end of a string
    *
    * @return string
    * @param string value
    * @param string[optional] charList
-   */
+   *!/
   trim: function (value, charList) {
     if (typeof value === 'undefined') return ''
     if (typeof charList === 'undefined') charList = ' '
@@ -274,34 +275,34 @@ utils.string = {
     return value.replace(pattern, '')
   },
 
-  /**
+  /!**
    * PHP-like urlencode
    *
    * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
    * @return string
    * @param string value
-   */
+   *!/
   urlEncode: function (value) {
-    return encodeURIComponent(value).replace(/%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/~/g, '%7E')
+    return encodeURIComponent(value).replace(/%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*!/g, '%2A').replace(/~/g, '%7E')
   },
 
-  /**
+  /!**
    * PHP-like urlencode
    *
    * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
    * @return string
    * @param string value
-   */
+   *!/
   urlDecode: function (value) {
     return decodeURIComponent(value.replace(/\+/g, '%20').replace(/%21/g, '!').replace(/%27/g, '\'').replace(/%28/g, '(').replace(/%29/g, ')').replace(/%2A/g, '*').replace(/%7E/g, '~'))
   },
 
-  /**
+  /!**
    * Urlise a string (cfr. SpoonFilter::urlise)
    *
    * @return string
    * @param string value
-   */
+   *!/
   urlise: function (value) {
     // reserved characters (RFC 3986)
     var reservedCharacters = [
@@ -335,22 +336,22 @@ utils.string = {
     return utils.string.trim(value, '-')
   },
 
-  /**
+  /!**
    * Adds a capital letter to a string
    *
    * @return string
    * @param string $value
-   */
+   *!/
   ucfirst: function (value) {
     return value.charAt(0).toUpperCase() + value.slice(1)
   },
 
-  /**
+  /!**
    * Convert a HTML string to a XHTML string.
    *
    * @return string
    * @param string value
-   */
+   *!/
   xhtml: function (value) {
     // break tags should end with a slash
     value = value.replace(/<br>/g, '<br />')
@@ -372,11 +373,12 @@ utils.string = {
     return value
   }
 }
+*/
 
 /**
  * Functions related to the current url
  */
-utils.url = {
+/*utils.url = {
   extractParamFromUri: function (uri, paramName) {
     if (!uri) return
     uri = uri.split('#')[0]
@@ -393,12 +395,12 @@ utils.url = {
     }
   },
 
-  /**
+  /!**
    * Get a GET parameter
    *
    * @return string
    * @param string name
-   */
+   *!/
   getGetValue: function (name) {
     // init return value
     var getValue = ''
@@ -424,4 +426,4 @@ utils.url = {
     // cough up value
     return getValue
   }
-}
+}*/

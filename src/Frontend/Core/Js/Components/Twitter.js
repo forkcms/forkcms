@@ -10,7 +10,7 @@ export class Twitter {
           let targetUrl = null
 
           // get url
-          if (e.target && e.target.nodeName === 'IFRAME') targetUrl = utils.url.extractParamFromUri(e.target.src, 'url')
+          if (e.target && e.target.nodeName === 'IFRAME') targetUrl = utilsOld.url.extractParamFromUri(e.target.src, 'url')
 
           // push to GA
           if (typeof _gaq === 'object') {

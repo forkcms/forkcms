@@ -523,7 +523,7 @@ export class Group {
     // check which items to add
     $(this.config.currentMediaItemIds).each((i, id) => {
       // add item
-      if (!utils.array.inArray(id, currentIds)) {
+      if (!utilsOld.array.inArray(id, currentIds)) {
         // loop media folders
         $.each(this.config.media, (index, items) => {
           // loop media items in folder
@@ -587,7 +587,7 @@ export class Group {
     // loop media
     $.each(this.config.media[this.config.mediaFolderId], (i, item) => {
       // check if media is connected or not
-      const connected = (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') ? false : utils.array.inArray(item.id, this.config.mediaGroups[this.config.currentMediaGroupId].media)
+      const connected = (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') ? false : utilsOld.array.inArray(item.id, this.config.mediaGroups[this.config.currentMediaGroupId].media)
 
       // Redefine
       html[item.type] += Templates.getHTMLForMediaItemTableRow(item, connected)
@@ -596,13 +596,13 @@ export class Group {
 
     $(mediaItemTypes).each((index, type) => {
       const mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks" title="Select all"></span></th>' +
-        (type === 'image' ? '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Image')) + '</th>' : '') +
-        '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Filename')) + '</th>' +
-        '<th>' + utils.string.ucfirst(window.backend.locale.lbl('Title')) + '</th>' +
+        (type === 'image' ? '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Image')) + '</th>' : '') +
+        '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Filename')) + '</th>' +
+        '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Title')) + '</th>' +
         '</tr></thead>' +
         '<tbody>' + html[type] + '</tbody>'
-      $('#mediaTable' + utils.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
-      $('#mediaCount' + utils.string.ucfirst(type)).text('(' + counts[type] + ')')
+      $('#mediaTable' + utilsOld.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
+      $('#mediaCount' + utilsOld.string.ucfirst(type)).text('(' + counts[type] + ')')
     })
 
     // Init toggle for mass-action checkbox
@@ -660,7 +660,7 @@ export class Group {
       const isChecked = $(e.currentTarget).is(':checked')
 
       // was already connected?
-      const connected = utils.array.inArray(mediaId, this.config.currentMediaItemIds)
+      const connected = utilsOld.array.inArray(mediaId, this.config.currentMediaItemIds)
 
       // delete from array
       if (connected && !isChecked) {

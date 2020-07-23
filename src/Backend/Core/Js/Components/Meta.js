@@ -89,7 +89,7 @@ export class Meta {
               $(options.generatedUrlSelector).html(url)
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-              url = utils.string.urlDecode(utils.string.urlise(url))
+              url = utilsOld.string.urlDecode(utilsOld.string.urlise(url))
               $(options.urlSelector).val(url)
               $(options.generatedUrlSelector).html(url)
             }

@@ -924,7 +924,7 @@
           // only add if not already in elements
           if (!inElements) {
             // add elements
-            elements.push(utils.string.stripForTag(value))
+            elements.push(utilsOld.string.stripForTag(value))
 
             // set new value
             $('#' + id).val(elements.join(options.splitChar))
@@ -949,10 +949,10 @@
 
           // loop elements
           for (var i in elements) {
-            var value = utils.string.stripForTag(elements[i])
+            var value = utilsOld.string.stripForTag(elements[i])
 
             html += '    <li class="list-group-item">' +
-              '        <button type="button" class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fas fa-trash" aria-hidden="true"></span></button></span>' +
+              '        <button type="button" class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + value + '" title="' + utilsOld.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fas fa-trash" aria-hidden="true"></span></button></span>' +
               '       <span><strong>' + value + '</strong>' +
               '    </li>'
           }
