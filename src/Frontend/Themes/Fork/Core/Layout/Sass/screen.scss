@@ -5,10 +5,11 @@
 @import '~bootstrap/scss/variables';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
+@import 'overwrite-variables';
 
 // Plugins
-//@import '~photoswipe/src/css/main.scss';
-//@import '~photoswipe/src/css/default-skin/default-skin.scss';
+@import '~photoswipe/src/css/main.scss';
+@import '~photoswipe/src/css/default-skin/default-skin.scss';
 @import '~slick-carousel/slick/slick.scss';
 
 // Base
