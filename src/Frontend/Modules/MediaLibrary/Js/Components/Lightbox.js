@@ -1,3 +1,6 @@
+import 'photoswipe/dist/photoswipe.min'
+import 'photoswipe/dist/photoswipe-ui-default.min'
+
 export class Lightbox {
   constructor (gallerySelector) {
     // loop through all gallery elements and bind events

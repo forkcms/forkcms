@@ -1,3 +1,5 @@
+import 'slick-carousel/slick/slick.min'
+
 export class Slider {
   constructor () {
     const $sliders = $('.widget-media-library-slider')
