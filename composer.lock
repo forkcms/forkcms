@@ -6072,16 +6072,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.42",
+            "version": "v3.4.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "ac355e1e9ebde4cf6ef5187f5cf4b43001f9a29f"
+                "reference": "03f831108f7cea087be83cc6dd07d3419542a5ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/ac355e1e9ebde4cf6ef5187f5cf4b43001f9a29f",
-                "reference": "ac355e1e9ebde4cf6ef5187f5cf4b43001f9a29f",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/03f831108f7cea087be83cc6dd07d3419542a5ba",
+                "reference": "03f831108f7cea087be83cc6dd07d3419542a5ba",
                 "shasum": ""
             },
             "require": {
@@ -6147,7 +6147,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-04T15:36:03+00:00"
+            "time": "2020-07-22T22:00:00+00:00"
         }
     ],
     "aliases": [],
