@@ -1,4 +1,5 @@
 import { EventUtil } from './EventUtil'
+import { StringUtil } from './StringUtil'
 
 export class Meta {
   static doMeta (options, element) {
@@ -89,7 +90,7 @@ export class Meta {
               $(options.generatedUrlSelector).html(url)
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-              url = utilsOld.string.urlDecode(utilsOld.string.urlise(url))
+              url = StringUtil.urlDecode(StringUtil.urlise(url))
               $(options.urlSelector).val(url)
               $(options.generatedUrlSelector).html(url)
             }

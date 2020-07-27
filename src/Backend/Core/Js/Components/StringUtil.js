@@ -115,7 +115,7 @@ export class StringUtil {
 
       // find all variables and replace them
       for (let i = 1; i < arguments.length; i++) {
-        value = utilsOld.string.replaceAll(value, '%' + i + 'Ss', arguments[i])
+        value = StringUtil.replaceAll(value, '%' + i + 'Ss', arguments[i])
       }
     }
 
@@ -206,25 +206,25 @@ export class StringUtil {
     for (let i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ')
 
     // replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
-    value = utilsOld.string.replaceAll(value, '"', ' ')
+    value = StringUtil.replaceAll(value, '"', ' ')
 
     // replace spaces by dashes
-    value = utilsOld.string.replaceAll(value, ' ', '-')
+    value = StringUtil.replaceAll(value, ' ', '-')
 
     // only urlencode if not yet urlencoded
-    if (utilsOld.string.urlDecode(value) === value) {
+    if (StringUtil.urlDecode(value) === value) {
       // to lowercase
       value = value.toLowerCase()
 
       // urlencode
-      value = utilsOld.string.urlEncode(value)
+      value = StringUtil.urlEncode(value)
     }
 
     // convert "--" to "-"
     value = value.replace(/-+/, '-')
 
     // trim - signs
-    return utilsOld.string.trim(value, '-')
+    return StringUtil.trim(value, '-')
   }
 
   /**
