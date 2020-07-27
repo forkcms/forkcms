@@ -33,6 +33,7 @@ framework:
 webpack_encore:
     output_path: '%kernel.project_dir%/src/Backend/Core/build'
     builds:
+        installerConfig: '%kernel.project_dir%/src/ForkCMS/Bundle/InstallerBundle/Resources/public/build'
         backendConfig: '%kernel.project_dir%/src/Backend/Core/build'
         frontendConfig: '%kernel.project_dir%/src/Frontend/Core/build'
         frontendThemeConfig: '%kernel.project_dir%/src/Frontend/Themes/%env(resolve:THEME)%/Core/build'

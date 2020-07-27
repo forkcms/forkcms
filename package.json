@@ -60,6 +60,7 @@
   },
   "scripts": {
     "test": "standard",
+    "dev:installer": "encore dev --config-name installerConfig --watch",
     "dev:backend": "encore dev --config-name backendConfig --watch",
     "dev:frontend": "encore dev --config-name frontendConfig --watch",
     "dev:frontend:theme": "encore dev --config-name frontendThemeConfig --watch",
