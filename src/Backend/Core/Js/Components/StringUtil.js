@@ -157,28 +157,6 @@ export class StringUtil {
   }
 
   /**
-   * PHP-like urlencode
-   *
-   * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
-   * @return string
-   * @param string value
-   */
-  static urlEncode (value) {
-    return encodeURIComponent(value).replace(/%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/~/g, '%7E')
-  }
-
-  /**
-   * PHP-like urlencode
-   *
-   * @see https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
-   * @return string
-   * @param string value
-   */
-  static urlDecode (value) {
-    return decodeURIComponent(value.replace(/\+/g, '%20').replace(/%21/g, '!').replace(/%27/g, '\'').replace(/%28/g, '(').replace(/%29/g, ')').replace(/%2A/g, '*').replace(/%7E/g, '~'))
-  }
-
-  /**
    * Tags cannot contain ", < and >
    *
    * @return string
@@ -212,12 +190,12 @@ export class StringUtil {
     value = StringUtil.replaceAll(value, ' ', '-')
 
     // only urlencode if not yet urlencoded
-    if (StringUtil.urlDecode(value) === value) {
+    if (decodeURI(value) === value) {
       // to lowercase
       value = value.toLowerCase()
 
       // urlencode
-      value = StringUtil.urlEncode(value)
+      value = encodeURI(value)
     }
 
     // convert "--" to "-"
