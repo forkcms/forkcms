@@ -3,6 +3,7 @@ import { Duplicator } from './Duplicator'
 import { Templates } from './Templates'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { Data } from '../../../../Core/Js/Components/Data'
+import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
 
 export class Group {
   constructor (configSet) {
@@ -596,13 +597,13 @@ export class Group {
 
     $(mediaItemTypes).each((index, type) => {
       const mediaTableHtml = '<thead><tr><th class="check"><span><input type="checkbox" name="toggleChecks" value="toggleChecks" title="Select all"></span></th>' +
-        (type === 'image' ? '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Image')) + '</th>' : '') +
-        '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Filename')) + '</th>' +
-        '<th>' + utilsOld.string.ucfirst(window.backend.locale.lbl('Title')) + '</th>' +
+        (type === 'image' ? '<th>' + StringUtil.ucfirst(window.backend.locale.lbl('Image')) + '</th>' : '') +
+        '<th>' + StringUtil.ucfirst(window.backend.locale.lbl('Filename')) + '</th>' +
+        '<th>' + StringUtil.ucfirst(window.backend.locale.lbl('Title')) + '</th>' +
         '</tr></thead>' +
         '<tbody>' + html[type] + '</tbody>'
-      $('#mediaTable' + utilsOld.string.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
-      $('#mediaCount' + utilsOld.string.ucfirst(type)).text('(' + counts[type] + ')')
+      $('#mediaTable' + StringUtil.ucfirst(type)).html((html[type]) ? $(mediaTableHtml) : rowNoItems)
+      $('#mediaCount' + StringUtil.ucfirst(type)).text('(' + counts[type] + ')')
     })
 
     // Init toggle for mass-action checkbox
