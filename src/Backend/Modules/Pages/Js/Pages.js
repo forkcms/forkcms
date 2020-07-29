@@ -128,34 +128,46 @@ jsBackend.pages.extras = {
       var $modal = $(this).closest('.modal')
       var separator = ' › '
       var $pageBlockWrapper = $modal.closest('[data-role="page-block-wrapper"]')
+      var $pageBlockTitleWrapper = $pageBlockWrapper.find('[data-role="page-block-title-wrapper"]')
       var $pageBlockTitle = $pageBlockWrapper.find('[data-role="page-block-title"]')
+      var $pageBlockType = $pageBlockWrapper.find('[data-role="page-block-type"]')
       var $pageBlockPreview = $pageBlockWrapper.find('[data-role="page-block-preview"]')
       var selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
-      var title = $modal.find('[data-role="select-block-type"] option:selected').text()
 
       if (selectedBlockType === 'block' || selectedBlockType === 'widget') {
-        title += separator + jsBackend.pages.extras.extractExtraTitle(
+        var title = jsBackend.pages.extras.extractExtraTitle(
           separator,
           $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
         )
+        $pageBlockTitleWrapper.removeClass('d-none')
+        $pageBlockTitle.text(title)
+        $pageBlockType.text(selectedBlockType)
+      } else {
+        $pageBlockTitleWrapper.addClass('d-none')
       }
 
-      if (selectedBlockType === 'rich_text' && $modal.find('.ce-block').length > 0) {
-        $pageBlockPreview.html(jsBackend.pages.extras.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]'))))
+      if (selectedBlockType === 'rich_text') {
+        $pageBlockPreview.removeClass('d-none')
+
+        var text = jsBackend.pages.extras.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]')))
+        if (text !== '') {
+          $pageBlockPreview.html(text)
+        } else {
+          $pageBlockPreview.html(jsBackend.locale.lbl('NoContentToShow'))
+        }
+      } else {
+        $pageBlockPreview.addClass('d-none')
       }
 
-      $pageBlockTitle.text(title)
       $modal.modal('hide')
     })
-
-    $('[data-role="page-content-tab"] [data-role="page-block-save"]').trigger('click')
   },
 
   getBlockPreview: function ($elements) {
     var previewText = ''
     var prefix = '<p>'
     var affix = '</p>'
-    var length = 100
+    var length = 75
     var addHellip = function(string) {
       if (string.length === 0) {
         return string

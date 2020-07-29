@@ -17,16 +17,11 @@
     vertical-align: top;
 
     &.empty {
-      background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
+      background-color: $gray-100;
       background-size: 20px;
       border-radius: 3px;
-      border: 1px solid $border-color;
       display: none;
       padding: 10px;
-    }
-
-    .card {
-      border: 1px solid $border-color;
     }
   }
 
@@ -49,16 +44,19 @@
 }
 
 @include media-breakpoint-up(xl) {
-  #templateVisualLarge table td {
-    display: table-cell;
-    margin: 0 -15px;
-
-    &.empty {
-      display: table-cell;
-    }
+  #templateVisualLarge {
+    margin: 0 -10px;
 
     table {
-      border-spacing: 15px;
+      border-spacing: 10px;
+
+      td {
+        display: table-cell;
+
+        &.empty {
+          display: table-cell;
+        }
+      }
     }
   }
 }

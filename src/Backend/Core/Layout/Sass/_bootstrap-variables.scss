@@ -18,6 +18,7 @@ $gray-100: #f1f1f1;
 $gray-200: #E5E5E5;
 $gray-300: #ddd;
 $gray-400: #cccccc;
+$gray-450: #B2B2B2;
 $gray-500: #adb5bd;
 $gray-550: #999999;
 $gray-600: #6c757d;
@@ -79,7 +80,7 @@ $info:          $blue;
 $warning:       $yellow;
 $danger:        $red;
 $light:         $gray-100;
-$medium:        $gray-600;
+$middle:        $gray-450;
 $dark:          $gray-800;
 $black:         $black;
 
@@ -92,7 +93,7 @@ $theme-colors: map-merge((
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "medium":     $medium,
+  "middle":     $middle,
   "dark":       $dark,
   "black":      $black
 ), $theme-colors);
@@ -102,7 +103,7 @@ $theme-colors: map-merge((
 $theme-color-interval:      8%;
 
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
-$yiq-contrasted-threshold: 150;
+$yiq-contrasted-threshold: 180;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
 $yiq-text-dark: $gray-900;
@@ -844,7 +845,7 @@ $card-spacer-y:                     .75rem;
 $card-spacer-x:                     1.25rem;
 $card-border-width:                 $border-width;
 $card-border-radius:                0.12rem;
-$card-border-color:                 rgba($black, .125);
+$card-border-color:                 $gray-200;
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width});
 $card-cap-bg:                       rgba($black, .03);
 $card-cap-color:                    null;
@@ -936,8 +937,8 @@ $toast-header-border-color:         rgba(0, 0, 0, .05);
 
 $badge-font-size:                   75%;
 $badge-font-weight:                 $font-weight-bold;
-$badge-padding-y:                   .25em;
-$badge-padding-x:                   .4em;
+$badge-padding-y:                   .4rem;
+$badge-padding-x:                   .4rem;
 $badge-border-radius:               $border-radius;
 
 $badge-transition:                  $btn-transition;
@@ -1024,7 +1025,7 @@ $progress-bar-transition:           width .6s ease;
 
 $list-group-color:                  null;
 $list-group-bg:                     $white;
-$list-group-border-color:           rgba($black, .125);
+$list-group-border-color:           $gray-450;
 $list-group-border-width:           $border-width;
 $list-group-border-radius:          $border-radius;
 
