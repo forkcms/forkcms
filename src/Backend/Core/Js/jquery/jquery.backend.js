@@ -1588,8 +1588,8 @@
       var searchFor = fromBlockName
       var replaceWith = toBlockName
       if (fromBlockName !== toBlockName) {
-        searchFor += prefix + currentIndex
-        replaceWith += prefix + newIndex
+        searchFor += prefix + currentIndex + suffix
+        replaceWith += prefix + newIndex + suffix
       }
 
       return oldString.replace(searchFor, replaceWith)
