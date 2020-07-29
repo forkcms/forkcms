@@ -1568,7 +1568,6 @@
       var chunks = name.split('_')
 
       for(var chunk of chunks) {
-        // if the
         if(!isNaN(+chunk)) {
           return (+chunk)
         }
