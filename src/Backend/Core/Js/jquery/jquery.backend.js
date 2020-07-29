@@ -1589,29 +1589,66 @@
       var fromBlockName = $(event.from).data('position')
       var toBlockName = $(event.to).data('position')
 
+      var positionHasChanged = (fromBlockName != toBlockName)
+      if(positionHasChanged) {
+        var $sequenceField = $(event.item).find(sequenceField)
+        var currentId = $sequenceField.attr('id')
+
+        var currentFieldIndex = this.getFieldIndexFromString(currentId)
+        if(currentFieldIndex === -1) {
+          console.error('Could not find the index.')
+        }
+
+        var newFieldIndex = event.newIndex
+        var regexp = new RegExp(fromBlockName + '_' + currentFieldIndex, 'g')
+
+        while ($('#' + currentId.replace(regexp, toBlockName + '_' + newFieldIndex)).length > 0) {
+          newFieldIndex++
+        }
+      }
+
       $(event.item).find('[id*="' + fromBlockName + '"]').each(function (index, item) {
         var oldId = $(item).attr('id')
-        var newId = oldId.replace(fromBlockName, toBlockName)
+        var searchFor = fromBlockName
+        var replaceWith = toBlockName
+        if(positionHasChanged) {
+          searchFor += '_' + currentFieldIndex
+          replaceWith += '_' + newFieldIndex
+        }
+        var newId = oldId.replace(searchFor, replaceWith)
 
         $(item).attr('id', newId)
       })
 
       $(event.item).find('[aria-labelledby*="' + fromBlockName + '"]').each(function (index, item) {
+        var searchFor = fromBlockName
+        var replaceWith = toBlockName
+        if(positionHasChanged) {
+          searchFor += '_' + currentFieldIndex
+          replaceWith += '_' + newFieldIndex
+        }
+
         var oldLabel = $(item).attr('aria-labelledby')
-        var newLabel = oldLabel.replace(fromBlockName, toBlockName)
+        var newLabel = oldLabel.replace(searchFor, replaceWith)
 
         $(item).attr('aria-labelledby', newLabel)
       })
 
       $(event.item).find('[name*="' + fromBlockName + '"]').each(function (index, item) {
+        var searchFor = fromBlockName
+        var replaceWith = toBlockName
+        if(positionHasChanged) {
+          searchFor += '][' + currentFieldIndex + ']'
+          replaceWith += '][' + newFieldIndex + ']'
+        }
+
         var oldName = $(item).attr('name')
-        var newName = oldName.replace(fromBlockName, toBlockName)
+        var newName = oldName.replace(searchFor, replaceWith)
 
         $(item).attr('name', newName)
       })
 
       $('[data-position="' + toBlockName + '"] li.list-group-item').each(function (index, item) {
-        console.log($(item).find('[data-role="sequence"]'))
         $(item).find('[data-role="sequence"]').val(index)
       })
     }
