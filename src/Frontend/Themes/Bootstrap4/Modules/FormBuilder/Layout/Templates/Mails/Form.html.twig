@@ -11,6 +11,11 @@
 
   <h3>{{ 'lbl.Content'|trans|ucfirst }}</h3>
   {% for field in fields %}
-    <p><strong>{{ field.label }}:</strong><br /> {{ field.value|raw }}</p>
+    <p><strong>{{ field.label|raw }}{% if field.value %}:{% endif %}</strong>
+      {% if field.value %}
+        <br />
+        {{ field.value|replace({'<br />\r\n' : '\r\n','<br>\r\n' : '\r\n','<br />' : '\r\n','<br>' : '\r\n'})|e|nl2br|raw }}
+      {% endif %}
+    </p>
   {% endfor %}
 {% endblock %}
