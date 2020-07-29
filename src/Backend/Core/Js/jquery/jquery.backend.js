@@ -1564,6 +1564,18 @@
       })
     },
 
+    getFieldIndexFromString: function(name) {
+      var chunks = name.split('_')
+
+      for(var chunk of chunks) {
+        // if the
+        if(!isNaN(+chunk)) {
+          return (+chunk)
+        }
+      }
+      return -1
+    },
+
     // TODO This might be deleted now we have saveNewGroup
     saveNewSequence: function ($sequenceBody) {
       var counter = 0
