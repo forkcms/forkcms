@@ -213,7 +213,7 @@ class Profile
         );
 
         foreach ($this->settings as &$value) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
     }
 

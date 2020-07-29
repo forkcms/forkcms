@@ -267,7 +267,7 @@ class Model
 
         // unserialize values
         foreach ($settings as &$value) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
 
         // return

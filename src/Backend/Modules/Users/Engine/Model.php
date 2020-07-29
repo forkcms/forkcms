@@ -161,7 +161,7 @@ class Model
 
         // loop settings and unserialize them
         foreach ($user['settings'] as &$value) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
 
         // return
@@ -288,7 +288,8 @@ class Model
                  FROM users_settings
                  WHERE user_id = ? AND name = ?',
                 [$userId, $setting]
-            )
+            ),
+            ['allowed_classes' => false]
         );
     }
 
@@ -328,7 +329,7 @@ class Model
 
         // loop users & unserialize
         foreach ($users as &$value) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
 
         // return

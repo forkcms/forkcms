@@ -6,6 +6,7 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksT
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
@@ -310,7 +311,7 @@ class Model
             // loop elements
             foreach ($navigation[$navigationType][$depth][$parentId] as $key => $aValue) {
                 $html .= "\t<li>" . "\n";
-                $html .= "\t\t" . '<a href="#">' . $aValue['navigation_title'] . '</a>' . "\n";
+                $html .= "\t\t" . '<a href="#">' . htmlspecialchars($aValue['navigation_title']) . '</a>' . "\n";
 
                 // insert recursive here!
                 if (isset($navigation[$navigationType][$depth + 1][$key])) {
@@ -469,7 +470,7 @@ class Model
 
         // unserialize data
         if ($return['data'] !== null) {
-            $return['data'] = unserialize($return['data']);
+            $return['data'] = unserialize($return['data'], ['allowed_classes' => false]);
         }
 
         // return
@@ -665,7 +666,7 @@ class Model
         $keys = [];
         $pages = [];
         $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $language);
-        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? SpoonFilter::ucfirst(BL::lbl('Home'));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {
@@ -676,7 +677,7 @@ class Model
                 $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
                 $parentTitle = str_replace([$homepageTitle . ' → ', $homepageTitle], '', $titles[$parentID] ?? '');
-                $titles[$pageID] = trim($parentTitle . ' → ' . $page['title'], ' → ');
+                $titles[$pageID] = htmlspecialchars(trim($parentTitle . ' → ' . $page['title'], ' → '));
             }
         }
 
@@ -706,7 +707,7 @@ class Model
 
         foreach ($navigation['page'][$parentId] as $page) {
             $pageId = $page['page_id'];
-            $pageTitle = $parentTitle . ' → ' . $page['navigation_title'];
+            $pageTitle = htmlspecialchars($parentTitle . ' → ' . $page['navigation_title']);
             $tree['pages'][$pageId] = $pageTitle;
             $tree['attributes'][$pageId] = $attributesFunction($page);
 
@@ -771,7 +772,7 @@ class Model
         array $page,
         array $navigation
     ): array {
-        $tree['pages'][$branchLabel][$page['page_id']] = $page['navigation_title'];
+        $tree['pages'][$branchLabel][$page['page_id']] = SpoonFilter::htmlentities($page['navigation_title']);
         $tree['attributes'][$page['page_id']] = $attributesFunction($page);
 
         return self::mergeTreeForDropdownArrays(
@@ -844,7 +845,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // get childs
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -929,7 +930,7 @@ class Model
         $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // start HTML
-        $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
+        $html = '<h4>' . SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
         $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home">';
@@ -954,7 +955,7 @@ class Model
         // only show meta if needed
         if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
             // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
+            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
             $html .= '    <ul>' . "\n";
 
@@ -971,7 +972,7 @@ class Model
                         null,
                         null,
                         ['id' => $page['page_id']]
-                    ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                    ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                     // insert subtree
                     $html .= self::getSubtree($navigation, $page['page_id']);
@@ -987,7 +988,7 @@ class Model
         }
 
         // footer pages
-        $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
+        $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
 
         // start
         $html .= '<div class="clearfix" data-tree="footer">' . "\n";
@@ -1006,7 +1007,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1023,7 +1024,7 @@ class Model
         // are there any root pages
         if (isset($navigation['root'][0]) && !empty($navigation['root'][0])) {
             // meta pages
-            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
+            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
 
             // start
             $html .= '<div class="clearfix" data-tree="root">' . "\n";
@@ -1040,7 +1041,7 @@ class Model
                     null,
                     null,
                     ['id' => $page['page_id']]
-                ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+                ) . '"><ins>&#160;</ins>' . htmlspecialchars($page['navigation_title']) . '</a>' . "\n";
 
                 // insert subtree
                 $html .= self::getSubtree($navigation, $page['page_id']);
@@ -1295,8 +1296,8 @@ class Model
         string $tree,
         string $language = null
     ): bool {
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
-        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
+        $typeOfDrop = SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
+        $tree = SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
         // When dropping on the main navigation it should be added as a child of the home page
@@ -1423,7 +1424,7 @@ class Model
     {
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
-        $newTemplate['data'] = @unserialize($newTemplate['data']);
+        $newTemplate['data'] = @unserialize($newTemplate['data'], ['allowed_classes' => false]);
 
         // fetch all pages
         $pages = (array) BackendModel::getContainer()->get('database')->getRecords(

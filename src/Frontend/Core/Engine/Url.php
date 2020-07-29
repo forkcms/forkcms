@@ -7,6 +7,7 @@ use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -43,7 +44,7 @@ class Url extends KernelLoader
                 'Redirect',
                 new RedirectResponse(
                     mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
-                    301
+                    Response::HTTP_FOUND
                 )
             );
         }
@@ -268,7 +269,7 @@ class Url extends KernelLoader
         $url = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
         // when we are just adding the language to the domain, it's a temporary redirect because
         // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
-        $redirectCode = ($url === '/' . $language ? 302 : 301);
+        $redirectCode = ($url === '/' . $language) ? Response::HTTP_FOUND : Response::HTTP_MOVED_PERMANENTLY;
 
         // set header & redirect
         throw new RedirectException(

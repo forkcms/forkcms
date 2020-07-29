@@ -496,7 +496,7 @@ class Block extends KernelLoader
             return;
         }
 
-        $this->data = unserialize($data);
+        $this->data = unserialize($data, ['allowed_classes' => false]);
     }
 
     private function setModule(string $module): void

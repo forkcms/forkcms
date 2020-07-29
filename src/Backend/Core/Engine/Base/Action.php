@@ -100,7 +100,7 @@ class Action extends KernelLoader
 
         $this->redirect(
             BackendModel::createUrlForAction(
-                'Index',
+                $this->url->getDefaultActionForCurrentModule(),
                 null,
                 null,
                 [

@@ -281,7 +281,13 @@ class Model
      */
     public static function formatRecipients(string $string): string
     {
-        return implode(', ', (array) @unserialize((string) $string));
+        return implode(
+            ', ',
+            (array) array_map(
+                'htmlspecialchars',
+                @unserialize($string, ['allowed_classes' => false])
+            )
+        );
     }
 
     /**
@@ -300,7 +306,7 @@ class Model
 
         // unserialize the emailaddresses
         if (isset($return['email'])) {
-            $return['email'] = (array) unserialize($return['email']);
+            $return['email'] = (array) unserialize($return['email'], ['allowed_classes' => false]);
         }
 
         return $return;
@@ -335,7 +341,7 @@ class Model
         // unserialize values
         foreach ($data['fields'] as &$field) {
             if ($field['value'] !== null) {
-                $field['value'] = unserialize($field['value']);
+                $field['value'] = unserialize($field['value'], ['allowed_classes' => false]);
             }
         }
 
@@ -391,7 +397,7 @@ class Model
 
         // unserialize settings
         if ($field['settings'] !== null) {
-            $field['settings'] = unserialize($field['settings']);
+            $field['settings'] = unserialize($field['settings'], ['allowed_classes' => false]);
         }
 
         // get validation
@@ -426,7 +432,7 @@ class Model
         foreach ($fields as &$field) {
             // unserialize
             if ($field['settings'] !== null) {
-                $field['settings'] = unserialize($field['settings']);
+                $field['settings'] = unserialize($field['settings'], ['allowed_classes' => false]);
             }
 
             // get validation

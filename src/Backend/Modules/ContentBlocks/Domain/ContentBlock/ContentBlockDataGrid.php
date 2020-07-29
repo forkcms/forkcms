@@ -23,7 +23,7 @@ class ContentBlockDataGrid extends DataGridDatabase
              WHERE i.status = :active AND i.language = :language',
             ['active' => Status::active(), 'language' => $locale]
         );
-
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
         $this->setSortingColumns(['title']);
 
         // show the hidden status

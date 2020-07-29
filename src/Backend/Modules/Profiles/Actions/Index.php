@@ -128,7 +128,7 @@ class Index extends BackendBaseActionIndex
             'registered_on',
             true
         );
-        $this->dgProfiles->setColumnFunction('htmlspecialchars', ['[display_name]'], 'display_name');
+        $this->dgProfiles->setColumnFunction('htmlspecialchars', ['[display_name]'], 'display_name', false);
 
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');

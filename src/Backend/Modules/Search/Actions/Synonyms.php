@@ -26,6 +26,7 @@ class Synonyms extends Action
         $dataGrid = new BackendDataGridDatabase(BackendSearchModel::QUERY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
         $dataGrid->setSortingColumns(['term'], 'term');
         $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
+        $dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term', false);
 
         if (BackendAuthentication::isAllowedAction('EditSynonym')) {
             $editUrl = BackendModel::createUrlForAction('EditSynonym') . '&amp;id=[id]';
