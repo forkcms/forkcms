@@ -29,6 +29,14 @@ With the new editor there is no need for the js and css related to CKEditor. If 
 
 The form util functions are removed as in most cases a global function is available. In some modules the form utils were not used, which made it pointless to keep maintaining these utility functions.
 
+Functions that are removed:
+* isChecked
+* isEmaill
+* isFilled
+* isNumber
+* isURL
+
+
 Example: There was a static function that checks if a checkbox is checked. This function was never used. If there is a need to check the value of a checkbox, this happens inline.
 
 #### Theme is defined in .env
@@ -39,6 +47,8 @@ This is necessary for webpack to know which theme to compile. In our Symfony con
 #### Double js methods
 
 We no longer use expliciet double js methods. Some utils (examples: array, string, url) are available and used in the backend. These are also available in the frontend.
+
+Example: The static method ‘ucfirst’ that adds a capital letter to a string. This method was below jsBackend.url.ucfirst and also below jsFrontend.url.ucfirst. Now the ucfirst is a static method in the backend, but this one is also available for the frontend.
 
 #### No more build assets in Git
 
@@ -55,14 +65,23 @@ npm run build
 ```
 	
 If you are developing locally you should run:
+
 ```
 npm install
 ```
 
-Watch frontend core: `npm run dev:frontend`
+ Watch files and recompile whenever they change:
+ 
+```
+npm run watch
+```
 
-Watch frontend theme `npm run dev:frontend:theme`
+You can also run the watch for a certain part:
 
-Watch backend core: `npm run dev:backend`
+watch frontend core: `npm run dev:frontend`
 
-Watch installer: `npm run dev:installer`
+watch frontend theme `npm run dev:frontend:theme`
+
+watch backend core: `npm run dev:backend`
+
+watch installer: `npm run dev:installer`
