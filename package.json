@@ -64,6 +64,7 @@
     "dev:backend": "encore dev --config-name backendConfig --watch",
     "dev:frontend": "encore dev --config-name frontendConfig --watch",
     "dev:frontend:theme": "encore dev --config-name frontendThemeConfig --watch",
+    "watch": "encore dev --watch",
     "build": "encore production"
   },
   "standard": {
