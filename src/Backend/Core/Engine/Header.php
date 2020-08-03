@@ -164,7 +164,6 @@ final class Header extends KernelLoader
         $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
         $minify = $minify && !$isExternalUrl;
 
-        dump($this->buildPathForModule($file, $module ?? $this->url->getModule(), 'build'));
         $this->jsFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'build'),
