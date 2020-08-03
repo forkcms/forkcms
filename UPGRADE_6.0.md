@@ -1,7 +1,7 @@
 UPGRADE FROM 5.x to 6.0
 =======================
 
-## Introdcure ES6
+## Introduce ES6
 
 ### Changes in Frontend
 
@@ -31,7 +31,7 @@ The form util functions are removed as in most cases a global function is availa
 
 Functions that are removed:
 * isChecked
-* isEmaill
+* isEmail
 * isFilled
 * isNumber
 * isURL
@@ -46,7 +46,7 @@ This is necessary for webpack to know which theme to compile. In our Symfony con
 
 #### Double js methods
 
-We no longer use expliciet double js methods. Some utils (examples: array, string, url) are available and used in the backend. These are also available in the frontend.
+We no longer use explicit double js methods. Some utils (examples: array, string, url) are available and used in the backend. These are also available in the frontend.
 
 Example: The static method ‘ucfirst’ that adds a capital letter to a string. This method was below jsBackend.url.ucfirst and also below jsFrontend.url.ucfirst. Now the ucfirst is a static method in the backend, but this one is also available for the frontend.
 
@@ -56,7 +56,7 @@ Files that are generated are no longer stored in Git. This means you won’t be 
 We think the developer community has matured enough that we can expect them to know how to build the assets beforehand.
 
 To generate the needed assets you can run:
-```node
+```bash
 npm install
 ```
 
