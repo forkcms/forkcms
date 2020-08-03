@@ -15,7 +15,6 @@ export class Resize {
 
   resize () {
     $(window).on('load resize', () => {
-      console.log('RESIZE')
       this.tick()
     })
   }
