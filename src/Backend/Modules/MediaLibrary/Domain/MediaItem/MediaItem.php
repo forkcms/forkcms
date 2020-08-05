@@ -301,7 +301,19 @@ class MediaItem implements JsonSerializable
 
     private static function getTypeFromFile(File $file): Type
     {
-        return Type::fromMimeType($file->getMimeType());
+        $extensionType = Type::fromExtension($file->getExtension());
+
+        try {
+            $mimeTypeType = Type::fromMimeType($file->getMimeType());
+        } catch (Exception $exception) {
+            return $extensionType;
+        }
+
+        if (!$extensionType->equals($mimeTypeType)) {
+            return $extensionType;
+        }
+
+        return $mimeTypeType;
     }
 
     public function getId(): string

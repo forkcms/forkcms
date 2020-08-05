@@ -4,21 +4,17 @@ namespace Backend\Modules\Tags\Tests\Action;
 
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class MassActionTest extends WebTestCase
+class MassActionTest extends BackendWebTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-
-        $client = self::createClient();
         $this->loadFixtures(
-            $client,
+            $this->getProvidedData()[0],
             [
                 LoadTagsTags::class,
                 LoadTagsModulesTags::class,
@@ -26,79 +22,77 @@ class MassActionTest extends WebTestCase
         );
     }
 
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        $this->assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Ftags%2Fmass_action',
-            $client->getHistory()->current()->getUri()
+        self::assertAuthenticationIsNeeded(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action')
         );
     }
 
-    public function testActionIsRequired(): void
+    public function testActionIsRequired(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action');
+        self::assertHttpStatusCode200($client, $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action'));
+        self::assertCurrentUrlEndsWith($client, '&error=no-action-selected');
+    }
 
-        $this->assertStringEndsWith(
-            '&error=no-action-selected',
-            $client->getHistory()->current()->getUri()
+    public function testIdsAreRequired(Client $client): void
+    {
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        self::assertHttpStatusCode200(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action?action=delete')
+        );
+        self::assertCurrentUrlEndsWith($client, '&error=no-selection');
+    }
+
+    public function testDeletingOneTag(Client $client): void
+    {
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        self::assertHttpStatusCode200(
+            $client,
+            $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action?action=delete&id[]=2')
+        );
+        self::assertCurrentUrlEndsWith($client, '&report=deleted');
+        $response = $client->getResponse();
+        self::assertResponseHasContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>'
+        );
+        self::assertResponseDoesNotHaveContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'
         );
     }
 
-    public function testIdsAreRequired(): void
+    public function testDeletingAllTags(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
         $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete');
-
-        $this->assertStringEndsWith(
-            '&error=no-selection',
-            $client->getHistory()->current()->getUri()
+        self::assertHttpStatusCode200(
+            $client,
+            $this->appendCsrfTokenToUrl(
+                $client,
+                '/private/en/tags/mass_action?action=delete&id[]=' . LoadTagsTags::TAGS_TAG_1_ID
+                . '&id[]=' . LoadTagsTags::TAGS_TAG_2_ID
+            )
         );
-    }
+        self::assertCurrentUrlEndsWith($client, '&report=deleted');
 
-    public function testDeletingOneTag(): void
-    {
-        $client = static::createClient();
-        $this->login($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete&id[]=2');
-
-        $this->assertStringEndsWith(
-            '&report=deleted',
-            $client->getHistory()->current()->getUri()
+        $response = $client->getResponse();
+        self::assertResponseHasContent($response, '<p>There are no tags yet.</p>');
+        self::assertResponseDoesNotHaveContent(
+            $response,
+            'id=' . LoadTagsTags::TAGS_TAG_1_ID . '" title="">' . LoadTagsTags::TAGS_TAG_1_NAME . '</a>',
+            'id=' . LoadTagsTags::TAGS_TAG_2_ID . '" title="">' . LoadTagsTags::TAGS_TAG_2_NAME . '</a>'
         );
-        $this->assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
-        $this->assertContains('id=1" title="">test</a>', $client->getResponse()->getContent());
-    }
-
-    public function testDeletingAllTags(): void
-    {
-        $client = static::createClient();
-        $this->login($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/tags/mass_action?action=delete&id[]=2&id[]=1');
-
-        $this->assertStringEndsWith(
-            '&report=deleted',
-            $client->getHistory()->current()->getUri()
-        );
-        $this->assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
-        $this->assertNotContains('id=1" title="">test</a>', $client->getResponse()->getContent());
-        $this->assertContains('<p>There are no tags yet.</p>', $client->getResponse()->getContent());
     }
 }

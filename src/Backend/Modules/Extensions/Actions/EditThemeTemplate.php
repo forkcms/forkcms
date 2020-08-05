@@ -55,7 +55,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->record = BackendExtensionsModel::getTemplate($this->id);
 
         // unserialize
-        $this->record['data'] = unserialize($this->record['data']);
+        $this->record['data'] = unserialize($this->record['data'], ['allowed_classes' => false]);
         $this->names = $this->record['data']['names'];
         if (isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) {
             $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];

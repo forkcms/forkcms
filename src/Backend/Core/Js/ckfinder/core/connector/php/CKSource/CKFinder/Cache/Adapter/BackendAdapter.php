@@ -85,7 +85,7 @@ class BackendAdapter implements AdapterInterface
             return null;
         }
 
-        return unserialize($this->backend->read($cachePath));
+        return unserialize($this->backend->read($cachePath), ['allowed_classes' => false]);
     }
 
     /**

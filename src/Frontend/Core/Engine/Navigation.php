@@ -281,7 +281,7 @@ class Navigation extends KernelLoader
                 // authentication
                 if (isset($page['data'])) {
                     // unserialize data
-                    $page['data'] = unserialize($page['data']);
+                    $page['data'] = unserialize($page['data'], ['allowed_classes' => false]);
                     // if auth_required isset and is true
                     if (isset($page['data']['auth_required']) && $page['data']['auth_required']) {
                         // is profile logged? unset

@@ -86,6 +86,10 @@ liip_imagine:
             quality: 95
             # list of transformations to apply (the "filters")
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 ## Using the "thumbnail + background" combination will crop the
                 ## the centered image to create your required width/height.
                 # Use the "outbound" mode to crop the image when the size ratio of the input differs
@@ -93,15 +97,31 @@ liip_imagine:
                 background: { size : [140, 90], position : center }
         media_library_lightbox_small:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [800, 600] }
         media_library_lightbox_large:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [1600, 800] }
         media_library_slider_pano:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [1600, 600] }
         media_library_one_image_large:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 thumbnail: { size : [1600, 500], mode : inbound }
 
 services:
@@ -182,6 +202,7 @@ services:
         arguments:
             - "@database"
             - "@cache.pool"
+            - "%fork.is_installed%"
 
     fork.cookie:
         class: Common\Core\Cookie

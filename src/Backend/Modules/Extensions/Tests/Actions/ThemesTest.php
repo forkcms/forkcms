@@ -2,48 +2,29 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class ThemesTest extends WebTestCase
+class ThemesTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/themes');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fthemes',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/themes');
     }
 
-    public function testIndexHasModules(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/themes');
-        self::assertContains(
-            'Installed themes',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/themes',
+            [
+                'Installed themes',
+                'Upload theme',
+                'Find themes',
+            ]
         );
-        self::assertNotContains(
-            'Not installed themes',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Upload theme',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Find themes',
-            $client->getResponse()->getContent()
-        );
+        self::assertResponseDoesNotHaveContent($client->getResponse(), 'Not installed themes');
     }
 }

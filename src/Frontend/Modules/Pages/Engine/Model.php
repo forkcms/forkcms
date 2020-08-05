@@ -85,7 +85,7 @@ class Model implements FrontendTagsInterface
 
                 // unserialize page data and template data
                 if (!empty($row['data'])) {
-                    $row['data'] = unserialize($row['data']);
+                    $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
                 }
             }
         }
