@@ -44,6 +44,7 @@ import { Search } from '../../Modules/Search/Js/Search'
 import { Settings } from '../../Modules/Settings/Js/Settings'
 import { Tags } from '../../Modules/Tags/Js/Tags'
 import { Users } from '../../Modules/Users/Js/Users'
+import { PasswordGenerator } from './Components/PasswordGenerator'
 
 export class Backend {
   initBackend () {
@@ -88,8 +89,16 @@ export class Backend {
     this.tags = new Tags()
     this.users = new Users()
 
+    Backend.initPasswordGenerators()
+
     // do not move, should be run as the last item.
     if (!Config.isDebug()) this.forms.unloadWarning()
+  }
+
+  static initPasswordGenerators () {
+    $('[data-password-generator]').each((index, element) => {
+      element.passwordGenerator = new PasswordGenerator($(element))
+    })
   }
 }
 

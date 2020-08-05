@@ -45,8 +45,8 @@ class Add extends BackendBaseActionAdd
             'password',
             null,
             75,
-            'form-control passwordGenerator',
-            'form-control danger passwordGenerator'
+            'form-control',
+            'form-control danger'
         )->setAttributes(['autocomplete' => 'off']);
         $this->form->addPassword('confirm_password', null, 75)->setAttributes(['autocomplete' => 'off']);
         $this->form->addText('name', null, 255);

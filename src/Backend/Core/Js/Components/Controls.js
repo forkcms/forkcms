@@ -10,7 +10,6 @@ export class Controls {
     this.bindFakeDropdown()
     this.bindMassAction()
     this.bindMassCheckbox()
-    this.bindPasswordGenerator()
     this.bindPasswordStrengthMeter()
     this.bindToggleDiv()
     this.bindTableCheckbox()
@@ -332,22 +331,6 @@ export class Controls {
         $this.closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false)
       }
     })
-  }
-
-  bindPasswordGenerator () {
-    // variables
-    const $passwordGenerator = $('.passwordGenerator')
-
-    if ($passwordGenerator.length > 0) {
-      const options = {
-        length: 8,
-        numbers: false,
-        lowercase: true,
-        uppercase: true,
-        generateLabel: StringUtil.ucfirst(window.backend.locale.lbl('Generate'))
-      }
-      PasswordGenerator.generator(options, $passwordGenerator)
-    }
   }
 
   // bind the password strength meter to the correct inputfield(s)
