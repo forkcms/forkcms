@@ -87,6 +87,9 @@ var jsBackend =
           type: 'POST',
           dataType: 'json',
           timeout: 10000,
+          beforeSend: function (jqXHR) {
+            jqXHR.setRequestHeader('X-CSRF-Token', jsBackend.data.get('csrf-token'));
+          },
           data: {
             fork: {
               module: jsBackend.current.module,
@@ -874,7 +877,7 @@ jsBackend.controls = {
       var $this = $(this)
 
       // check or uncheck all the checkboxes in this datagrid
-      $this.closest('table').find('td input:checkbox').prop('checked', $this.is(':checked'))
+      $this.closest('table').find('td input:checkbox').prop('checked', $this.is(':checked')).change()
 
       // set selected class
       if ($this.is(':checked')) {

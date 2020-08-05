@@ -10931,14 +10931,14 @@
         <translation language="pl"><![CDATA[Wybierz liczbę dobrze dobranych terminów, które opisują treść. Z punktu widzenia SEO nie oferują one jednak żadnej wartości dodanej.]]></translation>
       </item>
       <item type="message" name="HelpMetaURL">
-        <translation language="nl"><![CDATA[Vervang de automatisch gegenereerde URL door een zelfgekozen URL.]]></translation>
-        <translation language="en"><![CDATA[Replace the automaticly generated URL by a custom one.]]></translation>
+        <translation language="nl"><![CDATA[Vervang de automatisch gegenereerde URL door een zelfgekozen URL. Alleen kleine alfanumerieke letters en - zijn toegestaan]]></translation>
+        <translation language="en"><![CDATA[Replace the automaticly generated URL by a custom one. Only alphanumeric lowercase characters and - are allowed]]></translation>
         <translation language="hu"><![CDATA[Cserélje le az automatikusan generált URL-t egyénire.]]></translation>
         <translation language="it"><![CDATA[Sostituisci l'URL generato automaticamente con uno personalizzato.]]></translation>
         <translation language="ru"><![CDATA[Заменяет автоматический URL на пользовательский.]]></translation>
         <translation language="zh"><![CDATA[使用自定义链接替代自动生成的链接地址。]]></translation>
-        <translation language="de"><![CDATA[Ersetze die automatisch generierte URL mit einer individuell angepassten.]]></translation>
-        <translation language="fr"><![CDATA[Replacer l'URL automatiquement générée par une URL personnalisée.]]></translation>
+        <translation language="de"><![CDATA[Ersetze die automatisch generierte URL mit einer individuell angepassten. Es sind nur alphanumerische Kleinbuchstaben und - zulässig]]></translation>
+        <translation language="fr"><![CDATA[Replacer l'URL automatiquement générée par une URL personnalisée. Seuls les caractères alphanumériques en minuscules et - sont autorisés]]></translation>
         <translation language="es"><![CDATA[Remplaza la URL automáticamente generada por una propia.]]></translation>
         <translation language="lt"><![CDATA[Ar keisti automatiškai sugeneruotas nuorodas rankiniu būdu sukurtomis?.]]></translation>
         <translation language="uk"><![CDATA[Замінює автоматичниний URL на користувацький]]></translation>
@@ -11712,6 +11712,16 @@
         <translation language="sv"><![CDATA[Du har inte tillräckligt med rättigheter för denna åtgärd.]]></translation>
         <translation language="el"><![CDATA[Δεν έχετε επαρκή δικαιώματα γιά αυτή την ενέργεια.]]></translation>
         <translation language="pl"><![CDATA[Nie masz wystarczających uprawnień do tego działania.]]></translation>
+      </item>
+      <item type="error" name="NotFound">
+        <translation language="nl"><![CDATA[Deze pagina is verloren gegaan op zee.]]></translation>
+        <translation language="en"><![CDATA[This page was lost at sea.]]></translation>
+        <translation language="de"><![CDATA[Diese Seite ging auf See verloren.]]></translation>
+        <translation language="fr"><![CDATA[Cette page a été perdue en mer.]]></translation>
+        <translation language="es"><![CDATA[Esta página se perdió en el mar.]]></translation>
+        <translation language="it"><![CDATA[Questa pagina è stata persa in mare.]]></translation>
+        <translation language="pl"><![CDATA[Ta strona została zagubiona na morzu.]]></translation>
+        <translation language="ru"><![CDATA[Эта страница была потеряна в море.]]></translation>
       </item>
       <item type="error" name="AddingCategoryFailed">
         <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>

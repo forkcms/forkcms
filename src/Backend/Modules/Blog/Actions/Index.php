@@ -86,6 +86,8 @@ class Index extends BackendBaseActionIndex
             );
         }
 
+        $this->dgPosts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
+
         // set headers
         $this->dgPosts->setHeaderLabels(
             [
@@ -164,6 +166,8 @@ class Index extends BackendBaseActionIndex
             );
         }
 
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
+
         // set headers
         $this->dgDrafts->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);
 
@@ -233,6 +237,7 @@ class Index extends BackendBaseActionIndex
                 ['active', BL::getWorkingLanguage(), 4]
             );
         }
+        $this->dgRecent->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // set headers
         $this->dgRecent->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);

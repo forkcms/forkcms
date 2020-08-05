@@ -20,5 +20,5 @@ about: You have implemented some neat idea that you want to make part of Fork CM
 
 ### Resolves the following issues
 
-<!-- List the hashes of the issues that this pull request resolves if their are issues for it. -->
+<!-- List the hashes of the issues that this pull request resolves if there are issues for it. -->
 <!-- Use the following format: fixes #[issue_number] -->

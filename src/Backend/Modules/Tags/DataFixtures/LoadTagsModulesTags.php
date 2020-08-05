@@ -13,43 +13,43 @@ class LoadTagsModulesTags
             [
                 [
                     'module' => 'Pages',
-                    'tag_id' => 1,
-                    'other_id' => 1,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_1_ID,
+                    'other_id' => 1, // @TODO switch this to the constant in Fork 6
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
-                    'other_id' => 1,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
+                    'other_id' => 1, // @TODO switch this to the constant in Fork 6
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
-                    'other_id' => 2,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
+                    'other_id' => 2, // @TODO switch this to the constant in Fork 6
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
-                    'other_id' => 3,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
+                    'other_id' => 3, // @TODO switch this to the constant in Fork 6
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
-                    'other_id' => 404,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
+                    'other_id' => 404, // @TODO switch this to the constant in Fork 6
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
                     'other_id' => 405,
                 ],
                 [
                     'module' => 'Pages',
-                    'tag_id' => 2,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_2_ID,
                     'other_id' => 406,
                 ],
                 [
                     'module' => 'Faq',
-                    'tag_id' => 1,
-                    'other_id' => 1,
+                    'tag_id' => LoadTagsTags::TAGS_TAG_1_ID,
+                    'other_id' => 1, // @TODO switch this to the constant in Fork 6
                 ],
             ]
         );

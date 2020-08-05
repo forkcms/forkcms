@@ -1,3 +1,77 @@
+5.8.3  (2020-07-07)
+------------------
+
+Fixed:
+* Core: Optimise vendor images [#3143](https://github.com/forkcms/forkcms/pull/3143)
+* Core: Show the correct error when adding invalid custom slugs [#3145](https://github.com/forkcms/forkcms/pull/3145)
+* Core: Stop hard caching redirects [#3094](https://github.com/forkcms/forkcms/pull/3094)
+* Core: Update vendors [#3136](https://github.com/forkcms/forkcms/pull/3136) [#3111](https://github.com/forkcms/forkcms/pull/3111) [#3119](https://github.com/forkcms/forkcms/pull/3119)
+* DX: Fix docker build [#3121](https://github.com/forkcms/forkcms/pull/3121)
+* DX: Fix typo in pull request templates [#3140](https://github.com/forkcms/forkcms/pull/3140)
+* MediaGalleries: Fix text being truncated [#3139](https://github.com/forkcms/forkcms/pull/3139)
+* MediaLibrary: Fix uploading big files [#3146](https://github.com/forkcms/forkcms/pull/3146)
+
+Security:
+* Core: Fix xss bugs in the backend [#3093](https://github.com/forkcms/forkcms/pull/3093) [#3137](https://github.com/forkcms/forkcms/pull/3137)
+* Core: Improve csrf checks in the backend [#3123](https://github.com/forkcms/forkcms/pull/3123) [#3138](https://github.com/forkcms/forkcms/pull/3138) [#3124](https://github.com/forkcms/forkcms/pull/3124) [#3132](https://github.com/forkcms/forkcms/pull/3132) [#3135](https://github.com/forkcms/forkcms/pull/3135)
+
+
+5.8.2  (2020-05-12)
+------------------
+
+Fixed:
+* Core: Fix upscale cropping [#3079](https://github.com/forkcms/forkcms/pull/3079)
+* Core: Remove last slash in url after hreflang [#3080](https://github.com/forkcms/forkcms/pull/3080)
+* Core: Update composer packages [#3078](https://github.com/forkcms/forkcms/pull/3078) [#3077](https://github.com/forkcms/forkcms/pull/3077) [#3076](https://github.com/forkcms/forkcms/pull/3076)
+* Docs: Fix MailChimp Url [#3083](https://github.com/forkcms/forkcms/pull/3083)
+* Docs: Typo in Headline [#3082](https://github.com/forkcms/forkcms/pull/3082)
+* Docs: Update old docs link, with the new one [#3085](https://github.com/forkcms/forkcms/pull/3085)
+* Pages: Fix notice when deleting page [#3074](https://github.com/forkcms/forkcms/pull/3074)
+* Pages: Use single quotes for background images [#3067](https://github.com/forkcms/forkcms/pull/3067)
+
+Security:
+* Core: Bump jquery from 3.4.1 to 3.5.0 [#3089](https://github.com/forkcms/forkcms/pull/3089)
+
+
+5.8.1  (2020-04-17)
+------------------
+Fixed:
+* Core: Cast the data value to string [#3055](https://github.com/forkcms/forkcms/pull/3055)
+* Core: Update composer packages [#3057](https://github.com/forkcms/forkcms/pull/3057) [#3060](https://github.com/forkcms/forkcms/pull/3060) [#3072](https://github.com/forkcms/forkcms/pull/3072) [#3071](https://github.com/forkcms/forkcms/pull/3071) [#3064](https://github.com/forkcms/forkcms/pull/3064) [#3060](https://github.com/forkcms/forkcms/pull/3060)
+* Docs: Change Transmit to FileZilla [#3069](https://github.com/forkcms/forkcms/pull/3069)
+* Users: Don't use profiels password encrypting for backend users [#3054](https://github.com/forkcms/forkcms/pull/3054)
+
+Security:
+* Core: Block direct access to twig files [#3052](https://github.com/forkcms/forkcms/pull/3052)
+* Profiles: Fix xss in profiles display name [#3073](https://github.com/forkcms/forkcms/pull/3073)
+
+
+5.8.0  (2020-03-03)
+------------------
+
+Added:
+* Core: Allow get parameters to be set when creating an action for the DeleteType [#2973](https://github.com/forkcms/forkcms/pull/2973)
+* Core: Backport tests from Fork 6 to Fork 5 [#3025](https://github.com/forkcms/forkcms/pull/3025)
+* Core: Improve testsuite simplify testing [#3027](https://github.com/forkcms/forkcms/pull/3027)
+* FormBuilder: Formbuilder confirmation mail message [#2959](https://github.com/forkcms/forkcms/pull/2959)
+* MediaGallery: Add select-all checkbox to MediaGallery connect datagrid [#2965](https://github.com/forkcms/forkcms/pull/2965)
+* MediaLibrary: Add documentation about the SingleMediaGroupType  [#3004](https://github.com/forkcms/forkcms/pull/3004)
+
+Changed:
+* Core: Reduce file size of included images [#3020](https://github.com/forkcms/forkcms/pull/3020)
+* Core: Update composer packages [#3015](https://github.com/forkcms/forkcms/pull/3015) [#3022](https://github.com/forkcms/forkcms/pull/3022) [#3023](https://github.com/forkcms/forkcms/pull/3023) [#3024](https://github.com/forkcms/forkcms/pull/3024) [#3051](https://github.com/forkcms/forkcms/pull/3051) 
+
+Fixed:
+* Core: Fix timestamps for caching incorrect [#3006](https://github.com/forkcms/forkcms/pull/3006)
+* Core: Remove deprecated disableMagicQuotes method [#3021](https://github.com/forkcms/forkcms/pull/3021)
+* Core: Upgrade travis distribution [#3019](https://github.com/forkcms/forkcms/pull/3019)
+* Core: We should use a multibyte save version of ucfirst for translations [#3030](https://github.com/forkcms/forkcms/pull/3030)
+* FormBuilder: Add missing label for sending confirmation mail [#](https://github.com/forkcms/forkcms/pull/)
+* Pages: Fix page update error for an array offset on boolean value [#3031](https://github.com/forkcms/forkcms/pull/3031)
+* Profiles: Fix error when expiration date is null [#3033](https://github.com/forkcms/forkcms/pull/3033)
+* Profiles: Only filter profiles when a value is provided [#3046](https://github.com/forkcms/forkcms/pull/3046)
+
+
 5.7.1  (2019-12-05)
 ------------------
 

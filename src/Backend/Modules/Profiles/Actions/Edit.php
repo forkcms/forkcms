@@ -133,6 +133,7 @@ class Edit extends BackendBaseActionEdit
             BackendProfilesModel::QUERY_DATAGRID_BROWSE_PROFILE_GROUPS,
             [$this->profile['id']]
         );
+        $this->dgGroups->setColumnFunction('htmlspecialchars', ['[group_name]'], 'group_name', false);
 
         // sorting columns
         $this->dgGroups->setSortingColumns(['group_name'], 'group_name');

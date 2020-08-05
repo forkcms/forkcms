@@ -86,6 +86,7 @@ class ExportData extends BackendBaseAction
 
     public function execute(): void
     {
+        $this->checkToken();
         $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
@@ -176,7 +177,7 @@ class ExportData extends BackendBaseAction
             }
 
             // value is serialized
-            $value = unserialize($row['value']);
+            $value = unserialize($row['value'], ['allowed_classes' => false]);
 
             // flatten arrays
             if (is_array($value)) {

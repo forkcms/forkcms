@@ -38,7 +38,7 @@ class Model
      * @var string
      */
     const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
-        'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on,
+        'SELECT gr.id, g.name AS group_name, IFNULL(UNIX_TIMESTAMP(gr.expires_on),0) AS expires_on,
           IF(gr.expires_on IS NOT NULL AND gr.expires_on <= NOW(), 1, 0) AS hidden
          FROM profiles_groups AS g
          INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
@@ -414,7 +414,8 @@ class Model
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
                 [$profileId, $name]
-            )
+            ),
+            ['allowed_classes' => false]
         );
     }
 
@@ -801,13 +802,13 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
     }
 
-    public static function updateGroup(int $profileId, array $group): int
+    public static function updateGroup(int $groupId, array $group): int
     {
         return (int) BackendModel::getContainer()->get('database')->update(
             'profiles_groups',
             $group,
             'id = ?',
-            $profileId
+            $groupId
         );
     }
 

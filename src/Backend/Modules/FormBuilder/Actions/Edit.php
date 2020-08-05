@@ -95,6 +95,7 @@ class Edit extends BackendBaseActionEdit
         );
         $this->form->addCheckbox('textbox_send_confirmation_mail_to');
         $this->form->addText('textbox_confirmation_mail_subject');
+        $this->form->addEditor('textbox_confirmation_mail_message');
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
 
@@ -340,7 +341,8 @@ class Edit extends BackendBaseActionEdit
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                $values['identifier'] = (
+                    $txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );

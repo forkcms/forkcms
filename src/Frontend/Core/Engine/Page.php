@@ -414,6 +414,9 @@ class Page extends KernelLoader
             $url = Navigation::getUrl($this->pageId, $language);
         }
 
+        // remove last /
+        $url = rtrim($url, '/\\');
+
         // Ignore 404 links
         if ($this->pageId !== Response::HTTP_NOT_FOUND
             && $url === Navigation::getUrl(Response::HTTP_NOT_FOUND, $language)) {

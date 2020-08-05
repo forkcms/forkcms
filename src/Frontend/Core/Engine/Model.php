@@ -271,7 +271,7 @@ class Model extends \Common\Core\Model
     private static function unserializeArrayContent(array $array, string $key): array
     {
         if (isset($array[$key]) && $array[$key] !== '') {
-            $array[$key] = unserialize($array[$key]);
+            $array[$key] = unserialize($array[$key], ['allowed_classes' => false]);
 
             return $array;
         }

@@ -2,33 +2,20 @@
 
 namespace Backend\Modules\Analytics\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class SettingsTest extends WebTestCase
+class SettingsTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/analytics/settings');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fanalytics%2Fsettings',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
     }
 
-    public function testAnalyticsSettingsWorks(): void
+    public function testAnalyticsSettingsWorks(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/analytics/settings');
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains('How to get your secret file?', $crawler->html());
+        self::assertPageLoadedCorrectly($client, '/private/en/analytics/settings', ['How to get your secret file?']);
     }
 }

@@ -108,6 +108,11 @@ class Url extends KernelLoader
         return $this->getDefaultActionForModule($module, $language);
     }
 
+    final public function getDefaultActionForCurrentModule(string $language = null): string
+    {
+        return $this->getDefaultActionForModule($this->module, $language ?? $this->getLanguageFromUrl());
+    }
+
     private function getDefaultActionForModule(string $module, string $language): string
     {
         // Check if we can load the config file
@@ -239,7 +244,7 @@ class Url extends KernelLoader
 
     private function getInterfaceLanguage(): string
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language', SITE_DEFAULT_LANGUAGE);
 
         if (Authentication::getUser()->isAuthenticated()) {
             return Authentication::getUser()->getSetting('interface_language', $default);

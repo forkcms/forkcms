@@ -26,7 +26,7 @@ To install the dependencies, you can run the command below in the document-root:
 
 ## Security
 
-If you discover any security related issues, please email core@fork-cms.com instead of using the issue tracker.
+If you discover any security-related issues, please email core@fork-cms.com instead of using the issue tracker.
 
 
 ## SSL

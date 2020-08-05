@@ -2,48 +2,29 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class ModulesTest extends WebTestCase
+class ModulesTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/extensions/modules');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fmodules',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/modules');
     }
 
-    public function testIndexHasModuels(): void
+    public function testIndexHasModules(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/extensions/modules');
-        self::assertContains(
-            'Installed modules',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/extensions/modules',
+            [
+                'Installed modules',
+                'Upload module',
+                'Find modules',
+            ]
         );
-        self::assertNotContains(
-            'Not installed modules',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Upload module',
-            $client->getResponse()->getContent()
-        );
-
-        self::assertContains(
-            'Find modules',
-            $client->getResponse()->getContent()
-        );
+        self::assertResponseDoesNotHaveContent($client->getResponse(), 'Not installed modules');
     }
 }

@@ -2,75 +2,74 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class DeleteTest extends WebTestCase
+class DeleteTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
+        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/blog/delete?id=1');
+    }
+
+    public function testInvalidIdShouldShowAnError(Client $client): void
+    {
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/blog/delete?id=1');
-
-        // we should get redirected to authentication with a reference to the wanted page
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fblog%2Fdelete%3Fid%3D1',
-            $client->getHistory()->current()->getUri()
-        );
-    }
-
-    public function testInvalidIdShouldShowAnError(): void
-    {
-        $client = static::createClient();
         $this->login($client);
 
         // go to edit page to get a form token
-        $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
-        $token = $crawler->filter('#blog_delete__token')->attr('value');
+        self::assertHttpStatusCode200($client, '/private/en/blog/edit?token=1234&id=1');
+        $token = $client->getCrawler()->filter('#blog_delete__token')->attr('value');
 
-        // do request
-        $client->request('POST', '/private/en/blog/delete', ['blog_delete' => ['_token' => $token, 'id' => 12345678]]);
-        $client->followRedirect();
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
+        self::assertGetsRedirected(
+            $client,
+            '/private/en/blog/delete',
             '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
+            'POST',
+            ['blog_delete' => ['_token' => $token, 'id' => 12345678]]
         );
-        self::assertContains(
-            'error=non-existing',
-            $client->getHistory()->current()->getUri()
-        );
+
+        self::assertCurrentUrlContains($client, 'error=non-existing');
     }
 
-    public function testDeleteIsAvailableFromTheEditpage(): void
+    public function testDeleteIsAvailableFromTheEditPage(Client $client): void
     {
-        $client = static::createClient();
-        $this->login($client);
-
-        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
+        $this->loadFixtures(
+            $client,
+            [
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
+            ]
         );
 
-        $form = $crawler->filter('#confirmDelete')->selectButton('Delete')->form();
+        $this->login($client);
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/blog/edit?id=1',
+            [LoadBlogPosts::BLOG_POST_TITLE]
+        );
+
+        $form = $this->getFormForSubmitButton($client, 'Delete', '#confirmDelete');
         $client->submit($form);
 
         // we're now on the delete page of the blogpost with id 1
-        self::assertContains(
-            '/private/en/blog/delete',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertCurrentUrlContains($client, '/private/en/blog/delete');
         self::assertEquals(
             1,
             $client->getRequest()->request->get('blog_delete')['id']
@@ -78,20 +77,14 @@ class DeleteTest extends WebTestCase
 
         // we're redirected back to the index page after deletion
         $client->followRedirect();
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
+        self::assertIs200($client);
+        self::assertCurrentUrlContains(
+            $client,
             '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertContains(
-            'report=deleted&var=Blogpost+for+functional+tests',
-            $client->getHistory()->current()->getUri()
+            'report=deleted&var=' . urlencode(LoadBlogPosts::BLOG_POST_TITLE)
         );
 
-        // the blogpost should not be available anymore
-        self::assertNotContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        // the blog post should not be available anymore
+        self::assertResponseDoesNotHaveContent($client->getResponse(), LoadBlogPosts::BLOG_POST_TITLE);
     }
 }

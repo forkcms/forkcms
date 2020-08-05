@@ -2,38 +2,29 @@
 
 namespace Frontend\Modules\Blog\Tests\Actions;
 
-use Common\WebTestCase;
+use Frontend\Core\Tests\FrontendWebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class IndexTest extends WebTestCase
+class IndexTest extends FrontendWebTestCase
 {
-    public function testIndexContainsBlogPosts(): void
+    public function testIndexContainsBlogPosts(Client $client): void
     {
-        $client = static::createClient();
-
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
 
-        $client->request('GET', '/en/blog');
-        self::assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        self::assertPageLoadedCorrectly($client, '/en/blog', [LoadBlogPosts::BLOG_POST_TITLE]);
     }
 
-    public function testNonExistingPageGives404(): void
+    public function testNonExistingPageGives404(Client $client): void
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/blog', ['page' => 34]);
-        $this->assertIs404($client);
+        self::assertHttpStatusCode200($client, '/en/blog');
+        self::assertHttpStatusCode404($client, '/en/blog', 'GET', ['page' => 34]);
     }
 }

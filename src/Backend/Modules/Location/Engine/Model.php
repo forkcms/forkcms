@@ -134,7 +134,7 @@ class Model
         );
 
         if (!empty($serializedData)) {
-            return unserialize($serializedData);
+            return unserialize($serializedData, ['allowed_classes' => false]);
         }
 
         return false;
@@ -157,7 +157,7 @@ class Model
         );
 
         foreach ($mapSettings as $key => $value) {
-            $mapSettings[$key] = unserialize($value);
+            $mapSettings[$key] = unserialize($value, ['allowed_classes' => false]);
         }
 
         return $mapSettings;

@@ -33,6 +33,8 @@ class MediaItemMassAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         /** @var Type $selectedType */
         $selectedType = $this->getSelectedType();
 
@@ -95,7 +97,7 @@ class MediaItemMassAction extends BackendBaseAction
     private function getCurrentMediaFolder(): ?MediaFolder
     {
         // Define current folder
-        $id = $this->getRequest()->query->getInt('current_folder_id');
+        $id = $this->getRequest()->request->getInt('current_folder_id');
 
         try {
             /** @var MediaFolder */
@@ -126,7 +128,7 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolderToMoveTo(Type $selectedType): MediaFolder
     {
         // Define folder id
-        $id = $this->getRequest()->query->getInt('move_to_folder_id', 0);
+        $id = $this->getRequest()->request->getInt('move_to_folder_id', 0);
 
         if ($id === 0) {
             $this->redirect(
@@ -145,7 +147,7 @@ class MediaItemMassAction extends BackendBaseAction
 
     private function getSelectedAction(): string
     {
-        $action = $this->getRequest()->query->get('action', self::MOVE);
+        $action = $this->getRequest()->request->get('action', self::MOVE);
 
         if (!in_array($action, self::$actions)) {
             throw new Exception('Action not exists');
@@ -156,7 +158,7 @@ class MediaItemMassAction extends BackendBaseAction
 
     private function getSelectedMediaItemIds(): array
     {
-        $ids = $this->getRequest()->query->get('id');
+        $ids = $this->getRequest()->request->get('id');
 
         if (empty($ids)) {
             $this->redirect(
@@ -174,7 +176,7 @@ class MediaItemMassAction extends BackendBaseAction
 
     private function getSelectedType(): Type
     {
-        return Type::fromString($this->getRequest()->query->get('from', 'image'));
+        return Type::fromString($this->getRequest()->request->get('from', 'image'));
     }
 
     private function move(MediaItem $mediaItem, Type $selectedType): void

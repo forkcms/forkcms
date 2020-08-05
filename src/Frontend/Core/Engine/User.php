@@ -134,7 +134,7 @@ class User
 
         // loop settings and store them in the object
         foreach ($settings as $key => $value) {
-            $this->settings[$key] = unserialize($value);
+            $this->settings[$key] = unserialize($value, ['allowed_classes' => false]);
         }
     }
 }
