@@ -18,6 +18,7 @@
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
+    "check-password-strength": "^1.0.8",
     "ckeditor": "^4.12.1",
     "core-js": "^3.6.5",
     "cropper": "^3.0.0-rc.2",

@@ -45,6 +45,7 @@ import { Settings } from '../../Modules/Settings/Js/Settings'
 import { Tags } from '../../Modules/Tags/Js/Tags'
 import { Users } from '../../Modules/Users/Js/Users'
 import { PasswordGenerator } from './Components/PasswordGenerator'
+import { PasswordStrenghtMeter } from './Components/PasswordStrenghtMeter'
 
 export class Backend {
   initBackend () {
@@ -90,6 +91,7 @@ export class Backend {
     this.users = new Users()
 
     Backend.initPasswordGenerators()
+    Backend.initPasswordStrenghtMeters()
 
     // do not move, should be run as the last item.
     if (!Config.isDebug()) this.forms.unloadWarning()
@@ -98,6 +100,12 @@ export class Backend {
   static initPasswordGenerators () {
     $('[data-password-generator]').each((index, element) => {
       element.passwordGenerator = new PasswordGenerator($(element))
+    })
+  }
+
+  static initPasswordStrenghtMeters () {
+    $('[data-role="password-strength-meter"]').each((index, element) => {
+      element.passwordStrengthMeter = new PasswordStrenghtMeter($(element))
     })
   }
 }
