@@ -8,10 +8,15 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv as CsvWriter;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+/**
+ * @deprecated remove this in Fork 6, just use ForkCMS\Utility\Csv\Writer
+ */
 class Csv
 {
     /**
      * Output a CSV-file as a download
+     *
+     * @deprecated remove this in Fork 6, just use ForkCMS\Utility\Csv\Writer->output()
      *
      * @param string $filename       The name of the file.
      * @param array  $array          The array to convert.
@@ -80,6 +85,9 @@ class Csv
         );
     }
 
+    /**
+     * @deprecated remove this in Fork 6, you should not rely on this.
+     */
     private static function getLineEnding(): string
     {
         $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
