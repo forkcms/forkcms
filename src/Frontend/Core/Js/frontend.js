@@ -103,7 +103,12 @@ jsFrontend.consentDialog = {
     var $consentDialog = $('*[data-role=privacy_consent_dialog]')
     var $consentForm = $('form[data-role=privacy_consent_dialog_form]')
 
-    $consentForm.on('submit', function(e) {
+    $consentForm.on('click', '*[data-dismiss=modal]', function (e) {
+      e.preventDefault()
+      $consentDialog.hide()
+    })
+
+    $consentForm.on('submit', function (e) {
       e.preventDefault()
 
       var $levels = $consentForm.find('input[data-role=privacy-level]')
@@ -119,9 +124,9 @@ jsFrontend.consentDialog = {
         if (typeof dataLayer !== 'undefined') {
           if (isChecked) {
             var gtmData = {}
-            gtmData['privacyConsentLevel' + niceName  + 'Agreed'] = isChecked
+            gtmData['privacyConsentLevel' + niceName + 'Agreed'] = isChecked
             dataLayer.push(gtmData)
-            dataLayer.push({'event': 'privacyConsentLevel' + niceName  + 'Agreed'})
+            dataLayer.push({'event': 'privacyConsentLevel' + niceName + 'Agreed'})
           }
         }
 
@@ -130,7 +135,7 @@ jsFrontend.consentDialog = {
         utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash)
       }
 
-      $consentDialog.hide();
+      $consentDialog.hide()
     })
   }
 }
