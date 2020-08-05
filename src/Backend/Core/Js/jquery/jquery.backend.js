@@ -1564,6 +1564,17 @@
       })
     },
 
+    getFieldIndexFromString: function(name) {
+      var chunks = name.split('_')
+
+      for(var chunk of chunks) {
+        if(!isNaN(+chunk)) {
+          return (+chunk)
+        }
+      }
+      return -1
+    },
+
     // TODO This might be deleted now we have saveNewGroup
     saveNewSequence: function ($sequenceBody) {
       var counter = 0
@@ -1573,34 +1584,60 @@
       })
     },
 
+    buildNewString: function(oldString, fromBlockName, toBlockName, currentIndex, newIndex, prefix = '', suffix = '') {
+      var searchFor = fromBlockName
+      var replaceWith = toBlockName
+      if (fromBlockName !== toBlockName) {
+        searchFor += prefix + currentIndex + suffix
+        replaceWith += prefix + newIndex + suffix
+      }
+
+      return oldString.replace(searchFor, replaceWith)
+    },
+
     saveNewGroup: function (event) {
+      var $this = this;
       var fromBlockName = $(event.from).data('position')
       var toBlockName = $(event.to).data('position')
+      var currentFieldIndex = null
+      var newFieldIndex = event.newIndex
+      var $sequenceField = $(event.item).find(sequenceField)
+      var currentId = $sequenceField.attr('id')
+
+      if (fromBlockName !== toBlockName) {
+        currentFieldIndex = this.getFieldIndexFromString(currentId)
+        if (currentFieldIndex === -1) {
+          console.error('Could not find the index.')
+        }
+        var regexp = new RegExp(fromBlockName + '_' + currentFieldIndex, 'g')
+        while ($('#' + currentId.replace(regexp, toBlockName + '_' + newFieldIndex)).length > 0) {
+          newFieldIndex++
+        }
+      }
 
       $(event.item).find('[id*="' + fromBlockName + '"]').each(function (index, item) {
         var oldId = $(item).attr('id')
-        var newId = oldId.replace(fromBlockName, toBlockName)
+        var newId = $this.buildNewString(oldId, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '_')
 
         $(item).attr('id', newId)
       })
 
       $(event.item).find('[aria-labelledby*="' + fromBlockName + '"]').each(function (index, item) {
         var oldLabel = $(item).attr('aria-labelledby')
-        var newLabel = oldLabel.replace(fromBlockName, toBlockName)
+        var newLabel = $this.buildNewString(oldLabel, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '_')
 
         $(item).attr('aria-labelledby', newLabel)
       })
 
       $(event.item).find('[name*="' + fromBlockName + '"]').each(function (index, item) {
         var oldName = $(item).attr('name')
-        var newName = oldName.replace(fromBlockName, toBlockName)
+        var newName = $this.buildNewString(oldName, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '][', ']')
 
         $(item).attr('name', newName)
       })
 
       $('[data-position="' + toBlockName + '"] li.list-group-item').each(function (index, item) {
-        console.log($(item).find('[data-role="sequence"]'))
-        $(item).find('[data-role="sequence"]').val(index)
+        $(item).find(sequenceField).val(index)
       })
     }
   }
