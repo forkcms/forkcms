@@ -60,7 +60,7 @@ class Writer
         return $this;
     }
 
-    public function output(Spreadsheet $spreadsheet, string $filename): StreamedResponse
+    public function getResponse(Spreadsheet $spreadsheet, string $filename): StreamedResponse
     {
         $writer = $this->getWriter($spreadsheet);
 
