@@ -32,8 +32,11 @@ class ExportTemplate extends BackendBaseActionAdd
         throw new RedirectException(
             'Return the csv data',
             $this->get(Writer::class)
-                ->forBackendUser(Authentication::getUser())
-                ->output($spreadSheet, 'import_template.csv')
+                ->getResponseForUser(
+                    $spreadSheet,
+                    'import_template.csv',
+                    Authentication::getUser()
+                )
         );
     }
 }
