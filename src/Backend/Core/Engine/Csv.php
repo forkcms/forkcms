@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * @deprecated remove this in Fork 6, just use ForkCMS\Utility\Csv\Writer
  */
-class Csv
+class Csv extends \SpoonFileCSV
 {
     /**
      * Output a CSV-file as a download
