@@ -63,6 +63,9 @@ class Footer extends KernelLoader
 
         // assign site wide html
         $this->template->assignGlobal('siteHTMLEndOfBody', $siteHTMLEndOfBody);
+
+        // @deprecated remove this in Fork 6, use siteHTMLEndOfBody
+        $this->template->assignGlobal('siteHTMLFooter', $siteHTMLEndOfBody);
     }
 
     /**

@@ -433,9 +433,21 @@ class Index extends BackendBaseActionIndex
                     'site_html_start_of_body',
                     $this->form->getField('site_html_start_of_body')->getValue()
                 );
+                // @deprecated remove this in Fork 6, use site_html_start_of_body
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_start_of_body_scripts',
+                    $this->form->getField('site_html_start_of_body')->getValue()
+                );
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_html_end_of_body',
+                    $this->form->getField('site_html_end_of_body')->getValue()
+                );
+                // @deprecated remove this in Fork 6, use site_html_end_of_body
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_html_footer',
                     $this->form->getField('site_html_end_of_body')->getValue()
                 );
 
