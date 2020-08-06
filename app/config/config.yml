@@ -235,6 +235,9 @@ services:
         arguments:
             - "%kernel.charset%"
 
+    ForkCMS\Utility\Csv\Reader:
+        public: true
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true
