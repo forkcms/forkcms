@@ -8,33 +8,48 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use ZipStream\Stream;
 
 class Writer
 {
     private $charset;
 
-    private $options = [];
-
     public function __construct(string $charset)
     {
         $this->charset = $charset;
-        $this->setDefaultOptions();
     }
 
-    private function setDefaultOptions()
+    private function getDefaultOptions(): array
     {
-        $this->options['Enclosure'] = '"';
-        $this->options['Delimiter'] = ',';
-        $this->options['LineEnding'] = "\n";
-        $this->options['UseBOM'] = true;
+        $options['Enclosure'] = '"';
+        $options['Delimiter'] = ',';
+        $options['LineEnding'] = "\n";
+        $options['UseBOM'] = true;
+
+        return $options;
     }
 
-    private function getWriter(Spreadsheet $spreadsheet): Csv
+    private function getUserOptions(User $user): array
+    {
+        $options['Delimiter'] = $user->getSetting('csv_split_character');
+
+        $lineEnding = $user->getSetting('csv_line_ending');
+        if ($lineEnding === '\n') {
+            $options['LineEnding'] = "\n";
+        }
+        if ($lineEnding === '\r\n') {
+            $options['LineEnding'] = "\r\n";
+        }
+
+        return $options;
+    }
+
+    private function getWriter(Spreadsheet $spreadsheet, array $options = []): Csv
     {
         $writer = IOFactory::createWriter($spreadsheet, 'Csv');
 
-        if (!empty($this->options)) {
-            foreach ($this->options as $option => $value) {
+        if (!empty($options)) {
+            foreach ($options as $option => $value) {
                 $methodName = 'set' . $option;
                 if (method_exists($writer, $methodName)) {
                     call_user_func([$writer, $methodName], $value);
@@ -45,25 +60,8 @@ class Writer
         return $writer;
     }
 
-    public function forBackendUser(User $user): self
+    private function getStreamedResponse(Csv $writer, string $filename): StreamedResponse
     {
-        $this->options['Delimiter'] = $user->getSetting('csv_split_character');
-
-        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
-        if ($lineEnding === '\n') {
-            $this->options['LineEnding'] = "\n";
-        }
-        if ($lineEnding === '\r\n') {
-            $this->options['LineEnding'] = "\r\n";
-        }
-
-        return $this;
-    }
-
-    public function getResponse(Spreadsheet $spreadsheet, string $filename): StreamedResponse
-    {
-        $writer = $this->getWriter($spreadsheet);
-
         $response = new StreamedResponse(
             function () use ($writer) {
                 $writer->save('php://output');
@@ -77,5 +75,25 @@ class Writer
         $response->headers->set('Pragma', 'no-cache');
 
         return $response;
+    }
+
+    public function getResponse(Spreadsheet $spreadsheet, string $filename, array $options = []): StreamedResponse
+    {
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        return $this->getStreamedResponse(
+            $this->getWriter($spreadsheet, $options),
+            $filename
+        );
+    }
+
+    public function getResponseForUser(Spreadsheet $spreadsheet, string $filename, User $user): StreamedResponse
+    {
+        $options = array_merge($this->getDefaultOptions(), $this->getUserOptions($user));
+
+        return $this->getStreamedResponse(
+            $this->getWriter($spreadsheet, $options),
+            $filename
+        );
     }
 }

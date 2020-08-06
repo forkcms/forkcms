@@ -106,8 +106,11 @@ class ExportData extends BackendBaseAction
             throw new RedirectException(
                 'Return the csv data',
                 $this->get(Writer::class)
-                    ->forBackendUser(Authentication::getUser())
-                    ->getResponse($spreadSheet, date('Ymd_His') . '.csv')
+                    ->getResponseForUser(
+                        $spreadSheet,
+                        date('Ymd_His') . '.csv',
+                        Authentication::getUser()
+                    )
             );
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
