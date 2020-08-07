@@ -345,6 +345,7 @@ class Header extends KernelLoader
      */
     public function parse(): void
     {
+        // @deprecated remove this in Fork 6, check if this still should be used.
         $facebook = new Facebook($this->get('fork.settings'));
         $facebook->addOpenGraphMeta($this);
         $this->parseSeo();

@@ -18,6 +18,8 @@ final class Facebook
     public function addOpenGraphMeta(Header $header): void
     {
         $parseFacebook = false;
+
+        // @deprecated remove this in Fork 6, facebook_admin_ids / facebook_app_id should be removed
         $facebookAdminIds = $this->modulesSettings->get('Core', 'facebook_admin_ids', null);
         $facebookAppId = $this->modulesSettings->get('Core', 'facebook_app_id', null);
 
