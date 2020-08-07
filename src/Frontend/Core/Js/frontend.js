@@ -131,8 +131,8 @@ jsFrontend.consentDialog = {
         }
 
           // store data in functional cookies for later usage
-        utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0)
-        utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash)
+        utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0, 6 * 30)
+        utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash, 6 * 30)
       }
 
       $consentDialog.hide()
