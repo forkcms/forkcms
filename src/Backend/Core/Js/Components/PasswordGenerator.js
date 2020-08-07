@@ -1,4 +1,4 @@
-import { generatePassword } from '@cityssm/simple-password-generator'
+const passWordgenerator = require('generate-password');
 import { StringUtil } from './StringUtil'
 
 export class PasswordGenerator {
@@ -32,7 +32,13 @@ export class PasswordGenerator {
         newElement = currentElement
       }
 
-      const pass = generatePassword({ pattern: 'xxxXXnnss', doShufflePattern: true })
+      const pass = passWordgenerator.generate({
+        length: 10,
+        numbers: true,
+        symbols: true,
+        lowercase: true,
+        uppercase: true
+      })
 
       // set the generate password, and trigger the keyup event
       newElement.val(pass).keyup()
