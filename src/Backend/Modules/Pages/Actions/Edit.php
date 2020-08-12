@@ -370,6 +370,9 @@ class Edit extends BackendBaseActionEdit
             }
 
             $this->form->addMultiCheckbox('allow', $values, $checked);
+
+            // css link class
+            $page['link_class'] = $this->form->addText('link_class', isset($this->record['data']['link_class']) ? $this->record['data']['link_class'] : null);
         }
 
         // build prototype block
@@ -903,6 +906,9 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+
+        // link class
+        $data['link_class'] = $this->form->getField('link_class')->getValue();
 
         return $data;
     }
