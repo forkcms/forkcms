@@ -371,7 +371,7 @@
         <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες οι χρήστες θα κατευθύνονται αυτόματα ανάλογα με τη γλώσσα του φυλλομετρητή τους.]]></translation>
         <translation language="pl"><![CDATA[Wybierz języki, do których ludzie mogą automatycznie być przekierowywani na podstawie języka ich przeglądarki.]]></translation>
       </item>
-      <item type="message" name="HelpScriptsFoot">
+      <item type="message" name="HelpScriptsEndOfBody">
         <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
         <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code><body></code> tag here.]]></translation>
         <translation language="it"><![CDATA[Incolla qui il codice che vuoi caricare al termine del tag<code>&lt;body&gt;</code>.]]></translation>
@@ -384,7 +384,7 @@
         <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τέλος της ετικέτας <code><body></code>.]]></translation>
         <translation language="pl"><![CDATA[Wklej tutaj kod który musi się znajdować na końcu tagu <code><body></code>.]]></translation>
       </item>
-      <item type="message" name="HelpScriptsFootLabel">
+      <item type="message" name="HelpScriptsEndOfBodyLabel">
         <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="en"><![CDATA[End of <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="it"><![CDATA[Termine degli script(s) <code>&lt;body&gt;</code>]]></translation>
@@ -428,9 +428,9 @@
         <translation language="en"><![CDATA[Paste code that needs to be loaded right after the opening <code>&lt;body&gt;</code> tag here.]]></translation>
       </item>
       <item type="message" name="HelpScriptsStartOfBodyLabel">
-        <translation language="nl"><![CDATA[<code>Start van &lt;body&gt;</code> script(s)]]></translation>
-        <translation language="en"><![CDATA[<code>Start of &lt;body&gt;</code> script(s)]]></translation>
-        <translation language="pl"><![CDATA[<code>Rozpoczęcie skryptu &lt;body&gt;</code>]]></translation>
+        <translation language="nl"><![CDATA[Start van <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[Start of <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="pl"><![CDATA[Rozpoczęcie skryptu <code>&lt;body&gt;</code>]]></translation>
       </item>
       <item type="message" name="HelpSendingEmails">
         <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
@@ -597,6 +597,30 @@
         <translation language="es"><![CDATA[El servidor es requerido.]]></translation>
         <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
         <translation language="pl"><![CDATA[Serwer jest wymagany.]]></translation>
+      </item>
+      <item type="label" name="GoogleTrackingOptions">
+        <translation language="nl"><![CDATA[Google tracking options]]></translation>
+        <translation language="en"><![CDATA[Google tracking options]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingOptions">
+        <translation language="nl"><![CDATA[Je hoeft maar één van onderstaande opties te kiezen.]]></translation>
+        <translation language="en"><![CDATA[You should only enable one option.]]></translation>
+      </item>
+      <item type="label" name="GoogleAnalyticsTrackingId">
+        <translation language="nl"><![CDATA[Google Analytics Tracking Id]]></translation>
+        <translation language="en"><![CDATA[Google Analytics Tracking Id]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingGoogleAnalyticsTrackingId">
+        <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/analytics/answer/1008080?hl=nl">Google Analytics</a>. Dit ziet er uit als UA-000000-2.]]></translation>
+        <translation language="en"><![CDATA[You can find the Tracking Id in <a href="https://support.google.com/analytics/answer/1008080?hl=en">Google Analytics</a>, it will look like: UA-000000-2.]]></translation>
+      </item>
+      <item type="label" name="GoogleTagManagerContainerId">
+        <translation language="nl"><![CDATA[Google Tag Manager Container Id]]></translation>
+        <translation language="en"><![CDATA[Google Tag Manager Container Id]]></translation>
+      </item>
+      <item type="message" name="HelpGoogleTrackingGoogleTagManagerContainerId">
+        <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/tagmanager/answer/6103696?hl=nl">Google Tag Manager</a>. Dit ziet er uit als GTM-XXXXXX.]]></translation>
+        <translation language="en"><![CDATA[You can find the Container Id in <a href="https://support.google.com/tagmanager/answer/6103696?hl=en">Google Tag Manager</a>, it will look like: GTM-XXXXXX.]]></translation>
       </item>
     </Settings>
   </Backend>
