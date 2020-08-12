@@ -499,6 +499,10 @@
         <translation language="en"><![CDATA[The cache has been successfully cleared.]]></translation>
         <translation language="pl"><![CDATA[Pamięć podręczna została pomyślnie wyczyszczona.]]></translation>
       </item>
+      <item type="label" name="LinkedPagesPerLanguage">
+        <translation language="nl"><![CDATA[gelinkte pagina's per taal]]></translation>
+        <translation language="en"><![CDATA[linked pages per language]]></translation>
+      </item>
       <item type="message" name="NoAdminIds">
         <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
         <translation language="en"><![CDATA[No admin ids yet.]]></translation>

@@ -1414,6 +1414,25 @@ class Model
     }
 
     /**
+     * @param array $page
+     */
+    public static function updateRevisionData(int $pageId, int $revisionId, array $data): void
+    {
+        // get database
+        $database = BackendModel::getContainer()->get('database');
+
+        // serialize the data
+        $data['data'] = serialize($data['data']);
+
+        $database->update(
+            'pages',
+            $data,
+            'id = ? AND revision_id = ?',
+            [$pageId, $revisionId]
+        );
+    }
+
+    /**
      * Switch templates for all existing pages
      *
      * @param int $oldTemplateId The id of the new template to replace.
