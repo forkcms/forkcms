@@ -30,6 +30,8 @@ class Categories extends BackendBaseActionIndex
             ['active', BL::getWorkingLanguage()]
         );
 
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
+
         // set headers
         $this->dataGrid->setHeaderLabels([
             'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount')),

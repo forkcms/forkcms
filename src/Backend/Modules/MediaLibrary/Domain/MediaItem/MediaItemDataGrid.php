@@ -194,5 +194,6 @@ class MediaItemDataGrid extends DataGridDatabase
 
         // our JS needs to know an id, so we can highlight it
         $this->setRowAttributes(['id' => 'row-[id]']);
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
     }
 }

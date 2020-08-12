@@ -1,6 +1,9 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+{# Site wide HTML just after body tag #}
+{{ siteHTMLStartOfBody|raw }}
+
 {% block navigation %}
   <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
@@ -60,7 +63,7 @@
 <script src="/js/vendors/bootstrap.min.js"></script>
 <script src="/js/vendors/bootstrap-accessibility.min.js"></script>
 
-{# Site wide HTML #}
-{{ siteHTMLFooter|raw }}
+{# Site wide HTML just before closing body tag #}
+{{ siteHTMLEndOfBody|raw }}
 </body>
 </html>

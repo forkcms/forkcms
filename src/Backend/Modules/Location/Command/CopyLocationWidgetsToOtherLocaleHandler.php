@@ -27,7 +27,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
         );
 
         foreach ($currentWidgets as $currentWidget) {
-            $data = unserialize($currentWidget['data']);
+            $data = unserialize($currentWidget['data'], ['allowed_classes' => false]);
 
             if (!is_array($data)
                 || !isset($data['language'])

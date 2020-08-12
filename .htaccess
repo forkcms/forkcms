@@ -49,6 +49,7 @@ deny from env=stayout
 
     # forbidden folders
     RewriteRule .*\.php - [F]
+    RewriteRule .*\.twig - [F]
     RewriteRule \.git - [F]
     RewriteRule vendor/.* - [F]
     RewriteRule bin/.* - [F]
@@ -67,6 +68,7 @@ deny from env=stayout
     RewriteRule app/config - [F]
     RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
     RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+    RewriteRule src/Frontend/Files/MediaLibrary/uploads - [F]
     RewriteRule var/docker/.* - [F]
     RewriteRule Dockerfile - [F]
     RewriteRule \.dockerignore - [F]

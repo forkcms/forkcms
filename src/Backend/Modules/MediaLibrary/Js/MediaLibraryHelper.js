@@ -1038,10 +1038,16 @@ jsBackend.mediaLibraryHelper.upload = {
       --jsBackend.mediaLibraryHelper.upload.uploadedCount
       jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
     })
+
+    // bind change to "Enable cropper" checkbox
+    $('[data-role="enable-cropper-checkbox"]').on('change', function () {
+      // Reset the fineuploader upload box so we can skip or use a scaling config for the cropper
+      $('#fine-uploader-gallery').unbind().empty()
+      jsBackend.mediaLibraryHelper.upload.init()
+    })
   },
 
   toggleCropper: function () {
-    // the cropper is mandatory
     var $formGroup = $('[data-role="cropper-is-mandatory-form-group"]')
     var $warning = $('[data-role="cropper-is-mandatory-message"]')
     var $checkbox = $('[data-role="enable-cropper-checkbox"]')
@@ -1069,6 +1075,25 @@ jsBackend.mediaLibraryHelper.upload = {
     var $fineUploaderGallery = $('#fine-uploader-gallery')
     $fineUploaderGallery.fineUploader({
       template: 'qq-template-gallery',
+      options: {
+        request: {
+          omitDefaultParams: true
+        }
+      },
+      chunking: {
+        enabled: true,
+        success: {
+          endpoint: function() {
+            var mediaFolderId = $('#uploadMediaFolderId').val()
+
+            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]='
+              + jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
+          }
+        },
+        concurrent: {
+          enabled: true
+        },
+      },
       thumbnails: {
         placeholders: {
           waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
@@ -1082,10 +1107,10 @@ jsBackend.mediaLibraryHelper.upload = {
       callbacks: {
         onUpload: function (event) {
           // redefine media folder id
-          mediaFolderId = $('#uploadMediaFolderId').val()
-
+          var mediaFolderId = $('#uploadMediaFolderId').val()
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
           this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId)
+          this.setCustomHeaders({'X-CSRF-Token': jsBackend.data.get('csrf-token')})
         },
         onComplete: function (id, name, responseJSON) {
           // add file to uploaded box
@@ -1135,6 +1160,14 @@ jsBackend.mediaLibraryHelper.upload = {
    * Configure the uploader to trigger the cropper
    */
   getScalingConfig: function () {
+    // Skip scaling config for cropping if we don't have cropping enabled
+    if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+      return {
+        includeExif: false,
+      }
+    }
+
+    // Add a scaling config with custom resizer for our cropper feature
     return {
       includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
       sendOriginal: false,
@@ -1372,7 +1405,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
     // add to html
     html += '<option value="' + mediaFolder.id + '">'
-    html += '   ' + mediaFolder.slug + ' (' + count + '/' + mediaFolder.numberOfMediaItems + ')'
+    html += '   ' + utils.string.htmlEncode(mediaFolder.slug) + ' (' + count + '/' + mediaFolder.numberOfMediaItems + ')'
     html += '</option>'
 
     if (mediaFolder.numberOfChildren > 0) {

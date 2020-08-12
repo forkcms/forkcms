@@ -155,6 +155,16 @@
                       {% endfor %}
                     </ul>
                   </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">{{ 'lbl.LinkCssClass'|trans|ucfirst }}</h2>
+                    </div>
+                    <div class="panel-body">
+                      <div class="form-group last">
+                        {% form_field link_class %}{% form_field_error link_class %}
+                      </div>
+                    </div>
+                  </div>
                 {% endif %}
               </div>
             </div>
@@ -493,7 +503,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title|e)|raw }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal"}) }}

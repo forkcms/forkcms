@@ -83,6 +83,7 @@ class Edit extends BackendBaseActionEdit
 
         // create datagrid
         $this->dgUsage = new BackendDataGridArray($items);
+        $this->dgUsage->setColumnFunction('htmlspecialchars', ['[name]'], 'name', false);
         $this->dgUsage->setPaging(false);
         $this->dgUsage->setColumnsHidden(['url']);
         $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => '']);

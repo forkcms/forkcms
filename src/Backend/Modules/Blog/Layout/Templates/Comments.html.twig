@@ -25,6 +25,7 @@
             {% if dgPublished %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
                 <input type="hidden" name="from" value="published" />
+                <input type="hidden" name="token" value="{{ fork_csrf_token }}">
                 <div class="table-responsive">
                   {{ dgPublished|raw }}
                 </div>
@@ -70,6 +71,7 @@
             {% if dgModeration %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
                 <input type="hidden" name="from" value="moderation" />
+                <input type="hidden" name="token" value="{{ fork_csrf_token }}">
                 <div class="table-responsive">
                   {{ dgModeration|raw }}
                 </div>
@@ -115,6 +117,7 @@
             {% if dgSpam %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsSpam">
                 <input type="hidden" name="from" value="spam" />
+                <input type="hidden" name="token" value="{{ fork_csrf_token }}">
                 <div class="table-responsive">
                   {{ dgSpam|raw }}
                 </div>

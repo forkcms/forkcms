@@ -17,6 +17,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -226,6 +227,9 @@ class Add extends BackendBaseActionAdd
             }
 
             $this->form->addMultiCheckbox('allow', $values, $checked);
+
+            // css link class
+            $this->form->addText('link_class');
         }
 
         // build prototype block
@@ -419,7 +423,7 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('templates', $this->templates);
         $this->template->assign('isGod', $this->isGod);
         $this->template->assign('positions', $this->positions);
-        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasData', json_encode(BackendModel::recursiveHtmlspecialchars(BackendExtensionsModel::getExtrasData())));
         $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->template->assign(
             'prefixURL',
@@ -510,7 +514,7 @@ class Add extends BackendBaseActionAdd
                 if ($redirectValue === 'internal') {
                     $data['internal_redirect'] = [
                         'page_id' => $this->form->getField('internal_redirect')->getValue(),
-                        'code' => '301',
+                        'code' => Response::HTTP_TEMPORARY_REDIRECT,
                     ];
                 }
                 if ($redirectValue === 'external') {
@@ -518,7 +522,7 @@ class Add extends BackendBaseActionAdd
                         'url' => BackendPagesModel::getEncodedRedirectUrl(
                             $this->form->getField('external_redirect')->getValue()
                         ),
-                        'code' => '301',
+                        'code' => Response::HTTP_TEMPORARY_REDIRECT,
                     ];
                 }
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
@@ -552,6 +556,9 @@ class Add extends BackendBaseActionAdd
                         }
                     }
                 }
+
+                // link class
+                $data['link_class'] = $this->form->getField('link_class')->getValue();
 
                 // build page record
                 $page = [];

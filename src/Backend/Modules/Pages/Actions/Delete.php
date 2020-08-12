@@ -18,7 +18,7 @@ class Delete extends BackendBaseActionDelete
     {
         $deleteForm = $this->createForm(
             DeleteType::class,
-            ['id' => $this->record['id']],
+            ['id' => null],
             ['module' => $this->getModule()]
         );
         $deleteForm->handleRequest($this->getRequest());

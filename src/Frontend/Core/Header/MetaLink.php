@@ -110,7 +110,7 @@ final class MetaLink
             ' ',
             array_map(
                 function (string $parameterKey, string $parameterValue) {
-                    return $parameterKey . '="' . $parameterValue . '"';
+                    return $parameterKey . '="' . htmlspecialchars($parameterValue) . '"';
                 },
                 array_keys($this->attributes),
                 $this->attributes

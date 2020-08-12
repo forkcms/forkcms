@@ -30,7 +30,7 @@ class TwigFilters
         $twig->addFilter(new TwigFilter('uppercase', $app . '::uppercase'));
         $twig->addFilter(new TwigFilter('rand', $app . '::random'));
         $twig->addFilter(new TwigFilter('formatfloat', $app . '::formatFloat'));
-        $twig->addFilter(new TwigFilter('truncate', $app . '::truncate'));
+        $twig->addFilter(new TwigFilter('truncate', $app . '::truncate', ['is_safe' => ['html']]));
         $twig->addFilter(new TwigFilter('camelcase', $app . '::camelCase'));
         $twig->addFilter(new TwigFilter('snakeCase', $app . '::snakeCase'));
         $twig->addFilter(new TwigFilter('stripnewlines', $app . '::stripNewlines'));

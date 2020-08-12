@@ -21,10 +21,10 @@
         <div class="panel-body">
           {% if data %}
             <table class="table">
-              {% for _itr_13 in data %}
+              {% for field in data %}
                 <tr>
-                  <th>{{ _itr_13.label }}:</th>
-                  <td>{{ _itr_13.value }}</td>
+                  <th>{{ field.label|raw }}:</th>
+                  <td>{{ field.value }}</td>
                 </tr>
               {% endfor %}
             </table>

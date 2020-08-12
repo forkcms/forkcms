@@ -2,11 +2,14 @@
 
 namespace Backend\Modules\FormBuilder\Actions;
 
+use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Common\Exception\RedirectException;
+use ForkCMS\Utility\Csv\Writer;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * This action is used to export submissions of a form.
@@ -86,6 +89,7 @@ class ExportData extends BackendBaseAction
 
     public function execute(): void
     {
+        $this->checkToken();
         $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
@@ -93,7 +97,21 @@ class ExportData extends BackendBaseAction
             parent::execute();
             $this->setFilter();
             $this->setItems();
-            BackendCSV::outputCSV(date('Ymd_His') . '.csv', $this->rows, $this->columnHeaders);
+
+            $spreadSheet = new Spreadsheet();
+            $sheet = $spreadSheet->getActiveSheet();
+            $sheet->fromArray($this->columnHeaders, null, 'A1');
+            $sheet->fromArray($this->rows, null, 'A2');
+
+            throw new RedirectException(
+                'Return the csv data',
+                $this->get(Writer::class)
+                    ->getResponseForUser(
+                        $spreadSheet,
+                        date('Ymd_His') . '.csv',
+                        Authentication::getUser()
+                    )
+            );
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
             $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
@@ -176,7 +194,7 @@ class ExportData extends BackendBaseAction
             }
 
             // value is serialized
-            $value = unserialize($row['value']);
+            $value = unserialize($row['value'], ['allowed_classes' => false]);
 
             // flatten arrays
             if (is_array($value)) {
