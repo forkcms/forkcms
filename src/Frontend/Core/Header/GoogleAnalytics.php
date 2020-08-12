@@ -13,9 +13,16 @@ final class GoogleAnalytics
     /** @var Cookie */
     private $cookie;
 
+    /**
+     * @var string
+     * @deprecated this isn't used anymore
+     */
+    private $httpHost;
+
     public function __construct(ModulesSettings $modulesSettings, string $httpHost, Cookie $cookie)
     {
         // @deprecated $httpHost is deprecated
+        $this->httpHost = $httpHost;
         $this->modulesSettings = $modulesSettings;
         $this->cookie = $cookie;
     }
