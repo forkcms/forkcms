@@ -414,7 +414,8 @@ class Model
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
                 [$profileId, $name]
-            )
+            ),
+            ['allowed_classes' => false]
         );
     }
 
@@ -543,6 +544,8 @@ class Model
     /**
      * Import CSV data
      *
+     * @deprecated remove this in Fork 6, use Backend\Modules\Profiles\Engine::importFromArray
+     *
      * @param array $data The array from the .csv file
      * @param int|null $groupId $groupId Adding these profiles to a group
      * @param bool $overwriteExisting $overwriteExisting
@@ -623,6 +626,71 @@ class Model
                 $values['starts_on'] = BackendModel::getUTCDate();
 
                 // insert values
+                self::insertProfileGroup($values);
+            }
+        }
+
+        return $statistics;
+    }
+
+    /**
+     * Import multiple profiles based on a given array
+     * Each row in the array should contain the fields:
+     *  * email
+     *  * display_name
+     *  * password
+     *
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     */
+    public static function importFromArray(array $data, int $groupId = null, bool $overwriteExisting = false): array
+    {
+        $statistics = ['count' => ['exists' => 0, 'inserted' => 0]];
+
+        foreach ($data as $item) {
+            if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
+                throw new BackendException(
+                    'The array should have the following fields; "email", "password" and "display_name".'
+                );
+            }
+
+            $exists = self::existsByEmail($item['email']);
+
+            // do not overwrite existing profiles
+            if ($exists && !$overwriteExisting) {
+                $statistics['count']['exists'] += 1;
+                continue;
+            }
+
+            $values = [
+                'email' => $item['email'],
+                'registered_on' => BackendModel::getUTCDate(),
+                'display_name' => $item['display_name'],
+                'url' => self::getUrl($item['display_name']),
+                'password' => self::encryptPassword(time()), // @remark this is a temporary password, but it can't be null
+                'last_login' => date('Y-m-d H:i:s', 0), // @remark, this should be fixed! but at this point the column last_login can't be null
+            ];
+
+            if (!$exists) {
+                $id = self::insert($values);
+                $statistics['count']['inserted'] += 1;
+            } else {
+                $profile = self::getByEmail($item['email']);
+                $id = $profile['id'];
+                $statistics['count']['exists'] += 1;
+            }
+
+            if ($item['password']) {
+                $values['password'] = self::encryptPassword($item['password']);
+                self::update($id, $values);
+            }
+
+            if ($groupId !== null) {
+                $values = [];
+
+                $values['profile_id'] = $id;
+                $values['group_id'] = $groupId;
+                $values['starts_on'] = BackendModel::getUTCDate();
+
                 self::insertProfileGroup($values);
             }
         }

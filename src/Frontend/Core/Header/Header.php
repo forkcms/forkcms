@@ -8,6 +8,7 @@ use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
+use ForkCMS\Google\TagManager\TagManager;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
@@ -351,14 +352,39 @@ class Header extends KernelLoader
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
-        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
-        $siteHTMLHeader .= new GoogleAnalytics(
-            $this->get('fork.settings'),
-            Model::getRequest()->getHttpHost(),
-            $this->get('fork.cookie')
-        );
-        $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $siteHTMLHead = '';
+        $siteHTMLStartOfBody = '';
+
+        // Add Google Tag Manager code if needed
+        $googleTagManagerContainerId = $this->get('fork.settings')->get('Core', 'google_tracking_google_tag_manager_container_id', '');
+        if ($googleTagManagerContainerId !== '') {
+            $googleTagManager = $this->get(TagManager::class);
+            $siteHTMLHead .= $googleTagManager->generateHeadCode() . "\n";
+
+            $siteHTMLStartOfBody .= $googleTagManager->generateStartOfBodyCode() . "\n";
+        }
+
+        // Add Google Analytics code if needed
+        $googleAnalyticsTrackingId = $this->get('fork.settings')->get('Core', 'google_tracking_google_analytics_tracking_id', '');
+        if ($googleAnalyticsTrackingId !== '') {
+            $siteHTMLHead .= new GoogleAnalytics(
+                $this->get('fork.settings'),
+                Model::getRequest()->getHttpHost(),
+                $this->get('fork.cookie')
+            ) . "\n";
+        }
+
+        // @deprecated fallback to site_html_header as this was used in the past
+        $siteHTMLHead .= (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', '')) . "\n";
+        $siteHTMLHead .= "\n" . $this->jsData;
+        $this->template->assignGlobal('siteHTMLHead', trim($siteHTMLHead));
+
+        // @deprecated remove this in Fork 6, use siteHTMLHead
+        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHead));
+
+        // @deprecated fallback to site_start_of_body_scripts as this was used in the pased
+        $siteHTMLStartOfBody .= $this->get('fork.settings')->get('Core', 'site_html_start_of_body', $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', ''));
+        $this->template->assignGlobal('siteHTMLStartOfBody', trim($siteHTMLStartOfBody));
 
         $this->template->assignGlobal('pageTitle', $this->getPageTitle());
         $this->template->assignGlobal('contentTitle', $this->getContentTitle());

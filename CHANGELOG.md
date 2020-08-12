@@ -1,3 +1,21 @@
+5.8.3  (2020-07-07)
+------------------
+
+Fixed:
+* Core: Optimise vendor images [#3143](https://github.com/forkcms/forkcms/pull/3143)
+* Core: Show the correct error when adding invalid custom slugs [#3145](https://github.com/forkcms/forkcms/pull/3145)
+* Core: Stop hard caching redirects [#3094](https://github.com/forkcms/forkcms/pull/3094)
+* Core: Update vendors [#3136](https://github.com/forkcms/forkcms/pull/3136) [#3111](https://github.com/forkcms/forkcms/pull/3111) [#3119](https://github.com/forkcms/forkcms/pull/3119)
+* DX: Fix docker build [#3121](https://github.com/forkcms/forkcms/pull/3121)
+* DX: Fix typo in pull request templates [#3140](https://github.com/forkcms/forkcms/pull/3140)
+* MediaGalleries: Fix text being truncated [#3139](https://github.com/forkcms/forkcms/pull/3139)
+* MediaLibrary: Fix uploading big files [#3146](https://github.com/forkcms/forkcms/pull/3146)
+
+Security:
+* Core: Fix xss bugs in the backend [#3093](https://github.com/forkcms/forkcms/pull/3093) [#3137](https://github.com/forkcms/forkcms/pull/3137)
+* Core: Improve csrf checks in the backend [#3123](https://github.com/forkcms/forkcms/pull/3123) [#3138](https://github.com/forkcms/forkcms/pull/3138) [#3124](https://github.com/forkcms/forkcms/pull/3124) [#3132](https://github.com/forkcms/forkcms/pull/3132) [#3135](https://github.com/forkcms/forkcms/pull/3135)
+
+
 5.8.2  (2020-05-12)
 ------------------
 

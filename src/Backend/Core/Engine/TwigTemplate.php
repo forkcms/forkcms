@@ -305,6 +305,7 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $this->assign('var', '');
         $this->assign('timestamp', time());
+        $this->assign('fork_csrf_token', Model::getToken());
         $this->addBodyClassAndId();
         $this->parseNavigation();
 

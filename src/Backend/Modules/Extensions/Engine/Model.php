@@ -295,7 +295,7 @@ class Model
         $itemsToRemove = [];
 
         foreach ($extras as $id => &$row) {
-            $row['data'] = $row['data'] === null ? [] : @unserialize($row['data']);
+            $row['data'] = $row['data'] === null ? [] : @unserialize($row['data'], ['allowed_classes' => false]);
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
                 $itemsToRemove[] = $id;
             }
@@ -343,7 +343,7 @@ class Model
         $values = [];
 
         foreach ($extras as $row) {
-            $row['data'] = @unserialize($row['data']);
+            $row['data'] = @unserialize($row['data'], ['allowed_classes' => false]);
 
             // remove items that are not for the current language
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
@@ -559,7 +559,7 @@ class Model
         $i = 0;
 
         foreach ($templates as &$row) {
-            $row['data'] = unserialize($row['data']);
+            $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
             $row['has_block'] = false;
 
             // reset
@@ -646,7 +646,7 @@ class Model
 
         foreach ($records as $row) {
             $template = self::getTemplate($row['id']);
-            $data = unserialize($template['data']);
+            $data = unserialize($template['data'], ['allowed_classes' => false]);
 
             $templateElement = $xml->createElement('template');
             $templateElement->setAttribute('label', $template['label']);

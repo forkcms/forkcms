@@ -153,7 +153,7 @@ class DataGridFunctions
 
             // get settings
             $avatar = $user->getSetting('avatar', 'no-avatar.gif');
-            $nickname = $user->getSetting('nickname');
+            $nickname = htmlentities($user->getSetting('nickname'));
             $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
             // build html

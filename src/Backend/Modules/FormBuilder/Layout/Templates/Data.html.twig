@@ -52,6 +52,7 @@
       {% if dataGrid %}
         <form action="{{ geturl('mass_data_action') }}" method="get" class="forkForms">
           <input type="hidden" name="form_id" value="{{ id }}">
+          <input type="hidden" name="token" value="{{ fork_csrf_token }}">
           {{ dataGrid|raw }}
           <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
             <div class="modal-dialog">

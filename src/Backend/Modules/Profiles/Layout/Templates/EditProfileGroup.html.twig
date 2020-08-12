@@ -67,7 +67,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmProfileGroupDelete'|trans|format(profileGroup.name)|raw }}</p>
+            <p>{{ 'msg.ConfirmProfileGroupDelete'|trans|format(profileGroup.name|e)|raw }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}

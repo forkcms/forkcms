@@ -423,7 +423,7 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('templates', $this->templates);
         $this->template->assign('isGod', $this->isGod);
         $this->template->assign('positions', $this->positions);
-        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasData', json_encode(BackendModel::recursiveHtmlspecialchars(BackendExtensionsModel::getExtrasData())));
         $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->template->assign(
             'prefixURL',
