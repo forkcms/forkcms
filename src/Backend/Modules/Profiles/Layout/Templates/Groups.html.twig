@@ -42,6 +42,7 @@
       {% if dgGroups %}
         <form action="{{ geturl('mass_action') }}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
         <div>
+          <input type="hidden" name="token" value="{{ fork_csrf_token }}">
           <input type="hidden" name="offset" value="{{ offset }}" />
           <input type="hidden" name="order" value="{{ order }}" />
           <input type="hidden" name="sort" value="{{ sort }}" />

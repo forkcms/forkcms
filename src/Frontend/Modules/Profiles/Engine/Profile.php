@@ -98,11 +98,11 @@ class Profile
      * Get a profile setting by name.
      *
      * @param string $name Setting name.
-     * @param string $defaultValue Default value is used when the setting does not exist.
+     * @param mixed $defaultValue Default value is used when the setting does not exist.
      *
      * @return mixed
      */
-    public function getSetting(string $name, string $defaultValue = null)
+    public function getSetting(string $name, $defaultValue = null)
     {
         // if settings array does not exist then get it first
         if (empty($this->settings)) {
@@ -121,7 +121,7 @@ class Profile
     public function getSettings(): array
     {
         // if settings array does not exist then get it first
-        if (empty($this->settings)) {
+        if (empty($this->settings) && $this->id !== null) {
             $this->settings = FrontendProfilesModel::getSettings($this->getId());
         }
 
@@ -213,7 +213,7 @@ class Profile
         );
 
         foreach ($this->settings as &$value) {
-            $value = unserialize($value);
+            $value = unserialize($value, ['allowed_classes' => false]);
         }
     }
 
@@ -247,7 +247,9 @@ class Profile
         $this->getSettings();
 
         // set setting
-        FrontendProfilesModel::setSetting($this->getId(), $name, $value);
+        if ($this->id !== null) {
+            FrontendProfilesModel::setSetting($this->getId(), $name, $value);
+        }
 
         // add setting to cache
         $this->settings[$name] = $value;
@@ -264,7 +266,9 @@ class Profile
         $this->getSettings();
 
         // set settings
-        FrontendProfilesModel::setSettings($this->getId(), $values);
+        if ($this->id !== null) {
+            FrontendProfilesModel::setSettings($this->getId(), $values);
+        }
 
         // add settings to cache
         foreach ($values as $key => $value) {

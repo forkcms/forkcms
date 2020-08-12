@@ -105,7 +105,7 @@ jsFrontend.location = {
       {
         position: new google.maps.LatLng(lat, lng),
         map: jsFrontend.location.map[mapId],
-        title: title,
+        title: utils.string.htmlEncode(title),
         locationId: id
       }
     )
@@ -118,7 +118,7 @@ jsFrontend.location = {
       // apparently JS goes bananas with multi line HTMl, so we grab it from the div, this seems like a good idea for SEO
       if ($markerText.length > 0) text = $markerText.html()
 
-      var content = '<h1>' + title + '</h1>'
+      var content = '<h1>' + utils.string.htmlEncode(title) + '</h1>'
       if (typeof text !== 'undefined') content += text
 
       new google.maps.InfoWindow(

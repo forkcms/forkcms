@@ -7,15 +7,18 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
     var numNodes = thumbElements.length
     var items = []
     var figureEl
+    var $figureEl
+    var $lightboxHtmlElement
     var linkEl
     var size
     var item
 
     for (var i = 0; i < numNodes; i++) {
       figureEl = thumbElements[i] // <figure> element
+      $figureEl = $(figureEl)
 
       // We only allow <figure> html elements
-      if ($(figureEl).prop('nodeName') !== 'FIGURE') {
+      if ($figureEl.prop('nodeName') !== 'FIGURE') {
         continue
       }
 
@@ -29,6 +32,17 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
       size = linkEl.getAttribute('data-size').split('x')
 
       // create slide object
+      $lightboxHtmlElement = $figureEl.find('[data-lightbox=html]');
+      if ($lightboxHtmlElement.length === 1) {
+        item = {
+          'html': $lightboxHtmlElement.html(),
+          'el': figureEl
+        }
+        items.push(item)
+
+        continue
+      }
+
       item = {
         src: linkEl.getAttribute('href'),
         w: parseInt(size[0], 10),

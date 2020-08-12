@@ -15,6 +15,8 @@ class MassAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['delete'])) {
@@ -32,7 +34,7 @@ class MassAction extends BackendBaseAction
             $aIds = (array) $this->getRequest()->query->get('id');
 
             // delete comment(s)
-            if ($action == 'delete') {
+            if ($action === 'delete') {
                 BackendTagsModel::delete($aIds);
             }
         }

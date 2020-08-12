@@ -13,7 +13,7 @@ class StorageManagerTest extends TestCase
     /** @var StorageManager */
     protected $storageManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->storageManager = new StorageManager();
     }
@@ -29,7 +29,7 @@ class StorageManagerTest extends TestCase
         );
 
         $this->storageManager->addStorageProvider($localStorageProvider, 'local');
-        $this->assertEquals(
+        self::assertEquals(
             $this->storageManager->getStorageProvider(StorageType::local()),
             $localStorageProvider
         );
@@ -42,7 +42,7 @@ class StorageManagerTest extends TestCase
             'https://www.youtube.com/embed/'
         );
         $this->storageManager->addStorageProvider($youtubeStorageProvider, 'youtube');
-        $this->assertEquals(
+        self::assertEquals(
             $this->storageManager->getStorageProvider(StorageType::youtube()),
             $youtubeStorageProvider
         );
@@ -55,7 +55,7 @@ class StorageManagerTest extends TestCase
             'https://player.vimeo.com/video/'
         );
         $this->storageManager->addStorageProvider($vimeoStorageProvider, 'vimeo');
-        $this->assertEquals(
+        self::assertEquals(
             $this->storageManager->getStorageProvider(StorageType::vimeo()),
             $vimeoStorageProvider
         );

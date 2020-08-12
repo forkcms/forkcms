@@ -146,6 +146,11 @@ class Navigation extends KernelLoader
                 continue;
             }
 
+            // if data
+            if (isset($data['data'])) {
+                $data['data'] = unserialize($data['data']);
+            }
+
             // add
             $footerLinks[] = [
                 'id' => $id,
@@ -153,6 +158,7 @@ class Navigation extends KernelLoader
                 'title' => $data['title'],
                 'navigation_title' => $data['navigation_title'],
                 'selected' => in_array($id, self::$selectedPageIds, true),
+                'link_class' => (isset($data['data']['link_class'])) ? $data['data']['link_class'] : null,
             ];
         }
 
@@ -281,7 +287,13 @@ class Navigation extends KernelLoader
                 // authentication
                 if (isset($page['data'])) {
                     // unserialize data
-                    $page['data'] = unserialize($page['data']);
+
+                    $page['data'] = unserialize($page['data'], ['allowed_classes' => false]);
+                    // add link class if needed
+                    if (isset($page['data']['link_class'])) {
+                        $navigation[$type][$parentId][$id]['link_class'] = $page['data']['link_class'];
+                    }
+
                     // if auth_required isset and is true
                     if (isset($page['data']['auth_required']) && $page['data']['auth_required']) {
                         // is profile logged? unset

@@ -25,14 +25,16 @@ class Helper
         if (!empty($field)) {
             // init
             $form = new BackendForm('tmp', '');
-            $tpl = (BackendModel::getContainer()->has('template') ?
+            $tpl = (
+                BackendModel::getContainer()->has('template') ?
                 BackendModel::getContainer()->get('template') :
                 new BackendTemplate()
             );
             $fieldHTML = '';
             $fieldName = 'field' . $field['id'];
             $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-            $defaultValues = (isset($field['settings']['default_values']) ?
+            $defaultValues = (
+                isset($field['settings']['default_values']) ?
                 $field['settings']['default_values'] :
                 null
             );

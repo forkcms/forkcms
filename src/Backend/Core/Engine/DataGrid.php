@@ -5,6 +5,7 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
 use SpoonDatagridSource;
+use SpoonFilter;
 use SpoonFormDropdown;
 
 /**
@@ -27,6 +28,7 @@ class DataGrid extends \SpoonDataGrid
         'add' => 'fa-plus',
         'copy' => 'fa-copy',
         'edit' => 'fa-pencil',
+        'clone' => 'fa-clone',
         'import' => 'fa-download',
         'export' => 'fa-upload',
         'delete' => 'fa-trash-o',
@@ -72,7 +74,7 @@ class DataGrid extends \SpoonDataGrid
 
             // set default label
             $this->setHeaderLabels(
-                [$column => \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($column)))]
+                [$column => SpoonFilter::ucfirst(BackendLanguage::lbl(SpoonFilter::toCamelCase($column)))]
             );
         }
 
@@ -111,14 +113,14 @@ class DataGrid extends \SpoonDataGrid
         // known actions that should have a button
         if (in_array(
             $lowercasedName,
-            ['add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install'],
+            ['add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install', 'clone'],
             true
         )) {
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs pull-right">' .
                 ($icon ? '<span class="fa ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
-                $value .
+               SpoonFilter::ucfirst($value) .
                 '</a>';
 
             // reset URL
@@ -130,7 +132,7 @@ class DataGrid extends \SpoonDataGrid
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs">' .
                 ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
-                $value .
+                SpoonFilter::ucfirst($value) .
                 '</a>';
 
             // reset URL
@@ -154,12 +156,13 @@ class DataGrid extends \SpoonDataGrid
                 'install',
                 'use_revision',
                 'use_draft',
+                'clone',
             ]
         )) {
             // add special attributes for actions we know
             $this->setColumnAttributes(
                 $name,
-                ['class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name)]
+                ['class' => 'fork-data-grid-action action' . SpoonFilter::toCamelCase($name)]
             );
         }
 
@@ -218,7 +221,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnAttributes(
             $name,
             [
-                'class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name),
+                'class' => 'fork-data-grid-action action' . SpoonFilter::toCamelCase($name),
                 'style' => 'width: 10%;',
             ]
         );
@@ -401,7 +404,7 @@ class DataGrid extends \SpoonDataGrid
 
         // set title if there wasn't one provided
         if ($title === null) {
-            $title = \SpoonFilter::ucfirst(BackendLanguage::lbl('Delete') . '?');
+            $title = SpoonFilter::ucfirst(BackendLanguage::lbl('Delete') . '?');
         }
 
         // grab current value
@@ -489,11 +492,11 @@ class DataGrid extends \SpoonDataGrid
         // build HTML
         $HTML =
             '<label for="' . $actionDropDown->getAttribute('id') . '">' .
-            \SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
+            SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
             '</label>' .
             $actionDropDown->parse() .
             '<button type="button" class="btn btn-default jsMassActionSubmit">' .
-            '   <span>' . \SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
+            '   <span>' . SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
             '</button>';
 
         // assign parsed html

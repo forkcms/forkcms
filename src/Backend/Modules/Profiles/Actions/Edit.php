@@ -116,6 +116,7 @@ class Edit extends BackendBaseActionEdit
             Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
+        $this->form->addTextarea('about', BackendProfilesModel::getSetting($this->id, 'about'));
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');
@@ -132,6 +133,7 @@ class Edit extends BackendBaseActionEdit
             BackendProfilesModel::QUERY_DATAGRID_BROWSE_PROFILE_GROUPS,
             [$this->profile['id']]
         );
+        $this->dgGroups->setColumnFunction('htmlspecialchars', ['[group_name]'], 'group_name', false);
 
         // sorting columns
         $this->dgGroups->setSortingColumns(['group_name'], 'group_name');
@@ -188,7 +190,7 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('blocked', true);
         }
 
-        $this->header->appendDetailToBreadcrumbs($this->record['display_name']);
+        $this->header->appendDetailToBreadcrumbs($this->profile['display_name']);
     }
 
     private function validateForm(): void
@@ -213,6 +215,7 @@ class Edit extends BackendBaseActionEdit
             $ddmMonth = $this->form->getField('month');
             $ddmYear = $this->form->getField('year');
             $ddmCountry = $this->form->getField('country');
+            $txtAbout = $this->form->getField('about');
 
             // email filled in?
             if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -306,6 +309,7 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'birth_date', $birthDate);
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
+                BackendProfilesModel::setSetting($this->id, 'about', $txtAbout->getValue());
 
                 $displayName = (isset($values['display_name'])) ?
                     $values['display_name'] : $this->profile['display_name'];

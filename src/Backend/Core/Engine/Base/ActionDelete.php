@@ -28,7 +28,7 @@ class ActionDelete extends Action
      */
     public function execute(): void
     {
-        parent::parse();
-        parent::checkToken();
+        $this->parse();
+        $this->checkToken();
     }
 }

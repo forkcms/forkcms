@@ -153,17 +153,17 @@ class DataGridFunctions
 
             // get settings
             $avatar = $user->getSetting('avatar', 'no-avatar.gif');
-            $nickname = $user->getSetting('nickname');
+            $nickname = htmlentities($user->getSetting('nickname'));
             $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
             // build html
             $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                    BackendModel::createUrlForAction(
-                        'Edit',
-                        'Users'
-                    ) . '&amp;id=' . $id . '">' . "\n";
+                BackendModel::createUrlForAction(
+                    'Edit',
+                    'Users'
+                ) . '&amp;id=' . $id . '">' . "\n";
             }
             $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/Users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";

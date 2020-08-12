@@ -188,7 +188,9 @@ class MetaType extends AbstractType
             );
 
             if ($generatedUrl !== $metaData['url'] && $metaData['urlOverwrite']) {
-                $metaForm->get('url')->addError(new FormError($this->translator->trans('err.URLAlreadyExists')));
+                $metaForm->get('url')->addError(
+                    new FormError($this->translator->trans(self::getInvalidUrlErrorMessage($generatedUrl)))
+                );
                 $event->setData($metaData);
 
                 return;
@@ -320,5 +322,30 @@ class MetaType extends AbstractType
         $view->vars['generated_url_selector'] = $options['generated_url_selector'];
         $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
         $view->vars['detail_url'] = $options['detail_url'];
+    }
+
+    private static function stripNumberAddedByTheUrlGeneration(string $string): string
+    {
+        $chunks = explode('-', $string);
+
+        if (!SpoonFilter::isNumeric(end($chunks))) {
+            return $string;
+        }
+
+        // remove last chunk
+        array_pop($chunks);
+
+        return implode('-', $chunks);
+    }
+
+    private static function getInvalidUrlErrorMessage(string $generatedUrl): string
+    {
+        $baseGeneratedUrl = self::stripNumberAddedByTheUrlGeneration($generatedUrl);
+
+        if ($baseGeneratedUrl !== $generatedUrl && strpos($generatedUrl, $baseGeneratedUrl) === 0) {
+            return 'err.URLAlreadyExists';
+        }
+
+        return 'err.InvalidURL';
     }
 }

@@ -26,7 +26,6 @@ class DetailModule extends BackendBaseActionIndex
      *
      * @var BackendDataGridArray
      */
-    private $dataGridCronjobs;
     private $dataGridEvents;
 
     /**

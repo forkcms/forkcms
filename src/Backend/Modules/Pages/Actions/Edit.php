@@ -17,7 +17,9 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -194,6 +196,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
+        $this->dgDrafts->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // our JS needs to know an id, so we can highlight it
         $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
@@ -367,6 +370,9 @@ class Edit extends BackendBaseActionEdit
             }
 
             $this->form->addMultiCheckbox('allow', $values, $checked);
+
+            // css link class
+            $page['link_class'] = $this->form->addText('link_class', isset($this->record['data']['link_class']) ? $this->record['data']['link_class'] : null);
         }
 
         // build prototype block
@@ -599,6 +605,7 @@ class Edit extends BackendBaseActionEdit
             ['[edited_on]'],
             'edited_on'
         );
+        $this->dgRevisions->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -634,7 +641,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('isGod', $this->isGod);
         $this->template->assign('templates', $this->templates);
         $this->template->assign('positions', $this->positions);
-        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasData', json_encode(BackendModel::recursiveHtmlspecialchars(BackendExtensionsModel::getExtrasData())));
         $this->template->assign('extrasById', json_encode($this->extras));
         $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->template->assign('formErrors', (string) $this->form->getErrors());
@@ -714,6 +721,9 @@ class Edit extends BackendBaseActionEdit
 
         $this->form->cleanupFields();
         $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+        if ($this->form->getField('navigation_title_overwrite')->isChecked()) {
+            $this->form->getField('navigation_title')->isFilled(BL::err('FieldIsRequired'));
+        }
         $this->meta->validate();
 
         if ($this->form->getField('move_page')->isChecked()) {
@@ -769,8 +779,8 @@ class Edit extends BackendBaseActionEdit
         $cacheShouldBeUpdated = !(
             $this->record['title'] === $page['title']
             && $this->record['navigation_title'] === $page['navigation_title']
-            && $this->record['navigation_title_overwrite'] === $page['navigation_title_overwrite']
-            && $this->record['hidden'] === $page['hidden']
+            && $this->record['navigation_title_overwrite'] == $page['navigation_title_overwrite'] // can be 0 or false
+            && $this->record['hidden'] == $page['hidden'] // can be 0 or false
         );
 
         // build cache
@@ -853,7 +863,7 @@ class Edit extends BackendBaseActionEdit
         if ($redirectValue === 'internal') {
             $data['internal_redirect'] = [
                 'page_id' => $this->form->getField('internal_redirect')->getValue(),
-                'code' => '301',
+                'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
         }
         if ($redirectValue === 'external') {
@@ -861,7 +871,7 @@ class Edit extends BackendBaseActionEdit
                 'url' => BackendPagesModel::getEncodedRedirectUrl(
                     $this->form->getField('external_redirect')->getValue()
                 ),
-                'code' => '301',
+                'code' => Response::HTTP_TEMPORARY_REDIRECT,
             ];
         }
         if (array_key_exists('image', $this->templates[$templateId]['data'])) {
@@ -896,6 +906,9 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+
+        // link class
+        $data['link_class'] = $this->form->getField('link_class')->getValue();
 
         return $data;
     }
@@ -962,7 +975,7 @@ class Edit extends BackendBaseActionEdit
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
         // delete the current image
-        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
+        $this->get(Thumbnails::class)->delete($imagePath, (string) $imageFilename);
 
         if (!$allowImage
             || ($this->form->getField('remove_image')->isChecked() && !$this->form->getField('image')->isFilled())

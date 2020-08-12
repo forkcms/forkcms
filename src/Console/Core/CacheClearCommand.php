@@ -37,6 +37,9 @@ class CacheClearCommand extends Command
         $symfonyCacheClearCommand = $this->getApplication()->find('cache:clear');
         $symfonyCacheClearCommand->run(new ArrayInput(['--no-warmup' => true]), $output);
 
+        // clear file info cache
+        clearstatcache();
+
         $io->success('Cache is cleared');
     }
 

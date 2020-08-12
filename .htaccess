@@ -49,6 +49,7 @@ deny from env=stayout
 
     # forbidden folders
     RewriteRule .*\.php - [F]
+    RewriteRule .*\.twig - [F]
     RewriteRule \.git - [F]
     RewriteRule vendor/.* - [F]
     RewriteRule bin/.* - [F]
@@ -67,6 +68,7 @@ deny from env=stayout
     RewriteRule app/config - [F]
     RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
     RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+    RewriteRule src/Frontend/Files/MediaLibrary/uploads - [F]
     RewriteRule var/docker/.* - [F]
     RewriteRule Dockerfile - [F]
     RewriteRule \.dockerignore - [F]
@@ -80,7 +82,8 @@ deny from env=stayout
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>
-    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteCond %{HTTPS} off
     # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
     # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]

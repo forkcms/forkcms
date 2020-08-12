@@ -12,7 +12,14 @@ class DeleteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAction(Model::createUrlForAction($options['action'], $options['module']));
+        $builder->setAction(
+            Model::createUrlForAction(
+                $options['action'],
+                $options['module'],
+                null,
+                $options['get_parameters']
+            )
+        );
 
         $builder->add($options['id_field_name'], HiddenType::class);
     }
@@ -28,6 +35,7 @@ class DeleteType extends AbstractType
         $resolver->setDefaults([
             'action' => 'Delete',
             'id_field_name' => 'id',
+            'get_parameters' => [], // Get parameters to be added to the generated action url
         ]);
     }
 }

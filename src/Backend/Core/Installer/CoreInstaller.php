@@ -65,8 +65,8 @@ class CoreInstaller extends ModuleInstaller
         $this->setSetting('Core', 'google_maps_key', '');
         $this->setSetting('Core', 'max_num_revisions', 20);
         $this->setSetting('Core', 'site_domains', [$this->getVariable('site_domain')]);
-        $this->setSetting('Core', 'site_html_header', '');
-        $this->setSetting('Core', 'site_html_footer', '');
+        $this->setSetting('Core', 'site_html_head', '');
+        $this->setSetting('Core', 'site_html_end_of_body', '');
 
         // date & time
         $this->setSetting('Core', 'date_format_short', 'j.n.Y');
@@ -183,6 +183,7 @@ class CoreInstaller extends ModuleInstaller
             'sv' => 'min hemsida',
             'tr' => 'web siteme',
             'uk' => 'мій сайт',
+            'pt' => 'O meu website'
         ];
 
         // language specific

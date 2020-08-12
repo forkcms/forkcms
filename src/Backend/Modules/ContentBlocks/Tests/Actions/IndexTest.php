@@ -2,40 +2,27 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/content_blocks/index');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fcontent_blocks%2Findex',
-            $client->getHistory()->current()->getUri()
-        );
+        self::assertAuthenticationIsNeeded($client, '/private/en/content_blocks/index');
     }
 
-    public function testIndexHasNoItems(): void
+    public function testIndexHasNoItems(Client $client): void
     {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/content_blocks/index');
-        self::assertContains(
-            'There are no items yet.',
-            $client->getResponse()->getContent()
-        );
-
-        // some stuff we also want to see on the content block index
-        self::assertContains(
-            'Add content block',
-            $client->getResponse()->getContent()
+        self::assertPageLoadedCorrectly(
+            $client,
+            '/private/en/content_blocks/index',
+            [
+                'There are no items yet.',
+                'Add content block',
+            ]
         );
     }
 }

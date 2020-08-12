@@ -83,6 +83,7 @@ class Groups extends BackendBaseActionIndex
 
         // create datagrid
         $this->dgGroups = new BackendDataGridDatabase($query, $parameters);
+        $this->dgGroups->setColumnFunction('htmlspecialchars', ['[name]'], 'name', false);
 
         // overrule default URL
         $this->dgGroups->setURL(
@@ -171,10 +172,9 @@ class Groups extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // complete output
-            $output = '<a href="' .
-                      BackendModel::createUrlForAction(
-                          'Index'
-                      ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
+            $output = '<a href="' . BackendModel::createUrlForAction(
+                'Index'
+            ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }
 
         return $output;

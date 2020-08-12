@@ -29,6 +29,7 @@ class Index extends BackendBaseActionIndex
             BackendTagsModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[tag]'], 'tag', false);
 
         // header labels
         $this->dataGrid->setHeaderLabels([
@@ -62,6 +63,10 @@ class Index extends BackendBaseActionIndex
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
+            $this->dataGrid->setColumnURL(
+                'tag',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
+            );
             // add column
             $this->dataGrid->addColumn(
                 'edit',

@@ -2,51 +2,32 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
-use Common\WebTestCase;
+use Backend\Core\Tests\BackendWebTestCase;
+use Backend\Modules\Blog\DataFixtures\LoadBlogCategories;
+use Backend\Modules\Blog\DataFixtures\LoadBlogPosts;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-class IndexTest extends WebTestCase
+class IndexTest extends BackendWebTestCase
 {
-    public function testAuthenticationIsNeeded(): void
+    public function testAuthenticationIsNeeded(Client $client): void
     {
-        $client = static::createClient();
-        $this->logout($client);
+        self::assertAuthenticationIsNeeded($client, '/private/en/blog/index');
+    }
+
+    public function testIndexContainsBlogPosts(Client $client): void
+    {
         $this->loadFixtures(
             $client,
             [
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                LoadBlogCategories::class,
+                LoadBlogPosts::class,
             ]
         );
-
-        $client->setMaxRedirects(1);
-        $client->request('GET', '/private/en/blog/index');
-
-        // we should get redirected to authentication with a reference to blog index in our url
-        self::assertStringEndsWith(
-            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fblog%2Findex',
-            $client->getHistory()->current()->getUri()
-        );
-    }
-
-    public function testIndexContainsBlogPosts(): void
-    {
-        $client = static::createClient();
         $this->login($client);
 
-        $client->request('GET', '/private/en/blog/index');
-        self::assertContains(
-            'Blogpost for functional tests',
-            $client->getResponse()->getContent()
-        );
+        self::assertPageLoadedCorrectly($client, '/private/en/blog/index', ['Blogpost for functional tests']);
 
         // some stuff we also want to see on the blog index
-        self::assertContains(
-            'Add article',
-            $client->getResponse()->getContent()
-        );
-        self::assertContains(
-            'Published articles',
-            $client->getResponse()->getContent()
-        );
+        self::assertResponseHasContent($client->getResponse(), 'Add article', 'Published articles');
     }
 }

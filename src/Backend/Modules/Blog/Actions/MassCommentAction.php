@@ -15,6 +15,8 @@ class MassCommentAction extends BackendBaseAction
     {
         parent::execute();
 
+        $this->checkToken();
+
         // current status
         $from = $this->getRequest()->query->get('from');
         if (!in_array($from, ['published', 'moderation', 'spam'])) {
@@ -47,7 +49,7 @@ class MassCommentAction extends BackendBaseAction
                 // loop comments
                 foreach ($comments as $row) {
                     // unserialize data
-                    $row['data'] = unserialize($row['data']);
+                    $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
 
                     // check if needed data is available
                     if (!isset($row['data']['server']['REMOTE_ADDR'])) {
@@ -87,7 +89,7 @@ class MassCommentAction extends BackendBaseAction
                         // previous status is spam
                         if ($row['status'] == 'spam') {
                             // unserialize data
-                            $row['data'] = unserialize($row['data']);
+                            $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
 
                             // check if needed data is available
                             if (!isset($row['data']['server']['REMOTE_ADDR'])) {

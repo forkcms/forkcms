@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Form\Type\DeleteType;
+use Backend\Modules\FormBuilder\Engine\Autocomplete;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
@@ -82,6 +83,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_classname');
         $this->form->addCheckbox('textbox_required');
         $this->form->addCheckbox('textbox_reply_to');
+        $this->form->addCheckbox('textbox_mailmotor');
         $this->form->addText('textbox_required_error_message');
         $this->form->addDropdown(
             'textbox_validation',
@@ -93,8 +95,11 @@ class Edit extends BackendBaseActionEdit
         );
         $this->form->addCheckbox('textbox_send_confirmation_mail_to');
         $this->form->addText('textbox_confirmation_mail_subject');
+        $this->form->addEditor('textbox_confirmation_mail_message');
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
+
+        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getValuesForDropdown());
 
         // textarea dialog
         $this->form->addText('textarea_label');
@@ -158,6 +163,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
 
+        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getValuesForDropdown());
+
         // dropdown dialog
         $this->form->addText('dropdown_label');
         $this->form->addText('dropdown_values');
@@ -185,6 +192,14 @@ class Edit extends BackendBaseActionEdit
         // heading dialog
         $this->form->addText('heading');
 
+        // mailmotor dialog
+        $settings = BackendModel::get('fork.settings');
+        $this->form->addText(
+            'mailmotor_list_id',
+            $settings->get('Mailmotor', 'list_id_' . BL::getWorkingLanguage()) ?? $settings->get('Mailmotor', 'list_id')
+        );
+        $this->form->addText('mailmotor_label', BL::lbl('MailmotorSubscribeToNewsletter'));
+
         // paragraph dialog
         $this->form->addEditor('paragraph');
         $this->form->getField('paragraph')->setAttribute('cols', 30);
@@ -201,11 +216,18 @@ class Edit extends BackendBaseActionEdit
 
         $this->template->assign('id', $this->record['id']);
         $this->template->assign('name', $this->record['name']);
-        $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
-        $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+        $settings = BackendModel::get('fork.settings');
+        $recaptchaSiteKey = $settings->get('Core', 'google_recaptcha_site_key');
+        $recaptchaSecretKey = $settings->get('Core', 'google_recaptcha_secret_key');
+        $mailmotorListId = $settings->get('Mailmotor', 'list_id');
 
         if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
             $this->template->assign('recaptchaMissing', true);
+        }
+
+        if (BackendModel::isModuleInstalled('Mailmotor')) {
+            $this->template->assign('showMailmotorOption', !empty($mailmotorListId));
+            $this->template->assign('mailmotorMailEngine', $settings->get('Mailmotor', 'mail_engine'));
         }
 
         // parse error messages
@@ -319,7 +341,8 @@ class Edit extends BackendBaseActionEdit
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                $values['identifier'] = (
+                    $txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );

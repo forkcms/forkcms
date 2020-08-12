@@ -74,7 +74,10 @@ class TwigTemplate extends BaseTwigTemplate
 
     protected function getDefaultThemes(): array
     {
-        return ['Layout/Templates/FormLayout.html.twig'];
+        return [
+            'Layout/Templates/FormLayout.html.twig',
+            'MediaLibrary/Resources/views/FormLayout.html.twig',
+        ];
     }
 
     private function parseUserDefinedConstants(): void
@@ -233,6 +236,7 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $this->assign('var', '');
         $this->assign('timestamp', time());
+        $this->assign('fork_csrf_token', Model::getToken());
         $this->addBodyClassAndId();
         $this->parseNavigation();
 

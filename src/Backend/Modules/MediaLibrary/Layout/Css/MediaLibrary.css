@@ -93,15 +93,18 @@
   display: inline-block;
   overflow: hidden;
   margin: 0 3px 3px 0;
-  background: #eee;
-  width: 140px;
+  background: none;
+  border: none;
   vertical-align: top;
+  position: relative;
 }
   .mediaHolder {
     float: left;
-    cursor: pointer;
-    width: 140px;
+    cursor: move;
     display: block;
+    padding: 1em 1em 2em;
+    width: 140px;
+    height: 118px;
   }
     .mediaHolderFile .icon,
     .mediaHolderMovie .icon,
@@ -131,39 +134,65 @@
       width: 100%;
       word-wrap: break-word;
     }
+    .mediaHolderMovie .videoThumbnail {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      padding-top: 20px;
+    }
     .mediaHolderImage img {
-      width: 140px;
-      height: 90px;
+      max-width: 100%;
+      max-height: 100%;
     }
-  .mediaConnectedItems li.selected {
-    border: 1px solid #000;
+  .mediaConnectedItems .disconnectMediaItem::before {
+    content: "\f057";
+    color: #ffffff;
+    font: normal normal normal 2rem/1.7rem FontAwesome;
+    border-radius: 100%;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: #d0021b;
+    border: 2px solid #d0021b;
   }
-  .mediaConnectedItems li.selected .mediaHolder {
-    opacity: 0.4;
+  .mediaConnectedItems .mediaHolder .disconnectMediaItem:hover,
+  .mediaConnectedItems .mediaHolder .disconnectMediaItem:focus {
+    font-size: 14px;
   }
-
-  .editMediaItem,
-  .deleteMediaItem {
-    margin-top: 2px;
-    margin-left: -26px;
-    display: none;
+  .mediaConnectedItems .mediaHolder .disconnectMediaItem:hover::before,
+  .mediaConnectedItems .mediaHolder .disconnectMediaItem:focus::before {
+    border-color: #d0021b;
+    color: #d0021b;
+    background-color: #ffffff;
+    padding: 0;
+    font-weight: normal;
   }
-    .mediaConnectedItems .ui-state-default.hover .editMediaItem,
-    .mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
-      display: block;
-    }
-
-
+  .mediaConnectedItems .disconnectMediaItem {
+    color: #d0021b;
+    line-height: 2em;
+    font-size: 0;
+    width: 100%;
+    background: none;
+    border: none;
+    display: block;
+    font-weight: normal;
+  }
 /**
  * Media Dialog
  */
+#addMediaDialog .modal-dialog,
+#cropperMediaDialog .modal-dialog {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
 #addMediaDialog .modal-body,
 #cropperMediaDialog .modal-body {
   padding: 0;
   background: none;
   border: none;
 }
-#addMediaDialog #tabLibrary .options{
+#addMediaDialog #tabLibrary .options,
+#addMediaDialog #tabUploadMedia .options {
   margin-bottom: 1em;
 }
 #addMediaDialog #tabLibrary .tab-content {
@@ -177,6 +206,9 @@
 #addMediaDialog #tabLibrary .table-responsive {
   max-height: 400px;
   overflow: auto;
+}
+.mediaTable {
+  overflow-wrap: break-word;
 }
   .mediaTable .check {
     width: 30px;

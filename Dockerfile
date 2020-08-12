@@ -5,9 +5,11 @@ LABEL maintainer="Fork CMS <info@fork-cms.com>"
 RUN a2enmod rewrite
 
 # Install GD2
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libz-dev \
+    zlib1g-dev \
     libpng-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \

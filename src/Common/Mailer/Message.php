@@ -91,7 +91,7 @@ class Message extends \Swift_Message
      */
     public function setPlainText(string $content): Message
     {
-        if ($content !== null) {
+        if (!empty($content)) {
             $this->addPart($content, 'text/plain');
         }
 

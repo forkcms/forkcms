@@ -29,6 +29,9 @@ class Block extends BackendBaseActionDelete
                 // set profile status to active
                 BackendProfilesModel::update($this->id, ['status' => 'active']);
 
+                // reset login attempts, because profile gets blocked when it has 10 or more login attempts
+                BackendProfilesModel::setSetting($this->id, 'login_attempts', 0);
+
                 // redirect
                 $this->redirect(
                     BackendModel::createUrlForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(

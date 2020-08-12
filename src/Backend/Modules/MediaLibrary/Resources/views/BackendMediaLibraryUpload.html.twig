@@ -79,7 +79,7 @@
 <div data-role="uploadMediaStep1">
   {# Choose type #}
   <div class="row fork-module-content">
-    <div id="uploadMediaTypeBox">
+    <div id="uploadMediaTypeBox" {% if mediaType is defined %}class="hidden"{% endif %}>
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -89,10 +89,10 @@
             <div class="form-group last">
               <ul class="list-unstyled">
                 <li class="radiobutton">
-                  <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
+                  <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" {% if mediaType is not defined or mediaType == 'image' %}checked="checked"{% endif %} /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
                 </li>
                 <li class="radiobutton">
-                  <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
+                  <label><input type="radio" name="uploading_type" value="movie" {% if mediaType is defined and mediaType == 'video' %}checked="checked"{% endif %} /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
                 </li>
               </ul>
             </div>
@@ -137,6 +137,9 @@
   {# Choose media to upload #}
   <div id="uploadMediaBox" class="row fork-module-content">
     <div class="col-md-12">
+      <div class="options">
+        <div class="alert alert-warning hidden" data-role="fork-media-count-error"></div>
+      </div>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>

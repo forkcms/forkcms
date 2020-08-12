@@ -47,6 +47,16 @@
                             {{ macro.required }}{% endif %}
                           </label>
                           {{ field.html|raw }}
+                          {% if field.error %}<span class="text-danger help-inline">{{ field.error|raw }}</span>{% endif %}
+                        </div>
+                      {% endif %}
+
+                      {# Mailmotor#}
+                      {% if field.isMailmotor %}
+                        <div class="form-group{% if field.error %} has-error{% endif %}">
+                          <label class="control-label" for="{{ field.name }}">
+                            {{ field.html|raw }} {{ field.label|raw }}
+                          </label>
                           {% if field.error %}<span class="text-danger help-inline">{{ field.error }}</span>{% endif %}
                         </div>
                       {% endif %}
@@ -65,7 +75,7 @@
                               </label>
                             </div>
                           {% endfor %}
-                          {% if field.error %}<span class="text-danger help-inline">{{ field.error }}</span>{% endif %}
+                          {% if field.error %}<span class="text-danger help-inline">{{ field.error|raw }}</span>{% endif %}
                         </div>
                       {% endif %}
                     </div>

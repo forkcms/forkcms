@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Blog\Installer;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
 
@@ -105,6 +106,7 @@ class Installer extends ModuleInstaller
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RelatedArticles', 'RelatedArticles');
     }
 
     private function configureFrontendPages(): void
@@ -216,6 +218,11 @@ class Installer extends ModuleInstaller
         return (int) $this->getDatabase()->insert('blog_categories', $item);
     }
 
+    private function getNextBlogPostId(): int
+    {
+        return 1 + (int) $this->getDatabase()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
+    }
+
     /**
      * @todo: this method should be rewritten to use DataFixtures.
      */
@@ -234,10 +241,11 @@ class Installer extends ModuleInstaller
         )
         ) {
             // insert sample blogpost 1
+            $firstBlogPostId = $this->getNextBlogPostId();
             $database->insert(
                 'blog_posts',
                 [
-                    'id' => 1,
+                    'id' => $firstBlogPostId,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta(
@@ -267,7 +275,7 @@ class Installer extends ModuleInstaller
             // add Search index blogpost 1
             $this->addSearchIndex(
                 $this->getModule(),
-                1,
+                $firstBlogPostId,
                 [
                     'title' => 'Nunc sediam est',
                     'text' => file_get_contents(
@@ -278,10 +286,11 @@ class Installer extends ModuleInstaller
             );
 
             // insert sample blogpost 2
+            $secondBlogPostId = $this->getNextBlogPostId();
             $database->insert(
                 'blog_posts',
                 [
-                    'id' => 2,
+                    'id' => $secondBlogPostId,
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
@@ -306,7 +315,7 @@ class Installer extends ModuleInstaller
             // add Search index blogpost 2
             $this->addSearchIndex(
                 $this->getModule(),
-                2,
+                $secondBlogPostId,
                 [
                     'title' => 'Lorem ipsum',
                     'text' => file_get_contents(
@@ -320,7 +329,7 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => 1,
+                    'post_id' => $firstBlogPostId,
                     'language' => $language,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
@@ -337,7 +346,7 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => 1,
+                    'post_id' => $firstBlogPostId,
                     'language' => $language,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',

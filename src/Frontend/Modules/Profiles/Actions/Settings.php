@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use ForkCMS\Utility\Thumbnails;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Model;
@@ -95,6 +96,7 @@ class Settings extends FrontendBaseBlock
         $this->form->addDropdown('month', $months, $birthMonth)->setDefaultElement('');
         $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear)->setDefaultElement('');
         $this->form->addImage('avatar');
+        $this->form->addTextarea('about', $this->profile->getSetting('about'));
     }
 
     private function parse(): void
@@ -205,6 +207,7 @@ class Settings extends FrontendBaseBlock
                 'gender' => $this->form->getField('gender')->getValue(),
                 'birth_date' => $this->getSubmittedBirthDate(),
                 'avatar' => $this->getAvatar(),
+                'about' => $this->form->getField('about')->getValue(),
             ]
         );
 
@@ -221,7 +224,7 @@ class Settings extends FrontendBaseBlock
         }
 
         $baseAvatarPath = FRONTEND_FILES_PATH . '/Profiles/Avatars/';
-        Model::deleteThumbnails($baseAvatarPath, $currentAvatar);
+        $this->get(Thumbnails::class)->delete($baseAvatarPath, $currentAvatar);
 
         $newAvatar = $this->profile->getUrl() . '.' . $this->form->getField('avatar')->getExtension();
 

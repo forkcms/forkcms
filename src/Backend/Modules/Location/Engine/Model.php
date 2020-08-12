@@ -133,8 +133,8 @@ class Model
             [$mapId, $name]
         );
 
-        if ($serializedData !== null) {
-            return unserialize($serializedData);
+        if (!empty($serializedData)) {
+            return unserialize($serializedData, ['allowed_classes' => false]);
         }
 
         return false;
@@ -157,7 +157,7 @@ class Model
         );
 
         foreach ($mapSettings as $key => $value) {
-            $mapSettings[$key] = unserialize($value);
+            $mapSettings[$key] = unserialize($value, ['allowed_classes' => false]);
         }
 
         return $mapSettings;
@@ -193,7 +193,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Location') . '&id=' . $item['id'],
             ]
         );
 
@@ -241,7 +241,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                    'edit_url' => BackendModel::createUrlForAction('Edit', 'Location') . '&id=' . $item['id'],
                 ]
             );
         }

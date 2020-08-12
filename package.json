@@ -9,7 +9,7 @@
   "devDependencies": {
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.7.0",
-    "bootstrap-sass": "~3.3",
+    "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
     "ckeditor": "^4.7.3",
     "cropper": "^3.0.0-rc.2",
@@ -21,7 +21,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.9.1",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1",

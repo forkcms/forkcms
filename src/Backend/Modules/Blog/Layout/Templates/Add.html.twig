@@ -43,18 +43,18 @@
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
                     <h2>
-                      <label for="text">
-                        {{ 'lbl.MainContent'|trans|ucfirst }}
-                        {{ macro.required }}
+                      <label for="introduction">
+                        {{ 'lbl.Summary'|trans|ucfirst }}
+                        {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
                       </label>
                     </h2>
                   </div>
                   <div class="panel-body">
-                    {% form_field text %}
+                    {% form_field introduction %}
                   </div>
-                  {% if txtTextError %}
+                  {% if txtIntroductionError %}
                     <div class="panel-footer">
-                      {% form_field_error text %}
+                      {% form_field_error introduction %}
                     </div>
                   {% endif %}
                 </div>
@@ -71,18 +71,18 @@
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
                     <h2>
-                      <label for="introduction">
-                        {{ 'lbl.Summary'|trans|ucfirst }}
-                        {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
+                      <label for="text">
+                        {{ 'lbl.MainContent'|trans|ucfirst }}
+                        {{ macro.required }}
                       </label>
                     </h2>
                   </div>
                   <div class="panel-body">
-                    {% form_field introduction %}
+                    {% form_field text %}
                   </div>
-                  {% if txtIntroductionError %}
+                  {% if txtTextError %}
                     <div class="panel-footer">
-                      {% form_field_error introduction %}
+                      {% form_field_error text %}
                     </div>
                   {% endif %}
                 </div>
@@ -186,7 +186,7 @@
         </div>
         <div class="modal-footer">
           {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit", "type":"button"}) }}
         </div>
       </div>
     </div>

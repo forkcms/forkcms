@@ -8,6 +8,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Core\Language\Locale;
+use SpoonFilter;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -22,11 +23,11 @@ class ContentBlockDataGrid extends DataGridDatabase
              WHERE i.status = :active AND i.language = :language',
             ['active' => Status::active(), 'language' => $locale]
         );
-
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
         $this->setSortingColumns(['title']);
 
         // show the hidden status
-        $this->addColumn('isHidden', ucfirst(Language::lbl('VisibleOnSite')), '[hidden]');
+        $this->addColumn('isHidden', SpoonFilter::ucfirst(Language::lbl('VisibleOnSite')), '[hidden]');
         $this->setColumnFunction([TemplateModifiers::class, 'showBool'], ['[hidden]', true], 'isHidden');
 
         // check if this action is allowed

@@ -17,6 +17,10 @@
   }
 }
 
+div.active.tab-pane:focus {
+  outline: none;
+}
+
 .nav-tabs {
   .has-error,
   .active.has-error {

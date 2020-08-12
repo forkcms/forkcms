@@ -44,7 +44,7 @@ class CommentsRss extends FrontendBaseBlock
     ): FrontendRSSItem {
         $rssItem = new FrontendRSSItem(
             $blogPostComment['author'] . ' ' . FL::lbl('On') . ' ' . $blogPostComment['post_title'],
-            $blogPostUrlBase . '/' . $blogPostComment['post_irl'] . '/#comment-' . $blogPostComment['id'],
+            $blogPostUrlBase . '/' . $blogPostComment['post_url'] . '/#comment-' . $blogPostComment['id'],
             $blogPostComment['text']
         );
 

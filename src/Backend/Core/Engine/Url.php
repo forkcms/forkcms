@@ -108,6 +108,11 @@ class Url extends KernelLoader
         return $this->getDefaultActionForModule($module, $language);
     }
 
+    final public function getDefaultActionForCurrentModule(string $language = null): string
+    {
+        return $this->getDefaultActionForModule($this->module, $language ?? $this->getLanguageFromUrl());
+    }
+
     private function getDefaultActionForModule(string $module, string $language): string
     {
         // Check if we can load the config file
@@ -239,7 +244,7 @@ class Url extends KernelLoader
 
     private function getInterfaceLanguage(): string
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language', SITE_DEFAULT_LANGUAGE);
 
         if (Authentication::getUser()->isAuthenticated()) {
             return Authentication::getUser()->getSetting('interface_language', $default);
@@ -333,6 +338,10 @@ class Url extends KernelLoader
 
     public function getModule(): string
     {
+        if ($this->module === null) {
+            throw new Exception('Module has not yet been set.');
+        }
+
         return $this->module;
     }
 
@@ -341,11 +350,6 @@ class Url extends KernelLoader
         // set module
         if ($module !== null) {
             $this->setModule($module);
-        }
-
-        // check if module is set
-        if ($this->getModule() === null) {
-            throw new Exception('Module has not yet been set.');
         }
 
         // is this action allowed?

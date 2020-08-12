@@ -3,6 +3,7 @@
 namespace Frontend\Modules\Blog\Engine;
 
 use Common\Mailer\Message;
+use ForkCMS\Utility\Thumbnails;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -73,7 +74,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -136,7 +137,7 @@ class Model implements FrontendTagsInterface
         // loop items and unserialize
         foreach ($return as &$row) {
             if (isset($row['meta_data'])) {
-                $row['meta_data'] = @unserialize($row['meta_data']);
+                $row['meta_data'] = @unserialize($row['meta_data'], ['allowed_classes' => false]);
             }
         }
 
@@ -234,7 +235,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -335,7 +336,7 @@ class Model implements FrontendTagsInterface
 
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+        $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -531,7 +532,7 @@ class Model implements FrontendTagsInterface
         if (!empty($items)) {
             // init var
             $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+            $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             // reset url
             foreach ($items as &$row) {
@@ -739,7 +740,7 @@ class Model implements FrontendTagsInterface
         return self::completeBlogPost($blogPost);
     }
 
-    private static function completeBlogPost(array $blogPost)
+    private static function completeBlogPost(array $blogPost): array
     {
         if (isset($blogPost['meta_id'])) {
             $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
@@ -751,7 +752,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($blogPost['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
+            $folders = FrontendModel::get(Thumbnails::class)->getFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $blogPost['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $blogPost['image'];

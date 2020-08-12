@@ -111,7 +111,7 @@
 
               // add html
               html += '<li class="shareMenuDelicious">' +
-                '    <a href="' + url + '" target="_blank">' +
+                '    <a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
                 '        <span class="icon"></span>' +
                 '        <span class="textWrapper">' + options.delicious.label + '</span>' +
                 '    </a>' +
@@ -126,7 +126,7 @@
 
               // add html
               html += '<li class="shareMenuDigg">' +
-                '    <a href="' + url + '" target="_blank">' +
+                '    <a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
                 '        <span class="icon"></span>' +
                 '        <span class="textWrapper">' + options.digg.label + '</span>' +
                 '    </a>' +
@@ -334,10 +334,10 @@
     options = $.extend(defaults, options)
 
     $input.on('invalid', function (e) {
-      if ($input.context.validity.valueMissing) {
+      if ($input[0].validity.valueMissing) {
         errorMessage = options.required
-      } else if (!$input.context.validity.valid) {
-        type = $input.context.type
+      } else if (!$input[0].validity.valid) {
+        type = $input[0].type
         errorMessage = options.value
 
         if (options[type]) {

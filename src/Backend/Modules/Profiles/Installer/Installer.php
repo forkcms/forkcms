@@ -4,6 +4,7 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 
@@ -195,7 +196,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesBlock($language)) {
                 $indexPageId = $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Profile')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Profile')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -203,13 +204,55 @@ class Installer extends ModuleInstaller
                     ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
                     ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
+
+                // settings page
+                if (!$this->hasPageWithProfilesAction($language, 'Settings')) {
+                    $this->insertPage(
+                        [
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ProfileSettings')),
+                            'parent_id' => $indexPageId,
+                            'language' => $language,
+                        ],
+                        null,
+                        ['extra_id' => $this->getExtraId('settings'), 'position' => 'main'],
+                        ['extra_id' => $searchExtraId, 'position' => 'top']
+                    );
+                }
+
+                // change email page
+                if (!$this->hasPageWithProfilesAction($language, 'ChangeEmail')) {
+                    $this->insertPage(
+                        [
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ChangeEmail')),
+                            'parent_id' => $indexPageId,
+                            'language' => $language,
+                        ],
+                        null,
+                        ['extra_id' => $this->getExtraId('change_email'), 'position' => 'main'],
+                        ['extra_id' => $searchExtraId, 'position' => 'top']
+                    );
+                }
+
+                // change password page
+                if (!$this->hasPageWithProfilesAction($language, 'ChangePassword')) {
+                    $this->insertPage(
+                        [
+                            'title' => SpoonFilter::ucfirst(Language::lbl('ChangePassword')),
+                            'parent_id' => $indexPageId,
+                            'language' => $language,
+                        ],
+                        null,
+                        ['extra_id' => $this->getExtraId('change_password'), 'position' => 'main'],
+                        ['extra_id' => $searchExtraId, 'position' => 'top']
+                    );
+                }
             }
 
             // activate page
             if (!$this->hasPageWithProfilesAction($language, 'Activate')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Activate')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Activate')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -223,7 +266,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ForgotPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ForgotPassword')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ForgotPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -237,7 +280,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ResetPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResetPassword')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ResetPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -251,7 +294,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ResendActivation')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResendActivation')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('ResendActivation')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -265,7 +308,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Login')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Login')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Login')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -279,7 +322,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Register')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Register')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Register')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -293,54 +336,12 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Logout')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Logout')),
+                        'title' => SpoonFilter::ucfirst(Language::lbl('Logout')),
                         'type' => 'root',
                         'language' => $language,
                     ],
                     null,
                     ['extra_id' => $this->getExtraId('logout'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-            }
-
-            // settings page
-            if (!$this->hasPageWithProfilesAction($language, 'Settings')) {
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ProfileSettings')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('settings'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-            }
-
-            // change email page
-            if (!$this->hasPageWithProfilesAction($language, 'ChangeEmail')) {
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ChangeEmail')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('change_email'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-            }
-
-            // change password page
-            if (!$this->hasPageWithProfilesAction($language, 'ChangePassword')) {
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ChangePassword')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('change_password'), 'position' => 'main'],
                     ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
             }
