@@ -4,6 +4,7 @@ namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
+use Frontend\Modules\Profiles\Engine\Model;
 use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
@@ -360,6 +361,8 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'profile_notification_email', null);
         $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_admin', false);
         $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_profile', false);
+        $this->setSetting($this->getModule(), 'limit_display_name_changes', true);
+        $this->setSetting($this->getModule(), 'max_display_name_changes', Model::MAX_DISPLAY_NAME_CHANGES);
     }
 
     private function getExtraId(string $key): int
