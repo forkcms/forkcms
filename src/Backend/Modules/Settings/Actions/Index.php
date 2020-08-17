@@ -282,6 +282,10 @@ class Index extends BackendBaseActionIndex
             );
         }
 
+        // cookies
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+        $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+
         // privacy
         $this->form->addCheckbox('show_consent_dialog', $this->get('fork.settings')->get('Core', 'show_consent_dialog', false));
         $this->form->addText(
@@ -612,6 +616,14 @@ class Index extends BackendBaseActionIndex
 
                 // save domains
                 $this->get('fork.settings')->set('Core', 'site_domains', $siteDomains);
+
+                // cookies
+                // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'show_cookie_bar',
+                    $this->form->getField('show_cookie_bar')->getChecked()
+                );
 
                 // privacy
                 $this->get('fork.settings')->set(

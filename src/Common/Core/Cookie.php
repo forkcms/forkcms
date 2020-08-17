@@ -139,6 +139,28 @@ final class Cookie
         return null;
     }
 
+    /**
+     * Has the visitor allowed cookies?
+     * @deprecated remove this in Fork 6, the privacy consent dialog should be used
+     *
+     * @return bool
+     */
+    public function hasAllowedCookies(): bool
+    {
+        return $this->get('cookie_bar_agree', 'N') === 'Y';
+    }
+
+    /**
+     * Has the cookiebar been hidden by the visitor
+     * @deprecated remove this in Fork 6, the privacy consent dialog should be used
+     *
+     * @return bool
+     */
+    public function hasHiddenCookieBar(): bool
+    {
+        return $this->get('cookie_bar_hide', 'N') === 'Y';
+    }
+
     public function attachToResponse(Response $response): void
     {
         foreach ($this->newCookiesHeaderBag->getCookies() as $cookie) {

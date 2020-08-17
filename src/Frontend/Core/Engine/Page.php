@@ -107,6 +107,12 @@ class Page extends KernelLoader
      */
     public function load(): void
     {
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+        if(!$this->getContainer()->get('fork.settings')->get('Core', 'show_consent_dialog', false)) {
+            // set tracking cookie
+            Model::getVisitorId();
+        }
+
         // create header instance
         $this->header = new Header($this->getKernel());
 
@@ -187,6 +193,13 @@ class Page extends KernelLoader
             $this->template->assignGlobal('isPage' . $this->pageId, true);
             $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
+            // hide the cookiebar from within the code to prevent flickering
+            // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+            $this->template->assignGlobal(
+                'cookieBarHide',
+                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
+                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
+            );
             $this->parsePrivacyConsents();
             $this->parsePositions();
 

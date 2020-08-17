@@ -35,6 +35,11 @@ final class GoogleAnalytics
 
     private function shouldAnonymize(): bool
     {
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+        if ($this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies()) {
+            return true;
+        }
+
         // if the consent dialog is disabled we will anonymize by default
         if (!$this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
             return true;

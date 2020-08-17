@@ -1,0 +1,7 @@
+{% if not cookieBarHide %}
+  <div id="cookie-bar" class="alert alert-warning">
+    {{ 'msg.CookiesWarning'|trans|raw }}
+    <a href="#" id="cookieBarAgree" data-role="cookie-bar-button" data-action="agree" class="btn btn-xs btn-success">{{ 'lbl.IAgree'|trans|ucfirst }}</a>
+    <a href="#" id="cookieBarDisagree" data-role="cookie-bar-button" data-action="disagree" class="btn btn-xs btn-danger">{{ 'lbl.IDisagree'|trans|ucfirst }}</a>
+  </div>
+{% endif %}
