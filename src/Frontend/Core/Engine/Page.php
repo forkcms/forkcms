@@ -108,7 +108,7 @@ class Page extends KernelLoader
     public function load(): void
     {
         // @deprecated remove this in Fork 6, the privacy consent dialog should be used
-        if(!$this->getContainer()->get('fork.settings')->get('Core', 'show_consent_dialog', false)) {
+        if (!$this->getContainer()->get('fork.settings')->get('Core', 'show_consent_dialog', false)) {
             // set tracking cookie
             Model::getVisitorId();
         }
