@@ -1114,6 +1114,21 @@
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
         <translation language="pt"><![CDATA[Neerlandês]]></translation>
       </item>
+      <item type="label" name="PT">
+        <translation language="nl"><![CDATA[Portugees]]></translation>
+        <translation language="en"><![CDATA[Portuguese]]></translation>
+        <translation language="ru"><![CDATA[Португальский]]></translation>
+        <translation language="lt"><![CDATA[Portoghese]]></translation>
+        <translation language="de"><![CDATA[Portugiesisch]]></translation>
+        <translation language="uk"><![CDATA[Португальська]]></translation>
+        <translation language="es"><![CDATA[Portugués]]></translation>
+        <translation language="hu"><![CDATA[Portugál]]></translation>
+        <translation language="sv"><![CDATA[Portugisiska]]></translation>
+        <translation language="el"><![CDATA[Πορτογαλικά]]></translation>
+        <translation language="zh"><![CDATA[葡萄牙语]]></translation>
+        <translation language="pt"><![CDATA[Português]]></translation>
+        <translation language="pl"><![CDATA[Portugalski]]></translation>
+      </item>
       <item type="label" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
         <translation language="en"><![CDATA[Ukrainian]]></translation>
@@ -2909,6 +2924,21 @@
         <translation language="pl"><![CDATA[Niemiecki]]></translation>
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
         <translation language="pt"><![CDATA[Neerlandês]]></translation>
+      </item>
+      <item type="message" name="PT">
+        <translation language="nl"><![CDATA[Portugees]]></translation>
+        <translation language="en"><![CDATA[Portuguese]]></translation>
+        <translation language="ru"><![CDATA[Португальский]]></translation>
+        <translation language="lt"><![CDATA[Portoghese]]></translation>
+        <translation language="de"><![CDATA[Portugiesisch]]></translation>
+        <translation language="uk"><![CDATA[Португальська]]></translation>
+        <translation language="es"><![CDATA[Portugués]]></translation>
+        <translation language="hu"><![CDATA[Portugál]]></translation>
+        <translation language="sv"><![CDATA[Portugisiska]]></translation>
+        <translation language="el"><![CDATA[Πορτογαλικά]]></translation>
+        <translation language="zh"><![CDATA[葡萄牙语]]></translation>
+        <translation language="pt"><![CDATA[Português]]></translation>
+        <translation language="pl"><![CDATA[Portugalski]]></translation>
       </item>
       <item type="message" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
@@ -8051,6 +8081,21 @@
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
         <translation language="pt"><![CDATA[neerlandês]]></translation>
       </item>
+      <item type="label" name="PT">
+        <translation language="nl"><![CDATA[Portugees]]></translation>
+        <translation language="en"><![CDATA[Portuguese]]></translation>
+        <translation language="ru"><![CDATA[Португальский]]></translation>
+        <translation language="lt"><![CDATA[Portoghese]]></translation>
+        <translation language="de"><![CDATA[Portugiesisch]]></translation>
+        <translation language="uk"><![CDATA[Португальська]]></translation>
+        <translation language="es"><![CDATA[Portugués]]></translation>
+        <translation language="hu"><![CDATA[Portugál]]></translation>
+        <translation language="sv"><![CDATA[Portugisiska]]></translation>
+        <translation language="el"><![CDATA[Πορτογαλικά]]></translation>
+        <translation language="zh"><![CDATA[葡萄牙语]]></translation>
+        <translation language="pt"><![CDATA[Português]]></translation>
+        <translation language="pl"><![CDATA[Portugalski]]></translation>
+      </item>
       <item type="label" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
         <translation language="en"><![CDATA[Ukrainian]]></translation>
@@ -11895,6 +11940,21 @@
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
         <translation language="pt"><![CDATA[neerlandês]]></translation>
         <translation language="pl"><![CDATA[Niderlandzki]]></translation>
+      </item>
+      <item type="message" name="PT">
+        <translation language="nl"><![CDATA[Portugees]]></translation>
+        <translation language="en"><![CDATA[Portuguese]]></translation>
+        <translation language="ru"><![CDATA[Португальский]]></translation>
+        <translation language="lt"><![CDATA[Portoghese]]></translation>
+        <translation language="de"><![CDATA[Portugiesisch]]></translation>
+        <translation language="uk"><![CDATA[Португальська]]></translation>
+        <translation language="es"><![CDATA[Portugués]]></translation>
+        <translation language="hu"><![CDATA[Portugál]]></translation>
+        <translation language="sv"><![CDATA[Portugisiska]]></translation>
+        <translation language="el"><![CDATA[Πορτογαλικά]]></translation>
+        <translation language="zh"><![CDATA[葡萄牙语]]></translation>
+        <translation language="pt"><![CDATA[Português]]></translation>
+        <translation language="pl"><![CDATA[Portugalski]]></translation>
       </item>
       <item type="message" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
