@@ -13,6 +13,26 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title">
+            {{ 'lbl.DisplayNameChanges'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="limitDisplayNameChanges" class="control-label">{% form_field limit_display_name_changes %} {{ 'lbl.LimitDisplayNameChanges'|trans|ucfirst }}</label>
+                <span id="maxDisplayNameChangesBox">
+                  {{ macro.required }} {% form_field max_display_name_changes %}
+                  {% form_field_error max_display_name_changes %}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">
             {{ 'lbl.Notifications'|trans|ucfirst }}
           </h2>
         </div>
@@ -24,9 +44,9 @@
               </li>
               <li class="checkbox" id="overwriteProfileNotificationEmailBox">
                 <label for="overwriteProfileNotificationEmail" class="control-label">{% form_field overwrite_profile_notification_email %} {{ 'lbl.OverwriteProfileNotificationEmail'|trans|ucfirst }}</label><br />
-                    <span id="profileNotificationEmailBox">
+                <span id="profileNotificationEmailBox">
                       {{ macro.required }} {% form_field profile_notification_email %}
-                      {% form_field_error profile_notification_email %}
+                  {% form_field_error profile_notification_email %}
                     </span>
               </li>
             </ul>
