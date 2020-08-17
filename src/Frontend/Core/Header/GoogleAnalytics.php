@@ -11,15 +11,17 @@ final class GoogleAnalytics
     /** @var ModulesSettings */
     private $modulesSettings;
 
-    /**
-     * @var ConsentDialog
-     */
+    /** @var Cookie */
+    private $cookie;
+
+    /** @var ConsentDialog */
     private $consentDialog;
 
-    public function __construct(ModulesSettings $modulesSettings, ConsentDialog $consentDialog)
+    public function __construct(ModulesSettings $modulesSettings, ConsentDialog $consentDialog, Cookie $cookie)
     {
         $this->modulesSettings = $modulesSettings;
         $this->consentDialog = $consentDialog;
+        $this->cookie = $cookie;
     }
 
     private function shouldAddGoogleAnalyticsHtml(): bool

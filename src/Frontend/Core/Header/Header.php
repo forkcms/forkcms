@@ -377,7 +377,8 @@ class Header extends KernelLoader
         if ($googleAnalyticsTrackingId !== '') {
             $siteHTMLHead .= new GoogleAnalytics(
                 $this->get('fork.settings'),
-                $this->get(ConsentDialog::class)
+                $this->get(ConsentDialog::class),
+                $this->get('fork.cookie')
             ) . "\n";
         }
 
@@ -385,6 +386,9 @@ class Header extends KernelLoader
         $siteHTMLHead .= (string) $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', '')) . "\n";
         $siteHTMLHead .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHead', trim($siteHTMLHead));
+
+        // @deprecated remove this in Fork 6, use siteHTMLHead
+        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHead));
 
         // @deprecated fallback to site_start_of_body_scripts as this was used in the pased
         $siteHTMLStartOfBody .= $this->get('fork.settings')->get('Core', 'site_html_start_of_body', $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', ''));

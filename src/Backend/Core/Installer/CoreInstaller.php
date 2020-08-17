@@ -183,6 +183,7 @@ class CoreInstaller extends ModuleInstaller
             'sv' => 'min hemsida',
             'tr' => 'web siteme',
             'uk' => 'мій сайт',
+            'pt' => 'O meu website'
         ];
 
         // language specific

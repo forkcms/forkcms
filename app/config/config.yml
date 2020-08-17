@@ -230,6 +230,14 @@ services:
         arguments:
             - "%site.path_www%"
 
+    ForkCMS\Utility\Csv\Writer:
+        public: true
+        arguments:
+            - "%kernel.charset%"
+
+    ForkCMS\Utility\Csv\Reader:
+        public: true
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true
