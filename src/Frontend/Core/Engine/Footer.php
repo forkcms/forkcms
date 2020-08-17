@@ -46,7 +46,7 @@ class Footer extends KernelLoader
         $siteHTMLEndOfBody = (string) $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
 
         // @deprecated remove this in Fork 6, Facebook should not be added automaticall
-       $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
         if ($facebookAppId !== null) {
             // add Facebook container
             $siteHTMLEndOfBody .= $this->getFacebookHtml($facebookAppId);
