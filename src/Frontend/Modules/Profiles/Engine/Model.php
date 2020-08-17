@@ -25,12 +25,12 @@ class Model
 
     public static function maxDisplayNameChanges(): int
     {
-        return FrontendModel::getModuleSetting('Profiles', 'max_display_name_changes', self::MAX_DISPLAY_NAME_CHANGES);
+        return FrontendModel::get('fork.settings')->get('Profiles', 'max_display_name_changes', self::MAX_DISPLAY_NAME_CHANGES);
     }
 
     public static function displayNameCanStillBeChanged(Profile $profile): bool
     {
-        if (!FrontendModel::getModuleSetting('Profiles', 'limit_display_name_changes', false)) {
+        if (!FrontendModel::get('fork.settings')->get('Profiles', 'limit_display_name_changes', false)) {
             return true;
         }
 
