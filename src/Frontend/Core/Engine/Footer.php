@@ -44,9 +44,9 @@ class Footer extends KernelLoader
         $this->template->assignGlobal('footerLinks', $footerLinks);
 
         $siteHTMLEndOfBody = (string) $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
-        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
-        // facebook admins given?
+        // @deprecated remove this in Fork 6, Facebook should not be added automaticall
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
         if ($facebookAppId !== null) {
             // add Facebook container
             $siteHTMLEndOfBody .= $this->getFacebookHtml($facebookAppId);
@@ -70,6 +70,9 @@ class Footer extends KernelLoader
 
     /**
      * Builds the HTML needed for Facebook to be initialized
+     * @deprecated remove this in Fork 6, Facebook should be added with respect
+     *             to the given consent. In essence: add Facebook yourself if
+     *             needed.
      *
      * @param string $facebookAppId The application id used to interact with FB
      *
@@ -107,6 +110,11 @@ class Footer extends KernelLoader
         return $facebookHtml;
     }
 
+    /**
+     * @deprecated remove this in Fork 6, Facebook should be added with respect
+     *             to the given consent. In essence: add Facebook yourself if
+     *             needed.
+     */
     private function getFacebookLocale(): string
     {
         $specialCases = [

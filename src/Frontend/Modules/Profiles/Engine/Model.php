@@ -6,6 +6,7 @@ use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
@@ -21,6 +22,21 @@ class Model
      * @var array
      */
     private static $avatars = [];
+
+    public static function maxDisplayNameChanges(): int
+    {
+        return FrontendModel::get('fork.settings')->get('Profiles', 'max_display_name_changes', self::MAX_DISPLAY_NAME_CHANGES);
+    }
+
+    public static function displayNameCanStillBeChanged(Profile $profile): bool
+    {
+        if (!FrontendModel::get('fork.settings')->get('Profiles', 'limit_display_name_changes', false)) {
+            return true;
+        }
+
+        return (int) FrontendProfilesModel::getSetting($profile->getId(), 'display_name_changes') <
+            self::maxDisplayNameChanges();
+    }
 
     public static function deleteSetting(int $profileId, string $name): int
     {

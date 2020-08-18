@@ -324,16 +324,28 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
+          <h2 class="panel-title">{{ 'lbl.PrivacyConsents'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            <p>{{ 'msg.HelpCookies'|trans }}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="showCookieBar" class="control-label">{% form_field show_cookie_bar %} {{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
               </li>
             </ul>
+          </div>
+          <div class="form-group last">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="showConsentDialog" class="control-label">{% form_field show_consent_dialog %} {{ 'msg.ShowConsentDialog'|trans|ucfirst }}</label>
+              </li>
+            </ul>
+            <p>{{ 'msg.HelpPrivacyConsents'|trans }}</p>
+            <div class="form-group">
+              <label for="privacyConsentLevels" class="control-label">{{ 'lbl.TechnicalName'|trans|ucfirst }}</label>
+              {% form_field privacy_consent_levels %} {% form_field_error privacy_consent_levels %}
+              <span class="help-block">{{ 'msg.HelpPrivacyConsentLevels'|trans|ucfirst }}</span>
+            </div>
           </div>
         </div>
       </div>

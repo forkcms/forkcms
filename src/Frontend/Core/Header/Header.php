@@ -9,6 +9,7 @@ use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
 use ForkCMS\Google\TagManager\TagManager;
+use ForkCMS\Privacy\ConsentDialog;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
@@ -116,7 +117,13 @@ class Header extends KernelLoader
                 FRONTEND_CACHE_PATH . '/MinifiedJs/'
             )
         );
-        $this->jsData = new JsData(['LANGUAGE' => Locale::frontendLanguage()]);
+
+        $jsData = [
+            'LANGUAGE' => Locale::frontendLanguage(),
+            'privacyConsent' => $this->get(ConsentDialog::class)->getJsData(),
+        ];
+        $this->jsData = new JsData($jsData);
+
         $this->meta = new MetaCollection();
 
         // add some default CSS files
@@ -338,6 +345,7 @@ class Header extends KernelLoader
      */
     public function parse(): void
     {
+        // @deprecated remove this in Fork 6, check if this still should be used.
         $facebook = new Facebook($this->get('fork.settings'));
         $facebook->addOpenGraphMeta($this);
         $this->parseSeo();
@@ -369,7 +377,7 @@ class Header extends KernelLoader
         if ($googleAnalyticsTrackingId !== '') {
             $siteHTMLHead .= new GoogleAnalytics(
                 $this->get('fork.settings'),
-                Model::getRequest()->getHttpHost(),
+                $this->get(ConsentDialog::class),
                 $this->get('fork.cookie')
             ) . "\n";
         }

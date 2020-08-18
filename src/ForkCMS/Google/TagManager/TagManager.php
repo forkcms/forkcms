@@ -2,8 +2,8 @@
 
 namespace ForkCMS\Google\TagManager;
 
-use Common\Core\Cookie;
 use Common\ModulesSettings;
+use ForkCMS\Privacy\ConsentDialog;
 
 class TagManager
 {
@@ -18,15 +18,15 @@ class TagManager
     private $dataLayer;
 
     /**
-     * @var Cookie
+     * @var ConsentDialog
      */
-    private $cookie;
+    private $consentDialog;
 
-    public function __construct(ModulesSettings $modulesSettings, DataLayer $dataLayer, Cookie $cookie)
+    public function __construct(ModulesSettings $modulesSettings, DataLayer $dataLayer, ConsentDialog $consentDialog)
     {
         $this->modulesSettings = $modulesSettings;
         $this->dataLayer = $dataLayer;
-        $this->cookie = $cookie;
+        $this->consentDialog = $consentDialog;
 
         $this->addDefaultDataLayerVariables();
     }
@@ -34,11 +34,29 @@ class TagManager
     private function addDefaultDataLayerVariables(): void
     {
         $this->dataLayer->set('anonymizeIp', $this->shouldAnonymizeIp());
+
+        // only if the consent dialog is enabled we should extra variables
+        if ($this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+            foreach ($this->consentDialog->getVisitorChoices() as $level => $choice) {
+                $this->dataLayer->set('privacyConsentLevel' . ucfirst($level) . 'Agreed', $choice);
+            }
+        }
     }
 
     private function shouldAnonymizeIp(): bool
     {
-        return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies();
+        // if the consent dialog is disabled we will anonymize by default
+        if (!$this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+            return true;
+        }
+
+        // the visitor has agreed to be tracked
+        if ($this->consentDialog->hasAgreedTo('statistics')) {
+            return false;
+        }
+
+        // fallback
+        return true;
     }
 
     private function shouldAddCode(): bool

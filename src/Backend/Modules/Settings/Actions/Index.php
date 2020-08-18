@@ -129,6 +129,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // facebook settings
+        // @deprecated remove this in Fork 6, facebook_admin_ids / facebook_app_id / facebook_app_secret should be removed
         $this->form->addText('facebook_admin_ids', $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null));
         $this->form->addText('facebook_application_id', $this->get('fork.settings')->get('Core', 'facebook_app_id', null));
         $this->form->addText(
@@ -282,7 +283,22 @@ class Index extends BackendBaseActionIndex
         }
 
         // cookies
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
         $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+
+        // privacy
+        $this->form->addCheckbox('show_consent_dialog', $this->get('fork.settings')->get('Core', 'show_consent_dialog', false));
+        $this->form->addText(
+            'privacy_consent_levels',
+            implode(
+                ',',
+                $this->get('fork.settings')->get(
+                    'Core',
+                    'privacy_consent_levels',
+                    ['functional']
+                )
+            )
+        );
     }
 
     protected function parse(): void
@@ -391,6 +407,18 @@ class Index extends BackendBaseActionIndex
                     'ckfinder_image_max_height'
                 )->isInteger(BL::err('InvalidInteger'));
             }
+
+            $privacyConsentLevelsField = $this->form->getField('privacy_consent_levels');
+            if ($privacyConsentLevelsField->isFilled()) {
+                $levels = explode(',', $privacyConsentLevelsField->getValue());
+                foreach ($levels as $level) {
+                    if (!preg_match('/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i', $level)) {
+                        $privacyConsentLevelsField->setError(sprintf(BL::err('InvalidVariableName'), $level));
+                        break;
+                    }
+                }
+            }
+
 
             // no errors ?
             if ($this->form->isCorrect()) {
@@ -601,10 +629,24 @@ class Index extends BackendBaseActionIndex
                 // save domains
                 $this->get('fork.settings')->set('Core', 'site_domains', $siteDomains);
 
+                // cookies
+                // @deprecated remove this in Fork 6, the privacy consent dialog should be used
                 $this->get('fork.settings')->set(
                     'Core',
                     'show_cookie_bar',
                     $this->form->getField('show_cookie_bar')->getChecked()
+                );
+
+                // privacy
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'show_consent_dialog',
+                    $this->form->getField('show_consent_dialog')->getChecked()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'privacy_consent_levels',
+                    explode(',', $this->form->getField('privacy_consent_levels')->getValue())
                 );
 
                 // assign report

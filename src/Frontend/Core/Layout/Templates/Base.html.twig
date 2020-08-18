@@ -27,8 +27,13 @@
 {% endblock %}
 
 <div class="content container">
+  {# @deprecated remove this in Fork 6, the privacy consent dialog should be used#}
   {% block cookies %}
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
+  {% endblock %}
+
+  {% block privacyConsentDialog %}
+    {% include "Core/Layout/Templates/PrivacyConsentDialog.html.twig" %}
   {% endblock %}
 
   {% block breadcrumb %}
@@ -45,10 +50,8 @@
     {% endif %}
   {% endblock %}
 
-
   {# Main content #}
   {% block main %}
-
   {% endblock %}
 
   {% block footer %}

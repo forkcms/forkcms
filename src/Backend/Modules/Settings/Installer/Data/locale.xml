@@ -215,12 +215,8 @@
         <translation language="pl"><![CDATA[Skonfiguruj maksymalną szerokość (w pikselach) przesłanych obrazów. Jeśli przesłany obraz jest większy, zostanie proporcjonalnie zmniejszony. Ustaw na 0, aby wyłączyć tę funkcję.]]></translation>
       </item>
       <item type="message" name="HelpCookies">
-        <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht. Met deze cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>
-        <translation language="en"><![CDATA[There are several laws in Europe about the use of cookies. With this Cookie-bar you fulfill the most strict law.]]></translation>
-        <translation language="fr"><![CDATA[En Europe, il existe plusieurs lois pour l'utilisation des cookies. Avec ce barre de cookie vous accomplissez la loi la plus stricte.]]></translation>
-        <translation language="de"><![CDATA[In Europa gibt es mehrere Gesetze für die Verwendung von Cookies. Mit diesem Cookie-Bar erfüllen Sie das strengsten Recht.]]></translation>
-        <translation language="es"><![CDATA[En Europa hay varias leyes para el uso de cookies. Con este barra de cookie cumple con la legislación más estricta.]]></translation>
-        <translation language="pl"><![CDATA[W Europie obowiązuje kilka przepisów dotyczących używania plików cookie. Za pomocą tego paska Cookie spełniasz najbardziej surowe prawo.]]></translation>
+        <translation language="nl"><![CDATA[Gebruik toch de verouderde cookiebar, je kan beter het privacy voorkeuren scherm gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Show the deprecated cookiebar, consider upgrading to the consent dialog.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -625,6 +621,34 @@
       <item type="message" name="HelpGoogleTrackingGoogleTagManagerContainerId">
         <translation language="nl"><![CDATA[Dit kan je terugvinden in <a href="https://support.google.com/tagmanager/answer/6103696?hl=nl">Google Tag Manager</a>. Dit ziet er uit als GTM-XXXXXX.]]></translation>
         <translation language="en"><![CDATA[You can find the Container Id in <a href="https://support.google.com/tagmanager/answer/6103696?hl=en">Google Tag Manager</a>, it will look like: GTM-XXXXXX.]]></translation>
+      </item>
+      <item type="message" name="ShowConsentDialog">
+        <translation language="nl"><![CDATA[Toon het privacy voorkeuren scherm]]></translation>
+        <translation language="en"><![CDATA[Show the privacy preferences dialog]]></translation>
+      </item>
+      <item type="label" name="PrivacyConsents">
+        <translation language="nl"><![CDATA[Privacy toestemmingen]]></translation>
+        <translation language="en"><![CDATA[Privacy consents]]></translation>
+      </item>
+      <item type="label" name="TechnicalName">
+        <translation language="nl"><![CDATA[Technische naam]]></translation>
+        <translation language="en"><![CDATA[Technical name]]></translation>
+      </item>
+      <item type="message" name="HelpPrivacyConsents">
+        <translation language="nl"><![CDATA[De GDPR regelt hoe je als website eigenaar moet omgaan met cookies. Hieronder kan je verschillende niveaus instellen, waarmee je de bezoeker verschillende opties kan bieden.]]></translation>
+        <translation language="en"><![CDATA[GDPR defines how you as a website owner may use cookies. Below you are able to define several levels, so the user can choose from them.]]></translation>
+      </item>
+      <item type="message" name="NoPrivacyConsentLevels">
+        <translation language="nl"><![CDATA[Je hebt nog geen niveaus ingegeven.]]></translation>
+        <translation language="en"><![CDATA[No levels yet.]]></translation>
+      </item>
+      <item type="message" name="HelpPrivacyConsentLevels">
+        <translation language="nl"><![CDATA[Dit zijn de namen van de variabelen die beschikbaar zullen zijn in JavaScript en Google Data Layer. Je kan dus geen spaties gebruiken.]]></translation>
+        <translation language="en"><![CDATA[These are the names of the variable that will be available in JavaScript and Google Data Layer. You can't use spaces or other illegal characters.]]></translation>
+      </item>
+      <item type="error" name="InvalidVariableName">
+        <translation language="nl"><![CDATA[<code>%1$s</code> is een ongeldige variabele naam.]]></translation>
+        <translation language="en"><![CDATA[<code>%1$s</code> is an invalid variable name.]]></translation>
       </item>
     </Settings>
   </Backend>
