@@ -908,7 +908,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         // link class
-        $data['link_class'] = $this->form->getField('link_class')->getValue();
+        $data['link_class'] = isset($this->record['data']['link_class']) ? $this->record['data']['link_class'] : null;
+        if ($this->isGod) {
+            $data['link_class'] = $this->form->getField('link_class')->getValue();
+        }
 
         return $data;
     }
