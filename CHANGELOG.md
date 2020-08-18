@@ -1,3 +1,10 @@
+5.9.1  (2020-08-18)
+------------------
+
+Fixed:
+* Pages: Fix non god users not being able to save pages [#3163](https://github.com/forkcms/forkcms/pull/3163)
+
+
 5.9.0  (2020-08-17)
 ------------------
 
