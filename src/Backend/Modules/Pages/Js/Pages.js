@@ -901,7 +901,7 @@ jsBackend.pages.extras = {
     }
 
     if ($element.is('[data-ft-type="textarea"]')) {
-      $placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.text(), $element.data('ft-label'), key))
+      $placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.html(), $element.data('ft-label'), key))
 
       return
     }
@@ -1063,7 +1063,7 @@ jsBackend.pages.extras = {
     if ($element.is('[data-ft-type="textarea"]')) {
       $textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]')
 
-      $element.text($textarea.val())
+      $element.html($textarea.val())
 
       return
     }
