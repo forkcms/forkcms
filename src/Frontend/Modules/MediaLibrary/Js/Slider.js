@@ -30,7 +30,7 @@
         autoplay: multipleItems,
         adaptiveHeight: true,
         dots: showPager,
-        fade: true,
+        // fade: true, // this has side effects in bootstrap 4 because of the .fade class, if you enable this don't forget to add extra styling for this
         lazyLoad: 'ondemand',
         mobileFirst: true
       })
