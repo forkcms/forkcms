@@ -1,0 +1,77 @@
+name: run-tests
+
+on: [push, pull_request]
+
+jobs:
+    phpunit:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false # todo
+            matrix:
+                php: [7.1]
+                testsuite: ["functional", "unit", "installer"]
+
+        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
+
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_DATABASE: forkcms
+                    MYSQL_ROOT_PASSWORD: "kingtriton"
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            - name: Install dependencies
+              run: composer install -o
+
+            - name: Prepare test env
+              run: |
+                  mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
+                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
+                  cp app/config/parameters.yml.test app/config/parameters.yml
+                  ls -al app/config/parameters.yml
+                  cat app/config/parameters.yml
+
+            - name: Execute tests
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
+
+            - name: Upload Coverage report
+              run: |
+                  curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
+                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover
+              env:
+                  SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}
+
+    frontend:
+        name: Yarn test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: yarn install
+            # @todo fix errors, it was broken on travis already
+            #- run: yarn test
