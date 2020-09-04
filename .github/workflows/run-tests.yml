@@ -45,16 +45,16 @@ jobs:
 
             - name: Install dependencies
               run: composer install -o
+              env:
+                  FORK_ENV: test
 
             # Need this step because we use PHPUnit < 8: https://github.com/shivammathur/setup-php#pcov
+            # Nope does not work with simple-phpunit
             # - name: Setup PCOV
             #   run: composer require pcov/clobber && bin/pcov clobber
 
             - name: Execute tests
-              run: |
-                  ls -al var/cache/
-                  bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
-                  ls -al var/cache/
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
             - name: debug coverage
               run: cat ./${{ matrix.testsuite}}.clover
@@ -106,10 +106,7 @@ jobs:
                   FORK_ENV: dev
 
             - name: Run PHPStan
-              run: |
-                  ls -al var/cache/
-                  cat var/cache/dev/appDevDebugProjectContainer.xml
-                  bin/phpstan analyze src
+              run: bin/phpstan analyze src
 
     php-code-sniffer:
         name: PHP Code Sniffer
