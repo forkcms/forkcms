@@ -10,7 +10,7 @@ jobs:
             matrix:
                 php: [7.1]
                 testsuite: ["functional", "unit", "installer"]
-
+        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
             mysql:
                 image: mysql:5.7
@@ -20,8 +20,6 @@ jobs:
                 ports:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
-        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -37,10 +35,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
-                  coverage: none
-
-            - name: Install dependencies
-              run: composer install -o
+                  coverage: xdebug # We should switch to phpunit 8 and pcov!
 
             - name: Prepare test env
               run: |
@@ -48,8 +43,18 @@ jobs:
                   mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
                   cp app/config/parameters.yml.test app/config/parameters.yml
 
+            - name: Install dependencies
+              run: composer install -o
+
+            # Need this step because we use PHPUnit < 8: https://github.com/shivammathur/setup-php#pcov
+            # - name: Setup PCOV
+            #   run: composer require pcov/clobber && bin/pcov clobber
+
             - name: Execute tests
-              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+              run: |
+                  ls -al var/cache/
+                  bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+                  ls -al var/cache/
 
             - name: debug coverage
               run: cat ./${{ matrix.testsuite}}.clover
@@ -78,7 +83,6 @@ jobs:
                 ports:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -90,17 +94,22 @@ jobs:
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
-            - name: Install dependencies
-              run: composer install -o
-
             - name: Prepare test env
               run: |
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
                   mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
                   cp app/config/parameters.yml.test app/config/parameters.yml
 
+            - name: Install dependencies
+              run: composer install -o
+              env:
+                  FORK_ENV: dev
+
             - name: Run PHPStan
-              run: bin/phpstan analyze src
+              run: |
+                  ls -al var/cache/
+                  cat var/cache/dev/appDevDebugProjectContainer.xml
+                  bin/phpstan analyze src
 
     php-code-sniffer:
         name: PHP Code Sniffer
