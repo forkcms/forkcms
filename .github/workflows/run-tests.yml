@@ -56,9 +56,10 @@ jobs:
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
 
             - name: Upload Coverage report
+              if: ${{ github.repository == 'forkcms/forkcms' }}
               run: |
                   curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
-                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover
+                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover || true
               env:
                   SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}
 
