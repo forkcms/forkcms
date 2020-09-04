@@ -5,14 +5,11 @@ on: [push, pull_request]
 jobs:
     phpunit:
         runs-on: ubuntu-latest
-
         strategy:
-            fail-fast: false # todo
+            fail-fast: true
             matrix:
                 php: [7.1]
                 testsuite: ["functional", "unit", "installer"]
-
-        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
 
         services:
             mysql:
@@ -24,6 +21,7 @@ jobs:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
+        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -49,11 +47,9 @@ jobs:
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
                   mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
                   cp app/config/parameters.yml.test app/config/parameters.yml
-                  ls -al app/config/parameters.yml
-                  cat app/config/parameters.yml
 
             - name: Execute tests
-              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
             - name: debug coverage
               run: cat ./${{ matrix.testsuite}}.clover
@@ -71,21 +67,66 @@ jobs:
                   SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}
 
     phpstan:
-        name: PHPStan - Static Analysis
+        name: PHPStan - Static Code Analysis
         runs-on: ubuntu-latest
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_DATABASE: forkcms
+                    MYSQL_ROOT_PASSWORD: "kingtriton"
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.1
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
+
             - name: Install dependencies
               run: composer install -o
+
+            - name: Prepare test env
+              run: |
+                  mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
+                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
+                  cp app/config/parameters.yml.test app/config/parameters.yml
+
             - name: Run PHPStan
               run: bin/phpstan analyze src
+
+    php-code-sniffer:
+        name: PHP Code Sniffer
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            - name: Install dependencies
+              run: composer install -o
+
+            - name: Run PHP Codesniffer
+              run: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
 
     frontend:
         name: Yarn test
