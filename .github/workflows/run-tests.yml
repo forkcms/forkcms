@@ -55,13 +55,37 @@ jobs:
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
 
+            - name: debug coverage
+              run: cat ./${{ matrix.testsuite}}.clover
+
+            - name: Display error logs on failure
+              if: ${{ failure() }}
+              run: cat var/logs/test.log
+
             - name: Upload Coverage report
               if: ${{ github.repository == 'forkcms/forkcms' }}
               run: |
                   curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
-                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover || true
+                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover
               env:
                   SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}
+
+    phpstan:
+        name: PHPStan - Static Analysis
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+            - name: Install dependencies
+              run: composer install -o
+            - name: Run PHPStan
+              run: bin/phpstan analyze src
 
     frontend:
         name: Yarn test
