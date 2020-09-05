@@ -35,7 +35,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
-                  coverage: xdebug # We should switch to phpunit 8 and pcov!
+                  coverage: pcov
 
             - name: Prepare test env
               run: |
@@ -45,13 +45,15 @@ jobs:
 
             - name: Install dependencies
               env:
-                  FORK_ENV: dev
-              run: composer install -o
+                  FORK_ENV: test
+              run: |
+                  composer install -o
+                  bin/simple-phpunit --version
 
             # Need this step because we use PHPUnit < 8: https://github.com/shivammathur/setup-php#pcov
             # Nope does not work with simple-phpunit
-            # - name: Setup PCOV
-            #   run: composer require pcov/clobber && bin/pcov clobber
+            - name: Setup PCOV
+              run: composer require pcov/clobber && bin/pcov clobber
 
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
