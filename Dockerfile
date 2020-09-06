@@ -21,8 +21,10 @@ RUN docker-php-ext-install pdo_mysql
 # Install mbstring
 RUN docker-php-ext-install mbstring
 
-# Install zip
-RUN docker-php-ext-install zip
+# Install zip & unzip
+RUN apt-get update && apt-get install -y unzip && \
+    docker-php-ext-install zip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install intl
 RUN apt-get update && apt-get install -y --no-install-recommends \
