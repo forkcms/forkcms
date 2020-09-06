@@ -21,8 +21,7 @@ jobs:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
             - name: Cache dependencies
               uses: actions/cache@v1
@@ -35,7 +34,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
-                  coverage: pcov
+                  coverage: xdebug # Switch to PCOV for a speed gain when we can use PHP 7.2 & PHPUnit 8.0.
 
             - name: Prepare test env
               run: |
@@ -46,14 +45,7 @@ jobs:
             - name: Install dependencies
               env:
                   FORK_ENV: test
-              run: |
-                  composer install -o
-                  bin/simple-phpunit --version
-
-            # Need this step because we use PHPUnit < 8: https://github.com/shivammathur/setup-php#pcov
-            # Nope does not work with simple-phpunit
-            - name: Setup PCOV
-              run: composer require pcov/clobber && bin/pcov clobber
+              run: composer install -o
 
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
@@ -86,8 +78,7 @@ jobs:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -114,8 +105,7 @@ jobs:
         name: PHP Code Sniffer
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
 
             - name: Cache dependencies
               uses: actions/cache@v1
@@ -140,8 +130,7 @@ jobs:
         name: Yarn test
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - uses: actions/checkout@v2
             - name: Install Node
               uses: actions/setup-node@v2-beta
               with:
