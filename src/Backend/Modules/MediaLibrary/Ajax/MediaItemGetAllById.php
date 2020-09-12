@@ -34,6 +34,12 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
             return [];
         }
 
-        return $this->get('media_library.repository.item')->findById($ids);
+        $mediaItems = [];
+
+        foreach ($ids as $id) {
+            $mediaItems[] = $this->get('media_library.repository.item')->findOneById($id);
+        }
+
+        return $mediaItems;
     }
 }
