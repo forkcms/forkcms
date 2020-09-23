@@ -558,7 +558,9 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // link class
-                $data['link_class'] = $this->form->getField('link_class')->getValue();
+                if ($this->isGod) {
+                    $data['link_class'] = $this->form->getField('link_class')->getValue();
+                }
 
                 // build page record
                 $page = [];
