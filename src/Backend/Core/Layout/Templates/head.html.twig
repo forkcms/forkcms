@@ -8,33 +8,20 @@
   <link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 
   <script defer data-search-pseudo-elements src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
-  <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
 
-  {% for cssFile in cssFiles %}
-    <link rel="stylesheet" href="{{ cssFile }}" />{{ CRLF }}{{ TAB }}
-  {% endfor %}
+  <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
 
   {% for jsFile in jsFiles %}
     <script src="{{ jsFile }}"></script>{{ CRLF }}{{ TAB }}
   {% endfor %}
 
+
+  {{ encore_entry_script_tags('backend', null, 'backendConfig') }}
+  {{ encore_entry_link_tags('screen', null, 'backendConfig') }}
+
   {% if debug %}
-    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+    <script src="http://localhost:35729/livereload.js"></script>
   {% endif %}
 
   {{ jsData|raw }}
-
-  <script>
-    //<![CDATA[
-    // reports
-    $(function()
-    {
-      {% if form_error %} jsBackend.messages.add('danger', "{{ 'err.FormError'|trans|addslashes|raw }}", '');{% endif %}
-      {% if usingRevision %} jsBackend.messages.add('info', '{{ 'msg.UsingARevision'|trans|addslashes|raw }}', 'toast-inline');{% endif %}
-      {% if usingDraft %} jsBackend.messages.add('info', '{{ 'msg.UsingADraft'|trans|addslashes|raw }}', 'toast-inline');{% endif %}
-      {% if report %} jsBackend.messages.add('success', '{{ reportMessage|addslashes|raw }}', '');{% endif %}
-      {% if errorMessage %} jsBackend.messages.add('danger', '{{ errorMessage|addslashes|raw }}', '');{% endif %}
-    });
-    //]]>
-  </script>
 </head>

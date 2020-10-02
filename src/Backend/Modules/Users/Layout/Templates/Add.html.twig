@@ -35,11 +35,11 @@
                 <span class="passwordStrength ml-auto" data-id="password" data-role="password-strength-meter">
                   <span class="strength strength-none none badge" data-role="password-strength" data-strength="none">None</span>
                   <span class="strength strength-weak weak badge" data-role="password-strength" data-strength="weak">Weak</span>
-                  <span class="strength strength-average average badge" data-role="password-strength" data-strength="average">Average</span>
+                  <span class="strength strength-average average badge" data-role="password-strength" data-strength="medium">Average</span>
                   <span class="strength strength-strong strong badge" data-role="password-strength" data-strength="strong">Strong</span>
                 </span>
               </label>
-              <div class="input-group">
+              <div class="input-group" data-password-generator>
                 {% form_field password %} {% form_field_error password %}
               </div>
               <small class="form-text text-muted">{{ 'msg.HelpStrongPassword'|trans }}</small>

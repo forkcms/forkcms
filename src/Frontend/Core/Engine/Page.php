@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Common\BlockEditor\Twig\ParseBlocksExtension;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
@@ -489,7 +490,7 @@ class Page extends KernelLoader
                     if ($block['extra_id'] === null) {
                         return [
                             'blockIsEditor' => true,
-                            'blockContent' => $block['html'],
+                            'blockContent' => $this->get(ParseBlocksExtension::class)->parseBlocks($block['html']),
                         ];
                     }
 

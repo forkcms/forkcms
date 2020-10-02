@@ -8,7 +8,7 @@
       <label for="pagetree-search" class="sr-only">{{ 'lbl.search'|trans|ucfirst }}</label>
       <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text form-control-sm js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
     </div>
-    <div id="tree" {% if overview %} data-clear-tree{% endif %}>
+    <div id="tree" data-tree-pages {% if overview %} data-clear-tree{% endif %}>
       {{ tree|raw }}
     </div>
   </div>

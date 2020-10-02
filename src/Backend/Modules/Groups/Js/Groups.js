@@ -1,46 +1,50 @@
-/**
- * Interaction for the groups module
- */
-jsBackend.Groups = {
-  // init, constructor-alike
-  init: function () {
+export class Groups {
+  constructor () {
     // variables
-    var $moduleDataGridBody = $('.jsGroupsPermissionsModule .jsDataGrid tbody')
-    var $widgetsDataGridBody = $('.jsGroupsWidgets .jsDataGrid tbody')
-    var $dataGridCheck = $('.jsDataGrid tbody tr td.check input[type="checkbox"]')
-    var $selectAll = $('.jsSelectAll')
+    const $moduleDataGridBody = $('.jsGroupsPermissionsModule .jsDataGrid tbody')
+    const $widgetsDataGridBody = $('.jsGroupsWidgets .jsDataGrid tbody')
+    const $dataGridCheck = $('.jsDataGrid tbody tr td.check input[type="checkbox"]')
+    const $selectAll = $('.jsSelectAll')
 
-    $moduleDataGridBody.each(jsBackend.Groups.selectionPermissions)
-    $widgetsDataGridBody.each(jsBackend.Groups.selectionWidgets)
-    $dataGridCheck.click(jsBackend.Groups.selectHandler)
-    $selectAll.click(jsBackend.Groups.selectAll)
-  },
+    $moduleDataGridBody.each((index, element) => {
+      this.selectionPermissions(element)
+    })
+    $widgetsDataGridBody.each((index, element) => {
+      this.selectionWidgets(element)
+    })
+    $dataGridCheck.on('click', $.proxy(this.selectHandler, this))
+    $selectAll.on('click', $.proxy(this.selectAll, this))
+  }
 
   // selectHandler
-  selectHandler: function () {
+  selectHandler (event) {
     // init vars
-    var $this = $(this)
+    const $this = $(event.currentTarget)
 
     // editing permissions? check permissions
     if ($this.closest('.jsGroupsPermissionsModule').length !== 0) {
-      $this.closest('tbody').each(jsBackend.Groups.selectionPermissions)
+      $this.closest('tbody').each((index, element) => {
+        this.selectionPermissions(element)
+      })
     } else {
       // editing widgets? check widgets
-      $this.closest('tbody').each(jsBackend.Groups.selectionWidgets)
+      $this.closest('tbody').each((index, element) => {
+        this.selectionWidgets(element)
+      })
     }
-  },
+  }
 
   // selection
-  selectionPermissions: function () {
+  selectionPermissions (element) {
     // init vars
-    var allChecked = true
-    var noneChecked = true
-    var $this = $(this)
+    let allChecked = true
+    let noneChecked = true
+    const $this = $(element)
 
     // loop all actions and check if they're checked
-    $this.find('td.check input[type="checkbox"]').each(function () {
+    $this.find('td.check input[type="checkbox"]').each((index, checkbox) => {
       // if not checked set false
-      if (!$(this).prop('checked')) {
+      if (!$(checkbox).prop('checked')) {
         allChecked = false
       } else {
         // is checked?
@@ -68,18 +72,18 @@ jsBackend.Groups = {
       $this.closest('.jsGroupsPermissionsModule').find('input.jsSelectAll').get(0).indeterminate = false
       $this.closest('.jsGroupsPermissionsModule').find('input.jsSelectAll').get(0).checked = false
     }
-  },
+  }
 
   // selection widgets
-  selectionWidgets: function () {
+  selectionWidgets (element) {
     // init vars
-    var allChecked = true
-    var $this = $(this)
+    let allChecked = true
+    const $this = $(element)
 
     // loop all actions and check if they're checked
-    $this.find('td.check input[type="checkbox"]').each(function () {
+    $this.find('td.check input[type="checkbox"]').each((index, checkbox) => {
       // if not checked set false
-      if (!$(this).prop('checked')) {
+      if (!$(checkbox).prop('checked')) {
         allChecked = false
       }
     })
@@ -91,19 +95,17 @@ jsBackend.Groups = {
       // uncheck if not all items are checked
       $this.closest('.jsDataGrid').find('th.check input[type="checkbox"]').prop('checked', false)
     }
-  },
+  }
 
   // select all
-  selectAll: function (event) {
+  selectAll (event) {
     event.stopPropagation()
     // init vars
-    var $selectAll = $(event.currentTarget)
+    const $selectAll = $(event.currentTarget)
 
     // toggle data grid checkboxes
-    $selectAll.closest('.jsGroupsPermissionsModule').find('td.check input[type="checkbox"]').each(function (index, checkbox) {
+    $selectAll.closest('.jsGroupsPermissionsModule').find('td.check input[type="checkbox"]').each((index, checkbox) => {
       $(checkbox).prop('checked', $selectAll.prop('checked'))
     })
   }
 }
-
-$(jsBackend.Groups.init)

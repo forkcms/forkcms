@@ -83,45 +83,6 @@ final class Header extends KernelLoader
                 'csrf-token' => Model::getToken(),
             ]
         );
-
-        $this->addCoreJs();
-        $this->addCoreCss();
-    }
-
-    private function addCoreJs(): void
-    {
-        $this->addJS('/js/vendors/jquery.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/bootstrap.bundle.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/Sortable.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true, true, Priority::core());
-        $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
-        $this->addJS('utils.js', 'Core', true, false, true, Priority::core());
-        $this->addJS('backend.js', 'Core', true, false, true, Priority::core());
-
-        $this->addJS('/js/vendors/select2/select2.full.js', 'Core', true, true, true, Priority::core());
-        $select2InterfaceLanguage = BL::getInterfaceLanguage();
-        // There is no 1 on 1 mapping for Chinese so we need to select which version of Chinese we want
-        if ($select2InterfaceLanguage === 'zh') {
-            $select2InterfaceLanguage = 'zh-TW';
-        }
-        $select2TranslationPath = '/js/vendors/select2/i18n/' . $select2InterfaceLanguage . '.js';
-
-        if (is_file($this->getContainer()->getParameter('kernel.project_dir') . $select2TranslationPath)) {
-            $this->addJS($select2TranslationPath, 'Core', true, true, true, Priority::core());
-        }
-    }
-
-    private function addCoreCss(): void
-    {
-        $this->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true, true, true, Priority::core());
-        $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
-        $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
-        $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
-        $this->addCSS('/css/vendors/select2.css', 'Core', true, true, true, Priority::core());
-        $this->addCSS('/css/vendors/select2-bootstrap.css', 'Core', true, true, true, Priority::core());
     }
 
     private function buildPathForModule(string $fileName, string $module, string $subDirectory): string
@@ -130,7 +91,7 @@ final class Header extends KernelLoader
             return '/src/Backend/Core/' . $subDirectory . '/' . $fileName;
         }
 
-        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . $fileName;
+        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . 'index.js';
     }
 
     /**
@@ -168,7 +129,7 @@ final class Header extends KernelLoader
 
         $this->cssFiles->add(
             new Asset(
-                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
+                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'build'),
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
@@ -205,7 +166,7 @@ final class Header extends KernelLoader
 
         $this->jsFiles->add(
             new Asset(
-                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
+                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'build'),
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),

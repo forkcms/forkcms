@@ -50,10 +50,10 @@ class Rss extends \SpoonFeedRSS
         $theme = Model::get('fork.settings')->get('Core', 'theme', 'Fork');
 
         // theme rss image exists
-        if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {
+        if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/Images/rss_image.png')) {
             // set rss image
             $this->setImage(
-                SITE_URL . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png',
+                SITE_URL . '/src/Frontend/Themes/' . $theme . '/Core/Images/rss_image.png',
                 $title,
                 $link
             );

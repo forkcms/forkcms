@@ -14,6 +14,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-zip": "*",
@@ -48,7 +49,8 @@
         "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^2.4",
         "codex-team/editor.js": "^2.0",
-        "beberlei/doctrineextensions": "^1.2"
+        "beberlei/doctrineextensions": "^1.2",
+        "symfony/webpack-encore-bundle": "^1.7"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",

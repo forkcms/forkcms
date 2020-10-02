@@ -1,7 +1,7 @@
 {% apply spaceless %}
 {% for subtree in tree %}
   <h4>{{ ('lbl.' ~ subtree.label)|trans|ucfirst }}</h4>
-  <div class="clearfix" data-tree="{{ subtree.name}}">
+  <div class="clearfix" data-tree="{{ subtree.name }}">
     {{ _self.parseTree(subtree.pages, editUrl) }}
   </div>
 {% endfor %}

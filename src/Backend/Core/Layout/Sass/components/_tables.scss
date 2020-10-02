@@ -46,6 +46,10 @@
 
   tr {
 
+    .highlighted {
+      background: lighten($primary, 35%);
+    }
+
     td,
     th {
 
