@@ -12683,6 +12683,30 @@
         <translation language="de"><![CDATA[eine Kategorie hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter une catégorie]]></translation>
       </item>
+      <item type="label" name="NoResultsFound">
+        <translation language="nl"><![CDATA[geen resultaten gevonden]]></translation>
+        <translation language="en"><![CDATA[no results found]]></translation>
+        <translation language="de"><![CDATA[keine Ergebnisse gefunden]]></translation>
+        <translation language="fr"><![CDATA[aucun résultat trouvé]]></translation>
+      </item>
+      <item type="label" name="TheResultsCouldNotBeLoaded">
+        <translation language="nl"><![CDATA[de resultaten kunnen niet geladen worden]]></translation>
+        <translation language="en"><![CDATA[the results could not be loaded]]></translation>
+        <translation language="de"><![CDATA[die Ergebnisse konnten nicht geladen werden]]></translation>
+        <translation language="fr"><![CDATA[les résultats n'ont pas pu être chargés]]></translation>
+      </item>
+      <item type="label" name="LoadingMoreResults">
+        <translation language="nl"><![CDATA[meer resultaten laden…]]></translation>
+        <translation language="en"><![CDATA[loading more results…]]></translation>
+        <translation language="de"><![CDATA[Weitere Ergebnisse laden…]]></translation>
+        <translation language="fr"><![CDATA[chargement d'autres résultats…]]></translation>
+      </item>
+      <item type="label" name="Searching">
+        <translation language="nl"><![CDATA[zoeken…]]></translation>
+        <translation language="en"><![CDATA[searching…]]></translation>
+        <translation language="de"><![CDATA[Suche…]]></translation>
+        <translation language="fr"><![CDATA[recherche…]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>

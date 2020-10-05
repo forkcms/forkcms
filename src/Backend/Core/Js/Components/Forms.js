@@ -32,7 +32,21 @@ export class Forms {
   select2 () {
     $.fn.select2.defaults.set('theme', 'bootstrap')
 
-    // todo webpack: add label for empty text
+    $.fn.select2.defaults.set('language', {
+      noResults: () => {
+        return window.backend.locale.lbl('NoResultsFound')
+      },
+      errorLoading: () => {
+        return window.backend.local.lbl('TheResultsCouldNotBeLoaded')
+      },
+      loadingMore: () => {
+        return window.backend.locale.lbl('LoadingMoreResults')
+      },
+      searching: () => {
+        return window.backend.locale.lbl('Searching')
+      }
+    })
+
     $('[data-fork="select2"]').select2()
   }
 
