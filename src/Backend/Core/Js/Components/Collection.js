@@ -1,50 +1,48 @@
+import Sortable from 'sortablejs'
+
 export class Collection {
   constructor () {
-    var addField = '[data-addfield="collection"]'
-    var removeField = '[data-removefield="collection"]'
-    var sequenceField = '[data-role="sequence"]'
-    var CollectionAdd = function (el) {
+    const addField = '[data-addfield="collection"]'
+    const removeField = '[data-removefield="collection"]'
+    const sequenceField = '[data-role="sequence"]'
+    const CollectionAdd = function (el) {
       $(el).on('click', addField, this.addField)
     }
-    var CollectionRemove = function (el) {
+    const CollectionRemove = function (el) {
       $(el).on('click', removeField, this.removeField)
     }
-    var CollectionSequence = {
+    const CollectionSequence = {
       init: function () {
         CollectionSequence.initSequence()
       },
 
       initSequence: function () {
-        var $sequenceInstances = $('[data-role=collection-sequence]')
+        const $sequenceInstances = $('[data-role=collection-sequence]')
 
         if ($sequenceInstances.length === 0) {
           return
         }
 
         $.each($sequenceInstances, function (index, element) {
-          var $sequenceBody = $(element)
+          new Sortable(element, {
+            group: typeof $sequenceInstances.attr('data-sequence-group') !== 'undefined' ? $sequenceInstances.data('sequence-group') : '',
 
-          $sequenceBody.sortable(
-            {
-              items: '.list-group-item',
-              handle: '[data-role="sequence-handle"]',
-              placeholder: 'dragAndDropPlaceholder',
-              forcePlaceholderSize: true,
-              stop: function (e, ui) {
-                CollectionSequence.saveNewSequence($(this).closest('[data-role=collection-sequence]'))
-              }
+            // Element dragging ended
+            onEnd: function (event) {
+              const draggedItem = $(event.item)
+              CollectionSequence.saveNewSequence(draggedItem.closest('[data-role=collection-sequence]'))
+              CollectionSequence.saveNewGroup(event)
             }
-          )
+          })
 
-          $sequenceBody.on('click.fork.order-move', '[data-role="order-move"]', function (e) {
-            var $this = $(this)
-            var $row = $this.closest('.list-group-item')
-            var direction = $this.data('direction')
+          $(element).on('click.fork.order-move', '[data-role="order-move"]', function (e) {
+            const $this = $(this)
+            const $row = $this.closest('.list-group-item')
+            const direction = $this.data('direction')
 
             if (direction === 'up') {
               $row.prev().insertAfter($row)
-            }
-            else if (direction === 'down') {
+            } else if (direction === 'down') {
               $row.next().insertBefore($row)
             }
 
@@ -53,46 +51,114 @@ export class Collection {
         })
       },
 
+      getFieldIndexFromString: function (name) {
+        const chunks = name.split('_')
+
+        for (const chunk of chunks) {
+          if (!isNaN(+chunk)) {
+            return (+chunk)
+          }
+        }
+        return -1
+      },
+
       saveNewSequence: function ($sequenceBody) {
-        var $counter = 0
+        let counter = 0
         $.each($sequenceBody.find(sequenceField), function (index, element) {
-          $(element).val($counter)
-          $counter++
+          $(element).val(counter)
+          counter++
+        })
+      },
+
+      buildNewString: function (oldString, fromBlockName, toBlockName, currentIndex, newIndex, prefix = '', suffix = '') {
+        let searchFor = fromBlockName
+        let replaceWith = toBlockName
+        if (fromBlockName !== toBlockName) {
+          searchFor += prefix + currentIndex + suffix
+          replaceWith += prefix + newIndex + suffix
+        }
+
+        return oldString.replace(searchFor, replaceWith)
+      },
+
+      saveNewGroup: function (event) {
+        const $this = this;
+        const fromBlockName = $(event.from).data('position')
+        const toBlockName = $(event.to).data('position')
+        let currentFieldIndex = null
+        let newFieldIndex = event.newIndex
+        const $sequenceField = $(event.item).find(sequenceField)
+        const currentId = $sequenceField.attr('id')
+
+        if (fromBlockName !== toBlockName) {
+          currentFieldIndex = this.getFieldIndexFromString(currentId)
+          if (currentFieldIndex === -1) {
+            console.error('Could not find the index.')
+          }
+          const regexp = new RegExp(fromBlockName + '_' + currentFieldIndex, 'g')
+          while ($('#' + currentId.replace(regexp, toBlockName + '_' + newFieldIndex)).length > 0) {
+            newFieldIndex++
+          }
+        }
+
+        $(event.item).find('[id*="' + fromBlockName + '"]').each(function (index, item) {
+          const oldId = $(item).attr('id')
+          const newId = $this.buildNewString(oldId, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '_')
+
+          $(item).attr('id', newId)
+        })
+
+        $(event.item).find('[aria-labelledby*="' + fromBlockName + '"]').each(function (index, item) {
+          const oldLabel = $(item).attr('aria-labelledby')
+          const newLabel = $this.buildNewString(oldLabel, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '_')
+
+          $(item).attr('aria-labelledby', newLabel)
+        })
+
+        $(event.item).find('[name*="' + fromBlockName + '"]').each(function (index, item) {
+          const oldName = $(item).attr('name')
+          const newName = $this.buildNewString(oldName, fromBlockName, toBlockName, currentFieldIndex, newFieldIndex, '][', ']')
+
+          $(item).attr('name', newName)
+        })
+
+        $('[data-position="' + toBlockName + '"] li.list-group-item').each(function (index, item) {
+          $(item).find(sequenceField).val(index)
         })
       }
     }
 
     CollectionAdd.prototype.addField = function (e) {
-      var $this = $(this)
-      var selector = $this.attr('data-collection')
-      var prototypeName = $this.attr('data-prototype-name')
+      const $this = $(this)
+      const selector = $this.attr('data-collection')
+      const prototypeName = $this.attr('data-prototype-name')
 
       e && e.preventDefault()
 
-      var collection = $('#' + selector)
-      var list = collection.find('ul.js-collection').first()
-      var count = list.find('> li').length
+      const collection = $('#' + selector)
+      const list = collection.find('ul.js-collection').first()
+      let count = list.find('> li').length
 
-      var newWidget = collection.attr('data-prototype')
+      let newWidget = collection.attr('data-prototype')
 
       // Check if an element with this ID already exists.
       // If it does, increase the count by one and try again
-      var newName = newWidget.match(/id="(.*?)"/)
-      var re = new RegExp(prototypeName, 'g')
+      const newName = newWidget.match(/id="(.*?)"/)
+      const re = new RegExp(prototypeName, 'g')
       while ($('#' + newName[1].replace(re, count)).length > 0) {
         count++
       }
       newWidget = newWidget.replace(re, count)
       newWidget = newWidget.replace(/__id__/g, newName[1].replace(re, count))
-      var newLi = $('<li class="list-group-item"></li>').html(newWidget)
+      const newLi = $('<li class="list-group-item"></li>').html(newWidget)
       newLi.appendTo(list)
       CollectionSequence.saveNewSequence(newLi.closest(list))
       $this.trigger('collection-field-added', newLi)
     }
 
     CollectionRemove.prototype.removeField = function (e) {
-      var $this = $(this)
-      var parent = $this.closest('li').parent()
+      const $this = $(this)
+      const parent = $this.closest('li').parent()
 
       e && e.preventDefault()
 
@@ -104,13 +170,13 @@ export class Collection {
 
     // Extra jquery functions
     // first get the old ones in case there is a conflict
-    var oldAdd = $.fn.addField
-    var oldRemove = $.fn.removeField
+    const oldAdd = $.fn.addField
+    const oldRemove = $.fn.removeField
 
     $.fn.addField = function (option) {
       return this.each(function () {
-        var $this = $(this)
-        var data = $this.data('addfield')
+        const $this = $(this)
+        let data = $this.data('addfield')
 
         if (!data) {
           $this.data('addfield', (data = new CollectionAdd(this)))
@@ -123,8 +189,8 @@ export class Collection {
 
     $.fn.removeField = function (option) {
       return this.each(function () {
-        var $this = $(this)
-        var data = $this.data('removefield')
+        const $this = $(this)
+        let data = $this.data('removefield')
 
         if (!data) {
           $this.data('removefield', (data = new CollectionRemove(this)))
