@@ -8,7 +8,7 @@ import { MovieThumbUrl } from './Helper/MovieThumbUrl'
 export class MediaLibraryHelper {
   constructor () {
     // main variables
-    let config = {
+    this.config = {
       media: {},
       mediaFolders: false,
       mediaGroups: {},
@@ -22,10 +22,10 @@ export class MediaLibraryHelper {
 
     // init
     this.buildMovieStorageTypeDropdown()
-    this.group = new Group(config)
-    this.upload = new Upload(config)
-    this.modalSelection = new ModalSelection(config)
-    this.cropper = new Cropper(config)
+    this.group = new Group(this.config)
+    this.upload = new Upload(this.config)
+    this.modalSelection = new ModalSelection(this.config)
+    this.cropper = new Cropper(this.config)
     this.mediaThumbUrl = new MovieThumbUrl()
   }
 

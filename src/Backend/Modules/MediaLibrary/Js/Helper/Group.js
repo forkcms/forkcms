@@ -64,7 +64,7 @@ export class Group {
 
     $addMediaSubmit.on('click', () => {
       // add uploaded media to current group
-      this.config.upload.addUploadedMediaToGroup()
+      window.backend.mediaLibrary.helper.upload.addUploadedMediaToGroup()
 
       // push media to group
       this.updateGroupMedia()
@@ -88,16 +88,16 @@ export class Group {
       }
 
       // define groupId
-      this.config.currentMediaGroupId = $(this).data('groupId')
-      this.config.currentAspectRatio = $(this).data('aspectRatio')
+      this.config.currentMediaGroupId = $(e.currentTarget).data('groupId')
+      this.config.currentAspectRatio = $(e.currentTarget).data('aspectRatio')
       if (this.config.currentAspectRatio === undefined) {
         this.config.currentAspectRatio = false
       }
-      this.config.maximumMediaItemsCount = $(this).data('maximumMediaCount')
+      this.config.maximumMediaItemsCount = $(e.currentTarget).data('maximumMediaCount')
       if (this.config.maximumMediaItemsCount === undefined) {
         this.config.maximumMediaItemsCount = false
       }
-      this.config.minimumMediaItemsCount = $(this).data('minimumMediaCount')
+      this.config.minimumMediaItemsCount = $(e.currentTarget).data('minimumMediaCount')
       if (this.config.minimumMediaItemsCount === undefined) {
         this.config.minimumMediaItemsCount = false
       }
@@ -120,7 +120,7 @@ export class Group {
       this.getMedia()
 
       // toggle upload boxes
-      this.config.upload.toggleUploadBoxes()
+      window.backend.mediaLibrary.helper.upload.toggleUploadBoxes()
 
       // open dialog
       $addMediaDialog.modal('show')
@@ -680,7 +680,7 @@ export class Group {
    * Runs the validation for the minimum and maximum count of connected media
    */
   validateMinimumMaximumCount () {
-    const totalMediaCount = this.config.upload.uploadedCount + this.config.currentMediaItemIds.length
+    const totalMediaCount = window.backend.mediaLibrary.helper.upload.uploadedCount + this.config.currentMediaItemIds.length
     const $minimumCountError = $('[data-role="fork-media-count-error"]')
     const $submitButton = $('#addMediaSubmit')
 

@@ -37,8 +37,8 @@ export class Templates {
     let count = 0
 
     // redefine count
-    if (window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count && window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolder.id]) {
-      count = window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolder.id]
+    if (window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count && window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolderId]) {
+      count = window.backend.mediaLibrary.helper.config.mediaGroups[window.backend.mediaLibrary.helper.config.currentMediaGroupId].count[window.backend.mediaLibrary.helper.config.mediaFolderId]
     }
 
     // add to html
