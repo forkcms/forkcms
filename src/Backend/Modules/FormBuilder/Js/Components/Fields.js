@@ -2,6 +2,7 @@ import { Messages } from '../../../../Core/Js/Components/Messages'
 import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { MultiTextBox } from '../../../../Core/Js/Components/MultiTextBox'
+import Sortable from 'sortablejs'
 
 export class Fields {
   constructor () {
@@ -253,27 +254,22 @@ export class Fields {
    * Drag and drop fields
    */
   bindDragAndDrop () {
-    // bind sortable
-    $('#fieldsHolder').sortable({
-      items: 'div.jsField',
-      handle: 'button.dragAndDropHandle',
-      containment: '#fieldsHolder',
-      cancel: '',
-      stop (e, ui) {
-        // init var
-        const rowIds = $(this).sortable('toArray')
-        const newIdSequence = []
+    const element = document.querySelector('[data-sequence-drag-and-drop="fields-formbuilder"]')
 
-        // loop rowIds
-        for (const i in rowIds) newIdSequence.push(rowIds[i].split('-')[1])
+    // bind sortable
+    new Sortable(element, {
+      handle: '[data-role="drag-and-drop-handle"]',
+      onEnd: () => {
+        // init var
+        const newIdSequence = this.getSequence($(element))
 
         // make ajax call
         $.ajax({
           data: $.extend({}, this.paramsSequence, {
-            form_id: this.formId,
+            form_id: window.backend.formbuilder.formId,
             new_id_sequence: newIdSequence.join('|')
           }),
-          success (data, textStatus) {
+          success: (data, textStatus) => {
             // not a success so revert the changes
             if (data.code !== 200) {
               // refresh page
@@ -289,8 +285,8 @@ export class Fields {
             }
           },
           error (XMLHttpRequest, textStatus, errorThrown) {
-            // revert
-            $(this).sortable('cancel')
+            // refresh page
+            location.reload()
 
             // show message
             Messages.add('danger', 'alter sequence failed.')
@@ -303,6 +299,18 @@ export class Fields {
         })
       }
     })
+  }
+
+  getSequence (wrapper) {
+    const sequence = []
+    const rows = $(wrapper).find('[data-field-wrapper]')
+
+    $.each(rows, function (index, element) {
+      const id = $(element).attr('id').split('-')[1]
+      sequence.push(id)
+    })
+
+    return sequence
   }
 
   /**
