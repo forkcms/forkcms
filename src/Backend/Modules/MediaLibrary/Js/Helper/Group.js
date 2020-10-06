@@ -4,6 +4,7 @@ import { Templates } from './Templates'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { Data } from '../../../../Core/Js/Components/Data'
 import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
+import Sortable from 'sortablejs'
 
 export class Group {
   constructor (configSet) {
@@ -23,48 +24,28 @@ export class Group {
     // init sequences
     let prevSequence = ''
     let newSequence = ''
+    const element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
 
     // bind drag'n drop to media
-    $('.mediaConnectedBox .ui-sortable').sortable({
-      opacity: 0.6,
-      cursor: 'move',
-      start: (e, ui) => {
+    const sortable = new Sortable(element, {
+      onStart: (event) => {
         // redefine previous and new sequence
         prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
-
-        // don't prevent the click
-        ui.item.removeClass('preventClick')
       },
-      update: () => {
+      onUpdate: (event) => {
         // set group i
-        this.config.currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
+        this.config.currentMediaGroupId = $(event).parents('[data-media-group]').data('media-group-id')
 
         // prepare correct new sequence value for hidden input
-        newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
+        newSequence = sortable.toArray().join(',')
 
         // add value to hidden input
         $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val(newSequence)
-      },
-      stop: (e, ui) => {
-        // prevent click
-        ui.item.addClass('preventClick')
-
-        // new sequence: de-select this item + update sequence
-        if (prevSequence !== newSequence) {
-          // remove selected class
-          ui.item.removeClass('selected')
-
-          return
-        }
-
-        // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
-        // don't prevent the click, click handler does the rest
-        ui.item.removeClass('preventClick')
       }
     })
 
-    $('[data-fork=connectedItems]').on('click', '[data-fork=disconnect]', () => {
-      const $mediaItem = $(this).closest('[data-fork=mediaItem]')
+    $('[data-fork=connectedItems]').on('click', '[data-fork=disconnect]', (event) => {
+      const $mediaItem = $(event.currentTarget).closest('[data-fork=mediaItem]')
 
       this.disconnectMediaFromGroup(
         $mediaItem.data('mediaId'),

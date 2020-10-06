@@ -254,6 +254,10 @@ export class Fields {
    * Drag and drop fields
    */
   bindDragAndDrop () {
+    if ($('[data-sequence-drag-and-drop="fields-formbuilder"]').length === 0) {
+      return
+    }
+
     const element = document.querySelector('[data-sequence-drag-and-drop="fields-formbuilder"]')
 
     // bind sortable

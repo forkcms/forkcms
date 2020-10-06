@@ -1,26 +1,31 @@
 import { Config } from './Config'
 import { Messages } from './Messages'
+import Sortable from 'sortablejs'
 
 export class TableSequenceDragAndDrop {
   constructor () {
-    // variables
-    const $sequenceBody = $('.sequenceByDragAndDrop tbody')
+    // constiables
+    const $sequenceInstances = $('[data-sequence-drag-and-drop="data-grid"] tbody')
 
-    if ($sequenceBody.length > 0) {
-      $sequenceBody.sortable(
+    if ($sequenceInstances.length === 0) {
+      return
+    }
+
+    $.each($sequenceInstances, (index, element) => {
+      console.log($sequenceInstances)
+      console.log(element)
+      new Sortable(element,
         {
-          items: 'tr',
-          handle: 'td.dragAndDropHandle',
-          placeholder: 'dragAndDropPlaceholder',
-          forcePlaceholderSize: true,
-          stop: (e, ui) => {
-            this.saveNewSequence($(e.currentTarget).closest('table.jsDataGrid'))
+          handle: '[data-role="drag-and-drop-handle"]',
+          onEnd: (event) => {
+            const $draggedItem = $(event.item)
+            this.saveNewSequence($draggedItem.closest('table.jsDataGrid'))
           }
         }
       )
 
-      $sequenceBody.find('[data-role="order-move"]').on('click.fork.order-move', (e) => {
-        const $this = $(e.currentTarget)
+      $(element).find('[data-role="order-move"]').on('click.fork.order-move', (e) => {
+        const $this = $(this)
         const $row = $this.closest('tr')
         const direction = $this.data('direction')
 
@@ -28,14 +33,13 @@ export class TableSequenceDragAndDrop {
 
         if (direction === 'up') {
           $row.prev().insertAfter($row)
-        }
-        else if (direction === 'down') {
+        } else if (direction === 'down') {
           $row.next().insertBefore($row)
         }
 
         this.saveNewSequence($row.closest('table'))
       })
-    }
+    })
   }
 
   saveNewSequence ($table) {
@@ -68,7 +72,9 @@ export class TableSequenceDragAndDrop {
       success: (data) => {
         // not a success so revert the changes
         if (data.code !== 200) {
-          $table.sortable('cancel')
+          // refresh page
+          location.reload()
+
           Messages.add('danger', window.backend.locale.err('AlterSequenceFailed'))
         }
 
@@ -92,7 +98,9 @@ export class TableSequenceDragAndDrop {
         }
 
         Messages.add('danger', textStatus)
-        $table.sortable('cancel')
+
+        // refresh page
+        location.reload()
 
         if (Config.isDebug()) {
           window.alert(textStatus)
