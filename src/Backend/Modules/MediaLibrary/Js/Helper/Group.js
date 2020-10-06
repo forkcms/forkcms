@@ -4,6 +4,7 @@ import { Templates } from './Templates'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { Data } from '../../../../Core/Js/Components/Data'
 import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
+import Sortable from 'sortablejs'
 
 export class Group {
   constructor (configSet) {
@@ -23,48 +24,28 @@ export class Group {
     // init sequences
     let prevSequence = ''
     let newSequence = ''
+    const element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
 
     // bind drag'n drop to media
-    $('.mediaConnectedBox .ui-sortable').sortable({
-      opacity: 0.6,
-      cursor: 'move',
-      start: (e, ui) => {
+    const sortable = new Sortable(element, {
+      onStart: (event) => {
         // redefine previous and new sequence
         prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
-
-        // don't prevent the click
-        ui.item.removeClass('preventClick')
       },
-      update: () => {
+      onUpdate: (event) => {
         // set group i
-        this.config.currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
+        this.config.currentMediaGroupId = $(event).parents('[data-media-group]').data('media-group-id')
 
         // prepare correct new sequence value for hidden input
-        newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
+        newSequence = sortable.toArray().join(',')
 
         // add value to hidden input
         $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val(newSequence)
-      },
-      stop: (e, ui) => {
-        // prevent click
-        ui.item.addClass('preventClick')
-
-        // new sequence: de-select this item + update sequence
-        if (prevSequence !== newSequence) {
-          // remove selected class
-          ui.item.removeClass('selected')
-
-          return
-        }
-
-        // same sequence: select this item (accidently moved this media a few millimeters counts as a click)
-        // don't prevent the click, click handler does the rest
-        ui.item.removeClass('preventClick')
       }
     })
 
-    $('[data-fork=connectedItems]').on('click', '[data-fork=disconnect]', () => {
-      const $mediaItem = $(this).closest('[data-fork=mediaItem]')
+    $('[data-fork=connectedItems]').on('click', '[data-fork=disconnect]', (event) => {
+      const $mediaItem = $(event.currentTarget).closest('[data-fork=mediaItem]')
 
       this.disconnectMediaFromGroup(
         $mediaItem.data('mediaId'),
@@ -83,7 +64,7 @@ export class Group {
 
     $addMediaSubmit.on('click', () => {
       // add uploaded media to current group
-      this.config.upload.addUploadedMediaToGroup()
+      window.backend.mediaLibrary.helper.upload.addUploadedMediaToGroup()
 
       // push media to group
       this.updateGroupMedia()
@@ -107,16 +88,16 @@ export class Group {
       }
 
       // define groupId
-      this.config.currentMediaGroupId = $(this).data('groupId')
-      this.config.currentAspectRatio = $(this).data('aspectRatio')
+      this.config.currentMediaGroupId = $(e.currentTarget).data('groupId')
+      this.config.currentAspectRatio = $(e.currentTarget).data('aspectRatio')
       if (this.config.currentAspectRatio === undefined) {
         this.config.currentAspectRatio = false
       }
-      this.config.maximumMediaItemsCount = $(this).data('maximumMediaCount')
+      this.config.maximumMediaItemsCount = $(e.currentTarget).data('maximumMediaCount')
       if (this.config.maximumMediaItemsCount === undefined) {
         this.config.maximumMediaItemsCount = false
       }
-      this.config.minimumMediaItemsCount = $(this).data('minimumMediaCount')
+      this.config.minimumMediaItemsCount = $(e.currentTarget).data('minimumMediaCount')
       if (this.config.minimumMediaItemsCount === undefined) {
         this.config.minimumMediaItemsCount = false
       }
@@ -139,7 +120,7 @@ export class Group {
       this.getMedia()
 
       // toggle upload boxes
-      this.config.upload.toggleUploadBoxes()
+      window.backend.mediaLibrary.helper.upload.toggleUploadBoxes()
 
       // open dialog
       $addMediaDialog.modal('show')
@@ -699,7 +680,7 @@ export class Group {
    * Runs the validation for the minimum and maximum count of connected media
    */
   validateMinimumMaximumCount () {
-    const totalMediaCount = this.config.upload.uploadedCount + this.config.currentMediaItemIds.length
+    const totalMediaCount = window.backend.mediaLibrary.helper.upload.uploadedCount + this.config.currentMediaItemIds.length
     const $minimumCountError = $('[data-role="fork-media-count-error"]')
     const $submitButton = $('#addMediaSubmit')
 

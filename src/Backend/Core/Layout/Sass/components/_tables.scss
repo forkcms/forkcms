@@ -10,13 +10,6 @@
   thead > tr {
     background-color: $gray-100;
   }
-
-  > tbody > tr:nth-of-type(even):hover,
-  > tbody > tr:nth-of-type(even):focus {
-    @include hover-focus {
-      background-color: $table-hover-bg;
-    }
-  }
 }
 
 .table > thead > tr > th {

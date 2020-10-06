@@ -1,10 +1,15 @@
-.ui-sortable-handle {
-  cursor: move;
+.sortable-ghost {
+  background: lighten($primary, 45%);
+
+  > td {
+    background: lighten($primary, 45%);
+  }
 }
 
-.dragAndDropPlaceholder {
-  background: $gray-200;
-  border: 0;
-  height: 90px;
-  margin: 5px 0;
+.sortable-drag {
+  background: $white;
+
+  > td {
+    background: $white;
+  }
 }

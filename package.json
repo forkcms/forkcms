@@ -53,7 +53,8 @@
     "webpack-cli": "^3.3.9",
     "webpack-livereload-plugin": "^2.3.0",
     "webpack-manifest-plugin": "^2.2.0",
-    "webpack-notifier": "^1.8.0"
+    "webpack-notifier": "^1.8.0",
+    "sortablejs": "^1.10.2"
   },
   "scripts": {
     "test": "standard",
