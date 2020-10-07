@@ -2,6 +2,7 @@ import { Messages } from '../../../../Core/Js/Components/Messages'
 import { Data } from '../../../../Core/Js/Components/Data'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
+import { Templates } from './Templates'
 
 export class Upload {
   constructor (configSet) {
@@ -17,7 +18,7 @@ export class Upload {
     this.toggleCropper()
 
     const $fineUploaderGallery = $('#fine-uploader-gallery')
-    $fineUploaderGallery.fineUploader({
+    const fineUploaderInstance = $fineUploaderGallery.fineUploader({
       template: 'qq-template-gallery',
       thumbnails: {
         placeholders: {
@@ -30,17 +31,17 @@ export class Upload {
       },
       scaling: this.getScalingConfig(),
       callbacks: {
-        onUpload: (event) => {
+        onUpload: () => {
           // redefine media folder id
           this.config.mediaFolderId = $('#uploadMediaFolderId').val()
 
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
-          $fineUploaderGallery.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + Config.getCurrentLanguage() + '&folder_id=' + this.config.mediaFolderId)
-          $fineUploaderGallery.setCustomHeaders({'X-CSRF-Token': Data.get('csrf-token')})
+          fineUploaderInstance.fineUploader('setEndpoint', '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + Config.getCurrentLanguage() + '&folder_id=' + this.config.mediaFolderId)
+          fineUploaderInstance.fineUploader('setCustomHeaders', {'X-CSRF-Token': Data.get('csrf-token')})
         },
         onComplete: (id, name, responseJSON) => {
           // add file to uploaded box
-          $('#uploadedMedia').append(window.backend.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(responseJSON))
+          $('#uploadedMedia').append(Templates.getHTMLForUploadedMediaItem(responseJSON))
 
           // update counter
           this.uploadedCount += 1
@@ -198,7 +199,7 @@ export class Upload {
           }
         } else {
           // add uploaded movie
-          $('#uploadedMedia').append(window.backend.mediaLibrary.helper.templates.getHTMLForUploadedMediaItem(json.data))
+          $('#uploadedMedia').append(Templates.getHTMLForUploadedMediaItem(json.data))
 
           // update counter
           this.uploadedCount += 1

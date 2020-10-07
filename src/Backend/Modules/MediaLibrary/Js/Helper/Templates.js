@@ -131,14 +131,14 @@ export class Templates {
    * @return {string}
    */
   static getHTMLForUploadedMediaItem (mediaItem) {
-    window.backend.mediaLibrary.helper.config.movieThumbUrl.set(mediaItem)
+    window.backend.mediaLibrary.helper.mediaThumbUrl.set(mediaItem)
 
     // init html
     let html = ''
 
     // create element
     html += '<li id="media-' + mediaItem.id + '" class="ui-state-default">'
-    html += '<div class="mediaHolder mediaHolder' + StringUtil.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
+    html += '<div class="media-item mediaHolder mediaHolder' + StringUtil.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     // is image
     if (mediaItem.type === 'image') {
