@@ -1,4 +1,4 @@
-import { Stylers } from './components/Stylers'
+import { Stylers } from './Components/Stylers'
 
 export class Location {
   constructor () {
