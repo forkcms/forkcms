@@ -21,7 +21,6 @@ class MediaBrowser extends BackendBaseAction
 
         $this->mediaFolder = $this->getMediaFolder();
 
-        $this->parseJsFiles();
         $this->parse();
         $this->display();
     }
@@ -50,12 +49,6 @@ class MediaBrowser extends BackendBaseAction
         $this->template->assign('folderId', $mediaFolderId);
         $this->template->assign('tree', $this->get('media_library.manager.tree_media_browser')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
-    }
-
-    protected function parseJsFiles(): void
-    {
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-        $this->header->addJS('MediaLibraryHelper.js', 'MediaLibrary');
     }
 
     protected function parseDataGrids(MediaFolder $mediaFolder = null): void

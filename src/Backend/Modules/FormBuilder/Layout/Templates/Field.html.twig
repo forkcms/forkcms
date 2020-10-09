@@ -1,5 +1,5 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
-<div id="fieldHolder-{{ id }}" class="form-group field jsField">
+<div id="fieldHolder-{{ id }}" class="form-group field jsField" data-field-wrapper>
   <div class="row">
     {% if plaintext %}
       <div class="col-md-8">
@@ -50,7 +50,7 @@
             {{ macro.icon('trash-alt fa-fw') }}
             <span class="sr-only" id="delete-text-{{ id }}">{{ 'lbl.Delete'|trans|ucfirst }}</span>
           </button>
-          <button class="btn btn-default btn-icon-only btn-sm dragAndDropHandle" aria-labelledby="move-text-{{ id }} field{{ id }}-label">
+          <button class="btn btn-default btn-icon-only btn-sm fork-data-grid-sortable dragAndDropHandle" data-role="drag-and-drop-handle" aria-labelledby="move-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('bars fa-fw') }}
             <span class="sr-only" id="move-text-{{ id }}">{{ 'lbl.Move'|trans|ucfirst }}</span>
           </button>

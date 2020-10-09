@@ -1,45 +1,52 @@
-/**
- * Interaction for the dashboard module
- */
-jsBackend.users = {
-    // init, something like a constructor
-  init: function () {
-    jsBackend.users.nick()
-  },
+import { StringUtil } from '../../../Core/Js/Components/StringUtil'
 
-    // set nickname
-  nick: function () {
-    var $nickname = $('#nickname')
-    var $name = $('#name')
-    var $surname = $('#surname')
+export class Users {
+  constructor () {
+    this.nick()
+  }
 
-        // are all elements available
+  nick () {
+    const $nickname = $('#nickname')
+    const $name = $('#name')
+    const $surname = $('#surname')
+
+    // are all elements available
     if ($nickname.length > 0 && $name.length > 0 && $surname.length > 0) {
-      var change = true
+      let change = true
 
-            // if the current value is the same as the one that would be generated then we bind the events
-      if ($nickname.val() !== jsBackend.users.calculateNick()) { change = false }
+      // if the current value is the same as the one that would be generated then we bind the events
+      if ($nickname.val() !== this.calculateNick()) {
+        change = false
+      }
 
-            // bind events
-      $name.on('keyup', function () { if (change) { $nickname.val(jsBackend.users.calculateNick()) } })
-      $surname.on('keyup', function () { if (change) { $nickname.val(jsBackend.users.calculateNick()) } })
+      // bind events
+      $name.on('keyup', () => {
+        if (change) {
+          $nickname.val(this.calculateNick())
+        }
+      })
+      $surname.on('keyup', () => {
+        if (change) {
+          $nickname.val(this.calculateNick())
+        }
+      })
 
-            // unbind events
-      $nickname.on('keyup', function () { change = false })
+      // unbind events
+      $nickname.on('keyup', () => {
+        change = false
+      })
     }
-  },
+  }
 
-    // calculate the nickname
-  calculateNick: function () {
-    var $nickname = $('#nickname')
-    var $name = $('#name')
-    var $surname = $('#surname')
+  // calculate the nickname
+  calculateNick () {
+    const $nickname = $('#nickname')
+    const $name = $('#name')
+    const $surname = $('#surname')
 
-    var maxLength = parseInt($nickname.attr('maxlength'))
+    let maxLength = parseInt($nickname.attr('maxlength'))
     if (maxLength === 0) maxLength = 255
 
-    return utils.string.trim(utils.string.trim($name.val()) + ' ' + utils.string.trim($surname.val())).substring(0, maxLength)
+    return StringUtil.trim(StringUtil.trim($name.val()) + ' ' + StringUtil.trim($surname.val())).substring(0, maxLength)
   }
 }
-
-$(jsBackend.users.init)

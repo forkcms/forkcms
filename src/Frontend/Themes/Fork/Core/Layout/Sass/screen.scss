@@ -1,16 +1,16 @@
 @charset 'UTF-8';
 
 // Bootstrap
-@import "bootstrap/scss/functions";
-@import 'bootstrap/scss/variables';
+@import "~bootstrap/scss/functions";
+@import '~bootstrap/scss/variables';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
+@import 'overwrite-variables';
 
 // Plugins
-@import './node_modules/photoswipe/src/css/main.scss';
-@import './node_modules/photoswipe/src/css/default-skin/default-skin.scss';
-@import './node_modules/slick-carousel/slick/slick.scss';
-@import './node_modules/slick-carousel/slick/slick-theme.scss';
+@import '~photoswipe/src/css/main.scss';
+@import '~photoswipe/src/css/default-skin/default-skin.scss';
+@import '~slick-carousel/slick/slick.scss';
 
 // Base
 @import 'base/type';
@@ -30,6 +30,9 @@
 @import 'components/navbar';
 @import 'components/sections';
 @import 'components/slider';
+
+// Modules
+@import '../../../../../Modules/Search/Layout/Sass/Search';
 
 // Custom page styling
 // Insert custom page styling here. Put all page styles in the pages/ directory

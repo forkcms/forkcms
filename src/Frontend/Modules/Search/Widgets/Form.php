@@ -16,9 +16,6 @@ class Form extends FrontendBaseWidget
         parent::execute();
         $this->loadTemplate();
 
-        $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
-        $this->addCSS('Search.css');
-
         $form = new FrontendForm('search', FrontendNavigation::getUrlForBlock('Search'), 'get', null, false);
         $form->setParameter('class', 'form-inline my-2 my-lg-0 ml-2');
         $form->setParameter('role', 'search');

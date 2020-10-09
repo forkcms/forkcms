@@ -69,7 +69,7 @@ class Edit extends BackendBaseActionEdit
             ],
             $this->record['method']
         )->makeRequired();
-        $this->form->addText('email', implode(',', (array) $this->record['email']));
+        $this->form->addText('email', implode(',', (array) $this->record['email']))->setAttribute('data-role', 'formbuilder-recipient');
         $this->form->addText('email_subject', $this->record['email_subject']);
 
         // if we have multiple templates, add a dropdown to select them

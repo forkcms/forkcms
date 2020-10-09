@@ -1,32 +1,26 @@
-/**
- * Interaction for the blog module
- */
-jsBackend.Blog = {
-  // init, something like a constructor
-  init: function () {
-    // variables
-    var $title = $('#title')
+import { Meta } from '../../../Core/Js/Components/Meta'
 
-    jsBackend.Blog.controls.init()
+export class Blog {
+  constructor () {
+    // variables
+    const $title = $('#title')
+
+    this.controls()
 
     // do meta
-    if ($title.length > 0) $title.doMeta()
+    if ($title.length > 0) Meta.doMeta({}, $title)
   }
-}
 
-jsBackend.Blog.controls = {
-  currentCategory: null,
-
-  // init, something like a constructor
-  init: function () {
+  controls () {
     // variables
-    var $addCategorySubmit = $('#addCategorySubmit')
-    var $addCategoryDialog = $('#addCategoryDialog')
-    var $categoryTitleError = $('#categoryTitleError')
-    var $categoryId = $('#categoryId')
+    let currentCategory = null
+    const $addCategorySubmit = $('#addCategorySubmit')
+    const $addCategoryDialog = $('#addCategoryDialog')
+    const $categoryTitleError = $('#categoryTitleError')
+    const $categoryId = $('#categoryId')
 
     if ($addCategorySubmit.length > 0 && $addCategoryDialog.length > 0) {
-      $addCategorySubmit.click(function () {
+      $addCategorySubmit.click(() => {
         // hide errors
         $categoryTitleError.hide()
 
@@ -35,7 +29,7 @@ jsBackend.Blog.controls = {
             fork: {action: 'AddCategory'},
             value: $('#categoryTitle').val()
           },
-          success: function (json, textStatus) {
+          success: (json, textStatus) => {
             if (json.code !== 200) {
               // show error if needed
               if (jsBackend.debug) window.alert(textStatus)
@@ -47,7 +41,7 @@ jsBackend.Blog.controls = {
               $categoryId.append('<option value="' + json.data.id + '">' + json.data.title + '</option>')
 
               // reset value
-              jsBackend.Blog.controls.currentCategory = json.data.id
+              currentCategory = json.data.id
 
               // close dialog
               $addCategoryDialog.modal('hide')
@@ -56,14 +50,14 @@ jsBackend.Blog.controls = {
         })
       })
 
-      $addCategoryDialog.on('hide.bs.modal', function () {
-        $categoryId.val(jsBackend.Blog.controls.currentCategory)
+      $addCategoryDialog.on('hide.bs.modal', () => {
+        $categoryId.val(currentCategory)
       })
 
       // bind change
-      $categoryId.on('change', function (e) {
+      $categoryId.on('change', (e) => {
         // new category?
-        if ($(this).val() === 'new_category') {
+        if ($(e.currentTarget).val() === 'new_category') {
           // prevent default
           e.preventDefault()
 
@@ -71,13 +65,11 @@ jsBackend.Blog.controls = {
           $addCategoryDialog.modal('show')
         } else {
           // reset current category
-          jsBackend.Blog.controls.currentCategory = $categoryId.val()
+          currentCategory = $categoryId.val()
         }
       })
     }
 
-    jsBackend.Blog.controls.currentCategory = $categoryId.val()
+    currentCategory = $categoryId.val()
   }
 }
-
-$(jsBackend.Blog.init)

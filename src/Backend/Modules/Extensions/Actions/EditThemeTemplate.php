@@ -34,7 +34,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
     public function execute(): void
     {
         parent::execute();
-        $this->header->addJS('ThemeTemplate.js');
         $this->loadData();
         $this->loadForm();
         $this->validateForm();

@@ -1,30 +1,31 @@
-/**
- * Interaction for the settings index-action
- */
-jsBackend.settings = {
-  init: function () {
-    $('#facebookAdminIds').multipleTextbox(
-      {
-        emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
-        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-        addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-        removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
-        canAddNew: true
-      })
+import { MultiTextBox } from '../../../Core/Js/Components/MultiTextBox'
+import { StringUtil } from '../../../Core/Js/Components/StringUtil'
+import { Messages } from '../../../Core/Js/Components/Messages'
 
-    $('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection)
-    $('[data-role="fork-clear-cache"]').on('click', jsBackend.settings.clearCache)
+export class Settings {
+  constructor () {
+    const options = {
+      emptyMessage: StringUtil.ucfirst(window.backend.locale.msg('NoAdminIds')),
+      errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
+      addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+      removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
+      canAddNew: true
+    }
+    MultiTextBox.multipleTextbox(options, $('#facebookAdminIds'))
 
-    $('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change()
-  },
+    $('#testEmailConnection').on('click', $.proxy(this.testEmailConnection, this))
+    $('[data-role="fork-clear-cache"]').on('click', $.proxy(this.clearCache, this))
 
-  changeActiveLanguage: function (e) {
-    var $this = $(this)
+    $('#activeLanguages input:checkbox').on('change', $.proxy(this.changeActiveLanguage, this)).change()
+  }
+
+  changeActiveLanguage (e) {
+    const $this = $(e.currentTarget)
 
     // only go on if the item isn't disabled by default
     if (!$this.attr('disabled')) {
       // grab other element
-      var $other = $('#' + $this.attr('id').replace('active_', 'redirect_'))
+      const $other = $('#' + $this.attr('id').replace('active_', 'redirect_'))
 
       if ($this.is(':checked')) {
         $other.attr('disabled', false)
@@ -32,16 +33,16 @@ jsBackend.settings = {
         $other.attr('checked', false).attr('disabled', true)
       }
     }
-  },
+  }
 
-  testEmailConnection: function (e) {
+  testEmailConnection (e) {
     // prevent default
     e.preventDefault()
 
-    var $spinner = $('#testEmailConnectionSpinner')
-    var $error = $('#testEmailConnectionError')
-    var $success = $('#testEmailConnectionSuccess')
-    var $email = $('#settingsEmail')
+    const $spinner = $('#testEmailConnectionSpinner')
+    const $error = $('#testEmailConnectionError')
+    const $success = $('#testEmailConnectionSuccess')
+    const $email = $('#settingsEmail')
 
     // show spinner
     $spinner.removeClass('d-none')
@@ -51,51 +52,51 @@ jsBackend.settings = {
     $success.hide()
 
     // fetch email parameters
-    var settings = {}
-    $.each($email.serializeArray(), function () { settings[this.name] = this.value })
+    const settings = {}
+    $.each($email.serializeArray(), (index, element) => { settings[element.name] = element.value })
 
     // make the call
     $.ajax(
       {
         data: $.extend({fork: {action: 'TestEmailConnection'}}, settings),
-        success: function (data, textStatus) {
+        success: (data, textStatus) => {
           // hide spinner
           $spinner.addClass('d-none')
 
           // show success
           if (data.code === 200) {
-            jsBackend.messages.add('success', jsBackend.locale.msg('TestWasSent'), '')
+            Messages.add('success', window.backend.locale.msg('TestWasSent'), '')
           } else {
-            jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '')
+            Messages.add('danger', window.backend.locale.err('ErrorWhileSendingEmail'), '')
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        error (XMLHttpRequest, textStatus, errorThrown) {
           // hide spinner
           $spinner.addClass('d-none')
 
           // show error
-          jsBackend.messages.add('danger', jsBackend.locale.err('ErrorWhileSendingEmail'), '')
+          Messages.add('danger', window.backend.locale.err('ErrorWhileSendingEmail'), '')
         }
       })
-  },
+  }
 
-  clearCache: function (e) {
+  clearCache (e) {
     // prevent default
     e.preventDefault()
 
     // save the button for later use
-    var $clearCacheButton = $('[data-role="fork-clear-cache"]')
+    const $clearCacheButton = $('[data-role="fork-clear-cache"]')
 
     // disable the handler to prevent sending too many requests
-    $clearCacheButton.off('click', jsBackend.settings.clearCache)
+    $clearCacheButton.off('click', $.proxy(this.clearCache, this))
     $clearCacheButton.attr('disabled', 'disabled')
 
     // display the status alert
-    var $statusAlert = $('[data-role="fork-clear-cache-status"]')
+    const $statusAlert = $('[data-role="fork-clear-cache-status"]')
     $statusAlert.toggleClass('d-none')
 
     // start the dot animation
-    var dotAnimation = jsBackend.settings.startDotAnimation()
+    const dotAnimation = this.startDotAnimation()
 
     // start the action clearing
     $.ajax(
@@ -107,34 +108,34 @@ jsBackend.settings = {
             action: 'ClearCache'
           }
         },
-        success: function (data) {
+        success: (data) => {
           // if the command exited with exit code 0, it was successful
           if (data.data.exitCode === 0) {
-            jsBackend.messages.add('success', jsBackend.locale.msg('CacheCleared'))
+            Messages.add('success', window.backend.locale.msg('CacheCleared'))
             return
           }
 
           // not so successful if it exited with anything else
-          jsBackend.messages.add('danger', jsBackend.locale.err('SomethingWentWrong'))
+          Messages.add('danger', window.backend.locale.err('SomethingWentWrong'))
         },
-        error: function () {
+        error () {
           // show error in case something goes wrong with the call itself
-          jsBackend.messages.add('danger', jsBackend.locale.err('SomethingWentWrong'))
+          Messages.add('danger', window.backend.locale.err('SomethingWentWrong'))
         },
-        complete: function () {
+        complete: () => {
           // stop the dot animation
-          jsBackend.settings.stopDotAnimation(dotAnimation)
+          this.stopDotAnimation(dotAnimation)
           // hide the status
           $statusAlert.toggleClass('d-none')
           // reset the button
-          $clearCacheButton.on('click', jsBackend.settings.clearCache)
+          $clearCacheButton.on('click', $.proxy(this.clearCache, this))
           $clearCacheButton.attr('disabled', false)
         }
       }
     )
-  },
+  }
 
-  startDotAnimation: function (speed, dotAmount) {
+  startDotAnimation (speed, dotAmount) {
     // set the default speed
     if (!speed) {
       speed = 300
@@ -145,22 +146,22 @@ jsBackend.settings = {
       dotAmount = 3
     }
 
-    var $dotsAnimation = $('[data-role="fork-dots-animation"]')
+    const $dotsAnimation = $('[data-role="fork-dots-animation"]')
 
     // clear the initial content
     $dotsAnimation.text('')
 
     // start the interval for our animation
-    setInterval(function () {
+    setInterval(() => {
       $dotsAnimation.text($dotsAnimation.text() + '.')
 
       if ($dotsAnimation.text().length > dotAmount) {
         $dotsAnimation.text('')
       }
     }, speed)
-  },
+  }
 
-  stopDotAnimation: function (animation) {
+  stopDotAnimation (animation) {
     // clear the text
     $('[data-role="fork-dots-animation"]').text('')
 
@@ -168,5 +169,3 @@ jsBackend.settings = {
     clearInterval(animation)
   }
 }
-
-$(jsBackend.settings.init)

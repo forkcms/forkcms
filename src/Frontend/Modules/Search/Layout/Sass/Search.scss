@@ -1,5 +1,3 @@
-@import 'bootstrap-sass/assets/stylesheets/bootstrap/variables';
-
 // a mixin to simplify our code
 @mixin typeahead-form-control($border-color) {
   border-color: $border-color;
@@ -15,21 +13,21 @@
 .has-warning .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    @include typeahead-form-control($state-warning-text);
+    @include typeahead-form-control($warning);
   }
 }
 
 .has-error .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    @include typeahead-form-control($state-danger-text);
+    @include typeahead-form-control($danger);
   }
 }
 
 .has-success .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    @include typeahead-form-control($state-success-text);
+    @include typeahead-form-control($success);
   }
 }
 
@@ -38,8 +36,8 @@
   &:first-child {
     .tt-input,
     .tt-hint {
-      border-bottom-left-radius: $border-radius-base;
-      border-top-left-radius: $border-radius-base;
+      border-bottom-left-radius: $border-radius;
+      border-top-left-radius: $border-radius;
       width: 100%;
     }
   }
@@ -47,8 +45,8 @@
   &:last-child {
     .tt-input,
     .tt-hint {
-      border-bottom-right-radius: $border-radius-base;
-      border-top-right-radius: $border-radius-base;
+      border-bottom-right-radius: $border-radius;
+      border-top-right-radius: $border-radius;
       width: 100%;
     }
   }
@@ -58,11 +56,11 @@
 .input-group.input-group-sm .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    border-radius: $border-radius-small;
-    font-size: $font-size-small;
-    height: $input-height-small;
-    line-height: $line-height-small;
-    padding: $padding-small-vertical $padding-small-horizontal;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    height: $input-height-sm;
+    line-height: $line-height-sm;
+    padding: $input-padding-x-sm $input-padding-y-sm;
   }
 
   &:not(:first-child):not(:last-child) {
@@ -75,14 +73,14 @@
   &:first-child {
     .tt-input,
     .tt-hint {
-      border-radius: $border-radius-small 0 0 $border-radius-small;
+      border-radius: $border-radius-sm 0 0 $border-radius-sm;
     }
   }
 
   &:last-child {
     .tt-input,
     .tt-hint {
-      border-radius: 0 $border-radius-small $border-radius-small 0;
+      border-radius: 0 $border-radius-sm $border-radius-sm 0;
     }
   }
 }
@@ -90,7 +88,7 @@
 select.input-group.input-group-sm .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    line-height: $input-height-small;
+    line-height: $input-height-sm;
   }
 }
 
@@ -106,11 +104,11 @@ select[multiple].input-group.input-group-sm .twitter-typeahead {
 .input-group.input-group-lg .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    border-radius: $border-radius-large;
-    font-size: $font-size-large;
-    height: $input-height-large;
-    line-height: $line-height-large;
-    padding: $padding-large-vertical $padding-large-horizontal;
+    border-radius: $border-radius-lg;
+    font-size: $font-size-lg;
+    height: $input-height-lg;
+    line-height: $line-height-lg;
+    padding: $input-padding-x-lg $input-padding-y-lg;
   }
 
   &:not(:first-child):not(:last-child) {
@@ -123,14 +121,14 @@ select[multiple].input-group.input-group-sm .twitter-typeahead {
   &:first-child {
     .tt-input,
     .tt-hint {
-      border-radius: $border-radius-large 0 0 $border-radius-large;
+      border-radius: $border-radius-lg 0 0 $border-radius-lg;
     }
   }
 
   &:last-child {
     .tt-input,
     .tt-hint {
-      border-radius: 0 $border-radius-large $border-radius-large 0;
+      border-radius: 0 $border-radius-lg $border-radius-lg 0;
     }
   }
 }
@@ -138,7 +136,7 @@ select[multiple].input-group.input-group-sm .twitter-typeahead {
 select.input-group.input-group-lg .twitter-typeahead {
   .tt-input,
   .tt-hint {
-    line-height: $input-height-large;
+    line-height: $input-height-lg;
   }
 }
 
@@ -173,7 +171,7 @@ select[multiple].input-group.input-group-lg .twitter-typeahead {
 .twitter-typeahead .tt-input[disabled],
 .twitter-typeahead .tt-input[readonly],
 fieldset[disabled] .twitter-typeahead .tt-input {
-  background-color: $input-bg-disabled !important;
+  background-color: $input-disabled-bg !important;
   cursor: not-allowed;
 }
 
@@ -182,9 +180,9 @@ fieldset[disabled] .twitter-typeahead .tt-input {
 .tt-menu {
   background-clip: padding-box;
   background-color: $dropdown-bg;
-  border: 1px solid $dropdown-fallback-border;
-  border: 1px solid $dropdown-border;
-  border-radius: $border-radius-base;
+  border: 1px solid $dropdown-border-color;
+  border: 1px solid $dropdown-border-color;
+  border-radius: $border-radius;
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   font-size: $font-size-base;
   left: 0;
