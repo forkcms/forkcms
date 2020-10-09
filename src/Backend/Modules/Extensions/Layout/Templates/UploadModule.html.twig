@@ -15,11 +15,18 @@
   {% if not zlibIsMissing %}
     {% form upload %}
       <div class="form-group">
-        <label for="file" class="control-label">
+        <label for="file">
           {{ 'lbl.File'|trans|ucfirst }}
           {{ macro.required }}
         </label>
-        {% form_field file %} {% form_field_error file %}
+        <div class="custom-file">
+          {% form_field file %}
+          <label for="file" class="custom-file-label">
+            {{ 'lbl.File'|trans|ucfirst }}
+            {{ macro.required }}
+          </label>
+        </div>
+        {% form_field_error file %}
       </div>
       <div class="fork-module-actions">
         <div class="btn-toolbar">

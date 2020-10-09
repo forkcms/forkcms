@@ -57,7 +57,6 @@ final class Index extends ActionIndex
             $this->redirect(Model::createUrlForAction('Settings'));
         }
 
-        $this->header->addJS('highcharts.js', 'Core', false);
         $analytics = $this->get('analytics.connector');
         $analyticsTemplateToFunctionMap = [
             'page_views' => 'getPageViews',

@@ -3,7 +3,7 @@
 {% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
 
 {% block pagesTree %}
-  {%  include 'Pages/Layout/Templates/PageTree.html.twig' with {'overview': false} %}
+  {% include 'Pages/Layout/Templates/PageTree.html.twig' with {'overview': false} %}
 {% endblock %}
 
 {% block actionbar %}

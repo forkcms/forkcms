@@ -143,21 +143,6 @@ class Action extends KernelLoader
 
     public function execute(): void
     {
-        // add module js
-        if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($this->getModule() . '.js');
-        }
-
-        // add action js
-        if (is_file($this->getBackendModulePath() . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($this->getAction() . '.js');
-        }
-
-        // add module specific css
-        if (is_file($this->getBackendModulePath() . '/Layout/Css/' . $this->getModule() . '.css')) {
-            $this->header->addCSS($this->getModule() . '.css');
-        }
-
         // store var so we don't have to call this function twice
         $var = $this->getRequest()->query->get('var', []);
         if ($var === '') {

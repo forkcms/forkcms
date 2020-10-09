@@ -17,7 +17,6 @@ class MediaItemIndex extends BackendBaseActionIndex
     {
         parent::execute();
         $this->parse();
-        $this->parseJSFiles();
         $this->display();
     }
 
@@ -125,12 +124,6 @@ class MediaItemIndex extends BackendBaseActionIndex
 
         $this->template->assign('dataGrids', $dataGrids);
         $this->template->assign('hasResults', $this->hasResults($dataGrids));
-    }
-
-    private function parseJSFiles(): void
-    {
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
-        $this->header->addJS('MediaLibraryFolders.js', 'MediaLibrary');
     }
 
     private function parseMediaFolders(MediaFolder $mediaFolder = null): void

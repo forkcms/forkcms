@@ -202,19 +202,9 @@ class Block extends KernelLoader
         $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
-        if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
+        if (is_file($frontendModulePath . '/Js/Index.js')) {
             $this->header->addJS(
-                $frontendModuleUrl . '/' . $this->getModule() . '.js',
-                true,
-                true,
-                Priority::module()
-            );
-        }
-
-        // add javascript file with same name as the action (if the file exists)
-        if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS(
-                $frontendModuleUrl . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/Index.js',
                 true,
                 true,
                 Priority::module()

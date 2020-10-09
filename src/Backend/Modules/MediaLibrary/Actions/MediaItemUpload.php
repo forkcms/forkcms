@@ -18,7 +18,6 @@ class MediaItemUpload extends BackendBaseActionAdd
 
         $this->mediaFolder = $this->getMediaFolder();
 
-        $this->parseJsFiles();
         $this->parse();
         $this->display();
     }
@@ -47,10 +46,5 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
         $this->header->appendDetailToBreadcrumbs((string) $this->mediaFolder);
-    }
-
-    private function parseJsFiles(): void
-    {
-        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
     }
 }

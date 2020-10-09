@@ -19,9 +19,8 @@
   <meta name="msapplication-TileImage" content="/tile.png" />
 
   {# Stylesheets #}
-  {% for cssFiles in cssFiles %}
-    <link rel="stylesheet" href="{{ cssFiles }}" />
-  {% endfor %}
+  {{ encore_entry_script_tags('frontend', null, 'frontendConfig') }}
+  {{ encore_entry_link_tags('screen', null, 'frontendConfig') }}
 
   {# Site wide HTML #}
   {{ siteHTMLHeader|raw }}

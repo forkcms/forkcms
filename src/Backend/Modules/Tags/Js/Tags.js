@@ -1,13 +1,12 @@
-/**
- * Interaction for the tags module
- */
-jsBackend.tags = {
-    // init, something like a constructor
-  init: function () {
-    var $dataGridTag = $('.jsDataGrid td.tag')
+import { InlineTextEdit } from '../../../Core/Js/Components/InlineTextEdit'
 
-    if ($dataGridTag.length > 0) $dataGridTag.inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: jsBackend.locale.msg('ClickToEdit') })
+export class Tags {
+  constructor () {
+    const $dataGridTag = $('.jsDataGrid td.tag')
+
+    if ($dataGridTag.length > 0) {
+      const options = { params: { fork: { action: 'edit' } }, tooltip: window.backend.locale.msg('ClickToEdit') }
+      InlineTextEdit.inlineTextEdit(options, $dataGridTag)
+    }
   }
 }
-
-$(jsBackend.tags.init)

@@ -13,7 +13,7 @@
         <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control form-control-sm fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
       </div>
     </div>
-    <div id="tree" {% if not mediaFolder.name %} data-clear-tree{% endif %}>
+    <div id="tree" data-tree-media-libreary {% if not mediaFolder.name %} data-clear-tree{% endif %}>
       {{ tree|raw }}
     </div>
   </div>

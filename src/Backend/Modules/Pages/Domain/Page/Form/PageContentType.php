@@ -130,6 +130,7 @@ final class PageContentType extends AbstractType
                         'add_button_text' => 'lbl.AddBlock',
                         'allow_delete' => true,
                         'allow_sequence' => true,
+                        'sequence_group' => 'pages',
                         'property_path' => 'blocks[' . $block . ']',
                         'entry_type' => PageBlockType::class,
                         'entry_options' => [
@@ -162,6 +163,7 @@ final class PageContentType extends AbstractType
                     'add_button_text' => 'lbl.AddBlock',
                     'allow_delete' => true,
                     'allow_sequence' => true,
+                    'sequence_group' => 'pages',
                     'property_path' => 'blocks[' . $block . ']',
                     'entry_type' => PageBlockType::class,
                     'entry_options' => [

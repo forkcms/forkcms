@@ -1,0 +1,4 @@
+// we do not load the plugin css from the node modules right away because the paths to the images are not relative
+@import '../../../../Backend/Core/Layout/Sass/plugins/fine-uploader-new';
+@import '~cropper/dist/cropper';
+

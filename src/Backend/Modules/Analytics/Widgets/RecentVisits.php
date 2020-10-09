@@ -24,8 +24,6 @@ class RecentVisits extends Widget
                 $analytics->getVisitorsGraphData($startDate, $endDate)
             );
 
-            $this->header->addJS('highcharts.js', 'Core', false);
-            $this->header->addJS('Analytics.js', 'Analytics');
             $this->display();
         } catch (Google_Auth_Exception $e) {
             // do nothing, analyticis is probably not set up yet.
