@@ -43,18 +43,59 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
+          <h2 class="panel-title">
+            {{ 'lbl.GoogleTrackingOptions'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="panel-body">
+          <p><small>{{ 'msg.HelpGoogleTrackingOptions'|trans }}</small></p>
+          <div class="form-group checkboxTextFieldCombo">
+            <label for="googleTrackingGoogleAnalyticsTrackingId" class="control-label">{{ 'lbl.GoogleAnalyticsTrackingId'|trans }}</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                {% form_field google_tracking_google_analytics_tracking_id_enabled %}
+              </div>
+              {% form_field google_tracking_google_analytics_tracking_id %}
+            </div>
+            {% form_field_error google_tracking_google_analytics_tracking_id %}
+            <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleAnalyticsTrackingId'|trans|raw }}</span>
+          </div>
+          <div class="form-group checkboxTextFieldCombo">
+            <label for="googleTrackingGoogleTagManagerContainerId" class="control-label">{{ 'lbl.GoogleTagManagerContainerId'|trans }}</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                {% form_field google_tracking_google_tag_manager_container_id_enabled %}
+              </div>
+              {% form_field google_tracking_google_tag_manager_container_id %}
+            </div>
+            {% form_field_error google_tracking_google_tag_manager_container_id %}
+            <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleTagManagerContainerId'|trans|raw }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
           <h2 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
-            {% form_field site_html_header %} {% form_field_error site_html_header %}
-            <span class="help-block">{{ 'msg.HelpScriptsHead'|trans }}</span>
+            <label for="siteHtmlHead" class="control-label">{{ 'msg.HelpScriptsHeadLabel'|trans|raw }}</label>
+            {% form_field site_html_head %} {% form_field_error site_html_head %}
+            <span class="help-block">{{ 'msg.HelpScriptsHead'|trans|raw }}</span>
+          </div>
+          <div class="form-group">
+            <label for="siteHtmlStartOfBody" class="control-label">{{ 'msg.HelpScriptsStartOfBodyLabel'|trans|raw }}</label>
+            {% form_field site_html_start_of_body %} {% form_field_error site_html_start_of_body %}
+            <span class="help-block">{{ 'msg.HelpScriptsStartOfBody'|trans|raw }}</span>
           </div>
           <div class="form-group last">
-            <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
-            {% form_field site_html_footer %} {% form_field_error site_html_footer %}
-            <span class="help-block">{{ 'msg.HelpScriptsFoot'|trans }}</span>
+            <label for="siteHtmlEndOfBody" class="control-label">{{ 'msg.HelpScriptsEndOfBodyLabel'|trans|raw }}</label>
+            {% form_field site_html_end_of_body %} {% form_field_error site_html_end_of_body %}
+            <span class="help-block">{{ 'msg.HelpScriptsEndOfBody'|trans|raw }}</span>
           </div>
         </div>
       </div>
@@ -283,16 +324,28 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
+          <h2 class="panel-title">{{ 'lbl.PrivacyConsents'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
-            <p>{{ 'msg.HelpCookies'|trans }}</p>
             <ul class="list-unstyled">
               <li class="checkbox">
                 <label for="showCookieBar" class="control-label">{% form_field show_cookie_bar %} {{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
               </li>
             </ul>
+          </div>
+          <div class="form-group last">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="showConsentDialog" class="control-label">{% form_field show_consent_dialog %} {{ 'msg.ShowConsentDialog'|trans|ucfirst }}</label>
+              </li>
+            </ul>
+            <p>{{ 'msg.HelpPrivacyConsents'|trans }}</p>
+            <div class="form-group">
+              <label for="privacyConsentLevels" class="control-label">{{ 'lbl.TechnicalName'|trans|ucfirst }}</label>
+              {% form_field privacy_consent_levels %} {% form_field_error privacy_consent_levels %}
+              <span class="help-block">{{ 'msg.HelpPrivacyConsentLevels'|trans|ucfirst }}</span>
+            </div>
           </div>
         </div>
       </div>

@@ -16,6 +16,15 @@ jsBackend.settings = {
     $('[data-role="fork-clear-cache"]').on('click', jsBackend.settings.clearCache)
 
     $('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change()
+
+    $('#privacyConsentLevels').multipleTextbox(
+      {
+        emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoPrivacyConsentLevels')),
+        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
+        addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+        removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
+        canAddNew: true
+      })
   },
 
   changeActiveLanguage: function (e) {

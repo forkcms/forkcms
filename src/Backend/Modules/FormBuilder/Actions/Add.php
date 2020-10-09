@@ -117,7 +117,8 @@ class Add extends BackendBaseActionAdd
                 $values['email_template'] = count($this->templates) > 1
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                $values['identifier'] = (
+                    $txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );

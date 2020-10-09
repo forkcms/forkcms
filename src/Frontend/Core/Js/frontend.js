@@ -17,6 +17,9 @@ var jsFrontend = {
 
     jsFrontend.cookieBar.init()
 
+    // init consent dialog
+    jsFrontend.consentDialog.init()
+
     // init controls
     jsFrontend.controls.init()
 
@@ -118,6 +121,54 @@ jsFrontend.cookieBar = {
         utils.cookies.setCookie('cookie_bar_hide', 'Y')
       }
       $cookieBar.hide()
+    })
+  }
+}
+
+/**
+ * Handles the privacy consent dialog
+ */
+jsFrontend.consentDialog = {
+  init: function () {
+    // if there is no consentDialog we shouldn't do anything
+    if ($('*[data-role=privacy_consent_dialog]').length === 0) return
+
+    var $consentDialog = $('*[data-role=privacy_consent_dialog]')
+    var $consentForm = $('form[data-role=privacy_consent_dialog_form]')
+
+    $consentForm.on('click', '*[data-dismiss=modal]', function (e) {
+      e.preventDefault()
+      $consentDialog.hide()
+    })
+
+    $consentForm.on('submit', function (e) {
+      e.preventDefault()
+
+      var $levels = $consentForm.find('input[data-role=privacy-level]')
+      for (var level of $levels) {
+        var name = $(level).data('value')
+        var isChecked = $(level).is(':checked')
+
+        // store in jsData
+        jsData.privacyConsent.visitorChoices[name] = isChecked
+
+        // store for Google Tag Manager
+        var niceName = name.charAt(0).toUpperCase() + name.slice(1)
+        if (typeof dataLayer !== 'undefined') {
+          if (isChecked) {
+            var gtmData = {}
+            gtmData['privacyConsentLevel' + niceName + 'Agreed'] = isChecked
+            dataLayer.push(gtmData)
+            dataLayer.push({'event': 'privacyConsentLevel' + niceName + 'Agreed'})
+          }
+        }
+
+          // store data in functional cookies for later usage
+        utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0, 6 * 30)
+        utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash, 6 * 30)
+      }
+
+      $consentDialog.hide()
     })
   }
 }

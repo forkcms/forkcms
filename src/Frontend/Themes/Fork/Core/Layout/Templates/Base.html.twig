@@ -1,11 +1,17 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+{# Site wide HTML just after body tag #}
+{{ siteHTMLStartOfBody|raw }}
+
 <div id="root">
+  {# @deprecated remove this in Fork 6, the privacy consent dialog should be used#}
   {% block cookies %}
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
   {% endblock %}
-
+  {% block privacyConsentDialog %}
+    {% include "Core/Layout/Templates/PrivacyConsentDialog.html.twig" %}
+  {% endblock %}
   <div class="header header-blue" {% if page.data.image is defined and page.data.image is not empty %}style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');"{% endif %}>
     {% block navigation %}
       <nav class="navbar navbar-default navbar-static-top">
@@ -79,7 +85,7 @@
 <script src="/js/vendors/bootstrap.min.js"></script>
 <script src="/js/vendors/bootstrap-accessibility.min.js"></script>
 
-{# Site wide HTML #}
-{{ siteHTMLFooter|raw }}
+{# Site wide HTML just before closing body tag #}
+{{ siteHTMLEndOfBody|raw }}
 </body>
 </html>

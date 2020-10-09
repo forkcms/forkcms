@@ -4,48 +4,56 @@ namespace Frontend\Core\Header;
 
 use Common\Core\Cookie;
 use Common\ModulesSettings;
+use ForkCMS\Privacy\ConsentDialog;
 
 final class GoogleAnalytics
 {
     /** @var ModulesSettings */
     private $modulesSettings;
 
-    /** @var string */
-    private $httpHost;
-
     /** @var Cookie */
     private $cookie;
 
-    public function __construct(ModulesSettings $modulesSettings, string $httpHost, Cookie $cookie)
+    /** @var ConsentDialog */
+    private $consentDialog;
+
+    public function __construct(ModulesSettings $modulesSettings, ConsentDialog $consentDialog, Cookie $cookie)
     {
         $this->modulesSettings = $modulesSettings;
-        $this->httpHost = $httpHost;
+        $this->consentDialog = $consentDialog;
         $this->cookie = $cookie;
     }
 
     private function shouldAddGoogleAnalyticsHtml(): bool
     {
-        $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_header', '');
-        $siteHTMLFooter = (string) $this->modulesSettings->get('Core', 'site_html_footer', '');
-        $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', null);
+        $googleAnalyticsTrackingId = $this->modulesSettings->get(
+            'Core',
+            'google_tracking_google_analytics_tracking_id',
+            ''
+        );
 
-        return $webPropertyId !== ''
-               && mb_strpos($siteHTMLHeader, $webPropertyId) === false
-               && mb_strpos($siteHTMLFooter, $webPropertyId) === false;
+        return ($googleAnalyticsTrackingId !== '');
     }
 
     private function shouldAnonymize(): bool
     {
-        return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies();
-    }
-
-    private function getGoogleAnalyticsEvent(): string
-    {
-        if ($this->shouldAnonymize()) {
-            return 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
+        if ($this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies()) {
+            return true;
         }
 
-        return 'ga(\'send\', \'pageview\');';
+        // if the consent dialog is disabled we will anonymize by default
+        if (!$this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+            return true;
+        }
+
+        // the visitor has agreed to be tracked
+        if ($this->consentDialog->hasAgreedTo('statistics')) {
+            return false;
+        }
+
+        // fallback
+        return true;
     }
 
     public function __toString(): string
@@ -54,19 +62,26 @@ final class GoogleAnalytics
             return '';
         }
 
-        $webPropertyId = $this->modulesSettings->get('Analytics', 'web_property_id', null);
+        $code = [
+            '<!-- Global site tag (gtag.js) - Google Analytics -->',
+            '<script async src="https://www.googletagmanager.com/gtag/js?id=%1$s"></script>',
+            '<script>',
+            '  window.dataLayer = window.dataLayer || [];',
+            '  function gtag(){dataLayer.push(arguments);}',
+            '  gtag(\'js\', new Date());',
+        ];
 
-        $trackingCode = '<script>
-                          (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
-                          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                          })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
-                          ga(\'create\', \'' . $webPropertyId . '\', \'' . $this->httpHost
-                        /**string */. '\');
-                        ';
-        $trackingCode .= $this->getGoogleAnalyticsEvent();
-        $trackingCode .= '</script>';
+        if ($this->shouldAnonymize()) {
+            $code[] = '  gtag(\'config\', \'%1$s\', { \'anonymize_ip\': true });';
+        } else {
+            $code[] = '  gtag(\'config\', \'%1$s\');';
+        }
 
-        return $trackingCode;
+        $code[] = '</script>';
+
+        return sprintf(
+            implode("\n", $code) . "\n",
+            $this->modulesSettings->get('Core', 'google_tracking_google_analytics_tracking_id', null)
+        );
     }
 }

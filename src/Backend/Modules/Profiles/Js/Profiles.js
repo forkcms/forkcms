@@ -74,11 +74,16 @@ jsBackend.Profiles = {
         jsBackend.Profiles.settings.toggleAdminMail()
       })
 
+      $('#limitDisplayNameChanges').on('change', function () {
+        jsBackend.Profiles.settings.toggleDisplayNameChanges()
+      })
+
       $('#overwriteProfileNotificationEmail').on('change', function () {
         jsBackend.Profiles.settings.toggleProfileNotificationEmail()
       })
 
       jsBackend.Profiles.settings.toggleAdminMail()
+      jsBackend.Profiles.settings.toggleDisplayNameChanges()
       jsBackend.Profiles.settings.toggleProfileNotificationEmail()
     },
 
@@ -87,6 +92,13 @@ jsBackend.Profiles = {
       var checked = ($item.attr('checked') === 'checked')
 
       $('#overwriteProfileNotificationEmailBox').toggle(checked)
+    },
+
+    toggleDisplayNameChanges: function () {
+      var $item = $('#limitDisplayNameChanges')
+      var checked = ($item.attr('checked') === 'checked')
+
+      $('#maxDisplayNameChangesBox').toggle(checked)
     },
 
     toggleProfileNotificationEmail: function () {

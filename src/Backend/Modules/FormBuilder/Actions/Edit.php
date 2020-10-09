@@ -341,7 +341,8 @@ class Edit extends BackendBaseActionEdit
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                $values['identifier'] = (
+                    $txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );

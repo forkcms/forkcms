@@ -33,6 +33,43 @@
           </div>
         </div>
       </div>
+      {% if langFields %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">
+              {{ 'lbl.LinkedPagesPerLanguage'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="panel-body">
+            <div class="form-group last">
+              <table class="table table-hover table-striped fork-data-grid jsDataGrid">
+                <thead>
+                  <tr>
+                    {% for lang in languages %}
+                      <th>{{ lang }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for pageId, item in langFields %}
+                    <tr class="{% if loop.index%2 == 0 %}odd{% else %}even{% endif %}">
+                      {% for lang, data in item %}
+                        <td>
+                          {% if data.field %}
+                            {{ data.field|raw }}
+                          {% else %}
+                            {{ data.title }}
+                          {% endif%}
+                        </td>
+                      {% endfor %}
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
   <div class="row fork-module-actions">

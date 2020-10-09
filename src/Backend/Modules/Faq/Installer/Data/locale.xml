@@ -14,6 +14,7 @@
         <translation language="el"><![CDATA[Νέα ερώτηση]]></translation>
         <translation language="zh"><![CDATA[添加问题]]></translation>
         <translation language="pl"><![CDATA[dodaj pytanie]]></translation>
+        <translation language="pt"><![CDATA[adicionar questão]]></translation>
       </item>
       <item type="label" name="AllCategories">
         <translation language="nl"><![CDATA[alle categorieën]]></translation>
@@ -30,6 +31,7 @@
         <translation language="sv"><![CDATA[alla kategorier]]></translation>
         <translation language="el"><![CDATA[Όλες οι κατηγορίες]]></translation>
         <translation language="pl"><![CDATA[wszystkie kategorie]]></translation>
+        <translation language="pt"><![CDATA[todas as categorias]]></translation>
       </item>
       <item type="label" name="AddQuestion">
         <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
@@ -46,6 +48,7 @@
         <translation language="sv"><![CDATA[lägg till fråga]]></translation>
         <translation language="el"><![CDATA[Προσθήκη Ερώτησης]]></translation>
         <translation language="pl"><![CDATA[dodaj pytanie]]></translation>
+        <translation language="pt"><![CDATA[adicionar questão]]></translation>
       </item>
       <item type="label" name="AllowFeedback">
         <translation language="nl"><![CDATA[feedback toelaten]]></translation>
@@ -59,6 +62,7 @@
         <translation language="el"><![CDATA[Να επιτρέπονται οι γνώμες]]></translation>
         <translation language="zh"><![CDATA[允许回复]]></translation>
         <translation language="pl"><![CDATA[zezwól na informacje zwrotne]]></translation>
+        <translation language="pt"><![CDATA[permitir feedback]]></translation>
       </item>
       <item type="label" name="AllowMultipleCategories">
         <translation language="nl"><![CDATA[meerdere categorieën toestaan]]></translation>
@@ -67,6 +71,7 @@
         <translation language="zh"><![CDATA[允许添加到多个分类]]></translation>
         <translation language="de"><![CDATA[mehrere Kategorien erlaubt]]></translation>
         <translation language="pl"><![CDATA[pozwolenie na wiele kategorii]]></translation>
+        <translation language="pt"><![CDATA[permitir multiplas categorias]]></translation>
       </item>
       <item type="label" name="AllowOwnQuestion">
         <translation language="nl"><![CDATA[gebruikersvragen toelaten]]></translation>
@@ -80,6 +85,7 @@
         <translation language="el"><![CDATA[Να επιτρέπονται οι ερωτήσεις από τους χρήστες]]></translation>
         <translation language="zh"><![CDATA[允许用户提问]]></translation>
         <translation language="pl"><![CDATA[pozwól na pytania użytkowników]]></translation>
+        <translation language="pt"><![CDATA[permitir questões de utilizadores]]></translation>
       </item>
       <item type="label" name="Answer">
         <translation language="nl"><![CDATA[antwoord]]></translation>
@@ -96,6 +102,7 @@
         <translation language="sv"><![CDATA[svar]]></translation>
         <translation language="el"><![CDATA[Απάντηση]]></translation>
         <translation language="pl"><![CDATA[odpowiedź]]></translation>
+        <translation language="pt"><![CDATA[resposta]]></translation>
       </item>
       <item type="label" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
@@ -109,6 +116,7 @@
         <translation language="el"><![CDATA[Η Γνώμη σας]]></translation>
         <translation language="zh"><![CDATA[回复]]></translation>
         <translation language="pl"><![CDATA[informacje zwrotne]]></translation>
+        <translation language="pt"><![CDATA[feedback]]></translation>
       </item>
       <item type="label" name="Fråga">
         <translation language="sv"><![CDATA[fråga]]></translation>
@@ -127,6 +135,7 @@
         <translation language="el"><![CDATA[Θέματα ανά κατηγορία]]></translation>
         <translation language="zh"><![CDATA[分类项目数]]></translation>
         <translation language="pl"><![CDATA[pozycji na kategorię]]></translation>
+        <translation language="pt"><![CDATA[itens por categoria]]></translation>
       </item>
       <item type="label" name="Process">
         <translation language="nl"><![CDATA[verwerken]]></translation>
@@ -139,6 +148,7 @@
         <translation language="el"><![CDATA[Επεξεργασία]]></translation>
         <translation language="zh"><![CDATA[进度]]></translation>
         <translation language="pl"><![CDATA[proces]]></translation>
+        <translation language="pt"><![CDATA[processar]]></translation>
       </item>
       <item type="label" name="Question">
         <translation language="nl"><![CDATA[vraag]]></translation>
@@ -153,6 +163,7 @@
         <translation language="uk"><![CDATA[Запитання]]></translation>
         <translation language="el"><![CDATA[Ερώτηση]]></translation>
         <translation language="pl"><![CDATA[pytanie]]></translation>
+        <translation language="pt"><![CDATA[questão]]></translation>
       </item>
       <item type="label" name="Questions">
         <translation language="nl"><![CDATA[vragen]]></translation>
@@ -164,6 +175,7 @@
         <translation language="el"><![CDATA[Ερωτήσεις]]></translation>
         <translation language="zh"><![CDATA[问题]]></translation>
         <translation language="pl"><![CDATA[pytania]]></translation>
+        <translation language="pt"><![CDATA[questões]]></translation>
       </item>
       <item type="label" name="SendEmailOnNewFeedback">
         <translation language="nl"><![CDATA[stuur een email als er nieuwe feedback is]]></translation>
@@ -176,6 +188,7 @@
         <translation language="el"><![CDATA[Στείλε ένα email αν υπάρχει μία νέα γνώμη]]></translation>
         <translation language="zh"><![CDATA[当有新回复时发送邮件提醒]]></translation>
         <translation language="pl"><![CDATA[wyślij email w przypadku nowych informacji zwrotnych]]></translation>
+        <translation language="pt"><![CDATA[enviar email se existir novo feedback]]></translation>
       </item>
       <item type="error" name="AnswerIsRequired">
         <translation language="nl"><![CDATA[Het antwoord is verplicht.]]></translation>
@@ -190,6 +203,7 @@
         <translation language="sv"><![CDATA[svar är obligatoriskt.]]></translation>
         <translation language="el"><![CDATA[Η απάντηση είναι υποχρεωτική.]]></translation>
         <translation language="pl"><![CDATA[Odpowiedź jest wymagana.]]></translation>
+        <translation language="pt"><![CDATA[A resposta é obrigatória.]]></translation>
       </item>
       <item type="error" name="CategoryIsRequired">
         <translation language="nl"><![CDATA[Gelieve een categorie te selecteren.]]></translation>
@@ -204,11 +218,13 @@
         <translation language="sv"><![CDATA[Vänligen välj en kategori.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ επιλέξτε μία κατηγορία.]]></translation>
         <translation language="pl"><![CDATA[Proszę wybrać kategorię.]]></translation>
+        <translation language="pt"><![CDATA[Por favor seleccione uma categoria.]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteFeedback">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze feedback wil verwijderen?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to delete this feedback?]]></translation>
         <translation language="pl"><![CDATA[Czy jesteś pewien że chcesz usunąć tę informację zwrotną?]]></translation>
+        <translation language="pt"><![CDATA[Tem a certeza que deseja remover este feedback?]]></translation>
       </item>
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
@@ -220,6 +236,7 @@
         <translation language="el"><![CDATA[Δεν επιτρέπεται η διαγραφή της κατηγορίας "%1$s".]]></translation>
         <translation language="zh"><![CDATA[分类“%1$s”不允许被删除。]]></translation>
         <translation language="pl"><![CDATA[Nie można usunąć kategorii "%1$s".]]></translation>
+        <translation language="pt"><![CDATA[Não é permitido remover a categoria "%1$s".]]></translation>
       </item>
       <item type="error" name="OnlyOneCategoryAllowed">
         <translation language="nl"><![CDATA[Het gebruik van meerdere categorieën is niet toegelaten.]]></translation>
@@ -228,6 +245,7 @@
         <translation language="zh"><![CDATA[不允许使用多目录。]]></translation>
         <translation language="de"><![CDATA[Das Benutzen mehrere Kategorien ist nicht erlaubt.]]></translation>
         <translation language="pl"><![CDATA[Wykorzystanie wielu kategorii jest niedozwolone.]]></translation>
+        <translation language="pt"><![CDATA[Não é permitido o uso de múltiplas categorias.]]></translation>
       </item>
       <item type="error" name="QuestionIsRequired">
         <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
@@ -242,6 +260,7 @@
         <translation language="sv"><![CDATA[fråga är obligatoriskt.]]></translation>
         <translation language="el"><![CDATA[Η ερώτηση είναι υποχρεωτική.]]></translation>
         <translation language="pl"><![CDATA[Pytanie jest wymagane.]]></translation>
+        <translation language="pt"><![CDATA[A pergunta é obrigatória.]]></translation>
       </item>
       <item type="message" name="EditCategory">
         <translation language="nl"><![CDATA[Bewerk categorie "%1$s"]]></translation>
@@ -253,6 +272,7 @@
         <translation language="el"><![CDATA[Μεταβολή της κατηγορίας "%1$s"]]></translation>
         <translation language="zh"><![CDATA[编辑分类“%1$s”]]></translation>
         <translation language="pl"><![CDATA[Edytuj kategorię "%1$s"]]></translation>
+        <translation language="pt"><![CDATA[Editar categoria "%1$s"]]></translation>
       </item>
       <item type="message" name="EditQuestion">
         <translation language="nl"><![CDATA[Bewerk vraag "%1$s]]></translation>
@@ -267,6 +287,7 @@
         <translation language="sv"><![CDATA[Ändra fråga "%1$s]]></translation>
         <translation language="el"><![CDATA[Μεταβολή της ερώτησης "%1$s"]]></translation>
         <translation language="pl"><![CDATA[Edytuj pytanie "%1$s"]]></translation>
+        <translation language="pt"><![CDATA[Editar pergunta "%1$s"]]></translation>
       </item>
       <item type="message" name="FeedbackInfo">
         <translation language="nl"><![CDATA[Dit zijn alle berichten achtergelaten door bezoekers die dit antwoord niet nuttig vonden.]]></translation>
@@ -278,6 +299,7 @@
         <translation language="el"><![CDATA[Αυτά είναι τα μηνύματα από επισκέπτες που δεν βρήκαν χρήσιμη αυτή την απάντηση.]]></translation>
         <translation language="zh"><![CDATA[全部未被访客视为有用的消息。]]></translation>
         <translation language="pl"><![CDATA[Są to wszystkie wiadomości pozostawione przez użytkowników, którzy nie uznali tej odpowiedzi za przydatną.]]></translation>
+        <translation language="pt"><![CDATA[Estas são todas as mensagens de visitantes que não consideraram esta resposta útil.]]></translation>
       </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
@@ -289,6 +311,7 @@
         <translation language="el"><![CDATA[Ενεργοποίησε το ενσωματωμένο φίλτρο ανεπιθύμητης αλληλογραφίας (spam) (Akismet) γιά να μην έχετε ανεπιθύμητα μηνύματα στις ερωτήσεις και τις γνώμες των χρηστών.]]></translation>
         <translation language="zh"><![CDATA[允许内置垃圾过滤器（Akismet）来帮助避免在回复和用户提问中的垃圾信息。]]></translation>
         <translation language="pl"><![CDATA[Włącz wbudowany filtr antyspamowy (Akismet), aby uniknąć spamu w odpowiedzi na pytania i pytania użytkowników.]]></translation>
+        <translation language="pt"><![CDATA[Activar o filtro anti-spam (Akismet) para ajudar a evitar o SPAM em feedback e perguntas dos utilizadores.]]></translation>
       </item>
       <item type="message" name="NoCategories">
         <translation language="nl"><![CDATA[Er zijn nog geen categorieën]]></translation>
@@ -303,6 +326,7 @@
         <translation language="sv"><![CDATA[Det finns inga kategorier än]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχει ακόμη καμμία κατηγορία.]]></translation>
         <translation language="pl"><![CDATA[Brak jeszcze kategorii]]></translation>
+        <translation language="pt"><![CDATA[Ainda não existem categorias.]]></translation>
       </item>
       <item type="message" name="NoFeedbackItems">
         <translation language="nl"><![CDATA[Er zijn momenteel geen feedback berichten.]]></translation>
@@ -314,6 +338,7 @@
         <translation language="el"><![CDATA[Δεν υπάρχουν σχόλια με γνώμες γιά την ώρα.]]></translation>
         <translation language="zh"><![CDATA[当下还没有回复评论。]]></translation>
         <translation language="pl"><![CDATA[Brak komentarzy w tym momencie.]]></translation>
+        <translation language="pt"><![CDATA[Não existem mensagens de feedback neste momento.]]></translation>
       </item>
       <item type="message" name="NoQuestionInCategory">
         <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
@@ -328,6 +353,7 @@
         <translation language="sv"><![CDATA[Det finns inga frågor i detta kategori.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ερωτήσεις σ' αυτή την κατηγορία.]]></translation>
         <translation language="pl"><![CDATA[Brak pytań w tej kategorii.]]></translation>
+        <translation language="pt"><![CDATA[Não existem questões nesta categoria.]]></translation>
       </item>
       <item type="message" name="NumMostReadItems">
         <translation language="nl"><![CDATA[Aantal meest gelezen items]]></translation>
@@ -339,6 +365,7 @@
         <translation language="el"><![CDATA[Πλήθος των πλέον αναγνωσμένων θεμάτων.]]></translation>
         <translation language="zh"><![CDATA[最多人阅读的条目数量]]></translation>
         <translation language="pl"><![CDATA[Ilość najczęściej czytanych pozycji]]></translation>
+        <translation language="pt"><![CDATA[Número de itens mais lidos.]]></translation>
       </item>
       <item type="message" name="NumRelatedItems">
         <translation language="nl"><![CDATA[Aantal gerelateerde items]]></translation>
@@ -350,6 +377,7 @@
         <translation language="el"><![CDATA[Πλήθος σχετικών θεμάτων.]]></translation>
         <translation language="zh"><![CDATA[相关条目数量]]></translation>
         <translation language="pl"><![CDATA[Ilość powiązanych pozycji]]></translation>
+        <translation language="pt"><![CDATA[Número de objectos relacionados]]></translation>
       </item>
       <item type="message" name="Processed">
         <translation language="nl"><![CDATA[De feedback is verwerkt.]]></translation>
@@ -361,6 +389,7 @@
         <translation language="el"><![CDATA[Επεξεργασία της γνώμης σας.]]></translation>
         <translation language="zh"><![CDATA[回复正在被处理。]]></translation>
         <translation language="pl"><![CDATA[Informacja zwrotna została przetworzona.]]></translation>
+        <translation language="pt"><![CDATA[O feedback foi processado.]]></translation>
       </item>
     </Faq>
   </Backend>
@@ -370,6 +399,7 @@
         <translation language="nl"><![CDATA[Andere vragen]]></translation>
         <translation language="en"><![CDATA[Other questions]]></translation>
         <translation language="pl"><![CDATA[Inne pytania]]></translation>
+        <translation language="pt"><![CDATA[Outras questões]]></translation>
       </item>
       <item type="label" name="AllCategories">
         <translation language="nl"><![CDATA[alle categorieën]]></translation>
@@ -386,6 +416,7 @@
         <translation language="sv"><![CDATA[alla kategorier]]></translation>
         <translation language="el"><![CDATA[Όλες οι κατηγορίες]]></translation>
         <translation language="pl"><![CDATA[wszystkie kategorie]]></translation>
+        <translation language="pt"><![CDATA[todas as categorias]]></translation>
       </item>
     </Core>
   </Frontend>
