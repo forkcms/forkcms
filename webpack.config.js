@@ -27,7 +27,7 @@ Encore
   .setPublicPath('/src/ForkCMS/Bundle/InstallerBundle/Resources/public/build')
   .setManifestKeyPrefix('src/ForkCMS/Bundle/InstallerBundle/Resources/public/build/')
 
-  .addEntry('installer', './src/ForkCMS/Bundle/InstallerBundle/Resources/public/js/Installer.js')
+  .addEntry('installer', './src/ForkCMS/Bundle/InstallerBundle/Resources/public/Js/Installer.js')
   .addStyleEntry('screen', './src/ForkCMS/Bundle/InstallerBundle/Resources/public/Sass/screen.scss')
 
   .cleanupOutputBeforeBuild()
