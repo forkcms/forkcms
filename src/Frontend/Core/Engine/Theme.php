@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use Exception;
+
 /**
  * This class will take care of functionality pertaining themes.
  */

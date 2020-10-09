@@ -46,7 +46,8 @@
         "symfony/swiftmailer-bundle": "^3.0",
         "symfony/symfony": "^3.3",
         "tijsverkoyen/akismet": "1.1.*",
-        "tijsverkoyen/css-to-inline-styles": "1.5.*"
+        "tijsverkoyen/css-to-inline-styles": "1.5.*",
+        "phpoffice/phpspreadsheet": "^1.12"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",

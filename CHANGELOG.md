@@ -1,3 +1,31 @@
+5.9.1  (2020-08-18)
+------------------
+
+Fixed:
+* Pages: Fix non god users not being able to save pages [#3163](https://github.com/forkcms/forkcms/pull/3163)
+
+
+5.9.0  (2020-08-17)
+------------------
+
+Fixed:
+* Core: Add missing use statement to Theme.php [#3162](https://github.com/forkcms/forkcms/pull/3162)
+* Core: Update vendors [#3153](https://github.com/forkcms/forkcms/pull/3153) [#3154](https://github.com/forkcms/forkcms/pull/3154) [#3155](https://github.com/forkcms/forkcms/pull/3155) [#3156](https://github.com/forkcms/forkcms/pull/3156) [#3161](https://github.com/forkcms/forkcms/pull/3161)
+* MediaLibrary: Fix rotation of images based on exif and strip metadata [#3152](https://github.com/forkcms/forkcms/pull/3152)
+* MediaLibrary: Skip default photo cropping if unchecked [#3151](https://github.com/forkcms/forkcms/pull/3151)
+
+Added:
+* Core: Add GDPR concent dialog [#3048](https://github.com/forkcms/forkcms/pull/3048)
+* Core: Add Google Tag Manager [#3047](https://github.com/forkcms/forkcms/pull/3047)
+* Core: Add Portuguese locale [#2431](https://github.com/forkcms/forkcms/pull/2431)
+* Pages: Add css class to a menu link [#3116](https://github.com/forkcms/forkcms/pull/3116)
+* Pages: Cross language link overview [#3117](https://github.com/forkcms/forkcms/pull/3117)
+
+Changed:
+* Core: Change CSV implementation [#3160](https://github.com/forkcms/forkcms/pull/3160)
+* Profiles: Make max amount of display name changes dynamic [#3102](https://github.com/forkcms/forkcms/pull/3102)
+
+
 5.8.3  (2020-07-07)
 ------------------
 

@@ -43,13 +43,13 @@ class Footer extends KernelLoader
         $footerLinks = (array) Navigation::getFooterLinks();
         $this->template->assignGlobal('footerLinks', $footerLinks);
 
-        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
-        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
+        $siteHTMLEndOfBody = (string) $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
 
-        // facebook admins given?
+        // @deprecated remove this in Fork 6, Facebook should not be added automaticall
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
         if ($facebookAppId !== null) {
             // add Facebook container
-            $siteHTMLFooter .= $this->getFacebookHtml($facebookAppId);
+            $siteHTMLEndOfBody .= $this->getFacebookHtml($facebookAppId);
         }
 
         // add Google sitelinks search box code if wanted.
@@ -57,16 +57,22 @@ class Footer extends KernelLoader
             $searchUrl = FrontendNavigation::getUrlForBlock('Search');
             $url404 = FrontendNavigation::getUrl(Model::ERROR_PAGE_ID);
             if ($searchUrl !== $url404) {
-                $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
+                $siteHTMLEndOfBody .= $this->getSiteLinksCode($searchUrl);
             }
         }
 
         // assign site wide html
-        $this->template->assignGlobal('siteHTMLFooter', $siteHTMLFooter);
+        $this->template->assignGlobal('siteHTMLEndOfBody', $siteHTMLEndOfBody);
+
+        // @deprecated remove this in Fork 6, use siteHTMLEndOfBody
+        $this->template->assignGlobal('siteHTMLFooter', $siteHTMLEndOfBody);
     }
 
     /**
      * Builds the HTML needed for Facebook to be initialized
+     * @deprecated remove this in Fork 6, Facebook should be added with respect
+     *             to the given consent. In essence: add Facebook yourself if
+     *             needed.
      *
      * @param string $facebookAppId The application id used to interact with FB
      *
@@ -104,6 +110,11 @@ class Footer extends KernelLoader
         return $facebookHtml;
     }
 
+    /**
+     * @deprecated remove this in Fork 6, Facebook should be added with respect
+     *             to the given consent. In essence: add Facebook yourself if
+     *             needed.
+     */
     private function getFacebookLocale(): string
     {
         $specialCases = [

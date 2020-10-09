@@ -5,7 +5,7 @@
         <li><a href="/">© <span itemprop="copyrightYear">{{ now|date('Y') }}</span> {{ siteTitle }}</a></li>
         {% for footerLink in footerLinks %}
           <li>
-            <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
+            <a href="{{ footerLink.url }}" title="{{ footerLink.title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}{% if footerLink.link_class %} class="{{ footerLink.link_class }}"{% endif %}>
               {{ footerLink.navigation_title }}
             </a>
           </li>

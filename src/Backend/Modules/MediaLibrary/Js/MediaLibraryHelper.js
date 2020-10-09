@@ -1038,10 +1038,16 @@ jsBackend.mediaLibraryHelper.upload = {
       --jsBackend.mediaLibraryHelper.upload.uploadedCount
       jsBackend.mediaLibraryHelper.group.validateMinimumMaximumCount()
     })
+
+    // bind change to "Enable cropper" checkbox
+    $('[data-role="enable-cropper-checkbox"]').on('change', function () {
+      // Reset the fineuploader upload box so we can skip or use a scaling config for the cropper
+      $('#fine-uploader-gallery').unbind().empty()
+      jsBackend.mediaLibraryHelper.upload.init()
+    })
   },
 
   toggleCropper: function () {
-    // the cropper is mandatory
     var $formGroup = $('[data-role="cropper-is-mandatory-form-group"]')
     var $warning = $('[data-role="cropper-is-mandatory-message"]')
     var $checkbox = $('[data-role="enable-cropper-checkbox"]')
@@ -1154,6 +1160,14 @@ jsBackend.mediaLibraryHelper.upload = {
    * Configure the uploader to trigger the cropper
    */
   getScalingConfig: function () {
+    // Skip scaling config for cropping if we don't have cropping enabled
+    if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+      return {
+        includeExif: false,
+      }
+    }
+
+    // Add a scaling config with custom resizer for our cropper feature
     return {
       includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
       sendOriginal: false,

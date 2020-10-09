@@ -366,6 +366,14 @@
         <translation language="el"><![CDATA[Πλήθος μελών]]></translation>
         <translation language="pl"><![CDATA[liczba członków]]></translation>
       </item>
+      <item type="label" name="LimitDisplayNameChanges">
+        <translation language="nl"><![CDATA[Wijzigingen in weergavenaam beperken]]></translation>
+        <translation language="en"><![CDATA[Limit display name changes]]></translation>
+      </item>
+      <item type="label" name="DisplayNameChanges">
+        <translation language="nl"><![CDATA[Wijzigingen in weergavenaam]]></translation>
+        <translation language="en"><![CDATA[Display name changes]]></translation>
+      </item>
       <item type="label" name="NotificationNewProfileToAdmin">
         <translation language="nl"><![CDATA[Nieuw profiel voor %1$s is toegevoegd.]]></translation>
         <translation language="en"><![CDATA[New profile for %1$s has been created.]]></translation>
@@ -950,6 +958,10 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
         <translation language="el"><![CDATA[Άγνωστη ενέργεια.]]></translation>
         <translation language="pl"><![CDATA[Nieznane działanie.]]></translation>
+      </item>
+      <item type="error" name="InvalidNumberOfChanges">
+        <translation language="nl"><![CDATA[The number of display name changes should be greater or equal to O]]></translation>
+        <translation language="en"><![CDATA[Het aantal wijzigingen in de weergavenaam moet groter of gelijk zijn aan 0]]></translation>
       </item>
     </Profiles>
     <Core>

@@ -64,23 +64,59 @@ class Index extends BackendBaseActionIndex
             'site_title',
             $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
+
+        // Google tracking settings
+        $googleTrackingAnalyticsTrackingId =  $this->get('fork.settings')->get(
+            'Core',
+            'google_tracking_google_analytics_tracking_id',
+            $this->get('fork.settings')->get('Analytics', 'web_property_id', '')
+        );
+        $this->form->addCheckbox(
+            'google_tracking_google_analytics_tracking_id_enabled',
+            ($googleTrackingAnalyticsTrackingId !== '')
+        );
+        $googleTrackingAnalyticsTrackingIdField = $this->form->addText(
+            'google_tracking_google_analytics_tracking_id',
+            $googleTrackingAnalyticsTrackingId
+        );
+        if ($googleTrackingAnalyticsTrackingId === '') {
+            $googleTrackingAnalyticsTrackingIdField->setAttribute('disabled', 'disabled');
+        }
+
+        $googleTrackingTagManagerContainerId =  $this->get('fork.settings')->get('Core', 'google_tracking_google_tag_manager_container_id', '');
+        $this->form->addCheckbox(
+            'google_tracking_google_tag_manager_container_id_enabled',
+            ($googleTrackingTagManagerContainerId !== '')
+        );
+        $googleTrackingTagManagerContainerIdField = $this->form->addText(
+            'google_tracking_google_tag_manager_container_id',
+            $googleTrackingTagManagerContainerId
+        );
+        if ($googleTrackingTagManagerContainerId === '') {
+            $googleTrackingTagManagerContainerIdField->setAttribute('disabled', 'disabled');
+        }
+
+        // @deprecated fallback to site_html_header as this was used in the past.
+        $siteHtmlHeadValue =  $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', null));
         $this->form->addTextarea(
-            'site_html_header',
-            $this->get('fork.settings')->get('Core', 'site_html_header', null),
+            'site_html_head',
+            $siteHtmlHeadValue,
             'form-control code',
             'form-control danger code',
             true
         );
+        $siteHtmlStartOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_start_of_body', $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null));
         $this->form->addTextarea(
-            'site_start_of_body_scripts',
-            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
+            'site_html_start_of_body',
+            $siteHtmlStartOfBodyValue,
             'form-control code',
             'form-control danger code',
             true
         );
+        $siteHtmlEndOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
         $this->form->addTextarea(
-            'site_html_footer',
-            $this->get('fork.settings')->get('Core', 'site_html_footer', null),
+            'site_html_end_of_body',
+            $siteHtmlEndOfBodyValue,
             'form-control code',
             'form-control danger code',
             true
@@ -93,6 +129,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // facebook settings
+        // @deprecated remove this in Fork 6, facebook_admin_ids / facebook_app_id / facebook_app_secret should be removed
         $this->form->addText('facebook_admin_ids', $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null));
         $this->form->addText('facebook_application_id', $this->get('fork.settings')->get('Core', 'facebook_app_id', null));
         $this->form->addText(
@@ -246,7 +283,22 @@ class Index extends BackendBaseActionIndex
         }
 
         // cookies
+        // @deprecated remove this in Fork 6, the privacy consent dialog should be used
         $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+
+        // privacy
+        $this->form->addCheckbox('show_consent_dialog', $this->get('fork.settings')->get('Core', 'show_consent_dialog', false));
+        $this->form->addText(
+            'privacy_consent_levels',
+            implode(
+                ',',
+                $this->get('fork.settings')->get(
+                    'Core',
+                    'privacy_consent_levels',
+                    ['functional']
+                )
+            )
+        );
     }
 
     protected function parse(): void
@@ -289,6 +341,18 @@ class Index extends BackendBaseActionIndex
         if ($this->form->isSubmitted()) {
             // validate required fields
             $this->form->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
+
+            // Google Tracking options
+            if ($this->form->getField('google_tracking_google_analytics_tracking_id_enabled')->getChecked()) {
+                $this->form->getField('google_tracking_google_analytics_tracking_id')->isFilled(
+                    BL::err('FieldIsRequired')
+                );
+            }
+            if ($this->form->getField('google_tracking_google_tag_manager_container_id_enabled')->getChecked()) {
+                $this->form->getField('google_tracking_google_tag_manager_container_id')->isFilled(
+                    BL::err('FieldIsRequired')
+                );
+            }
 
             // date & time
             $this->form->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
@@ -344,6 +408,18 @@ class Index extends BackendBaseActionIndex
                 )->isInteger(BL::err('InvalidInteger'));
             }
 
+            $privacyConsentLevelsField = $this->form->getField('privacy_consent_levels');
+            if ($privacyConsentLevelsField->isFilled()) {
+                $levels = explode(',', $privacyConsentLevelsField->getValue());
+                foreach ($levels as $level) {
+                    if (!preg_match('/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i', $level)) {
+                        $privacyConsentLevelsField->setError(sprintf(BL::err('InvalidVariableName'), $level));
+                        break;
+                    }
+                }
+            }
+
+
             // no errors ?
             if ($this->form->isCorrect()) {
                 // general settings
@@ -352,20 +428,55 @@ class Index extends BackendBaseActionIndex
                     'site_title_' . BL::getWorkingLanguage(),
                     $this->form->getField('site_title')->getValue()
                 );
+
+                if ($this->form->getField('google_tracking_google_analytics_tracking_id_enabled')->isChecked()) {
+                    $googleTrackingAnalyticsTrackingId = $this->form->getField('google_tracking_google_analytics_tracking_id')->getValue();
+                } else {
+                    $googleTrackingAnalyticsTrackingId = '';
+                }
                 $this->get('fork.settings')->set(
                     'Core',
-                    'site_html_header',
-                    $this->form->getField('site_html_header')->getValue()
+                    'google_tracking_google_analytics_tracking_id',
+                    $googleTrackingAnalyticsTrackingId
                 );
+
+                if ($this->form->getField('google_tracking_google_tag_manager_container_id_enabled')->isChecked()) {
+                    $googleTrackingTagManagerContainerId = $this->form->getField('google_tracking_google_tag_manager_container_id')->getValue();
+                } else {
+                    $googleTrackingTagManagerContainerId = '';
+                }
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'google_tracking_google_tag_manager_container_id',
+                    $googleTrackingTagManagerContainerId
+                );
+
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_html_head',
+                    $this->form->getField('site_html_head')->getValue()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_html_start_of_body',
+                    $this->form->getField('site_html_start_of_body')->getValue()
+                );
+                // @deprecated remove this in Fork 6, use site_html_start_of_body
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_start_of_body_scripts',
-                    $this->form->getField('site_start_of_body_scripts')->getValue()
+                    $this->form->getField('site_html_start_of_body')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
+                    'site_html_end_of_body',
+                    $this->form->getField('site_html_end_of_body')->getValue()
+                );
+                // @deprecated remove this in Fork 6, use site_html_end_of_body
+                $this->get('fork.settings')->set(
+                    'Core',
                     'site_html_footer',
-                    $this->form->getField('site_html_footer')->getValue()
+                    $this->form->getField('site_html_end_of_body')->getValue()
                 );
 
                 // facebook settings
@@ -461,7 +572,11 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // date & time formats
-                $this->get('fork.settings')->set('Core', 'time_format', $this->form->getField('time_format')->getValue());
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'time_format',
+                    $this->form->getField('time_format')->getValue()
+                );
                 $this->get('fork.settings')->set(
                     'Core',
                     'date_format_short',
@@ -514,10 +629,24 @@ class Index extends BackendBaseActionIndex
                 // save domains
                 $this->get('fork.settings')->set('Core', 'site_domains', $siteDomains);
 
+                // cookies
+                // @deprecated remove this in Fork 6, the privacy consent dialog should be used
                 $this->get('fork.settings')->set(
                     'Core',
                     'show_cookie_bar',
                     $this->form->getField('show_cookie_bar')->getChecked()
+                );
+
+                // privacy
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'show_consent_dialog',
+                    $this->form->getField('show_consent_dialog')->getChecked()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'privacy_consent_levels',
+                    explode(',', $this->form->getField('privacy_consent_levels')->getValue())
                 );
 
                 // assign report

@@ -17,6 +17,7 @@
                 <translation language="uk"><![CDATA[MailMotor]]></translation>
                 <translation language="zh"><![CDATA[邮件]]></translation>
                 <translation language="pl"><![CDATA[mailmotor]]></translation>
+                <translation language="pt"><![CDATA[mailmotor]]></translation>
             </item>
             <item type="label" name="SubscribeForm">
                 <translation language="de"><![CDATA[abonnieren Form]]></translation>
@@ -33,6 +34,7 @@
                 <translation language="uk"><![CDATA[підписатися форму]]></translation>
                 <translation language="zh"><![CDATA[订阅表单]]></translation>
                 <translation language="pl"><![CDATA[formularz zapisu]]></translation>
+                <translation language="pt"><![CDATA[formulário de subscrição]]></translation>
             </item>
             <item type="label" name="UnsubscribeForm">
                 <translation language="de"><![CDATA[Abmeldeformular]]></translation>
@@ -49,6 +51,7 @@
                 <translation language="uk"><![CDATA[відмовитися від форми]]></translation>
                 <translation language="zh"><![CDATA[取消订阅表单]]></translation>
                 <translation language="pl"><![CDATA[formularz rezygnacji]]></translation>
+                <translation language="pt"><![CDATA[formulário de cancelamento de subscrição]]></translation>
             </item>
         </Core>
         <Mailmotor>
@@ -67,6 +70,7 @@
                 <translation language="uk"><![CDATA[ключ API]]></translation>
                 <translation language="zh"><![CDATA[API密钥]]></translation>
                 <translation language="pl"><![CDATA[klucz API]]></translation>
+                <translation language="pt"><![CDATA[API key]]></translation>
             </item>
             <item type="message" name="DoubleOptIn">
                 <translation language="de"><![CDATA[Doppelte Opt-In aktivieren. Wenn überprüft Leute, die einschreiben, erhalten eine Mail, wo sie auf den Bestätigungslink klicken müssen. Dies hilft zu verhindern, dass Ihre Liste mit fictional E-Mail-Adressen gesperrt wird.]]></translation>
@@ -99,6 +103,7 @@
                 <translation language="uk"><![CDATA[список ідентифікаторів]]></translation>
                 <translation language="zh"><![CDATA[列表ID]]></translation>
                 <translation language="pl"><![CDATA[ID listy]]></translation>
+                <translation language="pt"><![CDATA[ID da lista]]></translation>
             </item>
             <item type="label" name="MailEngine">
                 <translation language="de"><![CDATA[mail engine]]></translation>

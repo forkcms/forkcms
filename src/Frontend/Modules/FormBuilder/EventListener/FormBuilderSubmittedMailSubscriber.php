@@ -143,7 +143,8 @@ final class FormBuilderSubmittedMailSubscriber
 
                 return [
                     'label' => $item['label'],
-                    'value' => (is_array($value)
+                    'value' => (
+                        is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
                     ),

@@ -141,6 +141,7 @@ final class Cookie
 
     /**
      * Has the visitor allowed cookies?
+     * @deprecated remove this in Fork 6, the privacy consent dialog should be used
      *
      * @return bool
      */
@@ -151,6 +152,7 @@ final class Cookie
 
     /**
      * Has the cookiebar been hidden by the visitor
+     * @deprecated remove this in Fork 6, the privacy consent dialog should be used
      *
      * @return bool
      */
