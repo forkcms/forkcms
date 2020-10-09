@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Console;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Finder\Finder;
  * Example: "bin/console media_library:cache:clear", will only clear all frontend MediaLibrary cached-thumbnails
  * Example: "bin/console media_library:cache:clear --all", will clear all MediaLibrary cached-thumbnails
  */
-class CacheClearCommand extends Command
+class CacheClearCommand extends ContainerAwareCommand
 {
     /**
      * Should we clear all
