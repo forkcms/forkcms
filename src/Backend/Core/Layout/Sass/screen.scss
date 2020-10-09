@@ -11,6 +11,7 @@
 @import '~select2/src/scss/core';
 @import '~select2-theme-bootstrap4/src/select2-bootstrap';
 @import 'plugins/treejs';
+@import '~flatpickr/dist/flatpickr';
 
 // Base
 @import 'base/base';
@@ -40,6 +41,7 @@
 @import 'components/analytics';
 @import 'components/authentication';
 @import 'components/formbuilder';
+@import 'components/date-time-picker';
 @import 'components/locale';
 @import 'components/themes';
 @import 'components/tooltip';
