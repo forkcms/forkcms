@@ -9,11 +9,9 @@ use Symfony\Component\Form\FormView;
 
 final class DateTypeExtension extends AbstractTypeExtension
 {
-    public static function getExtendedTypes(): iterable
+    public function getExtendedType(): string
     {
-        return [
-            DateType::class,
-        ];
+        return DateType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
