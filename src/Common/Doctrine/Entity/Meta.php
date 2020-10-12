@@ -80,6 +80,20 @@ class Meta
     private $urlOverwrite;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, name="canonical_url", nullable=true)
+     */
+    private $canonicalUrl;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", name="canonical_url_overwrite", options={"default" = false})
+     */
+    private $canonicalUrlOverwrite;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
@@ -123,6 +137,8 @@ class Meta
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
+        ?string $canonicalUrl,
+        bool $canonicalUrlOverwrite,
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
@@ -137,6 +153,8 @@ class Meta
         $this->titleOverwrite = $titleOverwrite;
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
+        $this->canonicalUrl = $canonicalUrl;
+        $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->custom = $custom;
         $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
@@ -153,6 +171,8 @@ class Meta
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
+        ?string $canonicalUrl,
+        bool $canonicalUrlOverwrite,
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
@@ -166,6 +186,8 @@ class Meta
         $this->titleOverwrite = $titleOverwrite;
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
+        $this->canonicalUrl = $canonicalUrl;
+        $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->custom = $custom;
         $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
@@ -216,6 +238,8 @@ class Meta
             $metaData['title_overwrite'],
             $metaData['url'],
             $metaData['url_overwrite'],
+            $metaData['canonical_url'],
+            $metaData['canonical_url_overwrite'],
             $metaData['custom'],
             array_key_exists('SEOFollow', $metaData) ? SEOFollow::fromString((string) $metaData['SEOFollow']) : null,
             array_key_exists('SEOIndex', $metaData) ? SEOIndex::fromString((string) $metaData['SEOIndex']) : null,
@@ -242,6 +266,8 @@ class Meta
             $metaData['titleOverwrite'],
             $metaData['url'],
             $metaData['urlOverwrite'],
+            $metaData['canonical_url'],
+            $metaData['canonical_url_overwrite'],
             $metaData['custom'] ?? null,
             SEOFollow::fromString((string) $metaData['SEOFollow']),
             SEOIndex::fromString((string) $metaData['SEOIndex']),
@@ -293,6 +319,16 @@ class Meta
     public function isUrlOverwrite(): bool
     {
         return $this->urlOverwrite;
+    }
+
+    public function getCanonicalUrl(): ?string
+    {
+        return $this->canonicalUrl;
+    }
+
+    public function isCanonicalUrlOverwrite(): bool
+    {
+        return $this->canonicalUrlOverwrite;
     }
 
     public function getCustom(): ?string

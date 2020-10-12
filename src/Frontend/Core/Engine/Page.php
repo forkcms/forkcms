@@ -463,6 +463,11 @@ class Page extends KernelLoader
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
 
+        // set canonical url
+        if ((bool) $this->record['canonical_url_overwrite'] && !empty($this->record['canonical_url'])) {
+            $this->header->setCanonicalUrl($this->record['canonical_url']);
+        }
+
         // advanced SEO-attributes
         if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(

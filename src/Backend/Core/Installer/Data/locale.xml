@@ -10361,6 +10361,24 @@
         <translation language="pt"><![CDATA[URL]]></translation>
         <translation language="pl"><![CDATA[URL]]></translation>
       </item>
+      <item type="label" name="CanonicalURL">
+        <translation language="nl"><![CDATA[canonical URL]]></translation>
+        <translation language="en"><![CDATA[canonical URL]]></translation>
+        <translation language="hu"><![CDATA[canonical URL]]></translation>
+        <translation language="ru"><![CDATA[canonical URL]]></translation>
+        <translation language="it"><![CDATA[canonical URL]]></translation>
+        <translation language="zh"><![CDATA[canonical URL]]></translation>
+        <translation language="de"><![CDATA[canonical URL]]></translation>
+        <translation language="fr"><![CDATA[canonical URL]]></translation>
+        <translation language="es"><![CDATA[canonical URL]]></translation>
+        <translation language="lt"><![CDATA[canonical URL]]></translation>
+        <translation language="uk"><![CDATA[canonical URL]]></translation>
+        <translation language="sv"><![CDATA[canonical URL]]></translation>
+        <translation language="el"><![CDATA[canonical διεύθυνση URL]]></translation>
+        <translation language="tr"><![CDATA[canonical URL]]></translation>
+        <translation language="pt"><![CDATA[canonical URL]]></translation>
+        <translation language="pl"><![CDATA[canonical URL]]></translation>
+      </item>
       <item type="label" name="UsedIn">
         <translation language="nl"><![CDATA[gebruikt in]]></translation>
         <translation language="en"><![CDATA[used in]]></translation>

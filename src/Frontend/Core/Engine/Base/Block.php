@@ -529,6 +529,11 @@ class Block extends KernelLoader
         $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
         $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
         $this->header->addMetaKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+
+        if ($meta->isCanonicalUrlOverwrite() && !empty($meta->getCanonicalUrl())) {
+            $this->header->setCanonicalUrl($meta->getCanonicalUrl());
+        }
+
         $SEO = [];
         if ($meta->hasSEOFollow()) {
             $SEO[] = $meta->getSEOFollow();
