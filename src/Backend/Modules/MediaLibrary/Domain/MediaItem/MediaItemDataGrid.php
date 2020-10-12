@@ -15,20 +15,24 @@ use SpoonFormDropdown;
  */
 class MediaItemDataGrid extends DataGridDatabase
 {
-    public function __construct(Type $type, int $folderId = null)
+    public function __construct(Type $type, int $folderId = null, string $searchQuery = null)
     {
         parent::__construct(
             'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
                 COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
-             WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
-            $this->getParameters($type, $folderId)
+             WHERE i.type = ?' . $this->getWhere($folderId, $searchQuery) . ' GROUP BY i.id',
+            $this->getParameters($type, $folderId, $searchQuery)
         );
 
         // filter on folder?
         if ($folderId !== null) {
             $this->setURL('&folder=' . $folderId, true);
+        }
+
+        if ($searchQuery) {
+            $this->setURL('&query=' . urlencode($searchQuery), true);
         }
 
         $this->setExtras($type);
@@ -70,9 +74,9 @@ class MediaItemDataGrid extends DataGridDatabase
         return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
     }
 
-    public static function getDataGrid(Type $type, int $folderId = null): DataGridDatabase
+    public static function getDataGrid(Type $type, int $folderId = null, string $searchQuery = null): DataGridDatabase
     {
-        return new self($type, $folderId);
+        return new self($type, $folderId, $searchQuery);
     }
 
     public static function getHtml(Type $type, int $folderId = null): string
@@ -100,7 +104,7 @@ class MediaItemDataGrid extends DataGridDatabase
         return $ddmMediaItemMassAction;
     }
 
-    private function getParameters(Type $type, int $folderId = null): array
+    private function getParameters(Type $type, int $folderId = null, string $searchQuery = null): array
     {
         $parameters = [(string) $type];
 
@@ -108,12 +112,22 @@ class MediaItemDataGrid extends DataGridDatabase
             $parameters[] = $folderId;
         }
 
+        if ($searchQuery) {
+            $parameters[] = '%' . $searchQuery .'%';
+        }
+
         return $parameters;
     }
 
-    private function getWhere(int $folderId = null): string
+    private function getWhere(int $folderId = null, string $searchQuery = null): string
     {
-        return ($folderId !== null) ? ' AND i.mediaFolderId = ?' : '';
+        $query = ($folderId !== null) ? ' AND i.mediaFolderId = ?' : '';
+
+        if ($searchQuery) {
+            $query .= ' AND i.title LIKE ?';
+        }
+
+        return $query;
     }
 
     private function setExtras(Type $type, int $folderId = null): void

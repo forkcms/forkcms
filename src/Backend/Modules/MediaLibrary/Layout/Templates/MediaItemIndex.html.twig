@@ -45,6 +45,16 @@
             <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
           </li>
           {% endfor %}
+          <li class="pull-right">
+            {{ form_start(searchForm, { 'attr' : { 'class': 'form-inline' } }) }}
+            <div class="input-group">
+              {{ form_widget(searchForm.query) }}
+              <span class="input-group-btn">
+                {{ macro.buttonIcon('', 'search', 'lbl.Search'|trans|capitalize, 'submitSearchForm', {'type':'submit'}) }}
+              </span>
+            </div>
+            {{ form_end(searchForm) }}
+          </li>
         </ul>
         <div class="tab-content">
           {% for dataGrid in dataGrids %}

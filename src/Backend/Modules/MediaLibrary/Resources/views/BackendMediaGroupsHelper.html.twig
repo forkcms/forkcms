@@ -24,9 +24,23 @@
               {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
             </div>
             <div role="tabpanel" class="tab-pane" id="tabLibrary">
-              <div class="options">
-                <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
-                <select id="mediaFolders"></select>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="options">
+                    <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
+                    <select id="mediaFolders"></select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="option">
+                    <div class="input-group">
+                      <input type="search" value="" name="query" class="form-control" />
+                      <span class="input-group-btn">
+                        {{ macro.buttonIcon('', 'search', 'lbl.Search'|trans|capitalize, 'btn-secondary', {'id': 'searchMedia', 'type' : 'button'}) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="options">
                 <div class="alert alert-warning hidden" data-role="fork-media-count-error"></div>
