@@ -80,20 +80,6 @@ class Meta
     private $urlOverwrite;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, name="canonical_url", nullable=true)
-     */
-    private $canonicalUrl;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", name="canonical_url_overwrite", options={"default" = false})
-     */
-    private $canonicalUrlOverwrite;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
@@ -153,13 +139,19 @@ class Meta
         $this->titleOverwrite = $titleOverwrite;
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
-        $this->canonicalUrl = $canonicalUrl;
-        $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->custom = $custom;
         $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
         $this->id = $id;
+
+        if ($canonicalUrlOverwrite) {
+            $this->data['canonicalUrl'] = $canonicalUrl;
+            $this->data['canonicalUrlOverwrite'] = $canonicalUrlOverwrite;
+        } else {
+            unset($this->data['canonicalUrl']);
+            unset($this->data['canonicalUrlOverwrite']);
+        }
     }
 
     public function update(
@@ -186,12 +178,18 @@ class Meta
         $this->titleOverwrite = $titleOverwrite;
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
-        $this->canonicalUrl = $canonicalUrl;
-        $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->custom = $custom;
         $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
+
+        if ($canonicalUrlOverwrite) {
+            $this->data['canonicalUrl'] = $canonicalUrl;
+            $this->data['canonicalUrlOverwrite'] = $canonicalUrlOverwrite;
+        } else {
+            unset($this->data['canonicalUrl']);
+            unset($this->data['canonicalUrlOverwrite']);
+        }
     }
 
     /**
@@ -323,12 +321,20 @@ class Meta
 
     public function getCanonicalUrl(): ?string
     {
-        return $this->canonicalUrl;
+        if (array_key_exists('canonicalUrl', $this->data)) {
+            return $this->data['canonicalUrl'];
+        }
+
+        return null;
     }
 
     public function isCanonicalUrlOverwrite(): bool
     {
-        return $this->canonicalUrlOverwrite;
+        if (array_key_exists('canonicalUrlOverwrite', $this->data)) {
+            return (bool) $this->data['canonicalUrlOverwrite'];
+        }
+
+        return false;
     }
 
     public function getCustom(): ?string
