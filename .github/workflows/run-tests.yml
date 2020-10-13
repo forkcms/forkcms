@@ -51,9 +51,6 @@ jobs:
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
-            - name: debug coverage
-              run: cat ./${{ matrix.testsuite}}.clover
-
             - name: Display error logs on failure
               if: ${{ failure() }}
               run: cat var/logs/test.log
