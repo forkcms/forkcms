@@ -201,18 +201,13 @@ jsBackend.mediaLibraryHelper.group = {
       jsBackend.mediaLibraryHelper.group.getMedia()
     })
 
-    $('[name=query]').on('keyup', function(e){
-      if (e.keyCode == 13) {
-        e.preventDefault();
-        e.stopPropagation();
+    $('[name=query]').bind('keyup input', utils.events.debounce(function(e){
+      mediaFolderId = $('#mediaFolders').val();
+      searchQuery = $(this).val();
 
-        mediaFolderId = $('#mediaFolders').val();
-        searchQuery = $(this).val();
-
-        jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
-        jsBackend.mediaLibraryHelper.group.getMedia()
-      }
-    })
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      jsBackend.mediaLibraryHelper.group.getMedia()
+    }, 400))
   },
 
   /**
