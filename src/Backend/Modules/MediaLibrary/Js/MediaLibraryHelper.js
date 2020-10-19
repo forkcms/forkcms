@@ -56,6 +56,9 @@ jsBackend.mediaLibraryHelper.group = {
     // add media dialog
     jsBackend.mediaLibraryHelper.group.addMediaDialog()
 
+    // edit media dialog
+    jsBackend.mediaLibraryHelper.group.editMediaDialog()
+
     // init sequences
     var prevSequence = ''
     var newSequence = ''
@@ -187,6 +190,93 @@ jsBackend.mediaLibraryHelper.group = {
 
       // get media for this folder
       jsBackend.mediaLibraryHelper.group.getMedia()
+    })
+  },
+
+  /**
+   * Edit media in a dialog
+   */
+  editMediaDialog: function(){
+    var $editMediaDialog = $('[data-role=media-library-edit-dialog]')
+    var $editMediaSubmit = $('#editMediaSubmit')
+    var $mediaItemTitleInput = $('#editMediaItemTile');
+    var $mediaItem;
+
+    $('[data-fork=connectedItems]').on('click', '[data-fork=edit]', function(){
+      $mediaItem = $(this).closest('[data-fork=mediaItem]')
+
+      $mediaItemTitleInput.val($mediaItem.data('mediaTitle'))
+
+      $editMediaDialog.modal('show')
+    })
+
+    $mediaItemTitleInput.keyup(function(e){
+      if (e.keyCode === 13) {
+        $editMediaSubmit.click()
+      }
+    })
+
+    $editMediaSubmit.click(function(){
+      if (!$mediaItem || !$mediaItem.data('mediaId')) {
+        return;
+      }
+
+      $editMediaDialog.find('.is-invalid').removeClass('is-invalid')
+      $editMediaDialog.find('.help-block').remove()
+
+      if ($mediaItemTitleInput.val() === "") {
+        $mediaItemTitleInput.addClass('is-invalid');
+
+        $('<span>').addClass('help-block')
+          .append(
+            $('<ul>').addClass('list-unstyled')
+              .append(
+                $('<li>').addClass('formError')
+                  .html(utils.string.ucfirst(jsBackend.locale.err('FieldIsRequired')))
+                  .prepend(
+                    $('<span>').addClass('fa fa-exclamation-triangle').attr('aria-hidden', 'true')
+                  )
+              )
+          )
+          .insertAfter($mediaItemTitleInput)
+
+        return;
+      }
+
+      $.ajax({
+        data: {
+          fork: {
+            module: 'MediaLibrary',
+            action: 'MediaItemEditTitle'
+          },
+          media_id: $mediaItem.data('mediaId'),
+          title: $mediaItemTitleInput.val()
+        },
+        success: function (json, textStatus) {
+          if (json.code !== 200) {
+            // show error if needed
+            if (jsBackend.debug) {
+              window.alert(textStatus)
+            }
+
+            return
+          }
+
+          jsBackend.messages.add('success', json.message)
+
+          $mediaItem.data('mediaTitle', $mediaItemTitleInput.val())
+          $mediaItem.find('img').attr({
+            alt: $mediaItemTitleInput.val()
+          })
+
+          $editMediaDialog.modal('hide')
+        }
+      })
+    })
+
+    $editMediaDialog.on('hide.bs.modal', function(e){
+      $mediaItem = null
+      $mediaItemTitleInput.val('')
     })
   },
 
