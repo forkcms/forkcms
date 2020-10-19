@@ -53,7 +53,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
     private function getSearchQuery(): ?string
     {
-        $query = $this->getRequest()->request->get('query');
+        $query = (string) $this->getRequest()->request->get('query');
 
         if (empty($query)) {
             return null;

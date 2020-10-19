@@ -90,9 +90,12 @@ class MediaItemIndex extends BackendBaseActionIndex
     private function getSearchForm(): Form
     {
         $request = $this->getRequest();
-        $data = [
-            'query' => $request->get('query')
-        ];
+        $data = [];
+
+        if (!empty((string) $request->get('query'))) {
+            $data['query'] = (string) $request->get('query');
+        }
+
         $form = $this->createForm(MediaItemSearchType::class, $data);
 
         $form->handleRequest($request);
