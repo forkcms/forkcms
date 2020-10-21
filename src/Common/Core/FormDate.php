@@ -37,8 +37,8 @@ class FormDate extends SpoonFormDate
         $day = mb_substr($data[$this->attributes['name']], mb_strpos($longMask, 'dd'), 2);
 
         // validate datefields that have a from-date set
-        if (mb_strpos($this->attributes['class'], 'inputDatefieldFrom') !== false) {
-            $fromDateChunks = explode('-', $this->attributes['data-startdate']);
+        if (isset($this->attributes['data-min-date'])) {
+            $fromDateChunks = explode('-', $this->attributes['data-min-date']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
 
             $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
@@ -50,8 +50,8 @@ class FormDate extends SpoonFormDate
 
                 return false;
             }
-        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldTill') !== false) {
-            $tillDateChunks = explode('-', $this->attributes['data-enddate']);
+        } elseif (isset($this->attributes['data-max-date'])) {
+            $tillDateChunks = explode('-', $this->attributes['data-max-date']);
             $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
 
             $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
@@ -63,11 +63,11 @@ class FormDate extends SpoonFormDate
 
                 return false;
             }
-        } elseif (mb_strpos($this->attributes['class'], 'inputDatefieldRange') !== false) {
-            $fromDateChunks = explode('-', $this->attributes['data-startdate']);
+        } elseif (isset($this->attributes['data-min-date']) && isset($this->attributes['data-max-date'])) {
+            $fromDateChunks = explode('-', $this->attributes['data-min-date']);
             $fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
 
-            $tillDateChunks = explode('-', $this->attributes['data-enddate']);
+            $tillDateChunks = explode('-', $this->attributes['data-max-date']);
             $tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
 
             $givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);

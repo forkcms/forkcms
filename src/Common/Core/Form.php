@@ -132,7 +132,7 @@ class Form extends \SpoonForm
         $type = SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = (string) ($class ?? 'form-control fork-form-date inputDate');
+        $class = (string) ($class ?? 'form-control');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // validate
@@ -148,45 +148,31 @@ class Form extends \SpoonForm
 
         // set mask and firstday
         $mask = 'd/m/Y';
-        $firstDay = 1;
 
         // build attributes
         $attributes = [];
-        $attributes['data-mask'] = str_replace(
-            ['d', 'm', 'Y', 'j', 'n'],
-            ['dd', 'mm', 'yy', 'd', 'm'],
-            $mask
-        );
-        $attributes['data-firstday'] = $firstDay;
-        $attributes['data-year'] = date('Y', $value);
-        // -1 because javascript starts at 0
-        $attributes['data-month'] = date('n', $value) - 1;
-        $attributes['data-day'] = date('j', $value);
+        $attributes['data-date-format'] = $mask;
+        //$attributes['data-default-date'] = date('d/m/Y');
+        $attributes['data-role'] = 'fork-datepicker';
 
         // add extra classes based on type
         switch ($type) {
             case 'from':
-                $class .= ' fork-form-date-from inputDatefieldFrom form-control';
-                $classError .= ' inputDatefieldFrom';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
+                $attributes['data-min-date'] = date('d/m/Y', $date);
                 break;
 
             case 'till':
-                $class .= ' fork-form-date-till inputDatefieldTill form-control';
-                $classError .= ' inputDatefieldTill';
-                $attributes['data-enddate'] = date('Y-m-d', $date);
+                $attributes['data-max-date'] = date('d/m/Y', $date);
                 break;
 
             case 'range':
-                $class .= ' fork-form-date-range inputDatefieldRange form-control';
-                $classError .= ' inputDatefieldRange';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
-                $attributes['data-enddate'] = date('Y-m-d', $date2);
+                $attributes['data-min-date'] = date('d/m/Y', $date);
+                $attributes['data-max-date'] = date('d/m/Y', $date2);
+                $attributes['data-mode'] = 'range';
                 break;
 
             default:
-                $class .= ' inputDatefieldNormal form-control';
-                $classError .= ' inputDatefieldNormal';
+                $attributes['data-role'] = 'fork-datepicker';
                 break;
         }
 
