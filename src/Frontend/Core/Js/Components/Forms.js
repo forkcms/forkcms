@@ -1,9 +1,9 @@
 import { Html5Validation } from './Html5Validation'
+import 'flatpickr'
 
 export class Forms {
   constructor () {
     this.placeholders()
-    this.datefields()
     this.validation()
     this.filled()
     this.datePicker()
@@ -59,152 +59,6 @@ export class Forms {
         $(e.currentTarget).addClass('filled')
       }
     })
-  }
-
-  // initialize the date fields
-  datefields () {
-    // jQuery datapicker fallback for browsers that don't support the HTML5 date type
-    const $inputDateType = $('input.inputDatefield')
-    if ($inputDateType.length) {
-      // the browser does not support the HTML5 data type
-      if ($inputDateType.get(0).type !== 'date') {
-        $inputDateType.addClass('inputDatefieldNormal')
-      }
-    }
-
-    const $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
-    const $inputDatefieldNormal = $('.inputDatefieldNormal')
-    const $inputDatefieldFrom = $('.inputDatefieldFrom')
-    const $inputDatefieldTill = $('.inputDatefieldTill')
-    const $inputDatefieldRange = $('.inputDatefieldRange')
-
-    if ($inputDatefields.length > 0) {
-      const dayNames = [
-        window.frontend.components.locale.loc('DayLongSun'), window.frontend.components.locale.loc('DayLongMon'), window.frontend.components.locale.loc('DayLongTue'),
-        window.frontend.components.locale.loc('DayLongWed'), window.frontend.components.locale.loc('DayLongThu'), window.frontend.components.locale.loc('DayLongFri'),
-        window.frontend.components.locale.loc('DayLongSat')
-      ]
-      const dayNamesMin = [
-        window.frontend.components.locale.loc('DayShortSun'), window.frontend.components.locale.loc('DayShortMon'),
-        window.frontend.components.locale.loc('DayShortTue'), window.frontend.components.locale.loc('DayShortWed'),
-        window.frontend.components.locale.loc('DayShortThu'), window.frontend.components.locale.loc('DayShortFri'),
-        window.frontend.components.locale.loc('DayShortSat')
-      ]
-      const dayNamesShort = [
-        window.frontend.components.locale.loc('DayShortSun'), window.frontend.components.locale.loc('DayShortMon'),
-        window.frontend.components.locale.loc('DayShortTue'), window.frontend.components.locale.loc('DayShortWed'),
-        window.frontend.components.locale.loc('DayShortThu'), window.frontend.components.locale.loc('DayShortFri'),
-        window.frontend.components.locale.loc('DayShortSat')
-      ]
-      const monthNames = [
-        window.frontend.components.locale.loc('MonthLong1'), window.frontend.components.locale.loc('MonthLong2'), window.frontend.components.locale.loc('MonthLong3'),
-        window.frontend.components.locale.loc('MonthLong4'), window.frontend.components.locale.loc('MonthLong5'), window.frontend.components.locale.loc('MonthLong6'),
-        window.frontend.components.locale.loc('MonthLong7'), window.frontend.components.locale.loc('MonthLong8'), window.frontend.components.locale.loc('MonthLong9'),
-        window.frontend.components.locale.loc('MonthLong10'), window.frontend.components.locale.loc('MonthLong11'),
-        window.frontend.components.locale.loc('MonthLong12')
-      ]
-      const monthNamesShort = [
-        window.frontend.components.locale.loc('MonthShort1'), window.frontend.components.locale.loc('MonthShort2'),
-        window.frontend.components.locale.loc('MonthShort3'), window.frontend.components.locale.loc('MonthShort4'),
-        window.frontend.components.locale.loc('MonthShort5'), window.frontend.components.locale.loc('MonthShort6'),
-        window.frontend.components.locale.loc('MonthShort7'), window.frontend.components.locale.loc('MonthShort8'),
-        window.frontend.components.locale.loc('MonthShort9'), window.frontend.components.locale.loc('MonthShort10'),
-        window.frontend.components.locale.loc('MonthShort11'), window.frontend.components.locale.loc('MonthShort12')
-      ]
-
-      if ($.isFunction($.fn.datepicker)) {
-        $inputDatefieldNormal.each((index, element) => {
-          // Create a hidden clone (before datepicker init!), which will contain the actual value
-          const clone = $(element).clone()
-          clone.insertAfter(element)
-          clone.hide()
-
-          // Rename the original field, used to contain the display value
-          $(element).attr('id', $(element).attr('id') + '-display')
-          $(element).attr('name', $(element).attr('name') + '-display')
-
-          // make sure we can make the value empty
-          $(element).on('change', (event) => {
-            if ($(event.currentTarget).val() === '') {
-              clone.val('')
-            }
-          })
-        })
-
-        $inputDatefields.datepicker({
-          dayNames: dayNames,
-          dayNamesMin: dayNamesMin,
-          dayNamesShort: dayNamesShort,
-          hideIfNoPrevNext: true,
-          monthNames: monthNames,
-          monthNamesShort: monthNamesShort,
-          nextText: window.frontend.components.locale.lbl('Next'),
-          prevText: window.frontend.components.locale.lbl('Previous'),
-          showAnim: 'slideDown'
-        })
-
-        // the default, nothing special
-        $inputDatefieldNormal.each((index, element) => {
-          // get data
-          const data = $(element).data()
-          const phpDate = new Date(data.year, data.month, data.day, 0, 0, 0) // Get date from php in YYYY-MM-DD format
-          const value = ($(element).val() !== '') ? $.datepicker.formatDate(data.mask, phpDate) : '' // Convert the value to the data-mask to display it
-
-          // Create the datepicker with the desired display format and alt field
-          $(element).datepicker('option', {
-            dateFormat: data.mask,
-            firstDay: data.firstday,
-            altField: '#' + $(element).attr('id').replace('-display', ''),
-            altFormat: 'yy-mm-dd'
-          }).datepicker('setDate', value)
-        })
-
-        // date fields that have a certain start date
-        $inputDatefieldFrom.each((index, element) => {
-          // get data
-          const data = $(element).data()
-          const value = $(element).val()
-
-          // set options
-          $(element).datepicker('option', {
-            dateFormat: data.mask,
-            firstDay: data.firstday,
-            minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-          }).datepicker('setDate', value)
-        })
-
-        // date fields that have a certain enddate
-        $inputDatefieldTill.each((index, element) => {
-          // get data
-          const data = $(element).data()
-          const value = $(element).val()
-
-          // set options
-          $(element).datepicker('option',
-            {
-              dateFormat: data.mask,
-              firstDay: data.firstday,
-              maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10))
-            }).datepicker('setDate', value)
-        })
-
-        // date fields that have a certain range
-        $inputDatefieldRange.each((index, element) => {
-          // get data
-          const data = $(element).data()
-          const value = $(element).val()
-
-          // set options
-          $(element).datepicker('option',
-            {
-              dateFormat: data.mask,
-              firstDay: data.firstday,
-              minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-              maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-            }).datepicker('setDate', value)
-        })
-      }
-    }
   }
 
   validation () {
@@ -277,8 +131,47 @@ export class Forms {
 
   // Add date pickers to the appropriate input elements
   datePicker () {
+    const dayNames = [
+      window.frontend.components.locale.loc('DayLongSun'), window.frontend.components.locale.loc('DayLongMon'), window.frontend.components.locale.loc('DayLongTue'),
+      window.frontend.components.locale.loc('DayLongWed'), window.frontend.components.locale.loc('DayLongThu'), window.frontend.components.locale.loc('DayLongFri'),
+      window.frontend.components.locale.loc('DayLongSat')
+    ]
+    const dayNamesShort = [
+      window.frontend.components.locale.loc('DayShortSun'), window.frontend.components.locale.loc('DayShortMon'),
+      window.frontend.components.locale.loc('DayShortTue'), window.frontend.components.locale.loc('DayShortWed'),
+      window.frontend.components.locale.loc('DayShortThu'), window.frontend.components.locale.loc('DayShortFri'),
+      window.frontend.components.locale.loc('DayShortSat')
+    ]
+    const monthNames = [
+      window.frontend.components.locale.loc('MonthLong1'), window.frontend.components.locale.loc('MonthLong2'), window.frontend.components.locale.loc('MonthLong3'),
+      window.frontend.components.locale.loc('MonthLong4'), window.frontend.components.locale.loc('MonthLong5'), window.frontend.components.locale.loc('MonthLong6'),
+      window.frontend.components.locale.loc('MonthLong7'), window.frontend.components.locale.loc('MonthLong8'), window.frontend.components.locale.loc('MonthLong9'),
+      window.frontend.components.locale.loc('MonthLong10'), window.frontend.components.locale.loc('MonthLong11'),
+      window.frontend.components.locale.loc('MonthLong12')
+    ]
+    const monthNamesShort = [
+      window.frontend.components.locale.loc('MonthShort1'), window.frontend.components.locale.loc('MonthShort2'),
+      window.frontend.components.locale.loc('MonthShort3'), window.frontend.components.locale.loc('MonthShort4'),
+      window.frontend.components.locale.loc('MonthShort5'), window.frontend.components.locale.loc('MonthShort6'),
+      window.frontend.components.locale.loc('MonthShort7'), window.frontend.components.locale.loc('MonthShort8'),
+      window.frontend.components.locale.loc('MonthShort9'), window.frontend.components.locale.loc('MonthShort10'),
+      window.frontend.components.locale.loc('MonthShort11'), window.frontend.components.locale.loc('MonthShort12')
+    ]
+
     $('input[data-role="fork-datepicker"]').each((index, datePickerElement) => {
-      $(datePickerElement).datepicker()
+      $(datePickerElement).flatpickr({
+        locale: {
+          firstDayOfWeek: 1,
+          weekdays: {
+            shorthand: dayNamesShort,
+            longhand: dayNames,
+          },
+          months: {
+            shorthand: monthNamesShort,
+            longhand: monthNames,
+          },
+        },
+      })
     })
   }
 }

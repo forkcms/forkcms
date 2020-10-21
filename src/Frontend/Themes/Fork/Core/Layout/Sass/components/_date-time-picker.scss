@@ -1,0 +1,53 @@
+.flatpickr-weekdays,
+.flatpickr-months {
+  background: $primary;
+
+  .flatpickr-weekday,
+  .flatpickr-prev-month,
+  .flatpickr-next-month,
+  .flatpickr-month {
+    color: $white;
+    fill: $white;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+span.flatpickr-day,
+span.flatpickr-day.prevMonthDay,
+span.flatpickr-day.nextMonthDay {
+  border-color: $border-color;
+  border-right: none;
+  border-radius: 0;
+  max-width: none;
+
+  &:nth-child(7n-7) {
+    border-right: 1px solid $border-color;
+  }
+
+  &:hover,
+  &.selected {
+    border-color: $border-color;
+  }
+
+  &:hover {
+    background: $gray-300;
+  }
+
+  &.selected {
+    background: $primary;
+  }
+}
+
+span.flatpickr-day:nth-child(n+8),
+span.flatpickr-day.prevMonthDay:nth-child(n+8),
+span.flatpickr-day.nextMonthDay:nth-child(n+8) {
+  border-top: none;
+}
+
+.flatpickr-calendar.arrowTop {
+
+  &:after,
+  &:before {
+    border-bottom-color: $primary;
+  }
+}
