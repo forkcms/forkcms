@@ -18,7 +18,7 @@ class DeleteTest extends BackendWebTestCase
                 LoadBlogPosts::class,
             ]
         );
-        self::assertAuthenticationIsNeeded($client, '/private/en/blog/delete?id=1');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/blog/delete?id=1');
     }
 
     public function testInvalidIdShouldShowAnError(Client $client): void

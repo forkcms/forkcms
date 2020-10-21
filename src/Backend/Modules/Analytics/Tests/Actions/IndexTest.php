@@ -9,7 +9,7 @@ class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/analytics/index');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/index');
     }
 
     public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(Client $client): void

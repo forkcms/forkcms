@@ -10,7 +10,7 @@ class IndexTest extends BackendWebTestCase
 {
     public function testPrivateRedirectsToAuthentication(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private');
+        $this->assertAuthenticationIsNeeded($client, '/private');
     }
 
     public function testAuthenticationIndexWorks(Client $client): void

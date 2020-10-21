@@ -21,7 +21,7 @@ class UploadThemeTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, self::URL_UPLOAD_THEME);
+        $this->assertAuthenticationIsNeeded($client, self::URL_UPLOAD_THEME);
     }
 
     public function testUploadPage(Client $client): void

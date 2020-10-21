@@ -9,7 +9,7 @@ class ModulesTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/modules');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/modules');
     }
 
     public function testIndexHasModules(Client $client): void

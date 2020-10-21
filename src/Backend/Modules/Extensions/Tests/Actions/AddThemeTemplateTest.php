@@ -9,7 +9,7 @@ class AddThemeTemplateTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/add_theme_template');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/add_theme_template');
     }
 
     public function testFormIsDisplayed(Client $client): void

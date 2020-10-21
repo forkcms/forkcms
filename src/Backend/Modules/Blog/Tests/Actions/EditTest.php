@@ -12,7 +12,7 @@ class EditTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/detail_theme?theme=Fork');
     }
 
     public function testWeCanGoToEditFromTheIndexPage(Client $client): void

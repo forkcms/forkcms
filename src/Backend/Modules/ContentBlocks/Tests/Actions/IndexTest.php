@@ -9,7 +9,7 @@ class IndexTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/content_blocks/index');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/content_blocks/index');
     }
 
     public function testIndexHasNoItems(Client $client): void

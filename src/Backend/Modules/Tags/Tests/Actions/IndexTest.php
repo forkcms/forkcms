@@ -24,7 +24,7 @@ class IndexTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/tags/index');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/index');
     }
 
     public function testIndexContainsTags(Client $client): void

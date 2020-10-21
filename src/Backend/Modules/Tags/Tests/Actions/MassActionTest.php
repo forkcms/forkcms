@@ -24,7 +24,7 @@ class MassActionTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded(
+        $this->assertAuthenticationIsNeeded(
             $client,
             $this->appendCsrfTokenToUrl($client, '/private/en/tags/mass_action')
         );

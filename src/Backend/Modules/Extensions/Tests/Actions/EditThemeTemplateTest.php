@@ -9,7 +9,7 @@ class EditThemeTemplateTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded(
+        $this->assertAuthenticationIsNeeded(
             $client,
             '/private/en/extensions/edit_theme_template?token=68ozixmy4j&id=3'
         );

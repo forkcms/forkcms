@@ -9,7 +9,7 @@ class ExportThemeTemplatesTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/export_theme_templates');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/export_theme_templates');
     }
 
     public function testExportIsReturned(Client $client): void

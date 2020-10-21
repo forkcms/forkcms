@@ -24,7 +24,7 @@ class EditTest extends BackendWebTestCase
 
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID);
+        $this->assertAuthenticationIsNeeded($client, '/private/en/tags/edit?id=' . LoadTagsTags::TAGS_TAG_1_ID);
     }
 
     public function testWeCanGoToEditFromTheIndexPage(Client $client): void

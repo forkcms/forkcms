@@ -9,7 +9,7 @@ class UploadModuleTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/extensions/upload_module');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/extensions/upload_module');
     }
 
     public function testUploadPage(Client $client): void

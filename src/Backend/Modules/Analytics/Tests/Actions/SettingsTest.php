@@ -9,7 +9,7 @@ class SettingsTest extends BackendWebTestCase
 {
     public function testAuthenticationIsNeeded(Client $client): void
     {
-        self::assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
+        $this->assertAuthenticationIsNeeded($client, '/private/en/analytics/settings');
     }
 
     public function testAnalyticsSettingsWorks(Client $client): void
