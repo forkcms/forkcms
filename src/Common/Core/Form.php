@@ -168,7 +168,6 @@ class Form extends \SpoonForm
             case 'range':
                 $attributes['data-min-date'] = date('d/m/Y', $date);
                 $attributes['data-max-date'] = date('d/m/Y', $date2);
-                $attributes['data-mode'] = 'range';
                 break;
 
             default:
