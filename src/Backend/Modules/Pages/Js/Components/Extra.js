@@ -28,7 +28,7 @@ export class Extra {
       const selectedBlockType = $modal.find('[data-role="select-block-type"]').val()
 
       if (selectedBlockType === 'block' || selectedBlockType === 'widget') {
-        const title = jsBackend.pages.extras.extractExtraTitle(
+        const title = this.extractExtraTitle(
           separator,
           $modal.find('[data-role="page-block-content-type-wrapper"][data-type="' + selectedBlockType + '"] select option:selected')
         )
@@ -42,11 +42,11 @@ export class Extra {
       if (selectedBlockType === 'rich_text') {
         $pageBlockPreview.removeClass('d-none')
 
-        const text = jsBackend.pages.extras.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]')))
+        const text = this.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]')))
         if (text !== '') {
           $pageBlockPreview.html(text)
         } else {
-          $pageBlockPreview.html(jsBackend.locale.lbl('NoContentToShow'))
+          $pageBlockPreview.html(window.backend.locale.lbl('NoContentToShow'))
         }
       } else {
         $pageBlockPreview.addClass('d-none')
@@ -121,12 +121,12 @@ export class Extra {
       // make visible
       $blackWrapper.removeClass('block-not-visible')
       $label.find('[data-fa-i2svg]').attr('data-icon', 'eye')
-      $label.find('.sr-only').html(jsBackend.locale.lbl('Hide'))
+      $label.find('.sr-only').html(window.backend.locale.lbl('Hide'))
     } else {
       // make invisible
       $blackWrapper.addClass('block-not-visible')
       $label.find('[data-fa-i2svg]').attr('data-icon', 'eye-slash')
-      $label.find('.sr-only').html(jsBackend.locale.lbl('Show'))
+      $label.find('.sr-only').html(window.backend.locale.lbl('Show'))
     }
   }
 }
