@@ -129,13 +129,13 @@
             "authors": [
                 {
                     "name": "Benjamin Eberlei",
-                    "role": "Lead Developer",
-                    "email": "kontakt@beberlei.de"
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Richard Quadling",
-                    "role": "Collaborator",
-                    "email": "rquadling@gmail.com"
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
                 }
             ],
             "description": "Thin assertion library for input validation in business models.",
@@ -236,8 +236,8 @@
             "authors": [
                 {
                     "name": "Toby Brain",
-                    "role": "Developer",
-                    "email": "tobio85@gmail.com"
+                    "email": "tobio85@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "A php library which implements the complete functionality of the Campaign Monitor API.",
@@ -2064,9 +2064,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
-                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be"
+                    "homepage": "http://jeroendesloovere.be",
+                    "role": "Developer"
                 }
             ],
             "description": "This Geolocation PHP class connects to Google Maps API to find latitude/longitude or address.",
@@ -2569,9 +2569,9 @@
             "authors": [
                 {
                     "name": "Jeroen Desloovere",
-                    "role": "Developer",
                     "email": "info@jeroendesloovere.be",
-                    "homepage": "http://jeroendesloovere.be"
+                    "homepage": "http://jeroendesloovere.be",
+                    "role": "Developer"
                 }
             ],
             "description": "This Symfony bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
@@ -5509,8 +5509,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "role": "Developer",
-                    "email": "akismet@verkoyen.eu"
+                    "email": "akismet@verkoyen.eu",
+                    "role": "Developer"
                 }
             ],
             "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
@@ -5556,8 +5556,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "role": "Developer",
-                    "email": "css_to_inline_styles@verkoyen.eu"
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
@@ -6518,16 +6518,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.6",
+            "version": "3.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "e97627871a7eab2f70e59166072a6b767d5834e0"
+                "reference": "4dbf1d59cd3f155c6f906f018a8574bc53b5be30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/e97627871a7eab2f70e59166072a6b767d5834e0",
-                "reference": "e97627871a7eab2f70e59166072a6b767d5834e0",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4dbf1d59cd3f155c6f906f018a8574bc53b5be30",
+                "reference": "4dbf1d59cd3f155c6f906f018a8574bc53b5be30",
                 "shasum": ""
             },
             "require": {
@@ -6565,7 +6565,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2020-08-10T04:50:15+00:00"
+            "time": "2020-10-22T21:09:11+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
