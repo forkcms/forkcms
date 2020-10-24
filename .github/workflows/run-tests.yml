@@ -34,6 +34,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
+                  tools: composer:v1 # Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: xdebug # Switch to PCOV for a speed gain when we can use PHP 7.2 & PHPUnit 8.0.
 
@@ -83,6 +84,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.1
+                  tools: composer:v1 # Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -117,6 +119,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.1
+                  tools: composer:v1 # Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -157,6 +160,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: 7.1
+                  tools: composer:v1 # Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
