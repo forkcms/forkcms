@@ -502,7 +502,7 @@
 
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -777,7 +777,7 @@
 
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -1257,7 +1257,7 @@
           timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -1557,8 +1557,7 @@
 
           if (direction === 'up') {
             $row.prev().insertAfter($row)
-          }
-          else if (direction === 'down') {
+          } else if (direction === 'down') {
             $row.next().insertBefore($row)
           }
 

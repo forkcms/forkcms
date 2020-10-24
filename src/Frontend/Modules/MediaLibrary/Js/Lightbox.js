@@ -32,7 +32,7 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
       size = linkEl.getAttribute('data-size').split('x')
 
       // create slide object
-      $lightboxHtmlElement = $figureEl.find('[data-lightbox=html]');
+      $lightboxHtmlElement = $figureEl.find('[data-lightbox=html]')
       if ($lightboxHtmlElement.length === 1) {
         item = {
           'html': $lightboxHtmlElement.html(),

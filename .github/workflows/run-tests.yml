@@ -140,8 +140,7 @@ jobs:
               with:
                   node-version: 12 # current LTS
             - run: yarn install
-            # @todo fix errors, it was broken on travis already
-            #- run: yarn test
+            - run: yarn test
 
     docker-test:
         name: Docker
