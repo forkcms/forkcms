@@ -44,8 +44,9 @@ RUN pecl install xdebug && \
     rm -rf /tmp/pear
 
 # Install composer
+# Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
 RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
+    php -- --install-dir=/usr/bin/ --filename=composer --version=1.10.16
 
 # Set the work directory to /var/www/html so all subsequent commands in this file start from that directory.
 # Also set this work directory so that it uses this directory everytime we use docker exec.
