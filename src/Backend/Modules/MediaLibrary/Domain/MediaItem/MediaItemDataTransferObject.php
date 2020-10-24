@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class MediaItemDataTransferObject
 {
@@ -12,7 +13,11 @@ class MediaItemDataTransferObject
     /** @var MediaFolder|null */
     public $folder;
 
-    /** @var string */
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank(message="err.FieldIsRequired")
+     */
     public $title;
 
     /** @var string */
