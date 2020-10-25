@@ -51,10 +51,10 @@ class ConsentDialog
             $levels = ['functional'];
         }
 
-        $levels = array_merge(
+        $levels = array_filter(array_merge(
             $levels,
             $this->settings->get('Core', 'privacy_consent_levels', [])
-        );
+        ));
 
         return $levels;
     }
