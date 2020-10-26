@@ -4,13 +4,13 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showLocaleAdd %}
+      {% if isAllowedAction('Add') %}
         {{ macro.buttonIcon(geturl('add')  ~ filter, 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-default jsButtonAdd') }}
       {% endif %}
-      {% if showLocaleExport %}
+      {% if isAllowedAction('Export') %}
         {{ macro.buttonIcon(geturl('export') ~ filter, 'download', 'lbl.Export'|trans|ucfirst, 'btn-default jsButtonExport') }}
       {% endif %}
-      {% if showLocaleImport %}
+      {% if isAllowedAction('Import') %}
         {{ macro.buttonIcon(geturl('import') ~ filter, 'upload', 'lbl.Import'|trans|ucfirst, 'btn-default jsButtonImport') }}
       {% endif %}
     </div>

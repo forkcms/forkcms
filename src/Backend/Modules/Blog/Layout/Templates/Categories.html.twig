@@ -2,7 +2,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
-  {% if showBlogAddCategory %}
+  {% if isAllowedAction('AddCategory') %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon( geturl('add_category'), 'plus-square', 'lbl.AddCategory'|trans|ucfirst) }}

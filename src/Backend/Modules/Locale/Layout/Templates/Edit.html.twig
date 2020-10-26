@@ -56,7 +56,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        {% if showLocaleDelete %}
+        {% if isAllowedAction('Delete') %}
           <div class="btn-group pull-left" role="group">
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           </div>
@@ -69,7 +69,7 @@
   </div>
   {% endform %}
 
-  {% if showLocaleDelete %}
+  {% if isAllowedAction('Delete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
