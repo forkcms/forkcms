@@ -181,7 +181,7 @@ jsBackend.mediaLibrary.tree = {
         onmove: jsBackend.mediaLibrary.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: window.location.protocol === 'https:'}}
       }
     }
 

@@ -1,7 +1,7 @@
 /**
  * Frontend related objects
  */
-/* global FB, ga, _gaq, twttr, Image */
+/* global FB, ga, _gaq, twttr, Image, dataLayer, FileReader */
 var jsFrontend = {
   debug: false,
   current: {},
@@ -87,7 +87,7 @@ jsFrontend.controls = {
       return
     }
 
-    $navToggle.on('click', function() {
+    $navToggle.on('click', function () {
       var $button = $(this)
       $button.find('[data-role=label]').text(jsFrontend.locale.lbl($button.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
     }).find('[data-role=label]').text(jsFrontend.locale.lbl($navToggle.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
@@ -573,7 +573,7 @@ jsFrontend.locale = {
 
   // init, something like a constructor
   init: function () {
-    if (typeof jsFrontend.current.language == 'undefined') {
+    if (typeof jsFrontend.current.language === 'undefined') {
       return
     }
 
@@ -608,12 +608,12 @@ jsFrontend.locale = {
         30
       )
 
-      return;
+      return
     }
 
     // validate
-    if (typeof jsFrontend.locale.data[type] === 'undefined'
-      || typeof jsFrontend.locale.data[type][key] === 'undefined') {
+    if (typeof jsFrontend.locale.data[type] === 'undefined' ||
+      typeof jsFrontend.locale.data[type][key] === 'undefined') {
       return '{$' + type + key + '}'
     }
 

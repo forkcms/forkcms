@@ -2,7 +2,9 @@ version: "2.4"
 
 services:
     app:
-        build: .
+        build:
+            context: .
+            cache_from: [ghcr.io/forkcms/forkcms:latest]
         working_dir: /var/www/html
         ports:
             - "80:80"
