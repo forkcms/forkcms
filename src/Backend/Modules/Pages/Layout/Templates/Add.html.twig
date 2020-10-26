@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block actionbar %}
-  {% if showPagesIndex %}
+  {% if isAllowedAction('Index') %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}

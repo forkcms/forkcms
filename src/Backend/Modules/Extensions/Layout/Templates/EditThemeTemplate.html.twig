@@ -187,7 +187,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
+          {% if isAllowedAction('DeleteThemeTemplate') and allowExtensionsDeleteThemeTemplate %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
@@ -199,7 +199,7 @@
   </div>
   {% endform %}
 
-  {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
+  {% if isAllowedAction('DeleteThemeTemplate') and allowExtensionsDeleteThemeTemplate %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}

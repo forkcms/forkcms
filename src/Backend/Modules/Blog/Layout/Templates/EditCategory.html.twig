@@ -52,7 +52,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showBlogDeleteCategory and allowBlogDeleteCategory %}
+          {% if isAllowedAction('DeleteCategory') and allowBlogDeleteCategory %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
@@ -65,7 +65,7 @@
   </div>
   {% endform %}
 
-  {% if showBlogDeleteCategory and allowBlogDeleteCategory %}
+  {% if isAllowedAction('DeleteCategory') and allowBlogDeleteCategory %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}

@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showProfilesIndex %}
+      {% if isAllowedAction('Index') %}
         {{ macro.buttonIcon(geturl('index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
       {% endif %}
       {{ macro.buttonIcon(geturl('export_template'), 'download', 'lbl.ExportTemplate'|trans|ucfirst) }}

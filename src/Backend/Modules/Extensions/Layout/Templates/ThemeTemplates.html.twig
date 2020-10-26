@@ -3,7 +3,7 @@
 
 {% block actionbar %}
   {% form themes %}
-  {% if showExtensionsAddThemeTemplate %}
+  {% if isAllowedAction('AddThemeTemplate') %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {% if selectedTheme %}

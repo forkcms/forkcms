@@ -20,7 +20,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showMediaLibraryMediaItemIndex %}
+      {% if isAllowedAction('MediaItemIndex') %}
         {% if folderId %}
           {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
         {% endif %}

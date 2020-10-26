@@ -6,6 +6,7 @@ namespace Common\Core\Twig\Extensions;
  * Contains all Forkcms filters for Twig
  */
 
+use Backend\Core\Engine\Authentication;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig_Environment;
@@ -21,6 +22,20 @@ class TwigFilters
      */
     public static function addFilters(Twig_Environment $twig, string $app): void
     {
+        if ($app === 'Backend') {
+            $twig->addFunction(
+                new TwigFunction(
+                    'isAllowedAction',
+                    [Authentication::class, 'isAllowedAction']
+                )
+            );
+            $twig->addFunction(
+                new TwigFunction(
+                    'isAllowedModule',
+                    [Authentication::class, 'isAllowedModule']
+                )
+            );
+        }
         $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new TwigFilter('getpageinfo', $app . '::getPageInfo'));
         $twig->addFilter(new TwigFilter('highlight', $app . '::highlightCode'));

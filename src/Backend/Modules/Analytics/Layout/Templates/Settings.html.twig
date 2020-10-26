@@ -115,7 +115,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        {% if showAnalyticsReset and fileCertificate is not defined %}
+        {% if isAllowedAction('Reset') and fileCertificate is not defined %}
           <div class="btn-group" role="group">
             <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
           </div>

@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showExtensionsUploadTheme %}
+      {% if isAllowedAction('UploadTheme') %}
         {{ macro.buttonIcon( geturl('upload_theme'), 'upload', 'lbl.UploadTheme'|trans|ucfirst) }}
       {% endif %}
       {{ macro.buttonIcon( 'http://www.fork-cms.com/extensions/themes', 'eye', 'lbl.FindThemes'|trans|ucfirst, '', 'target=_blank') }}
@@ -39,18 +39,18 @@
                         <img src="{{ installableTheme.thumbnail }}" class="img-thumbnail" alt="{{ installableTheme.label|ucfirst }}" />
                       </div>
                       <div class="panel-footer">
-                        {% if showExtensionsDetailTheme %}
+                        {% if isAllowedAction('DetailTheme') %}
                           <div class="btn-toolbar">
                             <div class="btn-group pull-right" role="group">
-                              {% if showExtensionsInstallTheme %}
+                              {% if isAllowedAction('InstallTheme') %}
                                 {{ macro.buttonIcon('', 'file-o', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "data-toggle":"modal", "type":"button", "data-target":"#confirmInstall" ~ installableTheme.value|ucfirst }) }}
                               {% endif %}
-                              {% if showExtensionsDetailTheme %}
+                              {% if isAllowedAction('DetailTheme') %}
                                 {{ macro.buttonIcon(geturl('detail_theme') ~ '&theme=' ~ installableTheme.value , 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default', { "title": installableTheme.label|ucfirst }) }}
                               {% endif %}
                             </div>
                           </div>
-                          {% if showExtensionsInstallTheme %}
+                          {% if isAllowedAction('InstallTheme') %}
                             <div class="modal fade" id="confirmInstall{{ installableTheme.value|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstall{{ installableTheme.value|ucfirst }}Title">
                               <div class="modal-dialog">
                                 <div class="modal-content">
@@ -111,7 +111,7 @@
                       <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
                     </div>
                     <div class="panel-footer">
-                      {% if showExtensionsDetailTheme %}
+                      {% if isAllowedAction('DetailTheme') %}
                         <div class="btn-toolbar">
                           <div class="btn-group pull-right" role="group">
                             <a href="{{ geturl('detail_theme') }}&theme={{ installedTheme.value }}" class="btn btn-default" role="button" title="{{ installedTheme.label|ucfirst }}">
