@@ -41,6 +41,7 @@ class Installer extends ModuleInstaller
 
         $this->setActionRights(1, $this->getModule(), 'Ping');
         $this->setActionRights(1, $this->getModule(), 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Index');
     }
 
     private function configureFrontendExtras(): void
