@@ -21,8 +21,10 @@ RUN docker-php-ext-install pdo_mysql
 # Install mbstring
 RUN docker-php-ext-install mbstring
 
-# Install zip
-RUN docker-php-ext-install zip
+# Install zip & unzip
+RUN apt-get update && apt-get install -y unzip && \
+    docker-php-ext-install zip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install intl
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -42,8 +44,9 @@ RUN pecl install xdebug && \
     rm -rf /tmp/pear
 
 # Install composer
+# Use composer v1 until Fork CMS v6 is out with support for PHP 7.4
 RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
+    php -- --install-dir=/usr/bin/ --filename=composer --version=1.10.16
 
 # Set the work directory to /var/www/html so all subsequent commands in this file start from that directory.
 # Also set this work directory so that it uses this directory everytime we use docker exec.

@@ -67,10 +67,6 @@
         </testsuite>
     </testsuites>
 
-    <php>
-        <server name="KERNEL_DIR" value="app/" />
-    </php>
-
     <filter>
         <whitelist>
             <directory>src</directory>
@@ -98,6 +94,7 @@
         </whitelist>
     </filter>
     <php>
+        <server name="KERNEL_DIR" value="app/" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
         <env name="FORK_ENV" value="test" />
         <env name="FORK_DEBUG" value="1" />

@@ -1,7 +1,7 @@
 /**
  * Backend related objects
  */
-/* global CKEDITOR, CKFinder, Bloodhound, linkList */
+/* global CKEDITOR, FileReader, Bloodhound */
 
 var jsBackend =
   {
@@ -88,7 +88,7 @@ var jsBackend =
           dataType: 'json',
           timeout: 10000,
           beforeSend: function (jqXHR) {
-            jqXHR.setRequestHeader('X-CSRF-Token', jsBackend.data.get('csrf-token'));
+            jqXHR.setRequestHeader('X-CSRF-Token', jsBackend.data.get('csrf-token'))
           },
           data: {
             fork: {
