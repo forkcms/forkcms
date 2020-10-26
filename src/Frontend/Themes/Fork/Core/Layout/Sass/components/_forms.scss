@@ -10,3 +10,7 @@
 .alert-danger {
   color: $white !important;
 }
+
+.grecaptcha-badge {
+  z-index: 9000;
+}
