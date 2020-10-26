@@ -43,7 +43,7 @@ jsBackend.FormBuilder = {
     var $selectMethod = $('select#method')
     var $emailWrapper = $('#emailWrapper')
 
-    if ($selectMethod.val() === 'database_email' || $selectMethod.val() === 'email') {
+    if ($selectMethod.val() === 'database_email' || $selectMethod.val() === 'email') {
       // show email field
       $emailWrapper.slideDown()
 
@@ -493,7 +493,7 @@ jsBackend.FormBuilder.Fields = {
                 $('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type))
                 $('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type))
                 $('#datetimeClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
-                $('#datetimeAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete));
+                $('#datetimeAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {

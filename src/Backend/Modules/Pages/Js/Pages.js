@@ -358,9 +358,9 @@ jsBackend.pages.extras = {
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
       if (jsData.Core.preferred_editor !== 'ck-editor') {
-        $('#html').val(previousContent);
+        $('#html').val(previousContent)
 
-        return;
+        return
       }
 
       // set content in editor
@@ -835,7 +835,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>'
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -1437,7 +1437,7 @@ jsBackend.pages.tree = {
         onmove: jsBackend.pages.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: window.location.protocol === 'https:'}}
       }
     }
 

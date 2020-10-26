@@ -709,7 +709,7 @@ jsBackend.mediaLibraryHelper.group = {
   /**
    * Runs the validation for the minimum and maximum count of connected media
    */
-  validateMinimumMaximumCount: function() {
+  validateMinimumMaximumCount: function () {
     var totalMediaCount = jsBackend.mediaLibraryHelper.upload.uploadedCount + currentMediaItemIds.length
     var $minimumCountError = $('[data-role="fork-media-count-error"]')
     var $submitButton = $('#addMediaSubmit')
@@ -777,9 +777,9 @@ jsBackend.mediaLibraryHelper.cropper = {
     )
   },
 
-  resetScaleSettings: function() {
-    jsBackend.mediaLibraryHelper.cropper.scaleX = 1;
-    jsBackend.mediaLibraryHelper.cropper.scaleY = 1;
+  resetScaleSettings: function () {
+    jsBackend.mediaLibraryHelper.cropper.scaleX = 1
+    jsBackend.mediaLibraryHelper.cropper.scaleY = 1
   },
 
   crop: function ($dialog, resizeInfo, resolve, reject) {
@@ -939,8 +939,8 @@ jsBackend.mediaLibraryHelper.cropper = {
   getFlipEventFunction: function () {
     return function () {
       var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
-      var isHorizontal = $(this).data('direction') === 'horizontal';
-      var method = isHorizontal ? 'scaleX' : 'scaleY';
+      var isHorizontal = $(this).data('direction') === 'horizontal'
+      var method = isHorizontal ? 'scaleX' : 'scaleY'
       jsBackend.mediaLibraryHelper.cropper[method] = jsBackend.mediaLibraryHelper.cropper[method] * -1
 
       $cropper.cropper(method, jsBackend.mediaLibraryHelper.cropper[method])
@@ -1083,16 +1083,16 @@ jsBackend.mediaLibraryHelper.upload = {
       chunking: {
         enabled: true,
         success: {
-          endpoint: function() {
+          endpoint: function () {
             var mediaFolderId = $('#uploadMediaFolderId').val()
 
-            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]='
-              + jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
+            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' +
+              jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
           }
         },
         concurrent: {
           enabled: true
-        },
+        }
       },
       thumbnails: {
         placeholders: {
@@ -1163,7 +1163,7 @@ jsBackend.mediaLibraryHelper.upload = {
     // Skip scaling config for cropping if we don't have cropping enabled
     if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
       return {
-        includeExif: false,
+        includeExif: false
       }
     }
 
@@ -1524,7 +1524,7 @@ jsBackend.mediaLibraryHelper.modalSelection = {
     window.opener.postMessage({'media-url': $(this).data('directUrl')}, '*')
     window.close()
   }
-};
+}
 
 /** global: jsBackend */
 $(jsBackend.mediaLibraryHelper.init)

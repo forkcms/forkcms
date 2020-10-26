@@ -353,7 +353,7 @@
       })
     })
 
-    $input.on('blur', function(e) {
+    $input.on('blur', function (e) {
       $input.parents('.form-group').removeClass('has-error')
       e.target.checkValidity()
     })
