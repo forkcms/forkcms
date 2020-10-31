@@ -50,7 +50,7 @@ jobs:
               run: composer install -o
 
             - name: Execute tests
-              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=coverage.clover
 
             - name: Display error logs on failure
               if: ${{ failure() }}
@@ -60,9 +60,7 @@ jobs:
               if: ${{ github.repository == 'forkcms/forkcms' }}
               run: |
                   curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
-                  php ocular.phar code-coverage:upload --access-token="${SCRUTINIZER_ACCESS_TOKEN}" --format=php-clover ./${{ matrix.testsuite}}.clover
-              env:
-                  SCRUTINIZER_ACCESS_TOKEN: ${{ secrets.SCRUTINIZER_ACCESS_TOKEN }}
+                  php ocular.phar code-coverage:upload -vvv --format=php-clover coverage.clover
 
     phpstan:
         name: PHPStan - Static Code Analysis
