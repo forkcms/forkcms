@@ -50,17 +50,17 @@ jobs:
               run: composer install -o
 
             - name: Execute tests
-              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=coverage.clover
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
             - name: Display error logs on failure
               if: ${{ failure() }}
               run: cat var/logs/test.log
 
             - name: Upload Coverage report
-              if: ${{ github.repository == 'forkcms/forkcms' }}
-              run: |
-                  curl -L https://scrutinizer-ci.com/ocular.phar > ./ocular.phar
-                  php ocular.phar code-coverage:upload -vvv --format=php-clover coverage.clover
+              uses: codecov/codecov-action@v1
+              with:
+                file: ${{ matrix.testsuite}}.clover
+                flags: ${{ matrix.testsuite}}
 
     phpstan:
         name: PHPStan - Static Code Analysis

@@ -25,12 +25,8 @@ filter:
         - vendor/*
 
 tools:
-    external_code_coverage:
-        timeout: 3600
-        runs: 3 # Scrutinizer will wait for 3 code coverage submissions
     php_mess_detector: true
     sensiolabs_security_checker: true
-    php_code_coverage: true
     php_cpd: false
     php_sim: true
     php_pdepend:

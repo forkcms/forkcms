@@ -50,11 +50,6 @@ class Index extends FrontendBaseBlock
 
     private function getData(): void
     {
-        $test = true;
-        if ($test) {
-            $hello = "world";
-        }
-
         $this->pagination = $this->buildPaginationConfig();
         $this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
     }
