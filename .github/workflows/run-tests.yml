@@ -100,7 +100,7 @@ jobs:
                   FORK_ENV: dev
 
             - name: Run PHPStan
-              run: bin/phpstan analyze src
+              run: bin/phpstan analyze --error-format github src
 
     php-code-sniffer:
         name: PHP Code Sniffer
