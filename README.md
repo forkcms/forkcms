@@ -28,15 +28,10 @@ To install the dependencies, you can run the command below in the document-root:
 
 If you discover any security-related issues, please email core@fork-cms.com instead of using the issue tracker.
 
-
-## SSL
-
-If you want to activate https redirection, go into the .htaccess file and uncomment the lines about https.
-
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
-If you're stuck or would like to discuss Fork CMS, talk to us on [slack](https://fork-cms.herokuapp.com/)!
+If you're stuck or would like to discuss Fork CMS: [![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
 
 ## Running the tests
 
@@ -70,8 +65,9 @@ the changes into the scss-files, and regenerate the real css with `gulp build`.
 We use [yarn](https://yarnpkg.com/) to install our dependencies. For now we have a `gulp`-script that moves everything to
 the correct directories. So if you change the dependencies, make sure you run `gulp build`.
 
-## Discussion
+## Community
 
-- Slack: <https://fork-cms.herokuapp.com/>
+[![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
+
 
 _The Fork CMS team_
