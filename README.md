@@ -31,7 +31,7 @@ If you discover any security-related issues, please email core@fork-cms.com inst
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
-If you're stuck or would like to discuss Fork CMS, talk to us on [Slack](https://fork-cms.herokuapp.com/)!
+If you're stuck or would like to discuss Fork CMS: [![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
 
 ## Running the tests
 
@@ -67,7 +67,7 @@ the correct directories. So if you change the dependencies, make sure you run `g
 
 ## Community
 
-[![Join our slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
+[![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
 
 
 _The Fork CMS team_
