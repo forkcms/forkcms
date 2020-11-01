@@ -17,7 +17,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
 
     public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
     {
-        $currentWidgets = $this->database->getRecords(
+        $currentWidgets = (array) $this->database->getRecords(
             'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             [
                 'Location',
