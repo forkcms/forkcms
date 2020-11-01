@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Tests\Utility;
+namespace ForkCMS\Tests\Utility\Thumbnails;
 
 use ForkCMS\Utility\Thumbnails;
 use PHPUnit\Framework\TestCase;
