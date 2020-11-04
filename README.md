@@ -1,6 +1,6 @@
 ![Fork CMS](docs/img/header.jpg)
 
-[![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
+[![Build Status](https://img.shields.io/github/workflow/status/forkcms/forkcms/run-tests)](https://github.com/forkcms/forkcms/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable)](https://packagist.org/packages/forkcms/forkcms)
 [![License](https://poser.pugx.org/forkcms/forkcms/license)](https://packagist.org/packages/forkcms/forkcms)
 [![Code Coverage](https://codecov.io/gh/forkcms/forkcms/branch/master/graph/badge.svg?token=ahj70hVO29)](http://codecov.io/github/forkcms/forkcms?branch=master)
