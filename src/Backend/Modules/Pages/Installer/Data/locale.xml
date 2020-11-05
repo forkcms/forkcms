@@ -50,6 +50,11 @@
         <translation language="nl"><![CDATA[status]]></translation>
         <translation language="en"><![CDATA[state]]></translation>
       </item>
+      <item type="label" name="PageIndex">
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+        <translation language="pl"><![CDATA[podgląd]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>
         <translation language="en"><![CDATA[add]]></translation>

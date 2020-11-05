@@ -60,6 +60,7 @@ final class PageContentType extends AbstractType
                     'data-role' => 'template-switcher',
                     'autocomplete' => 'off',
                 ],
+                'label' => 'lbl.Template',
             ]
         );
 
