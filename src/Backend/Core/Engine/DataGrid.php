@@ -299,7 +299,8 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnsSequence(['dragAndDropHandle', 'sortHandle']);
 
         // add a class on the handler column, so JS knows this is just a handler
-        $this->setColumnAttributes('dragAndDropHandle',
+        $this->setColumnAttributes(
+            'dragAndDropHandle',
             [
                 'class' => 'dragAndDropHandle fork-data-grid-sortable',
                 'data-role' => 'drag-and-drop-handle'
