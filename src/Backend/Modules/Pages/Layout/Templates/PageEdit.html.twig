@@ -3,21 +3,7 @@
 {% form_theme form 'Pages/Resources/views/FormLayout.html.twig' %}
 
 {% block pagesTree %}
-  <div class="sub-navigation d-none d-sm-block">
-    <div class="pages-tree">
-      {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans|ucfirst, null, null, {'class': 'd-md-none'}) }}
-      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
-        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
-      </button>
-      <div class="form-group">
-        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
-        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
-      </div>
-      <div id="tree">
-        {{ tree|raw }}
-      </div>
-    </div>
-  </div>
+  {% include 'Pages/Layout/Templates/PageTree.html.twig' with {'overview': false} %}
 {% endblock %}
 
 {% block actionbar %}
@@ -32,7 +18,7 @@
       {% endif %}
 
       {% if showPagesPageIndex %}
-        {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
+        {{ macro.buttonIcon(geturl('PageIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
       {% if showPagesPageAdd %}
@@ -88,7 +74,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|format(page.title)|raw }}</p>
+            <p>{{ 'msg.ConfirmDelete'|trans|format(page.title)|escape }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal", "id":"blockHtmlCancel" }) }}

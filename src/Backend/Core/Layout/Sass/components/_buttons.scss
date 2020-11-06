@@ -1,6 +1,6 @@
 .btn {
   border-radius: 3px;
-  font-size: $font-size-base * 0.875;
+  font-size: $btn-font-size;
   -webkit-appearance: none;
 
   .svg-inline--fa {
@@ -45,6 +45,7 @@
     align-items: center;
     align-content: center;
     display: flex;
+    font-size: $font-size-base;
     height: 32px;
     justify-content: center;
     padding: 0;
@@ -95,6 +96,25 @@
   }
 }
 
+.btn-move {
+  color: $gray-450;
+
+  &.btn-move-click {
+
+    @include hover-focus {
+      border-color: $black;
+    }
+  }
+
+  &.btn-move-drag {
+    font-size: $font-size-lg;
+  }
+
+  @include hover-focus {
+    color: $black;
+  }
+}
+
 .input-group-addon {
   color: $body-color;
 
@@ -115,7 +135,7 @@ a.btn {
 
   .btn .btn-text {
     display: inline-block;
-    font-size: $font-size-base * 0.875;
+    font-size: $btn-font-size;
     margin: 0;
   }
 }

@@ -307,7 +307,7 @@ abstract class WebTestCase extends BaseWebTestCase
      */
     protected function login(Client $client): void
     {
-        Authentication::tearDown();
+        $this->logout($client);
         self::assertHttpStatusCode200($client, '/private/en/authentication');
         $form = $this->getFormForSubmitButton($client, 'login');
         $this->submitForm(

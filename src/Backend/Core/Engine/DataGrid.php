@@ -34,7 +34,7 @@ class DataGrid extends \SpoonDataGrid
         'delete' => 'fa-trash-alt',
         'detail' => 'fa-eye',
         'details' => 'fa-eye',
-        'approve' => 'fa-thumbs-o-up',
+        'approve' => 'fa-thumbs-up',
         'mark_as_spam' => 'fa-ban',
         'install' => 'fa-download',
         'use_revision' => 'fa-file',
@@ -53,7 +53,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid']);
+        $this->setAttributes(['class' => 'table table-striped fork-data-grid jsDataGrid']);
 
         // id gets special treatment
         if (in_array('id', $this->getColumns(), true)) {
@@ -222,7 +222,6 @@ class DataGrid extends \SpoonDataGrid
             $name,
             [
                 'class' => 'fork-data-grid-action action' . SpoonFilter::toCamelCase($name),
-                'style' => 'width: 10%;',
             ]
         );
 
@@ -264,13 +263,12 @@ class DataGrid extends \SpoonDataGrid
                     ' ',
                     [
                         'table',
-                        'table-hover',
                         'table-striped',
                         'fork-data-grid',
                         'jsDataGrid',
-                        'sequenceByDragAndDrop',
                     ]
                 ),
+                'data-sequence-drag-and-drop' => 'data-grid',
             ]
         );
 
@@ -301,7 +299,12 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnsSequence(['dragAndDropHandle', 'sortHandle']);
 
         // add a class on the handler column, so JS knows this is just a handler
-        $this->setColumnAttributes('dragAndDropHandle', ['class' => 'dragAndDropHandle fork-data-grid-sortable']);
+        $this->setColumnAttributes('dragAndDropHandle',
+            [
+                'class' => 'dragAndDropHandle fork-data-grid-sortable',
+                'data-role' => 'drag-and-drop-handle'
+            ]
+        );
         $this->setColumnAttributes('sortHandle', ['class' => 'sortHandle']);
 
         // our JS needs to know an id, so we can send the new order
@@ -495,7 +498,7 @@ class DataGrid extends \SpoonDataGrid
             SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
             '</label>' .
             $actionDropDown->parse() .
-            '<button type="button" class="btn btn-default ml-2 jsMassActionSubmit">' .
+            '<button type="button" class="btn btn-default btn-sm ml-2 jsMassActionSubmit">' .
             '   <span>' . SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
             '</button>';
 

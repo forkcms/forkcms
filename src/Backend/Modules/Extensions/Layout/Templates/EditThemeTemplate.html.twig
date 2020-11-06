@@ -36,6 +36,11 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-lg-3">
+            <label for="defaultImage">
+              <img src="{% if template.default_image %}{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}{% else %}{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg{% endif %}" class="img-thumbnail" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('default_image').attributes.id }}" />
+            </label>
+          </div>
           <div class="col-lg-9">
             <div class="custom-file">
               {% form_field default_image %}
@@ -49,9 +54,6 @@
               </div>
               {% form_field_error remove_default_image %}
             {% endif %}
-          </div>
-          <div class="col-lg-3">
-            <img src="{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}" class="img-thumbnail{% if not template.default_image %} d-none{% endif %}" data-fork-cms-role="image-preview" data-id="{{ form_edit.field('default_image').attributes.id }}" />
           </div>
         </div>
       </fieldset>

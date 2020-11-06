@@ -22,6 +22,10 @@
 /bundles/*
 /css/*.css
 /js/*.js
+/src/ForkCMS/Bundle/InstallerBundle/Resources/public/build
+/src/Backend/Core/build
+/src/Frontend/Core/build
+/src/Frontend/Themes/*/Core/build
 
 # Docker
 var/docker/db/data/*

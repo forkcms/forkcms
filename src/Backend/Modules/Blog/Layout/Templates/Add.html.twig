@@ -24,9 +24,6 @@
         <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab" aria-selected="false" id="comments-tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
       </li>
     </ul>
@@ -61,13 +58,15 @@
                   <div class="row">
                     <div class="col-lg-3">
                       <div data-fork-cms-role="image-preview-wrapper" data-id="image">
-                        <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail{% if not item.image %} d-none{% endif %}" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                        <label for="image">
+                          <img src="{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" data-fork-cms-role="image-preview" data-id="image" />
+                        </label>
                       </div>
                     </div>
                     <div class="col-lg-9">
                       <div class="custom-file">
                         {% form_field image %}
-                        <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                        <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
                       </div>
                       {% form_field_error image %}
                     </div>
@@ -118,6 +117,19 @@
             </div>
             <div class="card card-default">
               <div class="card-heading">
+                <h2>{{ 'lbl.Comments'|trans|ucfirst }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="form-group last">
+                  <div class="form-check">
+                    {% form_field allow_comments %}
+                    <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card card-default">
+              <div class="card-heading">
                 <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
               </div>
               <div class="card-body">
@@ -138,14 +150,6 @@
                 {% endif %}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="tabComments" aria-labelledby="comments-tab">
-        <div class="form-group last">
-          <div class="form-check">
-            {% form_field allow_comments %}
-            <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
           </div>
         </div>
       </div>
@@ -183,7 +187,7 @@
         </div>
         <div class="modal-footer">
           {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit", "type":"button"}) }}
         </div>
       </div>
     </div>

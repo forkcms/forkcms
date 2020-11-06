@@ -18,6 +18,7 @@ $gray-100: #f1f1f1;
 $gray-200: #E5E5E5;
 $gray-300: #ddd;
 $gray-400: #cccccc;
+$gray-450: #B2B2B2;
 $gray-500: #adb5bd;
 $gray-550: #999999;
 $gray-600: #6c757d;
@@ -79,7 +80,9 @@ $info:          $blue;
 $warning:       $yellow;
 $danger:        $red;
 $light:         $gray-100;
+$middle:        $gray-450;
 $dark:          $gray-800;
+$black:         $black;
 
 $theme-colors: ();
 $theme-colors: map-merge((
@@ -90,7 +93,9 @@ $theme-colors: map-merge((
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "middle":     $middle,
+  "dark":       $dark,
+  "black":      $black
 ), $theme-colors);
 // stylelint-enable
 
@@ -98,7 +103,7 @@ $theme-colors: map-merge((
 $theme-color-interval:      8%;
 
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
-$yiq-contrasted-threshold: 150;
+$yiq-contrasted-threshold: 180;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
 $yiq-text-dark: $gray-900;
@@ -404,7 +409,7 @@ $input-btn-focus-width:       .2rem;
 $input-btn-focus-color:       rgba($component-active-bg, .25);
 $input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color;
 
-$input-btn-padding-y-sm:      .25rem;
+$input-btn-padding-y-sm:      .35rem;
 $input-btn-padding-x-sm:      .5rem;
 $input-btn-font-size-sm:      $font-size-sm;
 $input-btn-line-height-sm:    $line-height-sm;
@@ -424,12 +429,12 @@ $input-btn-border-width:      $border-width;
 $btn-padding-y:               0.5625rem;
 $btn-padding-x:               0.625rem;
 $btn-font-family:             $input-btn-font-family;
-$btn-font-size:               $input-btn-font-size;
+$btn-font-size:               $font-size-base * 0.875;
 $btn-line-height:             $input-btn-line-height;
 $btn-white-space:             null; // Set to `nowrap` to prevent text wrapping
 
 $btn-padding-y-sm:            .125rem;
-$btn-padding-x-sm:            $input-btn-padding-x-sm;
+$btn-padding-x-sm:            .5rem;
 $btn-font-size-sm:            $input-btn-font-size-sm;
 $btn-line-height-sm:          $input-btn-line-height-sm;
 
@@ -840,7 +845,7 @@ $card-spacer-y:                     .75rem;
 $card-spacer-x:                     1.25rem;
 $card-border-width:                 $border-width;
 $card-border-radius:                0.12rem;
-$card-border-color:                 rgba($black, .125);
+$card-border-color:                 $gray-200;
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width});
 $card-cap-bg:                       rgba($black, .03);
 $card-cap-color:                    null;
@@ -932,8 +937,8 @@ $toast-header-border-color:         rgba(0, 0, 0, .05);
 
 $badge-font-size:                   75%;
 $badge-font-weight:                 $font-weight-bold;
-$badge-padding-y:                   .25em;
-$badge-padding-x:                   .4em;
+$badge-padding-y:                   .4rem;
+$badge-padding-x:                   .4rem;
 $badge-border-radius:               $border-radius;
 
 $badge-transition:                  $btn-transition;
@@ -1020,7 +1025,7 @@ $progress-bar-transition:           width .6s ease;
 
 $list-group-color:                  null;
 $list-group-bg:                     $white;
-$list-group-border-color:           rgba($black, .125);
+$list-group-border-color:           $gray-450;
 $list-group-border-width:           $border-width;
 $list-group-border-radius:          $border-radius;
 

@@ -63,7 +63,7 @@ label,
     padding: 6px 12px 7px;
 
     &.btn-sm {
-      padding: 2px 8px;
+      padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
     }
   }
 }
@@ -123,6 +123,10 @@ select[size="1"] {
 
   .input-group-append .btn {
     padding: 7px 9px 8px;
+
+    &.btn-icon-only {
+      font-size: $btn-font-size;
+    }
   }
 }
 
@@ -136,10 +140,12 @@ select[size="1"] {
 
 fieldset {
   border-bottom: 1px solid $gray-200;
-  margin-bottom: 15px;
+  margin-bottom: $spacer * 2;
+  padding-bottom: $spacer;
 
   legend {
     border: 0;
+    color: $black;
     font-size: $font-size-lg;
     margin-bottom: 15px;
 

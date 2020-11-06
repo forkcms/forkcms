@@ -6,9 +6,14 @@
     </button>
     <div class="form-group">
       <label for="pagetree-search" class="sr-only">{{ 'lbl.search'|trans|ucfirst }}</label>
-      <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control form-control-sm fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+        </div>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control form-control-sm fork-form-text js-tree-search" placeholder="{{ 'lbl.Search'|trans|ucfirst }} {{ 'lbl.MediaFolder'|trans }}">
+      </div>
     </div>
-    <div id="tree" {% if not mediaFolder.name %} data-clear-tree{% endif %}>
+    <div id="tree" data-tree-media-libreary {% if not mediaFolder.name %} data-clear-tree{% endif %}>
       {{ tree|raw }}
     </div>
   </div>

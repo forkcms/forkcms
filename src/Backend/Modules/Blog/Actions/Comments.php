@@ -67,6 +67,8 @@ class Comments extends BackendBaseActionIndex
             ['published', BL::getWorkingLanguage(), 'active']
         );
 
+        $this->dgPublished->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid table-align-top']);
+
         // active tab
         $this->dgPublished->setActiveTab('tabPublished');
 
@@ -104,6 +106,9 @@ class Comments extends BackendBaseActionIndex
             true
         );
 
+        // set custom classes
+        $this->dgPublished->setColumnAttributes('text', ['class' => 'text w-50']);
+
         // sorting
         $this->dgPublished->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgPublished->setSortParameter('desc');
@@ -121,8 +126,8 @@ class Comments extends BackendBaseActionIndex
             ],
             'spam',
             false,
-            'form-control',
-            'form-control danger'
+            'form-control form-control-sm',
+            'form-control form-control-sm danger'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
         $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeletePublished']);
@@ -199,6 +204,9 @@ class Comments extends BackendBaseActionIndex
             true
         );
 
+        // set custom classes
+        $this->dgModeration->setColumnAttributes('text', ['class' => 'text w-50']);
+
         // sorting
         $this->dgModeration->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgModeration->setSortParameter('desc');
@@ -216,8 +224,8 @@ class Comments extends BackendBaseActionIndex
             ],
             'published',
             false,
-            'form-control',
-            'form-control danger'
+            'form-control form-control-sm',
+            'form-control form-control-sm danger'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
         $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeleteModeration']);
@@ -292,6 +300,9 @@ class Comments extends BackendBaseActionIndex
             true
         );
 
+        // set custom classes
+        $this->dgSpam->setColumnAttributes('text', ['class' => 'text w-50']);
+
         // sorting
         $this->dgSpam->setSortingColumns(['created_on', 'text', 'author'], 'created_on');
         $this->dgSpam->setSortParameter('desc');
@@ -309,8 +320,8 @@ class Comments extends BackendBaseActionIndex
             ],
             'published',
             false,
-            'form-control',
-            'form-control danger'
+            'form-control form-control-sm',
+            'form-control form-control-sm danger'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
         $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDeleteSpam']);

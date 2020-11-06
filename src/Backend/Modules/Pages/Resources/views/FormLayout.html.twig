@@ -50,7 +50,11 @@
       <div role="tabpanel" class="tab-pane" id="tabAuthentication" aria-labelledby="authentication-tab {% if form.data.authentication.required.vars.value %} show{% endif %}">
         {{ form_row(form.data.authentication.required) }}
         <div data-role="authentication-options" class="collapse{% if form.data.authentication.required.vars.checked %} show{% endif %}">
-          {{ form_rest(form.data.authentication) }}
+          {{ form_row(form.data.authentication.removeFromSearchIndex) }}
+          {{ form_label(form.data.authentication.groups) }}
+          {{ form_widget(form.data.authentication.groups) }}
+          {{ form_errors(form.data.authentication.groups) }}
+          <small class="help-text text-muted">{{ 'lbl.HelpAuthenticationGroups'|trans|ucfirst }}</small>
         </div>
       </div>
     {% else %}
@@ -83,10 +87,12 @@
 
        <div class="form-group">
          {{ form_widget(form.data.isAction) }}
-         {{ form_widget(form.settings.allowMove) }}
-         {{ form_widget(form.settings.allowChildren) }}
-         {{ form_widget(form.settings.allowEdit) }}
-         {{ form_widget(form.settings.allowDelete) }}
+         {% if form.settings.allowMove is defined %} {# Only god-users can see these#}
+           {{ form_widget(form.settings.allowMove) }}
+           {{ form_widget(form.settings.allowChildren) }}
+           {{ form_widget(form.settings.allowEdit) }}
+           {{ form_widget(form.settings.allowDelete) }}
+         {% endif %}
        </div>
       </fieldset>
 
@@ -238,6 +244,17 @@
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
+{% block _page_data_hreflang_widget %}
+  <div class="row">
+    {% for child in form.children %}
+      <div class="col-lg-4">
+        {{ form_row(child) }}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+
 {% block _page_data_redirect_redirect_entry_widget %}
   <div class="form-group">
     <div class="mb-2">
@@ -277,7 +294,7 @@
 
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
-      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% if form.vars.sequence_group %} data-sequence-group="{{ form.vars.sequence_group }}" data-position="{{ form.vars.name }}"{% endif %}{% endif %}>
         {% for field in form %}
           <li class="list-group-item">
             {{ block('page_block_collection_item') }}
@@ -287,9 +304,7 @@
 
       {% if form.vars.allow_add %}
         <div class="d-flex justify-content-center mt-2">
-          <div class="btn-group">
-            {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-wider', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
-          </div>
+          {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-block', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
         </div>
       {% endif %}
       {{ form_errors(form) }}
@@ -310,14 +325,14 @@
             <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body" data-role="page-block-form-wrapper">
-            {{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}
             {{ form_row(form.extraType) }}
             <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.blockExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="rich_text">{{ form_row(form.html) }}</div>
             {{ form_rest(form) }}
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-flex">
+            <div class="mr-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
             {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
           </div>
         </div>
@@ -328,42 +343,51 @@
 
 {% block page_block_collection_item %}
   {% import 'Layout/Templates/macros.html.twig' as macro %}
-    <div data-role="page-block-wrapper" class="{% if not field.children.visible.vars.checked %}block-not-visible{% endif %}">
-      <div class="d-flex">
-        <div class="block-info mb-2">
-          <p data-role="page-block-title" class="page-block-title mb-0 font-weight-bold">{{ field.vars.data.extraType.label }}</p>
-          <div data-role="page-block-preview">
-            {% if field.vars.data.extraType.isRichText and field.vars.data.html %}
-              <p class="page-block-description mb-0">{{ field.vars.data.html|parse_blocks|truncate(80) }}</p>
+    <div data-role="page-block-wrapper" class="d-flex{% if not field.children.visible.vars.checked %} block-not-visible{% endif %}">
+      {% if form.vars.allow_sequence %}
+        <div class="d-flex flex-column mr-2">
+          {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
+          <span class="btn btn-move btn-move-drag btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('grip-vertical') }}</span>
+          {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
+        </div>
+      {% endif %}
+
+      <div>
+        <div data-role="page-block-preview" class="mb-2{% if not field.vars.data.extraType.isRichText %} d-none{% endif %}">
+          <p class="page-block-description mb-0">
+            {% if field.vars.data.html %}
+              {{ field.vars.data.html|parse_blocks|truncate(75) }}
+            {% else %}
+              {{ 'lbl.NoContentToShow'|trans|ucfirst }}
+            {% endif %}
+          </p>
+        </div>
+        <div class="block-info mb-2{% if field.vars.data.extraType.isRichText %} d-none{% endif %}" data-role="page-block-title-wrapper">
+          <p class="badge badge-middle mb-2" data-role="page-block-type">{{ field.vars.data.extraType.label }}</p>
+          <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">
+            {% if field.vars.data.extraModule %}
+              {{ field.vars.data.extraModule }}
+              › {{ field.vars.data.extraLabel }}
+            {% endif %}
+          </p>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div class="btn-group">
+            {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
+
+            {% if form.vars.allow_delete %}
+              {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
             {% endif %}
           </div>
         </div>
-
-        <div class="ml-auto">
-          {{ form_widget(field) }}
-          {{ form_errors(field) }}
-        </div>
       </div>
 
-      <div class="d-flex flex-wrap">
-        <div class="btn-group">
-          {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-icon-only btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
-          {% if form.vars.allow_sequence %}
-            <span class="btn btn-default btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('arrows-alt') }}</span>
-          {% endif %}
-
-          {% if form.vars.allow_delete %}
-            {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-icon-only btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
-          {% endif %}
-        </div>
-
-        {% if form.vars.allow_sequence %}
-          <div class="btn-group d-flex justify-content-end p-0 ml-auto">
-            {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-default btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
-            {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-default btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
-          </div>
-        {% endif %}
+      <div class="ml-auto">
+        {{ form_widget(field) }}
+        {{ form_errors(field) }}
       </div>
+
 
       {% if form.vars.allow_delete %}
         <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
@@ -398,6 +422,6 @@
   <div class="custom-control custom-visible-switch">
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %} data-role="page-block-visibility" />
 
-    <label for="{{ form.vars.id }}">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="sr-only">{{ form.vars.label|trans }}</span></label>
+    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="sr-only">{{ form.vars.label|trans }}</span></label>
   </div>
 {%- endblock %}

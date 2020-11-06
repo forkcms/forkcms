@@ -1,20 +1,20 @@
-@charset 'UTF-8';
-
 // Bootstrap
-@import "bootstrap/scss/functions";
-@import 'bootstrap/scss/variables';
+@import "~bootstrap/scss/functions";
+@import '~bootstrap/scss/variables';
 @import 'bootstrap-variables';
 @import 'fork-variables';
 @import 'bootstrap-imports';
 
+// Plugins
+@import '~bootstrap-tagsinput/src/bootstrap-tagsinput';
+@import '~bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
+@import '~select2/src/scss/core';
+@import '~select2-theme-bootstrap4/src/select2-bootstrap';
+@import 'plugins/treejs';
+
 // Base
 @import 'base/base';
 @import 'base/typography';
-
-// Plugins
-@import 'plugins/jquery_ui';
-@import 'plugins/tags-input';
-@import 'plugins/jstree';
 
 // Components
 // Insert components here. Put all components in the components/ directory
@@ -28,6 +28,7 @@
 @import 'components/tabs';
 @import 'components/header';
 @import 'components/content-wrapper';
+@import 'components/data-grids';
 @import 'components/dropdowns';
 @import 'components/buttons';
 @import 'components/tree';
@@ -45,7 +46,6 @@
 @import 'components/editor';
 @import 'components/installer';
 @import 'components/settings';
-@import 'components/ckeditor';
 @import 'components/media-library';
 @import 'components/badges';
 @import 'components/images';
@@ -53,7 +53,12 @@
 @import 'components/toasts';
 @import 'components/list-group';
 @import 'components/codex-editor';
+@import 'components/empty-state';
+@import 'components/tags-input';
 
 // Layout
 @import 'layouts/fork';
 @import 'layouts/footer';
+
+// Modules
+@import '../../../Modules/MediaLibrary/Sass/mediaLibrary';

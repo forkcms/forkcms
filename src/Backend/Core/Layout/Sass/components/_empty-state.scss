@@ -1,0 +1,15 @@
+.empty-state {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: $spacer * 2;
+  width: 100%;
+
+  .empty-state-illustration {
+    width: 200px;
+  }
+
+  .empty-state-add {
+    text-decoration: underline;
+  }
+}

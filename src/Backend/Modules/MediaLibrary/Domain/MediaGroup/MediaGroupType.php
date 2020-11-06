@@ -215,13 +215,6 @@ class MediaGroupType extends AbstractType
         $header = Model::get('header');
 
         // Add "fine-uploader" css/js
-        $header->addCSS('/css/vendors/fine-uploader/fine-uploader-new.min.css', null, true, false);
-        $header->addCSS('/css/vendors/cropper.css', null, true);
-        $header->addJS('/js/vendors/jquery.fine-uploader.min.js', null, false, true);
-        $header->addJS('/js/vendors/cropper.js', null, true, true);
-
-        $header->addJS('MediaLibraryFolders.js', 'MediaLibrary');
-        $header->addJS('MediaLibraryHelper.js', 'MediaLibrary');
         $header->addJsData('MediaLibrary', 'mediaItemTypes', MediaItemPossibleType::POSSIBLE_VALUES);
         $header->addJsData('MediaLibrary', 'mediaAllowedMovieSource', StorageType::POSSIBLE_VALUES_FOR_MOVIE);
         $header->addJsData(

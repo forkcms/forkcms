@@ -1,0 +1,22 @@
+.fork-data-grid {
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .fork-data-grid-action {
+    min-width: 10%;
+
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  td.text {
+    max-width: 70%;
+  }
+
+  .sortHandle {
+    min-width: 86px;
+  }
+}

@@ -39,11 +39,11 @@
     </div>
   </div>
   <div class="fork-module-actions">
-    <div class="btn-toolbar">
+    <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('Categories'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
-      <div class="btn-group pull-right" role="group">
+      <div class="btn-group ml-auto" role="group">
         {{ macro.buttonIcon(null, 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>

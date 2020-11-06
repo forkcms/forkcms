@@ -13,41 +13,41 @@
 {% endblock %}
 
 {% block content %}
-  {% form filter %}
-  <div class="card card-default">
-    <div class="card-heading">
-      <h2>{{ 'lbl.Filter'|trans|ucfirst }}</h2>
-    </div>
-    <div class="card-body p-3">
-      <div class="form-row">
-        <div class="col-md-4">
-          <div class="form-group mb-md-0">
-            <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
-            {% form_field email %} {% form_field_error email %}
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group mb-md-0">
-            <label for="status" class="control-label">{{ 'lbl.Status'|trans|ucfirst }}</label>
-            {% form_field status %} {% form_field_error status %}
-          </div>
-        </div>
-        <div class="col-md-4">
-          {% if ddmGroup %}
-            <div class="form-group mb-md-0">
-              <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-              {% form_field group %} {% form_field_error group %}
-            </div>
-          {% endif %}
-        </div>
-      </div>
-      <div class="d-flex justify-content-end mt-3">
-        {{ macro.buttonIcon('', 'sync', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"search", "name":"search" }) }}
-      </div>
-    </div>
-  </div>
-  {% endform %}
   {% if dgProfiles %}
+    {% form filter %}
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2>{{ 'lbl.Filter'|trans|ucfirst }}</h2>
+      </div>
+      <div class="card-body p-3">
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group mb-md-0">
+              <label for="email" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              {% form_field email %} {% form_field_error email %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group mb-md-0">
+              <label for="status" class="control-label">{{ 'lbl.Status'|trans|ucfirst }}</label>
+              {% form_field status %} {% form_field_error status %}
+            </div>
+          </div>
+          <div class="col-md-4">
+            {% if ddmGroup %}
+              <div class="form-group mb-md-0">
+                <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
+                {% form_field group %} {% form_field_error group %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+          {{ macro.buttonIcon('', 'sync', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"search", "name":"search" }) }}
+        </div>
+      </div>
+    </div>
+    {% endform %}
     <form action="{{ geturl('mass_action') }}" method="get" class="forkForms submitWithLink">
     <div>
       <input type="hidden" name="offset" value="{{ offset }}" />
@@ -96,8 +96,7 @@
       </div>
     </div>
     </form>
-  {% endif %}
-  {% if not dgProfiles %}
-    <p>{{ 'msg.NoItems'|trans }}</p>
+  {% else %}
+    {{ macro.emptyState(geturl('add'), 'msg.AddAProfile'|trans, 'msg.NoProfiles'|trans|ucfirst) }}
   {% endif %}
 {% endblock %}

@@ -113,17 +113,30 @@
         <translation language="pl"><![CDATA[Brak statystyk do wyświetlenia.]]></translation>
       </item>
       <item type="message" name="NoSynonyms">
-        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.]]></translation>
-        <translation language="en"><![CDATA[There are no synonyms yet. <a href="%1$s">Add the first synonym</a>.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora sinonimi. <a href="%1$s">Aggiungi il primo sinonimo</a>.]]></translation>
-        <translation language="ru"><![CDATA[Нет синонимов. <a href="%1$s">Добавить</a>.]]></translation>
-        <translation language="zh"><![CDATA[还没有同义词。<a href="％1$s">添加第一个同义词</a>]]></translation>
-        <translation language="hu"><![CDATA[Nincsenek még szinonímák. <a href="%1$s">Az első hozzáadása</a>.]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Synonyme. <a href"%1$s">Erstelle das erste Synonym</a>]]></translation>
-        <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes. <a href="%1$s">Ajoutez le premier synonyme</a>.]]></translation>
-        <translation language="es"><![CDATA[Aún no hay sinónimos <a href="%1$s">Agregar el primer sinónimo</a>.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα. <a href="%1$s">Προσθέστε το πρώτο συνώνυμο</a>.]]></translation>
-        <translation language="pl"><![CDATA[Brak synonimów. <a href="%1$s">Dodaj pierwszy synonim</a>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>
+        <translation language="en"><![CDATA[There are no synonyms yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora sinonimi.]]></translation>
+        <translation language="ru"><![CDATA[Нет синонимов.]]></translation>
+        <translation language="zh"><![CDATA[还没有同义词。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még szinonímák.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Synonyme.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay sinónimos.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα.]]></translation>
+        <translation language="pl"><![CDATA[Brak synonimów.]]></translation>
+      </item>
+      <item type="message" name="AddASynonyms">
+        <translation language="nl"><![CDATA[Voeg het eerste synoniem toe]]></translation>
+        <translation language="en"><![CDATA[Add the first synonym]]></translation>
+        <translation language="it"><![CDATA[Aggiungi il primo sinonimo]]></translation>
+        <translation language="ru"><![CDATA[Добавить]]></translation>
+        <translation language="zh"><![CDATA[添加第一个同义词]]></translation>
+        <translation language="hu"><![CDATA[Az első hozzáadása]]></translation>
+        <translation language="de"><![CDATA[Erstelle das erste Synonym]]></translation>
+        <translation language="fr"><![CDATA[Ajoutez le premier synonyme]]></translation>
+        <translation language="es"><![CDATA[Agregar el primer sinónimo]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε το πρώτο συνώνυμο]]></translation>
+        <translation language="pl"><![CDATA[Dodaj pierwszy synonim]]></translation>
       </item>
       <item type="message" name="NoSynonymsBox">
         <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>

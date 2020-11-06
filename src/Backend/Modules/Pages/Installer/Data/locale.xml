@@ -7,6 +7,10 @@
         <translation language="en"><![CDATA[move this page]]></translation>
         <translation language="pl"><![CDATA[przenieś tę stronę]]></translation>
       </item>
+      <item type="label" name="NoContentToShow">
+        <translation language="nl"><![CDATA[geen inhoud om weer te geven]]></translation>
+        <translation language="en"><![CDATA[no content to show]]></translation>
+      </item>
       <item type="label" name="MovePageTree">
         <translation language="nl"><![CDATA[navigatie boom]]></translation>
         <translation language="en"><![CDATA[navigation tree]]></translation>
@@ -45,6 +49,11 @@
       <item type="label" name="State">
         <translation language="nl"><![CDATA[status]]></translation>
         <translation language="en"><![CDATA[state]]></translation>
+      </item>
+      <item type="label" name="PageIndex">
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+        <translation language="pl"><![CDATA[podgląd]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>
@@ -368,6 +377,11 @@
         <translation language="en"><![CDATA[This image can be used in the template. for example as a header]]></translation>
         <translation language="nl"><![CDATA[Deze afbeelding kan worden gebruikt in de template. bijvoorbeeld als header]]></translation>
         <translation language="pl"><![CDATA[Ten obraz może zostać użyty w szablonie. Np. jako header]]></translation>
+      </item>
+      <item type="message" name="HelpAuthenticationGroups">
+        <translation language="en"><![CDATA[Only users in the selected groups will be able to access this page]]></translation>
+        <translation language="nl"><![CDATA[Enkel gebruikers in de geselecteerde groepen zullen toegang hebben.]]></translation>
+        <translation language="fr"><![CDATA[Seuls les utilisateurs des groupes sélectionnés pourront accéder à cette page]]></translation>
       </item>
       <item type="message" name="AllowChildren">
         <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>

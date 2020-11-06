@@ -271,18 +271,32 @@
 		<translation language="pl"><![CDATA[Wyszukiwane hasło identyfikuje linki w istniejącym wpisie na blogu, abyśmy mogli przenieść je do aktywnych linków w module blogu widłowego.]]></translation>
       </item>
       <item type="message" name="NoCategoryItems">
-        <translation language="nl"><![CDATA[Er zijn nog geen categorieën. <a href="%1$s">Maak een eerste categorie</a>.]]></translation>
-        <translation language="en"><![CDATA[There are no categories yet. <a href="%1$s">Create the first category</a>.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora categorie. <a href="%1$s">Crea la prima categoria</a>.]]></translation>
-        <translation language="ru"><![CDATA[Нет категорий.<a href="%1$s">Создайте первую</a>.]]></translation>
-        <translation language="zh"><![CDATA[尚无分类。There are no articles yet. <a href="%1$s">创建一个分类</a>.]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Kategorien. <a href="%1$s">Erstelle die erste Kategorie</a>.]]></translation>
-        <translation language="hu"><![CDATA[Nincsenek még kategóriák. <a href="%1$s">Hozd létre az elsőt</a>.]]></translation>
-        <translation language="fr"><![CDATA[il n'y a pas encore de catégorie. <a href="%1$s">Créez la première</a>]]></translation>
-        <translation language="es"><![CDATA[Aún no hay categorias. <a href="%1$s">Crea la primera categoría</a>.]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga kategorier än. <en href="%1$s">Skapa en första kategori</en>.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη κατηγορίες. <a href="%1$s">Δημιουργήστε την πρώτη κατηγορία</a>.]]></translation>
-		<translation language="pl"><![CDATA[Nie ma jeszcze kategorii. <a href="%1$s"> Utwórz pierwszą kategorię </a>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen categorieën.]]></translation>
+        <translation language="en"><![CDATA[There are no categories yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora categorie.]]></translation>
+        <translation language="ru"><![CDATA[Нет категорий.]]></translation>
+        <translation language="zh"><![CDATA[尚无分类。There are no articles yet.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Kategorien.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még kategóriák.]]></translation>
+        <translation language="fr"><![CDATA[il n'y a pas encore de catégorie.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay categorias.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga kategorier än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη κατηγορίες.]]></translation>
+	    	<translation language="pl"><![CDATA[Nie ma jeszcze kategorii.]]></translation>
+      </item>
+      <item type="message" name="AddACategory">
+        <translation language="nl"><![CDATA[Maak een eerste categorie]]></translation>
+        <translation language="en"><![CDATA[Create the first category]]></translation>
+        <translation language="it"><![CDATA[Crea la prima categoria]]></translation>
+        <translation language="ru"><![CDATA[Создайте первую]]></translation>
+        <translation language="zh"><![CDATA[创建一个分类]]></translation>
+        <translation language="de"><![CDATA[Erstelle die erste Kategorie]]></translation>
+        <translation language="hu"><![CDATA[Hozd létre az elsőt]]></translation>
+        <translation language="fr"><![CDATA[Créez la première]]></translation>
+        <translation language="es"><![CDATA[Crea la primera categoría]]></translation>
+        <translation language="sv"><![CDATA[Skapa en första kategori]]></translation>
+        <translation language="el"><![CDATA[Δημιουργήστε την πρώτη κατηγορία]]></translation>
+        <translation language="pl"><![CDATA[Utwórz pierwszą kategorię]]></translation>
       </item>
       <item type="error" name="NoFromSelected">
         <translation language="nl"><![CDATA[Geen oorsprong geselecteerd.]]></translation>
@@ -290,18 +304,32 @@
 		<translation language="pl"><![CDATA[Nie wybrano początku.]]></translation>
       </item>
       <item type="message" name="NoItems">
-        <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
-        <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora articoli. <a href="%1$s">Scrivi il primo articolo</a>.]]></translation>
-        <translation language="ru"><![CDATA[Нет записей. <a href="%1$s">Напишите первый пост</a>.]]></translation>
-        <translation language="zh"><![CDATA[尚无文章。<a href="%1$s">撰写一篇文章</a>。]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Artikel. <a href="%1$s">Schreibe den ersten Artikel</a>.]]></translation>
-        <translation language="hu"><![CDATA[Nincsenek még cikkek. <a href="%1$s">Írd meg az elsőt</a>.]]></translation>
-        <translation language="fr"><![CDATA[il n'y a pas encore d'article. <a href="%1$s">Ajouter le premier article</a>.]]></translation>
-        <translation language="es"><![CDATA[Aún no hay artículos. <a href="%1$s">Escribe el primer artículo</a>.]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga artiklar än. <en href="%1$s">Skriv den första artikeln</en>.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη άρθρα. <a href="%1$s">Γράψε το πρώτο άρθρο</a>.]]></translation>
-		<translation language="pl"><![CDATA[Nie ma jeszcze żadnych artykułów. <a href="%1$s"> Napisz pierwszy artykuł </a>.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen artikels.]]></translation>
+        <translation language="en"><![CDATA[There are no articles yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora articoli.]]></translation>
+        <translation language="ru"><![CDATA[Нет записей.]]></translation>
+        <translation language="zh"><![CDATA[尚无文章。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Artikel.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még cikkek.]]></translation>
+        <translation language="fr"><![CDATA[il n'y a pas encore d'article.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay artículos.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga artiklar än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη άρθρα.]]></translation>
+        <translation language="pl"><![CDATA[Nie ma jeszcze żadnych artykułów.]]></translation>
+      </item>
+      <item type="message" name="AddAnArticle">
+        <translation language="nl"><![CDATA[Schrijf het eerste artikel.]]></translation>
+        <translation language="en"><![CDATA[Write the first article]]></translation>
+        <translation language="it"><![CDATA[Scrivi il primo articolo]]></translation>
+        <translation language="ru"><![CDATA[Напишите первый пост]]></translation>
+        <translation language="zh"><![CDATA[撰写一篇文章]]></translation>
+        <translation language="de"><![CDATA[Schreibe den ersten Artikel]]></translation>
+        <translation language="hu"><![CDATA[Írd meg az elsőt]]></translation>
+        <translation language="fr"><![CDATA[Ajouter le premier article]]></translation>
+        <translation language="es"><![CDATA[Escribe el primer artículo]]></translation>
+        <translation language="sv"><![CDATA[Skriv den första artikeln]]></translation>
+        <translation language="el"><![CDATA[Γράψε το πρώτο άρθρο]]></translation>
+		    <translation language="pl"><![CDATA[Napisz pierwszy artykuł]]></translation>
       </item>
       <item type="message" name="NotifyByEmailOnNewComment">
         <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
@@ -438,6 +466,20 @@
         <translation language="es"><![CDATA[artículos relacionados]]></translation>
         <translation language="ru"><![CDATA[соответствующие статьи]]></translation>
         <translation language="it"><![CDATA[articoli correlati]]></translation>
+      </item>
+      <item type="label" name="CommentedOnWithUrl">
+        <translation language="nl"><![CDATA[reageerde op <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[commented on <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="it"><![CDATA[commentato su <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="ru"><![CDATA[Прокомментировал <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="zh"><![CDATA[評論了 <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="hu"><![CDATA[kommentálta <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[commenté sur <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="de"><![CDATA[kommentiert zu <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="es"><![CDATA[comentado en <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="sv"><![CDATA[kommenterte på <en href="%1$s">%2$s</en>]]></translation>
+        <translation language="el"><![CDATA[Σχολίασε <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="pl"><![CDATA[skomentował <a href="%1$s">%2$s</a>]]></translation>
       </item>
     </Core>
   </Backend>

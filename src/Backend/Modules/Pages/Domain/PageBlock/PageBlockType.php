@@ -113,6 +113,9 @@ final class PageBlockType extends AbstractType
                 $moduleExtra = null;
                 if ($extraId !== null) {
                     $moduleExtra = $entityManager->getReference(ModuleExtra::class, $extraId);
+
+                    $event->getData()->extraModule = $moduleExtra->getModule();
+                    $event->getData()->extraLabel = $moduleExtra->getTranslatedLabel();
                 }
                 $event->getForm()->add(
                     'widgetExtraId',

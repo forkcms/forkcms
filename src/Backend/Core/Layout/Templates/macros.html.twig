@@ -36,19 +36,14 @@
   <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
 {% endmacro %}
 
-{% macro dataGrid(dataGrid, noItemsMessage) %}
+{% macro dataGrid(dataGrid, addItemLink, addItemText, noItemsText) %}
+  {% import _self as macro %}
   {% if dataGrid %}
     <div class="table-responsive">
       {{ dataGrid|raw }}
     </div>
   {% else %}
-    <p>
-      {% if noItemsMessage %}
-        {{ noItemsMessage|raw }}
-      {% else %}
-        {{ 'msg.NoItems'|trans|raw }}
-      {% endif %}
-    </p>
+    {{ macro.emptyState(addItemLink, addItemText, noItemsText) }}
   {% endif %}
 {% endmacro %}
 
@@ -74,7 +69,7 @@
 
   {% if type == 'danger' or type == 'warning' %}
     {% set role = 'alert' %}
-    {% set role = 'assertive' %}
+    {% set live = 'assertive' %}
   {% endif %}
 
   {% if type == 'danger' %}
@@ -112,3 +107,17 @@
   </div>
 {% endmacro %}
 
+{% macro emptyState(addItemLink, addItemText, noItemsText, addItemLinkExtraAttributes) %}
+  {% set addItemText = addItemText|default('msg.AddItem'|trans|raw) %}
+  {% set noItemsText = noItemsText|default('msg.NoItems'|trans|raw) %}
+
+  <div class="empty-state">
+    <img class="empty-state-illustration mb-4" src="{{ BACKEND_CORE_URL }}/Layout/images/empty-state.svg" alt="">
+    <p class="text-black mb-2"><strong>{{ noItemsText|raw }}</strong></p>
+    {% if not addItemLink is null %}
+      <a class="empty-state-add" href="{{ addItemLink }}"{% for attrname, attrvalue in addItemLinkExtraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ addItemText|trans|ucfirst }}
+      </a>
+    {% endif %}
+  </div>
+{% endmacro %}

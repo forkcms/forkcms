@@ -2437,21 +2437,6 @@
         <translation language="zh"><![CDATA["%1$s"有一条回复]]></translation>
         <translation language="pl"><![CDATA[Jest komentarz do "%1$s"]]></translation>
       </item>
-      <item type="message" name="FaqNoItems">
-        <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
-        <translation language="en"><![CDATA[There are no questions yet.]]></translation>
-        <translation language="ru"><![CDATA[Пока нет вопросов.]]></translation>
-        <translation language="fr"><![CDATA[Il n'ya pas encore de questions.]]></translation>
-        <translation language="es"><![CDATA[No hay preguntas aun.]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Fragen.]]></translation>
-        <translation language="lt"><![CDATA[Kolkas klausimų nėra.]]></translation>
-        <translation language="uk"><![CDATA[Запитань ще немає]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga frågor än.]]></translation>
-        <translation language="hu"><![CDATA[Nincs még kérdés.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ερωτήσεις.]]></translation>
-        <translation language="zh"><![CDATA[还没有人提问。]]></translation>
-        <translation language="pl"><![CDATA[Brak pytań.]]></translation>
-      </item>
       <item type="message" name="FaqOwnQuestionSubject">
         <translation language="nl"><![CDATA[Een vraag van %1$s.]]></translation>
         <translation language="en"><![CDATA[A question from %1$s.]]></translation>
@@ -10400,20 +10385,20 @@
         <translation language="pl"><![CDATA[Komentarze zostały oznaczone jako spam.]]></translation>
       </item>
       <item type="message" name="CommentsToModerate">
-        <translation language="nl"><![CDATA[%1$s reactie(s) te modereren.]]></translation>
-        <translation language="en"><![CDATA[%1$s comment(s) to moderate.]]></translation>
-        <translation language="hu"><![CDATA[%1$s komment moderálva.]]></translation>
-        <translation language="it"><![CDATA[%1$s commento/i da moderare.]]></translation>
-        <translation language="ru"><![CDATA[%1$s коммент. ждут модерации.]]></translation>
-        <translation language="zh"><![CDATA[有%1$s条评论待审核]]></translation>
-        <translation language="fr"><![CDATA[%1$s commentaire(s) à modérer.]]></translation>
-        <translation language="de"><![CDATA[%1$s Kommentar(e) zu moderieren.]]></translation>
-        <translation language="es"><![CDATA[%1$s comentario(s) a moderación.]]></translation>
-        <translation language="lt"><![CDATA[%1$s komentarai(-ų) laukia patvirtinimo.]]></translation>
-        <translation language="uk"><![CDATA[%1$s коментарів чакає на перевірку.]]></translation>
-        <translation language="sv"><![CDATA[%1$s kommentera (er) till moderering.]]></translation>
-        <translation language="el"><![CDATA[Υπάρχουν %1$s σχόλια γιά έγκριση.]]></translation>
-        <translation language="pl"><![CDATA[%1$s komentarzy do mederacji.]]></translation>
+        <translation language="nl"><![CDATA[%1$s reactie(s) te <a href="%2$s">modereren</a>.]]></translation>
+        <translation language="en"><![CDATA[%1$s comment(s) to <a href="%2$s">moderate</a>.]]></translation>
+        <translation language="hu"><![CDATA[%1$s komment <a href="%2$s">moderálva</a>.]]></translation>
+        <translation language="it"><![CDATA[%1$s commento/i da <a href="%2$s">moderare</a>.]]></translation>
+        <translation language="ru"><![CDATA[%1$s коммент. ждут <a href="%2$s">модерации</a>.]]></translation>
+        <translation language="zh"><![CDATA[有%1$s条评论<a href="%2$s">待审</a>核]]></translation>
+        <translation language="fr"><![CDATA[%1$s commentaire(s) à <a href="%2$s">modérer</a>.]]></translation>
+        <translation language="de"><![CDATA[%1$s Kommentar(e) zu <a href="%2$s">moderieren</a>.]]></translation>
+        <translation language="es"><![CDATA[%1$s comentario(s) a <a href="%2$s">moderación</a>.]]></translation>
+        <translation language="lt"><![CDATA[%1$s komentarai(-ų) laukia <a href="%2$s">patvirtinimo</a>.]]></translation>
+        <translation language="uk"><![CDATA[%1$s коментарів чакає на <a href="%2$s">перевірку</a>.]]></translation>
+        <translation language="sv"><![CDATA[%1$s kommentera (er) till <a href="%2$s">moderering</a>.]]></translation>
+        <translation language="el"><![CDATA[Υπάρχουν %1$s σχόλια γιά <a href="%2$s">έγκριση</a>.]]></translation>
+        <translation language="pl"><![CDATA[%1$s komentarzy do <a href="%2$s">mederacji</a>.]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
@@ -11324,6 +11309,21 @@
         <translation language="sv"><![CDATA[Det finns inga produkter än.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη αντικείμενα.]]></translation>
         <translation language="pl"><![CDATA[Brak pozycji.]]></translation>
+      </item>
+      <item type="message" name="AddItem">
+        <translation language="nl"><![CDATA[Voeg een item toe]]></translation>
+        <translation language="en"><![CDATA[Add an item]]></translation>
+        <translation language="hu"><![CDATA[Adjon hozzá egy elemet]]></translation>
+        <translation language="ru"><![CDATA[Добавить предмет]]></translation>
+        <translation language="it"><![CDATA[Aggiungi un oggetto]]></translation>
+        <translation language="zh"><![CDATA[新增項目]]></translation>
+        <translation language="fr"><![CDATA[Ajouter un élément]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie einen Artikel hinzu]]></translation>
+        <translation language="es"><![CDATA[Agregar un artículo]]></translation>
+        <translation language="lt"><![CDATA[Pridėti elementą]]></translation>
+        <translation language="uk"><![CDATA[Додати елемент]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε ένα αντικείμενο]]></translation>
+        <translation language="pl"><![CDATA[Dodaj element]]></translation>
       </item>
       <item type="message" name="NoKeywords">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
@@ -12676,6 +12676,36 @@
       <item type="label" name="ClickHereToAddContent">
         <translation language="nl"><![CDATA[klik hier om inhoud toe te voegen]]></translation>
         <translation language="en"><![CDATA[click here to add content]]></translation>
+      </item>
+      <item type="message" name="AddACategory">
+        <translation language="nl"><![CDATA[voeg een categorie toe]]></translation>
+        <translation language="en"><![CDATA[add a category]]></translation>
+        <translation language="de"><![CDATA[eine Kategorie hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une catégorie]]></translation>
+      </item>
+      <item type="label" name="NoResultsFound">
+        <translation language="nl"><![CDATA[geen resultaten gevonden]]></translation>
+        <translation language="en"><![CDATA[no results found]]></translation>
+        <translation language="de"><![CDATA[keine Ergebnisse gefunden]]></translation>
+        <translation language="fr"><![CDATA[aucun résultat trouvé]]></translation>
+      </item>
+      <item type="label" name="TheResultsCouldNotBeLoaded">
+        <translation language="nl"><![CDATA[de resultaten kunnen niet geladen worden]]></translation>
+        <translation language="en"><![CDATA[the results could not be loaded]]></translation>
+        <translation language="de"><![CDATA[die Ergebnisse konnten nicht geladen werden]]></translation>
+        <translation language="fr"><![CDATA[les résultats n'ont pas pu être chargés]]></translation>
+      </item>
+      <item type="label" name="LoadingMoreResults">
+        <translation language="nl"><![CDATA[meer resultaten laden…]]></translation>
+        <translation language="en"><![CDATA[loading more results…]]></translation>
+        <translation language="de"><![CDATA[Weitere Ergebnisse laden…]]></translation>
+        <translation language="fr"><![CDATA[chargement d'autres résultats…]]></translation>
+      </item>
+      <item type="label" name="Searching">
+        <translation language="nl"><![CDATA[zoeken…]]></translation>
+        <translation language="en"><![CDATA[searching…]]></translation>
+        <translation language="de"><![CDATA[Suche…]]></translation>
+        <translation language="fr"><![CDATA[recherche…]]></translation>
       </item>
     </Core>
   </Backend>

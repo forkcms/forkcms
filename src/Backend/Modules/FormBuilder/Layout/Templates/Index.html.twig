@@ -12,6 +12,6 @@
 {% endblock %}
 
 {% block content %}
-  {{ macro.dataGrid(dataGrid) }}
+  {{ macro.dataGrid(dataGrid, geturl('add'), 'msg.AddAForm'|trans, 'msg.NoItems'|trans) }}
 {% endblock %}
 

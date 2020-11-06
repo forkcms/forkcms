@@ -47,6 +47,21 @@
         <translation language="el"><![CDATA[Προσθήκη Ερώτησης]]></translation>
         <translation language="pl"><![CDATA[dodaj pytanie]]></translation>
       </item>
+      <item type="message" name="AddAQuestion">
+        <translation language="nl"><![CDATA[voeg een vraag toe]]></translation>
+        <translation language="en"><![CDATA[add a question]]></translation>
+        <translation language="hu"><![CDATA[Adjon hozzá egy tartalomblokkot]]></translation>
+        <translation language="it"><![CDATA[Aggiungi un blocco di contenuti]]></translation>
+        <translation language="ru"><![CDATA[Добавить блок контента]]></translation>
+        <translation language="zh"><![CDATA[添加內容塊]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie einen Inhaltsblock hinzu]]></translation>
+        <translation language="fr"><![CDATA[Ajouter un bloc de contenu]]></translation>
+        <translation language="es"><![CDATA[Agregar un bloque de contenido]]></translation>
+        <translation language="uk"><![CDATA[Додайте блок вмісту]]></translation>
+        <translation language="lt"><![CDATA[Pridėkite turinio bloką]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε ένα μπλοκ περιεχομένου]]></translation>
+        <translation language="pl"><![CDATA[Dodaj blok zawartości]]></translation>
+      </item>
       <item type="label" name="AllowFeedback">
         <translation language="nl"><![CDATA[feedback toelaten]]></translation>
         <translation language="en"><![CDATA[allow feedback]]></translation>
@@ -362,7 +377,30 @@
         <translation language="zh"><![CDATA[回复正在被处理。]]></translation>
         <translation language="pl"><![CDATA[Informacja zwrotna została przetworzona.]]></translation>
       </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
+        <translation language="en"><![CDATA[There are no questions yet.]]></translation>
+        <translation language="ru"><![CDATA[Пока нет вопросов.]]></translation>
+        <translation language="fr"><![CDATA[Il n'ya pas encore de questions.]]></translation>
+        <translation language="es"><![CDATA[No hay preguntas aun.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Fragen.]]></translation>
+        <translation language="lt"><![CDATA[Kolkas klausimų nėra.]]></translation>
+        <translation language="uk"><![CDATA[Запитань ще немає]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga frågor än.]]></translation>
+        <translation language="hu"><![CDATA[Nincs még kérdés.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ερωτήσεις.]]></translation>
+        <translation language="zh"><![CDATA[还没有人提问。]]></translation>
+        <translation language="pl"><![CDATA[Brak pytań.]]></translation>
+      </item>
     </Faq>
+    <Core>
+      <item type="label" name="FeedbackGivenOn">
+        <translation language="nl"><![CDATA[feedback gegeven op]]></translation>
+        <translation language="en"><![CDATA[feedback given on]]></translation>
+        <translation language="fr"><![CDATA[rétroaction donnée sur]]></translation>
+        <translation language="de"><![CDATA[Feedback gegeben am]]></translation>
+      </item>
+    </Core>
   </Backend>
   <Frontend>
     <Core>

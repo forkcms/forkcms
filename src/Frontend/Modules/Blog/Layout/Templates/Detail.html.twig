@@ -71,7 +71,7 @@
         {% if item.image %}
           <img class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />
         {% endif %}
-        {{ item.text|raw }}
+        {{ item.text|parse_blocks }}
       </div>
     {% endblock %}
 
@@ -125,11 +125,7 @@
               <div class="block-blog-article-comments-comment-avatar">
                 <meta itemprop="discusses" content="{{ item.title }}" />
                 {% if comment.website %}
-                <a href="{{ comment.website }}">
-                  {% endif %}
-                  <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar rounded-circle mr-3" data-gravatar-id="{{ comment.gravatar_id }}" />
-                  {% if comment.website %}
-                </a>
+                  <a href="{{ comment.website }}">{{ comment.website }}</a>
                 {% endif %}
               </div>
 

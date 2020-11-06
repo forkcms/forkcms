@@ -120,7 +120,7 @@ class InstallerControllerTest extends WebTestCase
         $this->submitForm($client, $form);
         self::assertGreaterThan(
             0,
-            $client->getCrawler()->filter('div.errorMessage:contains("Problem with database credentials")')->count()
+            $client->getCrawler()->filter('div.alert-danger:contains("Problem with database credentials")')->count()
         );
 
         // submit with correct database credentials

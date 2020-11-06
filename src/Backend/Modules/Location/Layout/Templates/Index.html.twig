@@ -77,9 +77,8 @@
       </div>
       {% endform %}
     </div>
-  {% endif %}
-  {% if not dataGrid %}
-    <p>{{ 'msg.NoItems'|trans|format(geturl('add')|raw) }}</p>
+  {% else %}
+    {{ macro.emptyState(geturl('add'), 'msg.AddItem'|trans, 'msg.NoItems'|trans|ucfirst) }}
   {% endif %}
   <script type="text/javascript">
     //@todo BUG: data below should come from action

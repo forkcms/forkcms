@@ -11,6 +11,8 @@ class ExportTemplate extends BackendBaseActionAdd
 {
     public function execute(): void
     {
+        $this->checkToken();
+
         // define path
         $path = BACKEND_CACHE_PATH . '/Profiles/import_template.csv';
 

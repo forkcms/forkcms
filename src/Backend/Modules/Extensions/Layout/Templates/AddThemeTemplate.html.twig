@@ -37,15 +37,17 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-lg-3">
+            <label for="defaultImage">
+              <img src="{{ BACKEND_CORE_URL }}/Layout/Images/image-upload-placeholder.jpg" class="img-thumbnail" data-fork-cms-role="image-preview" data-id="{{ form_add.field('default_image').attributes.id }}" />
+            </label>
+          </div>
           <div class="col-lg-9">
             <div class="custom-file">
               {% form_field default_image %}
-              <label for="label" class="custom-file-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+              <label for="defaultImage" class="custom-file-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
             </div>
             {% form_field_error default_image %}
-          </div>
-          <div class="col-lg-3">
-            <img src="#" class="img-thumbnail d-none" data-fork-cms-role="image-preview" data-id="{{ form_add.field('default_image').attributes.id }}" />
           </div>
         </div>
       </fieldset>

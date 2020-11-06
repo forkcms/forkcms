@@ -9,6 +9,7 @@ use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
+use Common\BlockEditor\EditorBlocks;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 
@@ -260,11 +261,11 @@ class Installer extends ModuleInstaller
                     ),
                     'language' => $language,
                     'title' => 'Nunc sediam est',
-                    'introduction' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'introduction' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
-                    'text' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'text' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
                     'status' => 'active',
                     'publish_on' => gmdate('Y-m-d H:i:00'),
@@ -282,8 +283,8 @@ class Installer extends ModuleInstaller
                 $firstBlogPostId,
                 [
                     'title' => 'Nunc sediam est',
-                    'text' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'text' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
                 ],
                 $language
@@ -300,11 +301,11 @@ class Installer extends ModuleInstaller
                     'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
                     'language' => $language,
                     'title' => 'Lorem ipsum',
-                    'introduction' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'introduction' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
-                    'text' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'text' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
                     'status' => 'active',
                     'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
@@ -322,8 +323,8 @@ class Installer extends ModuleInstaller
                 $secondBlogPostId,
                 [
                     'title' => 'Lorem ipsum',
-                    'text' => file_get_contents(
-                        __DIR__ . '/Data/' . $language . '/sample1.txt'
+                    'text' => EditorBlocks::createJsonFromHtml(
+                        file_get_contents(__DIR__ . '/Data/' . $language . '/sample1.txt')
                     ),
                 ],
                 $language
