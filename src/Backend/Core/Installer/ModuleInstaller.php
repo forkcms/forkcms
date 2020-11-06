@@ -433,7 +433,7 @@ class ModuleInstaller
         // loop group settings
         foreach ($groupSettings as $settings) {
             // unserialize data
-            $settings['value'] = unserialize($settings['value']);
+            $settings['value'] = unserialize($settings['value'], ['allowed_classes' => false]);
 
             // add new widget
             $settings['value'][$module][] = $widget;
@@ -453,7 +453,7 @@ class ModuleInstaller
         // loop user settings
         foreach ($userSettings as $settings) {
             // unserialize data
-            $settings['value'] = unserialize($settings['value']);
+            $settings['value'] = unserialize($settings['value'], ['allowed_classes' => false]);
 
             // add new widget
             $settings['value'][$module][] = $widget;

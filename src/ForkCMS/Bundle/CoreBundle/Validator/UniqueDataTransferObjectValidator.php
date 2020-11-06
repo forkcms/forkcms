@@ -108,7 +108,7 @@ final class UniqueDataTransferObjectValidator extends ConstraintValidator
         if (\count($result) === 0
             || (
                 \count($result) === 1
-                & $dataTransferObject->getEntity() === ($result instanceof \Iterator
+                && $dataTransferObject->getEntity() === ($result instanceof \Iterator
                     ? $result->current() : current($result))
             )
         ) {

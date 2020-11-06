@@ -4,15 +4,12 @@ LABEL maintainer="Fork CMS <info@fork-cms.com>"
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Run apt from fresh debian sources
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
-
 # Install GD2
 RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libz-dev \
-    zlib1g=1:1.2.8.dfsg-2+b1 \
+    zlib1g-dev \
     libpng-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
@@ -24,8 +21,10 @@ RUN docker-php-ext-install pdo_mysql
 # Install mbstring
 RUN docker-php-ext-install mbstring
 
-# Install zip
-RUN docker-php-ext-install zip
+# Install zip & unzip
+RUN apt-get update && apt-get install -y unzip && \
+    docker-php-ext-install zip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install intl
 RUN apt-get update && apt-get install -y --no-install-recommends \

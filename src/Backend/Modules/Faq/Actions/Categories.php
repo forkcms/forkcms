@@ -41,6 +41,7 @@ class Categories extends BackendBaseActionIndex
             BackendFaqModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
             [BL::getWorkingLanguage()]
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
         $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))]);
         if ($this->multipleCategoriesAllowed) {
             $this->dataGrid->enableSequenceByDragAndDrop();

@@ -11,6 +11,25 @@
     <div class="card card-default">
       <div class="card-heading">
         <h2 class="card-title">
+          {{ 'lbl.DisplayNameChanges'|trans|ucfirst }}
+        </h2>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-check">
+            {% form_field limit_display_name_changes %}
+            <label for="limitDisplayNameChanges" class="control-label">{{ 'lbl.LimitDisplayNameChanges'|trans|ucfirst }}</label>
+            <span id="maxDisplayNameChangesBox">
+              {{ macro.required }} {% form_field max_display_name_changes %}
+              {% form_field_error max_display_name_changes %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-default">
+      <div class="card-heading">
+        <h2 class="card-title">
           {{ 'lbl.Notifications'|trans|ucfirst }}
         </h2>
       </div>

@@ -357,7 +357,7 @@ class Meta
 
         // unserialize data
         if (isset($this->data['data'])) {
-            $this->data['data'] = @unserialize($this->data['data']);
+            $this->data['data'] = @unserialize($this->data['data'], ['allowed_classes' => false]);
         }
     }
 

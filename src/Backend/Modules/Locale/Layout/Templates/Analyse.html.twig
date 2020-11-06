@@ -2,8 +2,8 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
-  {% if showLocaleExportAnalyse %}
-    <div class="btn-toolbar justify-content-end">
+  {% if isAllowedAction('ExportAnalyse') %}
+    <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('ExportAnalyse') ~ '&language=' ~ language, 'plus-square', 'lbl.Export'|trans|ucfirst) }}
       </div>

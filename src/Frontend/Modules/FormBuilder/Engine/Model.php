@@ -22,7 +22,7 @@ class Model
 
         // unserialize the recipients
         if (isset($form['email'])) {
-            $form['email'] = (array) unserialize($form['email']);
+            $form['email'] = (array) unserialize($form['email'], ['allowed_classes' => false]);
         }
 
         // get validation
@@ -62,7 +62,7 @@ class Model
         foreach ($fields as &$field) {
             // unserialize
             if ($field['settings'] !== null) {
-                $field['settings'] = unserialize($field['settings']);
+                $field['settings'] = unserialize($field['settings'], ['allowed_classes' => false]);
             }
 
             // init validations

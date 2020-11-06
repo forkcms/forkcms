@@ -24,6 +24,20 @@ class Model
      */
     private static $avatars = [];
 
+    public static function maxDisplayNameChanges(): int
+    {
+        return FrontendModel::get('fork.settings')->get('Profiles', 'max_display_name_changes', self::MAX_DISPLAY_NAME_CHANGES);
+    }
+
+    public static function displayNameCanStillBeChanged(Profile $profile): bool
+    {
+        if (!FrontendModel::get('fork.settings')->get('Profiles', 'limit_display_name_changes', false)) {
+            return true;
+        }
+
+        return ((int) $profile->getSetting('display_name_changes')) < self::maxDisplayNameChanges();
+    }
+
     public static function deleteSetting(int $profileId, string $name): void
     {
         $SettingRepository = FrontendModel::get('profile.repository.profile_setting');

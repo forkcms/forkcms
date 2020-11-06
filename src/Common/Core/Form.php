@@ -252,7 +252,7 @@ class Form extends \SpoonForm
         }
 
         // create and return a dropdown
-        return parent::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
+        return parent::addDropdown($name, Model::recursiveHtmlspecialchars($values), $selected, $multipleSelection, $class, $classError);
     }
 
     /**

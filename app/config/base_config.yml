@@ -95,6 +95,10 @@ liip_imagine:
             quality: 95
             # list of transformations to apply (the "filters")
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 ## Using the "thumbnail + background" combination will crop the
                 ## the centered image to create your required width/height.
                 # Use the "outbound" mode to crop the image when the size ratio of the input differs
@@ -102,18 +106,38 @@ liip_imagine:
                 background: { size : [140, 90], position : center }
         media_library_lightbox_small:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [800, 600] }
         media_library_lightbox_large:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [1600, 800] }
         media_library_slider_pano:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim : [1600, 600] }
         media_library_one_image_large:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 thumbnail: { size : [1600, 500], mode : inbound }
         media_library_editor_image:
             filters:
+                # auto rotate the image using EXIF metadata and then strip the metadata (privacy)
+                auto_rotate: ~
+                strip: ~
+
                 scale: { dim: [2400, 2400] }
 
 services:
@@ -243,6 +267,14 @@ services:
         arguments:
             - "%site.path_www%"
 
+    ForkCMS\Utility\Csv\Writer:
+        public: true
+        arguments:
+            - "%kernel.charset%"
+
+    ForkCMS\Utility\Csv\Reader:
+        public: true
+
     Common\Core\Twig\Extensions\IncludeOnceExtension:
         public: false
         tags:
@@ -274,6 +306,22 @@ services:
         autowire: true
         tags:
             - { name: twig.extension }
+
+    ForkCMS\Google\TagManager\DataLayer:
+        public: true
+
+    ForkCMS\Google\TagManager\TagManager:
+        public: true
+        arguments:
+            - "@fork.settings"
+            - "@ForkCMS\\Google\\TagManager\\DataLayer"
+            - "@ForkCMS\\Privacy\\ConsentDialog"
+
+    ForkCMS\Privacy\ConsentDialog:
+        public: true
+        arguments:
+            - "@fork.settings"
+            - "@fork.cookie"
 
 fos_rest:
     routing_loader:

@@ -73,7 +73,7 @@ final class NavigationCache
         ];
 
         if ($navigationItemRecord['selected_for'] !== null) {
-            $navigationItem['selected_for'] = unserialize($navigationItemRecord['selected_for']);
+            $navigationItem['selected_for'] = unserialize($navigationItemRecord['selected_for'], ['allowed_classes' => false]);
         }
 
         $children = $this->buildNavigationTree($navigationItemRecord['id']);

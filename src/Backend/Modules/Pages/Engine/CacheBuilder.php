@@ -214,7 +214,7 @@ class CacheBuilder
         // any data?
         if (isset($page['data'])) {
             // get data
-            $data = unserialize($page['data']);
+            $data = unserialize($page['data'], ['allowed_classes' => false]);
 
             // internal alias?
             if (isset($data['internal_redirect']['page_id']) && $data['internal_redirect']['page_id'] != '') {

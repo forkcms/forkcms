@@ -29,6 +29,7 @@ class Index extends BackendBaseActionIndex
             BackendTagsModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
+        $this->dataGrid->setColumnFunction('htmlspecialchars', ['[tag]'], 'tag', false);
 
         // header labels
         $this->dataGrid->setHeaderLabels([

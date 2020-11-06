@@ -2,7 +2,7 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
-  {% if showLocationAdd %}
+  {% if isAllowedAction('Add') %}
     <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.AddLocation'|trans|ucfirst) }}
@@ -98,8 +98,8 @@
     markers.push({
       lat: {{ item.lat }},
       lng: {{ item.lng }},
-      title: '{{ item.title }}',
-      text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>'
+      title: '{{ item.title|e }}',
+      text: '<p>{{ item.street|e }} {{ item.number|e }}</p><p>{{ item.zip|e }} {{ item.city|e }}</p>'
     });
     {% endif %}
     {% endif %}

@@ -22,6 +22,7 @@ class MediaGalleryDataGrid extends DataGridDatabase
         );
 
         $this->setHeaderLabels(['title' => SpoonFilter::ucfirst(Language::lbl('Title'))]);
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
         $this->setSortingFunctions();
         $this->setExtraFunctions();
     }

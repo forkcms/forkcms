@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block actionbar %}
-  {% if showPagesPageIndex %}
+  {% if isAllowedAction('PageIndex') %}
     <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('PageIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}

@@ -196,7 +196,7 @@ class Meta implements JsonSerializable
             return;
         }
 
-        $this->data = unserialize($this->data);
+        $this->data = unserialize($this->data, ['allowed_classes' => false]);
     }
 
     public static function fromBackendMeta(BackendMeta $meta): self

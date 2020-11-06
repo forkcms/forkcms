@@ -17,6 +17,7 @@
         <translation language="sv"><![CDATA[all statistik]]></translation>
         <translation language="el"><![CDATA[Όλα τα στατιστικά]]></translation>
         <translation language="pl"><![CDATA[wszystkie statystyki]]></translation>
+        <translation language="pt"><![CDATA[todas as estatísticas]]></translation>
       </item>
     </Core>
     <Dashboard>
@@ -34,6 +35,7 @@
         <translation language="sv"><![CDATA[topp nyckelord]]></translation>
         <translation language="el"><![CDATA[Κορυφαίες λέξεις-κλειδιά]]></translation>
         <translation language="pl"><![CDATA[najlepsze słowa kluczowe]]></translation>
+        <translation language="pt"><![CDATA[top de palavras-chave]]></translation>
       </item>
       <item type="label" name="TopReferrers">
         <translation language="nl"><![CDATA[top verwijzende sites]]></translation>
@@ -49,6 +51,7 @@
         <translation language="sv"><![CDATA[topp referrers]]></translation>
         <translation language="el"><![CDATA[Κορυφαίοι αναφορείς]]></translation>
         <translation language="pl"><![CDATA[najlepsze strony kierujące]]></translation>
+        <translation language="pt"><![CDATA[top de sites referenciadores]]></translation>
       </item>
       <item type="message" name="WillBeEnabledOnSave">
         <translation language="nl"><![CDATA[Deze widget zal geactiveerd worden bij het opslaan.]]></translation>
@@ -63,6 +66,7 @@
         <translation language="sv"><![CDATA[Denna widget kommer att återaktiveras vid sparande.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή θα ενεργοποιηθεί πάλι κατά την αποθήκευση.]]></translation>
         <translation language="pl"><![CDATA[Ten widget zostanie aktywowany podczas zapisywania.]]></translation>
+        <translation language="pt"><![CDATA[Esta widget será activada ao guardar.]]></translation>
       </item>
     </Dashboard>
   </Backend>

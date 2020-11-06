@@ -161,7 +161,7 @@
                       <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
                       {% form_field user_id %} {% form_field_error user_id %}
                     </div>
-                    {% if showTagsIndex %}
+                    {% if isAllowedAction('Index', 'Tags') %}
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
@@ -207,7 +207,7 @@
   <div class="fork-module-actions">
     <div class="btn-toolbar">
       <div class="btn-group" role="group">
-        {% if showBlogDelete %}
+        {% if isAllowedAction('Delete') %}
           {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
@@ -243,7 +243,7 @@
   </div>
   {% endform %}
 
-  {% if showBlogDelete %}
+  {% if isAllowedAction('Delete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
@@ -255,7 +255,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title|e)|raw }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}

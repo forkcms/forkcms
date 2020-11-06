@@ -17,6 +17,15 @@ export class Settings {
     $('[data-role="fork-clear-cache"]').on('click', $.proxy(this.clearCache, this))
 
     $('#activeLanguages input:checkbox').on('change', $.proxy(this.changeActiveLanguage, this)).change()
+    $('#privacyConsentLevels').multipleTextbox(
+      {
+        emptyMessage: StringUtil.ucfirst(jsBackend.locale.msg('NoPrivacyConsentLevels')),
+        errorMessage: StringUtil.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
+        addLabel: StringUtil.ucfirst(jsBackend.locale.lbl('Add')),
+        removeLabel: StringUtil.ucfirst(jsBackend.locale.lbl('Delete')),
+        canAddNew: true
+      }
+    )
   }
 
   changeActiveLanguage (e) {

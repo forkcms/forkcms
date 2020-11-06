@@ -8,7 +8,7 @@
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
-      {% if showMediaLibraryMediaItemIndex %}
+      {% if isAllowedAction('MediaItemIndex') %}
         {% if folderId %}
           {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'list', 'lbl.Overview'|trans|ucfirst) }}
         {% endif %}

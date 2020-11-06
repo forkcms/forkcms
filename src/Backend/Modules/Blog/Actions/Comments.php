@@ -91,8 +91,9 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
-        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
-        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
+        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[text]'], 'text', false);
+        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[author]'], 'author', false);
+        $this->dgPublished->setColumnFunction('htmlspecialchars', ['[post_title]'], 'post_title', false);
         $this->dgPublished->setColumnFunction(
             [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',
@@ -189,8 +190,9 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
-        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
-        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
+        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[text]'], 'text', false);
+        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[author]'], 'author', false);
+        $this->dgModeration->setColumnFunction('htmlspecialchars', ['[post_title]'], 'post_title', false);
         $this->dgModeration->setColumnFunction(
             [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',
@@ -285,8 +287,9 @@ class Comments extends BackendBaseActionIndex
             'created_on',
             true
         );
-        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[text]'], 'text');
-        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[author]'], 'author');
+        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[text]'], 'text', false);
+        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[author]'], 'author', false);
+        $this->dgSpam->setColumnFunction('htmlspecialchars', ['[post_title]'], 'post_title', false);
         $this->dgSpam->setColumnFunction(
             [new BackendDataGridFunctions(), 'cleanupPlaintext'],
             '[text]',

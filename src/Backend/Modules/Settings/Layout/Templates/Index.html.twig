@@ -34,18 +34,53 @@
   </div>
   <div class="card card-default">
     <div class="card-heading">
+      <h2 class="card-title">{{ 'lbl.GoogleTrackingOptions'|trans|ucfirst }}</h2>
+    </div>
+    <div class="card-body">
+      <p><small>{{ 'msg.HelpGoogleTrackingOptions'|trans }}</small></p>
+      <div class="form-group checkboxTextFieldCombo">
+        <label for="googleTrackingGoogleAnalyticsTrackingId" class="control-label">{{ 'lbl.GoogleAnalyticsTrackingId'|trans }}</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            {% form_field google_tracking_google_analytics_tracking_id_enabled %}
+          </div>
+          {% form_field google_tracking_google_analytics_tracking_id %}
+        </div>
+        {% form_field_error google_tracking_google_analytics_tracking_id %}
+        <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleAnalyticsTrackingId'|trans|raw }}</span>
+      </div>
+      <div class="form-group last checkboxTextFieldCombo">
+        <label for="googleTrackingGoogleTagManagerContainerId" class="control-label">{{ 'lbl.GoogleTagManagerContainerId'|trans }}</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            {% form_field google_tracking_google_tag_manager_container_id_enabled %}
+          </div>
+          {% form_field google_tracking_google_tag_manager_container_id %}
+        </div>
+        {% form_field_error google_tracking_google_tag_manager_container_id %}
+        <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleTagManagerContainerId'|trans|raw }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="card card-default">
+    <div class="card-heading">
       <h2 class="card-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
     </div>
     <div class="card-body">
       <div class="form-group">
-        <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
-        {% form_field site_html_header %} {% form_field_error site_html_header %}
+        <label for="siteHtmlHead" class="control-label">{{ 'msg.HelpScriptsHeadLabel'|trans|raw }}</label>
+        {% form_field site_html_head %} {% form_field_error site_html_head %}
         <small class="form-text text-muted">{{ 'msg.HelpScriptsHead'|trans }}</small>
       </div>
+      <div class="form-group">
+        <label for="siteHtmlStartOfBody" class="control-label">{{ 'msg.HelpScriptsStartOfBodyLabel'|trans|raw }}</label>
+        {% form_field site_html_start_of_body %} {% form_field_error site_html_start_of_body %}
+        <small class="form-text text-muted">{{ 'msg.HelpScriptsStartOfBody'|trans }}</small>
+      </div>
       <div class="form-group last">
-        <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
-        {% form_field site_html_footer %} {% form_field_error site_html_footer %}
-        <small class="form-text text-muted">{{ 'msg.HelpScriptsFoot'|trans }}</small>
+        <label for="siteHtmlEndOfBody" class="control-label">{{ 'msg.HelpScriptsEndOfBodyLabel'|trans|raw }}</label>
+        {% form_field site_html_end_of_body %} {% form_field_error site_html_end_of_body %}
+        <small class="form-text text-muted">{{ 'msg.HelpScriptsEndOfBody'|trans }}</small>
       </div>
     </div>
   </div>
@@ -232,14 +267,26 @@
   </div>
   <div class="card card-default">
     <div class="card-heading">
-      <h2 class="card-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
+      <h2 class="card-title">{{ 'lbl.PrivacyConsents'|trans|ucfirst }}</h2>
     </div>
     <div class="card-body">
-      <div class="form-group last">
+      <div class="form-group">
         <p>{{ 'msg.HelpCookies'|trans }}</p>
         <div class="form-check">
           {% form_field show_cookie_bar %}
           <label for="showCookieBar" class="form-check-label">{{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
+        </div>
+      </div>
+      <div class="form-group last">
+        <p>{{ 'msg.HelpPrivacyConsents'|trans }}</p>
+        <div class="form-check">
+          {% form_field show_consent_dialog %}
+          <label for="showConsentDialog" class="form-check-label">{{ 'msg.ShowConsentDialog'|trans|ucfirst }}</label>
+        </div>
+        <div class="form-group">
+          <label for="privacyConsentLevels" class="control-label">{{ 'lbl.TechnicalName'|trans|ucfirst }}</label>
+          {% form_field privacy_consent_levels %} {% form_field_error privacy_consent_levels %}
+          <span class="help-block">{{ 'msg.HelpPrivacyConsentLevels'|trans|ucfirst }}</span>
         </div>
       </div>
     </div>

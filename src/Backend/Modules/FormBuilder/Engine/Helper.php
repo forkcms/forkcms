@@ -25,7 +25,8 @@ class Helper
         if (!empty($field)) {
             // init
             $form = new BackendForm('tmp', '');
-            $tpl = (BackendModel::getContainer()->has('template') ?
+            $tpl = (
+                BackendModel::getContainer()->has('template') ?
                 BackendModel::getContainer()->get('template') :
                 new BackendTemplate()
             );

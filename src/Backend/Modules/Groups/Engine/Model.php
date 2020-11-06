@@ -204,7 +204,7 @@ class Model
         }
 
         if (isset($setting['value'])) {
-            return unserialize($setting['value']);
+            return unserialize($setting['value'], ['allowed_classes' => false]);
         }
 
         return [];

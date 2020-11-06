@@ -41,7 +41,7 @@ class Analyse extends BackendBaseActionIndex
      */
     public static function formatFilesList(string $files): string
     {
-        $files = (array) unserialize($files);
+        $files = (array) unserialize($files, ['allowed_classes' => false]);
 
         // no files
         if (empty($files)) {

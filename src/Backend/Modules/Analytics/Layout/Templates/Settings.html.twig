@@ -113,7 +113,7 @@
 
   <div class="fork-module-actions">
     <div class="btn-toolbar align-items-center">
-      {% if showAnalyticsReset and fileCertificate is not defined %}
+      {% if isAllowedAction('Reset') and fileCertificate is not defined %}
         <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
       {% endif %}
       {% if not profile and (noAccounts == false or noAccounts is not defined) %}
