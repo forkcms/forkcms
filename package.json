@@ -7,11 +7,6 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
-    "@editorjs/editorjs": "^2.16.1",
-    "@editorjs/embed": "^2.2.1",
-    "@editorjs/header": "^2.3.1",
-    "@editorjs/list": "^1.4.0",
-    "@editorjs/paragraph": "^2.6.0",
     "@symfony/webpack-encore": "^0.30.2",
     "bootstrap": "^4.4.1",
     "bootstrap-datepicker": "^1.9.0",
