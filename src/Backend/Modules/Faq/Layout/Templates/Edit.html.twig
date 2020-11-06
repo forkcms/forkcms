@@ -107,7 +107,7 @@
                       <p>
                         {{ _itr_11.text }}
                       </p>
-                      {% if showFaqDeleteFeedback %}
+                      {% if isAllowedAction('DeleteFeedback') %}
                         <div class="btn-toolbar">
                           <div class="btn-group ml-auto" role="group">
                             {{ macro.buttonIcon('#', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger btn-sm', 'data-id=' ~ _itr_11.id ~ ' data-role=delete-feedback', false, true) }}
@@ -129,7 +129,7 @@
   <div class="fork-page-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
-        {% if showFaqDelete %}
+        {% if isAllowedAction('Delete') %}
           {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default' ) }}
@@ -141,7 +141,7 @@
   </div>
   {% endform %}
 
-  {% if showFaqDelete %}
+  {% if isAllowedAction('Delete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
@@ -152,7 +152,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|format(item.question)|raw }}</p>
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.question|e)|raw }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
@@ -164,7 +164,7 @@
     {{ form_end(deleteForm) }}
   {% endif %}
 
-  {% if showFaqDeleteFeedback %}
+  {% if isAllowedAction('DeleteFeedback') %}
     {{ form_start(deleteFeedbackForm) }}
     {{ form_row(deleteFeedbackForm._token) }}
     {{ form_row(deleteFeedbackForm.id) }}

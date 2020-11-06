@@ -8,6 +8,7 @@
 {% block content %}
   {% if dataGrid %}
     <form action="{{ geturl('mass_action') }}" method="get" class="forkForms submitWithLink" id="tagsForm">
+      <input type="hidden" name="token" value="{{ fork_csrf_token }}">
       <div class="table-responsive">
         {{ dataGrid|raw }}
       </div>

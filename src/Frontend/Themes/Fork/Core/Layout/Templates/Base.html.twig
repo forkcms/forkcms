@@ -1,9 +1,16 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
 <body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+{# Site wide HTML just after body tag #}
+{{ siteHTMLStartOfBody|raw }}
+
 <div id="root">
+  {# @deprecated remove this in Fork 6, the privacy consent dialog should be used#}
   {% block cookies %}
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
+  {% endblock %}
+  {% block privacyConsentDialog %}
+    {% include "Core/Layout/Templates/PrivacyConsentDialog.html.twig" %}
   {% endblock %}
 
   {% block navigation %}
@@ -70,7 +77,7 @@
   <script src="{{ js }}"></script>
 {% endfor %}
 
-{# Site wide HTML #}
-{{ siteHTMLFooter|raw }}
+{# Site wide HTML just before closing body tag #}
+{{ siteHTMLEndOfBody|raw }}
 </body>
 </html>

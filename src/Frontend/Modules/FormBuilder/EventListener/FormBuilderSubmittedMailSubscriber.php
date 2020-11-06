@@ -139,11 +139,12 @@ final class FormBuilderSubmittedMailSubscriber
     {
         return array_map(
             function ($item) : array {
-                $value = unserialize($item['value']);
+                $value = unserialize($item['value'], ['allowed_classes' => false]);
 
                 return [
                     'label' => $item['label'],
-                    'value' => (is_array($value)
+                    'value' => (
+                        is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
                     ),

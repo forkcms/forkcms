@@ -439,7 +439,7 @@ export class Fields {
                 $('#datetimeValueType').val(StringUtil.htmlDecode(data.data.field.settings.value_type))
                 $('#datetimeType').val(StringUtil.htmlDecode(data.data.field.settings.input_type))
                 $('#datetimeClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
-                $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete));
+                $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {

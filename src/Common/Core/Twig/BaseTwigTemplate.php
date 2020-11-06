@@ -165,6 +165,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         );
 
         // facebook stuff
+        // @deprecated remove this in Fork 6, facebook_admin_ids / facebook_app_id should be removed
         if ($this->forkSettings->get('Core', 'facebook_admin_ids', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_ADMIN_IDS',

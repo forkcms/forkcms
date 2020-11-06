@@ -359,7 +359,8 @@ class Edit extends BackendBaseActionEdit
                 $values['success_type'] = $rbtSuccessType->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['success_page'] = $ddmSuccessPage->getValue();
-                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                $values['identifier'] = (
+                    $txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );

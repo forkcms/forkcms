@@ -42,6 +42,7 @@ class ContentBlockRevisionDataGrid extends DataGridDatabase
         // set column-functions
         $this->setColumnFunction([DataGridFunctions::class, 'getUser'], ['[user_id]'], 'user_id');
         $this->setColumnFunction([DataGridFunctions::class, 'getTimeAgo'], ['[edited_on]'], 'edited_on');
+        $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
 
         // check if this action is allowed
         if (Authentication::isAllowedAction('Edit')) {

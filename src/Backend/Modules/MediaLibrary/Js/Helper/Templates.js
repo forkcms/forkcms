@@ -43,7 +43,7 @@ export class Templates {
 
     // add to html
     html += '<option value="' + mediaFolder.id + '">'
-    html += '   ' + mediaFolder.slug + ' (' + count + '/' + mediaFolder.numberOfMediaItems + ')'
+    html += '   ' + StringUtil.htmlEncode(mediaFolder.slug) + ' (' + count + '/' + mediaFolder.numberOfMediaItems + ')'
     html += '</option>'
 
     if (mediaFolder.numberOfChildren > 0) {

@@ -20,6 +20,25 @@ export class Upload {
     const $fineUploaderGallery = $('#fine-uploader-gallery')
     const fineUploaderInstance = $fineUploaderGallery.fineUploader({
       template: 'qq-template-gallery',
+      options: {
+        request: {
+          omitDefaultParams: true
+        }
+      },
+      chunking: {
+        enabled: true,
+        success: {
+          endpoint: function () {
+            var mediaFolderId = $('#uploadMediaFolderId').val()
+
+            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' +
+              jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
+          }
+        },
+        concurrent: {
+          enabled: true
+        }
+      },
       thumbnails: {
         placeholders: {
           waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',

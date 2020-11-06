@@ -22,8 +22,8 @@
   {{ encore_entry_script_tags('frontend', null, 'frontendConfig') }}
   {{ encore_entry_link_tags('screen', null, 'frontendConfig') }}
 
-  {# Site wide HTML #}
-  {{ siteHTMLHeader|raw }}
+  {# Site wide HTML in the head tag #}
+  {{ siteHTMLHead|raw }}
 
   {% if debug %}
     <script src="http://localhost:35729/livereload.js?snipver=1"></script>

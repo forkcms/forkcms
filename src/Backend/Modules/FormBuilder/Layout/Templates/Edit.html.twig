@@ -235,7 +235,7 @@
   <div class="fork-page-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
-        {% if showFormBuilderDelete %}
+        {% if isAllowedAction('Delete') %}
           {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button" } ) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
@@ -957,7 +957,7 @@
   {% endform %}
 
   {# Page delete confirm block #}
-  {% if showFormBuilderDelete %}
+  {% if isAllowedAction('Delete') %}
     {% if id %}
       {% if name %}
         {{ form_start(deleteForm) }}
@@ -970,7 +970,7 @@
                 <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
               </div>
               <div class="modal-body">
-                <p>{{ 'msg.ConfirmDelete'|trans|format(name)|raw }}</p>
+                <p>{{ 'msg.ConfirmDelete'|trans|format(name|e)|raw }}</p>
               </div>
               <div class="modal-footer">
                 {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}

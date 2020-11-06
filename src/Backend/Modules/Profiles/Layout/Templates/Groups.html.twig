@@ -2,7 +2,7 @@
 {% import 'Layout/Templates/macros.html.twig' as macro %}
 
 {% block actionbar %}
-  {% if showProfilesAddGroup %}
+  {% if isAllowedAction('AddGroup') %}
     <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('add_group'), 'plus-square', 'lbl.AddGroup'|trans|ucfirst) }}
@@ -35,6 +35,7 @@
     {% endform %}
     <form action="{{ geturl('mass_action') }}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
     <div>
+      <input type="hidden" name="token" value="{{ fork_csrf_token }}">
       <input type="hidden" name="offset" value="{{ offset }}" />
       <input type="hidden" name="order" value="{{ order }}" />
       <input type="hidden" name="sort" value="{{ sort }}" />

@@ -34,6 +34,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
         $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
         $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ExportThemeTemplates');
         $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
     }
 

@@ -359,7 +359,7 @@ class Model extends \Common\Core\Model
             array_filter(
                 $moduleExtras,
                 function (?string $serializedData) use ($key, $value) {
-                    $data = $serializedData === null ? [] : unserialize($serializedData);
+                    $data = $serializedData === null ? [] : unserialize($serializedData, ['allowed_classes' => false]);
 
                     return isset($data[$key]) && (string) $data[$key] === $value;
                 }

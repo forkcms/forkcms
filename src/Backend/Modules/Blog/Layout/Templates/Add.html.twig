@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-{% import 'Layout/Templates/macros.html.twig' as macro %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -141,7 +141,7 @@
                   <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
                   {% form_field user_id %} {% form_field_error user_id %}
                 </div>
-                {% if showTagsIndex %}
+                    {% if isAllowedAction('Index', 'Tags') %}
                   <div class="form-group last">
                     <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                     {% form_field tags %} {% form_field_error tags %}

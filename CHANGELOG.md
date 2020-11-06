@@ -1,3 +1,49 @@
+5.9.1  (2020-08-18)
+------------------
+
+Fixed:
+* Pages: Fix non god users not being able to save pages [#3163](https://github.com/forkcms/forkcms/pull/3163)
+
+
+5.9.0  (2020-08-17)
+------------------
+
+Fixed:
+* Core: Add missing use statement to Theme.php [#3162](https://github.com/forkcms/forkcms/pull/3162)
+* Core: Update vendors [#3153](https://github.com/forkcms/forkcms/pull/3153) [#3154](https://github.com/forkcms/forkcms/pull/3154) [#3155](https://github.com/forkcms/forkcms/pull/3155) [#3156](https://github.com/forkcms/forkcms/pull/3156) [#3161](https://github.com/forkcms/forkcms/pull/3161)
+* MediaLibrary: Fix rotation of images based on exif and strip metadata [#3152](https://github.com/forkcms/forkcms/pull/3152)
+* MediaLibrary: Skip default photo cropping if unchecked [#3151](https://github.com/forkcms/forkcms/pull/3151)
+
+Added:
+* Core: Add GDPR concent dialog [#3048](https://github.com/forkcms/forkcms/pull/3048)
+* Core: Add Google Tag Manager [#3047](https://github.com/forkcms/forkcms/pull/3047)
+* Core: Add Portuguese locale [#2431](https://github.com/forkcms/forkcms/pull/2431)
+* Pages: Add css class to a menu link [#3116](https://github.com/forkcms/forkcms/pull/3116)
+* Pages: Cross language link overview [#3117](https://github.com/forkcms/forkcms/pull/3117)
+
+Changed:
+* Core: Change CSV implementation [#3160](https://github.com/forkcms/forkcms/pull/3160)
+* Profiles: Make max amount of display name changes dynamic [#3102](https://github.com/forkcms/forkcms/pull/3102)
+
+
+5.8.3  (2020-07-07)
+------------------
+
+Fixed:
+* Core: Optimise vendor images [#3143](https://github.com/forkcms/forkcms/pull/3143)
+* Core: Show the correct error when adding invalid custom slugs [#3145](https://github.com/forkcms/forkcms/pull/3145)
+* Core: Stop hard caching redirects [#3094](https://github.com/forkcms/forkcms/pull/3094)
+* Core: Update vendors [#3136](https://github.com/forkcms/forkcms/pull/3136) [#3111](https://github.com/forkcms/forkcms/pull/3111) [#3119](https://github.com/forkcms/forkcms/pull/3119)
+* DX: Fix docker build [#3121](https://github.com/forkcms/forkcms/pull/3121)
+* DX: Fix typo in pull request templates [#3140](https://github.com/forkcms/forkcms/pull/3140)
+* MediaGalleries: Fix text being truncated [#3139](https://github.com/forkcms/forkcms/pull/3139)
+* MediaLibrary: Fix uploading big files [#3146](https://github.com/forkcms/forkcms/pull/3146)
+
+Security:
+* Core: Fix xss bugs in the backend [#3093](https://github.com/forkcms/forkcms/pull/3093) [#3137](https://github.com/forkcms/forkcms/pull/3137)
+* Core: Improve csrf checks in the backend [#3123](https://github.com/forkcms/forkcms/pull/3123) [#3138](https://github.com/forkcms/forkcms/pull/3138) [#3124](https://github.com/forkcms/forkcms/pull/3124) [#3132](https://github.com/forkcms/forkcms/pull/3132) [#3135](https://github.com/forkcms/forkcms/pull/3135)
+
+
 5.8.2  (2020-05-12)
 ------------------
 

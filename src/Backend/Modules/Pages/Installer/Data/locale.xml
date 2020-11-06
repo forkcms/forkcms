@@ -2,6 +2,10 @@
 <locale>
   <Backend>
     <Pages>
+      <item type="label" name="LinkCssClass">
+        <translation language="nl"><![CDATA[link CSS class]]></translation>
+        <translation language="en"><![CDATA[link CSS class]]></translation>
+      </item>
       <item type="label" name="MoveThisPage">
         <translation language="nl"><![CDATA[verplaats deze pagina]]></translation>
         <translation language="en"><![CDATA[move this page]]></translation>

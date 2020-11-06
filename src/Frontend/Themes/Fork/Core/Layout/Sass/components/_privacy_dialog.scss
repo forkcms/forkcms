@@ -1,0 +1,14 @@
+#privacyConsentDialog {
+  position: fixed;
+  bottom: 0;
+  z-index: $zindex-modal - 1;
+  font-size: $font-size-small;
+
+  .modal-dialog {
+    margin: $padding-base-vertical;
+
+    .modal-header, .modal-body, .modal-footer {
+      padding: $padding-small-horizontal $padding-small-horizontal;
+    }
+  }
+}
