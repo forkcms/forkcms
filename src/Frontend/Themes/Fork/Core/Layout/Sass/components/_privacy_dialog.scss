@@ -2,13 +2,13 @@
   position: fixed;
   bottom: 0;
   z-index: $zindex-modal - 1;
-  font-size: $font-size-small;
+  font-size: $font-size-sm;
 
   .modal-dialog {
-    margin: $padding-base-vertical;
+    margin: $modal-dialog-margin;
 
     .modal-header, .modal-body, .modal-footer {
-      padding: $padding-small-horizontal $padding-small-horizontal;
+      padding: $modal-inner-padding;
     }
   }
 }
