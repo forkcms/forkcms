@@ -112,8 +112,8 @@ Encore
   .enableVersioning(Encore.isProduction())
 
   .copyFiles({
-    from: '/src/Backend/Core/images',
-    to: '/src/Backend/Core/Build/images/[path][name].[ext]'
+    from: './src/Backend/Core/Layout/images',
+    to: './src/Backend/Core/Build/images/[path][name].[ext]'
   })
 
   .autoProvidejQuery()
@@ -185,8 +185,8 @@ Encore
   .enableVersioning(Encore.isProduction())
 
   .copyFiles({
-    from: '/src/Frontend/Core/Images',
-    to: '/src/Frontend/Core/Build/Images/[path][name].[ext]'
+    from: './src/Frontend/Core/Layout/Images',
+    to: './src/Frontend/Core/Build/Images/[path][name].[ext]'
   })
 
   .autoProvidejQuery()
