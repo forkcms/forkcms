@@ -384,8 +384,14 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = (string) ($class ?? 'form-control fork-form-time inputTime');
+        $class = (string) ($class ?? 'form-control fork-form-time');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
+
+        $attributes['data-role'] = 'fork-datepicker';
+        $attributes['data-enable-time'] = true;
+        $attributes['data-no-calendar'] = true;
+
+        parent::getField($name)->setAttributes($attributes);
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
