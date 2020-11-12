@@ -5,8 +5,6 @@ import { Config } from '../../../../Core/Js/Components/Config'
 
 export class Tree {
   constructor () {
-    this.pageID = null
-
     if ($('[data-tree-media-libreary]').find('> [data-tree]').length === 0) return false
 
     // jsTree options

@@ -22,7 +22,6 @@ export class Group {
     this.addMediaDialog()
 
     // init sequences
-    let prevSequence = ''
     let newSequence = ''
     const element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
 
@@ -30,7 +29,7 @@ export class Group {
     const sortable = new Sortable(element, {
       onStart: (event) => {
         // redefine previous and new sequence
-        this.prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
+        newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
       },
       onUpdate: (event) => {
         // set group i
