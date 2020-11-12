@@ -8,7 +8,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [7.1]
+                php: [7.4]
                 testsuite: ["functional", "unit", "installer"]
         name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
@@ -53,7 +53,7 @@ jobs:
 
             - name: Display error logs on failure
               if: ${{ failure() }}
-              run: cat var/logs/test.log
+              run: cat var/logs/test/debug.log
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1
@@ -80,7 +80,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.1
+                  php-version: 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -114,7 +114,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.1
+                  php-version: 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -153,7 +153,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.1
+                  php-version: 7.4
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 

@@ -119,15 +119,15 @@ final class RequirementsChecker
 
     private function checkWebServer(): RequirementCategory
     {
-        $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 7.1 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
+        $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 7.4 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
 
         return new RequirementCategory(
             'Web server',
             Requirement::check(
                 'php version',
-                version_compare(PHP_VERSION, '7.1.0', '>='),
-                'Your server is running at least php 7.1.0. <br>' . $reasoningBehindTheMinimumPHPVersion,
-                'PHP version must be at least 7.1.0, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version.<br>' . $reasoningBehindTheMinimumPHPVersion,
+                version_compare(PHP_VERSION, '7.4.0', '>='),
+                'Your server is running at least php 7.4.0. <br>' . $reasoningBehindTheMinimumPHPVersion,
+                'PHP version must be at least 7.4.0, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version.<br>' . $reasoningBehindTheMinimumPHPVersion,
                 RequirementStatus::error()
             ),
             Requirement::check(
