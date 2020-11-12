@@ -30,9 +30,4 @@ final class ParagraphBlock extends AbstractBlock
     {
         return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/ParagraphBlock.html.twig', $data);
     }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return '/js/vendors/editor.js';
-    }
 }

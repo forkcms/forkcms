@@ -58,11 +58,6 @@ final class EditorBlocks
         return true;
     }
 
-    public function getJavaScriptUrls(): array
-    {
-        return $this->javaScriptUrls;
-    }
-
     public static function createJsonFromHtml(string $html): ?string
     {
         $emptyCharacter = "\t\n\r\0\x0B ";

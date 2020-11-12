@@ -34,9 +34,4 @@ final class ListBlock extends AbstractBlock
     {
         return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/ListBlock.html.twig', $data);
     }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return '/js/vendors/editor.js';
-    }
 }

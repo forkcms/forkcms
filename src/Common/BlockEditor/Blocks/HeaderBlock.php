@@ -31,9 +31,4 @@ final class HeaderBlock extends AbstractBlock
     {
         return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/HeaderBlock.html.twig', $data);
     }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return '/js/vendors/editor.js';
-    }
 }

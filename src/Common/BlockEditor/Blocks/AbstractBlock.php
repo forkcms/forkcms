@@ -36,9 +36,6 @@ abstract class AbstractBlock
      */
     abstract public function getValidation(): array;
 
-    /** The url to the JS file with the config needed to make this block work in the editor */
-    abstract public function getJavaScriptUrl(): ?string;
-
     abstract public function parse(array $data): string;
 
     final protected function parseWithTwig(string $template, array $data): string

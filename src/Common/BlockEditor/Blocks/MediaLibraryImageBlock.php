@@ -39,9 +39,4 @@ final class MediaLibraryImageBlock extends AbstractBlock
 
         return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/MediaLibraryImageBlock.html.twig', $data);
     }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return '/js/vendors/editor.js';
-    }
 }
