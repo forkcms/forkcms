@@ -5,6 +5,9 @@ parameters:
   level: 0
   paths:
     - src
+  scanFiles:
+    - vendor/google/apiclient/src/Google/Task/Retryable.php
+    - vendor/spoon/library/spoon/form/form.php
   bootstrapFiles:
     - autoload.php
   excludes_analyse:
