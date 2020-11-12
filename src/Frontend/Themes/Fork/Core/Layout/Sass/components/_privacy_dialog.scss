@@ -1,14 +1,20 @@
 #privacyConsentDialog {
+  bottom: $spacer/2;
+  left: $spacer/2;
+  right: $spacer/2;
+  font-size: $font-size-sm;
   position: fixed;
-  bottom: 0;
   z-index: $zindex-modal - 1;
-  font-size: $font-size-small;
 
   .modal-dialog {
-    margin: $padding-base-vertical;
+    margin: 0;
+  }
+}
 
-    .modal-header, .modal-body, .modal-footer {
-      padding: $padding-small-horizontal $padding-small-horizontal;
-    }
+@include media-breakpoint-up(sm) {
+  #privacyConsentDialog {
+    bottom: $spacer;
+    left: $spacer;
+    right: auto;
   }
 }
