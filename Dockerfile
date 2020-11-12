@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.4-apache
 LABEL maintainer="Fork CMS <info@fork-cms.com>"
 
 # Enable Apache mod_rewrite
@@ -6,23 +6,21 @@ RUN a2enmod rewrite
 
 # Install GD2
 RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
+    libonig-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libz-dev \
     zlib1g-dev \
     libpng-dev && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pdo_mysql
 RUN docker-php-ext-install pdo_mysql
 
-# Install mbstring
-RUN docker-php-ext-install mbstring
-
 # Install zip & unzip
-RUN apt-get update && apt-get install -y unzip && \
+RUN apt-get update && apt-get install -y libzip-dev zip && \
     docker-php-ext-install zip && \
     rm -rf /var/lib/apt/lists/*
 
@@ -54,7 +52,7 @@ WORKDIR /var/www/html
 # Install the composer dependencies (no autoloader yet as that invalidates the docker cache)
 COPY composer.json ./
 COPY composer.lock ./
-RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress && \
     composer clear-cache
 
 # Bundle source code into container. Important here is that copying is done based on the rules defined in the .dockerignore file.
