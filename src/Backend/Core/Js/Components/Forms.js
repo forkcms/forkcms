@@ -58,7 +58,7 @@ export class Forms {
         // get the image preview by matching the image-preview data-id to the ImageField id
         const $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
         // use FileReader to get the url
-        const reader = new FileReader()
+        const reader = new window.FileReader()
 
         reader.onload = function (event) {
           $imagePreview.attr('src', event.target.result)
@@ -302,8 +302,7 @@ export class Forms {
             // is the button disabled?
             if ($(event.currentTarget).prop('disabled')) {
               return false
-            }
-            else {
+            } else {
               $('form#' + formId).submit()
             }
           })
@@ -331,7 +330,7 @@ export class Forms {
       const allTags = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch:       {
+        prefetch: {
           url: '/backend/ajax',
           prepare: (settings) => {
             settings.type = 'POST'

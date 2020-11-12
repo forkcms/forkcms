@@ -247,13 +247,13 @@ export class Location {
     this.bounds = new google.maps.LatLngBounds()
 
     // define type if not already set
-    if (this.type === null) this.type = mapOptions.type
+    if (this.type === null) this.type = window.mapOptions.type
 
     // define options
     const options = {
-      center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
+      center: new google.maps.LatLng(window.mapOptions.center.lat, window.mapOptions.center.lng),
       mapTypeId: google.maps.MapTypeId[this.type],
-      styles: Stylers.styles[mapOptions.style]
+      styles: Stylers.styles[window.mapOptions.style]
     }
 
     // create map
@@ -266,13 +266,13 @@ export class Location {
     }
 
     // loop the markers
-    for (const i in markers) {
+    for (const i in window.markers) {
       this.addMarker(
-        this.map, this.bounds, markers[i]
+        this.map, this.bounds, window.markers[i]
       )
     }
 
-    this.setMapZoom(mapOptions.zoom)
+    this.setMapZoom(window.mapOptions.zoom)
   }
 
   /**
@@ -283,7 +283,7 @@ export class Location {
     this.panorama = this.map.getStreetView()
 
     // define position
-    this.panorama.setPosition(new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng))
+    this.panorama.setPosition(new google.maps.LatLng(window.mapOptions.center.lat, window.mapOptions.center.lng))
 
     // define heading (horizontal °) and pitch (vertical °)
     this.panorama.setPov({

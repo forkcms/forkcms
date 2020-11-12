@@ -144,8 +144,8 @@ export class Tree {
     }
 
     // when node is dropped on the last position, we can not add it before the last one -> we need after
-    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined
-      && data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined &&
+      data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
       droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
       type = 'after'
     }

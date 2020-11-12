@@ -30,7 +30,7 @@ export class Group {
     const sortable = new Sortable(element, {
       onStart: (event) => {
         // redefine previous and new sequence
-        prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
+        this.prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
       },
       onUpdate: (event) => {
         // set group i
@@ -666,6 +666,7 @@ export class Group {
     // bind click to duplicate media item
     $('[data-role=media-library-duplicate-and-crop]').on('click', () => {
       const mediaItemToDuplicate = this.getMediaItemForId($(this).data('media-item-id'))
+      /* eslint-disable no-new */
       new Duplicator(mediaItemToDuplicate)
     })
 

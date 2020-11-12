@@ -69,7 +69,14 @@
       "jsData",
       "jsFrontend",
       "jsBackend",
-      "utils"
+      "utils",
+      "google",
+      "PhotoSwipe",
+      "PhotoSwipeUI_Default",
+      "_gaq",
+      "ga",
+      "twttr",
+      "FB"
     ],
     "ignore": [
       "/js/",
