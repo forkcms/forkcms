@@ -48,6 +48,14 @@ jobs:
                   FORK_ENV: test
               run: composer install -o
 
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: npm install
+
+            - run: webpack
+
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
@@ -130,7 +138,7 @@ jobs:
               run: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
 
     frontend:
-        name: Yarn test
+        name: npm test
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -139,8 +147,8 @@ jobs:
               uses: actions/setup-node@v2-beta
               with:
                   node-version: 12 # current LTS
-            - run: yarn install
-            - run: yarn test
+            - run: npm install
+            - run: npm test
 
     docker-test:
         name: Docker
