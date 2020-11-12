@@ -22,7 +22,6 @@ class IndexTest extends BackendWebTestCase
             [
                 'There are no content blocks yet.',
                 'Add content block',
-                'Add a content block',
             ]
         );
     }
