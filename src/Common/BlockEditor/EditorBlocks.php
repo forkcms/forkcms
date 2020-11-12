@@ -33,10 +33,6 @@ final class EditorBlocks
         foreach ($editorBlocks as $editorBlock) {
             $this->config[$editorBlock->getName()] = $editorBlock->getConfig();
             $this->validation[$editorBlock->getName()] = $editorBlock->getValidation();
-            $javaScriptUrl = $editorBlock->getJavaScriptUrl();
-            if ($javaScriptUrl !== null) {
-                $this->javaScriptUrls[$javaScriptUrl] = $javaScriptUrl;
-            }
         }
 
         return $this;
