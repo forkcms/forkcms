@@ -53,7 +53,12 @@ jobs:
 
             - name: Display error logs on failure
               if: ${{ failure() }}
-              run: cat var/logs/installer/debug.log && cat var/logs/test/debug.log
+              run: |
+                  [ -r var/logs/installer/debug.log ] && cat var/logs/installer/debug.log
+                  [ -r var/logs/test/debug.log ] && cat var/logs/test/debug.log
+                  [ -r var/logs/test_instal/debug.log ] && cat var/logs/test_instal/debug.log
+                  [ -r var/logs/prod/debug.log ] && cat var/logs/prod/debug.log
+                  [ -r var/logs/dev/debug.log ] && cat var/logs/dev/debug.log
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1

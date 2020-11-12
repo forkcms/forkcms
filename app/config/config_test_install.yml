@@ -17,4 +17,6 @@ framework:
 monolog:
     handlers:
         main:
-            type: 'null'
+            type:  stream
+            path:  "%site.path_www%/var/logs/%kernel.environment%/debug.log"
+            level: debug
