@@ -186,6 +186,14 @@ jobs:
                   docker run --rm --network=forkcms_default jwilder/dockerize -wait tcp://db:3306 -timeout 300s
                   docker-compose ps "app" | grep -q "Up"
 
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: npm install
+
+            - run: webpack
+
             - name: Test
               run: |
                   curl -s -L -o /dev/null -w "%{http_code}" http://localhost:80 | grep -q '200'
