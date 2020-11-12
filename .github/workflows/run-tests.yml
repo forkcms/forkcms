@@ -6,7 +6,7 @@ jobs:
     phpunit:
         runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
+            fail-fast: true
             matrix:
                 php: [7.4]
                 testsuite: ["functional", "unit", "installer"]
