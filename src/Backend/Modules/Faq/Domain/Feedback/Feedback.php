@@ -27,7 +27,7 @@ class Feedback
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Question\Question", inversedBy="feedbackItems")
      * @ORM\JoinColumn(
-     *   name="id",
+     *   name="question_id",
      *   referencedColumnName="id",
      *   onDelete="cascade",
      *   nullable=false

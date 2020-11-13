@@ -39,7 +39,7 @@ class Category
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(
-     *   name="id",
+     *   name="meta_id",
      *   referencedColumnName="id",
      *   onDelete="cascade",
      *   nullable=false
