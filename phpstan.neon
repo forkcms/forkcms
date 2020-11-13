@@ -14,6 +14,8 @@ parameters:
     - src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder/
     - src/*/Tests/*
     - src/Common/WebTestCase.php
+    - src/Backend/Cache
+    - src/Frontend/Cache
   earlyTerminatingMethodCalls:
     Frontend\Core\Engine\Page:
       - redirect
