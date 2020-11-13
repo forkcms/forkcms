@@ -43,26 +43,33 @@ class Model
             // today
             if ($hours >= 1) {
                 return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
-            } elseif ($minutes > 1) {
+            }
+
+            if ($minutes > 1) {
                 // more than one minute
                 return sprintf(BL::getLabel('MinutesAgo'), $minutes);
-            } elseif ($minutes == 1) {
+            }
+
+            if ($minutes == 1) {
                 // one minute
                 return BL::getLabel('OneMinuteAgo');
-            } elseif ($seconds > 1) {
+            }
+
+            if ($seconds > 1) {
                 // more than one second
                 return sprintf(BL::getLabel('SecondsAgo'), $seconds);
-            } elseif ($seconds <= 1) {
-                // one second
-                return BL::getLabel('OneSecondAgo');
             }
-        } elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
+
+            return BL::getLabel('OneSecondAgo');
+        }
+
+        if ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
             // yesterday
             return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
-        } else {
-            // older
-            return date('d/m/Y H:i', $timestamp);
         }
+
+        // older
+        return date('d/m/Y H:i', $timestamp);
     }
 
     /**

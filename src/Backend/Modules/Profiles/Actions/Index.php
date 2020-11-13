@@ -66,7 +66,7 @@ class Index extends BackendBaseActionIndex
         if (isset($this->filter['group']) && $this->filter['group']) {
             $query .= ' INNER JOIN profiles_groups_rights AS pgr ON pgr.profile_id = p.id AND
                         (pgr.expires_on IS NULL OR pgr.expires_on > NOW())';
-            $where[] .= 'pgr.group_id = ?';
+            $where[] = 'pgr.group_id = ?';
             $parameters[] = $this->filter['group'];
         }
 

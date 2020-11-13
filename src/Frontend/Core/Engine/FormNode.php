@@ -2,31 +2,26 @@
 
 namespace Frontend\Core\Engine;
 
+use Twig\Compiler;
+use Twig\Node\Node;
+
 /**
  * Twig node for writing out the compiled representation of an opeing form tag.
  */
-class FormNode extends \Twig_Node
+class FormNode extends Node
 {
     /**
      * @var string Template variable holding the form.
      */
     private $form;
 
-    /**
-     * @param string $form The name of the template variable to which the form is assigned
-     * @param int $lineNumber
-     * @param string $tag
-     */
     public function __construct(string $form, int $lineNumber, string $tag)
     {
         parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 
-    /**
-     * @param \Twig_Compiler $compiler
-     */
-    public function compile(\Twig_Compiler $compiler): void
+    public function compile(Compiler $compiler): void
     {
         // Set some string representations to make the code writing via the
         // compiler a bit more readable. ("a bit")

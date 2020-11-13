@@ -233,7 +233,7 @@ class Page extends KernelLoader
     /**
      * Redirects to the login page in a way that the login page will redirect back to the current page after logging in
      */
-    private function redirectToLogin()
+    private function redirectToLogin(): void
     {
         $this->redirect(
             Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . Model::getRequest()->getRequestUri(),
