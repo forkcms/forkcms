@@ -57,14 +57,14 @@ class Import extends BackendBaseActionAdd
                 sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
             )
         ) {
-                $indexes = $this->get(Reader::class)->findColumnIndexes(
-                    $fileFile->getTempFileName(),
-                    ['email', 'display_name', 'password']
-                );
-                if (in_array(null, $indexes, true)) {
-                    $fileFile->addError(BL::getError('InvalidCSV'));
-                }
+            $indexes = $this->get(Reader::class)->findColumnIndexes(
+                $fileFile->getTempFileName(),
+                ['email', 'display_name', 'password']
+            );
+            if (in_array(null, $indexes, true)) {
+                $fileFile->addError(BL::getError('InvalidCSV'));
             }
+        }
 
         if (!$this->form->isCorrect()) {
             return;
