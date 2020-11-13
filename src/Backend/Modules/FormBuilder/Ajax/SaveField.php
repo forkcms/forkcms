@@ -264,7 +264,7 @@ class SaveField extends BackendBaseAJAXAction
         if ($label !== '') {
             $settings['label'] = \SpoonFilter::htmlspecialchars($label);
         }
-        if (count($values) > 0) {
+        if (!empty($values)) {
             $settings['values'] = $values;
         }
         if ($defaultValues !== '') {
