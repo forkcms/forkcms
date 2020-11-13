@@ -13,7 +13,7 @@ abstract class Locale implements Serializable, JsonSerializable
      */
     protected $locale;
 
-    protected function __construct(string $locale)
+    final protected function __construct(string $locale)
     {
         $this->setLocale($locale);
     }

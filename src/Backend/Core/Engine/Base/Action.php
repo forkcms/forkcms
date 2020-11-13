@@ -263,8 +263,8 @@ class Action extends KernelLoader
      *
      * @throws RedirectException
      */
-    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
+    public function redirect(string $url, int $code = Response::HTTP_FOUND)
     {
-        $this->get('url')->redirect($url, $code);
+        $this->url->redirect($url, $code);
     }
 }

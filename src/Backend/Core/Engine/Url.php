@@ -328,7 +328,7 @@ class Url extends KernelLoader
         $errorUrl = '/' . NAMED_APPLICATION . '/' . BackendModel::getRequest()->getLocale()
                     . '/error?type=' . $type;
 
-        $this->get('url')->redirect($errorUrl, $code);
+        $this->redirect($errorUrl, $code);
     }
 
     public function getAction(): string

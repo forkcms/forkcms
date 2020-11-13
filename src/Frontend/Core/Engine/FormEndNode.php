@@ -2,10 +2,13 @@
 
 namespace Frontend\Core\Engine;
 
+use Twig\Compiler;
+use Twig\Node\Node;
+
 /**
  * Twig node for writing out a compiled version of a closing form tag.
  */
-class FormEndNode extends \Twig_Node
+class FormEndNode extends Node
 {
     /**
      * @param int $lineNumber Line number in the template source file.
@@ -16,10 +19,7 @@ class FormEndNode extends \Twig_Node
         parent::__construct([], [], $lineNumber, $tag);
     }
 
-    /**
-     * @param \Twig_Compiler $compiler
-     */
-    public function compile(\Twig_Compiler $compiler): void
+    public function compile(Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

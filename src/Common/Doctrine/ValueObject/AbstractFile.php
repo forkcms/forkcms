@@ -38,7 +38,7 @@ abstract class AbstractFile
      */
     protected $namePrefix;
 
-    protected function __construct(?string $fileName)
+    final protected function __construct(?string $fileName)
     {
         $this->fileName = $fileName;
     }

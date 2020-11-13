@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Countable;
 use Doctrine\Common\Collections\Collection;
@@ -185,6 +186,8 @@ class MediaGroup implements JsonSerializable, Countable
                 return $mediaGroupMediaItem;
             }
         }
+
+        throw MediaGroupMediaItemNotFound::forMediaItemId($mediaItemId);
     }
 
     public function addConnectedItem(MediaGroupMediaItem $connectedItem): MediaGroup

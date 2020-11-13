@@ -20,6 +20,7 @@
         "ext-zip": "*",
         "ext-gd": "*",
         "ext-intl": "*",
+        "ext-simplexml": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
@@ -61,8 +62,8 @@
         "symfony/var-dumper": "^3.3",
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/phpunit-bridge": "*",
-        "phpstan/phpstan": "^0.12.45",
-        "phpstan/phpstan-symfony": "^0.12.11"
+        "phpstan/phpstan": "^0.12.52",
+        "phpstan/phpstan-symfony": "^0.12.7"
     },
     "config": {
         "bin-dir": "bin"

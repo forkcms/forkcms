@@ -2,21 +2,16 @@
 
 namespace Frontend\Core\Engine;
 
-use Twig_Environment;
+use Twig\Environment;
 
 class FormExtension
 {
     /**
-     * @param Twig_Environment
+     * @param Environment
      */
     protected $twig;
 
-    /**
-     * Create a new Form Twig_Extension instance.
-     *
-     * @param Twig_Environment $twig
-     */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
 

@@ -61,6 +61,8 @@ final class Type
                 return self::fromString($mediaItemType);
             }
         }
+
+        throw new Exception('MimeType could not be resolved');
     }
 
     public static function fromExtension(string $extension): self
@@ -87,6 +89,8 @@ final class Type
                 return self::fromString($mediaItemType);
             }
         }
+
+        throw new Exception('Extension could not be resolved');
     }
 
     public function __toString(): string
