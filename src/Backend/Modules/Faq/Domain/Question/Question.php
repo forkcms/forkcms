@@ -37,6 +37,12 @@ class Question
      * @var Meta
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(
+     *   name="id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
     private Meta $meta;
 
@@ -44,6 +50,12 @@ class Question
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
+     * @ORM\JoinColumn(
+     *   name="id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
     private Category $category;
 
