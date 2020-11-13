@@ -295,7 +295,7 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->get(
                     'Core',
                     'privacy_consent_levels',
-                    ['functional']
+                    []
                 )
             )
         );
