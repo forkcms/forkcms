@@ -17,7 +17,7 @@ use JsonSerializable;
 class MediaFolder implements JsonSerializable
 {
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
