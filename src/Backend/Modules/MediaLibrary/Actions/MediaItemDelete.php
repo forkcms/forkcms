@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
 use Backend\Form\Type\DeleteType;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 class MediaItemDelete extends BackendBaseActionDelete
@@ -45,8 +45,8 @@ class MediaItemDelete extends BackendBaseActionDelete
     {
         try {
             // Define MediaItem from repository
-            return $this->get('media_library.repository.item')->findOneById($id);
-        } catch (MediaItemNotFound $mediaItemNotFound) {
+            $mediaItem = $this->get('media_library.repository.item')->findOneById($id);
+        } catch (MediaGroupMediaItemNotFound $mediaItemNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     [
@@ -55,6 +55,8 @@ class MediaItemDelete extends BackendBaseActionDelete
                 )
             );
         }
+
+        return $mediaItem;
     }
 
     private function getBackLink(array $parameters = []): string

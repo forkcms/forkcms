@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -41,7 +41,7 @@ final class SaveMediaGroupHandler
                     $this->mediaItemRepository->findOneById(Uuid::fromString($mediaItemId)),
                     $sequence
                 ));
-            } catch (MediaItemNotFound $e) {
+            } catch (MediaGroupMediaItemNotFound $e) {
                 // Do nothing
             }
         }

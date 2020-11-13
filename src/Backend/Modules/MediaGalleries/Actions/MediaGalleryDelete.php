@@ -52,7 +52,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
     {
         try {
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById($id);
+            $mediaGallery = $this->get('media_galleries.repository.gallery')->findOneById($id);
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(
@@ -62,6 +62,8 @@ class MediaGalleryDelete extends BackendBaseActionDelete
                 )
             );
         }
+
+        return $mediaGallery;
     }
 
     private function getBackLink(array $parameters = []): string

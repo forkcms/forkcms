@@ -96,13 +96,15 @@ class Edit extends BackendBaseActionEdit
         }
 
         try {
-            return $contentBlockRepository->findOneByIdAndLocale(
+            $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
                 $this->getRequest()->query->getInt('id'),
                 Locale::workingLocale()
             );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));
         }
+
+        return $contentBlock;
     }
 
     private function getForm(ContentBlock $contentBlock): Form

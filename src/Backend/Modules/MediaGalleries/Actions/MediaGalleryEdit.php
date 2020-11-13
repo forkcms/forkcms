@@ -78,7 +78,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
     {
         try {
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById(
+            $mediaGallery = $this->get('media_galleries.repository.gallery')->findOneById(
                 $this->getRequest()->query->get('id')
             );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
@@ -90,6 +90,8 @@ class MediaGalleryEdit extends BackendBaseActionEdit
                 )
             );
         }
+
+        return $mediaGallery;
     }
 
     private function getBackLink(array $parameters = []): string

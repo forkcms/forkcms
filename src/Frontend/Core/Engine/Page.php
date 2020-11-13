@@ -217,7 +217,7 @@ class Page extends KernelLoader
             $this->parseLanguages();
             $this->footer->parse();
 
-            return new Response(
+            $response = new Response(
                 $this->template->getContent($this->templatePath),
                 $this->statusCode
             );
@@ -228,6 +228,8 @@ class Page extends KernelLoader
         } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
             $this->redirectToLogin();
         }
+
+        return $response;
     }
 
     /**
