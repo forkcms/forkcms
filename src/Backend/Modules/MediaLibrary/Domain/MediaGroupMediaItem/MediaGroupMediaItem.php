@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
@@ -34,7 +35,8 @@ class MediaGroupMediaItem implements JsonSerializable
      * @ORM\JoinColumn(
      *     name="mediaGroupId",
      *     referencedColumnName="id",
-     *     onDelete="cascade"
+     *     onDelete="cascade",
+     *     nullable=false
      * )
      */
     protected $group;
@@ -51,13 +53,14 @@ class MediaGroupMediaItem implements JsonSerializable
      * @ORM\JoinColumn(
      *     name="mediaItemId",
      *     referencedColumnName="id",
-     *     onDelete="cascade"
+     *     onDelete="cascade",
+     *     nullable=false
      * )
      */
     protected $item;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -77,7 +80,7 @@ class MediaGroupMediaItem implements JsonSerializable
     ) {
         $this->group = $group;
         $this->item = $item;
-        $this->createdOn = new \DateTime();
+        $this->createdOn = new DateTime();
         $this->sequence = $sequence;
     }
 
@@ -118,7 +121,7 @@ class MediaGroupMediaItem implements JsonSerializable
         return $this->item;
     }
 
-    public function getCreatedOn(): \DateTime
+    public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }

@@ -44,7 +44,7 @@ class MediaGroup implements JsonSerializable, Countable
     protected $editedOn;
 
     /**
-     * @var ArrayCollection
+     * @var Collection<MediaGroupMediaItem>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
