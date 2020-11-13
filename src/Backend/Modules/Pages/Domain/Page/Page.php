@@ -92,7 +92,7 @@ class Page
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
      * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
      */
-    private $meta;
+    private Meta $meta;
 
     /**
      * @var MediaGroup|null
@@ -172,9 +172,16 @@ class Page
     private $publishUntil;
 
     /**
-     * @var array|null
+     * @var array
+     */
+    private $unserialisedData;
+
+    /**
+     * @var string|null
      *
-     * @ORM\Column(type="text", name="data", nullable=true)
+     * Only can be string during persisting or updating in the database as it then contains the serialised value
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     private $data;
 
@@ -255,7 +262,7 @@ class Page
         bool $hidden = true,
         Status $status = null,
         Type $type = null,
-        array $data = null,
+        array $unserialisedData = null,
         bool $allowMove = true,
         bool $allowChildren = true,
         bool $allowEdit = true,
@@ -290,7 +297,7 @@ class Page
         if ($this->status === null) {
             $this->status = Status::active();
         }
-        $this->data = $data;
+        $this->unserialisedData = $unserialisedData;
         $this->blocks = new ArrayCollection();
     }
 
@@ -420,7 +427,7 @@ class Page
 
     public function getData(): ?array
     {
-        return $this->data;
+        return $this->unserialisedData;
     }
 
     /**
@@ -446,8 +453,8 @@ class Page
      */
     public function serialiseData(): void
     {
-        if (!empty($this->data)) {
-            $this->data = serialize($this->data);
+        if (!empty($this->unserialisedData)) {
+            $this->data = serialize($this->unserialisedData);
 
             return;
         }
@@ -462,10 +469,10 @@ class Page
     public function unserialiseData(): void
     {
         if ($this->data === null) {
-            $this->data = [];
+            $this->unserialisedData = [];
             return;
         }
-        $this->data = unserialize($this->data, ['allowed_classes' => false]);
+        $this->unserialisedData = unserialize($this->data, ['allowed_classes' => false]);
     }
 
     public function archive(): void

@@ -3,6 +3,7 @@
 namespace Backend\Modules\Faq\Domain\Question;
 
 use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -110,7 +111,7 @@ class Question
     private $sequence;
 
     /**
-     * @var Collection
+     * @var Collection<Feedback>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Faq\Domain\Feedback\Feedback",

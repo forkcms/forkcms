@@ -29,14 +29,14 @@ class GroupRight
     private $id;
 
     /**
-     * @var Profile
+     * @var Profile|null
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Profiles\Domain\Profile\Profile", inversedBy="rights")
      */
     private $profile;
 
     /**
-     * @var Group
+     * @var Group|null
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Profiles\Domain\Group\Group", inversedBy="rights")
      */

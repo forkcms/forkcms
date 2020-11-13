@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Tags\Domain\Tag;
 
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
 use Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -51,7 +52,7 @@ class Tag
     private $url;
 
     /**
-     * @var Collection
+     * @var Collection<ModuleTag>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Tags\Domain\ModuleTag\ModuleTag",

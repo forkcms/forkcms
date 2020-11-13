@@ -32,7 +32,7 @@ class Group
     private $name;
 
     /**
-     * @var Collection;
+     * @var Collection<GroupRight>;
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\GroupRight\GroupRight",

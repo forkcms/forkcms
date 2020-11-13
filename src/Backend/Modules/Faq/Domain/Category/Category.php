@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Faq\Domain\Category;
 
+use Backend\Modules\Faq\Domain\Question\Question;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\CanNotSetExtraIdException;
 use Common\Locale;
@@ -60,7 +61,7 @@ class Category
     private $sequence;
 
     /**
-     * @var Collection
+     * @var Collection<Question>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Faq\Domain\Question\Question",

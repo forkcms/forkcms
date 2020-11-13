@@ -61,7 +61,7 @@ class Profile
     private $url;
 
     /**
-     * @var Collection
+     * @var Collection<GroupRight>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\GroupRight\GroupRight",
@@ -71,7 +71,7 @@ class Profile
     private $rights;
 
     /**
-     * @var Collection
+     * @var Collection<Setting>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\Setting\Setting",
