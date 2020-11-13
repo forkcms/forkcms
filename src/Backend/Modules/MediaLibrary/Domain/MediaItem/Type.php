@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Core\Engine\Model;
-use Exception;
 use InvalidArgumentException;
 
 final class Type
@@ -44,7 +43,7 @@ final class Type
 
         // Extension not exists, throw exception
         if (!in_array($mimeType, $mimeTypeManager->getAll(), true)) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 'MimeType is not one of the allowed ones: ' . implode(
                     ', ',
                     $mimeTypeManager->getAll()
@@ -62,7 +61,7 @@ final class Type
             }
         }
 
-        throw new Exception('MimeType could not be resolved');
+        throw new InvalidArgumentException('MimeType could not be resolved');
     }
 
     public static function fromExtension(string $extension): self
@@ -72,7 +71,7 @@ final class Type
 
         // Extension not exists, throw exception
         if (!in_array($extension, $extensionManager->getAll(), true)) {
-            throw new Exception(
+            throw new InvalidArgumentException(
                 'Extension is not one of the allowed ones: ' . implode(
                     ', ',
                     $extensionManager->getAll()
@@ -90,7 +89,7 @@ final class Type
             }
         }
 
-        throw new Exception('Extension could not be resolved');
+        throw new InvalidArgumentException('Extension could not be resolved');
     }
 
     public function __toString(): string
