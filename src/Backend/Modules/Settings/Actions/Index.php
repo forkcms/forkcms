@@ -66,7 +66,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // Google tracking settings
-        $googleTrackingAnalyticsTrackingId =  $this->get('fork.settings')->get(
+        $googleTrackingAnalyticsTrackingId = $this->get('fork.settings')->get(
             'Core',
             'google_tracking_google_analytics_tracking_id',
             $this->get('fork.settings')->get('Analytics', 'web_property_id', '')
@@ -83,7 +83,11 @@ class Index extends BackendBaseActionIndex
             $googleTrackingAnalyticsTrackingIdField->setAttribute('disabled', 'disabled');
         }
 
-        $googleTrackingTagManagerContainerId =  $this->get('fork.settings')->get('Core', 'google_tracking_google_tag_manager_container_id', '');
+        $googleTrackingTagManagerContainerId = $this->get('fork.settings')->get(
+            'Core',
+            'google_tracking_google_tag_manager_container_id',
+            ''
+        );
         $this->form->addCheckbox(
             'google_tracking_google_tag_manager_container_id_enabled',
             ($googleTrackingTagManagerContainerId !== '')
@@ -97,7 +101,11 @@ class Index extends BackendBaseActionIndex
         }
 
         // @deprecated fallback to site_html_header as this was used in the past.
-        $siteHtmlHeadValue =  $this->get('fork.settings')->get('Core', 'site_html_head', $this->get('fork.settings')->get('Core', 'site_html_header', null));
+        $siteHtmlHeadValue = $this->get('fork.settings')->get(
+            'Core',
+            'site_html_head',
+            $this->get('fork.settings')->get('Core', 'site_html_header', null)
+        );
         $this->form->addTextarea(
             'site_html_head',
             $siteHtmlHeadValue,
@@ -105,7 +113,11 @@ class Index extends BackendBaseActionIndex
             'form-control danger code',
             true
         );
-        $siteHtmlStartOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_start_of_body', $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null));
+        $siteHtmlStartOfBodyValue = $this->get('fork.settings')->get(
+            'Core',
+            'site_html_start_of_body',
+            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null)
+        );
         $this->form->addTextarea(
             'site_html_start_of_body',
             $siteHtmlStartOfBodyValue,
@@ -113,7 +125,11 @@ class Index extends BackendBaseActionIndex
             'form-control danger code',
             true
         );
-        $siteHtmlEndOfBodyValue = $this->get('fork.settings')->get('Core', 'site_html_end_of_body', $this->get('fork.settings')->get('Core', 'site_html_footer', null));
+        $siteHtmlEndOfBodyValue = $this->get('fork.settings')->get(
+            'Core',
+            'site_html_end_of_body',
+            $this->get('fork.settings')->get('Core', 'site_html_footer', null)
+        );
         $this->form->addTextarea(
             'site_html_end_of_body',
             $siteHtmlEndOfBodyValue,
@@ -287,7 +303,10 @@ class Index extends BackendBaseActionIndex
         $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
 
         // privacy
-        $this->form->addCheckbox('show_consent_dialog', $this->get('fork.settings')->get('Core', 'show_consent_dialog', false));
+        $this->form->addCheckbox(
+            'show_consent_dialog',
+            $this->get('fork.settings')->get('Core', 'show_consent_dialog', false)
+        );
         $this->form->addText(
             'privacy_consent_levels',
             implode(
@@ -295,7 +314,7 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->get(
                     'Core',
                     'privacy_consent_levels',
-                    ['functional']
+                    []
                 )
             )
         );
@@ -643,10 +662,14 @@ class Index extends BackendBaseActionIndex
                     'show_consent_dialog',
                     $this->form->getField('show_consent_dialog')->getChecked()
                 );
+                $privacyConsentLevels = [];
+                if ($privacyConsentLevelsField->isFilled()) {
+                    $privacyConsentLevels = explode(',', $privacyConsentLevelsField->getValue());
+                }
                 $this->get('fork.settings')->set(
                     'Core',
                     'privacy_consent_levels',
-                    explode(',', $this->form->getField('privacy_consent_levels')->getValue())
+                    $privacyConsentLevels
                 );
 
                 // assign report
