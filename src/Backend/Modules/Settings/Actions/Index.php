@@ -645,7 +645,7 @@ class Index extends BackendBaseActionIndex
                 );
                 $privacyConsentLevels = [];
                 if($privacyConsentLevelsField->isFilled()) {
-                    $privacyConsentLevels = explode(',', $this->form->getField('privacy_consent_levels')->getValue());
+                    $privacyConsentLevels = explode(',', $privacyConsentLevelsField->getValue());
                 }
                 $this->get('fork.settings')->set(
                     'Core',
