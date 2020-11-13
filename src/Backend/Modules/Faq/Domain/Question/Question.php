@@ -38,14 +38,14 @@ class Question
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
      */
-    private $meta;
+    private Meta $meta;
 
     /**
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
      */
-    private $category;
+    private Category $category;
 
     /**
      * @var int

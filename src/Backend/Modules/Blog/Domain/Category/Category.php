@@ -39,7 +39,7 @@ class Category
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
      */
-    private $meta;
+    private Meta $meta;
 
     public function __construct(Locale $locale, string $title, Meta $meta)
     {

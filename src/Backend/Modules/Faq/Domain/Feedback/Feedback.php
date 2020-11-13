@@ -27,7 +27,7 @@ class Feedback
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Question\Question", inversedBy="feedbackItems")
      */
-    private $question;
+    private Question $question;
 
     /**
      * @var string

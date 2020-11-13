@@ -90,7 +90,7 @@ class Page
      * @var Meta
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"ALL"})
-     * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="meta_id", referencedColumnName="id", nullable=false)
      */
     private Meta $meta;
 
