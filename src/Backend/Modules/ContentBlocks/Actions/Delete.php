@@ -53,14 +53,12 @@ class Delete extends BackendBaseActionDelete
     private function getContentBlock(int $id): ContentBlock
     {
         try {
-            $contentBlock = $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
+            return $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
                 $id,
                 Locale::workingLocale()
             );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));
         }
-
-        return $contentBlock;
     }
 }

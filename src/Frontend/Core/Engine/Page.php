@@ -217,7 +217,7 @@ class Page extends KernelLoader
             $this->parseLanguages();
             $this->footer->parse();
 
-            $response = new Response(
+            return new Response(
                 $this->template->getContent($this->templatePath),
                 $this->statusCode
             );
@@ -228,14 +228,12 @@ class Page extends KernelLoader
         } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
             $this->redirectToLogin();
         }
-
-        return $response;
     }
 
     /**
      * Redirects to the login page in a way that the login page will redirect back to the current page after logging in
      */
-    private function redirectToLogin()
+    private function redirectToLogin(): void
     {
         $this->redirect(
             Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . Model::getRequest()->getRequestUri(),

@@ -105,7 +105,8 @@ class Model
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
-
+        $locationWidgetOldIds = [];
+        $locationWidgetIds = [];
         if (BackendModel::isModuleInstalled('Location')) {
             // copy location widgets and get copied widget ids
             $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
@@ -237,15 +238,13 @@ class Model
                 $block['edited_on'] = BackendModel::getUTCDate();
 
                 // Overwrite the extra_id of the old content block with the id of the new one
-                if (in_array($block['extra_id'], $contentBlockOldIds)) {
+                if (in_array($block['extra_id'], $contentBlockOldIds, true)) {
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
                 }
 
-                if (BackendModel::isModuleInstalled('Location')) {
-                    // Overwrite the extra_id of the old location widget with the id of the new one
-                    if (in_array($block['extra_id'], $locationWidgetOldIds)) {
-                        $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
-                    }
+                // Overwrite the extra_id of the old location widget with the id of the new one
+                if ((count($locationWidgetOldIds) > 0) && in_array($block['extra_id'], $locationWidgetOldIds, true)) {
+                    $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
                 }
 
                 // add block

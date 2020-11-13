@@ -8,7 +8,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Exception;
@@ -55,7 +55,7 @@ class MediaItemMassAction extends BackendBaseAction
                         $this->delete($mediaItem);
                         break;
                 }
-            } catch (MediaGroupMediaItemNotFound $mediaItemNotFound) {
+            } catch (MediaItemNotFound $mediaItemNotFound) {
                 // Do nothing
             }
         }
@@ -110,9 +110,8 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolder(int $mediaFolderId, Type $selectedType): MediaFolder
     {
         try {
-            /** @var MediaFolder */
-            $mediaFolder = $this->get('media_library.repository.folder')->findOneById($mediaFolderId);
-        } catch (MediaGroupMediaItemNotFound $mediaItemNotFound) {
+            return $this->get('media_library.repository.folder')->findOneById($mediaFolderId);
+        } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     null,
@@ -123,8 +122,6 @@ class MediaItemMassAction extends BackendBaseAction
                 )
             );
         }
-
-        return $mediaFolder;
     }
 
     private function getMediaFolderToMoveTo(Type $selectedType): MediaFolder

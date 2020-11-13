@@ -41,8 +41,6 @@ class CheckRequirementsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $input1 = $input;
-        $output1 = $output;
         $this->formatter = new SymfonyStyle($input, $output);
 
         return $this->serverMeetsRequirements();

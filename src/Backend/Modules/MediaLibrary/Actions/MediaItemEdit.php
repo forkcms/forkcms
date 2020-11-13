@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
@@ -88,10 +88,10 @@ class MediaItemEdit extends BackendBaseActionEdit
     {
         try {
             // Define MediaItem from repository
-            $mediaItem = $this->get('media_library.repository.item')->findOneById(
+            return $this->get('media_library.repository.item')->findOneById(
                 $this->getRequest()->query->get('id')
             );
-        } catch (MediaGroupMediaItemNotFound $mediaItemNotFound) {
+        } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(
                 $this->getBackLink(
                     [
@@ -100,8 +100,6 @@ class MediaItemEdit extends BackendBaseActionEdit
                 )
             );
         }
-
-        return $mediaItem;
     }
 
     private function getBackLink(array $parameters = []): string

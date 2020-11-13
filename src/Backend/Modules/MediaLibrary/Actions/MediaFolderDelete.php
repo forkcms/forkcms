@@ -87,7 +87,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
     {
         try {
             /** @var MediaFolder */
-            $mediaFolder = $this->get('media_library.repository.folder')->findOneById(
+            return $this->get('media_library.repository.folder')->findOneById(
                 $this->getRequest()->query->getInt('id')
             );
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
@@ -99,8 +99,6 @@ class MediaFolderDelete extends BackendBaseActionDelete
                 )
             );
         }
-
-        return $mediaFolder;
     }
 
     private function getBackLink(array $parameters = []): string

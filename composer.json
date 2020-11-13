@@ -18,6 +18,7 @@
         "ext-zip": "*",
         "ext-gd": "*",
         "ext-intl": "*",
+        "ext-simplexml": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
