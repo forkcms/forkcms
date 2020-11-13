@@ -26,6 +26,8 @@ parameters:
     Backend\Core\Engine\Url:
       - redirect
       - redirectToErrorPage
+    Frontend\Core\Engine\Url:
+      - redirectToLanguage
   ignoreErrors:
     - '#Constant ACTION_GROUP_TAG not found.#'
     - '#Constant ACTION_RIGHTS_LEVEL not found.#'
