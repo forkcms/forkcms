@@ -20,7 +20,7 @@ export class Duplicator {
     canvas.width = mediaItemToDuplicate.width
 
     // create image
-    const image = new Image()
+    const image = new window.Image()
     image.onload = () => {
       context.drawImage(this, 0, 0)
 

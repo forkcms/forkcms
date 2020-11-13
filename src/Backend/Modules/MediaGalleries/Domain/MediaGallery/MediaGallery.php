@@ -91,10 +91,11 @@ class MediaGallery
      * @ORM\JoinColumn(
      *      name="mediaGroupId",
      *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *      onDelete="cascade",
+     *      nullable=false
      * )
      */
-    protected $mediaGroup;
+    protected MediaGroup $mediaGroup;
 
     private function __construct(
         string $title,

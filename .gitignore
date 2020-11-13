@@ -36,3 +36,6 @@ docker-compose.override.yml
 
 # PHP version locking
 /.php-version
+
+# PHPUnit
+/.phpunit.result.cache

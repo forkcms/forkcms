@@ -17,7 +17,7 @@ use JsonSerializable;
 class MediaFolder implements JsonSerializable
 {
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -70,7 +70,7 @@ class MediaFolder implements JsonSerializable
     protected $editedOn;
 
     /**
-     * @var ArrayCollection
+     * @var Collection<MediaItem>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
@@ -82,7 +82,7 @@ class MediaFolder implements JsonSerializable
     protected $items;
 
     /**
-     * @var ArrayCollection
+     * @var Collection<MediaFolder>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",

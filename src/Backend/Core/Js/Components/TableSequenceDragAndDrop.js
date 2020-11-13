@@ -12,8 +12,7 @@ export class TableSequenceDragAndDrop {
     }
 
     $.each($sequenceInstances, (index, element) => {
-      console.log($sequenceInstances)
-      console.log(element)
+      /* eslint-disable no-new */
       new Sortable(element,
         {
           handle: '[data-role="drag-and-drop-handle"]',
@@ -73,7 +72,7 @@ export class TableSequenceDragAndDrop {
         // not a success so revert the changes
         if (data.code !== 200) {
           // refresh page
-          location.reload()
+          window.location.reload()
 
           Messages.add('danger', window.backend.locale.err('AlterSequenceFailed'))
         }
@@ -100,7 +99,7 @@ export class TableSequenceDragAndDrop {
         Messages.add('danger', textStatus)
 
         // refresh page
-        location.reload()
+        window.location.reload()
 
         if (Config.isDebug()) {
           window.alert(textStatus)

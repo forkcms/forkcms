@@ -128,7 +128,7 @@ final class TagRepository extends ServiceEntityRepository
 
     public function removeUnused(): void
     {
-        $this->remove(...$this->findByNumberOfTimesLinked(0));
+        $this->remove(...$this->findBy(['numberOfTimesLinked' => 0]));
     }
 
     public function findAllLinkedTags(Locale $locale): array

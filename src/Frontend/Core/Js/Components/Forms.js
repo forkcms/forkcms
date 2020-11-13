@@ -35,7 +35,7 @@ export class Forms {
         let $imagePreviewWrapper = $('[data-fork-cms-role="image-preview-wrapper"][data-id="' + imageField.id + '"]')
 
         // use FileReader to get the url
-        const reader = new FileReader()
+        const reader = new window.FileReader()
 
         reader.onload = (event) => {
           if ($imagePreviewWrapper.find('img').length > 0) {

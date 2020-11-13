@@ -46,8 +46,8 @@ export class Locale {
     }
 
     // validate
-    if (typeof this.data[type] === 'undefined'
-      || typeof this.data[type][key] === 'undefined') {
+    if (typeof this.data[type] === 'undefined' ||
+      typeof this.data[type][key] === 'undefined') {
       return '{$' + type + key + '}'
     }
 

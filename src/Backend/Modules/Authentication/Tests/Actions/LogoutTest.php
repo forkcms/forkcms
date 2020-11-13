@@ -14,7 +14,7 @@ class LogoutTest extends BackendWebTestCase
         $client->request('GET', '/private/en/authentication/logout');
         $client->followRedirect();
 
-        self::assertContains(
+        self::assertStringContainsString(
             '/private/en/authentication/index',
             $client->getHistory()->current()->getUri()
         );

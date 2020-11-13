@@ -2,7 +2,7 @@ export class Modules {
   constructor () {
     $('.jsConfirmationTrigger').off().on('click', this.installModal)
   }
-  
+
   installModal (e) {
     // prevent default
     e.preventDefault()

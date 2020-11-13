@@ -269,6 +269,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->form->isCorrect()) {
                 // build item
                 $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
+                $password = BL::lbl('YourExistingPassword');
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
@@ -323,11 +324,6 @@ class Edit extends BackendBaseActionEdit
                 if ($this->notifyProfile &&
                     ($chkNewEmail->isChecked() || $chkNewPassword->isChecked())
                 ) {
-                    // no new password
-                    if (!$chkNewPassword->isChecked()) {
-                        $password = BL::lbl('YourExistingPassword');
-                    }
-
                     // notify values
                     $notifyValues = array_merge(
                         $values,
