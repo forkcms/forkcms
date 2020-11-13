@@ -23,6 +23,8 @@ parameters:
     Backend\Core\Engine\Url:
       - redirect
       - redirectToErrorPage
+    Frontend\Core\Engine\Url:
+      - redirectToLanguage
   ignoreErrors:
     - '#Constant LANGUAGE not found.#'
     - '#Constant FRONTEND_LANGUAGE not found.#'
