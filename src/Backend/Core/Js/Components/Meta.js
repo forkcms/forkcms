@@ -114,9 +114,7 @@ export class Meta {
         if (!$metaKeywordsOverwrite.is(':checked')) $metaKeywords.val(title)
 
         if (!$urlOverwrite.is(':checked')) {
-          if (typeof pageID === 'undefined' || pageID !== 1) {
-            generateUrl(title)
-          }
+          generateUrl(title)
         }
       }
     })

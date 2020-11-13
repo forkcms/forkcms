@@ -1,6 +1,3 @@
-import { StringUtil } from './StringUtil'
-import { PasswordGenerator } from './PasswordGenerator'
-
 export class Controls {
   constructor () {
     this.bindCheckboxDropdownCombo()
@@ -331,7 +328,7 @@ export class Controls {
       }
     })
   }
-  
+
   // toggle a div
   bindToggleDiv () {
     $(document).on('click', '.toggleDiv', (e) => {

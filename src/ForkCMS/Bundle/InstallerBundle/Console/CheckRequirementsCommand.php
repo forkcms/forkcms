@@ -15,14 +15,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class CheckRequirementsCommand extends Command
 {
-    const RETURN_SERVER_DOES_NOT_MEET_REQUIREMENTS = 2;
-    const RETURN_SERVER_MEETS_REQUIREMENTS = 0;
-    const RETURN_SERVER_MEETS_REQUIREMENTS_BUT_HAS_WARNINGS = 1;
-    /** @var InputInterface */
-    private $input;
-
-    /** @var OutputInterface */
-    private $output;
+    public const RETURN_SERVER_DOES_NOT_MEET_REQUIREMENTS = 2;
+    public const RETURN_SERVER_MEETS_REQUIREMENTS = 0;
+    public const RETURN_SERVER_MEETS_REQUIREMENTS_BUT_HAS_WARNINGS = 1;
 
     /** @var SymfonyStyle */
     private $formatter;
@@ -46,8 +41,6 @@ class CheckRequirementsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->input = $input;
-        $this->output = $output;
         $this->formatter = new SymfonyStyle($input, $output);
 
         return $this->serverMeetsRequirements();
@@ -78,6 +71,8 @@ class CheckRequirementsCommand extends Command
 
             return self::RETURN_SERVER_DOES_NOT_MEET_REQUIREMENTS;
         }
+
+        throw new \RuntimeException('Invalid requirement state');
     }
 
     private function showWarnings(): void

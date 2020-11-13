@@ -3,6 +3,7 @@ import { Slider } from './Components/Slider'
 
 export class MediaLibrary {
   constructor () {
+    /* eslint-disable no-new */
     new Slider()
 
     // when no items for lightbox found, stop here

@@ -13,7 +13,7 @@ export class MediaGalleries {
     }
 
     // todo: this does nothing, whats the point of this whole function anyway?
-    //this.addMediaGroupTypeDialog($addMediaGroupTypeDialog)
+    // this.addMediaGroupTypeDialog($addMediaGroupTypeDialog)
   }
 
   controls () {

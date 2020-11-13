@@ -88,7 +88,7 @@ export class Faq {
           Messages.add('success', data.message)
         } else {
           // refresh page
-          location.reload()
+          window.location.reload()
 
           // show message
           Messages.add('danger', 'alter sequence failed.')
@@ -99,7 +99,7 @@ export class Faq {
       },
       error (XMLHttpRequest, textStatus, errorThrown) {
         // refresh page
-        location.reload()
+        window.location.reload()
 
         // show message
         Messages.add('danger', 'alter sequence failed.')
@@ -116,6 +116,7 @@ export class Faq {
   bindDragAndDropQuestions () {
     // go over every dataGrid
     $.each($('[data-sequence-drag-and-drop="data-grid-faq"] tbody'), (index, element) => {
+      /* eslint-disable no-new */
       // make them sortable
       new Sortable(element, {
         group: 'faqIndex', // this is what makes dragging between categories possible

@@ -110,13 +110,11 @@ class Widget extends KernelLoader
     public function isAllowed(): bool
     {
         foreach ($this->rights as $rights) {
-            list($module, $action) = explode('/', $rights);
+            [$module, $action] = explode('/', $rights);
 
             // check action rights
-            if (isset($module) && isset($action)) {
-                if (!BackendAuthentication::isAllowedAction($action, $module)) {
-                    return false;
-                }
+            if ($module !== '' &&  $action !== '' && !BackendAuthentication::isAllowedAction($action, $module)) {
+                return false;
             }
         }
 

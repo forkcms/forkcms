@@ -38,8 +38,14 @@ class Category
      * @var Meta
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(
+     *   name="meta_id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
-    private $meta;
+    private Meta $meta;
 
     public function __construct(Locale $locale, string $title, Meta $meta)
     {

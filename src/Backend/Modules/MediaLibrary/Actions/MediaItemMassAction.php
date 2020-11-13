@@ -110,7 +110,6 @@ class MediaItemMassAction extends BackendBaseAction
     private function getMediaFolder(int $mediaFolderId, Type $selectedType): MediaFolder
     {
         try {
-            /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($mediaFolderId);
         } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(

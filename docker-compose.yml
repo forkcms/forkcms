@@ -18,7 +18,7 @@ services:
             - fork-cms-var:/var/www/html/var
 
     db:
-        image: "mariadb:latest"
+        image: "mysql:5.7"
         restart: always
         ports:
             - "3306:3306"

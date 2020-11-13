@@ -2,7 +2,7 @@ export class Mailmotor {
   constructor () {
     this.controls()
   }
-  
+
   controls () {
     // stop here because mail engine not found
     if ($('#settings_mailEngine').length === 0) {

@@ -12,12 +12,6 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class FormTokenParser extends AbstractTokenParser
 {
-    /**
-     * @param Token $token
-     *
-     * @return Node
-     * @throws SyntaxError
-     */
     public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();

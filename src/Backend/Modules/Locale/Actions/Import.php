@@ -7,6 +7,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use SimpleXMLElement;
 
 /**
  * This is the import action, it will display a form to import a XML locale file.
@@ -90,6 +91,7 @@ class Import extends BackendBaseActionAdd
         }
 
         // import
+        /* @phpstan-ignore-next-line */
         $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
         // everything is imported, so redirect to the overview

@@ -445,7 +445,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // widgetboxes available?
-            if (isset($widgetBoxes)) {
+            if (count($widgetBoxes) > 0) {
                 // create datagrid
                 $widgetGrid = new BackendDataGridArray($widgetBoxes);
                 $widgetGrid->setHeaderLabels(['check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" />']);

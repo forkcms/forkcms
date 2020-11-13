@@ -48,12 +48,25 @@ jobs:
                   FORK_ENV: test
               run: composer install -o
 
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: npm install
+
+            - run: webpack
+
             - name: Execute tests
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
             - name: Display error logs on failure
               if: ${{ failure() }}
-              run: cat var/logs/test/debug.log
+              run: |
+                  [ -r var/logs/installer/debug.log ] && cat var/logs/installer/debug.log
+                  [ -r var/logs/test/debug.log ] && cat var/logs/test/debug.log
+                  [ -r var/logs/test_instal/debug.log ] && cat var/logs/test_instal/debug.log
+                  [ -r var/logs/prod/debug.log ] && cat var/logs/prod/debug.log
+                  [ -r var/logs/dev/debug.log ] && cat var/logs/dev/debug.log
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1
@@ -96,7 +109,7 @@ jobs:
                   FORK_ENV: dev
 
             - name: Run PHPStan
-              run: bin/phpstan analyze src
+              run: bin/phpstan analyze --error-format github src
 
     php-code-sniffer:
         name: PHP Code Sniffer
@@ -125,7 +138,7 @@ jobs:
               run: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
 
     frontend:
-        name: Yarn test
+        name: npm test
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
@@ -134,8 +147,8 @@ jobs:
               uses: actions/setup-node@v2-beta
               with:
                   node-version: 12 # current LTS
-            - run: yarn install
-            - run: yarn test
+            - run: npm install
+            - run: npm test
 
     docker-test:
         name: Docker
@@ -172,6 +185,14 @@ jobs:
                   docker-compose up -d
                   docker run --rm --network=forkcms_default jwilder/dockerize -wait tcp://db:3306 -timeout 300s
                   docker-compose ps "app" | grep -q "Up"
+
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: npm install
+
+            - run: webpack
 
             - name: Test
               run: |

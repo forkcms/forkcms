@@ -3,6 +3,7 @@
 namespace Backend\Modules\Faq\Domain\Question;
 
 use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
@@ -36,15 +37,27 @@ class Question
      * @var Meta
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(
+     *   name="meta_id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
-    private $meta;
+    private Meta $meta;
 
     /**
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
+     * @ORM\JoinColumn(
+     *   name="category_id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
-    private $category;
+    private Category $category;
 
     /**
      * @var int
@@ -110,7 +123,7 @@ class Question
     private $sequence;
 
     /**
-     * @var Collection
+     * @var Collection<Feedback>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Faq\Domain\Feedback\Feedback",

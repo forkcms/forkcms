@@ -24,6 +24,7 @@ export class Collection {
         }
 
         $.each($sequenceInstances, function (index, element) {
+          /* eslint-disable no-new */
           new Sortable(element, {
             group: typeof $sequenceInstances.attr('data-sequence-group') !== 'undefined' ? $sequenceInstances.data('sequence-group') : '',
 
@@ -82,7 +83,7 @@ export class Collection {
       },
 
       saveNewGroup: function (event) {
-        const $this = this;
+        const $this = this
         const fromBlockName = $(event.from).data('position')
         const toBlockName = $(event.to).data('position')
         let currentFieldIndex = null

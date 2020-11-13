@@ -30,12 +30,12 @@ export class ConsentDialog {
 
         // store for Google Tag Manager
         const niceName = name.charAt(0).toUpperCase() + name.slice(1)
-        if (typeof dataLayer !== 'undefined') {
+        if (typeof window.dataLayer !== 'undefined') {
           if (isChecked) {
             const gtmData = {}
             gtmData['privacyConsentLevel' + niceName + 'Agreed'] = isChecked
-            dataLayer.push(gtmData)
-            dataLayer.push({'event': 'privacyConsentLevel' + niceName + 'Agreed'})
+            window.dataLayer.push(gtmData)
+            window.dataLayer.push({'event': 'privacyConsentLevel' + niceName + 'Agreed'})
           }
         }
 

@@ -107,7 +107,7 @@ class Location
     private $showInOverview;
 
     /**
-     * @var Collection
+     * @var Collection<LocationSetting>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Location\Domain\LocationSetting\LocationSetting",

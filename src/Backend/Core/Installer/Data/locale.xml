@@ -11145,21 +11145,21 @@
         <translation language="pl"><![CDATA[Niektóre ustawienia nie zostały jeszcze skonfigurowane.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
-        <translation language="nl"><![CDATA[Ben je zeker dat je het item "%1$s" wil verwijderen?]]></translation>
-        <translation language="en"><![CDATA[Are you sure you want to delete the item "%1$s"?]]></translation>
-        <translation language="hu"><![CDATA[Biztos törlöd a "%1$s" elemet?]]></translation>
-        <translation language="it"><![CDATA[Sei sicuro di voler modificare l'elemento "%1$s"?]]></translation>
-        <translation language="ru"><![CDATA[Вы уверены, что хотите удалить "%1$s"?]]></translation>
+        <translation language="nl"><![CDATA[Ben je zeker dat je het item wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the item?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törlöd a elemet?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler modificare l'elemento?]]></translation>
+        <translation language="ru"><![CDATA[Вы уверены, что хотите удалить?]]></translation>
         <translation language="zh"><![CDATA[你确定要删除“%1$s”吗？]]></translation>
-        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer l'élément "%1$s"?]]></translation>
-        <translation language="de"><![CDATA[Willst du den Eintrag "%1$s" wirklich löschen?]]></translation>
-        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el objeto "%1$s"?]]></translation>
-        <translation language="lt"><![CDATA[Ar tikrai norite ištrinti "%1$s"?]]></translation>
-        <translation language="uk"><![CDATA[Ви впевнені, що бажаєте видалити "%1$s"?]]></translation>
-        <translation language="sv"><![CDATA[Är du säger på att du vill ta bort detta objektet "%1$s"? ]]></translation>
-        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το αντικείμενο "%1$s";]]></translation>
-        <translation language="pt"><![CDATA[Tem a certeza que deseja quer remover o objecto "%1$s"?]]></translation>
-        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć pozycję "%1$s"?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer l'élément?]]></translation>
+        <translation language="de"><![CDATA[Willst du den Eintrag wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el objeto?]]></translation>
+        <translation language="lt"><![CDATA[Ar tikrai norite ištrinti?]]></translation>
+        <translation language="uk"><![CDATA[Ви впевнені, що бажаєте видалити?]]></translation>
+        <translation language="sv"><![CDATA[Är du säger på att du vill ta bort detta objektet? ]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το αντικείμενο;]]></translation>
+        <translation language="pt"><![CDATA[Tem a certeza que deseja quer remover o objecto?]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć pozycję?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteCategory">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze categorie "%1$s" wil verwijderen.]]></translation>
