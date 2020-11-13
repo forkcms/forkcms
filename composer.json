@@ -63,7 +63,8 @@
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/phpunit-bridge": "*",
         "phpstan/phpstan": "^0.12.52",
-        "phpstan/phpstan-symfony": "^0.12.7"
+        "phpstan/phpstan-symfony": "^0.12.7",
+        "phpstan/phpstan-doctrine": "^0.12.22"
     },
     "config": {
         "bin-dir": "bin"

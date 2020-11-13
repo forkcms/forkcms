@@ -1,8 +1,11 @@
 includes:
   - vendor/phpstan/phpstan-symfony/extension.neon
+  - vendor/phpstan/phpstan-doctrine/extension.neon
+  - vendor/phpstan/phpstan-doctrine/rules.neon
 
 parameters:
   level: 1
+  reportUnmatchedIgnoredErrors: false
   paths:
     - src
   scanFiles:
@@ -24,33 +27,31 @@ parameters:
       - redirect
       - redirectToErrorPage
   ignoreErrors:
-    - '#Constant LANGUAGE not found.#'
-    - '#Constant FRONTEND_LANGUAGE not found.#'
-    - '#Constant SITE_URL not found.#'
-    - '#Constant FRONTEND_FILES_URL not found.#'
-    - '#Constant FRONTEND_FILES_PATH not found.#'
-    - '#Constant SITE_MULTILANGUAGE not found.#'
-    - '#Constant SITE_DEFAULT_LANGUAGE not found.#'
-    - '#Constant FRONTEND_MODULES_PATH not found.#'
-    - '#Constant FRONTEND_CORE_PATH not found.#'
-    - '#Constant SITE_PROTOCOL not found.#'
-    - '#Constant FRONTEND_CACHE_URL not found.#'
-    - '#Constant FRONTEND_CACHE_PATH not found.#'
-    - '#Constant PATH_WWW not found.#'
-    - '#Constant FRONTEND_PATH not found.#'
-    - '#Constant NAMED_APPLICATION not found.#'
-    - '#Constant FORK_VERSION not found.#'
-    - '#Constant BACKEND_CACHE_URL not found.#'
-    - '#Constant BACKEND_PATH not found.#'
-    - '#Constant BACKEND_CORE_PATH not found.#'
     - '#Constant ACTION_GROUP_TAG not found.#'
-    - '#Constant SITE_DOMAIN not found.#'
-    - '#Constant BACKEND_MODULES_PATH not found.#'
-    - '#Constant FRONTEND_CORE_URL not found.#'
-    - '#Constant FRONTEND_THEMES_PATH not found.#'
     - '#Constant ACTION_RIGHTS_LEVEL not found.#'
     - '#Constant APPLICATION not found.#'
     - '#Constant BACKEND_CACHE_PATH not found.#'
+    - '#Constant BACKEND_CACHE_URL not found.#'
+    - '#Constant BACKEND_CORE_PATH not found.#'
+    - '#Constant BACKEND_MODULES_PATH not found.#'
+    - '#Constant BACKEND_PATH not found.#'
+    - '#Constant FORK_VERSION not found.#'
+    - '#Constant FRONTEND_CACHE_PATH not found.#'
+    - '#Constant FRONTEND_CACHE_URL not found.#'
+    - '#Constant FRONTEND_CORE_PATH not found.#'
+    - '#Constant FRONTEND_CORE_URL not found.#'
+    - '#Constant FRONTEND_FILES_PATH not found.#'
+    - '#Constant FRONTEND_FILES_URL not found.#'
+    - '#Constant FRONTEND_LANGUAGE not found.#'
+    - '#Constant FRONTEND_MODULES_PATH not found.#'
+    - '#Constant FRONTEND_PATH not found.#'
+    - '#Constant FRONTEND_THEMES_PATH not found.#'
+    - '#Constant LANGUAGE not found.#'
+    - '#Constant NAMED_APPLICATION not found.#'
+    - '#Constant PATH_WWW not found.#'
     - '#Constant SITE_DEFAULT_TITLE not found.#'
+    - '#Constant SITE_URL not found.#'
   symfony:
     container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
+  doctrine:
+    objectManagerLoader: tests/object-manager.php
