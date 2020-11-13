@@ -231,27 +231,27 @@ class Url extends KernelLoader
         $chunks = (array) explode('/', $queryString);
 
         // the language is present in the URL
-        if (!isset($chunks[0]) || !in_array($chunks[0], $possibleLanguages, true)) {
-            $cookie = $this->getContainer()->get('fork.cookie');
-            if ($cookie->has('frontend_language')
-                && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
-            ) {
-                $this->redirectToLanguage($cookie->get('frontend_language'));
-            }
-
-            // default browser language
-            $language = Language::getBrowserLanguage();
+        if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
+            // define language
+            $language = (string) $chunks[0];
             $this->setLanguageCookie($language);
-            $this->redirectToLanguage($language);
+
+            Model::getSession()->set('frontend_language', $language);
+
+            return $language;
         }
 
-        // define language
-        $language = (string) $chunks[0];
+        $cookie = $this->getContainer()->get('fork.cookie');
+        if ($cookie->has('frontend_language')
+            && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
+        ) {
+            $this->redirectToLanguage($cookie->get('frontend_language'));
+        }
+
+        // default browser language
+        $language = Language::getBrowserLanguage();
         $this->setLanguageCookie($language);
-
-        Model::getSession()->set('frontend_language', $language);
-
-        return $language;
+        $this->redirectToLanguage($language);
     }
 
     private function setLanguageCookie(string $language): void
