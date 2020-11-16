@@ -295,7 +295,7 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->get(
                     'Core',
                     'privacy_consent_levels',
-                    ['functional']
+                    []
                 )
             )
         );
@@ -643,10 +643,14 @@ class Index extends BackendBaseActionIndex
                     'show_consent_dialog',
                     $this->form->getField('show_consent_dialog')->getChecked()
                 );
+                $privacyConsentLevels = [];
+                if($privacyConsentLevelsField->isFilled()) {
+                    $privacyConsentLevels = explode(',', $this->form->getField('privacy_consent_levels')->getValue());
+                }
                 $this->get('fork.settings')->set(
                     'Core',
                     'privacy_consent_levels',
-                    explode(',', $this->form->getField('privacy_consent_levels')->getValue())
+                    $privacyConsentLevels
                 );
 
                 // assign report
