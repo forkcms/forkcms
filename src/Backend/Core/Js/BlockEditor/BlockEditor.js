@@ -9,16 +9,6 @@ export class BlockEditor {
   constructor () {
     this.initEditors($('textarea.inputBlockEditor'))
     this.loadEditorsInCollections()
-
-    if (this.blocks === undefined) {
-      this.blocks = {}
-    }
-
-    this.blocks.Header = Header
-    this.blocks.Embed = Embed
-    this.blocks.List = List
-    this.blocks.Paragraph = Paragraph
-    this.blocks.MediaLibraryImage = MediaLibraryImage
   }
 
   initEditors (editors) {
@@ -88,3 +78,18 @@ export class BlockEditor {
     })
   }
 }
+
+if (window.BlockEditor === undefined) {
+  window.BlockEditor = {blocks: {}}
+}
+
+if (window.BlockEditor.blocks === undefined) {
+  window.BlockEditor.blocks = {}
+}
+
+window.BlockEditor.editor = BlockEditor
+window.BlockEditor.blocks.Header = Header
+window.BlockEditor.blocks.Embed = Embed
+window.BlockEditor.blocks.List = List
+window.BlockEditor.blocks.Paragraph = Paragraph
+window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
