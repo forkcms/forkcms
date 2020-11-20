@@ -42,6 +42,6 @@ final class MediaLibraryImageBlock extends AbstractBlock
 
     public function getJavaScriptUrl(): ?string
     {
-        return '/js/vendors/editor.js';
+        return null;
     }
 }
