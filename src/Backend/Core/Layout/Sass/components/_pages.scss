@@ -43,12 +43,60 @@
   }
 }
 
+.template-visual-small {
+  clear: both;
+  margin: 0 -2px;
+
+  table {
+    border-collapse: separate;
+    table-layout: fixed;
+    font-size: $font-size-sm;
+    width: 100%;
+  }
+
+  td {
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    display: block;
+    vertical-align: top;
+    padding: 2px 5px;
+
+    &.empty {
+      background-color: $gray-100;
+      background-size: 20px;
+      border-radius: 3px;
+      display: none;
+    }
+
+    a {
+      color: $body-color;
+      pointer-events: none;
+    }
+  }
+}
+
 @include media-breakpoint-up(xl) {
   #templateVisualLarge {
     margin: 0 -10px;
 
     table {
       border-spacing: 10px;
+
+      td {
+        display: table-cell;
+
+        &.empty {
+          display: table-cell;
+        }
+      }
+    }
+  }
+
+  .template-visual-small {
+    margin: 0 -5px;
+
+    table {
+      border-spacing: 5px;
 
       td {
         display: table-cell;

@@ -269,11 +269,69 @@
 {% endblock %}
 
 {% block page_content_widget %}
-  <div class="row">
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+  {# @todo: remove select and use radios in de modal below, see markup below #}
+{#  <div class="row">
     <div class="col-8 col-sm-6 col-md-4 col-lg-6 col-xl-4">
       {{ form_row(form.templateId) }}
     </div>
+  </div>#}
+
+  <p>
+    {{ 'lbl.Template'|trans|ucfirst }}: {{ selectedTemplate.label }} <a href="#" class="link-sm" data-toggle="modal" data-target="#changeTemplate">{{ 'lbl.ChangeTemplate'|trans|ucfirst }}</a>
+  </p>
+
+  <div class="modal fade" id="changeTemplate" tabindex="-1" aria-labelledby="changeTemplateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changeTemplateLabel">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ macro.alert('warning', 'msg.TemplateChangeWarning'|trans|ucfirst) }}
+          <div class="row">
+
+            {# @todo: loop through templates  #}
+            {# loop 1 example #}
+            <div class="col-lg-6">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="templateRadios" id="templateRadio1" value="templateName1" checked>
+                <label class="form-check-label" for="templateRadio1">
+                  Template name <br>
+                  <div class="template-visual-small">
+                    {{ selectedTemplate.html|raw }}
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {# loop 2 example #}
+            <div class="col-lg-6">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="templateRadios" id="templateRadio2" value="templateName2" checked>
+                <label class="form-check-label" for="templateRadio2">
+                  Template name <br>
+                  <div class="template-visual-small">
+                    {{ selectedTemplate.html|raw }}
+                  </div>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary') }}
+        </div>
+      </div>
+    </div>
   </div>
+
+
   <div id="templateVisualLarge">
     {{ include(template_from_string(selectedTemplate.htmlLarge|replace({'&quot;': '"'}), 'page template: ' ~ selectedTemplate.label), {'form': form}) }}
   </div>
