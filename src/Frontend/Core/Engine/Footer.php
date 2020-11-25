@@ -89,7 +89,7 @@ class Footer extends KernelLoader
             $facebookHtml .= '            xfbml: true,' . "\n";
             $facebookHtml .= '            oauth: true' . "\n";
             $facebookHtml .= '        });' . "\n";
-            $facebookHtml .= '        jsFrontend.facebook.afterInit();' . "\n";
+            $facebookHtml .= '        window.components.facebook.afterInit();' . "\n";
             $facebookHtml .= '    };' . "\n";
         }
 

@@ -130,7 +130,15 @@
                 </legend>
                 <div class="form-group d-flex align-items-center justify-content-start">
                   <label class="mb-0">{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
-                  <span class="strength strength-{{ record.settings.password_strength }} badge ml-1">
+                  {% set badgeType = 'middle' %}
+                  {% if record.settings.password_strength == 'weak' %}
+                    {% set badgeType = 'danger' %}
+                  {% elseif record.settings.password_strength == 'average' %}
+                    {% set badgeType = 'warning' %}
+                  {% elseif record.settings.password_strength == 'strong' %}
+                    {% set badgeType = 'success' %}
+                  {% endif %}
+                  <span class="badge badge-{{ badgeType }} badge-sm ml-1">
                     {{ passwordStrengthLabel|ucfirst }}
                   </span>
                 </div>
@@ -148,10 +156,10 @@
                       {{ macro.required }}
 
                       <span class="passwordStrength ml-auto" data-id="newPassword" data-role="password-strength-meter">
-                        <span class="strength strength-none none badge" data-role="password-strength" data-strength="none">None</span>
-                        <span class="strength strength-weak weak badge" data-role="password-strength" data-strength="weak">Weak</span>
-                        <span class="strength strength-average average badge" data-role="password-strength" data-strength="average">Average</span>
-                        <span class="strength strength-strong strong badge" data-role="password-strength" data-strength="strong">Strong</span>
+                        <span class="badge badge-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
+                        <span class="badge badge-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
+                        <span class="badge badge-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
+                        <span class="badge badge-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
                       </span>
                     </label>
                     {% form_field new_password %} {% form_field_error new_password %}

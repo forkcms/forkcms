@@ -23,6 +23,10 @@
         <translation language="en"><![CDATA[move this page]]></translation>
         <translation language="pl"><![CDATA[przenieś tę stronę]]></translation>
       </item>
+      <item type="label" name="NoContentToShow">
+        <translation language="nl"><![CDATA[geen inhoud om weer te geven]]></translation>
+        <translation language="en"><![CDATA[no content to show]]></translation>
+      </item>
       <item type="label" name="MovePageTree">
         <translation language="nl"><![CDATA[navigatie boom]]></translation>
         <translation language="en"><![CDATA[navigation tree]]></translation>
@@ -61,6 +65,11 @@
       <item type="label" name="State">
         <translation language="nl"><![CDATA[status]]></translation>
         <translation language="en"><![CDATA[state]]></translation>
+      </item>
+      <item type="label" name="PageIndex">
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+        <translation language="pl"><![CDATA[podgląd]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>

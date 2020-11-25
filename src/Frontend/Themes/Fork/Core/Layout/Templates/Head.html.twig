@@ -23,9 +23,8 @@
   <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
 
   {# Stylesheets #}
-  {% for cssFiles in cssFiles %}
-    <link rel="stylesheet" href="{{ cssFiles }}" />
-  {% endfor %}
+  {{ encore_entry_script_tags('frontend', null, 'frontendThemeConfig') }}
+  {{ encore_entry_link_tags('screen', null, 'frontendThemeConfig') }}
 
   {# Site wide HTML #}
   {{ siteHTMLHeader|raw }}
@@ -34,6 +33,6 @@
   <link href="https://fonts.googleapis.com/css?family=Courgette|Roboto:300,400,500,700,900" rel="stylesheet">
 
   {% if debug %}
-    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+    <script src="http://localhost:35729/livereload.js"></script>
   {% endif %}
 </head>

@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new \Liip\ImagineBundle\LiipImagineBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

@@ -119,20 +119,6 @@ class Header extends KernelLoader
         $this->jsData = new JsData(['LANGUAGE' => Locale::frontendLanguage()]);
         $this->meta = new MetaCollection();
 
-        // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
-
-        // debug stylesheet
-        if ($container->getParameter('kernel.debug')) {
-            $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css', true, true, Priority::debug());
-        }
-
-        // add default javascript-files
-        $this->addJS('/js/vendors/jquery.min.js', false, true, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, true, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/utils.js', true, true, Priority::core());
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', true, true, Priority::core());
-
         $this->addJS('/src/Frontend/Modules/Pages/Js/Pages.js', true, true, Priority::module());
         $offlineImageId = $this->get('fork.settings')->get(
             'Pages',

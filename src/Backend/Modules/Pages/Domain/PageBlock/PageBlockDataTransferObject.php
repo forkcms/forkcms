@@ -64,6 +64,16 @@ class PageBlockDataTransferObject
      */
     public $sequence;
 
+    /**
+     * @var string
+     */
+    public $extraModule;
+
+    /**
+     * @var string
+     */
+    public $extraLabel;
+
     public function __construct(PageBlock $pageBlock = null)
     {
         $this->pageBlockEntity = $pageBlock;

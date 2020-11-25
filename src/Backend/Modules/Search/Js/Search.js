@@ -1,24 +1,25 @@
-/**
- * All methods related to the search
- */
-jsBackend.search = {
-  init: function () {
-    var $synonymBox = $('input.synonymBox')
+import { MultiTextBox } from '../../../Core/Js/Components/MultiTextBox'
+import { StringUtil } from '../../../Core/Js/Components/StringUtil'
+
+export class Search {
+  constructor () {
+    const $synonymBox = $('input.synonymBox')
 
     // synonyms box
     if ($synonymBox.length > 0) {
-      $synonymBox.multipleTextbox({
-        emptyMessage: jsBackend.locale.msg('NoSynonymsBox'),
-        errorMessage: utils.string.ucfirst(jsBackend.locale.err('AddTextBeforeSubmitting')),
-        addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-        removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteSynonym'))
-      })
+      const options = {
+        emptyMessage: window.backend.locale.msg('NoSynonymsBox'),
+        errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
+        addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+        removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('DeleteSynonym'))
+      }
+      MultiTextBox.multipleTextbox(options, $synonymBox)
     }
 
     // settings enable/disable
-    $('#searchModules').find('input[type=checkbox]').on('change', function () {
-      var $this = $(this)
-      var $weightElement = $('#' + $this.attr('id') + 'Weight')
+    $('#searchModules').find('input[type=checkbox]').on('change', (event) => {
+      const $this = $(event.currentTarget)
+      const $weightElement = $('#' + $this.attr('id') + 'Weight')
 
       if ($this.is(':checked')) {
         $weightElement.removeAttr('disabled').removeClass('disabled')
@@ -30,5 +31,3 @@ jsBackend.search = {
     })
   }
 }
-
-$(jsBackend.search.init)

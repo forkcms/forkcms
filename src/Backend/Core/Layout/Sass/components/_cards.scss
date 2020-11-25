@@ -47,7 +47,7 @@
   margin-bottom: 20px;
 
   .card-heading {
-    background: $gray-100;
+    background: $gray-200;
     border-bottom: 1px solid $gray-200;
 
     label,
@@ -64,13 +64,14 @@
   }
 
   &.card-pages-block {
-    background-color: $gray-100;
-    border: 0;
     margin-bottom: 0;
 
     .card-heading {
-      border-color: $border-color;
       padding: 9px 15px 8px;
+
+      h3 {
+        font-size: $font-size-base * 0.875;
+      }
     }
 
     .card-body {

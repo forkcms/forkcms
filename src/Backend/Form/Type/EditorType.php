@@ -200,11 +200,6 @@ class EditorType extends TextareaType
     public function buildCkEditorView(FormView $view, FormInterface $form, array $options, Header $header): void
     {
         parent::buildView($view, $form, $options);
-
-        // we add JS because we need CKEditor
-        $header->addJS('ckeditor/ckeditor.js', 'Core', false);
-        $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
-
         $currentLanguage = Language::getWorkingLanguage();
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $currentLanguage . '.js')) {

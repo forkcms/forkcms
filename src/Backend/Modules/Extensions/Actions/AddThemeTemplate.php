@@ -46,9 +46,6 @@ class AddThemeTemplate extends BackendBaseActionAdd
     {
         parent::execute();
 
-        // load additional js
-        $this->header->addJS('ThemeTemplate.js');
-
         // load data
         $this->loadData();
         $this->loadForm();
