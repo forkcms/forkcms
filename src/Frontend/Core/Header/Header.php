@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Header;
 
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Common\Core\Header\Asset;
 use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
@@ -131,6 +132,23 @@ class Header extends KernelLoader
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, true, Priority::core());
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, true, Priority::core());
         $this->addJS('/src/Frontend/Core/Js/frontend.js', true, true, Priority::core());
+
+        $this->addJS('/src/Frontend/Modules/Pages/Js/Pages.js', true, true, Priority::module());
+        $offlineImageId = $this->get('fork.settings')->get(
+            'Pages',
+            'offline_image_' . Locale::frontendLanguage()
+        );
+
+        $offlineImage = null;
+        if ($offlineImageId !== null) {
+            $offlineImage = $this->get('media_library.repository.group')->findOneById($offlineImageId);
+
+            if ($offlineImage instanceof MediaGroup && $offlineImage->getFirstConnectedMediaItem() !== null) {
+                $offlineImage = $offlineImage->getFirstConnectedMediaItem()->getWebPath();
+            }
+        }
+
+        $this->addJsData('Pages', 'offline_image', $offlineImage);
     }
 
     /**
