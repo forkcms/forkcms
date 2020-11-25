@@ -6,23 +6,38 @@
 {% endblock %}
 
 {% block content %}
-  {% form settings %}
-  <div class="card card-default">
-    <div class="card-heading">
-      <h2 class="card-title">
-        {{ 'lbl.MetaNavigation'|trans|ucfirst }}
-      </h2>
-    </div>
-    <div class="card-body">
-      <div class="form-group last">
-        <div class="form-check">
-          {% form_field meta_navigation %}
-          <label for="metaNavigation" class="form-check-label">{{ 'msg.MetaNavigation'|trans|ucfirst }}</label>
+{{ form_start(form, {attr: {class: 'fork-form'}}) }}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
+            {{ 'lbl.MetaNavigation'|trans|ucfirst }}
+          </h2>
         </div>
-        <small class="form-text text-muted">{{ 'msg.HelpMetaNavigation'|trans }}</small>
+        <div class="card-body">
+          {{ form_row(form.metaNavigation) }}
+          <small class="form-text text-muted">{{ 'msg.HelpMetaNavigation'|trans }}</small>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
+            {{ 'lbl.OfflinePage'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="card-body">
+          {{ form_rest(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="fork-module-actions">
     <div class="btn-toolbar">
       <div class="btn-group ml-auto" role="group">
@@ -30,5 +45,5 @@
       </div>
     </div>
   </div>
-  {% endform %}
+  {{ form_end(form) }}
 {% endblock %}

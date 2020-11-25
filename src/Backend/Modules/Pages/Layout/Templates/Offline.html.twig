@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Offline page</title>
+  <meta name="description" content="Offline page of this awesome website">
+  <meta name="author" content="Sarah Meysman">
+
+  <!--<link href="css/bootstrap.min.css" rel="stylesheet" />-->
+  <link href="/src/Frontend/Themes/Fork/Core/Layout/Css/screen.css?m=1593680880" rel="stylesheet" />
+
+</head>
+
+<body>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-xl-6">
+
+      <h1>{{ title }}</h1>
+
+      <img class="mb-5" src="{{ image.firstConnectedMediaItem.webPath }}" alt="">
+
+      {{ text|parse_blocks }}
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

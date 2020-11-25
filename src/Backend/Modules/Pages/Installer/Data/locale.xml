@@ -2,6 +2,22 @@
 <locale>
   <Backend>
     <Pages>
+      <item type="label" name="OfflinePage">
+        <translation language="nl"><![CDATA[Offline pagina]]></translation>
+        <translation language="en"><![CDATA[Offline page]]></translation>
+      </item>
+      <item type="label" name="OfflineTitle">
+        <translation language="nl"><![CDATA[Offline titel]]></translation>
+        <translation language="en"><![CDATA[Offline title]]></translation>
+      </item>
+      <item type="label" name="OfflineText">
+        <translation language="nl"><![CDATA[Offline tekst]]></translation>
+        <translation language="en"><![CDATA[Offline text]]></translation>
+      </item>
+      <item type="label" name="OfflineImage">
+        <translation language="nl"><![CDATA[Offline afbeelding]]></translation>
+        <translation language="en"><![CDATA[Offline image]]></translation>
+      </item>
       <item type="label" name="MoveThisPage">
         <translation language="nl"><![CDATA[verplaats deze pagina]]></translation>
         <translation language="en"><![CDATA[move this page]]></translation>
