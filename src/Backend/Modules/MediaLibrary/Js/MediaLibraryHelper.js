@@ -67,7 +67,7 @@ jsBackend.mediaLibraryHelper.group = {
       cursor: 'move',
       start: function (e, ui) {
         // redefine previous and new sequence
-        prevSequence = newSequence = $('#group-' + currentMediaGroupId + ' .mediaIds').first().val()
+        prevSequence = newSequence =  $('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val()
 
         // don't prevent the click
         ui.item.removeClass('preventClick')
@@ -80,7 +80,7 @@ jsBackend.mediaLibraryHelper.group = {
         newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
 
         // add value to hidden input
-        $('#group-' + currentMediaGroupId + ' .mediaIds').first().val(newSequence)
+        $('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val(newSequence)
       },
       stop: function (e, ui) {
         // prevent click
@@ -159,9 +159,9 @@ jsBackend.mediaLibraryHelper.group = {
       }
 
       // get current media for group
-      var $currentMediaGroupMediaIds = $('#group-' + currentMediaGroupId + ' .mediaIds')
+      var $currentMediaGroupMediaIds =  $('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds')
       currentMediaItemIds = ($currentMediaGroupMediaIds.length > 0 && $currentMediaGroupMediaIds.first().val() !== '')
-        ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+        ? $.trim($('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val()).split(',') : []
 
       // set the group media
       mediaGroups[currentMediaGroupId].media = currentMediaItemIds
@@ -211,7 +211,7 @@ jsBackend.mediaLibraryHelper.group = {
     currentMediaGroupId = groupId
 
     // current ids
-    var currentIds = $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',')
+    var currentIds = $.trim($('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val()).split(',')
 
     // remove from array
     currentIds = jQuery.grep(currentIds, function (value) {
@@ -364,8 +364,8 @@ jsBackend.mediaLibraryHelper.group = {
 
       var type = $('#group-' + mediaGroupId + ' .type').first().val()
       // get current media for group
-      var mediaIds = ($('#group-' + mediaGroupId + ' .mediaIds').length > 0 && $('#group-' + mediaGroupId + ' .mediaIds').first().val() !== '')
-        ? $.trim($('#group-' + mediaGroupId + ' .mediaIds').first().val()).split(',') : []
+      var mediaIds = ($('#group-' + mediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').length > 0 &&  $('#group-' + mediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val() !== '')
+        ? $.trim( $('#group-' + mediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val()).split(',') : []
 
       // Push ids to array
       mediaGroups[mediaGroupId] = {
@@ -552,8 +552,8 @@ jsBackend.mediaLibraryHelper.group = {
     var $currentItems = jsBackend.mediaLibraryHelper.group.getItems()
 
     // current ids
-    var currentIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
-      ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+    var currentIds = ($('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val() !== '')
+      ? $.trim($('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val()).split(',') : []
 
     // define empty
     var empty = (currentMediaItemIds.length === 0)
@@ -601,7 +601,7 @@ jsBackend.mediaLibraryHelper.group = {
     }
 
     // update the hidden group field for media
-    $('#group-' + currentMediaGroupId).find('.mediaIds').first().val(currentMediaItemIds.join(','))
+    $('#group-' + currentMediaGroupId).closest('.media-library-media-group-helper').find('.mediaIds').first().val(currentMediaItemIds.join(','))
 
     // redefine
     currentMediaItemIds = []
