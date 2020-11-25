@@ -293,34 +293,16 @@
         <div class="modal-body">
           {{ macro.alert('warning', 'msg.TemplateChangeWarning'|trans|ucfirst) }}
           <div class="row">
-
-            {# @todo: loop through templates  #}
-            {# loop 1 example #}
-            <div class="col-lg-6">
-              <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="templateRadios" id="templateRadio1" value="templateName1" checked>
-                <label class="form-check-label" for="templateRadio1">
-                  Template name <br>
+            {% for template in form.templateId.children %}
+              <div class="col-lg-6">
+                <div class="form-check mb-3">
+                  {{ form_widget(template) }}
                   <div class="template-visual-small">
-                    {{ selectedTemplate.html|raw }}
+                    {{ template.vars.attr['data-html']|raw }}
                   </div>
-                </label>
+                </div>
               </div>
-            </div>
-
-            {# loop 2 example #}
-            <div class="col-lg-6">
-              <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="templateRadios" id="templateRadio2" value="templateName2" checked>
-                <label class="form-check-label" for="templateRadio2">
-                  Template name <br>
-                  <div class="template-visual-small">
-                    {{ selectedTemplate.html|raw }}
-                  </div>
-                </label>
-              </div>
-            </div>
-
+            {% endfor %}
           </div>
         </div>
         <div class="modal-footer">
