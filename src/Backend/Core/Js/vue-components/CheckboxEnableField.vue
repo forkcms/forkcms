@@ -9,6 +9,7 @@
     <div class="form-group">
       <label :for="fieldId">{{fieldLabel}}</label>
       <input :class="['form-control', disabled && 'disabled']" :id="fieldId" :disabled="disabled" :name="fieldName" v-model="value">
+      <small v-if="fieldHelpText" class="form-text text-muted">{{fieldHelpText}}</small>
     </div>
   </div>
 </template>
@@ -22,6 +23,7 @@
       fieldId: String,
       fieldLabel: String,
       fieldName: String,
+      fieldHelpText: String,
       switchCheck: Boolean
     },
     data() {
