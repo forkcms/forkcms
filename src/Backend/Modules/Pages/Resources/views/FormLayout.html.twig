@@ -138,7 +138,7 @@
   >
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
-      <div class="checkboxTextFieldCombo">
+{#      <div class="checkboxTextFieldCombo">
         <div class="form-group">
           {{ form_widget(form.titleOverwrite) }}
         </div>
@@ -148,7 +148,19 @@
           {{ form_errors(form.title) }}
           <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
         </div>
+      </div>#}
+
+      <div id="app">
+        <checkbox-enable-field
+          checkbox-id="{{ form.titleOverwrite.vars.id }}"
+          checkbox-label="{{ form.titleOverwrite.vars.label|trans|ucfirst }}"
+          field-id="{{ form.title.vars.id }}"
+          field-label="{{ form.title.vars.label|trans|ucfirst }}"
+          field-name="{{ form.title.vars.full_name }}"
+          data-field-value="{{ form.title.vars.value }}">
+        </checkbox-enable-field>
       </div>
+
       <div class="checkboxTextFieldCombo">
         <div class="form-group">
           {{ form_widget(form.parent.children.navigation.children.titleOverwrite) }}
