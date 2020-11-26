@@ -116,12 +116,9 @@ $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
 
-  console.log('window on load')
-
-  if ($('#app').length) {
-    console.log('#app bestaat')
+  if ($('#tabSEO').length) {
     new Vue({
-      el: '#app',
+      el: '#tabSEO',
       components: {CheckboxEnableField}
     })
   }
