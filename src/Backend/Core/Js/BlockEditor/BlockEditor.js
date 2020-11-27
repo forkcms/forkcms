@@ -3,6 +3,7 @@ import Embed from '@editorjs/embed'
 import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
+import Quote from '@editorjs/quote'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
 import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 
@@ -93,5 +94,6 @@ window.BlockEditor.blocks.Header = Header
 window.BlockEditor.blocks.Embed = Embed
 window.BlockEditor.blocks.List = List
 window.BlockEditor.blocks.Paragraph = Paragraph
+window.BlockEditor.blocks.Quote = Quote
 window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
 window.BlockEditor.blocks.MediaLibraryVideo = MediaLibraryVideo
