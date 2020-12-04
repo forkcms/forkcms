@@ -41,7 +41,7 @@ final class PageContentType extends AbstractType
 
         $builder->add(
             'templateId',
-            ChoiceType::class,
+            TemplatesType::class,
             [
                 'choices' => array_flip(
                     array_map(

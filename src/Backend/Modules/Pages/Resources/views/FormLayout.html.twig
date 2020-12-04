@@ -298,7 +298,7 @@
                 <div class="form-check mb-3">
                   {{ form_widget(template) }}
                   <div class="template-visual-small">
-                    {{ template.vars.attr['data-html']|raw }}
+                    {{ form.templateId.vars.templates[template.vars.value]['html']|raw }}
                   </div>
                 </div>
               </div>
