@@ -5823,16 +5823,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v5.1.7",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "150aeb91dd9dafe13ec8416abd62e435330ca12d"
+                "reference": "92a76ca5e64effd41ce111b8f476144dfa29f1f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/150aeb91dd9dafe13ec8416abd62e435330ca12d",
-                "reference": "150aeb91dd9dafe13ec8416abd62e435330ca12d",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/92a76ca5e64effd41ce111b8f476144dfa29f1f0",
+                "reference": "92a76ca5e64effd41ce111b8f476144dfa29f1f0",
                 "shasum": ""
             },
             "require": {
@@ -5842,7 +5842,8 @@
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0|<6.4,>=6.0|9.1.2"
             },
             "require-dev": {
-                "symfony/deprecation-contracts": "^2.1"
+                "symfony/deprecation-contracts": "^2.1",
+                "symfony/error-handler": "^4.4|^5.0"
             },
             "suggest": {
                 "symfony/error-handler": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
@@ -5852,9 +5853,6 @@
             ],
             "type": "symfony-bridge",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                },
                 "thanks": {
                     "name": "phpunit/phpunit",
                     "url": "https://github.com/sebastianbergmann/phpunit"
@@ -5901,7 +5899,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-02T12:57:56+00:00"
+            "time": "2020-11-27T00:39:34+00:00"
         }
     ],
     "aliases": [],
