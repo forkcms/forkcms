@@ -6,6 +6,7 @@ import Paragraph from '@editorjs/paragraph'
 import Quote from '@editorjs/quote'
 import Underline from '@editorjs/underline'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
+import Button from './Blocks/Button'
 import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 
 export class BlockEditor {
@@ -99,3 +100,4 @@ window.BlockEditor.blocks.Quote = Quote
 window.BlockEditor.blocks.Underline = Underline
 window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
 window.BlockEditor.blocks.MediaLibraryVideo = MediaLibraryVideo
+window.BlockEditor.blocks.Button = Button
