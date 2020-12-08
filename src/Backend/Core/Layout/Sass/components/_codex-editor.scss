@@ -7,3 +7,13 @@
   max-width: 100%;
   width: 100%;
 }
+
+.ce-block {
+  border-bottom: 1px dashed $border-color;
+  padding-top: $spacer;
+  padding-bottom: $spacer;
+
+  @include hover-focus {
+    border-color: $border-color;
+  }
+}

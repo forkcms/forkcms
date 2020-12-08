@@ -6,6 +6,7 @@ use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\AbstractBlock;
+use Common\BlockEditor\Blocks\ButtonBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
@@ -100,6 +101,7 @@ class EditorType extends TextareaType
                     MediaLibraryImageBlock::class,
                     QuoteBlock::class,
                     UnderlineBlock::class,
+                    ButtonBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
