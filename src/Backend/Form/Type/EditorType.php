@@ -11,6 +11,7 @@ use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\Blocks\QuoteBlock;
+use Common\BlockEditor\Blocks\UnderlineBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -98,6 +99,7 @@ class EditorType extends TextareaType
                     ListBlock::class,
                     MediaLibraryImageBlock::class,
                     QuoteBlock::class,
+                    UnderlineBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
