@@ -25,7 +25,7 @@ final class QuoteBlock extends AbstractBlock
                 'allowedTags' => 'b,i,a[href]',
             ],
             'alignment' => [
-                'type' => 'string',
+                'canBeOnly' => '["left", "center"]',
             ],
         ];
     }
