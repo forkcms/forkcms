@@ -413,7 +413,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected static function assertResponseDoesNotHaveContent(Response $response, string ...$content): void
     {
         foreach ($content as $notExpectedContent) {
-            self::assertNotContains($notExpectedContent, $response->getContent());
+            self::assertStringNotContainsString($notExpectedContent, $response->getContent());
         }
     }
 
