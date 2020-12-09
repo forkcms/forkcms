@@ -406,7 +406,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected static function assertResponseHasContent(Response $response, string ...$content): void
     {
         foreach ($content as $expectedContent) {
-            self::assertContains($expectedContent, $response->getContent());
+            self::assertStringContainsString($expectedContent, $response->getContent());
         }
     }
 
@@ -420,7 +420,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected static function assertCurrentUrlContains(Client $client, string ...$partialUrls): void
     {
         foreach ($partialUrls as $partialUrl) {
-            self::assertContains($partialUrl, $client->getHistory()->current()->getUri());
+            self::assertStringContainsString($partialUrl, $client->getHistory()->current()->getUri());
         }
     }
 

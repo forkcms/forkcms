@@ -8,11 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class MetaLinkTest extends TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testHrefCannotBeEmpty(): void
     {
+        $this->expectException(InvalidArgumentException::class);
         new MetaLink('', []);
     }
 
@@ -20,14 +18,14 @@ class MetaLinkTest extends TestCase
     {
         $metaLink = new MetaLink('http://fork-cms.com', ['title' => 'dummy']);
 
-        self::assertContains('dummy', $metaLink->getUniqueKey());
+        self::assertStringContainsString('dummy', $metaLink->getUniqueKey());
     }
 
     public function testCustomUniqueKey(): void
     {
         $metaLink = new MetaLink('http://fork-cms.com', ['title' => 'dummy'], ['href']);
 
-        self::assertContains('http://fork-cms.com', $metaLink->getUniqueKey());
+        self::assertStringContainsString('http://fork-cms.com', $metaLink->getUniqueKey());
     }
 
     public function testSearchingInAttributes(): void
