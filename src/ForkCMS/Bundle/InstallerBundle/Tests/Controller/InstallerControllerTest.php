@@ -23,12 +23,12 @@ class InstallerControllerTest extends WebTestCase
         $this->kernelDir = $this->getProvidedData()[0]->getContainer()->getParameter('kernel.project_dir') . '/app';
     }
 
-    protected function onNotSuccessfulTest(Throwable $t)/* The :void return type declaration that should be here would cause a BC issue */
+    protected function onNotSuccessfulTest(Throwable $t): void
     {
         // put back our parameters file
         $this->putParametersFileBack(new Filesystem(), $this->kernelDir);
 
-        parent::onNotSuccessfulTest($throwable);
+        parent::onNotSuccessfulTest($t);
     }
 
     public function testNoStepActionAction(): void
