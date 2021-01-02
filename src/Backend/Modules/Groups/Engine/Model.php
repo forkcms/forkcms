@@ -11,14 +11,14 @@ class Model
 {
     const QUERY_BROWSE =
         'SELECT g.id, g.name, COUNT(u.id) AS num_users
-         FROM groups AS g
+         FROM `groups` AS g
          LEFT OUTER JOIN users_groups AS ug ON g.id = ug.group_id
-         LEFT OUTER JOIN users AS u ON u.id = ug.user_id
+         LEFT OUTER JOIN `users` AS u ON u.id = ug.user_id
          GROUP BY g.id';
 
     const QUERY_ACTIVE_USERS =
         'SELECT u.id, u.email
-         FROM users AS u
+         FROM `users` AS u
          INNER JOIN users_groups AS ug ON u.id = ug.user_id
          WHERE ug.group_id = ? AND u.deleted = ?';
 
@@ -44,7 +44,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
-             FROM groups AS i
+             FROM `groups` AS i
              WHERE i.name = ?',
             [$groupName]
         );
@@ -103,7 +103,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.*
-             FROM groups AS i
+             FROM `groups` AS i
              WHERE i.id = ?',
             [$id]
         );
@@ -133,7 +133,7 @@ class Model
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
-             FROM groups AS i
+             FROM `groups` AS i
              WHERE i.id = ?',
             [$groupId]
         );
@@ -152,7 +152,7 @@ class Model
     public static function getAll(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS value, i.name AS label FROM groups AS i'
+            'SELECT i.id AS value, i.name AS label FROM `groups` AS i'
         );
     }
 
@@ -160,7 +160,7 @@ class Model
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name
-             FROM groups AS i
+             FROM `groups` AS i
              INNER JOIN users_groups AS ug ON i.id = ug.group_id
              WHERE ug.user_id = ?',
             [$userId]
@@ -214,7 +214,7 @@ class Model
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
-             FROM users AS i
+             FROM `users` AS i
              INNER JOIN users_groups AS ug ON i.id = ug.user_id
              WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
             [$groupId, false, true]
