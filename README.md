@@ -27,6 +27,7 @@ To install the dependencies, you can run the command below in the document-root:
 ## Security
 
 If you discover any security-related issues, please email core@fork-cms.com instead of using the issue tracker.
+HTML is allowed in translations because you sometimes need it. Any reports regarding this will not be accepted as a security issue. Owners of a website can narrow down who can add/edit translation strings using the group permissions.
 
 ## Bugs
 
