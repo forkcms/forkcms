@@ -1,0 +1,13 @@
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
+
+{% block main %}
+
+  <div class="container">
+    {% for block in positions.main %}
+      {% if block.html %}
+        {{ block.html|raw }}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}

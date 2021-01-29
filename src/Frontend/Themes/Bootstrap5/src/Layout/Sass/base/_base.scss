@@ -1,0 +1,18 @@
+img {
+  max-width: 100%;
+}
+
+.skip-content {
+  height: 1px;
+  position: absolute;
+  left: 50%;
+  overflow: hidden;
+  width: 1px;
+  z-index: -1;
+
+  &:focus {
+    height: auto;
+    width: auto;
+    z-index: 10;
+  }
+}

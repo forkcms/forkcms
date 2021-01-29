@@ -1,0 +1,15 @@
+<div id="mailmotor-subscribe-widget" class="mailmotor">
+  {{ form_start(form) }}
+  <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
+  <input type="hidden" name="form" value="subscribe" />
+  <div class="form-group">
+    {{ form_label(form.email) }}
+    <div class="input-group">
+        {{ form_widget(form.email) }}
+      <div class="input-group-btn">
+        {{ form_widget(form.subscribe) }}
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+</div>

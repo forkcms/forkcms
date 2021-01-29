@@ -1,0 +1,26 @@
+@charset 'UTF-8';
+
+// Bootstrap
+@import "bootstrap5/scss/functions";
+@import 'bootstrap5/scss/variables';
+@import 'bootstrap-variables';
+@import 'bootstrap-imports';
+
+// Icon font generated from icon-sources/ through grunt
+@import 'icons';
+
+// Plugin styling
+// eg. @import 'fancybox/dist/scss/jquery.fancybox';
+// eg. @import 'fancybox/dist/helpers/scss/jquery.fancybox-thumbs';
+@import 'plugins/twitter-typeahead';
+
+// Base styles
+@import 'base/base';
+
+// Components
+@import 'components/cookiebar';
+@import 'components/footer';
+@import 'components/forms';
+
+// Custom page styling
+// eg. @import 'pages/footer';

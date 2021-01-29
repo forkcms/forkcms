@@ -1,0 +1,19 @@
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
+
+{% block main %}
+
+  <div class="container">
+    {% include 'Core/Layout/Templates/Breadcrumb.html.twig' %}
+  </div>
+
+  <div class="container">
+    <img src="{{ THEME_URL }}/apple-touch-icon-180.png" class="mb-3">
+    {% for block in positions.main %}
+      {% if block.html %}
+        {{ block.html|raw }}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}
+

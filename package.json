@@ -16,6 +16,7 @@
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "git+https://github.com/mathiashelin/bootstrap-tagsinput.git",
+    "bootstrap5": "npm:bootstrap@^5.0.0-beta1",
     "ckeditor": "^4.12.1",
     "cropper": "^3.0.0-rc.2",
     "del": "^3.0.0",
@@ -59,7 +60,7 @@
   "engines": {
     "node": "^9.*"
   },
-  "theme": "Bootstrap4",
+  "theme": "Bootstrap5",
   "standard": {
     "globals": [
       "$",
