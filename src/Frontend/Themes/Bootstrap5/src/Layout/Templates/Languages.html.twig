@@ -1,5 +1,5 @@
 {% if languages %}
-  <ul class="navbar-nav ml-start">
+  <ul class="navbar-nav ml-auto">
     {% for language in languages %}
       <li class="nav-item {% if language.current %} active{% endif %}">
         <a class="nav-link" href="{{ language.url }}">{{ language.label|uppercase }}</a>

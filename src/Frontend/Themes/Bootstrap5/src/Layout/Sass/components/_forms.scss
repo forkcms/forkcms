@@ -22,3 +22,8 @@ abbr[title] {
 select.form-control[size] {
   height: $input-height;
 }
+
+.input-group .twitter-typeahead {
+  float: none;
+  width: auto;
+}

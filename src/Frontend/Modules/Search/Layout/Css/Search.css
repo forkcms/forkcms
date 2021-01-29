@@ -38,6 +38,8 @@ select.input-group.input-group-lg .twitter-typeahead .tt-input, select.input-gro
 
 textarea.input-group.input-group-lg .twitter-typeahead .tt-input, textarea.input-group.input-group-lg .twitter-typeahead .tt-hint, select[multiple].input-group.input-group-lg .twitter-typeahead .tt-input, select[multiple].input-group.input-group-lg .twitter-typeahead .tt-hint {height: auto}
 
+.twitter-typeahead {float: left;width: 100%}
+
 .twitter-typeahead .tt-hint {color: #777}
 
 .twitter-typeahead .tt-input {z-index: 2}
