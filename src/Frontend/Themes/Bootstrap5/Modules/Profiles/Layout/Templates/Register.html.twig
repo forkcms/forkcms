@@ -1,0 +1,49 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<section id="registerForm" class="profiles">
+  <h1>{{ 'lbl.Register'|trans }}</h1>
+  {% if registerIsSuccess %}
+    {{ alerts.alert('success', 'msg.RegisterIsSuccess'|trans) }}
+  {% endif %}
+  {% if registerHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+
+  {% if not registerHideForm %}
+    {% form register %}
+    <fieldset>
+      <div class="form-group">
+        <small>
+          {{ 'msg.AlreadyHaveAnAccount'|trans|ucfirst }}
+          <a href="{{ geturlforblock('Profiles','Login') }}">{{ 'lbl.LoginHere'|trans }}</a>.
+        </small>
+      </div>
+      <div class="form-group{% if txtDisplayNameError %} has-danger{% endif %}">
+        <label class="form-control-label" for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        {% form_field display_name %}
+        {% form_field_error display_name %}
+      </div>
+      <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
+        <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        {% form_field email %}
+        {% form_field_error email %}
+      </div>
+      <div class="form-group{% if txtPasswordError %} has-danger{% endif %}">
+        <label class="form-control-label" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        {% form_field password %}
+        {% form_field_error password %}
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          {% form_field show_password %}
+          <label for="showPassword" class="custom-control-label">
+            {{ 'lbl.ShowPassword'|trans|ucfirst }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
+      </div>
+    </fieldset>
+    {% endform %}
+  {% endif %}
+</section>

@@ -1,0 +1,9 @@
+{#
+  variables that are available:
+  - {{ widgetContentBlocks }}:
+#}
+{% if widgetContentBlocks.text %}
+  <div class="content-block{{ widgetContentBlocks.id }}">
+    {{ widgetContentBlocks.text|raw }}
+  </div>
+{% endif %}
