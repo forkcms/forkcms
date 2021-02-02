@@ -62,6 +62,7 @@ class Button {
   }
 
   render () {
+    // wrapper
     const wrapper = this._make('div', this.CSS.wrapper)
     const wrapperContent = this._make('div')
     const wrapperTitle = this._make('label', this.CSS.wrapperLabel,
@@ -70,6 +71,7 @@ class Button {
       }
     )
 
+    // Button text
     const labelText = this._make('label', this.CSS.label,
       {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Text'))
@@ -84,6 +86,7 @@ class Button {
       }
     )
 
+    // Button url
     const labelUrl = this._make('label', this.CSS.label,
       {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Link'))
@@ -98,6 +101,7 @@ class Button {
       }
     )
 
+    // Button color
     const labelColor = this._make('label', this.CSS.label,
       {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Color'))
@@ -119,6 +123,7 @@ class Button {
       }
     )
 
+    // append to wrapper
     selectColor.appendChild(opt1)
     selectColor.appendChild(opt2)
 
