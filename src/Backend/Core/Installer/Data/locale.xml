@@ -13598,6 +13598,24 @@
         <translation language="de"><![CDATA[Suche…]]></translation>
         <translation language="fr"><![CDATA[recherche…]]></translation>
       </item>
+      <item type="label" name="Button">
+        <translation language="nl"><![CDATA[knop]]></translation>
+        <translation language="en"><![CDATA[button]]></translation>
+        <translation language="de"><![CDATA[taste]]></translation>
+        <translation language="fr"><![CDATA[bouton]]></translation>
+      </item>
+      <item type="label" name="Link">
+        <translation language="nl"><![CDATA[link]]></translation>
+        <translation language="en"><![CDATA[link]]></translation>
+        <translation language="de"><![CDATA[Verknüpfung]]></translation>
+        <translation language="fr"><![CDATA[lien]]></translation>
+      </item>
+      <item type="label" name="Color">
+        <translation language="nl"><![CDATA[kleur]]></translation>
+        <translation language="en"><![CDATA[color]]></translation>
+        <translation language="de"><![CDATA[Farbe]]></translation>
+        <translation language="fr"><![CDATA[couleur]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>

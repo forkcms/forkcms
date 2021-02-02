@@ -17,3 +17,18 @@
     border-color: $border-color;
   }
 }
+
+.ce-wrapper-label {
+  margin-bottom: $spacer/4;
+}
+
+.ce-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  margin-bottom: $spacer/5;
+}
+
+.ce-input {
+  @extend .form-control;
+  @extend .form-control-sm;
+}
