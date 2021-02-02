@@ -79,6 +79,7 @@ class Button {
     )
     const inputText = this._make('input', [this.CSS.input, this.CSS.spacingBellow],
       {
+        type: 'text',
         value: this.data && this.data.text ? this.data.text : ''
       },
       {
@@ -94,6 +95,7 @@ class Button {
     )
     const inputUrl = this._make('input', [this.CSS.input, this.CSS.spacingBellow],
       {
+        type: 'text',
         value: this.data && this.data.url ? this.data.url : ''
       },
       {
