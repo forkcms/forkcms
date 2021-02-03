@@ -14,7 +14,7 @@ final class RawBlock extends AbstractBlock
     public function getValidation(): array
     {
         return [
-            'embed' => [
+            'html' => [
                 'type' => 'string',
                 'required' => true,
             ],

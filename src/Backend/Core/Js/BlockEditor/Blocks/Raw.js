@@ -68,9 +68,6 @@ class Raw {
   save (blockContent) {
     const inputRaw = blockContent.querySelector('[data-textarea-html]')
 
-    console.log('save')
-    console.log(this.data)
-
     return Object.assign(this.data, {
       html: inputRaw.value
     })
@@ -89,8 +86,7 @@ class Raw {
 
     if (Array.isArray(classNames)) {
       el.classList.add(...classNames)
-    }
-    else if (classNames) {
+    } else if (classNames) {
       el.classList.add(classNames)
     }
 
@@ -103,6 +99,15 @@ class Raw {
     }
 
     return el
+  }
+
+  /**
+   * Automatic sanitize config
+   */
+  static get sanitize () {
+    return {
+      html: true // Allow HTML tags
+    }
   }
 }
 
