@@ -15,14 +15,14 @@ class Quote {
       {
         name: 'center',
         icon: `<svg width="16" height="11" viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg" ><path d="M1.069 0H13.33a1.069 1.069 0 0 1 0 2.138H1.07a1.069 1.069 0 1 1 0-2.138zm3.15 4.275h5.962a1.069 1.069 0 0 1 0 2.137H4.22a1.069 1.069 0 1 1 0-2.137zM1.069 8.55H13.33a1.069 1.069 0 0 1 0 2.137H1.07a1.069 1.069 0 0 1 0-2.137z"/></svg>`,
-      },
+      }
     ]
   }
 
   static get toolbox () {
     return {
-      title: 'Quote',
-      icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>'
+      icon: '<svg width="15" height="14" viewBox="0 0 15 14" xmlns="http://www.w3.org/2000/svg"><path d="M13.53 6.185l.027.025a1.109 1.109 0 0 1 0 1.568l-5.644 5.644a1.109 1.109 0 1 1-1.569-1.568l4.838-4.837L6.396 2.23A1.125 1.125 0 1 1 7.986.64l5.52 5.518.025.027zm-5.815 0l.026.025a1.109 1.109 0 0 1 0 1.568l-5.644 5.644a1.109 1.109 0 1 1-1.568-1.568l4.837-4.837L.58 2.23A1.125 1.125 0 0 1 2.171.64L7.69 6.158l.025.027z" /></svg>',
+      title: 'Quote'
     }
   }
 
@@ -47,6 +47,11 @@ class Quote {
     return this.alignments.left
   }
 
+  /**
+   * CSS classes
+   *
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, spacingBellow: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
+   */
   get CSS () {
     return {
       wrapper: 'ce-wrapper',
@@ -67,7 +72,7 @@ class Quote {
       .map(tune => {
         const el = this._make('div', this.CSS.settingsButton, {
           innerHTML: tune.icon,
-          title: `${tune.name} alignment`,
+          title: `${tune.name} alignment`
         })
 
         el.classList.toggle(this.CSS.settingsButtonActive, tune.name === this.data.alignment)
