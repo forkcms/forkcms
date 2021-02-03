@@ -1,2 +1,1 @@
-{{ dump(editorBlock) }}
-<a class="btn btn-{{ editorBlock.style }}" href="{{ editorBlock.url }}">{{ editorBlock.text }}</a>
+<a class="btn btn-{{ editorBlock.style }}" href="{{ editorBlock.url }}"{% if editorBlock.targetBlank %} target="_blank" {% endif %}>{{ editorBlock.text }}</a>

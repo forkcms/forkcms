@@ -19,8 +19,8 @@ class Button {
 
   static get toolbox () {
     return {
-      title: 'Button',
-      icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>'
+      title: StringUtil.ucfirst(window.backend.locale.lbl('Button')),
+      icon: '<svg width="20" height="10.1" viewBox="0 0 20 10.1" xmlns="http://www.w3.org/2000/svg"><path d="M15.3,2C16.8,2,18,3.2,18,4.7v0.7c0,1.5-1.2,2.7-2.7,2.7H4.7C3.2,8.1,2,6.9,2,5.4V4.7C2,3.2,3.2,2,4.7,2H15.3 M15.3,0H4.7C2.1,0,0,2.1,0,4.7v0.7c0,2.6,2.1,4.7,4.7,4.7h10.5c2.6,0,4.7-2.1,4.7-4.7V4.7C20,2.1,17.9,0,15.3,0L15.3,0z"/><rect x="4.6" y="4.6" width="7.6" height="1"/><polygon points="14.9,6.7 14.2,6 15,5.1 14.2,4.1 15,3.5 16.4,5.1 \t\t"/>\n</svg>'
     }
   }
 
@@ -143,7 +143,6 @@ class Button {
   }
 
   save (blockContent) {
-    console.log('SAVE')
     const inputUrl = blockContent.querySelector('[data-input-url]')
     const inputText = blockContent.querySelector('[data-input-text]')
     const selectColor = blockContent.querySelector('[data-select-color]')
