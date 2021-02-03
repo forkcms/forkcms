@@ -12,7 +12,6 @@
     "@editorjs/header": "^2.3.1",
     "@editorjs/list": "^1.4.0",
     "@editorjs/paragraph": "^2.6.0",
-    "@editorjs/quote": "^2.4.0",
     "@symfony/webpack-encore": "^0.30.2",
     "bootstrap": "^4.4.1",
     "bootstrap-datepicker": "^1.9.0",
