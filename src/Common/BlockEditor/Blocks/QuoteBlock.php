@@ -19,7 +19,7 @@ final class QuoteBlock extends AbstractBlock
                 'required' => true,
                 'allowedTags' => 'b,i,a[href]',
             ],
-            'caption' => [
+            'author' => [
                 'type' => 'string',
                 'required' => true,
                 'allowedTags' => 'b,i,a[href]',
