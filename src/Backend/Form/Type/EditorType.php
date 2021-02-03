@@ -12,6 +12,7 @@ use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\Blocks\QuoteBlock;
+use Common\BlockEditor\Blocks\RawBlock;
 use Common\BlockEditor\Blocks\UnderlineBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
@@ -102,6 +103,7 @@ class EditorType extends TextareaType
                     QuoteBlock::class,
                     UnderlineBlock::class,
                     ButtonBlock::class,
+                    RawBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
