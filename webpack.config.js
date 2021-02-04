@@ -106,6 +106,9 @@ Encore
     resolveUrlLoader: false
   })
   .enablePostCssLoader()
+
+  .enableVueLoader()
+
   // enables @babel/preset-env polyfills
   .enableSourceMaps(!Encore.isProduction())
   // enables hashed filenames (e.g. app.abc123.css)

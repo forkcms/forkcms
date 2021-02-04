@@ -17,6 +17,19 @@
 {% endblock %}
 
 {% block content %}
+  <div id="app">
+    <checkbox-enable-field
+      checkbox-id="1234-check"
+      checkbox-label="enable field"
+      field-id="1234-field"
+      field-label="field"
+      field-name="1234-field-name"
+      data-field-value="value"
+      field-help-text="Extra tekst hier"
+      switch-check>
+    </checkbox-enable-field>
+  </div>
+
   {% form edit %}
   <div class="form-group">
     <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
