@@ -104,10 +104,10 @@ export class Upload {
 
   preInit () {
     // bind change to upload_type
-    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', this.toggleUploadBoxes)
+    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
 
     // bind click to add movie
-    $('#addMediaMovie').on('click', this.insertMovie)
+    $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
 
     // bind change to upload folder
     $('#uploadMediaFolderId').on('change', () => {
