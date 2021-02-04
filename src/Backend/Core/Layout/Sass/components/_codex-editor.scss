@@ -49,6 +49,16 @@
 .codex-editor--narrow .ce-toolbar__actions {
   right: 5px;
 }
+.ce-toolbar__plus,
+.codex-editor--narrow .ce-toolbar__plus {
+  left: 0;
+}
+
+.ce-toolbox,
+.ce-toolbar .ce-toolbox {
+  background: $white;
+  z-index: 2;
+}
 
 .ce-toolbar__settings-btn {
   background: $primary;
