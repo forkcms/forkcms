@@ -24,33 +24,42 @@ class Button {
     }
   }
 
+  /**
+   * CSS classes
+   *
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
+   */
   get CSS () {
     return {
       wrapper: 'ce-wrapper',
       wrapperLabel: 'ce-wrapper-label',
       input: 'ce-input',
       label: 'ce-label',
-      spacingBellow: 'mb-2'
+      settingsWrapper: 'cdx-button-settings',
+      settingsButton: 'ce-settings__button',
+      settingsButtonActive: 'cdx-settings-button--active'
     }
   }
 
   renderSettings () {
-    const wrapper = document.createElement('div')
+    const wrapper = this._make('div', this.CSS.settingsWrapper)
 
     this.settings.forEach(tune => {
-      let button = document.createElement('div')
+      let button = this._make('div', this.CSS.settingsButton,
+        {
+          innerHTML: tune.icon,
+          title: tune.title
+        })
 
-      button.classList.add('cdx-settings-button')
       if (this.data[tune.name] === true) {
-        button.classList.add('cdx-settings-button--active')
+        button.classList.add(this.CSS.settingsButtonActive)
       }
-      button.innerHTML = tune.icon
-      button.title = tune.title
+
       wrapper.appendChild(button)
 
       button.addEventListener('click', () => {
         this._toggleTune(tune.name)
-        button.classList.toggle('cdx-settings-button--active')
+        button.classList.toggle(this.CSS.settingsButtonActive)
       })
     })
 
@@ -63,7 +72,9 @@ class Button {
 
   render () {
     // wrapper
-    const wrapper = this._make('div', this.CSS.wrapper)
+    const wrapper = this._make('div', this.CSS.wrapper, {}, {
+      'data-block-content': ''
+    })
     const wrapperContent = this._make('div')
     const wrapperTitle = this._make('label', this.CSS.wrapperLabel,
       {
@@ -77,7 +88,7 @@ class Button {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Text'))
       }
     )
-    const inputText = this._make('input', [this.CSS.input, this.CSS.spacingBellow],
+    const inputText = this._make('input', this.CSS.input,
       {
         type: 'text',
         value: this.data && this.data.text ? this.data.text : ''
@@ -93,7 +104,7 @@ class Button {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Link'))
       }
     )
-    const inputUrl = this._make('input', [this.CSS.input, this.CSS.spacingBellow],
+    const inputUrl = this._make('input', this.CSS.input,
       {
         type: 'text',
         value: this.data && this.data.url ? this.data.url : ''

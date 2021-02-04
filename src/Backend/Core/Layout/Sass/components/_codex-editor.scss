@@ -10,25 +10,56 @@
 
 .ce-block {
   border-bottom: 1px dashed $border-color;
-  padding-top: $spacer;
-  padding-bottom: $spacer;
+  padding-top: 0;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
 
   @include hover-focus {
     border-color: $border-color;
   }
+
+  &.ce-block--focused .ce-wrapper-label {
+    color: $blue-dark;
+  }
+
+  &.ce-block--selected .ce-block__content {
+    background: transparent;
+  }
 }
 
 .ce-wrapper-label {
-  margin-bottom: $spacer/4;
+  color: $gray-700;
+  margin-bottom: 0;
 }
 
 .ce-label {
+  color: $gray-700;
   font-size: $font-size-sm;
   font-weight: $font-weight-normal;
-  margin-bottom: $spacer/5;
+  margin-bottom: 0;
 }
 
 .ce-input {
   @extend .form-control;
   @extend .form-control-sm;
+  margin-bottom: 0.25rem;
+}
+
+.ce-toolbar__actions,
+.codex-editor--narrow .ce-toolbar__actions {
+  right: 5px;
+}
+
+.ce-toolbar__settings-btn {
+  background: $primary;
+  color: $white;
+
+  @include hover-focus {
+    background: $blue-dark;
+    color: $white;
+  }
+}
+
+.codex-editor__redactor {
+  margin-right: 50px;
 }
