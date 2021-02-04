@@ -17,15 +17,14 @@ class Raw {
   /**
    * CSS classes
    *
-   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, spacingBellow: string}}
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string}}
    */
   get CSS () {
     return {
       wrapper: 'ce-wrapper',
       wrapperLabel: 'ce-wrapper-label',
       input: 'ce-input',
-      label: 'ce-label',
-      spacingBellow: 'mb-2'
+      label: 'ce-label'
     }
   }
 
@@ -45,7 +44,7 @@ class Raw {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Text'))
       }
     )
-    const inputRaw = this._make('textarea', [this.CSS.input, this.CSS.spacingBellow],
+    const inputRaw = this._make('textarea', this.CSS.input,
       {
         value: this.data && this.data.html ? this.data.html : '',
         rows: 7

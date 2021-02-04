@@ -50,7 +50,7 @@ class Quote {
   /**
    * CSS classes
    *
-   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, spacingBellow: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
    */
   get CSS () {
     return {
@@ -58,7 +58,6 @@ class Quote {
       wrapperLabel: 'ce-wrapper-label',
       input: 'ce-input',
       label: 'ce-label',
-      spacingBellow: 'mb-2',
       settingsWrapper: 'cdx-quote-settings',
       settingsButton: 'ce-settings__button',
       settingsButtonActive: 'cdx-settings-button--active',
@@ -122,7 +121,7 @@ class Quote {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Text'))
       }
     )
-    const inputText = this._make('textarea', [this.CSS.input, this.CSS.spacingBellow],
+    const inputText = this._make('textarea', this.CSS.input,
       {
         value: this.data && this.data.text ? this.data.text : '',
         rows: 7
@@ -138,7 +137,7 @@ class Quote {
         innerHTML: StringUtil.ucfirst(window.backend.locale.lbl('Author'))
       }
     )
-    const inputAuthor = this._make('input', [this.CSS.input, this.CSS.spacingBellow],
+    const inputAuthor = this._make('input', this.CSS.input,
       {
         type: 'text',
         value: this.data && this.data.author ? this.data.author : ''
