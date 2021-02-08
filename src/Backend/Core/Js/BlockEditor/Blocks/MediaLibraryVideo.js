@@ -28,9 +28,9 @@ class MediaLibraryVideo {
 
     window.onmessage = (event) => {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
-        this.data.src = 'https://www.youtube-nocookie.com/embed/' + event.data['media-url'].split('v=')[1]
+        this.data.videoId = event.data['media-url'].split('v=')[1]
         this.data.id = event.data.id
-        this.iframe.src = this.data.src
+        this.iframe.src = 'https://www.youtube-nocookie.com/embed/' + this.data.videoId
         this.videoWrapper.classList.remove('d-none')
       }
     }
@@ -76,7 +76,7 @@ class MediaLibraryVideo {
   save (blockContent) {
     return {
       'id': this.data.id,
-      'src': this.data.src
+      'videoId': this.data.videoId
     }
   }
 
