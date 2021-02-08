@@ -33,7 +33,7 @@
     },
     data () {
       return {
-        url: 'https://www.youtube.com/embed/',
+        url: 'https://www.youtube-nocookie.com/embed/',
         visitorChoices: jsData.privacyConsent.visitorChoices,
       }
     },
