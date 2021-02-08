@@ -10,7 +10,21 @@ class MediaLibraryImage {
     }
   }
 
-  selectFromMediaLibrary () {
+  /**
+   * CSS classes
+   *
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
+   */
+  get CSS () {
+    return {
+      wrapper: 'ce-wrapper',
+      wrapperLabel: 'ce-wrapper-label',
+      input: 'ce-input',
+      label: 'ce-label'
+    }
+  }
+
+  selectFromMediaLibrary (event) {
     window.open(window.location.origin + jsData.MediaLibrary.browseActionImages)
 
     window.onmessage = (event) => {
@@ -24,8 +38,7 @@ class MediaLibraryImage {
   }
 
   render () {
-    this.wrapper = document.createElement('div')
-    this.wrapper.classList.add('media-library-image')
+    this.wrapper = this._make('div', [this.CSS.wrapper, 'media-library-image'])
 
     this.image = document.createElement('img')
     this.wrapper.appendChild(this.image)
@@ -50,6 +63,34 @@ class MediaLibraryImage {
       'id': this.data.id,
       'src': this.data.src
     }
+  }
+
+  /**
+   * Helper for making Elements with attributes
+   *
+   * @param  {string} tagName           - new Element tag name
+   * @param  {Array|string} classNames  - list or name of CSS classname(s)
+   * @param  {object} attributes        - any attributes
+   * @returns {Element}
+   */
+  _make (tagName, classNames = null, attributes = {}, customAttributes = {}) {
+    const el = document.createElement(tagName)
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames)
+    } else if (classNames) {
+      el.classList.add(classNames)
+    }
+
+    for (const attrName in attributes) {
+      el[attrName] = attributes[attrName]
+    }
+
+    for (const attrName in customAttributes) {
+      el.setAttribute(attrName, customAttributes[attrName])
+    }
+
+    return el
   }
 }
 
