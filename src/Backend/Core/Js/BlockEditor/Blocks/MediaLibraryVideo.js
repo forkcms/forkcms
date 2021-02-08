@@ -18,9 +18,8 @@ class MediaLibraryVideo {
   get CSS () {
     return {
       wrapper: 'ce-wrapper',
-      wrapperLabel: 'ce-wrapper-label',
-      input: 'ce-input',
-      label: 'ce-label'
+      videoWrapper: ['ce-video-wrapper', 'd-none'],
+      videoWrapperEditButton: ['btn', 'btn-primary', 'btn-sm', 'btn-icon-only', 'ce-btn-edit']
     }
   }
 
@@ -29,29 +28,45 @@ class MediaLibraryVideo {
 
     window.onmessage = (event) => {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
-        this.data.src = event.data['media-url']
+        this.data.src = 'https://www.youtube-nocookie.com/embed/' + event.data['media-url'].split('v=')[1]
         this.data.id = event.data.id
-        this.image.src = 'https://img.youtube.com/vi/' + this.data.src.split('v=')[1] + '/maxresdefault.jpg'
-        this.image.classList.remove('d-none')
+        this.iframe.src = this.data.src
+        this.videoWrapper.classList.remove('d-none')
       }
     }
   }
 
   render () {
-    this.wrapper = this._make('div', [this.CSS.wrapper, 'media-library-video'])
+    this.wrapper = this._make('div', [this.CSS.wrapper])
 
-    this.image = this._make('img')
-    this.wrapper.appendChild(this.image)
-    this.wrapper.appendChild(this.iframe)
+    this.videoWrapper = this._make('div', this.CSS.videoWrapper)
+    this.iframeWrapper = this._make('div', ['embed-responsive', 'embed-responsive-16by9'])
+    this.iframe = this._make('iframe', ['embed-responsive-item'], {},
+      {
+        'frameborder': '0',
+        'allow': 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      }
+    )
 
-    $(this.image).on('click.media-library-edit-image', $.proxy(this.selectFromMediaLibrary, this))
+    this.editButton = this._make('button', this.CSS.videoWrapperEditButton, {
+      type: 'button'
+    })
+    this.editButtonIcon = this._make('i', ['fas', 'fa-pencil-alt'])
+
+    this.editButton.appendChild(this.editButtonIcon)
+    this.iframeWrapper.appendChild(this.iframe)
+    this.videoWrapper.appendChild(this.iframeWrapper)
+    this.videoWrapper.appendChild(this.editButton)
+    this.wrapper.appendChild(this.videoWrapper)
+
+    $(this.editButton).on('click', $.proxy(this.selectFromMediaLibrary, this))
 
     if (this.data.src !== undefined) {
-      this.image.src = this.data.src
-      this.image.classList.remove('hidden')
+      this.iframe.src = this.data.src
+      this.videoWrapper.classList.remove('d-none')
     } else {
-      this.image.src = '#'
-      this.image.classList.add('d-none')
+      this.iframe.src = '#'
+      this.videoWrapper.classList.add('d-none')
       this.selectFromMediaLibrary()
     }
 
