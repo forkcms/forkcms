@@ -13598,6 +13598,36 @@
         <translation language="de"><![CDATA[Suche…]]></translation>
         <translation language="fr"><![CDATA[recherche…]]></translation>
       </item>
+      <item type="label" name="Button">
+        <translation language="nl"><![CDATA[knop]]></translation>
+        <translation language="en"><![CDATA[button]]></translation>
+        <translation language="de"><![CDATA[taste]]></translation>
+        <translation language="fr"><![CDATA[bouton]]></translation>
+      </item>
+      <item type="label" name="Link">
+        <translation language="nl"><![CDATA[link]]></translation>
+        <translation language="en"><![CDATA[link]]></translation>
+        <translation language="de"><![CDATA[Verknüpfung]]></translation>
+        <translation language="fr"><![CDATA[lien]]></translation>
+      </item>
+      <item type="label" name="Color">
+        <translation language="nl"><![CDATA[kleur]]></translation>
+        <translation language="en"><![CDATA[color]]></translation>
+        <translation language="de"><![CDATA[Farbe]]></translation>
+        <translation language="fr"><![CDATA[couleur]]></translation>
+      </item>
+      <item type="label" name="Quote">
+        <translation language="nl"><![CDATA[quote]]></translation>
+        <translation language="en"><![CDATA[quote]]></translation>
+        <translation language="de"><![CDATA[Zitat]]></translation>
+        <translation language="fr"><![CDATA[citation]]></translation>
+      </item>
+      <item type="label" name="EmbedIframe">
+        <translation language="nl"><![CDATA[embed]]></translation>
+        <translation language="en"><![CDATA[embed]]></translation>
+        <translation language="de"><![CDATA[einbetten]]></translation>
+        <translation language="fr"><![CDATA[intégrer]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>
