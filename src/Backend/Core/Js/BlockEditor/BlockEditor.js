@@ -4,6 +4,7 @@ import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
+import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 
 export class BlockEditor {
   constructor () {
@@ -93,3 +94,4 @@ window.BlockEditor.blocks.Embed = Embed
 window.BlockEditor.blocks.List = List
 window.BlockEditor.blocks.Paragraph = Paragraph
 window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
+window.BlockEditor.blocks.MediaLibraryVideo = MediaLibraryVideo
