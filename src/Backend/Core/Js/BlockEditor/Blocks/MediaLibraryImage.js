@@ -18,9 +18,8 @@ class MediaLibraryImage {
   get CSS () {
     return {
       wrapper: 'ce-wrapper',
-      wrapperLabel: 'ce-wrapper-label',
-      input: 'ce-input',
-      label: 'ce-label'
+      imageWrapper: ['ce-image-wrapper', 'd-none'],
+      imageWrapperEditButton: ['btn', 'btn-primary', 'btn-sm', 'btn-icon-only', 'ce-btn-edit']
     }
   }
 
@@ -32,26 +31,34 @@ class MediaLibraryImage {
         this.data.src = event.data['media-url']
         this.data.id = event.data.id
         this.image.src = this.data.src
-        this.image.classList.remove('hidden')
+        this.imageWrapper.classList.remove('d-none')
       }
     }
   }
 
   render () {
-    this.wrapper = this._make('div', [this.CSS.wrapper, 'media-library-image'])
+    this.wrapper = this._make('div', this.CSS.wrapper)
 
-    this.image = document.createElement('img')
-    this.wrapper.appendChild(this.image)
-    $(this.image).on('click.media-library-edit-image', $.proxy(this.selectFromMediaLibrary, this))
-    this.image.classList.add('img-responsive')
-    this.image.style.cursor = 'pointer'
+    this.imageWrapper = this._make('div', this.CSS.imageWrapper)
+    this.image = this._make('img')
+    this.editButton = this._make('button', this.CSS.imageWrapperEditButton, {
+      type: 'button'
+    })
+    this.editButtonIcon = this._make('i', ['fas', 'fa-pencil-alt'])
+
+    this.editButton.appendChild(this.editButtonIcon)
+    this.imageWrapper.appendChild(this.image)
+    this.imageWrapper.appendChild(this.editButton)
+    this.wrapper.appendChild(this.imageWrapper)
+
+    $(this.editButton).on('click.media-library-edit-image', $.proxy(this.selectFromMediaLibrary, this))
 
     if (this.data.src !== undefined) {
       this.image.src = this.data.src
-      this.image.classList.remove('hidden')
+      this.imageWrapper.classList.remove('d-none')
     } else {
       this.image.src = '#'
-      this.image.classList.add('hidden')
+      this.imageWrapper.classList.add('d-none')
       this.selectFromMediaLibrary(this)
     }
 
