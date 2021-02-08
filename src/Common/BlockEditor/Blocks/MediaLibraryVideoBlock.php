@@ -29,7 +29,7 @@ final class MediaLibraryVideoBlock extends AbstractBlock
     {
         return [
             'id' => 'string',
-            'src' => 'string',
+            'videoId' => 'string',
         ];
     }
 
