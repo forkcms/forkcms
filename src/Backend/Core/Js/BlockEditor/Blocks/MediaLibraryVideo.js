@@ -37,7 +37,7 @@ class MediaLibraryVideo {
   }
 
   render () {
-    this.wrapper = this._make('div', [this.CSS.wrapper])
+    this.wrapper = this._make('div', this.CSS.wrapper)
 
     this.videoWrapper = this._make('div', this.CSS.videoWrapper)
     this.iframeWrapper = this._make('div', ['embed-responsive', 'embed-responsive-16by9'])
