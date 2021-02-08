@@ -13,7 +13,7 @@ class MediaLibraryImage {
   selectFromMediaLibrary () {
     window.open(window.location.origin + jsData.MediaLibrary.browseActionImages)
 
-    window.onmessage = function (event) {
+    window.onmessage = (event) => {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
         this.data.src = event.data['media-url']
         this.data.id = event.data.id
@@ -29,7 +29,7 @@ class MediaLibraryImage {
 
     this.image = document.createElement('img')
     this.wrapper.appendChild(this.image)
-    $(this.image).on('click.media-library-edit-image', () => this.selectFromMediaLibrary(this))
+    $(this.image).on('click.media-library-edit-image', $.proxy(this.selectFromMediaLibrary, this))
     this.image.classList.add('img-responsive')
     this.image.style.cursor = 'pointer'
 
