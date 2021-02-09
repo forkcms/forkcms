@@ -22,7 +22,6 @@ final class UnderlineBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-
     }
 
     public function getJavaScriptUrl(): ?string
