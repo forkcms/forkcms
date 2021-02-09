@@ -196,13 +196,13 @@ jsBackend.mediaLibraryHelper.group = {
   /**
    * Edit media in a dialog
    */
-  editMediaDialog: function(){
+  editMediaDialog: function () {
     var $editMediaDialog = $('[data-role=media-library-edit-dialog]')
     var $editMediaSubmit = $('#editMediaSubmit')
-    var $mediaItemTitleInput = $('#editMediaItemTile');
-    var $mediaItem;
+    var $mediaItemTitleInput = $('#editMediaItemTile')
+    var $mediaItem
 
-    $('[data-fork=connectedItems]').on('click', '[data-fork=edit]', function(){
+    $('[data-fork=connectedItems]').on('click', '[data-fork=edit]', function () {
       $mediaItem = $(this).closest('[data-fork=mediaItem]')
 
       $mediaItemTitleInput.val($mediaItem.data('mediaTitle'))
@@ -210,22 +210,22 @@ jsBackend.mediaLibraryHelper.group = {
       $editMediaDialog.modal('show')
     })
 
-    $mediaItemTitleInput.keyup(function(e){
+    $mediaItemTitleInput.keyup(function (e) {
       if (e.keyCode === 13) {
         $editMediaSubmit.click()
       }
     })
 
-    $editMediaSubmit.click(function(){
+    $editMediaSubmit.click(function () {
       if (!$mediaItem || !$mediaItem.data('mediaId')) {
-        return;
+        return
       }
 
       $editMediaDialog.find('.is-invalid').removeClass('is-invalid')
       $editMediaDialog.find('.help-block').remove()
 
-      if ($mediaItemTitleInput.val() === "") {
-        $mediaItemTitleInput.addClass('is-invalid');
+      if ($mediaItemTitleInput.val() === '') {
+        $mediaItemTitleInput.addClass('is-invalid')
 
         $('<span>').addClass('help-block')
           .append(
@@ -240,7 +240,7 @@ jsBackend.mediaLibraryHelper.group = {
           )
           .insertAfter($mediaItemTitleInput)
 
-        return;
+        return
       }
 
       $.ajax({
@@ -274,7 +274,7 @@ jsBackend.mediaLibraryHelper.group = {
       })
     })
 
-    $editMediaDialog.on('hide.bs.modal', function(e){
+    $editMediaDialog.on('hide.bs.modal', function (e) {
       $mediaItem = null
       $mediaItemTitleInput.val('')
     })
