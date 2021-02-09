@@ -240,15 +240,15 @@ class Meta
         return urldecode($this->data['data']['canonical_url']);
     }
 
-    public function getCanonicalUrlOverwrite(): ?bool
+    public function getCanonicalUrlOverwrite(): bool
     {
         if (!is_array($this->data['data'])) {
-            return null;
+            return false;
         }
 
         // not set so return null
         if (!array_key_exists('canonical_url_overwrite', $this->data['data'])) {
-            return null;
+            return false;
         }
 
         // return value
