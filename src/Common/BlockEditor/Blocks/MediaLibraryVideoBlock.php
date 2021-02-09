@@ -20,7 +20,6 @@ final class MediaLibraryVideoBlock extends AbstractBlock
     public function getConfig(): array
     {
         return [
-            'shortcut' => 'CMD+SHIFT+I',
             'class' => 'BlockEditor.blocks.MediaLibraryVideo',
         ];
     }
