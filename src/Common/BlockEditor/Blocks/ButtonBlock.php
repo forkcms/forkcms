@@ -2,7 +2,6 @@
 
 namespace Common\BlockEditor\Blocks;
 
-
 final class ButtonBlock extends AbstractBlock
 {
     public function getConfig(): array
