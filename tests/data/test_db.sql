@@ -2232,7 +2232,8 @@ VALUES
     (1532, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopiedTitle', '%1$s copy', '2017-08-31 14:28:26'),
     (1533, 1, 'en', 'Backend', 'Pages', 'msg', 'CopySaveWarning', '<p><strong>Important:</strong> The copy hasn''t been saved yet.</p>', '2017-08-31 14:28:26'),
     (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26'),
-    (1535, 1, 'en', 'Backend', 'Core', 'err', 'NotFound', 'This page was lost at sea.', '2017-08-31 14:28:18');
+    (1535, 1, 'en', 'Backend', 'Core', 'err', 'NotFound', 'This page was lost at sea.', '2017-08-31 14:28:18'),
+    (1536, 1, 'en', 'Backend', 'Core', 'lbl', 'CanonicalURL', 'canonical URL', '2021-02-09 20:36:18');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;

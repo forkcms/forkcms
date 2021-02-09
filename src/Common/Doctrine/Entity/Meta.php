@@ -146,11 +146,11 @@ class Meta
         $this->id = $id;
 
         if ($canonicalUrlOverwrite) {
-            $this->data['canonicalUrl'] = $canonicalUrl;
-            $this->data['canonicalUrlOverwrite'] = $canonicalUrlOverwrite;
+            $this->unserialisedData['canonical_url'] = $canonicalUrl;
+            $this->unserialisedData['canonical_url_overwrite'] = $canonicalUrlOverwrite;
         } else {
-            unset($this->data['canonicalUrl']);
-            unset($this->data['canonicalUrlOverwrite']);
+            unset($this->unserialisedData['canonical_url']);
+            unset($this->unserialisedData['canonical_url_overwrite']);
         }
     }
 
@@ -184,11 +184,11 @@ class Meta
         $this->seoIndex = $seoIndex;
 
         if ($canonicalUrlOverwrite) {
-            $this->data['canonicalUrl'] = $canonicalUrl;
-            $this->data['canonicalUrlOverwrite'] = $canonicalUrlOverwrite;
+            $this->unserialisedData['canonical_url'] = $canonicalUrl;
+            $this->unserialisedData['canonical_url_overwrite'] = $canonicalUrlOverwrite;
         } else {
-            unset($this->data['canonicalUrl']);
-            unset($this->data['canonicalUrlOverwrite']);
+            unset($this->unserialisedData['canonical_url']);
+            unset($this->unserialisedData['canonical_url_overwrite']);
         }
     }
 
@@ -321,8 +321,8 @@ class Meta
 
     public function getCanonicalUrl(): ?string
     {
-        if (array_key_exists('canonicalUrl', $this->data)) {
-            return $this->data['canonicalUrl'];
+        if (array_key_exists('canonical_url', $this->unserialisedData)) {
+            return $this->unserialisedData['canonical_url'];
         }
 
         return null;
@@ -330,8 +330,8 @@ class Meta
 
     public function isCanonicalUrlOverwrite(): bool
     {
-        if (array_key_exists('canonicalUrlOverwrite', $this->data)) {
-            return (bool) $this->data['canonicalUrlOverwrite'];
+        if (array_key_exists('canonicalUrlOverwrite', $this->unserialisedData)) {
+            return (bool) $this->unserialisedData['canonical_url_overwrite'];
         }
 
         return false;
