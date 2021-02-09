@@ -23,6 +23,10 @@ class MediaLibraryVideo {
     }
   }
 
+  getIframeSrc (id) {
+    return 'https://www.youtube-nocookie.com/embed/' + id
+  }
+
   selectFromMediaLibrary () {
     window.open(window.location.origin + jsData.MediaLibrary.browseActionVideos)
 
@@ -30,7 +34,7 @@ class MediaLibraryVideo {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
         this.data.videoId = event.data['media-url'].split('v=')[1]
         this.data.id = event.data.id
-        this.iframe.src = 'https://www.youtube-nocookie.com/embed/' + this.data.videoId
+        this.iframe.src = this.getIframeSrc(this.data.videoId)
         this.videoWrapper.classList.remove('d-none')
       }
     }
@@ -61,8 +65,8 @@ class MediaLibraryVideo {
 
     $(this.editButton).on('click', $.proxy(this.selectFromMediaLibrary, this))
 
-    if (this.data.src !== undefined) {
-      this.iframe.src = this.data.src
+    if (this.data.videoId !== undefined) {
+      this.iframe.src = this.getIframeSrc(this.data.videoId)
       this.videoWrapper.classList.remove('d-none')
     } else {
       this.iframe.src = '#'
