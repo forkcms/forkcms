@@ -7,7 +7,7 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
-    "@editorjs/editorjs": "^2.16.1",
+    "@editorjs/editorjs": "^2.19.0",
     "@editorjs/embed": "^2.2.1",
     "@editorjs/header": "^2.3.1",
     "@editorjs/list": "^1.4.0",
@@ -49,6 +49,9 @@
     "terser-webpack-plugin": "^3.0.7",
     "typeahead.js": "^0.11.1",
     "url-loader": "^4.1.0",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
     "webpack-livereload-plugin": "^2.3.0",
     "webpack-manifest-plugin": "^2.2.0",
     "webpack-notifier": "^1.8.0"
@@ -84,5 +87,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "dependencies": {
+    "@editorjs/underline": "^1.0.0"
   }
 }

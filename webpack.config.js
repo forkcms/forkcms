@@ -178,6 +178,9 @@ Encore
     resolveUrlLoader: false
   })
   .enablePostCssLoader()
+
+  .enableVueLoader()
+
   .configureUrlLoader()
   // enables @babel/preset-env polyfills
   .enableSourceMaps(!Encore.isProduction())
@@ -250,6 +253,9 @@ Encore
     resolveUrlLoader: false
   })
   .enablePostCssLoader()
+
+  .enableVueLoader()
+
   .configureUrlLoader()
   // enables @babel/preset-env polyfills
   .enableSourceMaps(!Encore.isProduction())
