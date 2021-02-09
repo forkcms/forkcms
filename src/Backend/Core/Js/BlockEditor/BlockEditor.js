@@ -5,6 +5,7 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import Underline from '@editorjs/underline'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
+import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
@@ -98,6 +99,7 @@ window.BlockEditor.blocks.List = List
 window.BlockEditor.blocks.Paragraph = Paragraph
 window.BlockEditor.blocks.Underline = Underline
 window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
+window.BlockEditor.blocks.MediaLibraryVideo = MediaLibraryVideo
 window.BlockEditor.blocks.Button = Button
 window.BlockEditor.blocks.Quote = Quote
 window.BlockEditor.blocks.Raw = Raw

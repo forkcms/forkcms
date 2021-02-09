@@ -54,6 +54,15 @@
   left: 0;
 }
 
+.codex-editor--narrow .ce-block  {
+  margin-right: -50px;
+  padding-right: 50px;
+}
+
+.ce-toolbar__actions {
+  opacity: 1;
+}
+
 .ce-toolbox,
 .ce-toolbar .ce-toolbox {
   background: $white;
@@ -72,4 +81,17 @@
 
 .codex-editor__redactor {
   margin-right: 50px;
+}
+
+.ce-image-wrapper,
+.ce-video-wrapper {
+  max-width: 500px;
+  position: relative;
+
+  .ce-btn-edit {
+    bottom: 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+  }
 }

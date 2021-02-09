@@ -10,6 +10,7 @@ use Common\BlockEditor\Blocks\ButtonBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
+use Common\BlockEditor\Blocks\MediaLibraryVideoBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
 use Common\BlockEditor\Blocks\QuoteBlock;
 use Common\BlockEditor\Blocks\RawBlock;
@@ -100,6 +101,7 @@ class EditorType extends TextareaType
                     ParagraphBlock::class,
                     ListBlock::class,
                     MediaLibraryImageBlock::class,
+                    MediaLibraryVideoBlock::class,
                     QuoteBlock::class,
                     UnderlineBlock::class,
                     ButtonBlock::class,
