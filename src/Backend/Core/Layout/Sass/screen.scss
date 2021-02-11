@@ -2,14 +2,13 @@
 @import "~bootstrap/scss/functions";
 @import '~bootstrap/scss/variables';
 @import 'bootstrap-variables';
-@import 'fork-variables';
 @import 'bootstrap-imports';
 
 // Plugins
 @import '~bootstrap-tagsinput/src/bootstrap-tagsinput';
 @import '~bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead';
 @import '~select2/src/scss/core';
-@import '~select2-theme-bootstrap4/src/select2-bootstrap';
+//@import '~select2-theme-bootstrap4/src/select2-bootstrap';
 @import 'plugins/treejs';
 
 // Base

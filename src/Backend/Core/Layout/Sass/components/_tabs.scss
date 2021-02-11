@@ -13,7 +13,7 @@
   padding: 15px;
 
   .tab-pane-title {
-    font-size: $font-size-btn;
+    font-size: $btn-font-size;
   }
 
   @include media-breakpoint-up(lg) {

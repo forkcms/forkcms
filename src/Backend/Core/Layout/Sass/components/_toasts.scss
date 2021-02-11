@@ -17,7 +17,7 @@
 
     .svg-inline--fa {
       color: $body-color;
-      font-size: $close-font-size;
+      font-size: $font-size-base * 0.85;
     }
   }
 }
@@ -59,15 +59,15 @@
 
 @each $color, $value in $theme-colors {
   .toast-#{$color} {
-    background: rgba(theme-color-level($color, $alert-bg-level), .6);
-    border-left: 5px solid $value;
+    background: shift-color($value, $alert-bg-scale);
+    border-left: 5px solid shift-color($value, $alert-border-scale);
 
     .svg-inline--fa {
       color: $value;
     }
 
     a {
-      color: theme-color-level($color, $alert-color-level);
+      color: shift-color($value, $alert-color-scale);
     }
   }
 }
@@ -96,6 +96,6 @@
 @include media-breakpoint-up(lg) {
 
   .toast-messaging-wrapper {
-    width: $toast-max-width + $grid-gutter-width;
+    width: calc(#{$toast-max-width} - #{$grid-gutter-width});
   }
 }
