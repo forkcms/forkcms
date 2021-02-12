@@ -38,6 +38,10 @@ label,
   margin-bottom: map_get($spacers, 1);
 }
 
+.form-group {
+  margin-bottom: map_get($spacers, 3);
+}
+
 .form-check-label {
   font-weight: 400;
 }
