@@ -127,12 +127,15 @@
       <div class="card-body">
         <div class="form-group">
           <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
-          <div class="form-inline">
-            {% form_field smtp_server %}
-            <span class="mx-1">:</span>
-            {% form_field smtp_port %}
-            {% form_field_error smtp_port %} {% form_field_error smtp_server %}
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-center">
+              {% form_field smtp_server %}
+              <span class="mx-1">:</span>
+              {% form_field smtp_port %}
+            </div>
           </div>
+          {% form_field_error smtp_port %}
+          {% form_field_error smtp_server %}
           <small class="form-text text-muted">{{ 'msg.HelpSMTPServer'|trans }}</small>
         </div>
         <div class="row">

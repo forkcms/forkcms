@@ -14,11 +14,16 @@
       <fieldset>
         <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
         <label for="theme" class="d-none">{{ 'lbl.Theme'|trans|ucfirst }}</label>
-        <div class="form-inline form-group">
-          {% form_field theme %}
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-10 col-xl-8 d-flex align-items-center">
+              {% form_field theme %}
+              <code class="mx-2">/Core/Layout/Templates/</code>
+              {% form_field file %}
+            </div>
+          </div>
           {% form_field_error theme %}
-          <code>/Core/Layout/Templates/</code>
-          {% form_field file %} {% form_field_error file %}
+          {% form_field_error file %}
         </div>
         <p>
           <small class="form-text text-muted">{{ 'msg.HelpTemplateLocation'|trans|raw }}</small>
