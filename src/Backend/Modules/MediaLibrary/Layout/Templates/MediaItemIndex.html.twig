@@ -45,7 +45,7 @@
       <ul class="nav nav-tabs" role="tablist">
         {% for dataGrid in dataGrids %}
           <li class="nav-item">
-            <a class="nav-link" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab" id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+            <a class="nav-link" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-bs-toggle="tab" id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
           </li>
         {% endfor %}
       </ul>

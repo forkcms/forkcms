@@ -4,34 +4,34 @@
   {{ form_row(form.title) }}
   <ul class="nav nav-tabs justify-content-end" role="tablist">
     <li class="nav-item me-auto">
-      <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+      <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-bs-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabImage" aria-controls="tabImage" role="tab" data-bs-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
     </li>
     {% if form.vars.dataGridDrafts is defined or form.vars.dataGridRevisions is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-bs-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-bs-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
     </li>
     {% if form.tags is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-bs-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-bs-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
     </li>
     {% if form.data.authentication.required is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-bs-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-bs-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
     </li>
   </ul>
   <div class="tab-content">
