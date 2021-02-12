@@ -32,7 +32,7 @@
               <label for="password" class="control-label d-flex">
                 {{ 'lbl.Password'|trans|ucfirst }}
                 {{ macro.required }}
-                <span class="passwordStrength ml-auto" data-id="password" data-role="password-strength-meter">
+                <span class="passwordStrength ms-auto" data-id="password" data-role="password-strength-meter">
                   <span class="badge badge-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
                   <span class="badge badge-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
                   <span class="badge badge-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
@@ -174,7 +174,7 @@
   </div>
   <div class="fork-page-actions">
     <div class="btn-toolbar d-flex">
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>

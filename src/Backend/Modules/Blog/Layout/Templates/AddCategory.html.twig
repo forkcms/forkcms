@@ -9,7 +9,7 @@
   {% form addCategory %}
   <div>
         <ul class="nav nav-tabs justify-content-end" role="tablist">
-          <li class="nav-item mr-auto">
+          <li class="nav-item me-auto">
             <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item">
@@ -43,7 +43,7 @@
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
       </div>
     </div>

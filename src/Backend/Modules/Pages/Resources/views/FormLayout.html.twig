@@ -3,7 +3,7 @@
 
   {{ form_row(form.title) }}
   <ul class="nav nav-tabs justify-content-end" role="tablist">
-    <li class="nav-item mr-auto">
+    <li class="nav-item me-auto">
       <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
@@ -332,7 +332,7 @@
             {{ form_rest(form) }}
           </div>
           <div class="modal-footer d-flex">
-            <div class="mr-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
+            <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
             {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
           </div>
         </div>
@@ -383,7 +383,7 @@
         </div>
       </div>
 
-      <div class="ml-auto">
+      <div class="ms-auto">
         {{ form_widget(field) }}
         {{ form_errors(field) }}
       </div>

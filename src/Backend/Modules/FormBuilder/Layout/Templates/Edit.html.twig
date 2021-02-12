@@ -158,12 +158,12 @@
                 <div class="form-group field field-submit">
                   <div class="row">
                     <div class="col-md-8 d-flex">
-                      <div class="btn-group ml-auto" role="group">
+                      <div class="btn-group ms-auto" role="group">
                         {{ btnSubmitField|raw }}
                       </div>
                     </div>
                     <div class="col-md-4 d-flex">
-                      <div class="btn-group ml-auto" role="group">
+                      <div class="btn-group ms-auto" role="group">
                         {{ macro.buttonIcon('', 'pencil-alt fa-fw', 'lbl.Edit'|trans|ucfirst, 'btn-secondary jsFieldEdit', {"data-field-id": submitId}, false, true) }}
                       </div>
                     </div>
@@ -240,7 +240,7 @@
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "name":"edit", "type":"submit" } ) }}
       </div>
     </div>

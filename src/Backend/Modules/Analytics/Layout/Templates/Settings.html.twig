@@ -117,7 +117,7 @@
         <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
       {% endif %}
       {% if not profile and (noAccounts == false or noAccounts is not defined) %}
-        <div class="btn-group ml-auto" role="group">
+        <div class="btn-group ms-auto" role="group">
           {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
         </div>
       {% endif %}

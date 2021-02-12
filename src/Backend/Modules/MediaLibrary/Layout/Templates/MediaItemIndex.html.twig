@@ -33,7 +33,7 @@
         <h2>{{ 'lbl.MediaCurrentFolder'|trans|ucfirst }}: {{ mediaFolder.name }}</h2>
 
         {% if showMediaLibraryMediaFolderEdit %}
-          <div class="ml-auto">
+          <div class="ms-auto">
             {{ macro.buttonIcon('', 'pencil-alt', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-secondary btn-sm', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
           </div>
         {% endif %}

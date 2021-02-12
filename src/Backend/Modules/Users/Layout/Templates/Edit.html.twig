@@ -155,7 +155,7 @@
                       {{ 'lbl.Password'|trans|ucfirst }}
                       {{ macro.required }}
 
-                      <span class="passwordStrength ml-auto" data-id="newPassword" data-role="password-strength-meter">
+                      <span class="passwordStrength ms-auto" data-id="newPassword" data-role="password-strength-meter">
                         <span class="badge badge-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
                         <span class="badge badge-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
                         <span class="badge badge-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
@@ -268,7 +268,7 @@
           {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete" }) }}
         {% endif %}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
       </div>
     </div>
