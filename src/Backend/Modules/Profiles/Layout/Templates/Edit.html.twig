@@ -26,7 +26,7 @@
             <h2 class="card-title">{{ 'lbl.Profile'|trans|ucfirst }}</h2>
           </div>
           <div class="card-body">
-            <div class="form-row">
+            <div class="row gx-3">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="displayName" class="control-label">
@@ -84,7 +84,7 @@
             <h2 class="card-title">{{ 'lbl.PersonalInformation'|trans|ucfirst }}</h2>
           </div>
           <div class="card-body">
-            <div class="form-row">
+            <div class="row gx-3">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="firstName" class="control-label">{{ 'lbl.FirstName'|trans|ucfirst }}</label>
@@ -106,7 +106,7 @@
             </div>
             <div class="form-group">
               <label for="day" class="control-label">{{ 'lbl.BirthDate'|trans|ucfirst }}</label>
-              <div class="form-row">
+              <div class="row gx-3">
                 <div class="col-4">
                   {% form_field day %}
                 </div>
@@ -119,7 +119,7 @@
               </div>
               {% form_field_error year %}
             </div>
-            <div class="form-row">
+            <div class="row gx-3">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="city" class="control-label">{{ 'lbl.City'|trans|ucfirst }}</label>

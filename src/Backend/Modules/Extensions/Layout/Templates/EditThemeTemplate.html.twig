@@ -66,7 +66,7 @@
     <div id="positions" class="card-body">
       {% for position in positions %}
         <div class="form-group position jsPosition"{% if not position.i %} style="display: none"{% endif %}>
-          <div class="form-row">
+          <div class="row gx-3">
             {# Title & button to delete this position #}
             <div class="col-lg-2">
               <div class="form-group">
@@ -88,12 +88,12 @@
               </div>
             </div>
           </div>
-          <div class="form-row jsBlocks">
+          <div class="row gx-3 jsBlocks">
             {# Default blocks for this position #}
             {% if position.blocks %}
               {% for block in position.blocks %}
                 <div class="col-md-10 offset-md-2 jsBlock">
-                  <div class="form-row">
+                  <div class="row gx-3">
                     <div class="col-lg-6">
                       <div class="form-group d-flex mb-2">
                         <div class="flex-grow-1">
