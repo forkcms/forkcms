@@ -542,7 +542,7 @@ $table-cell-vertical-align:   top;
 $table-color:                 $body-color;
 $table-bg:                    transparent;
 
-$table-th-font-weight:        null;
+$table-th-font-weight:        600;
 
 $table-striped-color:         $table-color;
 $table-striped-bg-factor:     .05;
@@ -562,7 +562,7 @@ $table-border-color:          $gray-200;
 
 $table-striped-order:         odd;
 
-$table-group-separator-color: currentColor;
+$table-group-separator-color: $gray-200;
 
 $table-caption-color:         $text-muted;
 
