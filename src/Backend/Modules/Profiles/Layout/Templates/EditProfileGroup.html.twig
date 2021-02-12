@@ -19,10 +19,8 @@
       <div class="form-row">
         <div class="col-lg-6">
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                {{ macro.icon('calendar fa-fw') }}
-              </span>
+            <div class="input-group-text">
+              {{ macro.icon('calendar fa-fw') }}
               <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
             </div>
             {% form_field expiration_date %}
@@ -31,10 +29,8 @@
         </div>
         <div class="col-lg-6">
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                {{ macro.icon('clock fa-fw') }}
-              </span>
+            <div class="input-group-text">
+              {{ macro.icon('clock fa-fw') }}
               <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
             </div>
             {% form_field expiration_time %}

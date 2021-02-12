@@ -35,6 +35,7 @@ label,
   color: $black;
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
+  margin-bottom: map_get($spacers, 1);
 }
 
 .form-check-label {
@@ -121,12 +122,8 @@ select[size="1"] {
     border-bottom-right-radius: 0;
   }
 
-  .input-group-append .btn {
-    padding: 7px 9px 8px;
-
-    &.btn-icon-only {
-      font-size: $btn-font-size;
-    }
+  .btn .btn-icon-only {
+    font-size: $btn-font-size;
   }
 }
 

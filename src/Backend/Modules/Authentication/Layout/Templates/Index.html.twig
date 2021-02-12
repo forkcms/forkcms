@@ -37,26 +37,23 @@
         <div class="login-form">
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-prepend">
-                <span class="input-group-text">
-                  {{ macro.icon('envelope fa-fw') }}
-                  <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
-                </span>
-              </span>
+              <div class="input-group-text">
+                {{ macro.icon('envelope fa-fw') }}
+                <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              </div>
               {% form_field backend_email %}
             </div>
             {% form_field_error backend_email %}
           </div>
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-prepend">
-                <span class="input-group-text">
-                  {{ macro.icon('lock fa-fw') }}
-                  <label class="sr-only" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
-                </span>
-              </span>
-              {% form_field backend_password %} {% form_field_error backend_password %}
+              <div class="input-group-text">
+                {{ macro.icon('lock fa-fw') }}
+                <label class="sr-only" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
+              </div>
+              {% form_field backend_password %}
             </div>
+            {% form_field_error backend_password %}
           </div>
           <div class="form-group">
             <div class="btn-toolbar justify-content-end">
@@ -90,12 +87,10 @@
         <div class="form-group">
           <label for="backendEmailForgot" class="control-label">{{ 'lbl.Email'|trans|ucfirst }}</label>
           <div class="input-group">
-            <span class="input-group-prepend">
-              <span class="input-group-text">
-                {{ macro.icon('envelope fa-fw') }}
-                <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
-              </span>
-            </span>
+            <div class="input-group-text">
+              {{ macro.icon('envelope fa-fw') }}
+              <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+            </div>
             {% form_field backend_email_forgot %}
           </div>
           {% form_field_error backend_email_forgot %}

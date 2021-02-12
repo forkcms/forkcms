@@ -8,7 +8,7 @@ export class PasswordGenerator {
 
     // append the button
     $(element).find('input').after(
-      '<span class="input-group-append"><button data-id="' + id + '" class="btn btn-primary" type="button" data-password-generator-button><span>' + StringUtil.ucfirst(window.backend.locale.lbl('Generate')) + '</span></button></span>'
+      '<button data-id="' + id + '" class="btn btn-primary" type="button" data-password-generator-button><span>' + StringUtil.ucfirst(window.backend.locale.lbl('Generate')) + '</span></button>'
     )
 
     $(element).find('[data-password-generator-button]').on('click', (e) => {
