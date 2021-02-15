@@ -52,7 +52,7 @@
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
         {% if isAllowedAction('MassDataAction') %}
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">
             {{ macro.icon('trash-alt') }}
             {{ 'lbl.Delete'|trans|ucfirst }}
           </button>

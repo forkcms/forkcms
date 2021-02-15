@@ -36,7 +36,7 @@
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ page.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ page.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
             {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
-              <button type="button" class="dropdown-item" data-toggle="modal" data-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
+              <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
             {% endif %}
           </div>
         </div>
@@ -52,7 +52,7 @@
     <div class="btn-toolbar justify-content-between">
       <div class="btn-group" role="group">
         {% if isAllowedAction('PageDelete') and deleteForm is defined %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete" }) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>

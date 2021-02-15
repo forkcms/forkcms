@@ -76,7 +76,7 @@ export class Forms {
       const invalidTabId = $invalidField.closest('.tab-pane').attr('id')
 
       // Find the link that corresponds to the pane and have it show
-      $('a[href=#' + invalidTabId + '], [data-target=#' + invalidTabId + ']').tab('show')
+      $('a[href=#' + invalidTabId + '], [data-bs-target=#' + invalidTabId + ']').tab('show')
       $invalidField.focus()
     })
   }

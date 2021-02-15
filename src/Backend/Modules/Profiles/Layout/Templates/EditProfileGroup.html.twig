@@ -43,7 +43,7 @@
       <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {% if isAllowedAction('DeleteProfileGroup') %}
-            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete" }) }}
           {% endif %}
           {% if isAllowedAction('Edit') %}
             {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ profileId ~ "#tabGroups", 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}

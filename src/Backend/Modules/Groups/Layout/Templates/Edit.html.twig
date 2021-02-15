@@ -55,7 +55,7 @@
                 <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
                   {{ permission.chk|raw }}
                   <h4 class="card-title mb-0">
-                    <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                    <a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#permission-list-{{ permission.id }}" aria-expanded="false">
                         {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
                     </a>
                   </h4>
@@ -84,7 +84,7 @@
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') and allowGroupsDelete %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete"}) }}
         {% endif %}
       </div>
       <div class="btn-group ms-auto" role="group">

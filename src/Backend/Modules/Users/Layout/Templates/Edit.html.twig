@@ -265,7 +265,7 @@
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') and allowUsersDelete %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete" }) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmDelete" }) }}
         {% endif %}
       </div>
       <div class="btn-group ms-auto" role="group">

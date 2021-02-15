@@ -50,7 +50,7 @@
     <div class="btn-toolbar">
       <div class="btn-group" role="group">
         {% if isAllowedAction('MediaGalleryDelete') %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "id":"blog-delete", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete" } ) }}
         {% endif %}
         {% if isAllowedAction('MediaGalleryIndex') %}
           {{ macro.buttonIcon(geturl('MediaGalleryIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}

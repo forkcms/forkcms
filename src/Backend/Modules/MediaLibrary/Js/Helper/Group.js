@@ -627,7 +627,7 @@ export class Group {
     if (disabled !== '') {
       $tabs.children(disabled).find('.nav-link').addClass('disabled')
     }
-    $tabs.children(enabled).children('a').attr('data-toggle', 'tab').first().tab('show')
+    $tabs.children(enabled).children('a').attr('data-bs-toggle', 'tab').first().tab('show')
 
     // get table
     const $tables = $('.mediaTable')

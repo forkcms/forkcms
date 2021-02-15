@@ -50,7 +50,7 @@
       <div class="btn-group" role="group">
         {% if isAllowedAction('MediaItemDelete') %}
           {% if mediaItem.groups.count == 0 %}
-            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
+            {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmDelete", "id":"blog-delete" } ) }}
           {% endif %}
         {% endif %}
       </div>

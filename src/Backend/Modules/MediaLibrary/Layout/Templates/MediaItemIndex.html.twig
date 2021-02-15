@@ -34,7 +34,7 @@
 
         {% if showMediaLibraryMediaFolderEdit %}
           <div class="ms-auto">
-            {{ macro.buttonIcon('', 'pencil-alt', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-secondary btn-sm', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'pencil-alt', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-secondary btn-sm', {"data-bs-toggle":"modal", "data-bs-target":"#editMediaFolderDialog", "type":"button" } ) }}
           </div>
         {% endif %}
       {% else %}
@@ -78,11 +78,11 @@
             <div class="btn-group" role="group">
               {% if isAllowedAction('MediaFolderDelete') and folderHasNoChildren %}
                 {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
-                  {{ macro.buttonIcon('', 'trash-alt', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
+                  {{ macro.buttonIcon('', 'trash-alt', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-bs-toggle":"modal", "data-bs-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
                 {% endif %}
               {% endif %}
               {% if isAllowedAction('MediaFolderEdit') %}
-                {{ macro.buttonIcon('', 'pencil-alt', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
+                {{ macro.buttonIcon('', 'pencil-alt', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-bs-toggle":"modal", "data-bs-target":"#editMediaFolderDialog", "type":"button" } ) }}
               {% endif %}
             </div>
           </div>

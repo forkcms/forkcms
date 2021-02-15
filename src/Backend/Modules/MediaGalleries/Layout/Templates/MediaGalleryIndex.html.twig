@@ -6,7 +6,7 @@
       <div class="btn-toolbar justify-content-end">
         <div class="btn-group" role="group">
           {% if isAllowedAction('MediaGalleryAdd') %}
-            {{ macro.buttonIcon('', 'plus-square', 'lbl.AddGallery'|trans|capitalize, '', { "data-target":"#addMediaGroupTypeDialog", "data-toggle":"modal" }) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.AddGallery'|trans|capitalize, '', { "data-bs-target":"#addMediaGroupTypeDialog", "data-bs-toggle":"modal" }) }}
           {% endif %}
         </div>
       </div>
@@ -37,7 +37,7 @@
       </div>
     </div>
     {% else %}
-      {{ macro.emptyState('#', 'msg.AddAGallery'|trans, 'msg.NoGalleries'|trans|ucfirst, { "data-target":"#addMediaGroupTypeDialog", "data-toggle":"modal" }) }}
+      {{ macro.emptyState('#', 'msg.AddAGallery'|trans, 'msg.NoGalleries'|trans|ucfirst, { "data-bs-target":"#addMediaGroupTypeDialog", "data-bs-toggle":"modal" }) }}
     {% endif %}
 
     <div class="modal fade" id="addMediaGroupTypeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addMediaGroupTypeDialogTitle">

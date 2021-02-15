@@ -168,18 +168,18 @@
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') %}
           {% if deleted %}
-            {{ macro.buttonIcon('', 'plus-square', 'lbl.Undelete'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUndelete" }) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Undelete'|trans|ucfirst, 'btn-primary', { "type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmUndelete" }) }}
           {% endif %}
           {% if not deleted %}
-            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete" }) }}
           {% endif %}
         {% endif %}
           {% if isAllowedAction('Block') %}
           {% if blocked %}
-            {{ macro.buttonIcon('', 'check', 'lbl.Unblock'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUnblock" }) }}
+            {{ macro.buttonIcon('', 'check', 'lbl.Unblock'|trans|ucfirst, 'btn-primary', { "type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmUnblock" }) }}
           {% endif %}
           {% if not blocked %}
-            {{ macro.buttonIcon('', 'ban', 'lbl.Block'|trans|ucfirst, 'btn-warning', { "type":"button", "data-toggle":"modal", "data-target":"#confirmBlock" }) }}
+            {{ macro.buttonIcon('', 'ban', 'lbl.Block'|trans|ucfirst, 'btn-warning', { "type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmBlock" }) }}
           {% endif %}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}

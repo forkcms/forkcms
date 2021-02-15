@@ -206,7 +206,7 @@
     <div class="btn-toolbar">
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete", "type":"button"} ) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>

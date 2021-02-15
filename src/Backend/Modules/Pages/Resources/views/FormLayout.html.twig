@@ -374,10 +374,10 @@
 
         <div class="d-flex flex-wrap">
           <div class="btn-group">
-            {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
+            {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-role': 'page-block-edit', 'data-bs-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
 
             {% if form.vars.allow_delete %}
-              {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
+              {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-bs-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
             {% endif %}
           </div>
         </div>
