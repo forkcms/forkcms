@@ -48,7 +48,7 @@
   tr {
 
     .highlighted {
-      background: lighten($primary, 35%);
+      background: rgba($primary, .15);
     }
 
     td,
