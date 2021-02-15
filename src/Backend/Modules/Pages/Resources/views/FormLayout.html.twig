@@ -204,7 +204,7 @@
           {{ form_label(form.url) }}
 
           <div class="d-flex align-items-center">
-            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ml-2">{{ form_widget(form.url) }}</div>
+            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ms-2">{{ form_widget(form.url) }}</div>
           </div>
           {{ form_errors(form.url) }}
           <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
@@ -345,7 +345,7 @@
   {% import 'Layout/Templates/macros.html.twig' as macro %}
     <div data-role="page-block-wrapper" class="d-flex{% if not field.children.visible.vars.checked %} block-not-visible{% endif %}">
       {% if form.vars.allow_sequence %}
-        <div class="d-flex flex-column mr-2">
+        <div class="d-flex flex-column me-2">
           {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
           <span class="btn btn-move btn-move-drag btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('grip-vertical') }}</span>
           {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
