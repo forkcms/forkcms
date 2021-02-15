@@ -560,7 +560,7 @@ $table-border-factor:         .1;
 $table-border-width:          $border-width;
 $table-border-color:          $gray-200;
 
-$table-striped-order:         odd;
+$table-striped-order:         even;
 
 $table-group-separator-color: $gray-200;
 
@@ -833,7 +833,7 @@ $form-range-thumb-disabled-bg:             $gray-500;
 $form-range-thumb-transition:              background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
 $form-file-button-color:          $input-color;
-$form-file-button-bg:             $input-group-addon-bg;
+$form-file-button-bg:             $gray-200;
 $form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
 
 $form-floating-height:            add(3.5rem, $input-height-border);

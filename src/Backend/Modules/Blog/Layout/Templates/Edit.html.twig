@@ -75,10 +75,8 @@
                           </label>
                         </div>
                         <div class="col-lg-9">
-                          <div class="custom-file">
-                            {% form_field image %}
-                            <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
-                          </div>
+                          <label class="form-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                          {% form_field image %}
                           {% form_field_error image %}
                           {% if item.image %}
                             <div class="form-check">
