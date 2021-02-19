@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
+use Common\Form\DatePickerType;
 use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,21 +33,19 @@ final class PageSettingsType extends AbstractType
         );
         $builder->add(
             'publishOn',
-            DateTimeType::class,
+            DatePickerType::class,
             [
                 'label' => 'lbl.PublishOn',
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+                'time' => true,
             ]
         );
         $builder->add(
             'publishUntil',
-            DateTimeType::class,
+            DatePickerType::class,
             [
                 'label' => 'lbl.PublishTill',
                 'required' => false,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
+                'time' => true,
             ]
         );
 
