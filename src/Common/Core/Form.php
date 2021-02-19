@@ -388,13 +388,15 @@ class Form extends \SpoonForm
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         $attributes['data-role'] = 'fork-datepicker';
-        $attributes['data-enable-time'] = true;
-        $attributes['data-no-calendar'] = true;
+        $attributes['data-enable-time'] = 'true';
+        $attributes['data-no-calendar'] = 'true';
+
+        $this->add(new SpoonFormTime($name, $value, $class, $classError));
 
         parent::getField($name)->setAttributes($attributes);
 
         // create and return a time field
-        return parent::addTime($name, $value, $class, $classError);
+        return parent::getField($name);
     }
 
     /**

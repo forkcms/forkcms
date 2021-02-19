@@ -25,7 +25,8 @@ class DatePickerType extends DateType
         }
 
         if (isset($options['time'])) {
-            $view->vars['attr']['data-enable-time'] = $options['time'];
+            $view->vars['attr']['data-enable-time'] = 'true';
+            $view->vars['attr']['data-date-format'] = 'd/m/Y H:i';
         }
 
         parent::buildView($view, $form, $options);
