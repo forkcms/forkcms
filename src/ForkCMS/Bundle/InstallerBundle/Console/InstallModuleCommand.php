@@ -109,7 +109,6 @@ class InstallModuleCommand extends Command
         });
 
         return $helper->ask($input, $output, $question);
-
     }
 
     private function getAlreadyInstalledModules(): array
