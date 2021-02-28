@@ -8,6 +8,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use ForkCMS\App\BaseModel;
 use PDO;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -18,6 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This command allows you to install a module via the CLI
@@ -30,10 +32,14 @@ class InstallModuleCommand extends Command
     /** @var Connection */
     private $dbConnection;
 
-    public function __construct(EntityManager $em)
+    /** @var KernelInterface */
+    private $kernel;
+
+    public function __construct(EntityManager $em, KernelInterface $kernel)
     {
         parent::__construct();
         $this->dbConnection = $em->getConnection();
+        $this->kernel = $kernel;
     }
 
     protected function configure(): void
@@ -53,6 +59,13 @@ class InstallModuleCommand extends Command
             // Make sure this module can be installed
             $output->writeln("<comment>Validating if module can be installed...</comment>");
             $this->validateIfModuleCanBeInstalled($module);
+
+            // Reboot the kernel to trigger a kernel initialize which registers the Dependency Injection Extension of the
+            // module we would like to install. Also, make sure to replace the static cached container in our BaseModel!
+            $_SERVER['INSTALLING_MODULE'] = $module;
+            $this->kernel->shutdown();
+            $this->kernel->boot();
+            BaseModel::setContainer($this->kernel->getContainer());
 
             // Do the actual module install
             $output->writeln("<comment>Installing module $module...</comment>");
