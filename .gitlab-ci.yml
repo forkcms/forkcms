@@ -10,7 +10,7 @@ before_script:
 run_functional_tests:
     image: sumocoders/fork-php74:latest
     services:
-        - mysql:5.5
+        - mysql:5.7
     before_script:
         - curl -sS https://getcomposer.org/installer | php
         - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
@@ -33,7 +33,7 @@ run_functional_tests:
 run_unit_tests:
     image: sumocoders/fork-php74:latest
     services:
-        - mysql:5.5
+        - mysql:5.7
     before_script:
         - curl -sS https://getcomposer.org/installer | php
         - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
@@ -65,7 +65,7 @@ code_styles:
 phpstan:
     image: sumocoders/fork-php74:latest
     services:
-        - mysql:5.5
+        - mysql:5.7
     before_script:
         - curl -sS https://getcomposer.org/installer | php
         - mysql -h mysql -u root -proot -e "create database ci_test"
