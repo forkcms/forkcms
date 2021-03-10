@@ -198,7 +198,7 @@ class EditorType extends TextareaType
         $javaScriptUrls['/js/vendors/editor.js'] = '/js/vendors/editor.js';
 
         foreach ($javaScriptUrls as $url) {
-            $header->addJS($url, null, false, true, true, Priority::core());
+            $header->addJS($url, null,true,false,true, Priority::core());
         }
 
         $view->vars['attr']['fork-block-editor-config'] = json_encode(
@@ -219,8 +219,8 @@ class EditorType extends TextareaType
             $header->addJS(
                 '/src/Frontend/Cache/Navigation/editor_link_list_' . $currentLanguage . '.js?m=' . $timestamp,
                 null,
-                false,
                 true,
+                false,
                 true
             );
         }
