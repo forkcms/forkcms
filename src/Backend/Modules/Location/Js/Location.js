@@ -19,9 +19,9 @@ export class Location {
     this.width = null
     this.zoomLevel = null
 
-    $('[data-role=toggle-settings]').on('change', function () {
+    $('[data-role=toggle-settings]').on('change', () => {
       $('#settings').hide()
-      if ($(this).is(':checked')) {
+      if ($('[data-role=toggle-settings]').is(':checked')) {
         $('#settings').show()
       }
     }).change()
@@ -69,7 +69,7 @@ export class Location {
       // add event listener
       google.maps.event.addListener(marker, 'dragend', function () {
         this.updateMarker(marker)
-      })
+      }.bind(this))
     }
 
     // add click event on marker
@@ -274,7 +274,7 @@ export class Location {
    */
   updateMarker (marker) {
     this.getMapData()
-    $('#lat').val(marker.getPosition().lat())
-    $('#lng').val(marker.getPosition().lng())
+    $('[data-role=center-lat]').val(marker.getPosition().lat())
+    $('[data-role=center-lng]').val(marker.getPosition().lng())
   }
 }

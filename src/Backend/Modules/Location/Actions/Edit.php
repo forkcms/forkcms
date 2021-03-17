@@ -138,8 +138,10 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
         $this->form->addText('width', $this->settings['width']);
         $this->form->addText('height', $this->settings['height']);
-        $this->form->addHidden('centerLat', $this->settings['center']['lat']);
-        $this->form->addHidden('centerLng', $this->settings['center']['lng']);
+        $this->form->addHidden('centerLat', $this->settings['center']['lat'])
+            ->setAttribute('data-role', 'center-lat');
+        $this->form->addHidden('centerLng', $this->settings['center']['lng'])
+            ->setAttribute('data-role', 'center-lng');
         $this->form->addHidden('lat', $this->record['lat']);
         $this->form->addHidden('lng', $this->record['lng']);
         $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
