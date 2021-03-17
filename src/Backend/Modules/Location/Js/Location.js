@@ -20,7 +20,6 @@ export class Location {
     this.zoomLevel = null
 
     $('[data-role=toggle-settings]').on('change', function () {
-      console.log('here', $(this))
       $('#settings').hide()
       if ($(this).is(':checked')) {
         $('#settings').show()
