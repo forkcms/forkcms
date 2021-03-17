@@ -132,6 +132,13 @@ class Location
      */
     private $editedOn;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default" = false})
+     */
+    private $overrideMapSettings;
+
     public function __construct(
         Locale $locale,
         string $title,
@@ -143,7 +150,8 @@ class Location
         float $latitude,
         float $longitude,
         bool $showInOverview = true,
-        int $extraId = null
+        int $extraId = null,
+        bool $overrideMapSettings = false
     ) {
         $this->locale = $locale;
         $this->title = $title;
@@ -156,6 +164,7 @@ class Location
         $this->longitude = $longitude;
         $this->showInOverview = $showInOverview;
         $this->extraId = $extraId;
+        $this->overrideMapSettings = $overrideMapSettings;
 
         $this->settings = new ArrayCollection();
     }
@@ -169,7 +178,8 @@ class Location
         string $country,
         float $latitude,
         float $longitude,
-        bool $showInOverview = true
+        bool $showInOverview = true,
+        bool $overrideMapSettings
     ) {
         $this->title = $title;
         $this->street = $street;
@@ -180,6 +190,7 @@ class Location
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->showInOverview = $showInOverview;
+        $this->overrideMapSettings = $overrideMapSettings;
     }
 
     public function getId(): int
@@ -271,6 +282,16 @@ class Location
         $this->settings->add($setting);
     }
 
+    public function isOverrideMapSettings(): bool
+    {
+        return $this->overrideMapSettings;
+    }
+
+    public function setOverrideMapSettings(bool $overrideMapSettings): void
+    {
+        $this->overrideMapSettings = $overrideMapSettings;
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -306,7 +327,8 @@ class Location
             $item['lat'] ?? $item['latitude'] ?? 0,
             $item['lng'] ?? $item['longitude'] ?? 0,
             $item['show_overview'] ?? $item['showInOverview'] ?? true,
-            $item['extra_id'] ?? $item['extraId'] ?? null
+            $item['extra_id'] ?? $item['extraId'] ?? null,
+            $item['override_map_settings'] ?? false
         );
     }
 
@@ -326,6 +348,7 @@ class Location
             'show_overview' => (int) $this->showInOverview,
             'extra_id' => $this->extraId,
             'settings' => $this->settings->toArray(),
+            'override_map_settings' => $this->overrideMapSettings,
         ];
     }
 }

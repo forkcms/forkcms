@@ -74,6 +74,17 @@ class Add extends BackendBaseActionAdd
                 // insert the item
                 $item['id'] = BackendLocationModel::insert($item);
 
+                $generalSettings = $this->get('fork.settings')->getForModule('Location');
+                $center = ['lat' => $item['lat'], 'lng' => $item['lng']];
+                BackendLocationModel::setMapSetting($item['id'], 'zoom_level', (string) $generalSettings['zoom_level']);
+                BackendLocationModel::setMapSetting($item['id'], 'map_type', (string) $generalSettings['map_type']);
+                BackendLocationModel::setMapSetting($item['id'], 'map_style', (string) 'standard');
+                BackendLocationModel::setMapSetting($item['id'], 'center', $center);
+                BackendLocationModel::setMapSetting($item['id'], 'height', (int)  $generalSettings['height']);
+                BackendLocationModel::setMapSetting($item['id'], 'width', (int)  $generalSettings['width']);
+                BackendLocationModel::setMapSetting($item['id'], 'directions',  false);
+                BackendLocationModel::setMapSetting($item['id'], 'full_url',  false);
+
                 // redirect
                 $this->redirect(
                     BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'] .

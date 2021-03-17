@@ -214,7 +214,8 @@ class Model
             $updatedLocation->getCountry(),
             $updatedLocation->getLatitude(),
             $updatedLocation->getLongitude(),
-            $updatedLocation->isShowInOverview()
+            $updatedLocation->isShowInOverview(),
+            $updatedLocation->isOverrideMapSettings()
         );
 
         $locationRepository->save($currentLocation);
