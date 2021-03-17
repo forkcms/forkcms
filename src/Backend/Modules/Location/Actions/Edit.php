@@ -109,7 +109,6 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country'])->makeRequired();
         $this->form->addHidden('redirect', 'overview');
 
-
         $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
