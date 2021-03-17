@@ -303,8 +303,8 @@ class Location
             $item['zip'],
             $item['city'],
             $item['country'],
-            $item['lat'] ?? $item['latitude'],
-            $item['lng'] ?? $item['longitude'],
+            $item['lat'] ?? $item['latitude'] ?? 0,
+            $item['lng'] ?? $item['longitude'] ?? 0,
             $item['show_overview'] ?? $item['showInOverview'] ?? true,
             $item['extra_id'] ?? $item['extraId'] ?? null
         );
