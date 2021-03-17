@@ -179,7 +179,7 @@ class Location
         float $latitude,
         float $longitude,
         bool $showInOverview = true,
-        bool $overrideMapSettings
+        bool $overrideMapSettings = false
     ) {
         $this->title = $title;
         $this->street = $street;

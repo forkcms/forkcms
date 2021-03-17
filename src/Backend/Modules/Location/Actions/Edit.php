@@ -263,8 +263,8 @@ class Edit extends BackendBaseActionEdit
                     BackendLocationModel::setMapSetting($this->id, 'center', $center);
                     BackendLocationModel::setMapSetting($this->id, 'height', (int)  $generalSettings['height']);
                     BackendLocationModel::setMapSetting($this->id, 'width', (int)  $generalSettings['width']);
-                    BackendLocationModel::setMapSetting($this->id, 'directions',  false);
-                    BackendLocationModel::setMapSetting($this->id, 'full_url',  false);
+                    BackendLocationModel::setMapSetting($this->id, 'directions', false);
+                    BackendLocationModel::setMapSetting($this->id, 'full_url', false);
                 }
 
                 // redirect to the overview

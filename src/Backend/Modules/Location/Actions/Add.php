@@ -82,8 +82,8 @@ class Add extends BackendBaseActionAdd
                 BackendLocationModel::setMapSetting($item['id'], 'center', $center);
                 BackendLocationModel::setMapSetting($item['id'], 'height', (int)  $generalSettings['height']);
                 BackendLocationModel::setMapSetting($item['id'], 'width', (int)  $generalSettings['width']);
-                BackendLocationModel::setMapSetting($item['id'], 'directions',  false);
-                BackendLocationModel::setMapSetting($item['id'], 'full_url',  false);
+                BackendLocationModel::setMapSetting($item['id'], 'directions', false);
+                BackendLocationModel::setMapSetting($item['id'], 'full_url', false);
 
                 // redirect
                 $this->redirect(
