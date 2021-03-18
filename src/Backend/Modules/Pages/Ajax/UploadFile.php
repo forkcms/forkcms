@@ -23,11 +23,17 @@ class UploadFile extends AjaxAction
     {
         $request = $this->getRequest();
 
-        $fileName = $this->writeFile(
-            $this->getFileContentFromRequest($request),
-            $this->getFileNameFromRequest($request),
-            $request->get('type')
-        );
+        try {
+            $fileName = $this->writeFile(
+                $this->getFileContentFromRequest($request),
+                $this->getFileNameFromRequest($request),
+                $request->get('type')
+            );
+        } catch (Exception $backendCoreException) {
+            $this->output(Response::HTTP_BAD_REQUEST, $backendCoreException->getMessage());
+
+            return;
+        }
 
         $this->output(Response::HTTP_OK, $fileName);
     }
