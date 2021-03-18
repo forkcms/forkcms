@@ -165,14 +165,17 @@ export class Upload {
    * Add uploaded media to group
    */
   addUploadedMediaToGroup () {
+    let config = this.config
     // loop remaining items in uploaded media and push them to current group
     $('#uploadedMedia').find('li').each(function () {
       // get id
       const id = $(this).attr('id').replace('media-', '')
 
       // add each id to array
-      this.config.currentMediaItemIds.push(id)
+      config.currentMediaItemIds.push(id)
     })
+
+    this.config = config
 
     // clear upload queue count
     this.uploadedCount = 0
