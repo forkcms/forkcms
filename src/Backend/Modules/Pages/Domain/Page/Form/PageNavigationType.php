@@ -3,11 +3,17 @@
 namespace Backend\Modules\Pages\Domain\Page\Form;
 
 use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
+use Common\Doctrine\ValueObject\SEOFollow;
+use Common\Doctrine\ValueObject\SEOIndex;
 use Common\Form\SwitchType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class PageNavigationType extends AbstractType
 {
@@ -31,8 +37,22 @@ final class PageNavigationType extends AbstractType
                 'label_attr' => [
                     'class' => 'sr-only',
                 ],
+                'constraints' => [
+                    new NotBlank(),
+                ]
             ]
         );
+
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $formEvent) {
+            $data = $formEvent->getData();
+            if (array_key_exists('titleOverwrite', $data)) {
+                return;
+            }
+
+            $data['title'] = $formEvent->getForm()->getParent();
+            $formEvent->getForm()->getParent()->getData();
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

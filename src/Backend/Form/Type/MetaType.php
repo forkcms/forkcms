@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MetaType extends AbstractType
 {
@@ -52,19 +53,37 @@ class MetaType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
-                ['label' => 'lbl.PageTitle', 'label_attr' => ['class' => 'sr-only']]
+                [
+                    'label' => 'lbl.PageTitle',
+                    'label_attr' => ['class' => 'sr-only'],
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ]
             )
             ->add('titleOverwrite', SwitchType::class, ['label' => 'lbl.PageTitle', 'required' => false])
             ->add(
                 'description',
                 TextType::class,
-                ['label' => 'lbl.Description', 'label_attr' => ['class' => 'sr-only']]
+                [
+                    'label' => 'lbl.Description',
+                    'label_attr' => ['class' => 'sr-only'],
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ]
             )
             ->add('descriptionOverwrite', SwitchType::class, ['label' => 'lbl.Description', 'required' => false])
             ->add(
                 'keywords',
                 TextType::class,
-                ['label' => 'lbl.Keywords', 'label_attr' => ['class' => 'sr-only']]
+                [
+                    'label' => 'lbl.Keywords',
+                    'label_attr' => ['class' => 'sr-only'],
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ]
             )
             ->add('keywordsOverwrite', SwitchType::class, ['label' => 'lbl.Keywords', 'required' => false])
             ->add(
@@ -74,6 +93,9 @@ class MetaType extends AbstractType
                     'attr' => ['class' => 'fork-form-text'],
                     'label' => 'lbl.URL',
                     'label_attr' => ['class' => 'sr-only'],
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
                 ]
             )
             ->add('urlOverwrite', SwitchType::class, ['label' => 'lbl.URL', 'required' => false])
@@ -91,6 +113,48 @@ class MetaType extends AbstractType
                 ['label' => 'lbl.ExtraMetaTags', 'required' => false, 'attr' => ['rows' => 5, 'cols' => 62]]
             );
         }
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $formEvent) {
+            $data = $formEvent->getData();
+
+            if ($this->meta === null) {
+                return;
+            }
+
+            $meta = $this->meta[$data['id']];
+            $currentData = [
+                'id' => $meta->getId(),
+                'title' => $meta->getTitle(),
+                'description' => $meta->getDescription(),
+                'keywords' => $meta->getKeywords(),
+                'custom' => $meta->getCustom(),
+                'url' => $meta->getUrl(),
+                'SEOIndex' => (string)($meta->getSEOIndex() ?? SEOIndex::none()),
+                'SEOFollow' => (string)($meta->getSEOFollow() ?? SEOFollow::none()),
+            ];
+
+            if ($meta->isTitleOverwrite()) {
+                $currentData['titleOverwrite'] = '1';
+            }
+
+            if ($meta->isDescriptionOverwrite()) {
+                $currentData['descriptionOverwrite'] = '1';
+            }
+
+            if ($meta->isKeywordsOverwrite()) {
+                $currentData['keywordsOverwrite'] = '1';
+            }
+
+            if ($meta->isUrlOverwrite()) {
+                $currentData['urlOverwrite'] = '1';
+            }
+
+            foreach ($data as $key => $value) {
+                $currentData[$key] = $value;
+            }
+
+            $formEvent->setData($currentData);
+        });
     }
 
     private function getSEOIndexChoiceTypeOptions(): array
@@ -105,11 +169,11 @@ class MetaType extends AbstractType
                 SEOIndex::POSSIBLE_VALUES
             ),
             'choice_value' => function (SEOIndex $SEOIndex = null) {
-                return (string) $SEOIndex;
+                return (string)$SEOIndex;
             },
             'choice_label' => function ($SEOIndex) {
                 if ($SEOIndex->isNone()) {
-                    return 'lbl.' . ucfirst($SEOIndex);
+                    return 'lbl.'.ucfirst($SEOIndex);
                 }
 
                 return $SEOIndex;
@@ -133,11 +197,11 @@ class MetaType extends AbstractType
                 SEOFollow::POSSIBLE_VALUES
             ),
             'choice_value' => function (SEOFollow $SEOFollow = null) {
-                return (string) $SEOFollow;
+                return (string)$SEOFollow;
             },
             'choice_label' => function ($SEOFollow) {
                 if ($SEOFollow->isNone()) {
-                    return 'lbl.' . ucfirst($SEOFollow);
+                    return 'lbl.'.ucfirst($SEOFollow);
                 }
 
                 return $SEOFollow;
@@ -171,7 +235,7 @@ class MetaType extends AbstractType
             array_walk(
                 $overwritableFields,
                 function ($fieldName) use ($metaForm, $defaultValue, &$metaData) {
-                    if ($metaForm->get($fieldName . 'Overwrite')->getData()) {
+                    if ($metaForm->get($fieldName.'Overwrite')->getData()) {
                         // we are overwriting it so we don't need to set the fallback
                         return;
                     }
@@ -238,38 +302,38 @@ class MetaType extends AbstractType
     private function getMetaReverseTransformFunction(): callable
     {
         return function ($metaData) {
-            $metaId = $metaData['id'] === null ? null : (int) $metaData['id'];
+            $metaId = $metaData['id'] === null ? null : (int)$metaData['id'];
 
             if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
                 return new Meta(
-                    $metaData['keywords'],
-                    $metaData['keywordsOverwrite'],
-                    $metaData['description'],
-                    $metaData['descriptionOverwrite'],
-                    $metaData['title'],
-                    $metaData['titleOverwrite'],
-                    $metaData['url'],
-                    $metaData['urlOverwrite'],
+                    $metaData['keywords'] ?? '',
+                    $metaData['keywordsOverwrite'] ?? false,
+                    $metaData['description'] ?? '',
+                    $metaData['descriptionOverwrite'] ?? false,
+                    $metaData['title'] ?? '',
+                    $metaData['titleOverwrite'] ?? false,
+                    $metaData['url'] ?? '',
+                    $metaData['urlOverwrite'] ?? false,
                     $metaData['custom'] ?? null,
-                    SEOFollow::fromString((string) $metaData['SEOFollow']),
-                    SEOIndex::fromString((string) $metaData['SEOIndex']),
+                    SEOFollow::fromString((string)$metaData['SEOFollow']),
+                    SEOIndex::fromString((string)$metaData['SEOIndex']),
                     [],
                     $metaId
                 );
             }
 
             $this->meta[$metaId]->update(
-                $metaData['keywords'],
+                $metaData['keywords'] ?? '',
                 $metaData['keywordsOverwrite'],
-                $metaData['description'],
+                $metaData['description'] ?? '',
                 $metaData['descriptionOverwrite'],
-                $metaData['title'],
+                $metaData['title'] ?? '',
                 $metaData['titleOverwrite'],
-                $metaData['url'],
+                $metaData['url'] ?? '',
                 $metaData['urlOverwrite'],
                 array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
-                SEOFollow::fromString((string) $metaData['SEOFollow']),
-                SEOIndex::fromString((string) $metaData['SEOIndex'])
+                SEOFollow::fromString((string)$metaData['SEOFollow']),
+                SEOIndex::fromString((string)$metaData['SEOIndex'])
             );
 
             return $this->meta[$metaId];
@@ -315,7 +379,7 @@ class MetaType extends AbstractType
         if (!isset($view->parent->children[$options['base_field_name']])) {
             throw new InvalidArgumentException('The base_field_name does not exist in the parent form');
         }
-        $view->vars['base_field_selector'] = '#' . $view->parent->children[$options['base_field_name']]->vars['id'];
+        $view->vars['base_field_selector'] = '#'.$view->parent->children[$options['base_field_name']]->vars['id'];
         $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
         $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
