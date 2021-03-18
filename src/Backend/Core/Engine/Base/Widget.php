@@ -183,7 +183,7 @@ class Widget extends KernelLoader
 
         $this->redirect(
             BackendModel::createUrlForAction(
-                $this->url->getDefaultActionForCurrentModule(),
+                $this->getContainer()->get('url')->getDefaultActionForCurrentModule(),
                 null,
                 null,
                 [
