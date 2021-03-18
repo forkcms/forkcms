@@ -941,7 +941,7 @@ class Model
             null,
             null,
             ['id' => BackendModel::HOME_PAGE_ID]
-        ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
+        ) . '"><ins>&#160;</ins>' . htmlentities($homePage['title']) . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
