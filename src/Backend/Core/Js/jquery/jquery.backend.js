@@ -302,7 +302,7 @@
       var $this = $(this)
 
       // add wrapper and tooltip
-      $this.html('<span>' + $this.text() + '</span><span style="display: none;" class="inlineEditTooltip label label-primary">' + options.tooltip + '</span>')
+      $this.html('<span>' + utils.string.htmlEncode($this.text()) + '</span><span style="display: none;" class="inlineEditTooltip label label-primary">' + options.tooltip + '</span>')
 
       // grab element
       var $span = $this.find('span')
