@@ -95,7 +95,7 @@ class UploadFile extends AjaxAction
      */
     private function writeFile(string $content, string $fileName, string $destinationFolder): string
     {
-        $path = FRONTEND_FILES_PATH . '/Pages/' . $destinationFolder;
+        $path = FRONTEND_FILES_PATH . '/Pages/' . basename($destinationFolder);
 
         // create the needed folder if it doesn't exist
         $filesystem = new Filesystem();
