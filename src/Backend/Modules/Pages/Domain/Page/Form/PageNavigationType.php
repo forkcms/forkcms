@@ -42,17 +42,6 @@ final class PageNavigationType extends AbstractType
                 ]
             ]
         );
-
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $formEvent) {
-            $data = $formEvent->getData();
-            if (array_key_exists('titleOverwrite', $data)) {
-                return;
-            }
-
-            $data['title'] = $formEvent->getForm()->getParent();
-            $formEvent->getForm()->getParent()->getData();
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
