@@ -88,14 +88,14 @@ class Location
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;
 
@@ -147,8 +147,8 @@ class Location
         string $zip,
         string $city,
         string $country,
-        float $latitude,
-        float $longitude,
+        ?float $latitude = null,
+        ?float $longitude = null,
         bool $showInOverview = true,
         int $extraId = null,
         bool $overrideMapSettings = false
@@ -176,8 +176,8 @@ class Location
         string $zip,
         string $city,
         string $country,
-        float $latitude,
-        float $longitude,
+        ?float $latitude = null,
+        ?float $longitude = null,
         bool $showInOverview = true,
         bool $overrideMapSettings = false
     ) {
@@ -238,12 +238,12 @@ class Location
         return $this->country;
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -324,8 +324,8 @@ class Location
             $item['zip'],
             $item['city'],
             $item['country'],
-            $item['lat'] ?? $item['latitude'] ?? 0,
-            $item['lng'] ?? $item['longitude'] ?? 0,
+            $item['lat'] ?? $item['latitude'] ?? null,
+            $item['lng'] ?? $item['longitude'] ?? null,
             $item['show_overview'] ?? $item['showInOverview'] ?? true,
             $item['extra_id'] ?? $item['extraId'] ?? null,
             $item['override_map_settings'] ?? false
