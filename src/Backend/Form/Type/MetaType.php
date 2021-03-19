@@ -169,11 +169,11 @@ class MetaType extends AbstractType
                 SEOIndex::POSSIBLE_VALUES
             ),
             'choice_value' => function (SEOIndex $SEOIndex = null) {
-                return (string)$SEOIndex;
+                return (string) $SEOIndex;
             },
             'choice_label' => function ($SEOIndex) {
                 if ($SEOIndex->isNone()) {
-                    return 'lbl.'.ucfirst($SEOIndex);
+                    return 'lbl.' . ucfirst($SEOIndex);
                 }
 
                 return $SEOIndex;
@@ -197,11 +197,11 @@ class MetaType extends AbstractType
                 SEOFollow::POSSIBLE_VALUES
             ),
             'choice_value' => function (SEOFollow $SEOFollow = null) {
-                return (string)$SEOFollow;
+                return (string) $SEOFollow;
             },
             'choice_label' => function ($SEOFollow) {
                 if ($SEOFollow->isNone()) {
-                    return 'lbl.'.ucfirst($SEOFollow);
+                    return 'lbl.' . ucfirst($SEOFollow);
                 }
 
                 return $SEOFollow;
@@ -235,7 +235,7 @@ class MetaType extends AbstractType
             array_walk(
                 $overwritableFields,
                 function ($fieldName) use ($metaForm, $defaultValue, &$metaData) {
-                    if ($metaForm->get($fieldName.'Overwrite')->getData()) {
+                    if ($metaForm->get($fieldName . 'Overwrite')->getData()) {
                         // we are overwriting it so we don't need to set the fallback
                         return;
                     }
@@ -302,7 +302,7 @@ class MetaType extends AbstractType
     private function getMetaReverseTransformFunction(): callable
     {
         return function ($metaData) {
-            $metaId = $metaData['id'] === null ? null : (int)$metaData['id'];
+            $metaId = $metaData['id'] === null ? null : (int) $metaData['id'];
 
             if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
                 return new Meta(
@@ -379,7 +379,7 @@ class MetaType extends AbstractType
         if (!isset($view->parent->children[$options['base_field_name']])) {
             throw new InvalidArgumentException('The base_field_name does not exist in the parent form');
         }
-        $view->vars['base_field_selector'] = '#'.$view->parent->children[$options['base_field_name']]->vars['id'];
+        $view->vars['base_field_selector'] = '#' . $view->parent->children[$options['base_field_name']]->vars['id'];
         $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
         $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
