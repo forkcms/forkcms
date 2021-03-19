@@ -48,6 +48,20 @@ class Model
         return [];
     }
 
+    public static function getAllWithDefaultMapSettings(): array
+    {
+        $locations = self::getLocationRepository()->findBy([
+            'overrideMapSettings' => false
+        ]);
+
+        return array_map(
+            function (Location $location) {
+                return $location->toArray();
+            },
+            $locations
+        );
+    }
+
     public static function getAll(): array
     {
         $locations = self::getLocationRepository()->findAll();

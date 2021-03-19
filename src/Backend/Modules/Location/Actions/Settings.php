@@ -7,6 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This is the settings-action, it will display a form to set general location settings
@@ -77,6 +78,14 @@ class Settings extends BackendBaseActionEdit
                 $this->get('fork.settings')->set($this->url->getModule(), 'width_widget', $width);
                 $this->get('fork.settings')->set($this->url->getModule(), 'height_widget', $height);
                 $this->get('fork.settings')->set($this->url->getModule(), 'map_type_widget', (string) $this->form->getField('map_type_widget')->getValue());
+
+                $locations = BackendLocationModel::getAllWithDefaultMapSettings();
+                foreach ($locations as $location) {
+                    BackendLocationModel::setMapSetting($location['id'], 'zoom_level', (string) $this->form->getField('zoom_level_widget')->getValue());
+                    BackendLocationModel::setMapSetting($location['id'], 'map_type', (string) $this->form->getField('map_type_widget')->getValue());
+                    BackendLocationModel::setMapSetting($location['id'], 'height', $height);
+                    BackendLocationModel::setMapSetting($location['id'], 'width', $width);
+                }
 
                 // redirect to the settings page
                 $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
