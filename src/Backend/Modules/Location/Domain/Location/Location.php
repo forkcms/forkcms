@@ -86,14 +86,14 @@ class Location
     private $country;
 
     /**
-     * @var float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $latitude;
 
     /**
-     * @var float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
