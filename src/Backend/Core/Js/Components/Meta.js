@@ -86,12 +86,12 @@ export class Meta {
             },
             success: function (data, textStatus) {
               url = data.data
+              if (url.trim() === 'home') {
+                url = ''
+              }
+
               $(options.urlSelector).val(url)
               $(options.generatedUrlSelector).html(url)
-
-              if (url.trim() === 'home') {
-                $(options.generatedUrlSelector).val('')
-              }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
               url = decodeURI(StringUtil.urlise(url))
