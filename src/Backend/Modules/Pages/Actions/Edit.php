@@ -75,6 +75,11 @@ class Edit extends BackendBaseActionEdit
      */
     private $templates = [];
 
+    /**
+     * @var string
+     */
+    private $oldUrl;
+
     public function execute(): void
     {
         parent::execute();
@@ -558,6 +563,7 @@ class Edit extends BackendBaseActionEdit
 
         // meta
         $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
+        $this->oldUrl = $this->meta->getUrl();
 
         // set callback for generating an unique URL
         $this->meta->setUrlCallback(
@@ -781,6 +787,7 @@ class Edit extends BackendBaseActionEdit
             && $this->record['navigation_title'] === $page['navigation_title']
             && $this->record['navigation_title_overwrite'] == $page['navigation_title_overwrite'] // can be 0 or false
             && $this->record['hidden'] == $page['hidden'] // can be 0 or false
+            && $this->meta->getUrl() === $this->oldUrl
         );
 
         // build cache
