@@ -10,13 +10,6 @@ DirectorySlash Off
     deny from all
 </Files>
 
-# forbidden extensions
-<FilesMatch "(?i)\.(md)$">
-    ForceType text/plain
-    Order Deny,Allow
-    Deny from All
-</FilesMatch>
-
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
 
