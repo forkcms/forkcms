@@ -2917,20 +2917,20 @@
         },
         {
             "name": "matthiasmullie/scrapbook",
-            "version": "1.4.7",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/scrapbook.git",
-                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745"
+                "reference": "df200ba063722798a73bc020ff154604830043d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/d27ff1ab823f288918d3c593cd3c7e56db0e7745",
-                "reference": "d27ff1ab823f288918d3c593cd3c7e56db0e7745",
+                "url": "https://api.github.com/repos/matthiasmullie/scrapbook/zipball/df200ba063722798a73bc020ff154604830043d4",
+                "reference": "df200ba063722798a73bc020ff154604830043d4",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3|^7.0",
+                "php": ">=5.3.0",
                 "psr/cache": "~1.0",
                 "psr/simple-cache": "~1.0"
             },
@@ -2940,7 +2940,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.0",
-                "phpunit/phpunit": "~4.8|~5.0|~6.0"
+                "phpunit/phpunit": ">=4.8"
             },
             "suggest": {
                 "ext-apc": ">=3.1.1",
@@ -3000,7 +3000,13 @@
                 "transactional",
                 "value"
             ],
-            "time": "2019-08-30T09:35:02+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/matthiasmullie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-27T18:04:01+00:00"
         },
         {
             "name": "monolog/monolog",
