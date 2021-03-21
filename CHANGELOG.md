@@ -1,4 +1,23 @@
-5.9.2  (2020-12-5)
+5.9.3  (2021-03-21)
+------------------
+
+Fixed:
+* Core: Update packages [#3332](https://github.com/forkcms/forkcms/pull/3332) [#3329](https://github.com/forkcms/forkcms/pull/3329) [#3328](https://github.com/forkcms/forkcms/pull/3328) [#3325](https://github.com/forkcms/forkcms/pull/3325) [#3282](https://github.com/forkcms/forkcms/pull/3282) [#3269](https://github.com/forkcms/forkcms/pull/3269)
+* Github: Add badge for security issues [#3315](https://github.com/forkcms/forkcms/pull/3315)
+* Github: Make sure we test all supported php versions [#3254](https://github.com/forkcms/forkcms/pull/3254)
+* Github: Remove duplicate github issue reporting system [#3288](https://github.com/forkcms/forkcms/pull/3288)
+* Groups: Excape new reserverd keywords in mysal [#3264](https://github.com/forkcms/forkcms/pull/3264)
+* Locale: Clarify that html in translations is not considered a security issue [#3270](https://github.com/forkcms/forkcms/pull/3270)
+* Pages: Duplicate user template images when copying page [#3320](https://github.com/forkcms/forkcms/pull/3320)
+* Pages: Rebuild page cache when changing url [#3319](https://github.com/forkcms/forkcms/pull/3319)
+
+Security:
+* Core: Security fixes [#3351](https://github.com/forkcms/forkcms/pull/3351)
+* Locale: Fix xss in translation datagrid [#3314](https://github.com/forkcms/forkcms/pull/3314)
+* Spoon: Fix css bug in Spoon Library [#3316](https://github.com/forkcms/forkcms/pull/3316)
+
+
+5.9.2  (2020-12-05)
 ------------------
 
 Fixed:

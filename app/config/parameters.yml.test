@@ -10,7 +10,7 @@ parameters:
 
     fork.debug_email:       ''
     fork.debug_message:     'Internal error.'
-    fork.version:           '5.9.2'
+    fork.version:           '5.9.3'
 
     session.cookie_secure:  false
     site.protocol:          http
