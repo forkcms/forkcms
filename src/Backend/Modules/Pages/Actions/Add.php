@@ -569,10 +569,9 @@ class Add extends BackendBaseActionAdd
                 $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = $parentPage ? 'page' : 'root';
                 $page['title'] = $this->form->getField('title')->getValue();
-                $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue(
-                ) != '') ? $this->form->getField('navigation_title')->getValue() : $this->form->getField(
-                    'title'
-                )->getValue();
+                $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue() != '')
+                    ? $this->form->getField('navigation_title')->getValue()
+                    : $this->form->getField('title')->getValue();
                 $page['navigation_title_overwrite'] = $this->form->getField(
                     'navigation_title_overwrite'
                 )->isChecked();

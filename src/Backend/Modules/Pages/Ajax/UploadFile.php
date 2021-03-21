@@ -19,15 +19,35 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UploadFile extends AjaxAction
 {
+    private const ALLOWED_EXTENSIONS = [
+        'apng',
+        'avif',
+        'gif',
+        'jfif',
+        'jpeg',
+        'jpg',
+        'pjp',
+        'pjpeg',
+        'png',
+        'svg',
+        'webp',
+    ];
+
     public function execute(): void
     {
         $request = $this->getRequest();
 
-        $fileName = $this->writeFile(
-            $this->getFileContentFromRequest($request),
-            $this->getFileNameFromRequest($request),
-            $request->get('type')
-        );
+        try {
+            $fileName = $this->writeFile(
+                $this->getFileContentFromRequest($request),
+                $this->getFileNameFromRequest($request),
+                $request->get('type')
+            );
+        } catch (Exception $backendCoreException) {
+            $this->output(Response::HTTP_BAD_REQUEST, $backendCoreException->getMessage());
+
+            return;
+        }
 
         $this->output(Response::HTTP_OK, $fileName);
     }
@@ -89,7 +109,7 @@ class UploadFile extends AjaxAction
      */
     private function writeFile(string $content, string $fileName, string $destinationFolder): string
     {
-        $path = FRONTEND_FILES_PATH . '/Pages/' . $destinationFolder;
+        $path = FRONTEND_FILES_PATH . '/Pages/' . basename($destinationFolder);
 
         // create the needed folder if it doesn't exist
         $filesystem = new Filesystem();
@@ -100,6 +120,9 @@ class UploadFile extends AjaxAction
         // convert the filename to url friendly version
         $baseName = Uri::getUrl(pathinfo($fileName, PATHINFO_FILENAME));
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        if (!in_array(strtolower($extension), self::ALLOWED_EXTENSIONS)) {
+            throw new Exception('This is not an image.');
+        }
         $fileName = $baseName . '.' . $extension;
 
         // generate a non-existing filename
