@@ -92,6 +92,19 @@
 
 {%- endblock form_errors %}
 
+{% block checkbox_enable_field_widget %}
+  <checkbox-enable-field
+    checkbox-id="{{ form.enableField.vars.id }}"
+    checkbox-label="{{ form.enableField.vars.label|trans|capitalize }}"
+    field-id="{{ form.field.id }}"
+    field-label="{{ form.field.vars.label|trans|capitalize }}"
+    field-name="{{ form.field.vars.full_name }}"
+    field-help-text="{{ form.field.vars.help_text|trans }}"
+    switch-check
+  ></checkbox-enable-field>
+  {% do form.setRendered() %}
+{% endblock %}
+
 {%- block meta_widget -%}
   {% set customId = form.vars.id ~ '_custom' %}
   {% set classId = form.vars.id ~ '_class' %}
