@@ -87,5 +87,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "dependencies": {
+    "@editorjs/underline": "^1.0.0"
   }
 }
