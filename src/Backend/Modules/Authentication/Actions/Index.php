@@ -326,11 +326,10 @@ class Index extends BackendBaseActionIndex
 
     private function sanitizeQueryString(string $queryString, string $default): string
     {
-        // only allow internal urls starting with "\"
-        if (!preg_match('/^\//', $queryString)) {
+        if (!preg_match('/^\/[^\/]/', $queryString)) {
             return $default;
         }
 
-        return $queryString;
+        return filter_var($queryString, FILTER_SANITIZE_URL);
     }
 }
