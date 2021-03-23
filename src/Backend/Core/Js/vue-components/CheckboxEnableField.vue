@@ -40,6 +40,17 @@
         } else {
           this.disabled = true
         }
+
+        this.$parent.$emit('update-value')
+      }
+    },
+    methods: {
+      updateValue: function (newValue) {
+        if (!this.disabled) {
+          return
+        }
+
+        this.value = newValue
       }
     },
     mounted () {
