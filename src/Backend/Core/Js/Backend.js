@@ -114,12 +114,12 @@ export class Backend {
 
 $(window).on('load', () => {
   window.backend = new Backend()
-  window.backend.initBackend()
-
   if ($('#tabSEO').length) {
-    new Vue({
+    window.backend.seoVue = new Vue({
       el: '#tabSEO',
       components: {CheckboxEnableField}
     })
   }
+
+  window.backend.initBackend()
 })

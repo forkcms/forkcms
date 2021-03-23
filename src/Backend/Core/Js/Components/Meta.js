@@ -6,14 +6,10 @@ export class Meta {
     // define defaults
     const defaults = {
       metaIdSelector: '#metaId',
-      pageTitleSelector: '#pageTitle',
-      pageTitleOverwriteSelector: '#pageTitleOverwrite',
-      navigationTitleSelector: '#navigationTitle',
-      navigationTitleOverwriteSelector: '#navigationTitleOverwrite',
-      metaDescriptionSelector: '#metaDescription',
-      metaDescriptionOverwriteSelector: '#metaDescriptionOverwrite',
-      metaKeywordsSelector: '#metaKeywords',
-      metaKeywordsOverwriteSelector: '#metaKeywordsOverwrite',
+      pageTitleSelector: 'page_title',
+      pageNavigationTitleSelector: 'page_navigation_title',
+      metaDescriptionSelector: 'meta_description',
+      metaKeywordsSelector: 'meta_keywords',
       urlSelector: '#url',
       urlOverwriteSelector: '#urlOverwrite',
       generatedUrlSelector: '#generatedUrl',
@@ -31,42 +27,18 @@ export class Meta {
     return $(element).each((index, el) => {
       // variables
       const $element = $(el)
-      const $pageTitle = $(options.pageTitleSelector)
-      const $pageTitleOverwrite = $(options.pageTitleOverwriteSelector)
-      const $navigationTitle = $(options.navigationTitleSelector)
-      const $navigationTitleOverwrite = $(options.navigationTitleOverwriteSelector)
-      const $metaDescription = $(options.metaDescriptionSelector)
-      const $metaDescriptionOverwrite = $(options.metaDescriptionOverwriteSelector)
-      const $metaKeywords = $(options.metaKeywordsSelector)
-      const $metaKeywordsOverwrite = $(options.metaKeywordsOverwriteSelector)
+      const $pageTitle = options.pageTitleSelector
+      const $navigationTitle = options.pageNavigationTitleSelector
+      const $metaDescription = options.metaDescriptionSelector
+      const $metaKeywords = options.metaKeywordsSelector
       const $urlOverwrite = $(options.urlOverwriteSelector)
 
       // bind keypress
-      $element.bind('keyup input', EventUtil.debounce(calculateMeta, 400))
+      $element.bind('keyup input update-value', EventUtil.debounce(calculateMeta, 400))
 
-      // bind change on the checkboxes
-      if ($pageTitle.length > 0 && $pageTitleOverwrite.length > 0) {
-        $pageTitleOverwrite.change((e) => {
-          if (!$element.is(':checked')) $pageTitle.val($element.val())
-        })
-      }
-
-      if ($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0) {
-        $navigationTitleOverwrite.change((e) => {
-          if (!$element.is(':checked')) $navigationTitle.val($element.val())
-        })
-      }
-
-      $metaDescriptionOverwrite.change((e) => {
-        if (!$element.is(':checked')) $metaDescription.val($element.val())
-      })
-
-      $metaKeywordsOverwrite.change((e) => {
-        if (!$element.is(':checked')) $metaKeywords.val($element.val())
-      })
-
-      $urlOverwrite.change((e) => {
-        if (!$element.is(':checked')) generateUrl($element.val())
+      // pass vue emited event to jquery
+      window.backend.seoVue.$on('update-value', () => {
+        $element.trigger('update-value')
       })
 
       // generate url
@@ -100,18 +72,23 @@ export class Meta {
       // calculate meta
       function calculateMeta (e, element) {
         const title = (typeof element !== 'undefined') ? element.val() : $(this).val()
+        const seoVueRefs = window.backend.seoVue.$refs
 
-        if ($pageTitle.length > 0 && $pageTitleOverwrite.length > 0) {
-          if (!$pageTitleOverwrite.is(':checked')) $pageTitle.val(title)
+        if (seoVueRefs[$pageTitle] !== undefined) {
+          seoVueRefs[$pageTitle].updateValue(title)
         }
 
-        if ($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0) {
-          if (!$navigationTitleOverwrite.is(':checked')) $navigationTitle.val(title)
+        if (seoVueRefs[$navigationTitle] !== undefined) {
+          seoVueRefs[$navigationTitle].updateValue(title)
         }
 
-        if (!$metaDescriptionOverwrite.is(':checked')) $metaDescription.val(title)
+        if (seoVueRefs[$metaDescription] !== undefined) {
+          seoVueRefs[$metaDescription].updateValue(title)
+        }
 
-        if (!$metaKeywordsOverwrite.is(':checked')) $metaKeywords.val(title)
+        if (seoVueRefs[$metaKeywords] !== undefined) {
+          seoVueRefs[$metaKeywords].updateValue(title)
+        }
 
         if (!$urlOverwrite.is(':checked')) {
           generateUrl(title)
