@@ -94,13 +94,14 @@
 
 {% block checkbox_enable_field_widget %}
   <checkbox-enable-field
+    switch-check
     checkbox-id="{{ form.enableField.vars.id }}"
     checkbox-label="{{ form.enableField.vars.label|trans|capitalize }}"
+    checkbox-name="{{ form.enableField.vars.full_name }}"
     field-id="{{ form.field.id }}"
     field-label="{{ form.field.vars.label|trans|capitalize }}"
     field-name="{{ form.field.vars.full_name }}"
     field-help-text="{{ form.field.vars.help_text|trans }}"
-    switch-check
   ></checkbox-enable-field>
   {% do form.setRendered() %}
 {% endblock %}
@@ -129,15 +130,18 @@
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
       <div class="checkboxTextFieldCombo">
         <checkbox-enable-field
+          switch-check
           ref="{{ form.title.vars.id }}"
           checkbox-id="{{ form.titleOverwrite.vars.id }}"
           checkbox-label="{{ form.titleOverwrite.vars.label|trans|ucfirst }}"
+          checkbox-name="{{ form.titleOverwrite.vars.full_name }}"
           field-id="{{ form.title.vars.id }}"
           field-label="{{ form.title.vars.label|trans|ucfirst }}"
           field-name="{{ form.title.vars.full_name }}"
           field-help-text="{{ 'msg.HelpPageTitle'|trans|raw }}"
-          data-field-value="{{ form.title.vars.value }}"
-          switch-check>
+          value-on-load="{{ form.title.vars.value }}"
+          {% if form.titleOverwrite.vars.checked %} enabled-on-load {% endif %}
+        >
         </checkbox-enable-field>
         {% do form.title.setRendered() %}
         {% do form.titleOverwrite.setRendered() %}
@@ -148,13 +152,16 @@
       <legend>{{ 'lbl.MetaInformation'|trans|ucfirst }}</legend>
       <div class="checkboxTextFieldCombo">
         <checkbox-enable-field
+          switch-check
           checkbox-id="{{ form.descriptionOverwrite.vars.id }}"
           checkbox-label="{{ form.descriptionOverwrite.vars.label|trans|capitalize }}"
+          checkbox-name="{{ form.descriptionOverwrite.vars.full_name }}"
           field-id="{{ form.description.vars.id }}"
           field-label="{{  form.description.vars.label|trans|capitalize }}"
           field-name="{{ form.description.vars.full_name }}"
           field-help-text="{{  'msg.HelpMetaDescription'|trans|raw }}"
-          switch-check
+          value-on-load="{{ form.description.vars.value }}"
+          {% if form.descriptionOverwrite.vars.checked %} enabled-on-load {% endif %}
         ></checkbox-enable-field>
         {% do form.description.setRendered() %}
         {% do form.descriptionOverwrite.setRendered() %}
@@ -162,13 +169,16 @@
 
       <div class="checkboxTextFieldCombo">
         <checkbox-enable-field
+          switch-check
           checkbox-id="{{ form.keywordsOverwrite.vars.id }}"
           checkbox-label="{{ form.keywordsOverwrite.vars.label|trans|capitalize }}"
+          checkbox-name="{{ form.keywordsOverwrite.vars.full_name }}"
           field-id="{{ form.keywords.vars.id }}"
           field-label="{{  form.keywords.vars.label|trans|capitalize }}"
           field-name="{{ form.keywords.vars.full_name }}"
           field-help-text="{{  'msg.HelpMetaKeywords'|trans|raw }}"
-          switch-check
+          value-on-load="{{ form.keywords.vars.value }}"
+          {% if form.keywordsOverwrite.vars.checked %} enabled-on-load {% endif %}
         ></checkbox-enable-field>
         {% do form.keywords.setRendered() %}
         {% do form.keywordsOverwrite.setRendered() %}

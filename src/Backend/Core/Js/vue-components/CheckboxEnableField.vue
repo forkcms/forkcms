@@ -2,7 +2,7 @@
   <div>
     <div class="form-group">
       <div :class="[switchCheck ? 'custom-control custom-switch' : 'custom-control custom-checkbox']">
-        <input type="checkbox" class="custom-control-input" :id="checkboxId" v-model="checked">
+        <input type="checkbox" class="custom-control-input" :id="checkboxId" :name="checkboxName" v-model="checked">
         <label class="custom-control-label" :for="checkboxId">{{checkboxLabel}}</label>
       </div>
     </div>
@@ -20,11 +20,26 @@
     props: {
       checkboxId: String,
       checkboxLabel: String,
+      checkboxName: {
+        type: String,
+        required: false,
+        default: null
+      },
       fieldId: String,
       fieldLabel: String,
       fieldName: String,
       fieldHelpText: String,
-      switchCheck: Boolean
+      switchCheck: Boolean,
+      enabledOnLoad: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+      valueOnLoad: {
+        type: String,
+        required: true,
+        default: ''
+      }
     },
     data() {
       return {
@@ -54,6 +69,9 @@
       }
     },
     mounted () {
+      this.checked = this.enabledOnLoad
+      this.disabled = !this.enabledOnLoad
+      this.value = this.valueOnLoad
       let element = document.querySelector('[data-field-value]')
       this.value = element.dataset.fieldValue
     }
