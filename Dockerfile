@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY var/docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
 # Install and configure XDebug
-RUN pecl install xdebug && \
+RUN pecl install xdebug-2.9.8 && \
     docker-php-ext-enable xdebug && \
     rm -rf /tmp/pear
 
@@ -54,7 +54,7 @@ WORKDIR /var/www/html
 # Install the composer dependencies (no autoloader yet as that invalidates the docker cache)
 COPY composer.json ./
 COPY composer.lock ./
-RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress && \
     composer clear-cache
 
 # Bundle source code into container. Important here is that copying is done based on the rules defined in the .dockerignore file.

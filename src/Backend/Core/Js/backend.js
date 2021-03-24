@@ -176,18 +176,18 @@ jsBackend.navigation = {
     var collapsed = $wrapper.hasClass('navigation-collapsed')
 
     if ($wrapper.hasClass('navigation-collapsed')) {
-      $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+      $('.js-nav-screen-text').text(jsBackend.locale.lbl('OpenNavigation'))
     } else {
-      $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+      $('.js-nav-screen-text').text(jsBackend.locale.lbl('CloseNavigation'))
     }
 
     $navCollapse.on('click', function (e) {
       e.preventDefault()
       $wrapper.toggleClass('navigation-collapsed')
       if ($wrapper.hasClass('navigation-collapsed')) {
-        $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+        $('.js-nav-screen-text').text(jsBackend.locale.lbl('OpenNavigation'))
       } else {
-        $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+        $('.js-nav-screen-text').text(jsBackend.locale.lbl('CloseNavigation'))
       }
       collapsed = !collapsed
       utils.cookies.setCookie('navigation-collapse', collapsed)

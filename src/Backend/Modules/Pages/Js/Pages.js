@@ -1561,7 +1561,7 @@ jsBackend.pages.tree = {
       var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
 
       if (collapsed) {
-        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $buttonText.text(jsBackend.locale.lbl('OpenTreeNavigation'))
         $.each($('#tree div'), function (index, element) {
           $.tree.reference($(element).attr('id')).close_all()
         })
@@ -1569,7 +1569,7 @@ jsBackend.pages.tree = {
         return
       }
 
-      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $buttonText.text(jsBackend.locale.lbl('CloseTreeNavigation'))
       $.each($('#tree div'), function (index, element) {
         $.tree.reference($(element).attr('id')).open_all()
       })

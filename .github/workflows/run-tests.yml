@@ -8,7 +8,7 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [7.1]
+                php: [7.1, 7.2, 7.3, 7.4]
                 testsuite: ["functional", "unit", "installer"]
         name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
@@ -30,12 +30,21 @@ jobs:
                   path: ~/.composer/cache/files
                   key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
-            - name: Setup PHP
+            - name: Setup PHP with coverage
+              if: ${{ matrix.php == '7.4' }}
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
-                  coverage: xdebug # Switch to PCOV for a speed gain when we can use PHP 7.2 & PHPUnit 8.0.
+                  coverage: PCOV
+
+            - name: Setup PHP without coverage
+              if: ${{ matrix.php != '7.4' }}
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
 
             - name: Prepare test env
               run: |
@@ -48,8 +57,13 @@ jobs:
                   FORK_ENV: test
               run: composer install -o
 
-            - name: Execute tests
+            - name: Execute tests with coverage
+              if: ${{ matrix.php == '7.4' }}
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+
+            - name: Execute tests without coverage
+              if: ${{ matrix.php != '7.4' }}
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
 
             - name: Display error logs on failure
               if: ${{ failure() }}
@@ -57,6 +71,7 @@ jobs:
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1
+              if: ${{ matrix.php == '7.4' }}
               with:
                 file: ${{ matrix.testsuite}}.clover
                 flags: ${{ matrix.testsuite}}
@@ -96,7 +111,7 @@ jobs:
                   FORK_ENV: dev
 
             - name: Run PHPStan
-              run: bin/phpstan analyze src
+              run: bin/phpstan analyze --error-format github src
 
     php-code-sniffer:
         name: PHP Code Sniffer

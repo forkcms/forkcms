@@ -5,8 +5,8 @@ namespace Common\Tests;
 use Common\ModulesSettings;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Tests for our module settings
@@ -74,7 +74,7 @@ class ModulesSettingsTest extends TestCase
         );
     }
 
-    private function getDatabaseMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getDatabaseMock(): MockObject
     {
         $databaseMock = $this->getMockBuilder('SpoonDatabase')
             ->disableOriginalConstructor()

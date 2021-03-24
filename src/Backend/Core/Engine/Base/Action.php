@@ -280,6 +280,6 @@ class Action extends KernelLoader
      */
     public function redirect(string $url, int $code = Response::HTTP_FOUND): void
     {
-        $this->get('url')->redirect($url, $code);
+        $this->url->redirect($url, $code);
     }
 }

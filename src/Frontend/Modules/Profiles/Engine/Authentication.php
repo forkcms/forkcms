@@ -5,6 +5,7 @@ namespace Frontend\Modules\Profiles\Engine;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
+use RuntimeException;
 
 /**
  * Profile authentication functions.
@@ -199,14 +200,21 @@ class Authentication
         // cleanup old sessions
         self::cleanupOldSessions();
 
+        $session = FrontendModel::getSession();
+        // create a new session for safety reasons
+        if (!$session->migrate(true)) {
+            throw new RuntimeException(
+                'For safety reasons the session should be regenerated. But apparently it failed.'
+            );
+        }
         // set profile_logged_in to true
-        FrontendModel::getSession()->set('frontend_profile_logged_in', true);
+        $session->set('frontend_profile_logged_in', true);
 
         // should we remember the user?
         if ($remember) {
             // generate secret key
             $secretKey = FrontendProfilesModel::getEncryptedString(
-                FrontendModel::getSession()->getId(),
+                $session->getId(),
                 FrontendProfilesModel::getRandomString()
             );
 
@@ -218,7 +226,7 @@ class Authentication
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            FrontendModel::getSession()->getId()
+            $session->getId()
         );
 
         // insert new session record
@@ -226,7 +234,7 @@ class Authentication
             'profiles_sessions',
             [
                 'profile_id' => $profileId,
-                'session_id' => FrontendModel::getSession()->getId(),
+                'session_id' => $session->getId(),
                 'secret_key' => $secretKey,
                 'date' => FrontendModel::getUTCDate(),
             ]
@@ -241,16 +249,22 @@ class Authentication
 
     public static function logout(): void
     {
+        $session = FrontendModel::getSession();
         // delete session records
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            [FrontendModel::getSession()->getId()]
+            [$session->getId()]
         );
 
         // set is_logged_in to false
-        FrontendModel::getSession()->set('frontend_profile_logged_in', false);
-
+        $session->set('frontend_profile_logged_in', false);
+        // create a new session for safety reasons
+        if (!$session->migrate(true)) {
+            throw new RuntimeException(
+                'For safety reasons the session should be regenerated. But apparently it failed.'
+            );
+        }
         FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
     }
 

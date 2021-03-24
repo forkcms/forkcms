@@ -2,21 +2,59 @@ includes:
   - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
-  level: 0
-  autoload_files:
-    - %rootDir%/../../../autoload.php
-#  autoload_directories:
-#    - %rootDir%/../../../vendor/bin/.phpunit/phpunit-5.7/src
+  level: 1
+  paths:
+    - src
+  scanFiles:
+    - vendor/google/apiclient/src/Google/Task/Retryable.php
+    - vendor/spoon/library/spoon/form/form.php
+  bootstrapFiles:
+    - autoload.php
   excludes_analyse:
-    - %rootDir%/../../../src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder/
-    - %rootDir%/../../../src/*/Tests/*
-    - %rootDir%/../../../src/Common/WebTestCase.php
+    - src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder/
+    - src/*/Tests/*
+    - src/Common/WebTestCase.php
+    - src/Backend/Cache
+    - src/Frontend/Cache
+  earlyTerminatingMethodCalls:
+    Frontend\Core\Engine\Page:
+      - redirect
+      - redirectToLogin
+    Backend\Core\Engine\Base\Action:
+      - redirect
+    Backend\Core\Engine\Url:
+      - redirect
+      - redirectToErrorPage
+    Frontend\Core\Engine\Url:
+      - redirectToLanguage
   ignoreErrors:
-    - '#Function newrelic_name_transaction not found#'
-    - '#Service "breadcrumb" is not registered in the container.#'
-    - '#Service "header" is not registered in the container.#'
-    - '#Service "page" is not registered in the container.#'
-    - '#Service "template" is not registered in the container.#'
-    - '#Service "url" is not registered in the container.#'
+    - '#Constant LANGUAGE not found.#'
+    - '#Constant FRONTEND_LANGUAGE not found.#'
+    - '#Constant SITE_URL not found.#'
+    - '#Constant FRONTEND_FILES_URL not found.#'
+    - '#Constant FRONTEND_FILES_PATH not found.#'
+    - '#Constant SITE_MULTILANGUAGE not found.#'
+    - '#Constant SITE_DEFAULT_LANGUAGE not found.#'
+    - '#Constant FRONTEND_MODULES_PATH not found.#'
+    - '#Constant FRONTEND_CORE_PATH not found.#'
+    - '#Constant SITE_PROTOCOL not found.#'
+    - '#Constant FRONTEND_CACHE_URL not found.#'
+    - '#Constant FRONTEND_CACHE_PATH not found.#'
+    - '#Constant PATH_WWW not found.#'
+    - '#Constant FRONTEND_PATH not found.#'
+    - '#Constant NAMED_APPLICATION not found.#'
+    - '#Constant FORK_VERSION not found.#'
+    - '#Constant BACKEND_CACHE_URL not found.#'
+    - '#Constant BACKEND_PATH not found.#'
+    - '#Constant BACKEND_CORE_PATH not found.#'
+    - '#Constant ACTION_GROUP_TAG not found.#'
+    - '#Constant SITE_DOMAIN not found.#'
+    - '#Constant BACKEND_MODULES_PATH not found.#'
+    - '#Constant FRONTEND_CORE_URL not found.#'
+    - '#Constant FRONTEND_THEMES_PATH not found.#'
+    - '#Constant ACTION_RIGHTS_LEVEL not found.#'
+    - '#Constant APPLICATION not found.#'
+    - '#Constant BACKEND_CACHE_PATH not found.#'
+    - '#Constant SITE_DEFAULT_TITLE not found.#'
   symfony:
-    container_xml_path: %rootDir%/../../../var/cache/dev/appDevDebugProjectContainer.xml
+    container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml

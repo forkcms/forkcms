@@ -3,8 +3,8 @@
 namespace Common\Tests\Mailer;
 
 use Common\Mailer\Configurator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Tests for our module settings
@@ -79,12 +79,12 @@ class ConfiguratorTest extends TestCase
         $configurator->onKernelRequest($this->getGetResponseEventMock());
     }
 
-    private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getModulesSettingsMock(): MockObject
     {
         return $this->createMock('Common\ModulesSettings');
     }
 
-    private function getContainerMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getContainerMock(): MockObject
     {
         return $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')
             ->disableOriginalConstructor()
@@ -92,7 +92,7 @@ class ConfiguratorTest extends TestCase
         ;
     }
 
-    private function getGetResponseEventMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getGetResponseEventMock(): MockObject
     {
         return $this->getMockBuilder('Symfony\Component\HttpKernel\Event\GetResponseEvent')
             ->disableOriginalConstructor()

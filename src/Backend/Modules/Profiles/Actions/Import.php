@@ -50,15 +50,19 @@ class Import extends BackendBaseActionAdd
 
         // validate input
         $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
-        if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-            if ($fileFile->isAllowedExtension(['csv'], sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))) {
-                $indexes = $this->get(Reader::class)->findColumnIndexes(
-                    $fileFile->getTempFileName(),
-                    ['email', 'display_name', 'password']
-                );
-                if (in_array(null, $indexes)) {
-                    $fileFile->addError(BL::getError('InvalidCSV'));
-                }
+        $indexes = [];
+        if ($fileFile->isFilled(BL::err('FieldIsRequired'))
+            && $fileFile->isAllowedExtension(
+                ['csv'],
+                sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
+            )
+        ) {
+            $indexes = $this->get(Reader::class)->findColumnIndexes(
+                $fileFile->getTempFileName(),
+                ['email', 'display_name', 'password']
+            );
+            if (in_array(null, $indexes, true)) {
+                $fileFile->addError(BL::getError('InvalidCSV'));
             }
         }
 

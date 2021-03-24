@@ -6,6 +6,7 @@
 [![Code Coverage](https://codecov.io/gh/forkcms/forkcms/branch/master/graph/badge.svg?token=ahj70hVO29)](http://codecov.io/github/forkcms/forkcms?branch=master)
 [![Slack Status](https://fork-cms.herokuapp.com/badge.svg)](https://fork-cms.herokuapp.com/)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://docs.fork-cms.com/)
+[![huntr.dev | the place to protect open source](https://cdn.huntr.dev/huntr_security_badge.svg)](https://huntr.dev)
 
 ## Installation
 
@@ -27,6 +28,7 @@ To install the dependencies, you can run the command below in the document-root:
 ## Security
 
 If you discover any security-related issues, please email core@fork-cms.com instead of using the issue tracker.
+HTML is allowed in translations because you sometimes need it. Any reports regarding this will not be accepted as a security issue. Owners of a website can narrow down who can add/edit translation strings using the group permissions.
 
 ## Bugs
 

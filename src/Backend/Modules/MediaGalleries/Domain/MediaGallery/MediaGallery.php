@@ -92,7 +92,8 @@ class MediaGallery
      * @ORM\JoinColumn(
      *      name="mediaGroupId",
      *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *      onDelete="cascade",
+     *      nullable=false
      * )
      */
     protected $mediaGroup;

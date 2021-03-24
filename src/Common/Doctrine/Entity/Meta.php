@@ -87,7 +87,12 @@ class Meta
     private $custom;
 
     /**
-     * @var array|null|string
+     * @var array
+     */
+    private $unserialisedData;
+
+    /**
+     * @var string|null
      *
      * Only can be string during persisting or updating in the database as it then contains the serialised value
      *
@@ -121,7 +126,7 @@ class Meta
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
-        array $data = [],
+        array $unserialisedData = [],
         int $id = null
     ) {
         $this->keywords = $keywords;
@@ -133,7 +138,7 @@ class Meta
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
         $this->custom = $custom;
-        $this->data = $data;
+        $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
         $this->id = $id;
@@ -151,7 +156,7 @@ class Meta
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
-        array $data = []
+        array $unserialisedData = []
     ) {
         $this->keywords = $keywords;
         $this->keywordsOverwrite = $keywordsOverwrite;
@@ -162,7 +167,7 @@ class Meta
         $this->url = $url;
         $this->urlOverwrite = $urlOverwrite;
         $this->custom = $custom;
-        $this->data = $data;
+        $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
     }
@@ -173,8 +178,8 @@ class Meta
      */
     public function serialiseData()
     {
-        if (!empty($this->data)) {
-            $this->data = serialize($this->data);
+        if (!empty($this->unserialisedData)) {
+            $this->data = serialize($this->unserialisedData);
 
             return;
         }
@@ -190,12 +195,12 @@ class Meta
     public function unSerialiseData()
     {
         if ($this->data === null) {
-            $this->data = [];
+            $this->unserialisedData = [];
 
             return;
         }
 
-        $this->data = unserialize($this->data, ['allowed_classes' => false]);
+        $this->unserialisedData = unserialize($this->data, ['allowed_classes' => false]);
     }
 
     public static function fromBackendMeta(BackendMeta $meta): self
@@ -297,7 +302,7 @@ class Meta
 
     public function getData(): array
     {
-        return $this->data;
+        return $this->unserialisedData;
     }
 
     public function hasSEOIndex(): bool
