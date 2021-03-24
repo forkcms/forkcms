@@ -120,7 +120,7 @@ class Login extends FrontendBaseBlock
 
     private function sanitizeQueryString(string $queryString): string
     {
-        if (!preg_match('/^\/[^\/]/', $queryString)) {
+        if (!preg_match('/^\//', $queryString) or preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)) {
             return SITE_MULTILANGUAGE ? SITE_URL . '/' . LANGUAGE : SITE_URL;
         }
 
