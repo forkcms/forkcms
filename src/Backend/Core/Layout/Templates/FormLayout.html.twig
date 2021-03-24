@@ -371,7 +371,7 @@
     {% set meta = form.parent.meta %}
     {% set slug = meta.children.url.vars.value %}
     {% if slug == 'home' %}
-      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/">
+      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}">
         {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl"></span>
       </a>
     {% else %}
