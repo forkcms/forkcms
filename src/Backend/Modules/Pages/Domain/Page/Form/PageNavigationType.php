@@ -37,9 +37,6 @@ final class PageNavigationType extends AbstractType
                 'label_attr' => [
                     'class' => 'sr-only',
                 ],
-                'constraints' => [
-                    new NotBlank(),
-                ]
             ]
         );
     }
