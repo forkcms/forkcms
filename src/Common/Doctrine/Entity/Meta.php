@@ -6,6 +6,7 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use JsonSerializable;
 
 /**
@@ -27,6 +28,7 @@ class Meta implements JsonSerializable
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $keywords;
@@ -41,6 +43,7 @@ class Meta implements JsonSerializable
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $description;
@@ -55,6 +58,7 @@ class Meta implements JsonSerializable
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -69,6 +73,7 @@ class Meta implements JsonSerializable
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $url;

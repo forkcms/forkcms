@@ -56,9 +56,6 @@ class MetaType extends AbstractType
                 [
                     'label' => 'lbl.PageTitle',
                     'label_attr' => ['class' => 'sr-only'],
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
                 ]
             )
             ->add('titleOverwrite', SwitchType::class, ['label' => 'lbl.PageTitle', 'required' => false])
@@ -68,9 +65,6 @@ class MetaType extends AbstractType
                 [
                     'label' => 'lbl.Description',
                     'label_attr' => ['class' => 'sr-only'],
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
                 ]
             )
             ->add('descriptionOverwrite', SwitchType::class, ['label' => 'lbl.Description', 'required' => false])
@@ -80,9 +74,6 @@ class MetaType extends AbstractType
                 [
                     'label' => 'lbl.Keywords',
                     'label_attr' => ['class' => 'sr-only'],
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
                 ]
             )
             ->add('keywordsOverwrite', SwitchType::class, ['label' => 'lbl.Keywords', 'required' => false])
@@ -93,9 +84,6 @@ class MetaType extends AbstractType
                     'attr' => ['class' => 'fork-form-text'],
                     'label' => 'lbl.URL',
                     'label_attr' => ['class' => 'sr-only'],
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
                 ]
             )
             ->add('urlOverwrite', SwitchType::class, ['label' => 'lbl.URL', 'required' => false])
