@@ -30,12 +30,7 @@ final class PageType extends AbstractType
     {
         $builder->add(
             'title',
-            TitleType::class,
-            [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]
+            TitleType::class
         );
         if ($this->authenticatedUserIsAllowedToSeeAndEditTags()) {
             $builder->add('tags', TagsType::class, ['label' => 'lbl.Tags', 'required' => false]);
