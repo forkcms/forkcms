@@ -140,7 +140,7 @@
           field-name="{{ form.title.vars.full_name }}"
           field-help-text="{{ 'msg.HelpPageTitle'|trans|raw }}"
           value-on-load="{{ form.title.vars.value }}"
-          {% if form.titleOverwrite.vars.checked %} enabled-on-load {% endif %}
+          {% if form.titleOverwrite.vars.checked %} enabled-on-load{% endif %}
         >
         </checkbox-enable-field>
         {% do form.title.setRendered() %}
@@ -161,7 +161,7 @@
           field-name="{{ form.description.vars.full_name }}"
           field-help-text="{{  'msg.HelpMetaDescription'|trans|raw }}"
           value-on-load="{{ form.description.vars.value }}"
-          {% if form.descriptionOverwrite.vars.checked %} enabled-on-load {% endif %}
+          {% if form.descriptionOverwrite.vars.checked %} enabled-on-load{% endif %}
         ></checkbox-enable-field>
         {% do form.description.setRendered() %}
         {% do form.descriptionOverwrite.setRendered() %}
@@ -178,7 +178,7 @@
           field-name="{{ form.keywords.vars.full_name }}"
           field-help-text="{{  'msg.HelpMetaKeywords'|trans|raw }}"
           value-on-load="{{ form.keywords.vars.value }}"
-          {% if form.keywordsOverwrite.vars.checked %} enabled-on-load {% endif %}
+          {% if form.keywordsOverwrite.vars.checked %} enabled-on-load{% endif %}
         ></checkbox-enable-field>
         {% do form.keywords.setRendered() %}
         {% do form.keywordsOverwrite.setRendered() %}
