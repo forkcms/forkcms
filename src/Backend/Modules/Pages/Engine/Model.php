@@ -338,7 +338,7 @@ class Model
         $keys = [];
         $pages = [];
         $pageTree = self::getTree([Page::NO_PARENT_PAGE_ID], null, 1, $locale);
-        $homepageTitle = $pageTree[1][Page::HOME_PAGE_ID]['title'] ?? SpoonFilter::ucfirst(BL::lbl('Home'));
+        $homepageTitle = htmlentities($pageTree[1][Page::HOME_PAGE_ID]['title'] ?? SpoonFilter::ucfirst(BL::lbl('Home')));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {

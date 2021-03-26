@@ -5,7 +5,6 @@ namespace Common\Tests\Mailer;
 use Common\Mailer\Configurator;
 use Common\ModulesSettings;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
