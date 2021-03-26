@@ -4,12 +4,13 @@ namespace Frontend\Core\Engine;
 
 use Backend\Core\Language\Language as BackendLanguage;
 use SpoonFilter;
-use Twig_Compiler;
+use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
  * Twig node for writing the SEO form
  */
-class SeoFormNode extends \Twig_Node
+class SeoFormNode extends Node
 {
     private $form;
 
@@ -25,7 +26,7 @@ class SeoFormNode extends \Twig_Node
         $this->form = $form;
     }
 
-    public function compile(Twig_Compiler $compiler): void
+    public function compile(Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

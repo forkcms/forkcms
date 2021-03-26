@@ -1,7 +1,4 @@
 ---
-name: "🐞 Bug Report"
-about: "Something is broken? 🔨"
-title: ""
 labels: Bug
 assignees: ""
 ---

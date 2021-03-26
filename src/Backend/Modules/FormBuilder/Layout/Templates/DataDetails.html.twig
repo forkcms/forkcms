@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showFormBuilderData %}
+      {% if isAllowedAction('Data') %}
         {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|ucfirst) }}
       {% endif %}
     </div>
@@ -52,7 +52,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showFormBuilderMassDataAction %}
+          {% if isAllowedAction('MassDataAction') %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
@@ -60,7 +60,7 @@
           {% endif %}
         </div>
       </div>
-      {% if showFormBuilderMassDataAction %}
+      {% if isAllowedAction('MassDataAction') %}
         <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
           <div class="modal-dialog">
             <div class="modal-content">

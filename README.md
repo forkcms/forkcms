@@ -1,11 +1,12 @@
 ![Fork CMS](docs/img/header.jpg)
 
-[![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
+[![Build Status](https://img.shields.io/github/workflow/status/forkcms/forkcms/run-tests)](https://github.com/forkcms/forkcms/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable)](https://packagist.org/packages/forkcms/forkcms)
 [![License](https://poser.pugx.org/forkcms/forkcms/license)](https://packagist.org/packages/forkcms/forkcms)
-[![Code Coverage](https://scrutinizer-ci.com/g/forkcms/forkcms/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/forkcms/forkcms/?branch=master)
+[![Code Coverage](https://codecov.io/gh/forkcms/forkcms/branch/master/graph/badge.svg?token=ahj70hVO29)](http://codecov.io/github/forkcms/forkcms?branch=master)
 [![Slack Status](https://fork-cms.herokuapp.com/badge.svg)](https://fork-cms.herokuapp.com/)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://docs.fork-cms.com/)
+[![huntr.dev | the place to protect open source](https://cdn.huntr.dev/huntr_security_badge.svg)](https://huntr.dev)
 
 ## Installation
 
@@ -27,16 +28,12 @@ To install the dependencies, you can run the command below in the document-root:
 ## Security
 
 If you discover any security-related issues, please email core@fork-cms.com instead of using the issue tracker.
-
-
-## SSL
-
-If you want to activate https redirection, go into the .htaccess file and uncomment the lines about https.
+HTML is allowed in translations because you sometimes need it. Any reports regarding this will not be accepted as a security issue. Owners of a website can narrow down who can add/edit translation strings using the group permissions.
 
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
-If you're stuck or would like to discuss Fork CMS, talk to us on [slack](https://fork-cms.herokuapp.com/)!
+If you're stuck or would like to discuss Fork CMS: [![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
 
 ## Running the tests
 
@@ -70,8 +67,9 @@ the changes into the scss-files, and regenerate the real css with `gulp build`.
 We use [yarn](https://yarnpkg.com/) to install our dependencies. For now we have a `gulp`-script that moves everything to
 the correct directories. So if you change the dependencies, make sure you run `gulp build`.
 
-## Discussion
+## Community
 
-- Slack: <https://fork-cms.herokuapp.com/>
+[![Join our Slack channel](https://imgur.com/zXuvRdw.png) Join our Slack Channel!](https://fork-cms.herokuapp.com)
+
 
 _The Fork CMS team_

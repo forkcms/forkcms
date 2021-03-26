@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Tests\Utility\Thumbnails;
+namespace ForkCMS\Tests\Utility;
 
 use ForkCMS\Utility\Thumbnails;
 use PHPUnit\Framework\TestCase;
@@ -70,12 +70,12 @@ class ThumbnailsTest extends TestCase
     public function testGettingTheFolders(): void
     {
         $folderInfo = $this->thumbnails->getFolders(self::BASE_FOLDER);
-        $this->assertCount(count($folderInfo), $folderInfo);
+        self::assertCount(count($folderInfo), $folderInfo);
         foreach ($folderInfo as $info) {
-            $this->assertArrayHasKey('dirname', $info, 'The array key dirname should exist');
+            self::assertArrayHasKey('dirname', $info, 'The array key dirname should exist');
             $folder = $info['dirname'];
-            $this->assertContains($folder, self::IMAGE_FOLDERS, 'The folder "' . $folder . '" should not exist');
-            $this->assertContains(
+            self::assertContains($folder, self::IMAGE_FOLDERS, 'The folder "' . $folder . '" should not exist');
+            self::assertContains(
                 [
                     'dirname' => $folder,
                     'path' => $this->realBaseFolder . '/' . $folder,
@@ -110,11 +110,11 @@ class ThumbnailsTest extends TestCase
                 if ($folderWidth === null) {
                     $folderWidth = (int) ($folderHeight * ($width/$height));
                 }
-                $this->assertSame($width, $folderWidth);
+                self::assertSame($width, $folderWidth);
                 if ($folderHeight === null) {
                     $folderHeight = (int) ($folderWidth * ($height/$width));
                 }
-                $this->assertSame($height, $folderHeight);
+                self::assertSame($height, $folderHeight);
             }
         }
     }

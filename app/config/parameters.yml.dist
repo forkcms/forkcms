@@ -10,7 +10,7 @@ parameters:
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
-    fork.version:           '5.9.1'
+    fork.version:           '5.9.3'
 
     session.cookie_secure:  false
     site.protocol:          <site-protocol>
@@ -22,5 +22,3 @@ parameters:
 
     action.group_tag:       '<action-group-tag>'
     action.rights_level:    <action-rights-level>
-
-    sentry.dsn: ''

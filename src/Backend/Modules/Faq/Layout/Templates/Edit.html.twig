@@ -125,7 +125,7 @@
                         <div class="panel-body">
                           {{ _itr_11.text }}
                         </div>
-                        {% if showFaqDeleteFeedback %}
+                        {% if isAllowedAction('DeleteFeedback') %}
                           <div class="panel-footer">
                             <div class="btn-toolbar">
                               <div class="btn-group pull-left" role="group">
@@ -153,7 +153,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showFaqDelete %}
+          {% if isAllowedAction('Delete') %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default' ) }}
@@ -166,7 +166,7 @@
   </div>
   {% endform %}
 
-  {% if showFaqDelete %}
+  {% if isAllowedAction('Delete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
@@ -189,7 +189,7 @@
     {{ form_end(deleteForm) }}
   {% endif %}
 
-  {% if showFaqDeleteFeedback %}
+  {% if isAllowedAction('DeleteFeedback') %}
     {{ form_start(deleteFeedbackForm) }}
     {{ form_row(deleteFeedbackForm._token) }}
     {{ form_row(deleteFeedbackForm.id) }}

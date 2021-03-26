@@ -5,7 +5,7 @@
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
       {{ macro.buttonIcon(geturl('add'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
-      {% if showProfilesImport %}
+      {% if isAllowedAction('Import') %}
         {{ macro.buttonIcon(geturl('import'), 'upload', 'lbl.Import'|trans|ucfirst) }}
       {% endif %}
     </div>

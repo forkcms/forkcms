@@ -8,11 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class MetaDataTest extends TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testContentCannotBeEmpty(): void
     {
+        $this->expectException(InvalidArgumentException::class);
         new MetaData('', []);
     }
 
@@ -20,14 +18,14 @@ class MetaDataTest extends TestCase
     {
         $metaData = new MetaData('lorem ipsum', ['name' => 'dummy']);
 
-        self::assertContains('lorem ipsum', $metaData->getUniqueKey());
+        self::assertStringContainsString('lorem ipsum', $metaData->getUniqueKey());
     }
 
     public function testCustomUniqueKey(): void
     {
         $metaData = new MetaData('lorem ipsum', ['name' => 'dummy'], ['name']);
 
-        self::assertContains('dummy', $metaData->getUniqueKey());
+        self::assertStringContainsString('dummy', $metaData->getUniqueKey());
     }
 
     public function testSearchingInAttributes(): void

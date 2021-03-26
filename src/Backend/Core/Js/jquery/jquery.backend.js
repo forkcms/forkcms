@@ -302,7 +302,7 @@
       var $this = $(this)
 
       // add wrapper and tooltip
-      $this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip label label-primary">' + options.tooltip + '</span>')
+      $this.html('<span>' + utils.string.htmlEncode($this.text()) + '</span><span style="display: none;" class="inlineEditTooltip label label-primary">' + options.tooltip + '</span>')
 
       // grab element
       var $span = $this.find('span')
@@ -502,7 +502,7 @@
 
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -777,7 +777,7 @@
 
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -1257,7 +1257,7 @@
           timer = setTimeout(function () { $('#errorMessage-' + id).show() }, 200)
           $('html, body').animate({
             scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
-          },500);
+          }, 500)
         }
 
         return !blockSubmit
@@ -1557,8 +1557,7 @@
 
           if (direction === 'up') {
             $row.prev().insertAfter($row)
-          }
-          else if (direction === 'down') {
+          } else if (direction === 'down') {
             $row.next().insertBefore($row)
           }
 

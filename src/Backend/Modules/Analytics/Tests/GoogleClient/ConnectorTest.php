@@ -8,8 +8,8 @@ use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 class ConnectorTest extends TestCase
 {
@@ -197,7 +197,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getModulesSettingsMock(): MockObject
     {
         return $this->getMockBuilder(ModulesSettings::class)
             ->disableOriginalConstructor()

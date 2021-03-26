@@ -2,26 +2,24 @@
 
 namespace Frontend\Core\Engine;
 
+use Twig\Error\SyntaxError;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
+
 /**
  * Twig template tag for the start/opening element of a form tag.
  */
-class FormTokenParser extends \Twig_TokenParser
+class FormTokenParser extends AbstractTokenParser
 {
-    /**
-     * @param \Twig_Token $token
-     *
-     * @throws \Twig_Error_Syntax
-     *
-     * @return \Twig_Node
-     */
-    public function parse(\Twig_Token $token): \Twig_Node
+    public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();
-        $form = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $form = $stream->expect(Token::NAME_TYPE)->getValue();
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         if (FormState::$current !== null) {
-            throw new \Twig_Error_Syntax(
+            throw new SyntaxError(
                 sprintf(
                     'form [%s] not closed while opening form [%s]',
                     FormState::$current,

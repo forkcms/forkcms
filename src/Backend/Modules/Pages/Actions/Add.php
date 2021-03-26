@@ -14,9 +14,10 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Common\Core\Header\Priority;
+use Common\Core\Model;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -80,10 +81,10 @@ class Add extends BackendBaseActionAdd
         parent::execute();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js');
-        $this->header->addJS('jstree/lib/jquery.cookie.js');
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
-        $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', null, false, true, true, Priority::core());
+        $this->header->addJS('jstree/jquery.tree.js', null, false);
+        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/js/vendors/SimpleAjaxUploader.min.js', 'Core', false, true);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
@@ -558,9 +559,6 @@ class Add extends BackendBaseActionAdd
                     }
                 }
 
-                // link class
-                $data['link_class'] = $this->form->getField('link_class')->getValue();
-
                 // build page record
                 $page = [];
                 $page['id'] = BackendPagesModel::getMaximumPageId() + 1;
@@ -571,10 +569,9 @@ class Add extends BackendBaseActionAdd
                 $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = $parentPage ? 'page' : 'root';
                 $page['title'] = $this->form->getField('title')->getValue();
-                $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue(
-                ) != '') ? $this->form->getField('navigation_title')->getValue() : $this->form->getField(
-                    'title'
-                )->getValue();
+                $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue() != '')
+                    ? $this->form->getField('navigation_title')->getValue()
+                    : $this->form->getField('title')->getValue();
                 $page['navigation_title_overwrite'] = $this->form->getField(
                     'navigation_title_overwrite'
                 )->isChecked();
@@ -611,6 +608,9 @@ class Add extends BackendBaseActionAdd
                         (array) $this->form->getField('allow')->getValue(),
                         true
                     );
+
+                    // link class
+                    $data['link_class'] = $this->form->getField('link_class')->getValue();
                 }
 
                 // set navigation title
@@ -742,7 +742,49 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('showCopyWarning', true);
 
         $originalPage = BackendPagesModel::get($id);
-        $this->blocksContent = BackendPagesModel::getBlocks($id, $originalPage['revision_id']);
+
+        // Handle usertemplate images on copying a page, as otherwise the same path will be used.
+        // On changing/deleting a copied usertemplate image, the old image is deleted, breaking the usertemplate
+        // with the same image on the original page
+        $this->blocksContent = array_map(
+            function (array $block) {
+                // Only for usertemplates
+                if ($block['extra_type'] !== 'usertemplate') {
+                    return $block;
+                }
+
+                // Only usertemplates with image
+                if (strpos($block['html'], 'data-ft-type="image"') === false) {
+                    return $block;
+                }
+
+                // Find images in usertemplate
+                $blockElements = new Crawler($block['html']);
+                $images = $blockElements->filter('[data-ft-type="image"]');
+                $filesystem = new Filesystem();
+                $path = FRONTEND_FILES_PATH . '/Pages/UserTemplate';
+                $url = FRONTEND_FILES_URL . '/Pages/UserTemplate';
+                foreach ($images as $image) {
+                    $imagePath = $image->getAttribute('src');
+                    $basename = pathinfo($imagePath, PATHINFO_FILENAME);
+                    $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
+                    $originalFilename = $basename . '.' . $extension;
+                    $filename = $originalFilename;
+
+                    // Generate a non-existing filename
+                    while ($filesystem->exists($path . '/' . $filename)) {
+                        $basename = Model::addNumber($basename);
+                        $filename = $basename . '.' . $extension;
+                    }
+
+                    $block['html'] = str_replace($imagePath, $url . '/' . $filename, $block['html']);
+                    $filesystem->copy($path . '/' . $originalFilename, $path . '/' . $filename);
+                }
+
+                return $block;
+            },
+            BackendPagesModel::getBlocks($id, $originalPage['revision_id'])
+        );
 
         return $originalPage;
     }

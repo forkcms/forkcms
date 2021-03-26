@@ -39,6 +39,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Edit');
         $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'MassAction');
+        $this->setActionRights(1, $this->getModule(), 'GetAllTags');
     }
 
     private function configureFrontendExtras(): void

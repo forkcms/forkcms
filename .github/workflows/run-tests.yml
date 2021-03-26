@@ -1,0 +1,202 @@
+name: run-tests
+
+on: [push, pull_request]
+
+jobs:
+    phpunit:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: true
+            matrix:
+                php: [7.1, 7.2, 7.3, 7.4]
+                testsuite: ["functional", "unit", "installer"]
+        name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_DATABASE: forkcms
+                    MYSQL_ROOT_PASSWORD: "kingtriton"
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP with coverage
+              if: ${{ matrix.php == '7.4' }}
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: PCOV
+
+            - name: Setup PHP without coverage
+              if: ${{ matrix.php != '7.4' }}
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            - name: Prepare test env
+              run: |
+                  mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
+                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
+                  cp app/config/parameters.yml.test app/config/parameters.yml
+
+            - name: Install dependencies
+              env:
+                  FORK_ENV: test
+              run: composer install -o
+
+            - name: Execute tests with coverage
+              if: ${{ matrix.php == '7.4' }}
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+
+            - name: Execute tests without coverage
+              if: ${{ matrix.php != '7.4' }}
+              run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
+
+            - name: Display error logs on failure
+              if: ${{ failure() }}
+              run: cat var/logs/test.log
+
+            - name: Upload Coverage report
+              uses: codecov/codecov-action@v1
+              if: ${{ matrix.php == '7.4' }}
+              with:
+                file: ${{ matrix.testsuite}}.clover
+                flags: ${{ matrix.testsuite}}
+
+    phpstan:
+        name: PHPStan - Static Code Analysis
+        runs-on: ubuntu-latest
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_DATABASE: forkcms
+                    MYSQL_ROOT_PASSWORD: "kingtriton"
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            - name: Prepare test env
+              run: |
+                  mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
+                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
+                  cp app/config/parameters.yml.test app/config/parameters.yml
+
+            - name: Install dependencies
+              run: composer install -o
+              env:
+                  FORK_ENV: dev
+
+            - name: Run PHPStan
+              run: bin/phpstan analyze --error-format github src
+
+    php-code-sniffer:
+        name: PHP Code Sniffer
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            - name: Install dependencies
+              run: composer install -o
+
+            - name: Run PHP Codesniffer
+              run: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
+
+    frontend:
+        name: Yarn test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Install Node
+              uses: actions/setup-node@v2-beta
+              with:
+                  node-version: 12 # current LTS
+            - run: yarn install
+            - run: yarn test
+
+    docker-test:
+        name: Docker
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-php-composer-${{ hashFiles('composer.json') }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 7.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
+                  coverage: none
+
+            # We need to have a vendor folder locally, as the whole root folder gets mounted as volume via docker-compose.
+            # Alternatively, you can define a named volume for the vendor folder path in docker-compose.
+            - name: Install dependencies
+              run: composer install -o
+
+            - name: Build Docker image
+              run: |
+                  docker pull ghcr.io/forkcms/forkcms:latest || true
+                  docker-compose build
+
+            - name: Start docker-compose stack
+              run: |
+                  docker-compose up -d
+                  docker run --rm --network=forkcms_default jwilder/dockerize -wait tcp://db:3306 -timeout 300s
+                  docker-compose ps "app" | grep -q "Up"
+
+            - name: Test
+              run: |
+                  curl -s -L -o /dev/null -w "%{http_code}" http://localhost:80 | grep -q '200'
+                  curl -s -L http://localhost:80 | grep -q 'Install Fork CMS'
+
+            - name: Display error logs on failure
+              if: ${{ failure() }}
+              run: docker ps && docker-compose logs
+
+            - name: Cleanup
+              if: always()
+              run: docker-compose down -v

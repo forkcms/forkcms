@@ -181,7 +181,7 @@ jsBackend.mediaLibrary.tree = {
         onmove: jsBackend.mediaLibrary.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: window.location.protocol === 'https:'}}
       }
     }
 
@@ -309,13 +309,13 @@ jsBackend.mediaLibrary.tree = {
       var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
 
       if (collapsed) {
-        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $buttonText.text(jsBackend.locale.lbl('OpenTreeNavigation'))
         $.tree.reference('#tree div').close_all()
 
         return
       }
 
-      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $buttonText.text(jsBackend.locale.lbl('CloseTreeNavigation'))
       $.tree.reference('#tree div').open_all()
     })
   }

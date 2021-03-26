@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showBlogAdd %}
+      {% if isAllowedAction('Add') %}
         {% if filterCategory %}
           {{ macro.buttonIcon(geturl('add', null, '&category='~filterCategory.id), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
         {% endif %}

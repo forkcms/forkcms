@@ -20,7 +20,7 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showMediaLibraryMediaItemIndex %}
+      {% if isAllowedAction('MediaItemIndex') %}
         {% if folderId %}
           {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.Overview'|trans|capitalize) }}
         {% endif %}
@@ -46,7 +46,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showMediaLibraryMediaItemDelete %}
+          {% if isAllowedAction('MediaItemDelete') %}
             {% if mediaItem.groups.count == 0 %}
               {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
             {% endif %}
@@ -60,7 +60,7 @@
   </div>
   {{ form_end(form) }}
 
-  {% if showMediaLibraryMediaItemDelete %}
+  {% if isAllowedAction('MediaItemDelete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}

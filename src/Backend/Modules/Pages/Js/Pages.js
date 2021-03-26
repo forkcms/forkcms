@@ -358,9 +358,9 @@ jsBackend.pages.extras = {
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
       if (jsData.Core.preferred_editor !== 'ck-editor') {
-        $('#html').val(previousContent);
+        $('#html').val(previousContent)
 
-        return;
+        return
       }
 
       // set content in editor
@@ -1437,7 +1437,7 @@ jsBackend.pages.tree = {
         onmove: jsBackend.pages.tree.onMove
       },
       plugins: {
-        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: location.protocol === 'https:'}}
+        cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/', secure: window.location.protocol === 'https:'}}
       }
     }
 
@@ -1561,7 +1561,7 @@ jsBackend.pages.tree = {
       var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
 
       if (collapsed) {
-        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $buttonText.text(jsBackend.locale.lbl('OpenTreeNavigation'))
         $.each($('#tree div'), function (index, element) {
           $.tree.reference($(element).attr('id')).close_all()
         })
@@ -1569,7 +1569,7 @@ jsBackend.pages.tree = {
         return
       }
 
-      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $buttonText.text(jsBackend.locale.lbl('CloseTreeNavigation'))
       $.each($('#tree div'), function (index, element) {
         $.tree.reference($(element).attr('id')).open_all()
       })

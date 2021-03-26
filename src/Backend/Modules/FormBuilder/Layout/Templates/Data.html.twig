@@ -4,10 +4,10 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showFormBuilderIndex %}
+      {% if isAllowedAction('Index') %}
         {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
-      {% if showFormBuilderExportData %}
+      {% if isAllowedAction('ExportData') %}
         {{ macro.buttonIcon( geturl('export_data') ~ '&id=' ~ id  ~ '&start_date=' ~ start_date ~ '&end_date=' ~ end_date, 'download', 'lbl.Export'|trans|ucfirst) }}
       {% endif %}
     </div>
