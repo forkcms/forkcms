@@ -4,12 +4,24 @@ namespace Backend\Modules\Faq\Domain\Question;
 
 use Backend\Modules\Faq\Domain\Category\Category;
 use Common\Core\Model;
-use Doctrine\ORM\EntityRepository;
 use Common\Locale;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-final class QuestionRepository extends EntityRepository
+/**
+ * @method Question|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Question|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Question[] findAll()
+ * @method Question[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+final class QuestionRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Question::class);
+    }
+
     public function add(Question $question): void
     {
         $this->getEntityManager()->persist($question);

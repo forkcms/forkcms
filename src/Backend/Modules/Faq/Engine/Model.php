@@ -4,8 +4,11 @@ namespace Backend\Modules\Faq\Engine;
 
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Core\Language\Locale;
+use Backend\Modules\Faq\Domain\Category\CategoryRepository;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Feedback\FeedbackRepository;
 use Backend\Modules\Faq\Domain\Question\Question;
+use Backend\Modules\Faq\Domain\Question\QuestionRepository;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -36,22 +39,22 @@ class Model
      */
     public static function delete(int $id): void
     {
-        $question = BackendModel::get('faq.repository.question')->find($id);
+        $question = BackendModel::get(QuestionRepository::class)->find($id);
 
         BackendTagsModel::saveTags($id, '', 'Faq');
-        BackendModel::get('faq.repository.question')->remove($question);
+        BackendModel::get(QuestionRepository::class)->remove($question);
     }
 
     public static function deleteCategory(int $id): void
     {
-        $category = BackendModel::get('faq.repository.category')->find($id);
+        $category = BackendModel::get(CategoryRepository::class)->find($id);
 
         if (!$category instanceof Category) {
             return;
         }
 
         BackendModel::deleteExtraById($category->getExtraId());
-        BackendModel::get('faq.repository.category')->remove($category);
+        BackendModel::get(CategoryRepository::class)->remove($category);
     }
 
     public static function deleteCategoryAllowed(int $id): bool
@@ -62,14 +65,14 @@ class Model
             return false;
         }
 
-        $category = BackendModel::get('faq.repository.category')->find($id);
+        $category = BackendModel::get(CategoryRepository::class)->find($id);
 
         return $category->getQuestions()->isEmpty();
     }
 
     public static function deleteFeedback(int $itemId): void
     {
-        $feedback = BackendModel::get('faq.repository.feedback')->find($itemId);
+        $feedback = BackendModel::get(FeedbackRepository::class)->find($itemId);
         $feedback->process();
 
         BackendModel::get('doctrine.orm.default_entity_manager')->flush();
@@ -84,7 +87,7 @@ class Model
      */
     public static function exists(int $id): bool
     {
-        $question = BackendModel::get('faq.repository.question')->findOneBy(
+        $question = BackendModel::get(QuestionRepository::class)->findOneBy(
             [
                 'id' => $id,
                 'locale' => Locale::workingLocale(),
@@ -96,7 +99,7 @@ class Model
 
     public static function existsCategory(int $id): bool
     {
-        $category = BackendModel::get('faq.repository.category')->findOneBy(
+        $category = BackendModel::get(CategoryRepository::class)->findOneBy(
             [
                 'id' => $id,
                 'locale' => Locale::workingLocale(),
@@ -108,14 +111,14 @@ class Model
 
     public static function get(int $id): array
     {
-        $question = BackendModel::get('faq.repository.question')->find($id);
+        $question = BackendModel::get(QuestionRepository::class)->find($id);
 
         return $question->toArray();
     }
 
     public static function getAllFeedback(int $limit = 5): array
     {
-        $feedback = BackendModel::get('faq.repository.feedback')->findAllForWidget($limit);
+        $feedback = BackendModel::get(FeedbackRepository::class)->findAllForWidget($limit);
 
         return array_map(
             function (Feedback $feedback) {
@@ -127,7 +130,7 @@ class Model
 
     public static function getAllFeedbackForQuestion(int $id): array
     {
-        $question = BackendModel::get('faq.repository.question')->find($id);
+        $question = BackendModel::get(QuestionRepository::class)->find($id);
 
         return $question
             ->getFeedbackItems()
@@ -161,7 +164,7 @@ class Model
             ]
         );
 
-        $questions = BackendModel::get('faq.repository.question')->findMultiple(
+        $questions = BackendModel::get(QuestionRepository::class)->findMultiple(
             $questionIds,
             Locale::workingLocale()
         );
@@ -186,7 +189,7 @@ class Model
 
     public static function getCategories(bool $includeCount = false): array
     {
-        $categories = BackendModel::get('faq.repository.category')->findBy(
+        $categories = BackendModel::get(CategoryRepository::class)->findBy(
             ['locale' => Locale::workingLocale()],
             ['sequence' => 'DESC']
         );
@@ -206,7 +209,7 @@ class Model
 
     public static function getCategory(int $id): array
     {
-        $category = BackendModel::get('faq.repository.category')->find($id);
+        $category = BackendModel::get(CategoryRepository::class)->find($id);
 
         if (!$category instanceof Category) {
             return [];
@@ -217,26 +220,26 @@ class Model
 
     public static function getCategoryCount(): int
     {
-        return BackendModel::get('faq.repository.category')->findCount(Locale::workingLocale());
+        return BackendModel::get(CategoryRepository::class)->findCount(Locale::workingLocale());
     }
 
     public static function getFeedback(int $id): array
     {
-        return BackendModel::get('faq.repository.feedback')->find($id)->toArray();
+        return BackendModel::get(FeedbackRepository::class)->find($id)->toArray();
     }
 
     public static function getMaximumCategorySequence(): int
     {
-        return BackendModel::get('faq.repository.category')->findMaximumSequence(
+        return BackendModel::get(CategoryRepository::class)->findMaximumSequence(
             Locale::workingLocale()
         );
     }
 
     public static function getMaximumSequence(int $categoryId): int
     {
-        $category = BackendModel::get('faq.repository.category')->find($categoryId);
+        $category = BackendModel::get(CategoryRepository::class)->find($categoryId);
 
-        return BackendModel::get('faq.repository.question')->findMaximumSequence(
+        return BackendModel::get(QuestionRepository::class)->findMaximumSequence(
             $category,
             Locale::workingLocale()
         );
@@ -254,7 +257,7 @@ class Model
     {
         $url = CommonUri::getUrl($url);
 
-        return BackendModel::get('faq.repository.question')->getUrl(
+        return BackendModel::get(QuestionRepository::class)->getUrl(
             $url,
             Locale::workingLocale(),
             $id
@@ -273,7 +276,7 @@ class Model
     {
         $url = CommonUri::getUrl($url);
 
-        return BackendModel::get('faq.repository.category')->getUrl(
+        return BackendModel::get(CategoryRepository::class)->getUrl(
             $url,
             Locale::workingLocale(),
             $id
@@ -285,7 +288,7 @@ class Model
         $question = new Question(
             Locale::fromString($item['language']),
             BackendModel::get('fork.repository.meta')->find($item['meta_id']),
-            BackendModel::get('faq.repository.category')->find($item['category_id']),
+            BackendModel::get(CategoryRepository::class)->find($item['category_id']),
             $item['user_id'],
             $item['question'],
             $item['answer'],
@@ -293,7 +296,7 @@ class Model
             $item['sequence']
         );
 
-        BackendModel::get('faq.repository.question')->add($question);
+        BackendModel::get(QuestionRepository::class)->add($question);
 
         return $question->getId();
     }
@@ -320,7 +323,7 @@ class Model
         );
         $category->setExtraId($extraId);
 
-        BackendModel::get('faq.repository.category')->add($category);
+        BackendModel::get(CategoryRepository::class)->add($category);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
@@ -343,7 +346,7 @@ class Model
 
     public static function update(array $item): void
     {
-        $question = BackendModel::get('faq.repository.question')->find($item['id']);
+        $question = BackendModel::get(QuestionRepository::class)->find($item['id']);
 
         if (!$question instanceof Question) {
             return;
@@ -355,7 +358,7 @@ class Model
         $sequence = $item['sequence'] ?? $question->getSequence();
         $category = $question->getCategory();
         if (array_key_exists('category_id', $item) && $item['category_id'] !== $category->getId()) {
-            $category = BackendModel::get('faq.repository.category')->find($item['category_id']);
+            $category = BackendModel::get(CategoryRepository::class)->find($item['category_id']);
         }
 
         $question->update(
@@ -371,7 +374,7 @@ class Model
 
     public static function updateCategory(array $item): void
     {
-        $category = BackendModel::get('faq.repository.category')->find($item['id']);
+        $category = BackendModel::get(CategoryRepository::class)->find($item['id']);
 
         if (!$category instanceof Category) {
             return;
