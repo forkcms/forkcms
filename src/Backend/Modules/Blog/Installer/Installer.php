@@ -5,6 +5,7 @@ namespace Backend\Modules\Blog\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
@@ -178,7 +179,7 @@ class Installer extends ModuleInstaller
 
     private function getCategory(string $language): int
     {
-        $category = Model::get('blog.repository.category')->findOneByLocale($language);
+        $category = Model::get(CategoryRepository::class)->findOneByLocale($language);
 
         if (!$category instanceof Category) {
             return 0;

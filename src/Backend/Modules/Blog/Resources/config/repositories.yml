@@ -1,11 +1,5 @@
 services:
-    blog.repository.comment:
-        class: Backend\Modules\Blog\Domain\Comment\CommentRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Backend\Modules\Blog\Domain\Comment\Comment
-    blog.repository.category:
-        class: Backend\Modules\Blog\Domain\Category\CategoryRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Backend\Modules\Blog\Domain\Category\Category
+    Backend\Modules\Blog\Domain\Comment\CommentRepository:
+        public: true
+    Backend\Modules\Blog\Domain\Category\CategoryRepository:
+        public: true
