@@ -2,11 +2,16 @@
 
 namespace Backend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\Group\GroupRepository;
+use Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository;
 use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\ProfileRepository;
 use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\Group\Group;
 use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
+use Backend\Modules\Profiles\Domain\Session\SessionRepository;
 use Backend\Modules\Profiles\Domain\Setting\Setting;
+use Backend\Modules\Profiles\Domain\Setting\SettingRepository;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -60,7 +65,7 @@ class Model
         // redefine
         $ids = (array) $ids;
 
-        $profileRepository = BackendModel::get('profile.repository.profile');
+        $profileRepository = BackendModel::get({ProfileRepository::class});
 
         // delete profiles
         foreach ($ids as $id) {
@@ -76,9 +81,9 @@ class Model
 
     public static function deleteGroup(int $groupId): void
     {
-        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
+        $group = BackendModel::get(GroupRepository::class)->find($groupId);
 
-        BackendModel::get('profile.repository.profile_group')->remove($group);
+        BackendModel::get(GroupRepository::class)->remove($group);
     }
 
     /**
@@ -88,16 +93,16 @@ class Model
      */
     public static function deleteProfileGroup(int $membershipId): void
     {
-        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+        $groupRight = BackendModel::get(GroupRightRepository::class)->find($membershipId);
 
-        BackendModel::get('profile.repository.profile_group_right')->remove($groupRight);
+        BackendModel::get(GroupRightRepository::class)->remove($groupRight);
     }
 
     public static function deleteSession(int $id): void
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($id);
+        $profile = BackendModel::get(ProfileRepository::class)->find($id);
 
-        $SessionRepository = BackendModel::get('profile.repository.profile_session');
+        $SessionRepository = BackendModel::get(SessionRepository::class);
 
         $sessions = $SessionRepository->findByProfile($profile);
         foreach ($sessions as $session) {
@@ -107,39 +112,39 @@ class Model
 
     public static function exists(int $profileId): bool
     {
-        return BackendModel::get('profile.repository.profile')->find($profileId) instanceof Profile;
+        return BackendModel::get(ProfileRepository::class)->find($profileId) instanceof Profile;
     }
 
     public static function existsByEmail(string $email, int $excludedProfileId = 0): bool
     {
-        return BackendModel::get('profile.repository.profile')->existsByEmail($email, $excludedProfileId);
+        return BackendModel::get(ProfileRepository::class)->existsByEmail($email, $excludedProfileId);
     }
 
     public static function existsDisplayName(string $displayName, int $excludedProfileId = 0): bool
     {
-        return BackendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedProfileId);
+        return BackendModel::get(ProfileRepository::class)->existsByDisplayName($displayName, $excludedProfileId);
     }
 
     public static function existsGroup(int $groupId): bool
     {
-        return BackendModel::get('profile.repository.profile_group')->find($groupId) instanceof Group;
+        return BackendModel::get(GroupRepository::class)->find($groupId) instanceof Group;
     }
 
     public static function existsGroupName(string $groupName, int $excludedGroupId = 0): bool
     {
-        return BackendModel::get('profile.repository.profile_group')->existsByName($groupName, $excludedGroupId);
+        return BackendModel::get(GroupRepository::class)->existsByName($groupName, $excludedGroupId);
     }
 
     public static function existsProfileGroup(int $membershipId): bool
     {
-        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+        $groupRight = BackendModel::get(GroupRightRepository::class)->find($membershipId);
 
         return $groupRight instanceof GroupRight;
     }
 
     public static function get(int $profileId): array
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $profile = BackendModel::get(ProfileRepository::class)->find($profileId);
 
         if (!$profile instanceof Profile) {
             return [];
@@ -205,7 +210,7 @@ class Model
 
     public static function getByEmail(string $email): array
     {
-        $profile = BackendModel::get('profile.repository.profile')->findOneByEmail($email);
+        $profile = BackendModel::get(ProfileRepository::class)->findOneByEmail($email);
 
         if (!$profile instanceof Profile) {
             return [];
@@ -241,7 +246,7 @@ class Model
 
     public static function getGroup(int $groupId): array
     {
-        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
+        $group = BackendModel::get(GroupRepository::class)->find($groupId);
 
         if (!$group instanceof Group) {
             return [];
@@ -258,7 +263,7 @@ class Model
     public static function getGroups(): array
     {
         $groupsArray = [];
-        $groups = BackendModel::get('profile.repository.profile_group')->findBy([], ['name' => 'ASC']);
+        $groups = BackendModel::get(GroupRepository::class)->findBy([], ['name' => 'ASC']);
         foreach ($groups as $group) {
             $groupsArray[$group->getId()] = $group->getName();
         }
@@ -276,9 +281,9 @@ class Model
      */
     public static function getGroupsForDropDown(int $profileId, int $includeId = null): array
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $profile = BackendModel::get(ProfileRepository::class)->find($profileId);
 
-        $linkedGroups = BackendModel::get('profile.repository.profile_group_right')
+        $linkedGroups = BackendModel::get(GroupRightRepository::class)
             ->findLinkedToProfile($profile, $includeId);
         $excludeGroupIds = array_map(
             function (GroupRight $groupRight) {
@@ -287,7 +292,7 @@ class Model
             $linkedGroups
         );
 
-        $groups = BackendModel::get('profile.repository.profile_group')->findWithExcludedIds($excludeGroupIds);
+        $groups = BackendModel::get(GroupRepository::class)->findWithExcludedIds($excludeGroupIds);
 
         $groupsArray = [];
         foreach ($groups as $group) {
@@ -306,7 +311,7 @@ class Model
      */
     public static function getProfileGroup(int $membershipId): array
     {
-        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+        $groupRight = BackendModel::get(GroupRightRepository::class)->find($membershipId);
 
         if (!$groupRight instanceof GroupRight) {
             return [];
@@ -324,8 +329,8 @@ class Model
      */
     public static function getProfileGroups(int $profileId): array
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
-        $groupRights = BackendModel::get('profile.repository.profile_group_right')->findByProfile($profile);
+        $profile = BackendModel::get(ProfileRepository::class)->find($profileId);
+        $groupRights = BackendModel::get(GroupRightRepository::class)->findByProfile($profile);
 
         return array_map(
             static function (GroupRight $groupRight) {
@@ -392,8 +397,8 @@ class Model
 
     public static function getSetting(int $profileId, string $name): ?string
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
-        $setting = BackendModel::get('profile.repository.profile_setting')->findOneBy(
+        $profile = BackendModel::get(ProfileRepository::class)->find($profileId);
+        $setting = BackendModel::get(SettingRepository::class)->findOneBy(
             [
                 'profile' => $profile,
                 'name' => $name,
@@ -436,7 +441,7 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        return BackendModel::get('profile.repository.profile')->getUrl(
+        return BackendModel::get(ProfileRepository::class)->getUrl(
             $url,
             $excludedProfileId
         );
@@ -665,7 +670,7 @@ class Model
             $profile['url']
         );
 
-        BackendModel::get('profile.repository.profile')->add($profile);
+        BackendModel::get(ProfileRepository::class)->add($profile);
 
         return $profile->getId();
     }
@@ -674,7 +679,7 @@ class Model
     {
         $group = new Group($group['name']);
 
-        BackendModel::get('profile.repository.profile_group')->add($group);
+        BackendModel::get(GroupRepository::class)->add($group);
 
         return $group->getId();
     }
@@ -688,8 +693,8 @@ class Model
      */
     public static function insertProfileGroup(array $membership): int
     {
-        $profile = BackendModel::get('profile.repository.profile')->find($membership['profile_id']);
-        $group = BackendModel::get('profile.repository.profile_group')->find($membership['group_id']);
+        $profile = BackendModel::get(ProfileRepository::class)->find($membership['profile_id']);
+        $group = BackendModel::get(GroupRepository::class)->find($membership['group_id']);
 
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
@@ -721,7 +726,7 @@ class Model
             $expiresOn
         );
 
-        BackendModel::get('profile.repository.profile_group_right')->add($groupRight);
+        BackendModel::get(GroupRightRepository::class)->add($groupRight);
 
         return $groupRight->getId();
     }
@@ -854,9 +859,9 @@ class Model
      */
     public static function setSetting(int $profileId, string $name, $value): void
     {
-        $SettingRepository = BackendModel::get('profile.repository.profile_setting');
+        $SettingRepository = BackendModel::get(SettingRepository::class);
 
-        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $profile = BackendModel::get(ProfileRepository::class)->find($profileId);
 
         $existingSetting = $SettingRepository->findOneBy(
             [
@@ -887,7 +892,7 @@ class Model
      */
     public static function update(int $profileId, array $profile): int
     {
-        $profileEntity = BackendModel::get('profile.repository.profile')->find($profileId);
+        $profileEntity = BackendModel::get(ProfileRepository::class)->find($profileId);
 
         if (!$profileEntity instanceof Profile) {
             return $profileId;
@@ -929,7 +934,7 @@ class Model
 
     public static function updateGroup(int $groupId, array $group): int
     {
-        $groupEntity = BackendModel::get('profile.repository.profile_group')->find($groupId);
+        $groupEntity = BackendModel::get(GroupRepository::class)->find($groupId);
 
         if (!$groupEntity instanceof Group) {
             return $groupId;
@@ -952,7 +957,7 @@ class Model
      */
     public static function updateProfileGroup(int $membershipId, array $membership): int
     {
-        $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+        $groupRight = BackendModel::get(GroupRightRepository::class)->find($membershipId);
 
         if (!$groupRight instanceof GroupRight) {
             return $membershipId;
@@ -960,7 +965,7 @@ class Model
 
         $group = $groupRight->getGroup();
         if (array_key_exists('group_id', $membership)) {
-            $group = BackendModel::get('profile.repository.profile_group')->find($membership['group_id']);
+            $group = BackendModel::get(GroupRepository::class)->find($membership['group_id']);
         }
         $expiresOn = $groupRight->getExpiryDate();
         if (array_key_exists('expires_on', $membership)) {

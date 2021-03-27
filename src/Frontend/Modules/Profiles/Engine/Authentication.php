@@ -3,8 +3,10 @@
 namespace Frontend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\ProfileRepository;
 use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\Session\Session;
+use Backend\Modules\Profiles\Domain\Session\SessionRepository;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use RuntimeException;
@@ -26,7 +28,7 @@ class Authentication
      */
     public static function cleanupOldSessions(): void
     {
-        FrontendModel::get('profile.repository.profile_session')->cleanup();
+        FrontendModel::get(SessionRepository::class)->cleanup();
     }
 
     /**
@@ -45,7 +47,7 @@ class Authentication
         }
 
         // get the status
-        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+        $profile = FrontendModel::get(ProfileRepository::class)->findOneByEmail($email);
 
         if (!$profile instanceof Profile) {
             return (string) Status::inactive();
@@ -72,7 +74,7 @@ class Authentication
             $sessionId = FrontendModel::getSession()->getId();
 
             // get profile id
-            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySessionId($sessionId);
+            $Session = FrontendModel::get(SessionRepository::class)->findOneBySessionId($sessionId);
 
             if ($Session instanceof Session) {
                 $profile = $Session->getProfile();
@@ -92,7 +94,7 @@ class Authentication
             // secret
             $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
 
-            $Session = FrontendModel::get('profile.repository.profile_session')->findOneBySecretKey($secret);
+            $Session = FrontendModel::get(SessionRepository::class)->findOneBySecretKey($secret);
 
             if ($Session instanceof Session) {
                 $profile = $Session->getProfile();
@@ -156,8 +158,8 @@ class Authentication
             FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
-        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
-        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+        $SessionRepository = FrontendModel::get(SessionRepository::class);
+        $profile = FrontendModel::get(ProfileRepository::class)->find($profileId);
 
         // delete all records for this session to prevent duplicate keys (this should never happen)
         $Sessions = $SessionRepository->findBySessionId($session->getId());
@@ -184,7 +186,7 @@ class Authentication
     public static function logout(): void
     {
         $session = FrontendModel::getSession();
-        $SessionRepository = FrontendModel::get('profile.repository.profile_session');
+        $SessionRepository = FrontendModel::get(SessionRepository::class);
         $Sessions = $SessionRepository->findBySessionId($session->getId());
 
         foreach ($Sessions as $Session) {

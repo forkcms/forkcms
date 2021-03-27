@@ -1,30 +1,20 @@
 services:
-  profile.repository.profile:
-    class: Backend\Modules\Profiles\Domain\Profile\ProfileRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - Backend\Modules\Profiles\Domain\Profile\Profile
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
 
-  profile.repository.profile_setting:
-    class: Backend\Modules\Profiles\Domain\Setting\SettingRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - Backend\Modules\Profiles\Domain\Setting\Setting
+    Backend\Modules\Profiles\Domain\Profile\ProfileRepository:
+        public: true
 
-  profile.repository.profile_group:
-    class: Backend\Modules\Profiles\Domain\Group\GroupRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - Backend\Modules\Profiles\Domain\Group\Group
+    Backend\Modules\Profiles\Domain\Setting\SettingRepository:
+        public: true
 
-  profile.repository.profile_group_right:
-    class: Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - Backend\Modules\Profiles\Domain\GroupRight\GroupRight
+    Backend\Modules\Profiles\Domain\Group\GroupRepository:
+        public: true
 
-  profile.repository.profile_session:
-    class: Backend\Modules\Profiles\Domain\Session\SessionRepository
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    arguments:
-      - Backend\Modules\Profiles\Domain\Session\Session
+    Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository:
+        public: true
+
+    Backend\Modules\Profiles\Domain\Session\SessionRepository:
+        public: true
