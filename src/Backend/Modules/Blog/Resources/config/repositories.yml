@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
     Backend\Modules\Blog\Domain\Comment\CommentRepository:
         public: true
     Backend\Modules\Blog\Domain\Category\CategoryRepository:

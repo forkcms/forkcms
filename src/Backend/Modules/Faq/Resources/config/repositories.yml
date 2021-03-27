@@ -1,9 +1,14 @@
 services:
-  Backend\Modules\Faq\Domain\Category\CategoryRepository:
-    public: true
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
 
-  Backend\Modules\Faq\Domain\Question\QuestionRepository:
-    public: true
+    Backend\Modules\Faq\Domain\Category\CategoryRepository:
+        public: true
 
-  Backend\Modules\Faq\Domain\Feedback\FeedbackRepository:
-    public: true
+    Backend\Modules\Faq\Domain\Question\QuestionRepository:
+        public: true
+
+    Backend\Modules\Faq\Domain\Feedback\FeedbackRepository:
+        public: true

@@ -1,6 +1,11 @@
 services:
-  Backend\Modules\Location\Domain\Location\LocationRepository:
-    public: true
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
 
-  Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository:
-    public: true
+    Backend\Modules\Location\Domain\Location\LocationRepository:
+        public: true
+
+    Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository:
+        public: true
