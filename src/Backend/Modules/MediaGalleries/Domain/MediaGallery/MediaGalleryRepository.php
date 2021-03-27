@@ -2,14 +2,24 @@
 
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @method MediaGallery|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MediaGallery|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MediaGallery[] findAll()
+ * @method MediaGallery[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @method MediaGallery|null findOneByTitle(string $title)
  */
-final class MediaGalleryRepository extends EntityRepository
+final class MediaGalleryRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MediaGallery::class);
+    }
+
     /**
      * We don't flush here, see http://disq.us/p/okjc6b
      */
