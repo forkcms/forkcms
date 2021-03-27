@@ -4,6 +4,7 @@ namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
+use Common\Doctrine\Entity\CreateSchema;
 
 /**
  * Installer for the core
@@ -211,7 +212,7 @@ class CoreInstaller extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get(CreateSchema::class)->forEntityClasses(
             [
                 ModuleExtra::class,
             ]
