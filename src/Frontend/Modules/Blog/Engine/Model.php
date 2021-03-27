@@ -4,6 +4,7 @@ namespace Frontend\Modules\Blog\Engine;
 
 use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\CommentRepository;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\Mailer\Message;
 use Doctrine\ORM\NoResultException;
 use ForkCMS\Utility\Thumbnails;
@@ -752,7 +753,7 @@ class Model implements FrontendTagsInterface
     private static function completeBlogPost(array $blogPost): array
     {
         if (isset($blogPost['meta_id'])) {
-            $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
+            $blogPost['meta'] = FrontendModel::get(MetaRepository::class)->find($blogPost['meta_id']);
         }
 
         if (isset($blogPost['meta_data'])) {

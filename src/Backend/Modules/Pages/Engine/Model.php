@@ -92,7 +92,7 @@ class Model
         $pageRepository = BackendModel::get(PageRepository::class);
 
         /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
+        $metaRepository = BackendModel::get(MetaRepository::class);
 
         $locale = $locale ?? Locale::workingLocale();
 
@@ -804,7 +804,7 @@ class Model
         /** @var PageRepository $pageRepository */
         $pageRepository = BackendModel::get(PageRepository::class);
         /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
+        $metaRepository = BackendModel::get(MetaRepository::class);
 
         $locale = Locale::fromString($page['locale']);
 
@@ -1131,7 +1131,7 @@ class Model
     private static function updateUrlAfterMove(int $pageId, array $page, int $newParent): void
     {
         /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
+        $metaRepository = BackendModel::get(MetaRepository::class);
         $meta = $metaRepository->find($page['meta_id']);
 
         if (!$meta instanceof Meta) {

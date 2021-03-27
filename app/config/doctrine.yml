@@ -60,9 +60,5 @@ services:
     Common\Doctrine\Entity\CreateSchema:
         public: true
 
-    fork.repository.meta:
-        class: Common\Doctrine\Repository\MetaRepository
+    Common\Doctrine\Repository\MetaRepository:
         public: true
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Common\Doctrine\Entity\Meta

@@ -6,7 +6,7 @@ use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Uri;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use SpoonFilter;
 
 /**
@@ -15,8 +15,13 @@ use SpoonFilter;
  * @method Meta[]    findAll()
  * @method Meta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MetaRepository extends EntityRepository
+class MetaRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Meta::class);
+    }
+
     /**
      * Generate an url, using the predefined callback.
      *

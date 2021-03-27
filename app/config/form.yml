@@ -7,40 +7,37 @@ parameters:
         block-editor: 'Block Editor'
 
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
     Common\BlockEditor\Blocks\:
         autowire: true
         autoconfigure: true
         resource: '../../src/Common/BlockEditor/Blocks'
         tags: ['fork.block_editor.block']
 
-    fork.datepicker.form:
-        class: Common\Form\DatePickerType
-        arguments:
-          - "@service_container"
+    Common\Form\DatePickerType:
         tags:
           - { name: form.type }
-    form.type.editor:
-        class: Backend\Form\Type\EditorType
-        autowire: true
+
+    Backend\Form\Type\EditorType:
         tags:
             - { name: form.type, alias: editor}
-    form.type.meta:
-        class: Backend\Form\Type\MetaType
-        arguments:
-            - "@fork.repository.meta"
-            - "@translator"
+
+    Backend\Form\Type\MetaType:
         tags:
             - { name: form.type, alias: meta}
+
     Common\Form\ImageType:
-        arguments:
-            - "@validator"
         tags:
             - { name: form.type, alias: image}
+
     Common\Form\FileType:
-        arguments:
-            - "@validator"
         tags:
             - { name: form.type, alias: file}
+
     Common\Form\Extension\DateTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\DateType }

@@ -9,6 +9,7 @@ use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Feedback\FeedbackRepository;
 use Backend\Modules\Faq\Domain\Question\Question;
 use Backend\Modules\Faq\Domain\Question\QuestionRepository;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -287,7 +288,7 @@ class Model
     {
         $question = new Question(
             Locale::fromString($item['language']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get(MetaRepository::class)->find($item['meta_id']),
             BackendModel::get(CategoryRepository::class)->find($item['category_id']),
             $item['user_id'],
             $item['question'],
@@ -317,7 +318,7 @@ class Model
 
         $category = new Category(
             Locale::fromString($item['language'] ?? $item['locale']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get(MetaRepository::class)->find($item['meta_id']),
             $item['title'],
             $item['sequence']
         );

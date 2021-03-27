@@ -12,6 +12,7 @@ use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Comment\CommentRepository;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Doctrine\Repository\MetaRepository;
 use ForkCMS\Utility\Thumbnails;
 use Common\Doctrine\Entity\Meta;
 
@@ -775,8 +776,7 @@ class Model
     public static function insertCategory(array $item, array $meta = null): int
     {
         if ($meta === null) {
-            $meta = BackendModel::get('fork.repository.meta')
-                                ->find($item['meta_id']);
+            $meta = BackendModel::get(MetaRepository::class)->find($item['meta_id']);
         } else {
             $meta = new Meta(
                 $meta['keywords'],
