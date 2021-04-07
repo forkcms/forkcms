@@ -1,6 +1,7 @@
 /* Bootstrap imports */
 import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
+// import '@fancyapps/fancybox/dist/jquery.fancybox'
 
 /* Utilities imports */
 import { ScrollTo } from './Utilities/ScrollTo'

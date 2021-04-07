@@ -7,6 +7,7 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@fancyapps/fancybox": "^3.4.2",
     "@fortawesome/fontawesome-free": "^5.10.1",
     "@popperjs/core": "^2.6.0",
     "babel-core": "^6.25.0",
@@ -21,7 +22,6 @@
     "ckeditor": "^4.12.1",
     "cropper": "^3.0.0-rc.2",
     "del": "^3.0.0",
-    "fancybox": "^3.0.0",
     "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
     "gulp": "^4.0.2",
