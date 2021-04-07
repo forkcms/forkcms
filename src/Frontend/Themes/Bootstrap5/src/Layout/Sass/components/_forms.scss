@@ -1,5 +1,4 @@
 .has-danger {
-
   .form-control-feedback,
   .form-control-label {
     color: theme-color("danger");
@@ -26,4 +25,8 @@ select.form-control[size] {
 .input-group .twitter-typeahead {
   float: none;
   width: auto;
+}
+
+.form-group {
+  margin-bottom: $spacer;
 }
