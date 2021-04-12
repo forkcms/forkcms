@@ -1,13 +1,11 @@
 {% if not privacyConsentDialogHide %}
-  <div class="modal" id="privacyConsentDialog" tabindex="-1" role="dialog" aria-labelledby="privacyConsentDialogTitle" data-role="privacy_consent_dialog" data-backdrop="false">
+  <div class="modal" id="privacyConsentDialog" tabindex="-1" role="dialog" aria-labelledby="privacyConsentDialogTitle" data-role="privacy_consent_dialog" data-bs-backdrop="false">
     <div class="modal-dialog"  role="document">
       <div class="modal-content">
         <form data-role="privacy_consent_dialog_form">
           <div class="modal-header">
             <h5 id="privacyConsentDialogTitle" class="modal-title">{{ 'msg.PrivacyConsentDialogTitle'|trans|raw }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}"></button>
           </div>
           <div class="modal-body">
             <p>{{ 'msg.PrivacyConsentDialogBefore'|trans|raw }}</p>
