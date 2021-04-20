@@ -39,7 +39,7 @@
                     data-value="{{ level }}"
                     class="custom-control-input"
                   >
-                  <label id="privacyConsentLevel{{ level|ucfirst }}Checkbox" class="custom-control-label">
+                  <label for="privacyConsentLevel{{ level|ucfirst }}Checkbox" id="privacyConsentLevel{{ level|ucfirst }}Checkbox" class="custom-control-label">
                     {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst ~ 'Title')|trans|raw }}
                   </label>
                 </div>
