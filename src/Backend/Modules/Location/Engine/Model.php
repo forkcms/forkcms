@@ -54,24 +54,14 @@ class Model
             'overrideMapSettings' => false
         ]);
 
-        return array_map(
-            function (Location $location) {
-                return $location->toArray();
-            },
-            $locations
-        );
+        return self::getLocationsAsArray($locations);
     }
 
     public static function getAll(): array
     {
         $locations = self::getLocationRepository()->findAll();
 
-        return array_map(
-            function (Location $location) {
-                return $location->toArray();
-            },
-            $locations
-        );
+        return self::getLocationsAsArray($locations);
     }
 
     /**
@@ -261,5 +251,15 @@ class Model
     private static function getLocationSettingRepository(): LocationSettingRepository
     {
         return BackendModel::get('location.repository.location_setting');
+    }
+
+    private static function getLocationsAsArray(array $locations): array
+    {
+        return array_map(
+            function (Location $location) {
+                return $location->toArray();
+            },
+            $locations
+        );
     }
 }
