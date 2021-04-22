@@ -4,7 +4,7 @@ import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 import 'flatpickr'
-//TODO WEBPACK remove jquery ui, now used for sortable and datepicker
+// TODO WEBPACK remove jquery ui, now used for sortable and datepicker
 import 'jquery-ui-dist/jquery-ui'
 
 // component imports
@@ -23,7 +23,6 @@ import { Tooltip } from './Components/Tooltip'
 import { TableSequenceDragAndDrop } from './Components/TableSequenceDragAndDrop'
 import { Session } from './Components/Session'
 import { Config } from './Components/Config'
-import { DateTimePicker } from './Components/DateTimePicker'
 
 // block editor imports
 import { BlockEditor } from './BlockEditor/BlockEditor'
@@ -69,7 +68,6 @@ export class Backend {
     this.tooltip = new Tooltip()
     this.tableSequenceDragAndDrop = new TableSequenceDragAndDrop()
     this.session = new Session()
-    this.dateTimePicker = new DateTimePicker()
 
     // init block editor
     this.blockEditor = new BlockEditor()

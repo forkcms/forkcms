@@ -91,11 +91,6 @@ export class Forms {
     })
   }
 
-  datefields () {
-    // variables
-
-  }
-
   // set the focus on the first field
   focusFirstField () {
     $('form input:visible:not(.noFocus):first').focus()
@@ -322,13 +317,13 @@ export class Forms {
           firstDayOfWeek: 1,
           weekdays: {
             shorthand: dayNamesShort,
-            longhand: dayNames,
+            longhand: dayNames
           },
           months: {
             shorthand: monthNamesShort,
-            longhand: monthNames,
-          },
-        },
+            longhand: monthNames
+          }
+        }
       })
     })
   }

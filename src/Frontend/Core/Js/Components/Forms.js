@@ -164,13 +164,13 @@ export class Forms {
           firstDayOfWeek: 1,
           weekdays: {
             shorthand: dayNamesShort,
-            longhand: dayNames,
+            longhand: dayNames
           },
           months: {
             shorthand: monthNamesShort,
-            longhand: monthNames,
-          },
-        },
+            longhand: monthNames
+          }
+        }
       })
     })
   }
