@@ -67,9 +67,9 @@ export class Location {
       marker.setDraggable(true)
 
       // add event listener
-      google.maps.event.addListener(marker, 'dragend', function () {
+      google.maps.event.addListener(marker, 'dragend', () => {
         this.updateMarker(marker)
-      }.bind(this))
+      })
     }
 
     // add click event on marker
