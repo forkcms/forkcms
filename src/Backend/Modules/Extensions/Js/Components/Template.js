@@ -2,7 +2,7 @@ export class Template {
   constructor () {
     // default position names
     this.defaultPositions = ['', 'main', 'left', 'right', 'top']
-      
+
     // add first default position
     if ($('#position1').length === 0) this.addPosition()
 

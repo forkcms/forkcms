@@ -16,3 +16,7 @@ select.form-control[size] {
   min-width: 0;
   margin-bottom: 0;
 }
+
+.grecaptcha-badge {
+  z-index: 9000;
+}

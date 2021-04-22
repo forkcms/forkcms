@@ -4,19 +4,28 @@ import { Messages } from '../../../Core/Js/Components/Messages'
 
 export class Settings {
   constructor () {
-    const options = {
+    const optionsFacebook = {
       emptyMessage: StringUtil.ucfirst(window.backend.locale.msg('NoAdminIds')),
       errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
       addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
       removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
       canAddNew: true
     }
-    MultiTextBox.multipleTextbox(options, $('#facebookAdminIds'))
+    MultiTextBox.multipleTextbox(optionsFacebook, $('#facebookAdminIds'))
 
     $('#testEmailConnection').on('click', $.proxy(this.testEmailConnection, this))
     $('[data-role="fork-clear-cache"]').on('click', $.proxy(this.clearCache, this))
 
     $('#activeLanguages input:checkbox').on('change', $.proxy(this.changeActiveLanguage, this)).change()
+
+    const optionsConsent = {
+      emptyMessage: StringUtil.ucfirst(window.backend.locale.msg('NoPrivacyConsentLevels')),
+      errorMessage: StringUtil.ucfirst(window.backend.locale.err('AddTextBeforeSubmitting')),
+      addLabel: StringUtil.ucfirst(window.backend.locale.lbl('Add')),
+      removeLabel: StringUtil.ucfirst(window.backend.locale.lbl('Delete')),
+      canAddNew: true
+    }
+    MultiTextBox.multipleTextbox(optionsConsent, $('#privacyConsentLevels'))
   }
 
   changeActiveLanguage (e) {

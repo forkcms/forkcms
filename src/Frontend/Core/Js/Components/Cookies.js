@@ -41,7 +41,7 @@ export class Cookies {
 
   static setCookie (name, value, days, secure) {
     if (typeof days === 'undefined') days = 7
-    if (typeof secure === 'undefined') secure = location.protocol === 'https:'
+    if (typeof secure === 'undefined') secure = window.location.protocol === 'https:'
 
     const expireDate = new Date()
     expireDate.setDate(expireDate.getDate() + days)

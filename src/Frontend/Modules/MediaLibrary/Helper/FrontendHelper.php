@@ -206,6 +206,8 @@ class FrontendHelper
             if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
+
+            return '';
         }
     }
 }

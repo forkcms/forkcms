@@ -7,7 +7,9 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Core\Engine\Csv;
+use ForkCMS\Utility\Csv\Reader;
+use ForkCMS\Utility\PhpSpreadsheet\Reader\Filter\ColumnsFilter;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
@@ -45,16 +47,22 @@ class Import extends BackendBaseActionAdd
         // get fields
         $ddmGroup = $this->form->getField('group');
         $fileFile = $this->form->getField('file');
-        $csv = [];
 
         // validate input
         $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
-        if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-            if ($fileFile->isAllowedExtension(['csv'], sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))) {
-                $csv = Csv::fileToArray($fileFile->getTempFileName());
-                if ($csv === false) {
-                    $fileFile->addError(BL::getError('InvalidCSV'));
-                }
+        $indexes = [];
+        if ($fileFile->isFilled(BL::err('FieldIsRequired'))
+            && $fileFile->isAllowedExtension(
+                ['csv'],
+                sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
+            )
+        ) {
+            $indexes = $this->get(Reader::class)->findColumnIndexes(
+                $fileFile->getTempFileName(),
+                ['email', 'display_name', 'password']
+            );
+            if (in_array(null, $indexes, true)) {
+                $fileFile->addError(BL::getError('InvalidCSV'));
             }
         }
 
@@ -64,8 +72,11 @@ class Import extends BackendBaseActionAdd
 
         // import the profiles
         $overwrite = $this->form->getField('overwrite_existing')->isChecked();
-        $statistics = BackendProfilesModel::importCsv(
-            $csv,
+
+        $csvData = $this->convertFileToArray($fileFile->getTempFileName(), array_flip($indexes));
+
+        $statistics = BackendProfilesModel::importFromArray(
+            $csvData,
             $ddmGroup->getValue(),
             $overwrite
         );
@@ -80,5 +91,29 @@ class Import extends BackendBaseActionAdd
 
         // everything is saved, so redirect to the overview
         $this->redirect($redirectUrl);
+    }
+
+    private function convertFileToArray(string $path, array $mapping): array
+    {
+        $dataToImport = [];
+
+        $reader = IOFactory::createReader('Csv');
+        $reader->setReadDataOnly(true);
+        $reader->setReadFilter(new ColumnsFilter(array_keys($mapping)));
+        $spreadSheet = $reader->load($path);
+
+        foreach ($spreadSheet->getActiveSheet()->getRowIterator() as $row) {
+            // skip the first row as it contains the headers
+            if ($row->getRowIndex() === 1) {
+                continue;
+            }
+
+            $dataToImport[] = $this->get(Reader::class)->convertRowIntoMappedArray(
+                $row,
+                $mapping
+            );
+        }
+
+        return $dataToImport;
     }
 }

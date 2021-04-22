@@ -49,6 +49,9 @@
   </ul>
 </div>
 
-<div id="ajaxSpinner" style="display: none;" aria-label="{{ 'lbl.Loading'|trans|ucfirst }}">
-  {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
+<div id="ajaxSpinner" class="alert alert-primary d-none" aria-label="{{ 'lbl.Loading'|trans|ucfirst }}">
+  <p class="mb-1">{{ 'lbl.Loading'|trans|ucfirst }}...</p>
+  <div class="progress w-100">
+    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
 </div>

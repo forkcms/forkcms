@@ -10,35 +10,55 @@ class MediaLibraryImage {
     }
   }
 
-  selectFromMediaLibrary () {
+  /**
+   * CSS classes
+   *
+   * @returns {{wrapper: string, wrapperLabel: string, input: string, label: string, settingsWrapper: string, settingsButton: string, settingsButtonActive: string}}
+   */
+  get CSS () {
+    return {
+      wrapper: 'ce-wrapper',
+      imageWrapper: ['ce-image-wrapper', 'd-none'],
+      imageWrapperEditButton: ['btn', 'btn-primary', 'btn-sm', 'btn-icon-only', 'ce-btn-edit']
+    }
+  }
+
+  selectFromMediaLibrary (event) {
     window.open(window.location.origin + jsData.MediaLibrary.browseActionImages)
 
-    window.onmessage = function (event) {
+    window.onmessage = (event) => {
       if (event.data && typeof event.data === 'object' && 'media-url' in event.data) {
         this.data.src = event.data['media-url']
         this.data.id = event.data.id
         this.image.src = this.data.src
-        this.image.classList.remove('hidden')
+        this.imageWrapper.classList.remove('d-none')
       }
     }
   }
 
   render () {
-    this.wrapper = document.createElement('div')
-    this.wrapper.classList.add('media-library-image')
+    this.wrapper = this._make('div', this.CSS.wrapper)
 
-    this.image = document.createElement('img')
-    this.wrapper.appendChild(this.image)
-    $(this.image).on('click.media-library-edit-image', () => this.selectFromMediaLibrary(this))
-    this.image.classList.add('img-responsive')
-    this.image.style.cursor = 'pointer'
+    this.imageWrapper = this._make('div', this.CSS.imageWrapper)
+    this.image = this._make('img')
+    this.editButton = this._make('button', this.CSS.imageWrapperEditButton, {
+      type: 'button'
+    })
+    this.editButtonIcon = this._make('i', ['fas', 'fa-pencil-alt'])
+
+    this.editButton.appendChild(this.editButtonIcon)
+    this.imageWrapper.appendChild(this.image)
+    this.imageWrapper.appendChild(this.editButton)
+    this.wrapper.appendChild(this.imageWrapper)
+
+    $(this.editButton).on('click.media-library-edit-image', $.proxy(this.selectFromMediaLibrary, this))
 
     if (this.data.src !== undefined) {
       this.image.src = this.data.src
-      this.image.classList.remove('hidden')
+      this.imageWrapper.classList.remove('d-none')
     } else {
       this.image.src = '#'
-      this.image.classList.add('hidden')
+      this.imageWrapper.classList.add('d-none')
       this.selectFromMediaLibrary(this)
     }
 
@@ -50,6 +70,34 @@ class MediaLibraryImage {
       'id': this.data.id,
       'src': this.data.src
     }
+  }
+
+  /**
+   * Helper for making Elements with attributes
+   *
+   * @param  {string} tagName           - new Element tag name
+   * @param  {Array|string} classNames  - list or name of CSS classname(s)
+   * @param  {object} attributes        - any attributes
+   * @returns {Element}
+   */
+  _make (tagName, classNames = null, attributes = {}, customAttributes = {}) {
+    const el = document.createElement(tagName)
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames)
+    } else if (classNames) {
+      el.classList.add(classNames)
+    }
+
+    for (const attrName in attributes) {
+      el[attrName] = attributes[attrName]
+    }
+
+    for (const attrName in customAttributes) {
+      el.setAttribute(attrName, customAttributes[attrName])
+    }
+
+    return el
   }
 }
 

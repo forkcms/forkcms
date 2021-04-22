@@ -17,8 +17,8 @@ export class Fields {
 
     // init errors
     this.defaultErrorMessages = {}
-    if (typeof defaultErrorMessages !== 'undefined') {
-      this.defaultErrorMessages = defaultErrorMessages
+    if (typeof window.defaultErrorMessages !== 'undefined') {
+      this.defaultErrorMessages = window.defaultErrorMessages
     }
 
     // submit detection handler for the main form and modal field form
@@ -260,6 +260,7 @@ export class Fields {
 
     const element = document.querySelector('[data-sequence-drag-and-drop="fields-formbuilder"]')
 
+    /* eslint-disable no-new */
     // bind sortable
     new Sortable(element, {
       handle: '[data-role="drag-and-drop-handle"]',
@@ -277,7 +278,7 @@ export class Fields {
             // not a success so revert the changes
             if (data.code !== 200) {
               // refresh page
-              location.reload()
+              window.location.reload()
 
               // show message
               Messages.add('danger', 'alter sequence failed.')
@@ -290,7 +291,7 @@ export class Fields {
           },
           error (XMLHttpRequest, textStatus, errorThrown) {
             // refresh page
-            location.reload()
+            window.location.reload()
 
             // show message
             Messages.add('danger', 'alter sequence failed.')
@@ -439,7 +440,7 @@ export class Fields {
                 $('#datetimeValueType').val(StringUtil.htmlDecode(data.data.field.settings.value_type))
                 $('#datetimeType').val(StringUtil.htmlDecode(data.data.field.settings.input_type))
                 $('#datetimeClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
-                $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete));
+                $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete))
                 $.each(
                   data.data.field.validations,
                   function (k, v) {

@@ -2,7 +2,7 @@
   <ul class="navbar-nav">
     {% for nav in navigation %}
       <li class="nav-item{% if nav.selected %} active{% endif %}">
-        <a class="nav-link" href="{{ nav.link }}" title="{{ nav.navigation_title|escape }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title|escape }}</a>
+        <a class="nav-link{% if nav.link_class %} {{ nav.link_class }}{% endif %}" href="{{ nav.link }}" title="{{ nav.navigation_title|escape }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title|e('html') }}</a>
         {% if nav.selected %}{{ nav.children|raw }}{% endif %}
       </li>
     {% endfor %}

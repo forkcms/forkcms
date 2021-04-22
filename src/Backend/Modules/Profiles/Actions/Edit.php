@@ -133,6 +133,7 @@ class Edit extends BackendBaseActionEdit
             BackendProfilesModel::QUERY_DATAGRID_BROWSE_PROFILE_GROUPS,
             [$this->profile['id']]
         );
+        $this->dgGroups->setColumnFunction('htmlspecialchars', ['[group_name]'], 'group_name', false);
 
         // sorting columns
         $this->dgGroups->setSortingColumns(['group_name'], 'group_name');
@@ -268,6 +269,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->form->isCorrect()) {
                 // build item
                 $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
+                $password = BL::lbl('YourExistingPassword');
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
@@ -322,11 +324,6 @@ class Edit extends BackendBaseActionEdit
                 if ($this->notifyProfile &&
                     ($chkNewEmail->isChecked() || $chkNewPassword->isChecked())
                 ) {
-                    // no new password
-                    if (!$chkNewPassword->isChecked()) {
-                        $password = BL::lbl('YourExistingPassword');
-                    }
-
                     // notify values
                     $notifyValues = array_merge(
                         $values,

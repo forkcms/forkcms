@@ -77,7 +77,7 @@ class ModuleExtra
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="hidden", nullable=true)
+     * @ORM\Column(type="boolean", name="hidden")
      */
     private $hidden;
 

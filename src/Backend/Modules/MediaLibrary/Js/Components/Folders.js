@@ -1,11 +1,13 @@
 import { Messages } from '../../../../Core/Js/Components/Messages'
 import { UrlUtil } from '../../../../Core/Js/Components/UrlUtil'
 import { Config } from '../../../../Core/Js/Components/Config'
+import {StringUtil} from '../../../../Core/Js/Components/StringUtil'
 
 export class Folders {
   constructor () {
     const $addFolderSubmit = $('#addFolderSubmit')
     const $addFolderDialog = $('#addFolderDialog')
+    const $folderTitleError = $('#folderTitleError')
 
     // start or not
     if ($addFolderDialog.length === 0 || $addFolderSubmit.length === 0) {
@@ -21,6 +23,9 @@ export class Folders {
     }
 
     $addFolderSubmit.click(() => {
+      // hide errors
+      $folderTitleError.hide()
+
       // get selected folder
       selectedFolderId = ($('#uploadMediaFolderId').val()) ? $('#uploadMediaFolderId').val() : selectedFolderId
 
@@ -159,7 +164,7 @@ export class Folders {
    * @returns {string}
    */
   getHTMLForMediaFolder (mediaFolder) {
-    var html = '<option value="' + mediaFolder.id + '">' + mediaFolder.slug + '</option>'
+    var html = '<option value="' + mediaFolder.id + '">' + StringUtil.htmlEncode(mediaFolder.slug) + '</option>'
 
     if (mediaFolder.numberOfChildren > 0) {
       html += this.getHTMLForMediaFolders(mediaFolder.children)

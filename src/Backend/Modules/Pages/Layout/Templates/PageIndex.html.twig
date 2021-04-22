@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block actionbar %}
-  {% if showPagesPageAdd %}
+  {% if isAllowedAction('PageAdd') %}
     <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('PageAdd'), 'plus-square', 'lbl.AddPage'|trans|ucfirst) }}

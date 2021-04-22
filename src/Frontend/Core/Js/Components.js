@@ -7,6 +7,9 @@ import { Facebook } from './Components/Facebook'
 import { Forms } from './Components/Forms'
 import { Statistics } from './Components/Statistics'
 import { Twitter } from './Components/Twitter'
+import { ConsentDialog } from './Components/ConsentDialog'
+import Vue from 'vue/'
+import VEmbed from './Vue-components/VEmbed'
 
 export class Components {
   initComponents () {
@@ -19,5 +22,13 @@ export class Components {
     this.forms = new Forms()
     this.statistics = new Statistics()
     this.twitter = new Twitter()
+    this.consentDialog = new ConsentDialog()
+
+    if ($('[data-v-embed]').length) {
+      window.vembed = new Vue({
+        el: '[data-v-embed]',
+        components: {VEmbed}
+      })
+    }
   }
 }

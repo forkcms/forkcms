@@ -66,7 +66,7 @@ class Index extends BackendBaseActionIndex
         if (isset($this->filter['group']) && $this->filter['group']) {
             $query .= ' INNER JOIN ProfilesGroupRight AS pgr ON pgr.profile_id = p.id AND
                         (pgr.expiresOn IS NULL OR pgr.expiresOn > NOW())';
-            $where[] .= 'pgr.group_id = ?';
+            $where[] = 'pgr.group_id = ?';
             $parameters[] = $this->filter['group'];
         }
 
@@ -128,7 +128,7 @@ class Index extends BackendBaseActionIndex
             'registeredOn',
             true
         );
-        $this->dgProfiles->setColumnFunction('htmlspecialchars', ['[display_name]'], 'display_name');
+        $this->dgProfiles->setColumnFunction('htmlspecialchars', ['[display_name]'], 'display_name', false);
 
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');

@@ -7,3 +7,91 @@
   max-width: 100%;
   width: 100%;
 }
+
+.ce-block {
+  border-bottom: 1px dashed $border-color;
+  padding-top: 0;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
+
+  @include hover-focus {
+    border-color: $border-color;
+  }
+
+  &.ce-block--focused .ce-wrapper-label {
+    color: $blue-dark;
+  }
+
+  &.ce-block--selected .ce-block__content {
+    background: transparent;
+  }
+}
+
+.ce-wrapper-label {
+  color: $gray-700;
+  margin-bottom: 0;
+}
+
+.ce-label {
+  color: $gray-700;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  margin-bottom: 0;
+}
+
+.ce-input {
+  @extend .form-control;
+  @extend .form-control-sm;
+  margin-bottom: 0.25rem;
+}
+
+.ce-toolbar__actions,
+.codex-editor--narrow .ce-toolbar__actions {
+  right: 5px;
+}
+.ce-toolbar__plus,
+.codex-editor--narrow .ce-toolbar__plus {
+  left: 0;
+}
+
+.codex-editor--narrow .ce-block  {
+  margin-right: -50px;
+  padding-right: 50px;
+}
+
+.ce-toolbar__actions {
+  opacity: 1;
+}
+
+.ce-toolbox,
+.ce-toolbar .ce-toolbox {
+  background: $white;
+  z-index: 2;
+}
+
+.ce-toolbar__settings-btn {
+  background: $primary;
+  color: $white;
+
+  @include hover-focus {
+    background: $blue-dark;
+    color: $white;
+  }
+}
+
+.codex-editor__redactor {
+  margin-right: 50px;
+}
+
+.ce-image-wrapper,
+.ce-video-wrapper {
+  max-width: 500px;
+  position: relative;
+
+  .ce-btn-edit {
+    bottom: 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+  }
+}

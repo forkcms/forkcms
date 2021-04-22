@@ -1,0 +1,23 @@
+name: publish-docker-image
+on:
+    release:
+        types: [published]
+
+jobs:
+    push_to_registry:
+        name: Push Docker image to GitHub
+        runs-on: ubuntu-latest
+        if: github.repository == 'forkcms/forkcms'
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Build & push to GitHub Packages
+              uses: docker/build-push-action@v1
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.CR_PAT }}
+                  registry: ghcr.io
+                  repository: ${{ github.repository }}
+                  cache_froms: ${{ github.repository }}:latest
+                  tag_with_ref: true
+                  tags: latest

@@ -1,3 +1,5 @@
+import {UrlUtil} from '../../../../Backend/Core/Js/Components/UrlUtil'
+
 export class Twitter {
   constructor () {
     // if GA is integrated and a tweet button is used
@@ -10,7 +12,7 @@ export class Twitter {
           let targetUrl = null
 
           // get url
-          if (e.target && e.target.nodeName === 'IFRAME') targetUrl = utilsOld.url.extractParamFromUri(e.target.src, 'url')
+          if (e.target && e.target.nodeName === 'IFRAME') targetUrl = UrlUtil.extractParamFromUri(e.target.src, 'url')
 
           // push to GA
           if (typeof _gaq === 'object') {

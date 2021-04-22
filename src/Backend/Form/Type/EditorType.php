@@ -6,10 +6,15 @@ use Backend\Core\Engine\Header;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Common\BlockEditor\Blocks\AbstractBlock;
+use Common\BlockEditor\Blocks\ButtonBlock;
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\Blocks\ListBlock;
 use Common\BlockEditor\Blocks\MediaLibraryImageBlock;
+use Common\BlockEditor\Blocks\MediaLibraryVideoBlock;
 use Common\BlockEditor\Blocks\ParagraphBlock;
+use Common\BlockEditor\Blocks\QuoteBlock;
+use Common\BlockEditor\Blocks\RawBlock;
+use Common\BlockEditor\Blocks\UnderlineBlock;
 use Common\BlockEditor\EditorBlocks;
 use Common\Core\Header\Priority;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -96,6 +101,11 @@ class EditorType extends TextareaType
                     ParagraphBlock::class,
                     ListBlock::class,
                     MediaLibraryImageBlock::class,
+                    MediaLibraryVideoBlock::class,
+                    QuoteBlock::class,
+                    UnderlineBlock::class,
+                    ButtonBlock::class,
+                    RawBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
@@ -188,7 +198,7 @@ class EditorType extends TextareaType
         $javaScriptUrls['/js/vendors/editor.js'] = '/js/vendors/editor.js';
 
         foreach ($javaScriptUrls as $url) {
-            $header->addJS($url, null, false, true, true, Priority::core());
+            $header->addJS($url, null, true, false, true, Priority::core());
         }
 
         $view->vars['attr']['fork-block-editor-config'] = json_encode(
@@ -209,8 +219,8 @@ class EditorType extends TextareaType
             $header->addJS(
                 '/src/Frontend/Cache/Navigation/editor_link_list_' . $currentLanguage . '.js?m=' . $timestamp,
                 null,
-                false,
                 true,
+                false,
                 true
             );
         }

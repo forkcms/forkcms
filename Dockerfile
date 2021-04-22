@@ -1,31 +1,28 @@
-FROM php:7.1-apache
+FROM php:7.4-apache
 LABEL maintainer="Fork CMS <info@fork-cms.com>"
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Run apt from fresh debian sources
-RUN printf "deb http://archive.debian.org/debian/ jessie main\ndeb-src http://archive.debian.org/debian/ jessie main\ndeb http://security.debian.org jessie/updates main\ndeb-src http://security.debian.org jessie/updates main" > /etc/apt/sources.list
-
 # Install GD2
 RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgrades \
+    libonig-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libz-dev \
-    zlib1g=1:1.2.8.dfsg-2+b1 \
+    zlib1g-dev \
     libpng-dev && \
-    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
     rm -rf /var/lib/apt/lists/*
 
 # Install pdo_mysql
 RUN docker-php-ext-install pdo_mysql
 
-# Install mbstring
-RUN docker-php-ext-install mbstring
-
-# Install zip
-RUN docker-php-ext-install zip
+# Install zip & unzip
+RUN apt-get update && apt-get install -y libzip-dev zip && \
+    docker-php-ext-install zip && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install intl
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -40,7 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY var/docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
 # Install and configure XDebug
-RUN pecl install xdebug && \
+RUN pecl install xdebug-2.9.8 && \
     docker-php-ext-enable xdebug && \
     rm -rf /tmp/pear
 
@@ -55,7 +52,7 @@ WORKDIR /var/www/html
 # Install the composer dependencies (no autoloader yet as that invalidates the docker cache)
 COPY composer.json ./
 COPY composer.lock ./
-RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress && \
     composer clear-cache
 
 # Bundle source code into container. Important here is that copying is done based on the rules defined in the .dockerignore file.

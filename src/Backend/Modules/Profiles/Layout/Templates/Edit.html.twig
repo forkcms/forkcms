@@ -144,7 +144,7 @@
       </div>
       <div role="tabpanel" class="tab-pane" id="tabGroups" aria-labelledby="groups-tab">
         <div class="d-flex">
-          {% if showProfilesAddProfileGroup %}
+          {% if isAllowedAction('AddProfileGroup') %}
             <div class="btn-toolbar ml-auto">
               <div class="btn-group" role="group">
                 {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddToGroup'|trans|ucfirst, 'btn-primary') }}
@@ -166,7 +166,7 @@
   <div class="fork-page-actions">
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
-        {% if showProfilesDelete %}
+        {% if isAllowedAction('Delete') %}
           {% if deleted %}
             {{ macro.buttonIcon('', 'plus-square', 'lbl.Undelete'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUndelete" }) }}
           {% endif %}
@@ -174,7 +174,7 @@
             {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
         {% endif %}
-        {% if showProfilesBlock %}
+          {% if isAllowedAction('Block') %}
           {% if blocked %}
             {{ macro.buttonIcon('', 'check', 'lbl.Unblock'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUnblock" }) }}
           {% endif %}
@@ -188,7 +188,7 @@
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"saveButton", "name":"edit" }) }}
       </div>
     </div>
-    {% if showProfilesBlock %}
+      {% if isAllowedAction('Block') %}
       <div class="modal fade" id="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}Title">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -197,10 +197,10 @@
             </div>
             <div class="modal-body">
               {% if blocked %}
-                <p>{{ 'msg.ConfirmUnblock'|trans|format(profile.email)|raw }}</p>
+                  <p>{{ 'msg.ConfirmUnblock'|trans|format(profile.email|e)|raw }}</p>
               {% endif %}
               {% if not blocked %}
-                <p>{{ 'msg.ConfirmBlock'|trans|format(profile.email)|raw }}</p>
+                  <p>{{ 'msg.ConfirmBlock'|trans|format(profile.email|e)|raw }}</p>
               {% endif %}
             </div>
             <div class="modal-footer">
@@ -219,7 +219,7 @@
   </div>
   {% endform %}
 
-  {% if showProfilesDelete %}
+  {% if isAllowedAction('Delete') %}
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
@@ -231,10 +231,10 @@
           </div>
           <div class="modal-body">
             {% if deleted %}
-              <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email)|raw }}</p>
+              <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email|e)|raw }}</p>
             {% endif %}
             {% if not deleted %}
-              <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email)|raw }}</p>
+              <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email|e)|raw }}</p>
             {% endif %}
           </div>
           <div class="modal-footer">

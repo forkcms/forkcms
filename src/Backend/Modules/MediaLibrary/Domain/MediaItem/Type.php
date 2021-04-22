@@ -3,17 +3,16 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Core\Engine\Model;
-use Exception;
 use InvalidArgumentException;
 
 final class Type
 {
     // Possible MediaItem types
-    const AUDIO = 'audio';
-    const FILE = 'file';
-    const IMAGE = 'image';
-    const MOVIE = 'movie';
-    const POSSIBLE_VALUES = [
+    public const AUDIO = 'audio';
+    public const FILE = 'file';
+    public const IMAGE = 'image';
+    public const MOVIE = 'movie';
+    public const POSSIBLE_VALUES = [
         self::IMAGE,
         self::FILE,
         self::MOVIE,
@@ -39,14 +38,15 @@ final class Type
 
     public static function fromMimeType(string $mimeType): self
     {
+        $mimeTypeManager = Model::get('media_library.manager.mime_type');
         $mimeType = strtolower($mimeType);
 
         // Extension not exists, throw exception
-        if (!in_array($mimeType, Model::get('media_library.manager.mime_type')->getAll())) {
-            throw new Exception(
+        if (!in_array($mimeType, $mimeTypeManager->getAll(), true)) {
+            throw new InvalidArgumentException(
                 'MimeType is not one of the allowed ones: ' . implode(
                     ', ',
-                    Model::get('media_library.manager.mime_type')->getAll()
+                    $mimeTypeManager->getAll()
                 )
             );
         }
@@ -54,11 +54,42 @@ final class Type
         foreach (self::POSSIBLE_VALUES as $mediaItemType) {
             if (in_array(
                 $mimeType,
-                Model::get('media_library.manager.mime_type')->get(self::fromString($mediaItemType))
+                $mimeTypeManager->get(self::fromString($mediaItemType)),
+                true
             )) {
                 return self::fromString($mediaItemType);
             }
         }
+
+        throw new InvalidArgumentException('MimeType could not be resolved');
+    }
+
+    public static function fromExtension(string $extension): self
+    {
+        $extension = strtolower($extension);
+        $extensionManager = Model::get('media_library.manager.extension');
+
+        // Extension not exists, throw exception
+        if (!in_array($extension, $extensionManager->getAll(), true)) {
+            throw new InvalidArgumentException(
+                'Extension is not one of the allowed ones: ' . implode(
+                    ', ',
+                    $extensionManager->getAll()
+                )
+            );
+        }
+
+        foreach (self::POSSIBLE_VALUES as $mediaItemType) {
+            if (in_array(
+                $extension,
+                $extensionManager->get(self::fromString($mediaItemType)),
+                true
+            )) {
+                return self::fromString($mediaItemType);
+            }
+        }
+
+        throw new InvalidArgumentException('Extension could not be resolved');
     }
 
     public function __toString(): string

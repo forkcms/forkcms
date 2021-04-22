@@ -10,6 +10,7 @@ use Backend\Modules\Profiles\Domain\GroupRight\GroupRight;
 use Backend\Modules\Profiles\Domain\Session\Session;
 use Backend\Modules\Profiles\Domain\Setting\Setting;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
@@ -56,6 +57,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Import');
         $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'MassAction');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
     private function configureBackendActionRightsForProfileGroup(): void
@@ -370,6 +372,8 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'profile_notification_email', null);
         $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_admin', false);
         $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_profile', false);
+        $this->setSetting($this->getModule(), 'limit_display_name_changes', true);
+        $this->setSetting($this->getModule(), 'max_display_name_changes', FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES);
     }
 
     private function getExtraId(string $key): int

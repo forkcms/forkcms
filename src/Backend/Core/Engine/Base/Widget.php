@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\Model;
+use Backend\Core\Engine\Model as BackendModel;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -110,13 +111,11 @@ class Widget extends KernelLoader
     public function isAllowed(): bool
     {
         foreach ($this->rights as $rights) {
-            list($module, $action) = explode('/', $rights);
+            [$module, $action] = explode('/', $rights);
 
             // check action rights
-            if (isset($module) && isset($action)) {
-                if (!BackendAuthentication::isAllowedAction($action, $module)) {
-                    return false;
-                }
+            if ($module !== '' &&  $action !== '' && !BackendAuthentication::isAllowedAction($action, $module)) {
+                return false;
             }
         }
 
@@ -165,5 +164,32 @@ class Widget extends KernelLoader
     public function getRequest(): Request
     {
         return Model::getRequest();
+    }
+
+    /**
+     * Check if the token is ok
+     */
+    public function checkToken(): void
+    {
+        $fromSession = BackendModel::getSession()->get('csrf_token', '');
+        $fromGet = $this->getRequest()->query->get('token');
+
+        if ($fromSession !== '' && $fromGet !== '' && $fromSession === $fromGet) {
+            return;
+        }
+
+        // clear the token
+        BackendModel::getSession()->set('csrf_token', '');
+
+        $this->redirect(
+            BackendModel::createUrlForAction(
+                $this->getContainer()->get('url')->getDefaultActionForCurrentModule(),
+                null,
+                null,
+                [
+                    'error' => 'csrf',
+                ]
+            )
+        );
     }
 }

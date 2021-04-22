@@ -4,6 +4,8 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Modules\MediaLibrary\Component\StorageProvider\LiipImagineBundleStorageProviderInterface;
 use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
+use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -42,10 +44,11 @@ class MediaItem implements JsonSerializable
      * @ORM\JoinColumn(
      *      name="mediaFolderId",
      *      referencedColumnName="id",
-     *      onDelete="cascade"
+     *      onDelete="cascade",
+     *      nullable=false
      * )
      */
-    protected $folder;
+    protected MediaFolder $folder;
 
     /**
      * @var int
@@ -69,14 +72,14 @@ class MediaItem implements JsonSerializable
     protected $type;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $mime;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -97,49 +100,49 @@ class MediaItem implements JsonSerializable
     protected $title;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $size;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $width;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $height;
 
     /**
-     * @var AspectRatio
+     * @var AspectRatio|null
      *
      * @ORM\Column(type="media_item_aspect_ratio", nullable=true)
      */
     protected $aspectRatio;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $createdOn;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $editedOn;
 
     /**
-     * @var ArrayCollection
+     * @var Collection<MediaGroupMediaItem>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
@@ -164,8 +167,8 @@ class MediaItem implements JsonSerializable
         $this->storageType = $storageType;
         $this->url = $url;
         $this->title = $title;
-        $this->createdOn = new \DateTime();
-        $this->editedOn = new \DateTime();
+        $this->createdOn = new DateTime();
+        $this->editedOn = new DateTime();
         $this->groups = new ArrayCollection();
     }
 
@@ -301,7 +304,19 @@ class MediaItem implements JsonSerializable
 
     private static function getTypeFromFile(File $file): Type
     {
-        return Type::fromMimeType($file->getMimeType());
+        $extensionType = Type::fromExtension($file->getExtension());
+
+        try {
+            $mimeTypeType = Type::fromMimeType($file->getMimeType());
+        } catch (Exception $exception) {
+            return $extensionType;
+        }
+
+        if (!$extensionType->equals($mimeTypeType)) {
+            return $extensionType;
+        }
+
+        return $mimeTypeType;
     }
 
     public function getId(): string
@@ -396,12 +411,12 @@ class MediaItem implements JsonSerializable
         return $this->height;
     }
 
-    public function getCreatedOn(): \DateTime
+    public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
 
-    public function getEditedOn(): \DateTime
+    public function getEditedOn(): DateTime
     {
         return $this->editedOn;
     }
@@ -489,7 +504,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \DateTime();
+        $this->createdOn = $this->editedOn = new DateTime();
 
         $this->refreshAspectRatio();
     }
@@ -499,7 +514,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \DateTime();
+        $this->editedOn = new DateTime();
 
         $this->refreshAspectRatio();
     }

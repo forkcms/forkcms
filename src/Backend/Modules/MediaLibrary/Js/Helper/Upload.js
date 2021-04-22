@@ -20,6 +20,25 @@ export class Upload {
     const $fineUploaderGallery = $('#fine-uploader-gallery')
     const fineUploaderInstance = $fineUploaderGallery.fineUploader({
       template: 'qq-template-gallery',
+      options: {
+        request: {
+          omitDefaultParams: true
+        }
+      },
+      chunking: {
+        enabled: true,
+        success: {
+          endpoint: function () {
+            var mediaFolderId = $('#uploadMediaFolderId').val()
+
+            return '/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' +
+              jsBackend.current.language + '&folder_id=' + mediaFolderId + '&done=1'
+          }
+        },
+        concurrent: {
+          enabled: true
+        }
+      },
       thumbnails: {
         placeholders: {
           waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
@@ -85,10 +104,10 @@ export class Upload {
 
   preInit () {
     // bind change to upload_type
-    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', this.toggleUploadBoxes)
+    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
 
     // bind click to add movie
-    $('#addMediaMovie').on('click', this.insertMovie)
+    $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
 
     // bind change to upload folder
     $('#uploadMediaFolderId').on('change', () => {
@@ -147,9 +166,9 @@ export class Upload {
    */
   addUploadedMediaToGroup () {
     // loop remaining items in uploaded media and push them to current group
-    $('#uploadedMedia').find('li').each(function () {
+    $('#uploadedMedia').find('li').each((key, element) => {
       // get id
-      const id = $(this).attr('id').replace('media-', '')
+      const id = $(element).attr('id').replace('media-', '')
 
       // add each id to array
       this.config.currentMediaItemIds.push(id)

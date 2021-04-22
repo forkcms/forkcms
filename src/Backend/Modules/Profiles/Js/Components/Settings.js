@@ -10,8 +10,13 @@ export class Settings {
       this.toggleProfileNotificationEmail()
     })
 
+    $('#limitDisplayNameChanges').on('change', () => {
+      this.toggleDisplayNameChanges()
+    })
+
     this.toggleAdminMail()
     this.toggleProfileNotificationEmail()
+    this.toggleDisplayNameChanges()
   }
 
   toggleAdminMail () {
@@ -26,5 +31,12 @@ export class Settings {
     const checked = ($item.prop('checked') === true)
 
     $('#profileNotificationEmailBox').toggle(checked)
+  }
+
+  toggleDisplayNameChanges () {
+    var $item = $('#limitDisplayNameChanges')
+    var checked = ($item.attr('checked') === 'checked')
+
+    $('#maxDisplayNameChangesBox').toggle(checked)
   }
 }

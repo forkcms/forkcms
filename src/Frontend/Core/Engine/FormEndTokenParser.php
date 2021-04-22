@@ -2,33 +2,31 @@
 
 namespace Frontend\Core\Engine;
 
+use Twig\Error\SyntaxError;
+use Twig\Node\Node;
+use Twig\Token;
+use Twig\TokenParser\AbstractTokenParser;
+
 /**
  * Twig token parser for form closing tag.
  */
-class FormEndTokenParser extends \Twig_TokenParser
+class FormEndTokenParser extends AbstractTokenParser
 {
-    /**
-     * @param \Twig_Token $token Token consumed by the lexer.
-     *
-     * @throws \Twig_Error_Syntax
-     *
-     * @return \Twig_Node
-     */
-    public function parse(\Twig_Token $token): \Twig_Node
+    public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();
-        if ($stream->getCurrent()->getType() !== \Twig_Token::BLOCK_END_TYPE) {
+        if ($stream->getCurrent()->getType() !== Token::BLOCK_END_TYPE) {
             $error = sprintf("'%s' does not require any arguments.", $this->getTag());
-            throw new \Twig_Error_Syntax(
+            throw new SyntaxError(
                 $error,
                 $token->getLine(),
                 $this->parser->getStream()->getSourceContext()->getPath()
             );
         }
-        $stream->expect(\Twig_Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         if (FormState::$current === null) {
-            throw new \Twig_Error_Syntax(
+            throw new SyntaxError(
                 'Trying to close a form tag, while none opened',
                 $token->getLine(),
                 $this->parser->getStream()->getSourceContext()->getPath()
@@ -40,9 +38,6 @@ class FormEndTokenParser extends \Twig_TokenParser
         return new FormEndNode($token->getLine(), $this->getTag());
     }
 
-    /**
-     * @return string
-     */
     public function getTag(): string
     {
         return 'endform';

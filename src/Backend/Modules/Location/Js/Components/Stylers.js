@@ -2,9 +2,9 @@ export const Stylers = {
   styles: [
     {
       standard: [],
-      custom:   [],
+      custom: [],
       // GRAY STYLE
-      gray:     [
+      gray: [
         // BASIC
         {
           stylers: [
@@ -15,7 +15,7 @@ export const Stylers = {
         // Lanscape
         {
           featureType: 'landscape',
-          stylers:     [
+          stylers: [
             {
               color: '#E5E5E5'
             }
@@ -24,7 +24,7 @@ export const Stylers = {
         // Water
         {
           featureType: 'water',
-          stylers:     [
+          stylers: [
             {
               'visibility': 'on'
             },
@@ -37,7 +37,7 @@ export const Stylers = {
         {
           featureType: 'transit',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#B9B9B9'
             }
@@ -47,7 +47,7 @@ export const Stylers = {
         {
           featureType: 'road.highway',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#E2E2E2'
             }
@@ -57,7 +57,7 @@ export const Stylers = {
         {
           featureType: 'road.highway.controlled_access',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#ACACAC'
             }
@@ -67,7 +67,7 @@ export const Stylers = {
         {
           featureType: 'road.arterial',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#ffffff'
             }
@@ -77,7 +77,7 @@ export const Stylers = {
         {
           featureType: 'road.local',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#F6F6F6'
             }
@@ -87,7 +87,7 @@ export const Stylers = {
         {
           featureType: 'poi',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#DDDDDD'
             }
@@ -96,7 +96,7 @@ export const Stylers = {
         {
           featureType: 'poi.park',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#D3D3D3'
             }
@@ -105,7 +105,7 @@ export const Stylers = {
         {
           featureType: 'poi.attraction',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#DBDBDB'
             }
@@ -114,7 +114,7 @@ export const Stylers = {
         {
           featureType: 'poi.business',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#DBDBDB'
             }
@@ -123,7 +123,7 @@ export const Stylers = {
         {
           featureType: 'poi.place_of_worship',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#DBDBDB'
             }
@@ -131,7 +131,7 @@ export const Stylers = {
         }
       ],
       // Blue STYLE
-      blue:     [
+      blue: [
         // BASIC
         {
           stylers: [
@@ -142,7 +142,7 @@ export const Stylers = {
         // Lanscape
         {
           featureType: 'landscape',
-          stylers:     [
+          stylers: [
             {
               color: '#DEE7EB'
             }
@@ -151,7 +151,7 @@ export const Stylers = {
         // Water
         {
           featureType: 'water',
-          stylers:     [
+          stylers: [
             {
               'visibility': 'on'
             },
@@ -164,7 +164,7 @@ export const Stylers = {
         {
           featureType: 'transit',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#86CEEB'
             }
@@ -174,7 +174,7 @@ export const Stylers = {
         {
           featureType: 'road.highway',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#C2EDFF'
             }
@@ -184,7 +184,7 @@ export const Stylers = {
         {
           featureType: 'road.highway.controlled_access',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#4DCDFF'
             }
@@ -194,7 +194,7 @@ export const Stylers = {
         {
           featureType: 'road.arterial',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#ffffff'
             }
@@ -204,7 +204,7 @@ export const Stylers = {
         {
           featureType: 'road.local',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#F3F7F9'
             }
@@ -214,7 +214,7 @@ export const Stylers = {
         {
           featureType: 'poi',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#C6E5F1'
             }
@@ -223,7 +223,7 @@ export const Stylers = {
         {
           featureType: 'poi.park',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#B7DDEC'
             }
@@ -232,7 +232,7 @@ export const Stylers = {
         {
           featureType: 'poi.attraction',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#D5DDE0'
             }
@@ -241,7 +241,7 @@ export const Stylers = {
         {
           featureType: 'poi.business',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#D5DDE0'
             }
@@ -250,7 +250,7 @@ export const Stylers = {
         {
           featureType: 'poi.place_of_worship',
           elementType: 'geometry',
-          stylers:     [
+          stylers: [
             {
               color: '#D5DDE0'
             }

@@ -17,11 +17,11 @@
         {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank", "rel":"noopener noreferrer" }) }}
       {% endif %}
 
-      {% if showPagesPageIndex %}
+      {% if isAllowedAction('PageIndex') %}
         {{ macro.buttonIcon(geturl('PageIndex'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
-      {% if showPagesPageAdd %}
+      {% if isAllowedAction('PageAdd') %}
         <div class="btn-group">
           <a type="button" href="{{ geturl('PageAdd') }}" class="btn btn-default pull-left">
             {{ macro.icon('plus-square') }}
@@ -51,7 +51,7 @@
   <div class="fork-module-actions">
     <div class="btn-toolbar justify-content-between">
       <div class="btn-group" role="group">
-        {% if showPagesPageDelete and deleteForm is defined %}
+        {% if isAllowedAction('PageDelete') and deleteForm is defined %}
           {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
@@ -64,7 +64,7 @@
   </div>
   {{ form_rest(form) }}
   {{ form_end(form) }}
-  {% if showPagesPageDelete and deleteForm is defined %}
+  {% if isAllowedAction('PageDelete') and deleteForm is defined %}
     {{ form_start(deleteForm) }}
     {{ form_rest(deleteForm) }}
     <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">

@@ -1,4 +1,5 @@
 import { Data } from '../../../Core/Js/Components/Data'
+import {StringUtil} from '../../../../Backend/Core/Js/Components/StringUtil'
 
 export class Location {
   constructor () {
@@ -102,7 +103,7 @@ export class Location {
       {
         position: new google.maps.LatLng(lat, lng),
         map: this.map[mapId],
-        title: title,
+        title: StringUtil.htmlEncode(title),
         locationId: id
       }
     )
@@ -115,7 +116,7 @@ export class Location {
       // apparently JS goes bananas with multi line HTMl, so we grab it from the div, this seems like a good idea for SEO
       if ($markerText.length > 0) text = $markerText.html()
 
-      let content = '<h1>' + title + '</h1>'
+      let content = '<h1>' + StringUtil.htmlEncode(title) + '</h1>'
       if (typeof text !== 'undefined') content += text
 
       new google.maps.InfoWindow(

@@ -22,7 +22,6 @@ export class Group {
     this.addMediaDialog()
 
     // init sequences
-    let prevSequence = ''
     let newSequence = ''
     const element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
 
@@ -30,7 +29,7 @@ export class Group {
     const sortable = new Sortable(element, {
       onStart: (event) => {
         // redefine previous and new sequence
-        prevSequence = newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
+        newSequence = $('#group-' + this.config.currentMediaGroupId + ' .mediaIds').first().val()
       },
       onUpdate: (event) => {
         // set group i
@@ -505,7 +504,7 @@ export class Group {
     // check which items to add
     $(this.config.currentMediaItemIds).each((i, id) => {
       // add item
-      if (!utilsOld.array.inArray(id, currentIds)) {
+      if (!currentIds.includes(id)) {
         // loop media folders
         $.each(this.config.media, (index, items) => {
           // loop media items in folder
@@ -514,7 +513,7 @@ export class Group {
             if (id === item.id) {
               // Add HTML for MediaItem to Connect
               $currentItems.append(Templates.getHTMLForMediaItemToConnect(item))
-              window.mediaLibrary.mediaThumbUrl.set(item)
+              window.backend.mediaLibrary.helper.mediaThumbUrl.set(item)
             }
           })
         })
@@ -569,7 +568,7 @@ export class Group {
     // loop media
     $.each(this.config.media[this.config.mediaFolderId], (i, item) => {
       // check if media is connected or not
-      const connected = (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') ? false : utilsOld.array.inArray(item.id, this.config.mediaGroups[this.config.currentMediaGroupId].media)
+      const connected = (typeof this.config.mediaGroups[this.config.currentMediaGroupId] === 'undefined') ? false : this.config.mediaGroups[this.config.currentMediaGroupId].media.includes(item.id)
 
       // Redefine
       html[item.type] += Templates.getHTMLForMediaItemTableRow(item, connected)
@@ -642,7 +641,7 @@ export class Group {
       const isChecked = $(e.currentTarget).is(':checked')
 
       // was already connected?
-      const connected = utilsOld.array.inArray(mediaId, this.config.currentMediaItemIds)
+      const connected = this.config.currentMediaItemIds.includes(mediaId)
 
       // delete from array
       if (connected && !isChecked) {
@@ -666,6 +665,7 @@ export class Group {
     // bind click to duplicate media item
     $('[data-role=media-library-duplicate-and-crop]').on('click', () => {
       const mediaItemToDuplicate = this.getMediaItemForId($(this).data('media-item-id'))
+      /* eslint-disable no-new */
       new Duplicator(mediaItemToDuplicate)
     })
 

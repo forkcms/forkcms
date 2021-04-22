@@ -1,10 +1,15 @@
 #ajaxSpinner {
-  display: none;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-sm;
+  padding: $spacer * 0.5;
   position: fixed;
-  right: 10px;
-  top: 10px;
+  left: 50%;
+  top: $grid-gutter-width / 2;
+  transform: translateX(-50%);
+  width: 200px;
   z-index: 9001;
-  color: $blue-dark;
 
   &.light {
     color: $white;

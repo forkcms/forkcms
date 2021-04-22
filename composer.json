@@ -13,11 +13,14 @@
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4|^8.0",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-zip": "*",
+        "ext-gd": "*",
+        "ext-intl": "*",
+        "ext-simplexml": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
@@ -45,20 +48,23 @@
         "symfony/swiftmailer-bundle": "^3.0",
         "symfony/symfony": "^3.3",
         "tijsverkoyen/akismet": "1.1.*",
-        "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^2.4",
         "codex-team/editor.js": "^2.0",
         "beberlei/doctrineextensions": "^1.2",
-        "symfony/webpack-encore-bundle": "^1.7"
+        "symfony/webpack-encore-bundle": "^1.7",
+        "tijsverkoyen/css-to-inline-styles": "1.5.*",
+        "phpoffice/phpspreadsheet": "^1.12",
+        "composer/package-versions-deprecated": "^1.11"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
         "symfony/var-dumper": "^3.3",
         "squizlabs/php_codesniffer": "^3.5",
-        "symfony/phpunit-bridge": "^3.2",
-        "phpstan/phpstan": "^0.10.3",
-        "phpstan/phpstan-symfony": "^0.10.2"
+        "symfony/phpunit-bridge": "*",
+        "phpstan/phpstan": "^0.12.52",
+        "phpstan/phpstan-symfony": "^0.12.7",
+        "phpstan/phpstan-doctrine": "^0.12.22"
     },
     "config": {
         "bin-dir": "bin"

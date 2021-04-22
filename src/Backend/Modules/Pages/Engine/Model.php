@@ -9,6 +9,7 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\Page\Page;
+use Backend\Modules\Pages\Domain\Page\PageDataTransferObject;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 use Backend\Modules\Pages\Domain\Page\Status;
 use Backend\Modules\Pages\Domain\Page\Type;
@@ -21,6 +22,7 @@ use Common\Doctrine\Repository\MetaRepository;
 use Common\Locale as AbstractLocale;
 use InvalidArgumentException;
 use RuntimeException;
+use SpoonFilter;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -336,7 +338,7 @@ class Model
         $keys = [];
         $pages = [];
         $pageTree = self::getTree([Page::NO_PARENT_PAGE_ID], null, 1, $locale);
-        $homepageTitle = $pageTree[1][Page::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $homepageTitle = htmlentities($pageTree[1][Page::HOME_PAGE_ID]['title'] ?? SpoonFilter::ucfirst(BL::lbl('Home')));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {
@@ -442,7 +444,7 @@ class Model
         array $page,
         array $navigation
     ): array {
-        $tree['pages'][$branchLabel][$page['page_id']] = $page['navigation_title'];
+        $tree['pages'][$branchLabel][$page['page_id']] = SpoonFilter::htmlentities($page['navigation_title']);
         $tree['attributes'][$page['page_id']] = $attributesFunction($page);
 
         return self::mergeTreeForDropdownArrays(
@@ -750,8 +752,8 @@ class Model
         string $tree,
         Locale $locale = null
     ): bool {
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
-        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
+        $typeOfDrop = SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
+        $tree = SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $locale = $locale ?? Locale::workingLocale();
 
         // When dropping on the main navigation it should be added as a child of the home page
@@ -901,6 +903,19 @@ class Model
     }
 
     /**
+     * @param array $page
+     */
+    public static function updateRevisionData(int $pageId, int $revisionId, array $data): void
+    {
+        /** @var PageRepository $pageRepository */
+        $pageRepository = BackendModel::get(PageRepository::class);
+        $page = $pageRepository->findOneBy(['id' => $pageId, 'revisionId' => $revisionId]);
+        $pageDataTransferObject = new PageDataTransferObject($page);
+        $pageDataTransferObject->data = $data;
+        $pageRepository->save(Page::fromDataTransferObject($pageDataTransferObject));
+    }
+
+    /**
      * Switch templates for all existing pages
      *
      * @param int $oldTemplateId The id of the new template to replace.
@@ -911,7 +926,7 @@ class Model
     {
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
-        $newTemplate['data'] = @unserialize($newTemplate['data'], ['allowed_classes' => 'false']);
+        $newTemplate['data'] = @unserialize($newTemplate['data'], ['allowed_classes' => false]);
 
         // fetch all pages
         /** @var PageRepository $pageRepository */

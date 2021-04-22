@@ -1,5 +1,6 @@
-const passWordgenerator = require('generate-password');
 import { StringUtil } from './StringUtil'
+
+const passWordgenerator = require('generate-password')
 
 export class PasswordGenerator {
   constructor (element) {

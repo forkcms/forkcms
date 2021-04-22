@@ -62,7 +62,7 @@ final class TreeManager
         $html = '<li id="folder-' . $cacheItem->id . '" rel="folder" data-jstree=\'{"type":"' . 'folder' . '"}\'">' . "\n";
 
         // insert link
-        $html .= '<a href="' . $url . '"><ins>&#160;</ins>' . $cacheItem->name . ' (' . $cacheItem->numberOfMediaItems . ')</a>' . "\n";
+        $html .= '<a href="' . $url . '"><ins>&#160;</ins>' . htmlspecialchars($cacheItem->name) . ' (' . $cacheItem->numberOfMediaItems . ')</a>' . "\n";
 
         if ($cacheItem->numberOfChildren > 0) {
             $html .= $this->buildNavigationTree($cacheItem->children);

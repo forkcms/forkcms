@@ -1,16 +1,16 @@
 parameters:
     database.driver:        mysql
-    database.host:          localhost
+    database.host:          127.0.0.1
     database.port:          3306
-    database.name:          fork
+    database.name:          forkcms
     database.user:          root
-    database.password:      ''
+    database.password:      kingtriton
 
     kernel.secret:          hJkHiixy9xOd2fc8ovoSjNHjPlSZl8E0
 
     fork.debug_email:       ''
     fork.debug_message:     'Internal error.'
-    fork.version:           '5.8.2'
+    fork.version:           '5.9.3'
 
     session.cookie_secure:  false
     site.protocol:          http

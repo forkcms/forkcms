@@ -71,7 +71,7 @@ class ContentBlock
     private $title;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */

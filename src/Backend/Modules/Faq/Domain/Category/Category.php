@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Faq\Domain\Category;
 
+use Backend\Modules\Faq\Domain\Question\Question;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\CanNotSetExtraIdException;
 use Common\Locale;
@@ -35,8 +36,14 @@ class Category
      * @var Meta
      *
      * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(
+     *   name="meta_id",
+     *   referencedColumnName="id",
+     *   onDelete="cascade",
+     *   nullable=false
+     * )
      */
-    private $meta;
+    private Meta $meta;
 
     /**
      * @var int
@@ -60,7 +67,7 @@ class Category
     private $sequence;
 
     /**
-     * @var Collection
+     * @var Collection<Question>
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Faq\Domain\Question\Question",

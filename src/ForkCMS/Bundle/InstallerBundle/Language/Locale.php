@@ -19,6 +19,7 @@ final class Locale extends \Common\Locale
         'sv' => 'Swedish',
         'uk' => 'Ukrainian',
         'pl' => 'Polish',
+        'pt' => 'Portuguese',
     ];
 
     protected function getPossibleLanguages(): array

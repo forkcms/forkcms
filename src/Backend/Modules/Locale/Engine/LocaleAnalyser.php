@@ -41,7 +41,7 @@ final class LocaleAnalyser
                             $nonExistingKey = $this->application . $translationName . $type . $key;
 
                             if (array_key_exists($nonExistingKey, $nonExisting)) {
-                                $usedInFiles = unserialize($nonExisting[$nonExistingKey]['used_in']);
+                                $usedInFiles = unserialize($nonExisting[$nonExistingKey]['used_in'], ['allowed_classes' => false]);
                                 $usedInFiles[] = $file['file'];
                                 $nonExisting[$nonExistingKey]['used_in'] = serialize($usedInFiles);
 

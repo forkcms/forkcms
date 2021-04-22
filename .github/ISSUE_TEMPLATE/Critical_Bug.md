@@ -1,7 +1,4 @@
 ---
-name: "💥 Critical Bug Report"
-about: "Have you encountered something completely broken without workaround? 💣"
-title: ""
 labels: Bug
 assignees: ""
 ---

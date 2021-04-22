@@ -1,4 +1,3 @@
-import { ArrayUtil } from '../../../../Core/Js/Components/ArrayUtil'
 import { EventUtil } from '../../../../Core/Js/Components/EventUtil'
 import { Config } from '../../../../Core/Js/Components/Config'
 import { Messages } from '../../../../Core/Js/Components/Messages'
@@ -6,23 +5,6 @@ import { Messages } from '../../../../Core/Js/Components/Messages'
 export class Tree {
   constructor () {
     if ($('[data-tree-pages]').find('> [data-tree]').length === 0) return
-
-    let openedIds = []
-    if (typeof pageID !== 'undefined') {
-      // get parents
-      let parents = $('#page-' + pageID).parents('li')
-
-      // init var
-      openedIds = ['page-' + pageID]
-
-      // add parents
-      for (let i = 0; i < parents.length; i++) {
-        openedIds.push($(parents[i]).prop('id'))
-      }
-    }
-
-    // add home if needed
-    if (!ArrayUtil.inArray('page-1', openedIds)) openedIds.push('page-1')
 
     // jsTree options
     const options = {
@@ -104,9 +86,6 @@ export class Tree {
       }
     })
 
-    // set the item selected
-    if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
-
     this.toggleJsTreeCollapse(jsTreeInstance)
   }
 
@@ -144,8 +123,8 @@ export class Tree {
     }
 
     // when node is dropped on the last position, we can not add it before the last one -> we need after
-    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined
-      && data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
+    if (data.new_instance._model.data[data.parent].children[data.position + 1] === undefined &&
+      data.new_instance._model.data[data.parent].children[data.position - 1] !== undefined) {
       droppedOnElement = $('#' + data.new_instance._model.data[data.parent].children[data.position - 1])
       type = 'after'
     }

@@ -1,3 +1,99 @@
+5.9.3  (2021-03-21)
+------------------
+
+Fixed:
+* Core: Update packages [#3332](https://github.com/forkcms/forkcms/pull/3332) [#3329](https://github.com/forkcms/forkcms/pull/3329) [#3328](https://github.com/forkcms/forkcms/pull/3328) [#3325](https://github.com/forkcms/forkcms/pull/3325) [#3282](https://github.com/forkcms/forkcms/pull/3282) [#3269](https://github.com/forkcms/forkcms/pull/3269)
+* Github: Add badge for security issues [#3315](https://github.com/forkcms/forkcms/pull/3315)
+* Github: Make sure we test all supported php versions [#3254](https://github.com/forkcms/forkcms/pull/3254)
+* Github: Remove duplicate github issue reporting system [#3288](https://github.com/forkcms/forkcms/pull/3288)
+* Groups: Excape new reserverd keywords in mysal [#3264](https://github.com/forkcms/forkcms/pull/3264)
+* Locale: Clarify that html in translations is not considered a security issue [#3270](https://github.com/forkcms/forkcms/pull/3270)
+* Pages: Duplicate user template images when copying page [#3320](https://github.com/forkcms/forkcms/pull/3320)
+* Pages: Rebuild page cache when changing url [#3319](https://github.com/forkcms/forkcms/pull/3319)
+
+Security:
+* Core: Security fixes [#3351](https://github.com/forkcms/forkcms/pull/3351)
+* Locale: Fix xss in translation datagrid [#3314](https://github.com/forkcms/forkcms/pull/3314)
+* Spoon: Fix css bug in Spoon Library [#3316](https://github.com/forkcms/forkcms/pull/3316)
+
+
+5.9.2  (2020-12-05)
+------------------
+
+Fixed:
+* Core: Add composer v2 support [#3205](https://github.com/forkcms/forkcms/pull/3205)
+* Core: Allow switching in the backend to a language that is disabled in the frontend [#3202](https://github.com/forkcms/forkcms/pull/3202)
+* Core: Bugfix consent dialog [#3226](https://github.com/forkcms/forkcms/pull/3226)
+* Core: Filter on empty levels [#3176](https://github.com/forkcms/forkcms/pull/3176)
+* Core: Fix permission check for god user [#3201](https://github.com/forkcms/forkcms/pull/3201)
+* Core: Only copy the text and not the html when editing a value in a datagrid [#3203](https://github.com/forkcms/forkcms/pull/3203)
+* Core: Pin xdebug v2 for PHP 7.1 support [#3246](https://github.com/forkcms/forkcms/pull/3246)
+* Core: Prevent floating elements from covering the recaptcha badge [#3204](https://github.com/forkcms/forkcms/pull/3204)
+* Core: Replace & to && [#3194](https://github.com/forkcms/forkcms/pull/3194)
+* Core: Set cache policy for woff2 [#3212](https://github.com/forkcms/forkcms/pull/3212)
+* Core: Update packages [#3247](https://github.com/forkcms/forkcms/pull/3247) [3221](https://github.com/forkcms/forkcms/pull/3221) [3220](https://github.com/forkcms/forkcms/pull/3220) [3197](https://github.com/forkcms/forkcms/pull/3197) [3183](https://github.com/forkcms/forkcms/pull/3183) [3182](https://github.com/forkcms/forkcms/pull/3182) [3242](https://github.com/forkcms/forkcms/pull/3242) [3245](https://github.com/forkcms/forkcms/pull/3245) [3169](https://github.com/forkcms/forkcms/pull/3169)
+* Core: Upgrade phpstan [#3227](https://github.com/forkcms/forkcms/pull/3227)
+* Github: Add slack icon to Readme [#3209](https://github.com/forkcms/forkcms/pull/3209)
+* Github: Codecov should wait for 3 reports [#3213](https://github.com/forkcms/forkcms/pull/3213)
+* Github: Fix scrutinizer & coverage upload [#3208](https://github.com/forkcms/forkcms/pull/3208)
+* Github: Move from Travis to GitHub Actions [#3175](https://github.com/forkcms/forkcms/pull/3175)
+* Github: Move github repo files to .github dir [#3172](https://github.com/forkcms/forkcms/pull/3172)
+* Github: Use github actions badge on readme [#3214](https://github.com/forkcms/forkcms/pull/3214)
+* Installer: Add some missing permissions to the admin group during installation [#3200](https://github.com/forkcms/forkcms/pull/3200)
+* Location: Fix copying location widgets to another locale when there are no widgets [#3199](https://github.com/forkcms/forkcms/pull/3199)
+* MediaGalleries: Fix fade of slickslider clashing with bootstrap 4 [#3168](https://github.com/forkcms/forkcms/pull/3168)
+* MediaLibrary: Always require a media item to have a title [#3190](https://github.com/forkcms/forkcms/pull/3190)
+* Pages: Fix background images of usertemplates [#3165](https://github.com/forkcms/forkcms/pull/3165)
+* Pages: Fix error when adding pages as a non god user [#3181](https://github.com/forkcms/forkcms/pull/3181)
+* Pages: Translate the test usertemplate to English [#3198](https://github.com/forkcms/forkcms/pull/3198)
+
+
+5.9.1  (2020-08-18)
+------------------
+
+Fixed:
+* Pages: Fix non god users not being able to save pages [#3163](https://github.com/forkcms/forkcms/pull/3163)
+
+
+5.9.0  (2020-08-17)
+------------------
+
+Fixed:
+* Core: Add missing use statement to Theme.php [#3162](https://github.com/forkcms/forkcms/pull/3162)
+* Core: Update vendors [#3153](https://github.com/forkcms/forkcms/pull/3153) [#3154](https://github.com/forkcms/forkcms/pull/3154) [#3155](https://github.com/forkcms/forkcms/pull/3155) [#3156](https://github.com/forkcms/forkcms/pull/3156) [#3161](https://github.com/forkcms/forkcms/pull/3161)
+* MediaLibrary: Fix rotation of images based on exif and strip metadata [#3152](https://github.com/forkcms/forkcms/pull/3152)
+* MediaLibrary: Skip default photo cropping if unchecked [#3151](https://github.com/forkcms/forkcms/pull/3151)
+
+Added:
+* Core: Add GDPR concent dialog [#3048](https://github.com/forkcms/forkcms/pull/3048)
+* Core: Add Google Tag Manager [#3047](https://github.com/forkcms/forkcms/pull/3047)
+* Core: Add Portuguese locale [#2431](https://github.com/forkcms/forkcms/pull/2431)
+* Pages: Add css class to a menu link [#3116](https://github.com/forkcms/forkcms/pull/3116)
+* Pages: Cross language link overview [#3117](https://github.com/forkcms/forkcms/pull/3117)
+
+Changed:
+* Core: Change CSV implementation [#3160](https://github.com/forkcms/forkcms/pull/3160)
+* Profiles: Make max amount of display name changes dynamic [#3102](https://github.com/forkcms/forkcms/pull/3102)
+
+
+5.8.3  (2020-07-07)
+------------------
+
+Fixed:
+* Core: Optimise vendor images [#3143](https://github.com/forkcms/forkcms/pull/3143)
+* Core: Show the correct error when adding invalid custom slugs [#3145](https://github.com/forkcms/forkcms/pull/3145)
+* Core: Stop hard caching redirects [#3094](https://github.com/forkcms/forkcms/pull/3094)
+* Core: Update vendors [#3136](https://github.com/forkcms/forkcms/pull/3136) [#3111](https://github.com/forkcms/forkcms/pull/3111) [#3119](https://github.com/forkcms/forkcms/pull/3119)
+* DX: Fix docker build [#3121](https://github.com/forkcms/forkcms/pull/3121)
+* DX: Fix typo in pull request templates [#3140](https://github.com/forkcms/forkcms/pull/3140)
+* MediaGalleries: Fix text being truncated [#3139](https://github.com/forkcms/forkcms/pull/3139)
+* MediaLibrary: Fix uploading big files [#3146](https://github.com/forkcms/forkcms/pull/3146)
+
+Security:
+* Core: Fix xss bugs in the backend [#3093](https://github.com/forkcms/forkcms/pull/3093) [#3137](https://github.com/forkcms/forkcms/pull/3137)
+* Core: Improve csrf checks in the backend [#3123](https://github.com/forkcms/forkcms/pull/3123) [#3138](https://github.com/forkcms/forkcms/pull/3138) [#3124](https://github.com/forkcms/forkcms/pull/3124) [#3132](https://github.com/forkcms/forkcms/pull/3132) [#3135](https://github.com/forkcms/forkcms/pull/3135)
+
+
 5.8.2  (2020-05-12)
 ------------------
 

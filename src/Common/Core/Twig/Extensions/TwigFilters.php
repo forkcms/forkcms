@@ -6,6 +6,7 @@ namespace Common\Core\Twig\Extensions;
  * Contains all Forkcms filters for Twig
  */
 
+use Backend\Core\Engine\Authentication;
 use Twig\Environment;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -21,6 +22,20 @@ class TwigFilters
      */
     public static function addFilters(Environment $twig, string $app): void
     {
+        if ($app === 'Backend') {
+            $twig->addFunction(
+                new TwigFunction(
+                    'isAllowedAction',
+                    [Authentication::class, 'isAllowedAction']
+                )
+            );
+            $twig->addFunction(
+                new TwigFunction(
+                    'isAllowedModule',
+                    [Authentication::class, 'isAllowedModule']
+                )
+            );
+        }
         $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new TwigFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new TwigFilter('highlight', $app.'::highlightCode'));
@@ -30,7 +45,7 @@ class TwigFilters
         $twig->addFilter(new TwigFilter('uppercase', $app.'::uppercase'));
         $twig->addFilter(new TwigFilter('rand', $app.'::random'));
         $twig->addFilter(new TwigFilter('formatfloat', $app.'::formatFloat'));
-        $twig->addFilter(new TwigFilter('truncate', $app.'::truncate'));
+        $twig->addFilter(new TwigFilter('truncate', $app . '::truncate', ['is_safe' => ['html']]));
         $twig->addFilter(new TwigFilter('camelcase', $app.'::camelCase'));
         $twig->addFilter(new TwigFilter('snakeCase', $app.'::snakeCase'));
         $twig->addFilter(new TwigFilter('stripnewlines', $app.'::stripNewlines'));

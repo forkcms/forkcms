@@ -8,8 +8,10 @@
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
-      {{ macro.buttonIcon( geturl('MediaItemIndex'), 'photo-video', 'lbl.AllMedia'|trans|capitalize, 'btn-default btn-sm') }}
-      {% if showMediaLibraryMediaItemUpload %}
+      {% if isAllowedAction('MediaItemIndex') %}
+        {{ macro.buttonIcon( geturl('MediaItemIndex'), 'photo-video', 'lbl.AllMedia'|trans|capitalize, 'btn-default btn-sm') }}
+      {% endif %}
+      {% if isAllowedAction('MediaItemUpload') %}
         {% if mediaFolder %}
           {{ macro.buttonIcon( geturl('MediaItemUpload', null, '&folder='~mediaFolder.id), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
         {% endif %}
@@ -74,10 +76,13 @@
         <div class="fork-module-actions">
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
-              {% if showMediaLibraryMediaFolderDelete and folderHasNoChildren %}
+              {% if isAllowedAction('MediaFolderDelete') and folderHasNoChildren %}
                 {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
                   {{ macro.buttonIcon('', 'trash-alt', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
                 {% endif %}
+              {% endif %}
+              {% if isAllowedAction('MediaFolderEdit') %}
+                {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
               {% endif %}
             </div>
           </div>
@@ -134,7 +139,7 @@
   {# Dialogs for MediaFolderDelete and EditMediaFolder #}
   {% if mediaFolder %}
     {# Delete MediaFolder Dialog #}
-    {% if showMediaLibraryMediaFolderDelete %}
+    {% if isAllowedAction('MediaFolderDelete') %}
     <div class="modal fade" id="confirmMediaFolderDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmMediaFolderDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -166,7 +171,7 @@
     {% endif %}
 
     {# Edit MediaFolder Dialog #}
-    {% if showMediaLibraryMediaFolderEdit %}
+    {% if isAllowedAction('MediaFolderEdit') %}
     <div class="modal fade" id="editMediaFolderDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="editMediaFolderDialogTitle">
       <div class="modal-dialog">
         <div class="modal-content">
