@@ -48,9 +48,7 @@ class SettingsDataTransferObject
             try {
                 $this->offlineImage = $mediaGroupRepository->findOneById($mediaId);
             } catch (\Exception $e) {
-
             }
-
         }
     }
 }
