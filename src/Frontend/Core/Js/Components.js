@@ -10,6 +10,7 @@ import { Twitter } from './Components/Twitter'
 import { ConsentDialog } from './Components/ConsentDialog'
 import Vue from 'vue/'
 import VEmbed from './Vue-components/VEmbed'
+import VShareButton from './Vue-components/VShareButton'
 
 export class Components {
   initComponents () {
@@ -28,6 +29,13 @@ export class Components {
       window.vembed = new Vue({
         el: '[data-v-embed]',
         components: {VEmbed}
+      })
+    }
+
+    if ($('[data-v-share-button]').length) {
+      window.vsharebutton = new Vue({
+        el: '[data-v-share-button]',
+        components: {VShareButton}
       })
     }
   }
