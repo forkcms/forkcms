@@ -6,16 +6,23 @@
       :page_description="page_description"
       :page_title="page_title"
     ></Facebook>
+    <Twitter
+      v-if="platform === 'twitter'"
+      :page_url="page_url"
+      :page_title="page_title"
+    ></Twitter>
   </div>
 </template>
 
 <script>
   import Facebook from './ShareButtons/Facebook'
+  import Twitter from './ShareButtons/Twitter'
 
   export default {
     name:  'v-share-button',
     components: {
-      Facebook
+      Facebook,
+      Twitter
     },
     props: {
       platform: {
