@@ -14,7 +14,7 @@
     "@editorjs/paragraph": "^2.6.0",
     "@popperjs/core": "^2.6.0",
     "@symfony/webpack-encore": "^0.30.2",
-    "bootstrap": "^5.0.0-beta2",
+    "bootstrap": "^5.0.0-beta3",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
