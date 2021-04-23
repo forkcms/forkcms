@@ -64,11 +64,11 @@
                       </div>
                     </div>
                     <div class="col-lg-9">
-                      <div class="custom-file">
+                      <div class="form-group">
+                        <label class="form-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
                         {% form_field image %}
-                        <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                        {% form_field_error image %}
                       </div>
-                      {% form_field_error image %}
                     </div>
                   </div>
                 </div>

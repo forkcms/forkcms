@@ -84,11 +84,8 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                <div class="custom-file">
-                  {% form_field avatar %}
-                  <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                </div>
+                <label for="avatar" class="form-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                {% form_field avatar %}
                 <small class="form-text text-muted">{{ 'msg.HelpAvatar'|trans }}</small>
                 {% form_field_error avatar %}
               </div>

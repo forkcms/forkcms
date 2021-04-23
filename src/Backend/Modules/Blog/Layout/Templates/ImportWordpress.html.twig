@@ -4,12 +4,10 @@
 {% block content %}
   {% form import %}
   <div class="form-group">
-    <div class="custom-file">
-      <label for="wordpress" class="custom-file-label">{{ 'lbl.File'|trans|ucfirst }}</label>
-      {% form_field wordpress %}
-    </div>
-    {% form_field_error wordpress %}
+    <label for="wordpress" class="form-label">{{ 'lbl.File'|trans|ucfirst }}</label>
+    {% form_field wordpress %}
     <small class="form-text text-muted">{{ 'msg.HelpWordpress'|trans|ucfirst }}</small>
+    {% form_field_error wordpress %}
   </div>
   <div class="form-group">
     <label for="filter" class="control-label">{{ 'lbl.WordpressFilter'|trans|ucfirst }}</label>

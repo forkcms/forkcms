@@ -112,11 +112,8 @@
               </div>
             </div>
             <div class="form-group last">
-              <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-              <div class="custom-file">
-                {% form_field avatar %}
-                <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-              </div>
+              <label for="image" class="form-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+              {% form_field avatar %}
               {% form_field_error avatar %}
             </div>
           </div>

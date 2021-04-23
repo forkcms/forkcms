@@ -47,9 +47,9 @@
             </label>
           </div>
           <div class="col-lg-9">
-            <div class="custom-file">
+            <div class="form-group">
+              <label class="form-label" for="customFile">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
               {% form_field default_image %}
-              <label class="custom-file-label" for="customFile">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
               {% form_field_error default_image %}
             </div>
             {% if chkRemoveDefaultImage %}

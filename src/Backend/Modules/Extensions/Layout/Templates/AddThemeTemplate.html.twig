@@ -48,11 +48,11 @@
             </label>
           </div>
           <div class="col-lg-9">
-            <div class="custom-file">
+            <div class="form-group">
+              <label for="defaultImage" class="form-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
               {% form_field default_image %}
-              <label for="defaultImage" class="custom-file-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+              {% form_field_error default_image %}
             </div>
-            {% form_field_error default_image %}
           </div>
         </div>
       </fieldset>
