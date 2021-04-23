@@ -75,7 +75,7 @@ export class Templates {
     }
     html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
-    html += '<span class="sr-only">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += '<span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '<i class="fas fa-times"></i>'
     html += '</button>'
     html += '</div>'
@@ -156,7 +156,7 @@ export class Templates {
     html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
     html += '<i class="fas fa-times"></i>'
-    html += '<span class="sr-only">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
+    html += '<span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'
     html += '</div>'
     html += '</li>'

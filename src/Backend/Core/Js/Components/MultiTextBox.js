@@ -63,7 +63,7 @@ export class MultiTextBox {
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
         '<button id="addButton-' + id + '" class="btn btn-secondary' + (options.showIconOnly ? ' btn-icon-only' : '') + '">' +
         '<span class="fas fa-plus-square" aria-hidden="true"></span>' +
-        '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '<span' + (options.showIconOnly ? ' class="visually-hidden"' : '') + '>' + options.addLabel + '</span>' +
         '</button>' +
         '</div>' +
         '</div>' +

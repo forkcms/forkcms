@@ -422,6 +422,6 @@
   <div class="custom-control custom-visible-switch">
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %} data-role="page-block-visibility" />
 
-    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="sr-only">{{ form.vars.label|trans }}</span></label>
+    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="visually-hidden">{{ form.vars.label|trans }}</span></label>
   </div>
 {%- endblock %}

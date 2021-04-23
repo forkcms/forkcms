@@ -26,7 +26,7 @@
             <div class="input-group">
               <div class="input-group-text">
                 {{ macro.icon('calendar fa-fw') }}
-                <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
+                <label class="visually-hidden" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
               </div>
               {% form_field expiration_date %}
             </div>
@@ -36,7 +36,7 @@
             <div class="input-group">
               <div class="input-group-text">
                 {{ macro.icon('clock fa-fw') }}
-                <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
+                <label class="visually-hidden" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
               </div>
               {% form_field expiration_time %}
             </div>

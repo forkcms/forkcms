@@ -39,7 +39,7 @@
             <div class="input-group">
               <div class="input-group-text">
                 {{ macro.icon('envelope fa-fw') }}
-                <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+                <label class="visually-hidden" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
               </div>
               {% form_field backend_email %}
             </div>
@@ -49,7 +49,7 @@
             <div class="input-group">
               <div class="input-group-text">
                 {{ macro.icon('lock fa-fw') }}
-                <label class="sr-only" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
+                <label class="visually-hidden" for="backendPassword">{{ 'lbl.Password'|trans|ucfirst }}</label>
               </div>
               {% form_field backend_password %}
             </div>
@@ -89,7 +89,7 @@
           <div class="input-group">
             <div class="input-group-text">
               {{ macro.icon('envelope fa-fw') }}
-              <label class="sr-only" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
+              <label class="visually-hidden" for="backendEmail">{{ 'lbl.Email'|trans|ucfirst }}</label>
             </div>
             {% form_field backend_email_forgot %}
           </div>

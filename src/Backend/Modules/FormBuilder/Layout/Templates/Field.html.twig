@@ -44,15 +44,15 @@
         <div class="btn-group ms-auto" role="group">
           <button class="btn btn-secondary btn-icon-only btn-sm jsFieldEdit" data-field-id="{{ id }}" title="{{ 'lbl.Edit'|trans|ucfirst }}" aria-labelledby="edit-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('pencil-alt fa-fw') }}
-            <span class="sr-only" id="edit-text-{{ id }}">{{ 'lbl.Edit'|trans|ucfirst }}</span>
+            <span class="visually-hidden" id="edit-text-{{ id }}">{{ 'lbl.Edit'|trans|ucfirst }}</span>
           </button>
           <button class="btn btn-danger btn-icon-only btn-sm jsFieldDelete" data-field-id="{{ id }}" title="{{ 'lbl.Delete'|trans|ucfirst }}" aria-labelledby="delete-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('trash-alt fa-fw') }}
-            <span class="sr-only" id="delete-text-{{ id }}">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+            <span class="visually-hidden" id="delete-text-{{ id }}">{{ 'lbl.Delete'|trans|ucfirst }}</span>
           </button>
           <button class="btn btn-default btn-icon-only btn-sm fork-data-grid-sortable dragAndDropHandle" data-role="drag-and-drop-handle" aria-labelledby="move-text-{{ id }} field{{ id }}-label">
             {{ macro.icon('bars fa-fw') }}
-            <span class="sr-only" id="move-text-{{ id }}">{{ 'lbl.Move'|trans|ucfirst }}</span>
+            <span class="visually-hidden" id="move-text-{{ id }}">{{ 'lbl.Move'|trans|ucfirst }}</span>
           </button>
         </div>
       </div>

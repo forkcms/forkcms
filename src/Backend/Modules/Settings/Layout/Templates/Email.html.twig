@@ -31,7 +31,7 @@
             <small class="form-text text-muted">{{ 'msg.HelpSendingEmails'|trans }}</small>
             <span id="testEmailConnectionSpinner" class="pt-2 d-none">
               {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
-              <span class="sr-only">{{ 'lbl.Loading' }}</span>
+              <span class="visually-hidden">{{ 'lbl.Loading' }}</span>
             </span>
           </div>
           {{ macro.alert('danger', 'err.ErrorWhileSendingEmail'|trans, null, 'testEmailConnectionError', {'class': 'd-md-none'}, false) }}
