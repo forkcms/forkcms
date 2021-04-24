@@ -203,6 +203,8 @@ class Authentication
         self::cleanupOldSessions();
 
         $session = FrontendModel::getSession();
+        $oldSession = FrontendModel::getSession()->getId();
+
         // create a new session for safety reasons
         if (!$session->migrate(true)) {
             throw new RuntimeException(
@@ -248,7 +250,7 @@ class Authentication
         // trigger changed session ID
         FrontendModel::get('event_dispatcher')->dispatch(
             ProfilesEvents::PROFILES_SESSION_ID_CHANGED,
-            new ProfilesSessionIdChangedEvent()
+            new ProfilesSessionIdChangedEvent($oldSession)
         );
 
         // load the profile object
@@ -258,6 +260,8 @@ class Authentication
     public static function logout(): void
     {
         $session = FrontendModel::getSession();
+        $oldSession = FrontendModel::getSession()->getId();
+
         // delete session records
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
@@ -274,6 +278,12 @@ class Authentication
             );
         }
         FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
+
+        // trigger changed session ID
+        FrontendModel::get('event_dispatcher')->dispatch(
+            ProfilesEvents::PROFILES_SESSION_ID_CHANGED,
+            new ProfilesSessionIdChangedEvent($oldSession)
+        );
     }
 
     /**
