@@ -5,6 +5,8 @@ namespace Frontend\Modules\Profiles\Engine;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
+use Frontend\Modules\Profiles\ProfilesEvents;
+use Frontend\Modules\Profiles\Event\ProfilesSessionIdChangedEvent;
 use RuntimeException;
 
 /**
@@ -242,6 +244,12 @@ class Authentication
 
         // update last login
         FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
+
+        // trigger changed session ID
+        FrontendModel::get('event_dispatcher')->dispatch(
+            ProfilesEvents::PROFILES_SESSION_ID_CHANGED,
+            new ProfilesSessionIdChangedEvent()
+        );
 
         // load the profile object
         self::$profile = new FrontendProfilesProfile($profileId);
