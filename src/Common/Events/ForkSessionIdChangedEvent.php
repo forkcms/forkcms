@@ -1,11 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Event;
+namespace Common\Events;
 
 use Symfony\Component\EventDispatcher\Event;
-use Frontend\Core\Engine\Model as FrontendModel;
 
-class ProfilesSessionIdChangedEvent extends Event
+class ForkSessionIdChangedEvent extends Event
 {
     /**
      * @var string
@@ -17,10 +16,10 @@ class ProfilesSessionIdChangedEvent extends Event
      */
     protected $sessionId;
 
-    public function __construct(string $oldSessionId)
+    public function __construct(string $oldSessionId, string $sessionId)
     {
         $this->oldSessionId = $oldSessionId;
-        $this->sessionId = FrontendModel::getSession()->getId();
+        $this->sessionId = $sessionId;
     }
 
     public function getOldSessionId()

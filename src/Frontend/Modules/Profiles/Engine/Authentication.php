@@ -5,8 +5,8 @@ namespace Frontend\Modules\Profiles\Engine;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
-use Frontend\Modules\Profiles\ProfilesEvents;
-use Frontend\Modules\Profiles\Event\ProfilesSessionIdChangedEvent;
+use Common\Events\ForkEvents;
+use Common\Events\ForkSessionIdChangedEvent;
 use RuntimeException;
 
 /**
@@ -203,7 +203,7 @@ class Authentication
         self::cleanupOldSessions();
 
         $session = FrontendModel::getSession();
-        $oldSession = FrontendModel::getSession()->getId();
+        $oldSession = $session->getId();
 
         // create a new session for safety reasons
         if (!$session->migrate(true)) {
@@ -249,8 +249,8 @@ class Authentication
 
         // trigger changed session ID
         FrontendModel::get('event_dispatcher')->dispatch(
-            ProfilesEvents::PROFILES_SESSION_ID_CHANGED,
-            new ProfilesSessionIdChangedEvent($oldSession)
+            ForkEvents::FORK_EVENTS_SESSION_ID_CHANGED,
+            new ForkSessionIdChangedEvent($oldSession, $session->getId())
         );
 
         // load the profile object
@@ -260,7 +260,7 @@ class Authentication
     public static function logout(): void
     {
         $session = FrontendModel::getSession();
-        $oldSession = FrontendModel::getSession()->getId();
+        $oldSession = $session->getId();
 
         // delete session records
         FrontendModel::getContainer()->get('database')->delete(
@@ -281,8 +281,8 @@ class Authentication
 
         // trigger changed session ID
         FrontendModel::get('event_dispatcher')->dispatch(
-            ProfilesEvents::PROFILES_SESSION_ID_CHANGED,
-            new ProfilesSessionIdChangedEvent($oldSession)
+            ForkEvents::FORK_EVENTS_SESSION_ID_CHANGED,
+            new ForkSessionIdChangedEvent($oldSession, $session->getId())
         );
     }
 
