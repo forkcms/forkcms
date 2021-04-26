@@ -10,7 +10,7 @@ import { Twitter } from './Components/Twitter'
 import { ConsentDialog } from './Components/ConsentDialog'
 import Vue from 'vue/'
 import VEmbed from './Vue-components/VEmbed'
-import VShareButton from './Vue-components/VShareButton'
+import VShareButtons from './Vue-components/VShareButtons'
 
 export class Components {
   initComponents () {
@@ -32,10 +32,10 @@ export class Components {
       })
     }
 
-    if ($('[data-v-share-button]').length) {
+    if ($('[data-v-share-buttons]').length) {
       window.vsharebutton = new Vue({
-        el: '[data-v-share-button]',
-        components: {VShareButton}
+        el: '[data-v-share-buttons]',
+        components: {VShareButtons}
       })
     }
   }

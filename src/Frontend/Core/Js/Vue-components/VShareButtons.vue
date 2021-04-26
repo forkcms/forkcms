@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="d-flex">
     <Facebook
-      v-if="platform === 'facebook'"
+      v-if="facebook"
       :page_url="page_url"
       :page_description="page_description"
       :page_title="page_title"
       @clicked="openPopUpWindow"
     ></Facebook>
     <Twitter
-      v-if="platform === 'twitter'"
+      v-if="twitter"
       :page_url="page_url"
       :page_title="page_title"
       @clicked="openPopUpWindow"
@@ -21,15 +21,19 @@
   import Twitter from './ShareButtons/Twitter'
 
   export default {
-    name:  'v-share-button',
+    name:  'v-share-buttons',
     components: {
       Facebook,
       Twitter
     },
     props: {
-      platform: {
-        type: String,
-        required: true
+      facebook: {
+        type: Boolean,
+        default: false
+      },
+      twitter: {
+        type: Boolean,
+        default: false
       },
       page_url: {
         type: String,
@@ -52,6 +56,6 @@
 
         return window.open(share_url, "Share this", `${window_config},toolbar=no,menubar=no,scrollbars=no`)
       },
-    }
+    },
   }
 </script>
