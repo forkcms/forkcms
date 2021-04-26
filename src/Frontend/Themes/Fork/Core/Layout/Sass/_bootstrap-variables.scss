@@ -51,6 +51,17 @@ $green:         #2C9F42;
 $teal:          #20c997;
 $cyan:          #5bc0de;
 
+// brands
+$brands: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$brands: map-merge(
+    (
+      "facebook": #3b5998,
+      "twitter":  #00acee,
+    ),
+    $brands
+);
+
 $colors: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 $colors: map-merge(

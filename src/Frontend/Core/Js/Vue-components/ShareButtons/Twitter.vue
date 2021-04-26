@@ -1,11 +1,11 @@
 <template>
   <div>
     <button
-      class="btn btn-twitter"
+      class="btn btn-share btn-twitter"
       :page-url="page_url"
       @click="buttonClick"
     >
-      <i class="fab fa-twitter"></i>
+      <i class="fab fa-twitter fa-fw"></i>
     </button>
   </div>
 </template>

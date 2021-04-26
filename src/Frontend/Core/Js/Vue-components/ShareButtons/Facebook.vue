@@ -1,10 +1,10 @@
 <template>
   <button
-    class="btn btn-facebook"
+    class="btn btn-share btn-facebook"
     :page-url="page_url"
     @click="buttonClick"
   >
-    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-facebook-f fa-fw"></i>
   </button>
 </template>
 
