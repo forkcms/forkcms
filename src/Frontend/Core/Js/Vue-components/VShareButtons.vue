@@ -13,18 +13,26 @@
       :page_title="page_title"
       @clicked="openPopUpWindow"
     ></Twitter>
+    <LinkedIn
+      v-if="linkedin"
+      :page_url="page_url"
+      :page_title="page_title"
+      @clicked="openPopUpWindow"
+    ></LinkedIn>
   </div>
 </template>
 
 <script>
   import Facebook from './ShareButtons/Facebook'
   import Twitter from './ShareButtons/Twitter'
+  import LinkedIn from './ShareButtons/LinkedIn'
 
   export default {
     name:  'v-share-buttons',
     components: {
       Facebook,
-      Twitter
+      Twitter,
+      LinkedIn
     },
     props: {
       facebook: {
@@ -32,6 +40,10 @@
         default: false
       },
       twitter: {
+        type: Boolean,
+        default: false
+      },
+      linkedin: {
         type: Boolean,
         default: false
       },

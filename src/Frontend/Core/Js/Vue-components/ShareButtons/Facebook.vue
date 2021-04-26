@@ -16,13 +16,13 @@
         type: String,
         default: () => document.location.href.replace(document.location.hash, "")
       },
-      page_description: {
-        type: String,
-        default: () => ""
-      },
       page_title: {
         type: String,
-        default: () => ""
+        default: ''
+      },
+      page_description: {
+        type: String,
+        default: ''
       }
     },
     data () {
