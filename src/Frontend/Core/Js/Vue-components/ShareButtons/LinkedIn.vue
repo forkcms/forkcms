@@ -17,14 +17,6 @@
       page_url: {
         type: String,
         default: () => document.location.href.replace(document.location.hash, "")
-      },
-      page_title: {
-        type: String,
-        default: ''
-      },
-      page_description: {
-        type: String,
-        default: ''
       }
     },
     data () {
@@ -38,7 +30,7 @@
     },
     computed: {
       share_url() {
-        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.$props.page_url)}&text=${encodeURIComponent(this.$props.page_title)}&summary=${encodeURIComponent(this.$props.page_description)}&mini=true`;
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(this.$props.page_url)}&mini=true`;
       }
     },
   }

@@ -16,14 +16,6 @@
         type: String,
         default: () => document.location.href.replace(document.location.hash, "")
       },
-      page_title: {
-        type: String,
-        default: ''
-      },
-      page_description: {
-        type: String,
-        default: ''
-      }
     },
     data () {
       return {
@@ -36,7 +28,7 @@
     },
     computed: {
       share_url() {
-        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.$props.page_url)}&description=${encodeURIComponent(this.$props.page_description)}&title=${encodeURIComponent(this.$props.page_title)}`
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.$props.page_url)}`
       },
     }
   }

@@ -34,7 +34,7 @@
     },
     computed: {
       share_url() {
-        return `https://twitter.com/share?url=${encodeURIComponent(this.$props.page_url)}&text=${encodeURIComponent(this.$props.page_title)}`
+        return `https://twitter.com/share?url=${encodeURIComponent(this.$props.page_url)}`
       }
     },
   }
