@@ -340,6 +340,7 @@ class Page extends KernelLoader
     {
         $consentDialog = $this->get(ConsentDialog::class);
 
+        $this->template->assignGlobal('privacyConsentEnabled', $consentDialog->isDialogEnabled());
         $this->template->assignGlobal('privacyConsentDialogHide', !$consentDialog->shouldDialogBeShown());
         $this->template->assignGlobal('privacyConsentDialogLevels', $consentDialog->getLevels());
     }

@@ -163,10 +163,21 @@ jsFrontend.consentDialog = {
           }
         }
 
-          // store data in functional cookies for later usage
+        // store data in functional cookies for later usage
         utils.cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0, 6 * 30)
         utils.cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash, 6 * 30)
+
+        // trigger events
+        var eventName = 'privacyConsentLevel' + niceName
+        if (isChecked) {
+          eventName += 'Agreed'
+        } else {
+          eventName += 'Disagreed'
+        }
+        $(document).trigger(eventName)
       }
+
+      $(document).trigger('privacyConsentChanged')
 
       $consentDialog.hide()
     })
