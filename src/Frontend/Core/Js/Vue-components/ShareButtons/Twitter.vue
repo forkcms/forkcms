@@ -18,14 +18,6 @@
         type: String,
         default: () => document.location.href.replace(document.location.hash, "")
       },
-      page_title: {
-        type: String,
-        default: ''
-      }
-    },
-    data () {
-      return {
-      }
     },
     methods: {
       buttonClick () {
@@ -36,6 +28,6 @@
       share_url() {
         return `https://twitter.com/share?url=${encodeURIComponent(this.$props.page_url)}`
       }
-    },
+    }
   }
 </script>

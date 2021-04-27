@@ -17,10 +17,6 @@
         default: () => document.location.href.replace(document.location.hash, "")
       },
     },
-    data () {
-      return {
-      }
-    },
     methods: {
       buttonClick () {
         this.$emit('clicked', this.share_url)
@@ -29,7 +25,7 @@
     computed: {
       share_url() {
         return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.$props.page_url)}`
-      },
+      }
     }
   }
 </script>

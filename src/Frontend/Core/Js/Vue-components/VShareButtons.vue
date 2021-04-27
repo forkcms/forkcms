@@ -55,7 +55,7 @@
         const window_config = `width=${width},height=${height},left=${left},top=${top}`;
 
         return window.open(share_url, "Share this", `${window_config},toolbar=no,menubar=no,scrollbars=no`)
-      },
-    },
+      }
+    }
   }
 </script>
