@@ -161,17 +161,16 @@
                       <label for="userId" class="control-label">{{ 'lbl.Author'|trans|ucfirst }}</label>
                       {% form_field user_id %} {% form_field_error user_id %}
                     </div>
- {#                   {% if isAllowedAction('Index', 'Tags') %}
+
+                    {% if isAllowedAction('Index', 'Tags') %}
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
-                        {% form_field tags %} {% form_field_error tags %}
+                        <div data-v-tags-input>
+                          <v-tags-input current-tags="{{ tags }}" input-id="tags"></v-tags-input>
+                        </div>
                         <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
                       </div>
-                    {% endif %}#}
-
-                    <div data-v-tags-input>
-                      <v-tags-input current-tags="{{ tags }}" input-id="tags"></v-tags-input>
-                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>

@@ -1,5 +1,18 @@
-.bootstrap-tagsinput {
-  display: block;
-  overflow: hidden;
-  padding: 4px 6px 7px;
+.ti-input {
+  @extend .form-control;
+
+  height: auto;
+
+  .ti-tag {
+    background: $primary;
+
+    &.ti-deletion-mark {
+      background: $danger;
+    }
+  }
+}
+
+
+.ti-autocomplete .ti-item.ti-selected-item {
+  background: $primary;
 }
