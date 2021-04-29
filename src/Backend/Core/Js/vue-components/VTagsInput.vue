@@ -75,7 +75,7 @@
       }
     },
     created() {
-      this.tags = this.currentTags.split(',').map(text => ({ text }));
+      this.tags = this.currentTags.length > 0 ? this.currentTags.split(',').map(text => ({ text })) : []
     }
   }
 </script>

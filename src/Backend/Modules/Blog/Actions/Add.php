@@ -67,8 +67,8 @@ class Add extends BackendBaseActionAdd
             'tags',
             null,
             null,
-            'form-control js-tags-input',
-            'form-control danger js-tags-input'
+            'form-control',
+            'form-control danger'
         )->setAttribute('aria-describedby', 'tags-info');
         $this->form->addDate('publish_on_date');
         $this->form->addTime('publish_on_time');

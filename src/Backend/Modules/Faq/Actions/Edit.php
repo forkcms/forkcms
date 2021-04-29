@@ -69,8 +69,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
-            'form-control js-tags-input',
-            'form-control danger js-tags-input'
+            'form-control',
+            'form-control danger'
         );
 
         $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
@@ -90,6 +90,8 @@ class Edit extends BackendBaseActionEdit
         // assign the active record and additional variables
         $this->template->assign('item', $this->record);
         $this->template->assign('feedback', $this->feedback);
+
+        $this->template->assign('tags', BackendTagsModel::getTags($this->url->getModule(), $this->record['id']));
 
         $this->header->appendDetailToBreadcrumbs($this->record['question']);
     }

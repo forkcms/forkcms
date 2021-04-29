@@ -118,7 +118,7 @@ $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
 
-  if ($('[data-v-tags-input]').length) {
+  if ($('[data-v-tags-input]').length > 0) {
     window.backend.tagsInputVue = new Vue({
       el: '[data-v-tags-input]',
       components: {VTagsInput}

@@ -80,7 +80,9 @@
                 </div>
                 <div class="form-group last">
                   <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
-                  {% form_field tags %} {% form_field_error tags %}
+                  <div data-v-tags-input>
+                    <v-tags-input current-tags="{{ tags }}" input-id="tags"></v-tags-input>
+                  </div>
                   <small class="form-text text-muted">{{ 'msg.HelpTextTags'|trans }}</small>
                 </div>
               </div>
