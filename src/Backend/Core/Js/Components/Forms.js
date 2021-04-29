@@ -7,7 +7,6 @@ export class Forms {
     this.focusFirstField()
     this.datefields()
     this.submitWithLinks()
-    this.tagsInput()
     this.meta()
     this.datePicker()
     this.bootstrapTabFormValidation()
@@ -319,38 +318,6 @@ export class Forms {
           $('form#' + formId).submit(() => {
             return !dontSubmit
           })
-        }
-      })
-    }
-  }
-
-  // add tagsinput to the correct input fields
-  tagsInput () {
-    if ($('.js-tags-input').length > 0) {
-      const allTags = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: {
-          url: '/backend/ajax',
-          prepare: (settings) => {
-            settings.type = 'POST'
-            settings.data = {fork: {module: 'Tags', action: 'GetAllTags'}}
-            return settings
-          },
-          cache: false,
-          filter: (list) => {
-            list = list.data
-            return list
-          }
-        }
-      })
-
-      allTags.initialize()
-      $('.js-tags-input').tagsinput({
-        tagClass: 'badge badge-primary',
-        typeaheadjs: {
-          name: 'Tags',
-          source: allTags.ttAdapter()
         }
       })
     }

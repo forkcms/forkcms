@@ -52,7 +52,6 @@
     "typeahead.js": "^0.11.1",
     "url-loader": "^4.1.0",
     "vue": "^2.6.12",
-    "vue-axios": "^3.2.4",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
     "webpack-livereload-plugin": "^2.3.0",
