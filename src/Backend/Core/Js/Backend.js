@@ -5,6 +5,10 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 // TODO WEBPACK remove jquery ui, now used for sortable and datepicker
 import 'jquery-ui-dist/jquery-ui'
+import Vue from 'vue'
+
+// vue component imports
+import VTagsInput from './vue-components/VTagsInput'
 
 // component imports
 import { Ajax } from './Components/Ajax'
@@ -113,4 +117,12 @@ export class Backend {
 $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
+
+  if ($('[data-v-tags-input]').length) {
+    window.backend.tagsInputVue = new Vue({
+      el: '[data-v-tags-input]',
+      components: {VTagsInput}
+    })
+  }
+
 })

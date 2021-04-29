@@ -203,8 +203,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
-            'form-control js-tags-input',
-            'form-control danger js-tags-input'
+            'form-control',
+            'form-control danger'
         )->setAttribute('aria-describedby', 'tags-info');
         $this->form->addDate('publish_on_date', $this->record['publish_on']);
         $this->form->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
@@ -295,6 +295,8 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
         $this->template->assign('imageIsAllowed', $this->imageIsAllowed);
+
+        $this->template->assign('tags', BackendTagsModel::getTags($this->url->getModule(), $this->record['id']));
 
         // assign category
         if ($this->categoryId !== null) {

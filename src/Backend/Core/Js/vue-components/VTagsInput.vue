@@ -1,0 +1,76 @@
+<template>
+  <div>
+    <v-tags-input
+      v-model="tag"
+      :tags="tags"
+      @tags-changed="newTags => tags = newTags"
+    />
+    <input :id="inputId" :name="inputId" type="hidden" :value="tagsInputValue" />
+  </div>
+</template>
+
+<script>
+  import VTagsInput from '@johmun/vue-tags-input';
+  import axios from 'axios'
+  import { Data } from '../Components/Data'
+
+  export default {
+    components: {
+      VTagsInput ,
+    },
+    props: {
+      currentTags: {
+        type: String,
+        default: ''
+      },
+      inputId: {
+        type: String,
+        required: true
+      }
+    },
+    data() {
+      return {
+        tag: '',
+        tags: null,
+        tagsInputValue: '',
+        filteredTags: []
+      };
+    },
+    watch: {
+      tags (newValue) {
+        let text = []
+
+        for (const [key, value] of Object.entries(newValue)) {
+          text.push(value.text)
+        }
+        this.tagsInputValue = text.join(',')
+      }
+    },
+    methods: {
+      getFilteredTags () {
+        axios.post('/backend/ajax',
+          {
+            fork: {
+              module: 'Tags',
+              action: 'GetAllTags'
+            },
+          },
+          {
+            timeout: 1000,
+            headers: {'X-CSRF-Token': Data.get('csrf-token')}
+          }
+        )
+        .then((response) => {
+          this.filteredTags = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+      }
+    },
+    created() {
+      this.tags = this.currentTags.split(',').map(text => ({ text }));
+    }
+  }
+</script>
