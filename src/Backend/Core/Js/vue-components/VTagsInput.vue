@@ -3,6 +3,7 @@
     <v-tags-input
       v-model="tag"
       :tags="tags"
+      :autocomplete-items="filteredTags"
       @tags-changed="newTags => tags = newTags"
     />
     <input :id="inputId" :name="inputId" type="hidden" :value="tagsInputValue" />
@@ -13,6 +14,7 @@
   import VTagsInput from '@johmun/vue-tags-input';
   import axios from 'axios'
   import { Data } from '../Components/Data'
+  import { Messages } from '../Components/Messages'
 
   export default {
     components: {
@@ -44,10 +46,13 @@
           text.push(value.text)
         }
         this.tagsInputValue = text.join(',')
+      },
+      tag (newValue) {
+        this.getFilteredTags(newValue)
       }
     },
     methods: {
-      getFilteredTags () {
+      getFilteredTags (value) {
         axios.post('/backend/ajax',
           {
             fork: {
@@ -61,11 +66,11 @@
           }
         )
         .then((response) => {
-          this.filteredTags = response.data.data
+          this.filteredTags = response.data.data.map(text => ({ text }))
         })
         .catch(error => {
           console.log(error)
-          this.errored = true
+          Messages.add('danger', window.backend.locale.err('SomethingWentWrong'), '')
         })
       }
     },
