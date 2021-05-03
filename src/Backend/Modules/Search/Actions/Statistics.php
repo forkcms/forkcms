@@ -50,8 +50,8 @@ class Statistics extends Action
     {
         $data = unserialize($data, ['allowed_classes' => false]);
 
-        if (isset($data['server']['HTTP_REFERER'])) {                          
-            $referrer = $data['server']['HTTP_REFERER'];        
+        if (isset($data['server']['HTTP_REFERER'])) {
+            $referrer = $data['server']['HTTP_REFERER'];
             if (preg_match('/^(http|https):\/\//', $referrer)) {
                 $referrer = htmlspecialchars($referrer);
                 return '<a href="' . $referrer . '">' . $referrer . '</a>';
