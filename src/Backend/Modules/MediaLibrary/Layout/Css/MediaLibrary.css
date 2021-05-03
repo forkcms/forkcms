@@ -177,6 +177,35 @@
     display: block;
     font-weight: normal;
   }
+  .mediaConnectedItems .editMediaItem::before {
+    content: "\f044";
+    color: #2f77cf;
+    font: normal normal normal 2rem/1.7rem FontAwesome;
+    position: absolute;
+    top: 7px;
+    right: 26px;
+    background: #ffffff;
+  }
+  .mediaConnectedItems .mediaHolder .editMediaItem:hover,
+  .mediaConnectedItems .mediaHolder .editMediaItem:focus {
+    font-size: 14px;
+  }
+  .mediaConnectedItems .mediaHolder .editMediaItem:hover::before,
+  .mediaConnectedItems .mediaHolder .editMediaItem:focus::before {
+    color: #01417b;
+    padding: 0;
+    font-weight: normal;
+  }
+  .mediaConnectedItems .editMediaItem {
+    color: #2f77cf;
+    line-height: 2em;
+    font-size: 0;
+    width: 100%;
+    background: none;
+    border: none;
+    display: block;
+    font-weight: normal;
+  }
 /**
  * Media Dialog
  */
