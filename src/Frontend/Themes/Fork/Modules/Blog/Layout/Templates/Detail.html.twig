@@ -59,4 +59,8 @@
     {% endif %}
     {{ item.text|parse_blocks }}
   </div>
+  <div data-v-share-buttons>
+    <p class="mb-2"><strong>{{ 'lbl.Share'|trans|ucfirst }}:</strong></p>
+    <v-share-buttons facebook twitter linkedin></v-share-buttons>
+  </div>
 {% endblock %}

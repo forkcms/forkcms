@@ -1,0 +1,20 @@
+.btn-share {
+  color: $white;
+  padding: .375rem .5rem;
+
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+
+@each $color, $value in $brands {
+  .btn-#{$color} {
+    background: $value;
+
+    &:hover,
+    &:focus {
+      background: darken($value, 15%);
+    }
+  }
+}
