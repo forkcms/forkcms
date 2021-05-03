@@ -39,6 +39,7 @@ var mediaFolders = false
 var mediaGroups = {}
 var currentMediaGroupId = 0
 var mediaFolderId
+var searchQuery
 var currentAspectRatio = false
 var minimumMediaItemsCount = false
 var maximumMediaItemsCount = false
@@ -188,6 +189,25 @@ jsBackend.mediaLibraryHelper.group = {
       // get media for this folder
       jsBackend.mediaLibraryHelper.group.getMedia()
     })
+
+    $('#searchMedia').on('click', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      mediaFolderId = $('#mediaFolders').val();
+      searchQuery = $('[name=query]').val();
+
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      jsBackend.mediaLibraryHelper.group.getMedia()
+    })
+
+    $('[name=query]').bind('keyup input', utils.events.debounce(function(e){
+      mediaFolderId = $('#mediaFolders').val();
+      searchQuery = $(this).val();
+
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      jsBackend.mediaLibraryHelper.group.getMedia()
+    }, 400))
   },
 
   /**
@@ -195,6 +215,13 @@ jsBackend.mediaLibraryHelper.group = {
    */
   clearFoldersCache: function () {
     mediaFolders = false
+  },
+
+  /**
+   * Clear the media cache when necessary
+   */
+  clearMediaCache: function(mediaFolderId) {
+    media[mediaFolderId] = false;
   },
 
   /**
@@ -435,6 +462,7 @@ jsBackend.mediaLibraryHelper.group = {
         },
         group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : null,
         folder_id: mediaFolderId,
+        query: searchQuery,
         aspect_ratio: currentAspectRatio
       },
       success: function (json, textStatus) {

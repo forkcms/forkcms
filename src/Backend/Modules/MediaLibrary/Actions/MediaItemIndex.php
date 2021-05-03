@@ -4,12 +4,15 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDatabase;
+use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemSearchType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;
+use Symfony\Component\Form\Form;
 
 class MediaItemIndex extends BackendBaseActionIndex
 {
@@ -21,14 +24,15 @@ class MediaItemIndex extends BackendBaseActionIndex
         $this->display();
     }
 
-    private function getDataGrids(MediaFolder $mediaFolder = null): array
+    private function getDataGrids(MediaFolder $mediaFolder = null, string $searchQuery = null): array
     {
         return array_map(
-            function ($type) use ($mediaFolder) {
+            function ($type) use ($mediaFolder, $searchQuery) {
                 /** @var DataGridDatabase $dataGrid */
                 $dataGrid = MediaItemDataGrid::getDataGrid(
                     Type::fromString($type),
-                    ($mediaFolder !== null) ? $mediaFolder->getId() : null
+                    ($mediaFolder !== null) ? $mediaFolder->getId() : null,
+                    $searchQuery
                 );
 
                 return [
@@ -83,6 +87,22 @@ class MediaItemIndex extends BackendBaseActionIndex
         return $dropdownItems;
     }
 
+    private function getSearchForm(): Form
+    {
+        $request = $this->getRequest();
+        $data = [];
+
+        if (!empty((string) $request->get('query'))) {
+            $data['query'] = (string) $request->get('query');
+        }
+
+        $form = $this->createForm(MediaItemSearchType::class, $data);
+
+        $form->handleRequest($request);
+
+        return $form;
+    }
+
     private function hasResults(array $dataGrids): bool
     {
         $totalResultCount = array_sum(
@@ -103,6 +123,24 @@ class MediaItemIndex extends BackendBaseActionIndex
 
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
+        $searchQuery = $this->getRequest()->get('query');
+        $searchForm = $this->getSearchForm();
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $parameters = [
+                'query' => $searchForm->getData()['query'],
+            ];
+
+            $this->redirect(
+                Model::createUrlForAction(
+                    'MediaItemIndex',
+                    null,
+                    null,
+                    $parameters
+                )
+            );
+            return;
+        }
 
         $this->template->assign(
             'folderHasNoChildren',
@@ -113,15 +151,16 @@ class MediaItemIndex extends BackendBaseActionIndex
 
         // Assign variables
         $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->template->assign('searchForm', $searchForm->createView());
 
-        $this->parseDataGrids($mediaFolder);
+        $this->parseDataGrids($mediaFolder, $searchQuery);
         $this->parseMediaFolders($mediaFolder);
     }
 
-    private function parseDataGrids(MediaFolder $mediaFolder = null): void
+    private function parseDataGrids(MediaFolder $mediaFolder = null, string $searchQuery = null): void
     {
         /** @var array $dataGrids */
-        $dataGrids = $this->getDataGrids($mediaFolder);
+        $dataGrids = $this->getDataGrids($mediaFolder, $searchQuery);
 
         $this->template->assign('dataGrids', $dataGrids);
         $this->template->assign('hasResults', $this->hasResults($dataGrids));

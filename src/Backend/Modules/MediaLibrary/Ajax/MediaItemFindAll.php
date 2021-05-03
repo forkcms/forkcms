@@ -27,12 +27,13 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         $mediaFolder = $this->getMediaFolderBasedOnMediaGroup();
         $aspectRatio = $this->getAspectRatio();
+        $searchQuery = $this->getSearchQuery();
 
         // Output success message with variables
         $this->output(
             Response::HTTP_OK,
             [
-                'media' => $this->loadMediaItems($mediaFolder, $aspectRatio),
+                'media' => $this->loadMediaItems($mediaFolder, $aspectRatio, $searchQuery),
                 'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,
                 'tab' => $this->selectedTab,
             ]
@@ -48,6 +49,17 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
 
         return new AspectRatio($aspectRatio);
+    }
+
+    private function getSearchQuery(): ?string
+    {
+        $query = (string) $this->getRequest()->request->get('query');
+
+        if (empty($query)) {
+            return null;
+        }
+
+        return $query;
     }
 
     private function getMediaFolder(): ?MediaFolder
@@ -113,10 +125,18 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
     }
 
-    private function loadMediaItems(?MediaFolder $mediaFolder, ?AspectRatio $aspectRatio): array
+    private function loadMediaItems(?MediaFolder $mediaFolder, ?AspectRatio $aspectRatio, ?string $searchQuery): array
     {
         if ($mediaFolder === null) {
             return [];
+        }
+
+        if ($searchQuery) {
+            return $this->get('media_library.repository.item')->findByFolderAndAspectRatioAndSearchQuery(
+                $mediaFolder,
+                $aspectRatio,
+                $searchQuery
+            );
         }
 
         return $this->get('media_library.repository.item')->findByFolderAndAspectRatio($mediaFolder, $aspectRatio);
