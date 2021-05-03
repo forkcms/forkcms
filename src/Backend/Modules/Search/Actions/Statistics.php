@@ -49,12 +49,15 @@ class Statistics extends Action
     public static function parseRefererInDataGrid(string $data): string
     {
         $data = unserialize($data, ['allowed_classes' => false]);
-        if (!isset($data['server']['HTTP_REFERER'])) {
-            return '';
+
+        if (isset($data['server']['HTTP_REFERER'])) {
+            $referrer = $data['server']['HTTP_REFERER'];
+            if (preg_match('/^(http|https):\/\//', $referrer)) {
+                $referrer = htmlspecialchars($referrer);
+                return '<a href="' . $referrer . '">' . $referrer . '</a>';
+            }
         }
 
-        $referrer = htmlspecialchars($data['server']['HTTP_REFERER']);
-
-        return '<a href="' . $referrer . '">' . $referrer . '</a>';
+        return '';
     }
 }
