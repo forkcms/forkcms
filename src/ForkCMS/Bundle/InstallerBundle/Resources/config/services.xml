@@ -19,5 +19,11 @@
             <argument type="service" id="forkcms.requirements.checker"/>
             <tag name="console.command" />
         </service>
+
+        <service id="forkcms.console.installer.install_module" class="ForkCMS\Bundle\InstallerBundle\Console\InstallModuleCommand">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="kernel"/>
+            <tag name="console.command" />
+        </service>
     </services>
 </container>
