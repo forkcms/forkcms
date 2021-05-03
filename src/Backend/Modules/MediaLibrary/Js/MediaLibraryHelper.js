@@ -193,22 +193,22 @@ jsBackend.mediaLibraryHelper.group = {
       jsBackend.mediaLibraryHelper.group.getMedia()
     })
 
-    $('#searchMedia').on('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
+    $('#searchMedia').on('click', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
 
-      mediaFolderId = $('#mediaFolders').val();
-      searchQuery = $('[name=query]').val();
+      mediaFolderId = $('#mediaFolders').val()
+      searchQuery = $('[name=query]').val()
 
-      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId)
       jsBackend.mediaLibraryHelper.group.getMedia()
     })
 
-    $('[name=query]').bind('keyup input', utils.events.debounce(function(e){
-      mediaFolderId = $('#mediaFolders').val();
-      searchQuery = $(this).val();
+    $('[name=query]').bind('keyup input', utils.events.debounce(function (e) {
+      mediaFolderId = $('#mediaFolders').val()
+      searchQuery = $(this).val()
 
-      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId)
       jsBackend.mediaLibraryHelper.group.getMedia()
     }, 400))
   },
@@ -310,8 +310,8 @@ jsBackend.mediaLibraryHelper.group = {
   /**
    * Clear the media cache when necessary
    */
-  clearMediaCache: function(mediaFolderId) {
-    media[mediaFolderId] = false;
+  clearMediaCache: function (mediaFolderId) {
+    media[mediaFolderId] = false
   },
 
   /**
