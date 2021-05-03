@@ -464,6 +464,17 @@ class Page extends KernelLoader
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
 
+        // set canonical url
+        if (array_key_exists('meta_data', $this->record) &&
+            is_array($this->record['meta_data']) &&
+            array_key_exists('canonical_url_overwrite', $this->record['meta_data']) &&
+            array_key_exists('canonical_url', $this->record['meta_data'])) {
+            if ((bool)$this->record['meta_data']['canonical_url_overwrite'] &&
+                !empty($this->record['meta_data']['canonical_url'])) {
+                $this->header->setCanonicalUrl($this->record['meta_data']['canonical_url']);
+            }
+        }
+
         // advanced SEO-attributes
         if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(

@@ -10361,6 +10361,10 @@
         <translation language="pt"><![CDATA[URL]]></translation>
         <translation language="pl"><![CDATA[URL]]></translation>
       </item>
+      <item type="label" name="CanonicalURL">
+        <translation language="nl"><![CDATA[canonical URL]]></translation>
+        <translation language="en"><![CDATA[canonical URL]]></translation>
+      </item>
       <item type="label" name="UsedIn">
         <translation language="nl"><![CDATA[gebruikt in]]></translation>
         <translation language="en"><![CDATA[used in]]></translation>
