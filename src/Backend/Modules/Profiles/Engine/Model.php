@@ -691,9 +691,15 @@ class Model
         $profile = BackendModel::get('profile.repository.profile')->find($membership['profile_id']);
         $group = BackendModel::get('profile.repository.profile_group')->find($membership['group_id']);
 
+        $startsOn = new DateTime();
+        $startsOn->setTimestamp($membership['starts_on']);
+        $startsOn->format('Y-m-d H:i:s');
+
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+            $expiresOn = new DateTime();
+            $expiresOn->setTimestamp($membership['expires_on']);
+            $expiresOn->format('Y-m-d H:i:s');
         }
 
         $existingGroupRight = $profile->getRights()->filter(
@@ -705,8 +711,8 @@ class Model
         if ($existingGroupRight instanceof GroupRight) {
             $existingGroupRight->update(
                 $group,
-                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
-                null
+                $startsOn,
+                $expiresOn
             );
 
             BackendModel::get('doctrine.orm.entity_manager')->flush();
@@ -717,7 +723,7 @@ class Model
         $groupRight = new GroupRight(
             $profile,
             $group,
-            DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+            $startsOn,
             $expiresOn
         );
 
