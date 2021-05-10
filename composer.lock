@@ -5599,16 +5599,16 @@
     "packages-dev": [
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.85",
+            "version": "0.12.86",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03"
+                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/20e6333c0067875ad7697cd8acdf245c6ef69d03",
-                "reference": "20e6333c0067875ad7697cd8acdf245c6ef69d03",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
+                "reference": "a84fdc53ecca7643dbc89ef8880d8b393a6c155a",
                 "shasum": ""
             },
             "require": {
@@ -5639,7 +5639,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.85"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.86"
             },
             "funding": [
                 {
@@ -5655,26 +5655,26 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-27T14:13:16+00:00"
+            "time": "2021-05-08T11:29:01+00:00"
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.29",
+            "version": "0.12.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "4e4353ef28765f1b5e0ebab1bced58f087f2044b"
+                "reference": "7f47026c69c9f2ef8d6b1814bd17cc86ea768e9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/4e4353ef28765f1b5e0ebab1bced58f087f2044b",
-                "reference": "4e4353ef28765f1b5e0ebab1bced58f087f2044b",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/7f47026c69c9f2ef8d6b1814bd17cc86ea768e9d",
+                "reference": "7f47026c69c9f2ef8d6b1814bd17cc86ea768e9d",
                 "shasum": ""
             },
             "require": {
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.85"
+                "phpstan/phpstan": "^0.12.86"
             },
             "conflict": {
                 "symfony/framework-bundle": "<3.0"
@@ -5723,9 +5723,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.29"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.33"
             },
-            "time": "2021-05-02T09:05:52+00:00"
+            "time": "2021-05-05T14:52:06+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
