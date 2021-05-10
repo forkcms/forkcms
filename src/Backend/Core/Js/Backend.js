@@ -5,6 +5,8 @@ import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 // TODO WEBPACK remove jquery ui, now used for sortable and datepicker
 import 'jquery-ui-dist/jquery-ui'
+import Vue from 'vue'
+import CheckboxEnableField from './vue-components/CheckboxEnableField'
 
 // component imports
 import { Ajax } from './Components/Ajax'
@@ -112,5 +114,12 @@ export class Backend {
 
 $(window).on('load', () => {
   window.backend = new Backend()
+  if ($('#tabSEO').length) {
+    window.backend.seoVue = new Vue({
+      el: '#tabSEO',
+      components: {CheckboxEnableField}
+    })
+  }
+
   window.backend.initBackend()
 })

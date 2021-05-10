@@ -121,14 +121,10 @@
     data-page-id="{{ form.parent.vars.value.id }}"
     data-base-field-selector="{{ base_field_selector }}"
     data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
-    data-page-title-selector="{{ '#' ~ form.title.vars.id }}"
-    data-page-title-overwrite-selector="{{ '#' ~ form.titleOverwrite.vars.id }}"
-    data-page-navigation-title-selector="{{ '#' ~ form.parent.children.navigation.children.title.vars.id }}"
-    data-page-navigation-title-overwrite-selector="{{ '#' ~ form.parent.children.navigation.children.titleOverwrite.vars.id }}"
-    data-meta-description-selector="{{ '#' ~ form.description.vars.id }}"
-    data-meta-description-overwrite-selector="{{ '#' ~ form.descriptionOverwrite.vars.id }}"
-    data-meta-keywords-selector="{{ '#' ~ form.keywords.vars.id }}"
-    data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
+    data-page-title-selector="{{ form.title.vars.id }}"
+    data-page-navigation-title-selector="{{ form.parent.children.navigation.children.title.vars.id }}"
+    data-meta-description-selector="{{ form.description.vars.id }}"
+    data-meta-keywords-selector="{{ form.keywords.vars.id }}"
     data-url-selector="{{ '#' ~ form.url.vars.id }}"
     data-url-overwrite-selector="{{ '#' ~ form.urlOverwrite.vars.id }}"
     data-generated-url-selector="{{ form.vars.generated_url_selector }}"
@@ -140,52 +136,80 @@
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
       <div class="checkboxTextFieldCombo">
-        <div class="form-group">
-          {{ form_widget(form.titleOverwrite) }}
-        </div>
-        <div class="form-group">
-          {{ form_label(form.title) }}
-          {{ form_widget(form.title) }}
-          {{ form_errors(form.title) }}
-          <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
-        </div>
+        <checkbox-enable-field
+          switch-check
+          ref="{{ form.title.vars.id }}"
+          checkbox-id="{{ form.titleOverwrite.vars.id }}"
+          checkbox-label="{{ form.titleOverwrite.vars.label|trans|ucfirst }}"
+          checkbox-name="{{ form.titleOverwrite.vars.full_name }}"
+          field-id="{{ form.title.vars.id }}"
+          field-label="{{ form.title.vars.label|trans|ucfirst }}"
+          field-name="{{ form.title.vars.full_name }}"
+          field-help-text="{{ 'msg.HelpPageTitle'|trans|raw }}"
+          value-on-load="{{ form.title.vars.value }}"
+          {% if form.titleOverwrite.vars.checked %} enabled-on-load{% endif %}
+        >
+        </checkbox-enable-field>
+        {% do form.title.setRendered() %}
+        {% do form.titleOverwrite.setRendered() %}
       </div>
+
       <div class="checkboxTextFieldCombo">
-        <div class="form-group">
-          {{ form_widget(form.parent.children.navigation.children.titleOverwrite) }}
-        </div>
-        <div class="form-group">
-          {{ form_label(form.parent.children.navigation.children.title) }}
-          {{ form_widget(form.parent.children.navigation.children.title) }}
-          {{ form_errors(form.parent.children.navigation.children.title) }}
-          <small class="form-text text-muted">{{ 'msg.HelpNavigationTitle'|trans|raw }}</small>
-        </div>
+        <checkbox-enable-field
+          switch-check
+          ref="{{ form.parent.navigation.title.vars.id }}"
+          checkbox-id="{{ form.parent.navigation.titleOverwrite.vars.id }}"
+          checkbox-label="{{ form.parent.navigation.titleOverwrite.vars.label|trans|ucfirst }}"
+          checkbox-name="{{ form.parent.navigation.titleOverwrite.vars.full_name }}"
+          field-id="{{ form.parent.navigation.title.vars.id }}"
+          field-label="{{ form.parent.navigation.title.vars.label|trans|ucfirst }}"
+          field-name="{{ form.parent.navigation.title.vars.full_name }}"
+          field-help-text="{{ 'msg.HelpNavigationTitle'|trans|raw }}"
+          value-on-load="{{ form.parent.vars.value.navigationTitle }}"
+          {% if form.parent.navigation.titleOverwrite.vars.checked %} enabled-on-load{% endif %}
+        >
+        </checkbox-enable-field>
+        {% do form.parent.navigation.title.setRendered() %}
+        {% do form.parent.navigation.titleOverwrite.setRendered() %}
       </div>
     </fieldset>
 
     <fieldset>
       <legend>{{ 'lbl.MetaInformation'|trans|ucfirst }}</legend>
       <div class="checkboxTextFieldCombo">
-        <div class="form-group">
-          {{ form_widget(form.descriptionOverwrite) }}
-        </div>
-        <div class="form-group">
-          {{ form_label(form.description) }}
-          {{ form_widget(form.description) }}
-          {{ form_errors(form.description) }}
-          <small class="form-text text-muted">{{ 'msg.HelpMetaDescription'|trans|raw }}</small>
-        </div>
+        <checkbox-enable-field
+          switch-check
+          ref="{{ form.description.vars.id }}"
+          checkbox-id="{{ form.descriptionOverwrite.vars.id }}"
+          checkbox-label="{{ form.descriptionOverwrite.vars.label|trans|capitalize }}"
+          checkbox-name="{{ form.descriptionOverwrite.vars.full_name }}"
+          field-id="{{ form.description.vars.id }}"
+          field-label="{{  form.description.vars.label|trans|capitalize }}"
+          field-name="{{ form.description.vars.full_name }}"
+          field-help-text="{{  'msg.HelpMetaDescription'|trans|raw }}"
+          value-on-load="{{ form.description.vars.value }}"
+          {% if form.descriptionOverwrite.vars.checked %} enabled-on-load{% endif %}
+        >
+        </checkbox-enable-field>
+        {% do form.description.setRendered() %}
+        {% do form.descriptionOverwrite.setRendered() %}
       </div>
       <div class="checkboxTextFieldCombo">
-        <div class="form-group">
-          {{ form_widget(form.keywordsOverwrite) }}
-        </div>
-        <div class="form-group">
-          {{ form_label(form.keywords) }}
-          {{ form_widget(form.keywords) }}
-          {{ form_errors(form.keywords) }}
-          <small class="form-text text-muted">{{ 'msg.HelpMetaKeywords'|trans|raw }}</small>
-        </div>
+        <checkbox-enable-field
+          switch-check
+          ref="{{ form.keywords.vars.id }}"
+          checkbox-id="{{ form.keywordsOverwrite.vars.id }}"
+          checkbox-label="{{ form.keywordsOverwrite.vars.label|trans|capitalize }}"
+          checkbox-name="{{ form.keywordsOverwrite.vars.full_name }}"
+          field-id="{{ form.keywords.vars.id }}"
+          field-label="{{  form.keywords.vars.label|trans|capitalize }}"
+          field-name="{{ form.keywords.vars.full_name }}"
+          field-help-text="{{  'msg.HelpMetaKeywords'|trans|raw }}"
+          value-on-load="{{ form.keywords.vars.value }}"
+          {% if form.keywordsOverwrite.vars.checked %} enabled-on-load{% endif %}
+        ></checkbox-enable-field>
+        {% do form.keywords.setRendered() %}
+        {% do form.keywordsOverwrite.setRendered() %}
       </div>
       {% if form.custom %}
         <div class="form-group">
