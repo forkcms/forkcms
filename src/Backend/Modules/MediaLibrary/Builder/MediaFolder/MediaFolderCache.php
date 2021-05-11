@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Builder\MediaFolder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -88,7 +89,7 @@ final class MediaFolderCache
 
     private function getMediaFoldersForParent(MediaFolder $parent = null): array
     {
-        return (array) $this->container->get('media_library.repository.folder')->findBy(
+        return (array) $this->container->get(MediaFolderRepository::class)->findBy(
             ['parent' => $parent],
             ['name' => 'ASC']
         );

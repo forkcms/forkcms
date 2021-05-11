@@ -2,14 +2,14 @@ services:
     media_library.form.type.media_group:
         class: Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType
         arguments:
-            - "@media_library.repository.group"
+            - '@Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository'
             - "@command_bus"
         tags:
             - { name: form.type }
 
     Backend\Modules\MediaLibrary\Domain\MediaGroup\SingleMediaGroupType:
         arguments:
-            - "@media_library.repository.group"
+            - '@Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository'
             - "@command_bus"
         tags:
             - { name: form.type }

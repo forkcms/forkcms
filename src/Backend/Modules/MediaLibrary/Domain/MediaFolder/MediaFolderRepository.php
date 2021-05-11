@@ -3,11 +3,23 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 
-final class MediaFolderRepository extends EntityRepository
+/**
+ * @method MediaFolder|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MediaFolder|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MediaFolder[]    findAll()
+ * @method MediaFolder[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+final class MediaFolderRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MediaFolder::class);
+    }
+
     public function add(MediaFolder $mediaFolder): void
     {
         // We don't flush here, see http://disq.us/p/okjc6b
