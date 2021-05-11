@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Common\Doctrine\Entity\Meta;
 use Common\Uri;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use SpoonFilter;
 
 /**

@@ -65,7 +65,7 @@ class Model
         // redefine
         $ids = (array) $ids;
 
-        $profileRepository = BackendModel::get({ProfileRepository::class});
+        $profileRepository = BackendModel::get(ProfileRepository::class);
 
         // delete profiles
         foreach ($ids as $id) {
