@@ -263,7 +263,7 @@ class Model
 
     public static function deleteSpamComments(): void
     {
-        $comments = BackendModel::get('CommentRepository::class')->findBy(
+        $comments = BackendModel::get(CommentRepository::class)->findBy(
             [
                 'status' => 'spam',
                 'locale' => BL::getWorkingLanguage(),
@@ -309,7 +309,7 @@ class Model
 
     public static function existsComment(int $id): bool
     {
-        $repository = BackendModel::get('CommentRepository::class');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return $repository->find($id) instanceof Comment;
     }
@@ -445,7 +445,7 @@ class Model
 
     public static function getComment(int $id): array
     {
-        $comment = BackendModel::get('CommentRepository::class')
+        $comment = BackendModel::get(CommentRepository::class)
                                ->find($id);
 
         if (!$comment instanceof Comment) {
@@ -479,7 +479,7 @@ class Model
 
     public static function getComments(array $ids): array
     {
-        $repository = BackendModel::get('CommentRepository::class');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return array_map(
             function (Comment $comment) {
@@ -495,7 +495,7 @@ class Model
 
     public static function getCommentStatusCount(): array
     {
-        $repository = BackendModel::get('CommentRepository::class');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return $repository->listCountPerStatus(Locale::workingLocale());
     }
@@ -1019,7 +1019,7 @@ class Model
 
     public static function updateComment(array $item): void
     {
-        $comment = BackendModel::get('CommentRepository::class')
+        $comment = BackendModel::get(CommentRepository::class)
                                ->find($item['id']);
 
         if (!$comment instanceof Comment) {
@@ -1041,7 +1041,7 @@ class Model
 
     public static function updateCommentStatuses(array $ids, string $status): void
     {
-        $repository = BackendModel::get('CommentRepository::class');
+        $repository = BackendModel::get(CommentRepository::class);
         $comments = $repository->findById($ids);
 
         if (empty($comments)) {
