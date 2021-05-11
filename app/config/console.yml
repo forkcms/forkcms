@@ -6,6 +6,6 @@ services:
   forkcms.console.thumbnails.generate:
     class: Console\Thumbnails\GenerateThumbnailsCommand
     arguments:
-      - "@ForkCMS\\Utility\\Thumbnails"
+      - '@ForkCMS\Utility\Thumbnails'
     tags:
       - { name: console.command }
