@@ -238,6 +238,7 @@ jsBackend.pages.extras = {
     } else if (extraType === 'usertemplate') {
       // user template
       if (typeof extraData === 'string' && extraData !== '') {
+        extraData = ($('<textarea />').html(extraData).text())
         extraData = JSON.parse(extraData)
       }
 

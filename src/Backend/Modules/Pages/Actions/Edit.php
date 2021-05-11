@@ -483,12 +483,7 @@ class Edit extends BackendBaseActionEdit
                 'block_extra_type_' . $block['index'],
                 $block['extra_type']
             );
-            $this->form->add(
-                $this->getHiddenJsonField(
-                    'block_extra_data_' . $block['index'],
-                    $block['extra_data']
-                )
-            );
+            $this->form->addHidden('block_extra_data_' . $block['index'],  $block['extra_data']);
             $block['formElements']['hidExtraData'] = $this->form->getField('block_extra_data_' . $block['index']);
             $block['formElements']['hidPosition'] = $this->form->addHidden(
                 'block_position_' . $block['index'],
@@ -1012,15 +1007,5 @@ class Edit extends BackendBaseActionEdit
             ['module' => $this->getModule()]
         );
         $this->template->assign('deleteForm', $deleteForm->createView());
-    }
-
-    private function getHiddenJsonField(string $name, ?string $json): SpoonFormHidden
-    {
-        return new class($name, $json) extends SpoonFormHidden {
-            public function getValue($allowHTML = null)
-            {
-                return parent::getValue(true);
-            }
-        };
     }
 }
