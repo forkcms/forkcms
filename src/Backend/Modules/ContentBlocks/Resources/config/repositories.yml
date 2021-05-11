@@ -5,4 +5,3 @@ services:
         public: true
 
     Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository:
-        public: true

@@ -314,8 +314,8 @@ services:
         public: true
         arguments:
             - "@fork.settings"
-            - "@ForkCMS\\Google\\TagManager\\DataLayer"
-            - "@ForkCMS\\Privacy\\ConsentDialog"
+            - '@ForkCMS\Google\TagManager\DataLayer'
+            - '@ForkCMS\Privacy\ConsentDialog'
 
     ForkCMS\Privacy\ConsentDialog:
         public: true

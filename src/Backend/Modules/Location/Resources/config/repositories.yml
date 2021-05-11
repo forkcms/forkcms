@@ -5,7 +5,5 @@ services:
         public: true
 
     Backend\Modules\Location\Domain\Location\LocationRepository:
-        public: true
 
     Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository:
-        public: true

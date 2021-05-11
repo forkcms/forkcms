@@ -5,16 +5,13 @@ services:
         public: true
 
     Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGalleryHandler:
-        public: true
         tags:
             - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery }
 
     Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGalleryHandler:
-        public: true
         tags:
             - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery }
 
     Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGalleryHandler:
-        public: true
         tags:
             - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery }

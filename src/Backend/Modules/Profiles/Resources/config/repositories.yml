@@ -5,16 +5,11 @@ services:
         public: true
 
     Backend\Modules\Profiles\Domain\Profile\ProfileRepository:
-        public: true
 
     Backend\Modules\Profiles\Domain\Setting\SettingRepository:
-        public: true
 
     Backend\Modules\Profiles\Domain\Group\GroupRepository:
-        public: true
 
     Backend\Modules\Profiles\Domain\GroupRight\GroupRightRepository:
-        public: true
 
     Backend\Modules\Profiles\Domain\Session\SessionRepository:
-        public: true

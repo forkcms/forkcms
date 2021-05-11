@@ -13,7 +13,6 @@ services:
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate
-        public: true
         arguments:
             - "@twig"
             - "@templating.name_parser"
@@ -21,7 +20,6 @@ services:
 
     translator:
         class: Common\Language
-        public: true
         arguments:
             - "@translator.selector"
 

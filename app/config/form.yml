@@ -13,8 +13,6 @@ services:
         public: true
 
     Common\BlockEditor\Blocks\:
-        autowire: true
-        autoconfigure: true
         resource: '../../src/Common/BlockEditor/Blocks'
         tags: ['fork.block_editor.block']
 

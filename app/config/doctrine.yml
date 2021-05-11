@@ -58,7 +58,5 @@ services:
         public: true
 
     Common\Doctrine\Entity\CreateSchema:
-        public: true
 
     Common\Doctrine\Repository\MetaRepository:
-        public: true
