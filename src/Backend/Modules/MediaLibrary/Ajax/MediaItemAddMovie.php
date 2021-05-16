@@ -52,7 +52,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieId(): string
     {
-        $movieId = htmlspecialchars(trim($this->getRequest()->request->get('id')), ENT_QUOTES | ENT_HTML5);
+        $movieId = trim($this->getRequest()->request->get('id'));
 
         // Movie id not null
         if (empty($movieId)) {
@@ -74,7 +74,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieTitle(): string
     {
-        $movieTitle = htmlspecialchars(trim($this->getRequest()->request->get('title')), ENT_QUOTES | ENT_HTML5);
+        $movieTitle = trim($this->getRequest()->request->get('title'));
 
         // Title not valid
         if (empty($movieTitle)) {
