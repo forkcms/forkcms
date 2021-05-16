@@ -1586,7 +1586,7 @@ jsBackend.mediaLibraryHelper.templates = {
     }
 
     html += '<td class="url"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.url + '</label></td>'
-    html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.title + '</label></td>'
+    html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + utils.string.htmlEncode(mediaItem.title) + '</label></td>'
     html += '</tr>'
 
     return html
