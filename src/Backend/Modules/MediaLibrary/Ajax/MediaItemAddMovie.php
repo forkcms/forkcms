@@ -52,7 +52,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieId(): string
     {
-        $movieId = htmlspecialchars(trim($this->getRequest()->request->get('id')), ENT_QUOTES | ENT_HTML5);
+        $movieId = trim($this->getRequest()->request->get('id'));
 
         // Movie id not null
         if (empty($movieId)) {
@@ -64,12 +64,17 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
             throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
         }
 
+        // Make sure the movie id is valid
+        if (!preg_match('/^[a-zA-Z]+[a-zA-Z0-9._]+$/', (string) $movieId)) {
+            throw new AjaxExitException(Language::err('InvalidValue'));
+        }
+
         return $movieId;
     }
 
     protected function getMovieTitle(): string
     {
-        $movieTitle = htmlspecialchars(trim($this->getRequest()->request->get('title')), ENT_QUOTES | ENT_HTML5);
+        $movieTitle = trim($this->getRequest()->request->get('title'));
 
         // Title not valid
         if (empty($movieTitle)) {
