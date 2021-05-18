@@ -55,7 +55,6 @@ deny from env=stayout
     # forbidden extensions
     RewriteRule \.asp - [F]
     RewriteRule \.cgi - [F]
-    RewriteRule \.htm - [F]
     RewriteRule \.jsp - [F]
     RewriteRule \.md - [F]
     RewriteRule \.phar - [F]

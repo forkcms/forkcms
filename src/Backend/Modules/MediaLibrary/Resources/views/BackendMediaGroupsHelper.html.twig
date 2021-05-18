@@ -24,9 +24,23 @@
               {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
             </div>
             <div role="tabpanel" class="tab-pane" id="tabLibrary">
-              <div class="options">
-                <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
-                <select id="mediaFolders"></select>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="options">
+                    <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
+                    <select id="mediaFolders"></select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="option">
+                    <div class="input-group">
+                      <input type="search" value="" name="query" class="form-control" />
+                      <span class="input-group-btn">
+                        {{ macro.buttonIcon('', 'search', 'lbl.Search'|trans|capitalize, 'btn-secondary', {'id': 'searchMedia', 'type' : 'button'}) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="options">
                 <div class="alert alert-warning hidden" data-role="fork-media-count-error"></div>
@@ -84,5 +98,28 @@
       </div>
     </div>
     {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
+  </div>
+  {# Edit media dialog #}
+  <div class="modal fade" id="editMediaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="editMediaDialogTitle" data-role="media-library-edit-dialog">
+    <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="editMediaDialogTitle">{{ 'lbl.Edit'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editMediaItemTitle">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required() }}</label>
+            <input type="text" class="form-control" name="mediaItemTitle" id="editMediaItemTile" value="" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            {{ macro.icon('times') }}<span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+          </button>
+          <button id="editMediaSubmit" type="button" class="btn btn-primary">
+            {{ macro.icon('check') }}<span class="btn-text">{{ 'lbl.Save'|trans|ucfirst }}</span></button>
+        </div>
+      </div>
+    </div>
   </div>
 {% endif %}

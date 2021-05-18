@@ -1253,6 +1253,8 @@ jsBackend.forms = {
         'metaKeywordsOverwriteSelector',
         'urlSelector',
         'urlOverwriteSelector',
+        'canonicalUrlSelector',
+        'canonicalUrlOverwriteSelector',
         'generatedUrlSelector',
         'customSelector',
         'classNameSelector',

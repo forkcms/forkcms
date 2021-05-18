@@ -64,6 +64,11 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
             throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
         }
 
+        // Make sure the movie id is valid
+        if (!preg_match('/^[a-zA-Z]+[a-zA-Z0-9._]+$/', (string) $movieId)) {
+            throw new AjaxExitException(Language::err('InvalidValue'));
+        }
+
         return $movieId;
     }
 

@@ -340,6 +340,7 @@ class Page extends KernelLoader
     {
         $consentDialog = $this->get(ConsentDialog::class);
 
+        $this->template->assignGlobal('privacyConsentEnabled', $consentDialog->isDialogEnabled());
         $this->template->assignGlobal('privacyConsentDialogHide', !$consentDialog->shouldDialogBeShown());
         $this->template->assignGlobal('privacyConsentDialogLevels', $consentDialog->getLevels());
     }
@@ -462,6 +463,17 @@ class Page extends KernelLoader
             $this->record['meta_keywords_overwrite']
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
+
+        // set canonical url
+        if (array_key_exists('meta_data', $this->record) &&
+            is_array($this->record['meta_data']) &&
+            array_key_exists('canonical_url_overwrite', $this->record['meta_data']) &&
+            array_key_exists('canonical_url', $this->record['meta_data'])) {
+            if ((bool)$this->record['meta_data']['canonical_url_overwrite'] &&
+                !empty($this->record['meta_data']['canonical_url'])) {
+                $this->header->setCanonicalUrl($this->record['meta_data']['canonical_url']);
+            }
+        }
 
         // advanced SEO-attributes
         if (isset($this->record['meta_seo_index'])) {

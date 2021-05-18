@@ -59,4 +59,30 @@ final class MediaItemRepository extends EntityRepository
             ['title' => 'ASC']
         );
     }
+
+    public function findByFolderAndAspectRatioAndSearchQuery(
+        MediaFolder $mediaFolder,
+        ?AspectRatio $aspectRatio,
+        ?string $searchQuery
+    ): array {
+        $queryBuilder = $this->createQueryBuilder('i')
+            ->select('i');
+
+        $queryBuilder = $queryBuilder->where('i.folder = :folder')
+            ->orderBy('i.title', 'ASC')
+            ->setParameter('folder', $mediaFolder);
+
+        if ($aspectRatio instanceof AspectRatio) {
+            $queryBuilder = $queryBuilder->andWhere('i.aspectRatio = :aspectRatio')
+                ->setParameter('aspectRatio', $aspectRatio);
+        }
+
+        if ($searchQuery) {
+            $queryBuilder = $queryBuilder->andWhere('i.title LIKE :searchQuery')
+                ->setParameter('searchQuery', '%'. $searchQuery .'%');
+        }
+
+        return $queryBuilder->getQuery()
+            ->execute();
+    }
 }

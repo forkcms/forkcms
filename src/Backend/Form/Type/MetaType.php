@@ -77,6 +77,23 @@ class MetaType extends AbstractType
                 ]
             )
             ->add('urlOverwrite', CheckboxType::class, ['label' => 'lbl.URL', 'required' => false])
+            ->add(
+                'canonicalUrl',
+                TextType::class,
+                [
+                    'attr' => ['class' => 'fork-form-text'],
+                    'label' => 'lbl.CanonicalURL',
+                    'label_attr' => ['class' => 'sr-only'],
+                ]
+            )
+            ->add(
+                'canonicalUrlOverwrite',
+                CheckboxType::class,
+                [
+                    'label' => 'lbl.CanonicalURL',
+                    'required' => false,
+                ]
+            )
             ->add('SEOIndex', ChoiceType::class, $this->getSEOIndexChoiceTypeOptions())
             ->add('SEOFollow', ChoiceType::class, $this->getSEOFollowChoiceTypeOptions())
             ->addModelTransformer(
@@ -229,6 +246,8 @@ class MetaType extends AbstractType
                 'custom' => $meta->getCustom(),
                 'url' => $meta->getUrl(),
                 'urlOverwrite' => $meta->isUrlOverwrite(),
+                'canonicalUrl' => $meta->getCanonicalUrl(),
+                'canonicalUrlOverwrite' => $meta->isCanonicalUrlOverwrite(),
                 'SEOIndex' => $meta->getSEOIndex() ?? SEOIndex::none(),
                 'SEOFollow' => $meta->getSEOFollow() ?? SEOFollow::none(),
             ];
@@ -250,6 +269,8 @@ class MetaType extends AbstractType
                     $metaData['titleOverwrite'],
                     $metaData['url'],
                     $metaData['urlOverwrite'],
+                    $metaData['canonicalUrl'],
+                    $metaData['canonicalUrlOverwrite'],
                     $metaData['custom'] ?? null,
                     SEOFollow::fromString((string) $metaData['SEOFollow']),
                     SEOIndex::fromString((string) $metaData['SEOIndex']),
@@ -267,6 +288,8 @@ class MetaType extends AbstractType
                 $metaData['titleOverwrite'],
                 $metaData['url'],
                 $metaData['urlOverwrite'],
+                $metaData['canonicalUrl'],
+                $metaData['canonicalUrlOverwrite'],
                 array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
                 SEOFollow::fromString((string) $metaData['SEOFollow']),
                 SEOIndex::fromString((string) $metaData['SEOIndex'])

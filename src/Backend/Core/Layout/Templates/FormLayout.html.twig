@@ -90,6 +90,7 @@
     data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
     data-url-selector="{{ '#' ~ form.url.vars.id }}"
     data-url-overwrite-selector="{{ '#' ~ form.urlOverwrite.vars.id }}"
+    data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
     data-generated-url-selector="{{ form.vars.generated_url_selector }}"
     data-custom-selector="{{ '#' ~ customId }}"
     data-class-name-selector="{{ '#' ~ classId }}"
@@ -163,7 +164,7 @@
       <div class="panel panel-default">
         <div class="panel-heading"><p class="tab-pane-title">{{ 'lbl.URL'|trans|ucfirst }}</p></div>
         <div class="panel-body">
-          <div class="form-group last">
+          <div class="form-group">
             <ul class="list-unstyled checkboxTextFieldCombo">
               <li class="checkbox">
                 <p>
@@ -175,6 +176,18 @@
                 </div>
                 {{ form_errors(form.url) }}
                 <p class="help-block">{{ 'msg.HelpMetaURL'|trans|raw }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="form-group last">
+            <ul class="list-unstyled checkboxTextFieldCombo">
+              <li class="checkbox">
+                <p>
+                  {{ form_widget(form.canonicalUrlOverwrite) }}
+                </p>
+                {{ form_label(form.canonicalUrl) }}
+                {{ form_widget(form.canonicalUrl) }}
+                {{ form_errors(form.canonicalUrl) }}
               </li>
             </ul>
           </div>
