@@ -227,7 +227,7 @@ class Meta
 
     public function getCanonicalUrl(): ?string
     {
-        if (!isset($this->data['data'])) {
+        if (!isset($this->data['data']) || !is_array($this->data['data'])) {
             return null;
         }
 
@@ -242,7 +242,7 @@ class Meta
 
     public function getCanonicalUrlOverwrite(): bool
     {
-        if (!isset($this->data['data'])) {
+        if (!isset($this->data['data']) || !is_array($this->data['data'])) {
             return false;
         }
 
