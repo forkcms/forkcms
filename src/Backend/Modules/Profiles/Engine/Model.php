@@ -961,8 +961,6 @@ class Model
         if (!$groupRight instanceof GroupRight) {
             return $membershipId;
         }
-        dump($membership);
-        dump($groupRight);
 
         $group = $groupRight->getGroup();
         if (array_key_exists('group_id', $membership)) {
@@ -978,10 +976,7 @@ class Model
             $startsOn = new DateTime();
             $startsOn->setTimestamp($membership['starts_on']);
         }
-        dump($membership['expires_on']);
-        dump($startsOn);
-        dump($expiresOn);
-        die;
+
         $groupRight->update($group, $startsOn, $expiresOn);
 
         BackendModel::get('doctrine.orm.entity_manager')->flush();
