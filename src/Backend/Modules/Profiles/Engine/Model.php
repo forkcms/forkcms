@@ -333,7 +333,7 @@ class Model
                     'id' => $groupRight->getId(),
                     'group_id' => $groupRight->getGroup()->getId(),
                     'group_name' => $groupRight->getGroup()->getName(),
-                    'expires_on' => $groupRight->getExpiryDate()->getTimestamp(),
+                    'expires_on' => $groupRight->getExpiryDate() !== null ?$groupRight->getExpiryDate()->getTimestamp() : null,
                 ];
             },
             $groupRights
@@ -693,13 +693,11 @@ class Model
 
         $startsOn = new DateTime();
         $startsOn->setTimestamp($membership['starts_on']);
-        $startsOn->format('Y-m-d H:i:s');
 
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
             $expiresOn = new DateTime();
             $expiresOn->setTimestamp($membership['expires_on']);
-            $expiresOn->format('Y-m-d H:i:s');
         }
 
         $existingGroupRight = $profile->getRights()->filter(
@@ -963,6 +961,8 @@ class Model
         if (!$groupRight instanceof GroupRight) {
             return $membershipId;
         }
+        dump($membership);
+        dump($groupRight);
 
         $group = $groupRight->getGroup();
         if (array_key_exists('group_id', $membership)) {
@@ -970,13 +970,18 @@ class Model
         }
         $expiresOn = $groupRight->getExpiryDate();
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
+            $expiresOn = new DateTime();
+            $expiresOn->setTimestamp($membership['expires_on']);
         }
         $startsOn = $groupRight->getStartDate();
         if (array_key_exists('starts_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('U', $membership['starts_on']);
+            $startsOn = new DateTime();
+            $startsOn->setTimestamp($membership['starts_on']);
         }
-
+        dump($membership['expires_on']);
+        dump($startsOn);
+        dump($expiresOn);
+        die;
         $groupRight->update($group, $startsOn, $expiresOn);
 
         BackendModel::get('doctrine.orm.entity_manager')->flush();
