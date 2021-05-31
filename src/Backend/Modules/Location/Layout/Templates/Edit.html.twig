@@ -6,134 +6,160 @@
 {% endblock %}
 
 {% block content %}
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="location-tab" data-toggle="tab" href="#locationTab" role="tab" aria-controls="location" aria-selected="true">{{ 'lbl.Location'|trans|ucfirst }}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settingsTab" role="tab" aria-controls="settings" aria-selected="false">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+    </li>
+  </ul>
+
   {% form edit %}
-    <div class="form-group">
-      <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required }}</label>
-      {% form_field title %} {% form_field_error title %}
-    </div>
-    <div class="card card-default">
-      <div class="card-heading">
-        <h2 class="card-title">
-          {{ 'lbl.Address'|trans|ucfirst }}
-        </h2>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="locationTab" role="tabpanel" aria-labelledby="location-tab">
+      <div class="form-group">
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required }}</label>
+        {% form_field title %} {% form_field_error title %}
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-10">
-            <div class="form-group">
-              <label for="street" class="control-label">
-                {{ 'lbl.Street'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-              {% form_field street %} {% form_field_error street %}
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
+            {{ 'lbl.Address'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="form-group">
+                <label for="street" class="control-label">
+                  {{ 'lbl.Street'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field street %} {% form_field_error street %}
+              </div>
             </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="form-group">
-              <label for="number" class="control-label">
-                {{ 'lbl.Number'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-              {% form_field number %} {% form_field_error number %}
+            <div class="col-lg-2">
+              <div class="form-group">
+                <label for="number" class="control-label">
+                  {{ 'lbl.Number'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field number %} {% form_field_error number %}
+              </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="zip" class="control-label">
-                {{ 'lbl.Zip'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-              {% form_field zip %} {% form_field_error zip %}
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="zip" class="control-label">
+                  {{ 'lbl.Zip'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field zip %} {% form_field_error zip %}
+              </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="city" class="control-label">
-                {{ 'lbl.City'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-              {% form_field city %} {% form_field_error city %}
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="city" class="control-label">
+                  {{ 'lbl.City'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field city %} {% form_field_error city %}
+              </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="country" class="control-label">
-                {{ 'lbl.Country'|trans|ucfirst }}
-                {{ macro.required }}
-              </label>
-              {% form_field country %} {% form_field_error country %}
-            </div>
-            <div class="hide">
-              {{ hidMapId|raw }} {{ hidRedirect|raw }}
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="country" class="control-label">
+                  {{ 'lbl.Country'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+                {% form_field country %} {% form_field_error country %}
+              </div>
+              <div class="hide">
+                {{ hidMapId|raw }} {{ hidRedirect|raw }}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  {% endform %}
-
-  {% form settings %}
-    <div class="card card-default">
-      <div class="card-heading">
-        <h2 class="card-title">
-          {{ 'lbl.Settings'|trans|ucfirst }}
-        </h2>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
-              {% form_field zoom_level %} {% form_field_error zoom_level %}
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|ucfirst }}</label>
-              {% form_field map_type %} {% form_field_error map_type %}
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group{% if not godUser %} d-none{% endif %}">
-              <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
-              {% form_field width %} {% form_field_error width %}
-              <small class="form-text text-muted">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</small>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group{% if not godUser %} d-none{% endif %}">
-              <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
-              {% form_field height %} {% form_field_error height %}
-              <small class="form-text text-muted">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</small>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="mapStyle" class="control-label">{{ 'lbl.MapStyle'|trans|capitalize }}</label>
-              {% form_field_error map_style %} {% form_field map_style %}
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="form-group">
-              <div class="form-check">
-                {% form_field full_url %}
-                <label for="fullUrl" class="form-check-label">{{ 'msg.ShowMapUrl'|trans|ucfirst }}</label>
-              </div>
-              <div class="form-check">
-                {% form_field directions %}
-                <label for="directions" class="form-check-label">{{ 'msg.ShowDirections'|trans|ucfirst }}</label>
-              </div>
-              <div class="form-check">
-                {% form_field marker_overview %}
-                <label for="markerOverview" class="form-check-label">{{ 'msg.ShowMarkerOverview'|trans|ucfirst }}</label>
-              </div>
-            </div>
-          </div>
+    <div class="tab-pane fade" id="settingsTab" role="tabpanel" aria-labelledby="settings-tab">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
+            {{ 'lbl.Settings'|trans|ucfirst }}
+          </h2>
         </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-check">
+                  {% form_field override_map_settings %}
+                  <label for="overrideMapSettings" class="form-check-label">{{ 'lbl.OverrideMapSettings'|trans|ucfirst }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="settings">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
+                {% form_field zoom_level %} {% form_field_error zoom_level %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|ucfirst }}</label>
+                {% form_field map_type %} {% form_field_error map_type %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group{% if not godUser %} d-none{% endif %}">
+                <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
+                {% form_field width %} {% form_field_error width %}
+                <small class="form-text text-muted">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</small>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group{% if not godUser %} d-none{% endif %}">
+                <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
+                {% form_field height %} {% form_field_error height %}
+                <small class="form-text text-muted">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</small>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="mapStyle" class="control-label">{{ 'lbl.MapStyle'|trans|capitalize }}</label>
+                {% form_field_error map_style %} {% form_field map_style %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <div class="form-check">
+                  {% form_field full_url %}
+                  <label for="fullUrl" class="form-check-label">{{ 'msg.ShowMapUrl'|trans|ucfirst }}</label>
+                </div>
+                <div class="form-check">
+                  {% form_field directions %}
+                  <label for="directions" class="form-check-label">{{ 'msg.ShowDirections'|trans|ucfirst }}</label>
+                </div>
+                <div class="form-check">
+                  {% form_field marker_overview %}
+                  <label for="markerOverview" class="form-check-label">{{ 'msg.ShowMarkerOverview'|trans|ucfirst }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% form_field centerLat %}
+          {% form_field centerLng %}
+          {% form_field lat %}
+          {% form_field lng %}
 
-        <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
+          <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
+        </div>
       </div>
     </div>
+  </div>
 
     <div class="fork-page-actions">
       <div class="btn-toolbar d-flex">

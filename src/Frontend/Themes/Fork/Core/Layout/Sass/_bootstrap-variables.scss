@@ -52,6 +52,7 @@ $yellow:        #F5A623;
 $green:         #2C9F42;
 $teal:          #20c997;
 $cyan:          #5bc0de;
+
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -71,6 +72,14 @@ $colors: (
   "gray-dark":  $gray-800
 );
 // scss-docs-end colors-map
+
+// scss-docs-start brands-map
+$brands: (
+  "facebook": #3b5998,
+  "twitter":  #00acee,
+  "linked-in": #2867B2
+);
+// scss-docs-end brands-map
 
 // scss-docs-start theme-color-variables
 $primary:       $blue;

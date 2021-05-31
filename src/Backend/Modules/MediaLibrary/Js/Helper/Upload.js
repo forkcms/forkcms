@@ -166,9 +166,9 @@ export class Upload {
    */
   addUploadedMediaToGroup () {
     // loop remaining items in uploaded media and push them to current group
-    $('#uploadedMedia').find('li').each(function () {
+    $('#uploadedMedia').find('li').each((key, element) => {
       // get id
-      const id = $(this).attr('id').replace('media-', '')
+      const id = $(element).attr('id').replace('media-', '')
 
       // add each id to array
       this.config.currentMediaItemIds.push(id)

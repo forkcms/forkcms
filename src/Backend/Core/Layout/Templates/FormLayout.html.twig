@@ -370,9 +370,15 @@
   {% if form.parent.meta is defined %}
     {% set meta = form.parent.meta %}
     {% set slug = meta.children.url.vars.value %}
-    <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
-      {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
-    </a>
+    {% if slug == 'home' %}
+      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}">
+        {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl"></span>
+      </a>
+    {% else %}
+      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
+        {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
+      </a>
+    {% endif %}
   {% endif %}
 {% endblock %}
 

@@ -80,8 +80,8 @@ class Form extends \Common\Core\Form
             $this->header->addJS(
                 '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js',
                 null,
-                false,
                 true,
+                false,
                 true
             );
         }

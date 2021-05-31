@@ -513,7 +513,7 @@ export class Group {
             if (id === item.id) {
               // Add HTML for MediaItem to Connect
               $currentItems.append(Templates.getHTMLForMediaItemToConnect(item))
-              window.mediaLibrary.mediaThumbUrl.set(item)
+              window.backend.mediaLibrary.helper.mediaThumbUrl.set(item)
             }
           })
         })

@@ -118,6 +118,7 @@
   {% set parametersId = form.vars.id ~ '_parameters' %}
   <div
     class="js-do-meta-automatically"
+    data-page-id="{{ form.parent.vars.value.id }}"
     data-base-field-selector="{{ base_field_selector }}"
     data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
     data-page-title-selector="{{ '#' ~ form.title.vars.id }}"

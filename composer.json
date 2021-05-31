@@ -13,7 +13,7 @@
     "homepage": "http://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",

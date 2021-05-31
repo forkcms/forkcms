@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY var/docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
 # Install and configure XDebug
-RUN pecl install xdebug && \
+RUN pecl install xdebug-2.9.8 && \
     docker-php-ext-enable xdebug && \
     rm -rf /tmp/pear
 

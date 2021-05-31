@@ -4,6 +4,7 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use RuntimeException;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
@@ -347,20 +348,28 @@ class Authentication
         // cleanup old sessions
         self::cleanupOldSessions();
 
+        $session = BackendModel::getSession();
+        // create a new session for safety reasons
+        if (!$session->migrate(true)) {
+            throw new RuntimeException(
+                'For safety reasons the session should be regenerated. But apparently it failed.'
+            );
+        }
+
         // build the session array (will be stored in the database)
-        $session = [
+        $userSession = [
             'user_id' => $userId,
-            'secret_key' => static::getEncryptedString(BackendModel::getSession()->getId(), $userId),
-            'session_id' => BackendModel::getSession()->getId(),
+            'secret_key' => static::getEncryptedString($session->getId(), $userId),
+            'session_id' => $session->getId(),
             'date' => BackendModel::getUTCDate(),
         ];
 
         // insert a new row in the session-table
-        $database->insert('users_sessions', $session);
+        $database->insert('users_sessions', $userSession);
 
         // store some values in the session
-        BackendModel::getSession()->set('backend_logged_in', true);
-        BackendModel::getSession()->set('backend_secret_key', $session['secret_key']);
+        $session->set('backend_logged_in', true);
+        $session->set('backend_secret_key', $userSession['secret_key']);
 
         // update/instantiate the value for the logged_in container.
         BackendModel::getContainer()->set('logged_in', true);
@@ -377,14 +386,21 @@ class Authentication
         if (self::$alreadyLoggedOut) {
             return;
         }
-
+        $session = BackendModel::getSession();
         // remove all rows owned by the current user
-        BackendModel::get('database')->delete('users_sessions', 'session_id = ?', BackendModel::getSession()->getId());
+        BackendModel::get('database')->delete('users_sessions', 'session_id = ?', $session->getId());
 
         // reset values. We can't destroy the session because session-data can be used on the site.
-        BackendModel::getSession()->set('backend_logged_in', false);
-        BackendModel::getSession()->set('backend_secret_key', '');
-        BackendModel::getSession()->set('csrf_token', '');
+        $session->set('backend_logged_in', false);
+        $session->set('backend_secret_key', '');
+        $session->set('csrf_token', '');
+
+        // create a new session for safety reasons
+        if (!$session->migrate(true)) {
+            throw new RuntimeException(
+                'For safety reasons the session should be regenerated. But apparently it failed.'
+            );
+        }
 
         self::$alreadyLoggedOut = true;
     }
