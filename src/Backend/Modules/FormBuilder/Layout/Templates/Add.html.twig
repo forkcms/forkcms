@@ -10,10 +10,10 @@
   <div>
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+        <a class="nav-link active" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-bs-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab" aria-selected="false" id="extra-tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabExtra" aria-controls="tabExtra" role="tab" data-bs-toggle="tab" aria-selected="false" id="extra-tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -127,7 +127,7 @@
       <div class="btn-group" role="group">
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>

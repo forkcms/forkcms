@@ -30,14 +30,14 @@
   </div>
   <div>
         <ul class="nav nav-tabs justify-content-end" role="tablist">
-          <li class="nav-item mr-auto">
-            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          <li class="nav-item me-auto">
+            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-bs-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+            <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-bs-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-bs-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -75,10 +75,8 @@
                           </label>
                         </div>
                         <div class="col-lg-9">
-                          <div class="custom-file">
-                            {% form_field image %}
-                            <label class="custom-file-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
-                          </div>
+                          <label class="form-label" for="image">{{ 'lbl.ChooseFile'|trans|ucfirst }}</label>
+                          {% form_field image %}
                           {% form_field_error image %}
                           {% if item.image %}
                             <div class="form-check">
@@ -208,11 +206,11 @@
     <div class="btn-toolbar">
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete", "type":"button"} ) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'file', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
         {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
       </div>

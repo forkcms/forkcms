@@ -28,7 +28,8 @@
     color: $primary;
     margin-left: 5px;
 
-    @include hover-focus {
+    &:hover,
+    &:focus {
       border-color: $link-hover-color;
       color: $link-hover-color;
     }
@@ -63,7 +64,8 @@
   }
 
 
-  @include hover-focus {
+  &:hover,
+  &:focus {
     border-color: $primary;
     color: $primary;
     text-decoration: none;

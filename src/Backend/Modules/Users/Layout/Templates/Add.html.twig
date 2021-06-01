@@ -10,10 +10,10 @@
   <div>
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab" aria-selected="true" id="profile-tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+        <a class="nav-link active" href="#tabProfile" aria-controls="tabProfile" role="tab" data-bs-toggle="tab" aria-selected="true" id="profile-tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-bs-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -32,11 +32,11 @@
               <label for="password" class="control-label d-flex">
                 {{ 'lbl.Password'|trans|ucfirst }}
                 {{ macro.required }}
-                <span class="passwordStrength ml-auto" data-id="password" data-role="password-strength-meter">
-                  <span class="badge badge-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
-                  <span class="badge badge-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
-                  <span class="badge badge-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
-                  <span class="badge badge-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
+                <span class="passwordStrength ms-auto" data-id="password" data-role="password-strength-meter">
+                  <span class="badge bg-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
+                  <span class="badge bg-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
+                  <span class="badge bg-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
+                  <span class="badge bg-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
                 </span>
               </label>
               <div class="input-group" data-password-generator>
@@ -84,11 +84,8 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                <div class="custom-file">
-                  {% form_field avatar %}
-                  <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-                </div>
+                <label for="avatar" class="form-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+                {% form_field avatar %}
                 <small class="form-text text-muted">{{ 'msg.HelpAvatar'|trans }}</small>
                 {% form_field_error avatar %}
               </div>
@@ -174,7 +171,7 @@
   </div>
   <div class="fork-page-actions">
     <div class="btn-toolbar d-flex">
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>

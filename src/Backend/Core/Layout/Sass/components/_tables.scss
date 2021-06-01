@@ -5,15 +5,6 @@
 
 .table-striped {
   border: 1px solid $table-border-color;
-
-  > tbody > tr:nth-of-type(even),
-  thead > tr {
-    background-color: $gray-100;
-  }
-}
-
-.table > thead > tr > th {
-  border-width: 1px;
 }
 
 .table > tbody > tr > td.dragAndDropHandle,
@@ -42,12 +33,29 @@
 }
 
 .table {
-  margin-bottom: 0;
+
+  > thead th {
+    background: $gray-100;
+    color: $gray-700;
+
+    a {
+      color: $body-color;
+
+      &.sorted {
+        color: $primary;
+      }
+    }
+  }
+
+  &,
+  label {
+    font-size: $font-size-sm;
+  }
 
   tr {
 
     .highlighted {
-      background: lighten($primary, 35%);
+      background: rgba($primary, .15);
     }
 
     td,
@@ -65,7 +73,6 @@
     }
 
     td {
-      font-size: $font-size-sm;
 
       &.title a {
         font-weight: $font-weight-medium;
@@ -76,26 +83,8 @@
       }
     }
 
-    th {
-      color: $gray-700;
-      font-size: $font-size-sm;
-      font-weight: $font-weight-medium;
-
-      a {
-        color: $body-color;
-
-        &.sorted {
-          color: $primary;
-        }
-      }
-    }
-
     &.grayedOut td {
       opacity: .6;
-    }
-
-    th + th {
-      border-left: 1px solid $table-border-color;
     }
   }
 
@@ -105,12 +94,5 @@
 
   label {
     font-size: $font-size-sm;
-  }
-}
-
-table.fork-data-grid {
-
-  tfooter{
-
   }
 }

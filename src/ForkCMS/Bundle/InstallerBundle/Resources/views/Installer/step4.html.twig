@@ -28,19 +28,21 @@
             <label for="install_database_databaseHostname">
               Hostname
               <abbr title="Required field">*</abbr>
-              <small class="text-muted form-text">If you are working locally, your hostname is probably <strong>localhost</strong>.</small>
             </label>
-            <div class="form-group form-inline">
-              {{ form_widget(form.databaseHostname) }} : {{ form_widget(form.databasePort) }}
+            <div class="form-group">
+              <div class="d-flex align-items-center">
+                {{ form_widget(form.databaseHostname, {'attr': {'class': 'w-auto me-2'}}) }} : {{ form_widget(form.databasePort, {'attr': {'class': 'w-auto ms-2'}}) }}
+              </div>
+              <small class="text-muted form-text">If you are working locally, your hostname is probably <strong>localhost</strong>.</small>
             </div>
           </div>
           <div class="form-group">
             <label for="install_database_databaseName">
               Database
               <abbr title="Required field">*</abbr>
-              <small class="text-muted form-text">Make sure this database is empty!</small>
             </label>
             {{ form_widget(form.databaseName) }}
+            <small class="text-muted form-text">Make sure this database is empty!</small>
           </div>
           <div class="form-group">
             <label for="install_database_databaseUsername">

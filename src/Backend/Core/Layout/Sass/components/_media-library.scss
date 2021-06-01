@@ -189,7 +189,8 @@
     color: $white;
   }
 
-  @include hover-focus () {
+  &:hover,
+  &:focus {
     background: $gray-700;
     border: $gray-700;
   }

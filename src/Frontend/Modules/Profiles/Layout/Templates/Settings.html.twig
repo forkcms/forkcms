@@ -114,11 +114,11 @@
               </div>
             </div>
           {% endif %}
-          <div class="custom-file">
-          {% form_field avatar %}
-            <label for="avatar" class="custom-file-label">{{ 'lbl.UploadAvatar'|trans|ucfirst }}</label>
+          <div class="form-group">
+            <label for="avatar" class="form-label">{{ 'lbl.UploadAvatar'|trans|ucfirst }}</label>
+            {% form_field avatar %}
+            {% form_field_error avatar %}
           </div>
-          {% form_field_error avatar %}
         </div>
       </fieldset>
 

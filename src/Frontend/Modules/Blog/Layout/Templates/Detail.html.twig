@@ -82,14 +82,14 @@
             {% if navigation.previous %}
               <li class="page-item">
                 <a class="page-link" href="{{ navigation.previous.url }}">&larr;
-                  <span class="sr-only">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span>
+                  <span class="visually-hidden">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.previous.title }}</span></a>
               </li>
             {% endif %}
             {% if navigation.next %}
               <li class="page-item ml-auto">
                 <a class="page-link" href="{{ navigation.next.url }}">
-                  <span class="sr-only">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span>
+                  <span class="visually-hidden">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span>
                   <span class="title">{{ navigation.next.title }}</span> &rarr;
                 </a>
               </li>
