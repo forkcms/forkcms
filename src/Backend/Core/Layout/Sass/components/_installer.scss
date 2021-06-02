@@ -38,6 +38,7 @@
         -webkit-font-smoothing: antialiased;
         padding: 0;
         line-height: 2.8em;
+        overflow: hidden;
         position: relative;
         text-align: center;
 
@@ -52,7 +53,7 @@
             content: '';
             position: absolute;
             left: -1px;
-            top: 0;
+            top: -1px;
           }
 
           + li:before {

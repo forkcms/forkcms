@@ -17,7 +17,7 @@ export class Forms {
   }
 
   fileUpload () {
-    $('.custom-file-input').on('change', (event) => {
+    $('.form-control[type="file"]').on('change', (event) => {
       let file = ''
       event = event.originalEvent
 
@@ -25,7 +25,7 @@ export class Forms {
         file = event.target.files[i]
       }
 
-      $(event.currentTarget).siblings('.custom-file-label').text(file.name)
+      $(event.currentTarget).siblings('.form-label').text(file.name)
     })
   }
 
@@ -51,8 +51,8 @@ export class Forms {
   }
 
   imagePreview () {
-    $('input[type=file]').on('change', () => {
-      const imageField = $(this).get(0)
+    $('input[type=file]').on('change', (event) => {
+      const imageField = event.target
       // make sure we are uploading an image by checking the data attribute
       if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
         // get the image preview by matching the image-preview data-id to the ImageField id
@@ -76,7 +76,7 @@ export class Forms {
       const invalidTabId = $invalidField.closest('.tab-pane').attr('id')
 
       // Find the link that corresponds to the pane and have it show
-      $('a[href=#' + invalidTabId + '], [data-target=#' + invalidTabId + ']').tab('show')
+      $('a[href=#' + invalidTabId + '], [data-bs-target=#' + invalidTabId + ']').tab('show')
       $invalidField.focus()
     })
   }

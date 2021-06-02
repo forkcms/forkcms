@@ -3,35 +3,35 @@
 
   {{ form_row(form.title) }}
   <ul class="nav nav-tabs justify-content-end" role="tablist">
-    <li class="nav-item mr-auto">
-      <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+    <li class="nav-item me-auto">
+      <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-bs-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabImage" aria-controls="tabImage" role="tab" data-bs-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
     </li>
     {% if form.vars.dataGridDrafts is defined or form.vars.dataGridRevisions is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabVersions" aria-controls="tabVersions" role="tab" data-bs-toggle="tab" aria-selected="false" id="versions-tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-bs-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
     </li>
     {% if form.tags is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-bs-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-bs-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
     </li>
     {% if form.data.authentication.required is defined %}
       <li class="nav-item">
-        <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-bs-toggle="tab" aria-selected="false" id="authentication-tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
       </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+      <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-bs-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
     </li>
   </ul>
   <div class="tab-content">
@@ -205,7 +205,7 @@
           {{ form_label(form.url) }}
 
           <div class="d-flex align-items-center">
-            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ml-2">{{ form_widget(form.url) }}</div>
+            <span id="urlFirstPart">{{ SITE_URL }}{{ form.vars.detail_url }}/</span> <div class="ms-2">{{ form_widget(form.url) }}</div>
           </div>
           {{ form_errors(form.url) }}
           <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
@@ -333,7 +333,7 @@
             {{ form_rest(form) }}
           </div>
           <div class="modal-footer d-flex">
-            <div class="mr-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
+            <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
             {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
           </div>
         </div>
@@ -346,7 +346,7 @@
   {% import 'Layout/Templates/macros.html.twig' as macro %}
     <div data-role="page-block-wrapper" class="d-flex{% if not field.children.visible.vars.checked %} block-not-visible{% endif %}">
       {% if form.vars.allow_sequence %}
-        <div class="d-flex flex-column mr-2">
+        <div class="d-flex flex-column me-2">
           {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
           <span class="btn btn-move btn-move-drag btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('grip-vertical') }}</span>
           {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
@@ -364,7 +364,7 @@
           </p>
         </div>
         <div class="block-info mb-2{% if field.vars.data.extraType.isRichText %} d-none{% endif %}" data-role="page-block-title-wrapper">
-          <p class="badge badge-middle mb-2" data-role="page-block-type">{{ field.vars.data.extraType.label }}</p>
+          <p class="badge bg-middle mb-2" data-role="page-block-type">{{ field.vars.data.extraType.label }}</p>
           <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">
             {% if field.vars.data.extraModule %}
               {{ field.vars.data.extraModule }}
@@ -375,16 +375,16 @@
 
         <div class="d-flex flex-wrap">
           <div class="btn-group">
-            {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-role': 'page-block-edit', 'data-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
+            {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-role': 'page-block-edit', 'data-bs-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
 
             {% if form.vars.allow_delete %}
-              {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-toggle': 'modal', 'data-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
+              {{ macro.buttonIcon('', 'trash', '', 'btn-danger btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-bs-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
             {% endif %}
           </div>
         </div>
       </div>
 
-      <div class="ml-auto">
+      <div class="ms-auto">
         {{ form_widget(field) }}
         {{ form_errors(field) }}
       </div>
@@ -423,6 +423,6 @@
   <div class="custom-control custom-visible-switch">
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %} data-role="page-block-visibility" />
 
-    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="sr-only">{{ form.vars.label|trans }}</span></label>
+    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="visually-hidden">{{ form.vars.label|trans }}</span></label>
   </div>
 {%- endblock %}

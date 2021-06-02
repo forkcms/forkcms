@@ -19,14 +19,11 @@
           {{ 'lbl.File'|trans|ucfirst }}
           {{ macro.required }}
         </label>
-        <div class="custom-file">
+        <div class="form-group">
+          <label for="file" class="form-label">{{ 'lbl.File'|trans|ucfirst }}{{ macro.required }}</label>
           {% form_field file %}
-          <label for="file" class="custom-file-label">
-            {{ 'lbl.File'|trans|ucfirst }}
-            {{ macro.required }}
-          </label>
+          {% form_field_error file %}
         </div>
-        {% form_field_error file %}
       </div>
       <div class="fork-module-actions">
         <div class="btn-toolbar">

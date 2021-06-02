@@ -50,7 +50,8 @@
       padding: 11px 0 12px;
       text-align: left;
 
-      @include hover-focus {
+      &:hover,
+      &:focus {
         color: darken($formbuilder-blue, 15%);
         text-decoration: underline;
         background: transparent;

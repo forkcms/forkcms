@@ -90,8 +90,8 @@ class MediaItemDataGrid extends DataGridDatabase
             ],
             MediaItemMassAction::MOVE,
             false,
-            'form-control',
-            'form-control danger'
+            'form-select w-auto',
+            'form-select w-auto danger'
         );
         $ddmMediaItemMassAction->setAttribute('id', 'mass-action-' . (string) $type);
         $ddmMediaItemMassAction->setOptionAttributes(MediaItemMassAction::MOVE, ['data-target' => '#confirmMassActionMediaItemMove']);

@@ -1,4 +1,5 @@
 // plugins imports
+// You can specify which plugins you need
 import 'bootstrap'
 import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'

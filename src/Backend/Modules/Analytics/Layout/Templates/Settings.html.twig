@@ -24,11 +24,8 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <label>{{ 'lbl.Certificate'|trans|ucfirst }}</label>
-                <div class="custom-file">
-                  {% form_field certificate %}
-                  <label class="custom-file-label" for="customFile">{{ 'lbl.ChooseFile'|trans }}</label>
-                </div>
+                <label class="form-label" for="customFile">{{ 'lbl.ChooseFile'|trans }}</label>
+                {% form_field certificate %}
                 {% form_field_error certificate %}
               </div>
             </div>
@@ -117,7 +114,7 @@
         <a href="{{ geturl('reset') }}">{{ 'msg.RemoveAccountLink'|trans|ucfirst }}</a>
       {% endif %}
       {% if not profile and (noAccounts == false or noAccounts is not defined) %}
-        <div class="btn-group ml-auto" role="group">
+        <div class="btn-group ms-auto" role="group">
           {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
         </div>
       {% endif %}

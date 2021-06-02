@@ -25,8 +25,8 @@ final class PageDataAuthenticationType extends AbstractType implements PageDataT
                 'label' => 'msg.AuthRequired',
                 'required' => false,
                 'attr' => [
-                    'data-toggle' => 'collapse',
-                    'data-target' => '[data-role=authentication-options]',
+                    'data-bs-toggle' => 'collapse',
+                    'data-bs-target' => '[data-role=authentication-options]',
                 ],
             ]
         );

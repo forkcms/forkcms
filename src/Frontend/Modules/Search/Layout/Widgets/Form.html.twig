@@ -4,7 +4,7 @@
 
 {% block widget_body %}
   {% form search %}
-    <label for="qWidget" class="sr-only">
+    <label for="qWidget" class="visually-hidden">
       {{ 'lbl.SearchTerm'|trans|ucfirst }}{{ macro.required }}
     </label>
     {% form_field q_widget %}

@@ -35,6 +35,11 @@ label,
   color: $black;
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
+  margin-bottom: map_get($spacers, 1);
+}
+
+.form-group {
+  margin-bottom: map_get($spacers, 3);
 }
 
 .form-check-label {
@@ -121,12 +126,8 @@ select[size="1"] {
     border-bottom-right-radius: 0;
   }
 
-  .input-group-append .btn {
-    padding: 7px 9px 8px;
-
-    &.btn-icon-only {
-      font-size: $btn-font-size;
-    }
+  .btn .btn-icon-only {
+    font-size: $btn-font-size;
   }
 }
 
@@ -158,10 +159,6 @@ fieldset {
     border-bottom: 0;
     margin-bottom: 0;
   }
-}
-
-.custom-file .custom-file-label {
-  overflow: hidden;
 }
 
 .select2-container--bootstrap {

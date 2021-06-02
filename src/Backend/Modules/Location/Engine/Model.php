@@ -48,16 +48,20 @@ class Model
         return [];
     }
 
+    public static function getAllWithDefaultMapSettings(): array
+    {
+        $locations = self::getLocationRepository()->findBy([
+            'overrideMapSettings' => false
+        ]);
+
+        return self::getLocationsAsArray($locations);
+    }
+
     public static function getAll(): array
     {
         $locations = self::getLocationRepository()->findAll();
 
-        return array_map(
-            function (Location $location) {
-                return $location->toArray();
-            },
-            $locations
-        );
+        return self::getLocationsAsArray($locations);
     }
 
     /**
@@ -214,7 +218,8 @@ class Model
             $updatedLocation->getCountry(),
             $updatedLocation->getLatitude(),
             $updatedLocation->getLongitude(),
-            $updatedLocation->isShowInOverview()
+            $updatedLocation->isShowInOverview(),
+            $updatedLocation->isOverrideMapSettings()
         );
 
         $locationRepository->save($currentLocation);
@@ -246,5 +251,15 @@ class Model
     private static function getLocationSettingRepository(): LocationSettingRepository
     {
         return BackendModel::get(LocationSettingRepository::class);
+    }
+
+    private static function getLocationsAsArray(array $locations): array
+    {
+        return array_map(
+            function (Location $location) {
+                return $location->toArray();
+            },
+            $locations
+        );
     }
 }

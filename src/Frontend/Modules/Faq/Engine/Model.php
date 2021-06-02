@@ -94,7 +94,7 @@ class Model implements FrontendTagsInterface
 
     public static function getCategoryById(int $id): array
     {
-        return FrontendModel::get(CategoryRepository::class)->findOne(
+        return FrontendModel::get(CategoryRepository::class)->findOneBy(
             [
                 'id' => $id,
                 'locale' => Locale::frontendLanguage()

@@ -27,16 +27,16 @@
             {{ macro.icon('plus-square') }}
             <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
           </a>
-          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
-            <span class="sr-only">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
+            <span class="visually-hidden">{{ 'lbl.ToggleAddPageDropdown'|trans|ucfirst }}</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}">{{ 'lbl.AddPage'|trans|ucfirst }}</a>
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&parent={{ page.id }}">{{ 'lbl.AddSubPage'|trans|ucfirst }}</a>
             <a class="dropdown-item" href="{{ geturl('PageAdd') }}&copy={{ page.id }}">{{ 'lbl.CopyThisPage'|trans|ucfirst }}</a>
             {% if copyToOtherLanguageForm is defined and copyToOtherLanguageForm is not null %}
-              <button type="button" class="dropdown-item" data-toggle="modal" data-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
+              <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#copyPage">{{ 'lbl.CopyPageToAnotherLanguage'|trans|ucfirst }}</button>
             {% endif %}
           </div>
         </div>
@@ -52,7 +52,7 @@
     <div class="btn-toolbar justify-content-between">
       <div class="btn-group" role="group">
         {% if isAllowedAction('PageDelete') and deleteForm is defined %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete" }) }}
         {% endif %}
         {{ macro.buttonIcon(geturl('PageIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>

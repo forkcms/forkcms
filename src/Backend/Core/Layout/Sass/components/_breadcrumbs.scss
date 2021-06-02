@@ -18,7 +18,8 @@
       display: inline-block;
       color: $gray-700;
 
-      @include hover-focus {
+      &:hover,
+      &:focus {
         border-bottom: 1px solid $gray-550;
         text-decoration: none;
       }
