@@ -4461,23 +4461,23 @@
         },
         {
             "name": "spoon/library",
-            "version": "3.2.10",
+            "version": "3.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "8b4429ff7a74380d9e5c5e7791bb5591b8dbd794"
+                "reference": "60e69d26577a418dc9e9c8e2fade51f5ff3f81b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/8b4429ff7a74380d9e5c5e7791bb5591b8dbd794",
-                "reference": "8b4429ff7a74380d9e5c5e7791bb5591b8dbd794",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/60e69d26577a418dc9e9c8e2fade51f5ff3f81b7",
+                "reference": "60e69d26577a418dc9e9c8e2fade51f5ff3f81b7",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "^7.1|^8.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "^3.3"
+                "symfony/phpunit-bridge": "^5.3"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -4490,13 +4490,13 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A PHP5 library that is fast, easy to learn and fun!",
+            "description": "A PHP library that is fast, easy to learn and very much deprecated!",
             "homepage": "http://www.spoon-library.com",
             "support": {
                 "issues": "https://github.com/forkcms/library/issues",
-                "source": "https://github.com/forkcms/library/tree/3.2.10"
+                "source": "https://github.com/forkcms/library/tree/3.2.11"
             },
-            "time": "2021-05-15T21:58:12+00:00"
+            "time": "2021-06-08T19:08:57+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6294,5 +6294,5 @@
         "ext-simplexml": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
