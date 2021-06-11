@@ -869,7 +869,7 @@ class PageRepository extends ServiceEntityRepository
             Language::setLocale($locale, true);
 
             // if the new URL conflicts with an action we should rebuild the URL
-            if (in_array($url, Language::getActions(), true)) {
+            if (in_array($url, Language::getSlug(), true)) {
                 // recall this method, but with a new URL
                 return $this->getUrl(Model::addNumber($url), $locale, $excludedId, $parentId, $isAction);
             }

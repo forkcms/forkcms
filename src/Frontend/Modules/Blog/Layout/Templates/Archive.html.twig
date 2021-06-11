@@ -54,11 +54,11 @@
                   <td class="comments">
                     {% if item.comments %}
                       {% if item.comments_multiple %}
-                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">
+                        <a href="{{ item.full_url }}#{{ 'slg.Comments'|trans }}">
                           {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
                         </a>
                       {% else %}
-                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">
+                        <a href="{{ item.full_url }}#{{ 'slg.Comments'|trans }}">
                           {{ 'msg.BlogOneComment'|trans }}
                         </a>
                       {% endif %}

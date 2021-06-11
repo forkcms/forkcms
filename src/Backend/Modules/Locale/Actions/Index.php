@@ -107,14 +107,14 @@ class Index extends BackendBaseActionIndex
         $this->dgLabels = new BackendDataGridArray($translations['lbl'] ?? []);
         $this->dgMessages = new BackendDataGridArray($translations['msg'] ?? []);
         $this->dgErrors = new BackendDataGridArray($translations['err'] ?? []);
-        $this->dgActions = new BackendDataGridArray($translations['act'] ?? []);
+        $this->dgActions = new BackendDataGridArray($translations['slg'] ?? []);
 
         // put the datagrids (references) in an array so we can loop them
         $dataGrids = [
             'lbl' => &$this->dgLabels,
             'msg' => &$this->dgMessages,
             'err' => &$this->dgErrors,
-            'act' => &$this->dgActions,
+            'slg' => &$this->dgActions,
         ];
 
         // loop the datagrids (as references)
@@ -158,7 +158,7 @@ class Index extends BackendBaseActionIndex
                     $lang,
                     true
                 );
-                if ($type == 'act') {
+                if ($type == 'slg') {
                     $dataGrid->setColumnFunction('urldecode', ['[' . $lang . ']'], $lang, true);
                 }
 

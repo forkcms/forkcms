@@ -166,7 +166,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
         foreach ($this->config->getPossibleActions() as $actionName) {
             // get action that should be passed as parameter
             $actionUrl = \SpoonFilter::toCamelCase(
-                rawurlencode(FL::act(\SpoonFilter::toCamelCase($actionName)))
+                rawurlencode(FL::slg(\SpoonFilter::toCamelCase($actionName)))
             );
 
             // the action is the requested one

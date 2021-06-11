@@ -16,7 +16,7 @@
       </div>
       <div>
         {% if item.allow_comments %}
-          <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+          <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
             {% if not item.comments %}
               {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
             {% else %}

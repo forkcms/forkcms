@@ -244,7 +244,7 @@ class Detail extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('commentsForm');
-        $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
+        $this->form->setAction($this->form->getAction() . '#' . FL::slg('Comment'));
 
         $cookie = FrontendModel::getContainer()->get('fork.cookie');
         $author = $cookie->get('comment_author');
@@ -349,9 +349,9 @@ class Detail extends FrontendBaseBlock
 
         switch ($comment['status']) {
             case 'moderation':
-                return $redirectLink . 'comment=moderation#' . FL::act('Comment');
+                return $redirectLink . 'comment=moderation#' . FL::slg('Comment');
             case 'spam':
-                return $redirectLink . 'comment=spam#' . FL::act('Comment');
+                return $redirectLink . 'comment=spam#' . FL::slg('Comment');
             case 'published':
                 return $redirectLink . 'comment=true#comment-' . $comment['id'];
             default:

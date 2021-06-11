@@ -26,11 +26,11 @@
               {% if post.allow_comments %}
                 <div class="pull-right">
                   {% if not post.comments %}
-                    <a href="{{ post.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                    <a href="{{ post.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
                       {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
                     </a>
                   {% else %}
-                    <a href="{{ post.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                    <a href="{{ post.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
                       {% if post.comments_multiple %}
                         {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
                       {% else %}

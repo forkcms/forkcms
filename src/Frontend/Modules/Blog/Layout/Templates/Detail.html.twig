@@ -48,11 +48,11 @@
           {% if item.allow_comments %}
             <div class="col-md-6">
               {% if not item.comments %}
-                <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
                   {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
                 </a>
               {% else %}
-                <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                <a href="{{ item.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
                   {% if item.comments_multiple %}
                     {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
                   {% else %}
@@ -102,7 +102,7 @@
 
   {% block block_article_comments %}
     {% if comments or item.allow_comments %}
-      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments mt-4">
+      <section id="{{ 'slg.Comments'|trans }}" class="block-blog-article-comments mt-4">
         <header role="banner" class="block-blog-article-comments-heading">
           <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
         </header>
@@ -156,7 +156,7 @@
 
   {% if item.allow_comments %}
     {% block block_article_comment_form %}
-      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form mt-4 bg-light p-3">
+      <section id="{{ 'slg.Comment'|trans }}" class="block-blog-article-comment-form mt-4 bg-light p-3">
         <header class="block-blog-article-comment-form-heading" role="banner">
           <h4>{{ 'msg.Comment'|trans|ucfirst }}</h4>
         </header>

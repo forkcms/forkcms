@@ -4120,7 +4120,7 @@
         <translation language="pl"><![CDATA[Nie udał się proces anulowania subskrypcji]]></translation>
         <translation language="pt"><![CDATA[O cancelamento da subscrição falhou.]]></translation>
       </item>
-      <item type="action" name="Archive">
+      <item type="slug" name="Archive">
         <translation language="nl"><![CDATA[archief]]></translation>
         <translation language="en"><![CDATA[archive]]></translation>
         <translation language="hu"><![CDATA[archivum]]></translation>
@@ -4136,7 +4136,7 @@
         <translation language="tr"><![CDATA[arsiv]]></translation>
         <translation language="pt"><![CDATA[arquivo]]></translation>
       </item>
-      <item type="action" name="ArticleCommentsRss">
+      <item type="slug" name="ArticleCommentsRss">
         <translation language="nl"><![CDATA[reacties-op-rss]]></translation>
         <translation language="en"><![CDATA[comments-on-rss]]></translation>
         <translation language="hu"><![CDATA[hozzaszolasok-rss-en]]></translation>
@@ -4152,7 +4152,7 @@
         <translation language="pl"><![CDATA[komentarze-w-rss]]></translation>
         <translation language="pt"><![CDATA[comentarios-em-rss]]></translation>
       </item>
-      <item type="action" name="Category">
+      <item type="slug" name="Category">
         <translation language="nl"><![CDATA[categorie]]></translation>
         <translation language="en"><![CDATA[category]]></translation>
         <translation language="hu"><![CDATA[kategoria]]></translation>
@@ -4169,7 +4169,7 @@
         <translation language="tr"><![CDATA[kategori]]></translation>
         <translation language="pt"><![CDATA[categoria]]></translation>
       </item>
-      <item type="action" name="Comment">
+      <item type="slug" name="Comment">
         <translation language="nl"><![CDATA[reageer]]></translation>
         <translation language="en"><![CDATA[comment]]></translation>
         <translation language="hu"><![CDATA[hozzaszolas]]></translation>
@@ -4186,7 +4186,7 @@
         <translation language="tr"><![CDATA[yorum]]></translation>
         <translation language="pt"><![CDATA[comentar]]></translation>
       </item>
-      <item type="action" name="Comments">
+      <item type="slug" name="Comments">
         <translation language="nl"><![CDATA[reacties]]></translation>
         <translation language="en"><![CDATA[comments]]></translation>
         <translation language="hu"><![CDATA[hozzaszolasok]]></translation>
@@ -4203,7 +4203,7 @@
         <translation language="tr"><![CDATA[yorumlar]]></translation>
         <translation language="pt"><![CDATA[comentários]]></translation>
       </item>
-      <item type="action" name="CommentsRss">
+      <item type="slug" name="CommentsRss">
         <translation language="nl"><![CDATA[reacties-rss]]></translation>
         <translation language="en"><![CDATA[comments-rss]]></translation>
         <translation language="hu"><![CDATA[hozzaszolasok-rss]]></translation>
@@ -4220,7 +4220,7 @@
         <translation language="tr"><![CDATA[yorum-rss]]></translation>
         <translation language="pt"><![CDATA[comentarios-rss]]></translation>
       </item>
-      <item type="action" name="Detail">
+      <item type="slug" name="Detail">
         <translation language="nl"><![CDATA[detail]]></translation>
         <translation language="en"><![CDATA[detail]]></translation>
         <translation language="hu"><![CDATA[reszlet]]></translation>
@@ -4237,7 +4237,7 @@
         <translation language="tr"><![CDATA[detay]]></translation>
         <translation language="pt"><![CDATA[detalhe]]></translation>
       </item>
-      <item type="action" name="Feedback">
+      <item type="slug" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
         <translation language="ru"><![CDATA[обратная связь]]></translation>
@@ -4251,7 +4251,7 @@
         <translation language="zh"><![CDATA[回复]]></translation>
         <translation language="pt"><![CDATA[feedback]]></translation>
       </item>
-      <item type="action" name="OwnQuestion">
+      <item type="slug" name="OwnQuestion">
         <translation language="nl"><![CDATA[stel-jouw-vraag]]></translation>
         <translation language="en"><![CDATA[ask-your-question]]></translation>
         <translation language="ru"><![CDATA[задайте ваш вопрос]]></translation>
@@ -4265,7 +4265,7 @@
         <translation language="zh"><![CDATA[提问]]></translation>
         <translation language="pt"><![CDATA[faça-a-sua-pergunta]]></translation>
       </item>
-      <item type="action" name="Preview">
+      <item type="slug" name="Preview">
         <translation language="en"><![CDATA[preview]]></translation>
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="hu"><![CDATA[elonezet]]></translation>
@@ -4282,7 +4282,7 @@
         <translation language="tr"><![CDATA[onizleme]]></translation>
         <translation language="pt"><![CDATA[vista prévia]]></translation>
       </item>
-      <item type="action" name="Rss">
+      <item type="slug" name="Rss">
         <translation language="nl"><![CDATA[rss]]></translation>
         <translation language="en"><![CDATA[rss]]></translation>
         <translation language="hu"><![CDATA[rss]]></translation>
@@ -4299,7 +4299,7 @@
         <translation language="tr"><![CDATA[rss]]></translation>
         <translation language="pt"><![CDATA[rss]]></translation>
       </item>
-      <item type="action" name="Spam">
+      <item type="slug" name="Spam">
         <translation language="nl"><![CDATA[spam]]></translation>
         <translation language="en"><![CDATA[spam]]></translation>
         <translation language="ru"><![CDATA[спам]]></translation>
@@ -4313,7 +4313,7 @@
         <translation language="zh"><![CDATA[举报]]></translation>
         <translation language="pt"><![CDATA[spam]]></translation>
       </item>
-      <item type="action" name="Subscribe">
+      <item type="slug" name="Subscribe">
         <translation language="en"><![CDATA[subscribe]]></translation>
         <translation language="nl"><![CDATA[inschrijven]]></translation>
         <translation language="hu"><![CDATA[feliratkozas]]></translation>
@@ -4330,7 +4330,7 @@
         <translation language="tr"><![CDATA[abone-ol]]></translation>
         <translation language="pt"><![CDATA[subscrever]]></translation>
       </item>
-      <item type="action" name="Success">
+      <item type="slug" name="Success">
         <translation language="nl"><![CDATA[succes]]></translation>
         <translation language="en"><![CDATA[success]]></translation>
         <translation language="ru"><![CDATA[успешно]]></translation>
@@ -4344,7 +4344,7 @@
         <translation language="zh"><![CDATA[成功]]></translation>
         <translation language="pt"><![CDATA[sucesso]]></translation>
       </item>
-      <item type="action" name="Unsubscribe">
+      <item type="slug" name="Unsubscribe">
         <translation language="en"><![CDATA[unsubscribe]]></translation>
         <translation language="nl"><![CDATA[uitschrijven]]></translation>
         <translation language="hu"><![CDATA[leiratkozas]]></translation>

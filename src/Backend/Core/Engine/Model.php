@@ -607,7 +607,7 @@ class Model extends \Common\Core\Model
 
         // append action
         if ($action !== null) {
-            $url .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
+            $url .= '/' . urldecode(FrontendLanguage::slg(\SpoonFilter::toCamelCase($action)));
         }
 
         // return the unique URL!
