@@ -101,7 +101,7 @@ class Language
         return '{$act' . $key . '}';
     }
 
-    public static function getSlug(): array
+    public static function getSlugs(): array
     {
         return Model::getContainer()->getParameter('kernel.debug') ? self::$slg : array_merge(
             self::$fallbackSlg,
