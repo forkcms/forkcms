@@ -571,7 +571,7 @@ class Navigation extends KernelLoader
 
         // append action
         if ($action !== null) {
-            $url .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+            $url .= '/' . Language::slg(\SpoonFilter::toCamelCase($action));
         }
 
         // return the URL

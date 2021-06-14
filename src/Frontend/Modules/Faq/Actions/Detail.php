@@ -90,9 +90,9 @@ class Detail extends FrontendBaseBlock
     private function getStatus(): ?string
     {
         switch ($this->url->getParameter(2)) {
-            case FL::getAction('Success'):
+            case FL::getSlug('Success'):
                 return 'success';
-            case FL::getAction('Spam'):
+            case FL::getSlug('Spam'):
                 return 'spam';
             default:
                 return null;
@@ -225,7 +225,7 @@ class Detail extends FrontendBaseBlock
             $this->saveUserFeedback();
         }
 
-        $this->redirect($this->question['full_url'] . '/' . FL::getAction('Success'));
+        $this->redirect($this->question['full_url'] . '/' . FL::getSlug('Success'));
     }
 
     private function isSpamFilterEnabled(): bool
@@ -248,7 +248,7 @@ class Detail extends FrontendBaseBlock
 
         if ($this->isSpamFilterEnabled() && FrontendModel::isSpam($feedback['text'], $feedback['question_link'])) {
             // set the status to spam
-            $this->redirect($this->question['full_url'] . '/' . FL::getAction('Spam'));
+            $this->redirect($this->question['full_url'] . '/' . FL::getSlug('Spam'));
         }
 
         // save the feedback

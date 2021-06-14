@@ -17,7 +17,7 @@ class Model
      * @var array The possible locale types
      */
     public const TYPES = [
-        'act',
+        'slg',
         'err',
         'lbl',
         'msg',
@@ -174,7 +174,7 @@ class Model
         );
 
         // actions are urlencoded
-        if ($record['type'] === 'act') {
+        if ($record['type'] === 'slg') {
             $record['value'] = urldecode($record['value']);
         }
 
@@ -356,8 +356,8 @@ class Model
     {
         // get full type name
         switch ($type) {
-            case 'act':
-                $type = 'action';
+            case 'slg':
+                $type = 'slug';
                 break;
             case 'err':
                 $type = 'error';
@@ -571,7 +571,7 @@ class Model
     public static function insert(array $item): int
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+        if ($item['type'] == 'slg' && urldecode($item['value']) != $item['value']) {
             $item['value'] = CommonUri::getUrl(
                 $item['value']
             );
@@ -590,7 +590,7 @@ class Model
     public static function update(array $item): int
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+        if ($item['type'] == 'slg' && urldecode($item['value']) != $item['value']) {
             $item['value'] = CommonUri::getUrl(
                 $item['value']
             );

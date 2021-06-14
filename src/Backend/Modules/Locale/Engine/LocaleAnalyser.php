@@ -188,7 +188,7 @@ final class LocaleAnalyser
 
     private function cleanUpLocaleType(string $type): string
     {
-        return str_replace(['getMessage', 'getLabel', 'getError', 'getAction'], ['msg','lbl', 'err', 'act'], $type);
+        return str_replace(['getMessage', 'getLabel', 'getError', 'getSlug'], ['msg','lbl', 'err', 'slg'], $type);
     }
 
     private function getInBetweenStrings(string $start, string $end, string $str)
@@ -218,7 +218,7 @@ final class LocaleAnalyser
             Model::getTranslations(
                 $this->application,
                 '',
-                ['lbl', 'act', 'err', 'msg'],
+                ['lbl', 'slg', 'err', 'msg'],
                 [$language],
                 '',
                 ''

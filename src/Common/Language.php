@@ -91,9 +91,9 @@ final class Language extends IdentityTranslator
      *
      * @return string
      */
-    public static function act(string $key): string
+    public static function slg(string $key): string
     {
-        return self::callLanguageFunction('act', [$key]);
+        return self::callLanguageFunction('slg', [$key]);
     }
 
     /**
@@ -113,7 +113,7 @@ final class Language extends IdentityTranslator
     {
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {
-            $possibleActions[] = 'act';
+            $possibleActions[] = 'slg';
         }
 
         if (!preg_match('/(' . implode('|', $possibleActions) . ')./', $id)) {
@@ -150,7 +150,7 @@ final class Language extends IdentityTranslator
     {
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {
-            $possibleActions[] = 'act';
+            $possibleActions[] = 'slg';
         }
 
         if (!preg_match('/(' . implode('|', $possibleActions) . ')./', $id)) {
