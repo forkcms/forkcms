@@ -300,7 +300,7 @@ class MetaType extends AbstractType
                     $metaData['descriptionOverwrite'] ?? false,
                     $metaData['title'] ?? '',
                     $metaData['titleOverwrite'] ?? false,
-                    $metaData['url'] ?? '',
+                    $metaData['url'],
                     $metaData['urlOverwrite'] ?? false,
                     $metaData['custom'] ?? null,
                     SEOFollow::fromString((string) $metaData['SEOFollow']),
