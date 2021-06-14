@@ -70,16 +70,16 @@ export class Controls {
           const $field = $($combo.find('input:text')[0])
 
           if ($this.is(':checked')) {
-            $field.removeClass('disabled').prop('disabled', false).focus()
+            $field.removeClass('disabled').prop('readonly', false).focus()
           } else {
-            $field.addClass('disabled').prop('disabled', true)
+            $field.addClass('disabled').prop('readonly', true)
           }
         })
 
         if ($checkbox.is(':checked')) {
-          $textField.removeClass('disabled').prop('disabled', false)
+          $textField.removeClass('disabled').prop('readonly', false)
         } else {
-          $textField.addClass('disabled').prop('disabled', true)
+          $textField.addClass('disabled').prop('readonly', true)
         }
       }
     })

@@ -21,12 +21,17 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class PageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('title', TitleType::class);
+        $builder->add(
+            'title',
+            TitleType::class
+        );
         if ($this->authenticatedUserIsAllowedToSeeAndEditTags()) {
             $builder->add('tags', TagsType::class, ['label' => 'lbl.Tags', 'required' => false]);
         }

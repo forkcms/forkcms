@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MetaType extends AbstractType
 {
@@ -58,13 +59,19 @@ class MetaType extends AbstractType
             ->add(
                 'description',
                 TextType::class,
-                ['label' => 'lbl.Description', 'label_attr' => ['class' => 'visually-hidden']]
+                [
+                    'label' => 'lbl.Description',
+                    'label_attr' => ['class' => 'visually-hidden'],
+                ]
             )
             ->add('descriptionOverwrite', SwitchType::class, ['label' => 'lbl.Description', 'required' => false])
             ->add(
                 'keywords',
                 TextType::class,
-                ['label' => 'lbl.Keywords', 'label_attr' => ['class' => 'visually-hidden']]
+                [
+                    'label' => 'lbl.Keywords',
+                    'label_attr' => ['class' => 'visually-hidden'],
+                ]
             )
             ->add('keywordsOverwrite', SwitchType::class, ['label' => 'lbl.Keywords', 'required' => false])
             ->add(
@@ -91,6 +98,48 @@ class MetaType extends AbstractType
                 ['label' => 'lbl.ExtraMetaTags', 'required' => false, 'attr' => ['rows' => 5, 'cols' => 62]]
             );
         }
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $formEvent) {
+            $data = $formEvent->getData();
+
+            if ($this->meta === null) {
+                return;
+            }
+
+            $meta = $this->meta[$data['id']];
+            $currentData = [
+                'id' => $meta->getId(),
+                'title' => $meta->getTitle(),
+                'description' => $meta->getDescription(),
+                'keywords' => $meta->getKeywords(),
+                'custom' => $meta->getCustom(),
+                'url' => $meta->getUrl(),
+                'SEOIndex' => (string)($meta->getSEOIndex() ?? SEOIndex::none()),
+                'SEOFollow' => (string)($meta->getSEOFollow() ?? SEOFollow::none()),
+            ];
+
+            if ($meta->isTitleOverwrite()) {
+                $currentData['titleOverwrite'] = '1';
+            }
+
+            if ($meta->isDescriptionOverwrite()) {
+                $currentData['descriptionOverwrite'] = '1';
+            }
+
+            if ($meta->isKeywordsOverwrite()) {
+                $currentData['keywordsOverwrite'] = '1';
+            }
+
+            if ($meta->isUrlOverwrite()) {
+                $currentData['urlOverwrite'] = '1';
+            }
+
+            foreach ($data as $key => $value) {
+                $currentData[$key] = $value;
+            }
+
+            $formEvent->setData($currentData);
+        });
     }
 
     private function getSEOIndexChoiceTypeOptions(): array
@@ -242,14 +291,14 @@ class MetaType extends AbstractType
 
             if ($metaId === null || !$this->meta[$metaId] instanceof Meta) {
                 return new Meta(
-                    $metaData['keywords'],
-                    $metaData['keywordsOverwrite'],
-                    $metaData['description'],
-                    $metaData['descriptionOverwrite'],
-                    $metaData['title'],
-                    $metaData['titleOverwrite'],
+                    $metaData['keywords'] ?? '',
+                    $metaData['keywordsOverwrite'] ?? false,
+                    $metaData['description'] ?? '',
+                    $metaData['descriptionOverwrite'] ?? false,
+                    $metaData['title'] ?? '',
+                    $metaData['titleOverwrite'] ?? false,
                     $metaData['url'],
-                    $metaData['urlOverwrite'],
+                    $metaData['urlOverwrite'] ?? false,
                     $metaData['custom'] ?? null,
                     SEOFollow::fromString((string) $metaData['SEOFollow']),
                     SEOIndex::fromString((string) $metaData['SEOIndex']),
@@ -259,13 +308,13 @@ class MetaType extends AbstractType
             }
 
             $this->meta[$metaId]->update(
-                $metaData['keywords'],
+                $metaData['keywords'] ?? '',
                 $metaData['keywordsOverwrite'],
-                $metaData['description'],
+                $metaData['description'] ?? '',
                 $metaData['descriptionOverwrite'],
-                $metaData['title'],
+                $metaData['title'] ?? '',
                 $metaData['titleOverwrite'],
-                $metaData['url'],
+                $metaData['url'] ?? '',
                 $metaData['urlOverwrite'],
                 array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
                 SEOFollow::fromString((string) $metaData['SEOFollow']),
