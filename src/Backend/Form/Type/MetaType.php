@@ -303,8 +303,8 @@ class MetaType extends AbstractType
                     $metaData['url'] ?? '',
                     $metaData['urlOverwrite'] ?? false,
                     $metaData['custom'] ?? null,
-                    SEOFollow::fromString((string)$metaData['SEOFollow']),
-                    SEOIndex::fromString((string)$metaData['SEOIndex']),
+                    SEOFollow::fromString((string) $metaData['SEOFollow']),
+                    SEOIndex::fromString((string) $metaData['SEOIndex']),
                     [],
                     $metaId
                 );
@@ -320,8 +320,8 @@ class MetaType extends AbstractType
                 $metaData['url'] ?? '',
                 $metaData['urlOverwrite'],
                 array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
-                SEOFollow::fromString((string)$metaData['SEOFollow']),
-                SEOIndex::fromString((string)$metaData['SEOIndex'])
+                SEOFollow::fromString((string) $metaData['SEOFollow']),
+                SEOIndex::fromString((string) $metaData['SEOIndex'])
             );
 
             return $this->meta[$metaId];
