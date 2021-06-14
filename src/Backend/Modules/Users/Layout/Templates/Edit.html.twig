@@ -53,19 +53,19 @@
     <div>
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab" aria-selected="true" id="tab-profile">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+          <a class="nav-link active" href="#tabProfile" aria-controls="tabProfile" role="tab" data-bs-toggle="tab" aria-selected="true" id="tab-profile">{{ 'lbl.Profile'|trans|ucfirst }}</a>
         </li>
         {% if allowPasswordEdit %}
           <li class="nav-item">
-            <a class="nav-link" href="#tabPassword" aria-controls="tabPassword" role="tab" data-toggle="tab" aria-selected="false" id="tab-password">{{ 'lbl.Password'|trans|ucfirst }}</a>
+            <a class="nav-link" href="#tabPassword" aria-controls="tabPassword" role="tab" data-bs-toggle="tab" aria-selected="false" id="tab-password">{{ 'lbl.Password'|trans|ucfirst }}</a>
           </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="tab-settings">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-bs-toggle="tab" aria-selected="false" id="tab-settings">{{ 'lbl.Settings'|trans|ucfirst }}</a>
         </li>
         {% if allowUserRights %}
           <li class="nav-item">
-            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="tab-permissions">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-bs-toggle="tab" aria-selected="false" id="tab-permissions">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         {% endif %}
       </ul>
@@ -112,11 +112,8 @@
               </div>
             </div>
             <div class="form-group last">
-              <label for="image" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-              <div class="custom-file">
-                {% form_field avatar %}
-                <label for="avatar" class="custom-file-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-              </div>
+              <label for="image" class="form-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
+              {% form_field avatar %}
               {% form_field_error avatar %}
             </div>
           </div>
@@ -138,7 +135,7 @@
                   {% elseif record.settings.password_strength == 'strong' %}
                     {% set badgeType = 'success' %}
                   {% endif %}
-                  <span class="badge badge-{{ badgeType }} badge-sm ml-1">
+                  <span class="badge badge-{{ badgeType }} badge-sm ms-1">
                     {{ passwordStrengthLabel|ucfirst }}
                   </span>
                 </div>
@@ -155,11 +152,11 @@
                       {{ 'lbl.Password'|trans|ucfirst }}
                       {{ macro.required }}
 
-                      <span class="passwordStrength ml-auto" data-id="newPassword" data-role="password-strength-meter">
-                        <span class="badge badge-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
-                        <span class="badge badge-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
-                        <span class="badge badge-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
-                        <span class="badge badge-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
+                      <span class="passwordStrength ms-auto" data-id="newPassword" data-role="password-strength-meter">
+                        <span class="badge bg-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
+                        <span class="badge bg-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
+                        <span class="badge bg-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
+                        <span class="badge bg-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
                       </span>
                     </label>
                     {% form_field new_password %} {% form_field_error new_password %}
@@ -265,10 +262,10 @@
     <div class="btn-toolbar d-flex">
       <div class="btn-group" role="group">
         {% if isAllowedAction('Delete') and allowUsersDelete %}
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete" }) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmDelete" }) }}
         {% endif %}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
       </div>
     </div>

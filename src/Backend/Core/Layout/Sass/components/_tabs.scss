@@ -13,7 +13,7 @@
   padding: 15px;
 
   .tab-pane-title {
-    font-size: $font-size-btn;
+    font-size: $btn-font-size;
   }
 
   @include media-breakpoint-up(lg) {
@@ -77,10 +77,6 @@ div.active.tab-pane:focus {
 
     > .nav-item {
       float: none;
-    }
-
-    .mr-auto {
-      margin-right: auto;
     }
   }
 }

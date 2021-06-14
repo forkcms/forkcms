@@ -19,7 +19,7 @@
       {% block widget_large_map_link %}
         <div class="widget-large-map-link d-flex mt-2">
           <a href="{{ widgetLocationSettings.maps_url }}" class="btn btn-primary ml-auto" target="_blank" data-role="fork-map-url" data-map-id="{{ widgetLocationItem.id }}">
-            {{ 'lbl.ViewLargeMap'|trans|ucfirst }} <span class="sr-only">{{ widgetLocationItem.title }}</span>
+            {{ 'lbl.ViewLargeMap'|trans|ucfirst }} <span class="visually-hidden">{{ widgetLocationItem.title }}</span>
           </a>
         </div>
       {% endblock %}

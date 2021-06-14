@@ -73,7 +73,7 @@ export class Upload {
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
             const $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' +
-              responseJSON.direct_url + '"><span class="sr-only">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
+              responseJSON.direct_url + '"><span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
 
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder')
@@ -166,9 +166,9 @@ export class Upload {
    */
   addUploadedMediaToGroup () {
     // loop remaining items in uploaded media and push them to current group
-    $('#uploadedMedia').find('li').each(function () {
+    $('#uploadedMedia').find('li').each((key, element) => {
       // get id
-      const id = $(this).attr('id').replace('media-', '')
+      const id = $(element).attr('id').replace('media-', '')
 
       // add each id to array
       this.config.currentMediaItemIds.push(id)
@@ -244,7 +244,7 @@ export class Upload {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="sr-only">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
+            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)

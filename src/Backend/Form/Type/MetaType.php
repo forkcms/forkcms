@@ -53,10 +53,7 @@ class MetaType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
-                [
-                    'label' => 'lbl.PageTitle',
-                    'label_attr' => ['class' => 'sr-only'],
-                ]
+                ['label' => 'lbl.PageTitle', 'label_attr' => ['class' => 'visually-hidden']]
             )
             ->add('titleOverwrite', SwitchType::class, ['label' => 'lbl.PageTitle', 'required' => false])
             ->add(
@@ -64,7 +61,7 @@ class MetaType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'lbl.Description',
-                    'label_attr' => ['class' => 'sr-only'],
+                    'label_attr' => ['class' => 'visually-hidden'],
                 ]
             )
             ->add('descriptionOverwrite', SwitchType::class, ['label' => 'lbl.Description', 'required' => false])
@@ -73,7 +70,7 @@ class MetaType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'lbl.Keywords',
-                    'label_attr' => ['class' => 'sr-only'],
+                    'label_attr' => ['class' => 'visually-hidden'],
                 ]
             )
             ->add('keywordsOverwrite', SwitchType::class, ['label' => 'lbl.Keywords', 'required' => false])
@@ -83,7 +80,7 @@ class MetaType extends AbstractType
                 [
                     'attr' => ['class' => 'fork-form-text'],
                     'label' => 'lbl.URL',
-                    'label_attr' => ['class' => 'sr-only'],
+                    'label_attr' => ['class' => 'visually-hidden'],
                 ]
             )
             ->add('urlOverwrite', SwitchType::class, ['label' => 'lbl.URL', 'required' => false])

@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+    - name: 🐞 Bug Report
+      url: https://github.com/forkcms/forkcms/issues/new?labels=Bug&template=Bug.md
+      about: Something is broken? 🔨
+    - name: 💥 Critical Bug Report
+      url: https://github.com/forkcms/forkcms/issues/new?labels=Bug&template=Critical_Bug.md
+      about: Have you encountered something completely broken without workaround? 💣
+    - name: ✨ Feature Request
+      url: https://github.com/forkcms/forkcms/discussions/new?category=ideas-feature-requests
+      about: You have a neat idea that should be implemented? 🎩
+    - name: ❓ Ask a Question
+      url: https://github.com/forkcms/forkcms/discussions/new?category=help
+      about: Have a problem that you can't figure out? 🤔  Ask the community for help
+    - name: 🔒 Report a Security Vulnerability
+      url: https://github.com/forkcms/forkcms/security/policy
+      about: Please review our security policy for more details

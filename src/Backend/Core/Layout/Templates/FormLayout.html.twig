@@ -2,7 +2,7 @@
 
 {% block form_widget_simple -%}
   {% if type is not defined or type != 'hidden' %}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control' ~ (type|default('') == 'file' ? '-file custom-file-input' : ''))|trim}) -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
   {% endif %}
   {%- if type is defined and (type == 'range' or type == 'color') %}
     {# Attribute "required" is not supported #}
@@ -170,7 +170,7 @@
         <div class="form-group">
           {{ form_widget(form.urlOverwrite) }}
           {{ form_label(form.url) }}
-          <div class="form-inline">
+          <div class="d-flex align-items-center">
             <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
           </div>
           {{ form_errors(form.url) }}
@@ -370,9 +370,15 @@
   {% if form.parent.meta is defined %}
     {% set meta = form.parent.meta %}
     {% set slug = meta.children.url.vars.value %}
-    <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
-      {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
-    </a>
+    {% if slug == 'home' %}
+      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}">
+        {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl"></span>
+      </a>
+    {% else %}
+      <a target="_blank" rel="noopener noreferrer" class="site-url" href="{{ meta.vars.detail_url }}/{{ slug }}">
+        {{ SITE_URL }}{{ meta.vars.detail_url }}/<span id="generatedUrl">{{ slug }}</span>
+      </a>
+    {% endif %}
   {% endif %}
 {% endblock %}
 
@@ -389,7 +395,7 @@
   {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
     {% set required = false %}
   {%- endif -%}
-  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="custom-select">
+  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-select">
     {%- if placeholder is not none -%}
       <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
     {%- endif -%}

@@ -14,18 +14,8 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="form-group">
-        <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-        {% form_field group %} {% form_field_error group %}
-      </div>
-      <div class="form-group">
-        <label>{{ 'lbl.File'|trans|ucfirst }}</label>
-        <div class="custom-file">
-          {% form_field file %}
-          <label for="file" class="custom-file-label">
-            {{ 'lbl.File'|trans|ucfirst }}
-            {{ macro.required }}
-          </label>
-        </div>
+        <label for="file" class="form-label">{{ 'lbl.File'|trans|ucfirst }}{{ macro.required }}</label>
+        {% form_field file %}
         {% form_field_error file %}
       </div>
       <div class="form-group">
@@ -33,6 +23,12 @@
           {% form_field overwrite_existing %}
           <label for="overwriteExisting" class="form-check-label">{{ 'msg.OverwriteExisting'|trans }}</label>
         </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="form-group">
+        <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
+        {% form_field group %} {% form_field_error group %}
       </div>
     </div>
   </div>
@@ -43,7 +39,7 @@
           {{ macro.buttonIcon(geturl('index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
         {% endif %}
       </div>
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'upload', 'lbl.Import'|trans|ucfirst, 'btn-primary', { "id":"importButton", "type":"submit", "name":"add" }) }}
       </div>
     </div>

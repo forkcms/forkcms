@@ -240,8 +240,9 @@ class UploadTheme extends BackendBaseActionAdd
             $fileName = $file['name'];
 
             // We skip all the files that are outside of the theme folder or on the ignore list.
-            if ($this->checkIfPathContainsIgnoredWord($fileName) ||
-                (!empty($this->parentFolderName) && mb_stripos($fileName, $this->parentFolderName) !== 0)
+            if ($this->checkIfPathContainsIgnoredWord($fileName)
+                || (!empty($this->parentFolderName) && mb_stripos($fileName, $this->parentFolderName) !== 0)
+                || mb_strpos(basename($fileName), '.') === 0 // ignore hidden files
             ) {
                 continue;
             }

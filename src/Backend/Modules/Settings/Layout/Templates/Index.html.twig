@@ -37,28 +37,28 @@
       <h2 class="card-title">{{ 'lbl.GoogleTrackingOptions'|trans|ucfirst }}</h2>
     </div>
     <div class="card-body">
-      <p><small>{{ 'msg.HelpGoogleTrackingOptions'|trans }}</small></p>
+      <p>{{ 'msg.HelpGoogleTrackingOptions'|trans }}</p>
       <div class="form-group checkboxTextFieldCombo">
         <label for="googleTrackingGoogleAnalyticsTrackingId" class="control-label">{{ 'lbl.GoogleAnalyticsTrackingId'|trans }}</label>
         <div class="input-group">
-          <div class="input-group-addon">
+          <div class="input-group-text">
             {% form_field google_tracking_google_analytics_tracking_id_enabled %}
           </div>
           {% form_field google_tracking_google_analytics_tracking_id %}
         </div>
         {% form_field_error google_tracking_google_analytics_tracking_id %}
-        <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleAnalyticsTrackingId'|trans|raw }}</span>
+        <small class="form-text text-muted">{{ 'msg.HelpGoogleTrackingGoogleAnalyticsTrackingId'|trans|raw }}</small>
       </div>
       <div class="form-group last checkboxTextFieldCombo">
         <label for="googleTrackingGoogleTagManagerContainerId" class="control-label">{{ 'lbl.GoogleTagManagerContainerId'|trans }}</label>
         <div class="input-group">
-          <div class="input-group-addon">
+          <div class="input-group-text">
             {% form_field google_tracking_google_tag_manager_container_id_enabled %}
           </div>
           {% form_field google_tracking_google_tag_manager_container_id %}
         </div>
         {% form_field_error google_tracking_google_tag_manager_container_id %}
-        <span class="help-block">{{ 'msg.HelpGoogleTrackingGoogleTagManagerContainerId'|trans|raw }}</span>
+        <small class="form-text text-muted">{{ 'msg.HelpGoogleTrackingGoogleTagManagerContainerId'|trans|raw }}</small>
       </div>
     </div>
   </div>
@@ -164,7 +164,7 @@
       <h2 class="card-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
     </div>
     <div class="card-body p-0">
-      <table class="table table-striped border-0">
+      <table class="table table-striped mb-0">
         <thead>
           <tr>
             <th class="title" style="width: 20%;"><span>{{ 'lbl.Name'|trans|ucfirst }}</span></th>
@@ -258,7 +258,7 @@
       <div class="form-group last">
         <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|ucfirst }}</label>
         <div class="input-group">
-          <div class="input-group-prepend"><span class="input-group-text">@</span></div>
+          <div class="input-group-text">@</div>
           {% form_field twitter_site_name %}
         </div>
         {% form_field_error twitter_site_name %}
@@ -294,7 +294,7 @@
 
   <div class="fork-module-actions">
     <div class="btn-toolbar">
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
       </div>
     </div>

@@ -86,16 +86,16 @@ class Location
     private $country;
 
     /**
-     * @var float
+     * @var float|null
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $latitude;
 
     /**
-     * @var float
+     * @var float|null
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;
 
@@ -132,6 +132,13 @@ class Location
      */
     private $editedOn;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default" = false})
+     */
+    private $overrideMapSettings;
+
     public function __construct(
         Locale $locale,
         string $title,
@@ -140,10 +147,11 @@ class Location
         string $zip,
         string $city,
         string $country,
-        float $latitude,
-        float $longitude,
+        ?float $latitude = null,
+        ?float $longitude = null,
         bool $showInOverview = true,
-        int $extraId = null
+        int $extraId = null,
+        bool $overrideMapSettings = false
     ) {
         $this->locale = $locale;
         $this->title = $title;
@@ -156,6 +164,7 @@ class Location
         $this->longitude = $longitude;
         $this->showInOverview = $showInOverview;
         $this->extraId = $extraId;
+        $this->overrideMapSettings = $overrideMapSettings;
 
         $this->settings = new ArrayCollection();
     }
@@ -167,9 +176,10 @@ class Location
         string $zip,
         string $city,
         string $country,
-        float $latitude,
-        float $longitude,
-        bool $showInOverview = true
+        ?float $latitude = null,
+        ?float $longitude = null,
+        bool $showInOverview = true,
+        bool $overrideMapSettings = false
     ) {
         $this->title = $title;
         $this->street = $street;
@@ -180,6 +190,7 @@ class Location
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->showInOverview = $showInOverview;
+        $this->overrideMapSettings = $overrideMapSettings;
     }
 
     public function getId(): int
@@ -227,12 +238,12 @@ class Location
         return $this->country;
     }
 
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
@@ -271,6 +282,16 @@ class Location
         $this->settings->add($setting);
     }
 
+    public function isOverrideMapSettings(): bool
+    {
+        return $this->overrideMapSettings;
+    }
+
+    public function setOverrideMapSettings(bool $overrideMapSettings): void
+    {
+        $this->overrideMapSettings = $overrideMapSettings;
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -303,10 +324,11 @@ class Location
             $item['zip'],
             $item['city'],
             $item['country'],
-            $item['lat'] ?? $item['latitude'],
-            $item['lng'] ?? $item['longitude'],
+            $item['lat'] ?? $item['latitude'] ?? null,
+            $item['lng'] ?? $item['longitude'] ?? null,
             $item['show_overview'] ?? $item['showInOverview'] ?? true,
-            $item['extra_id'] ?? $item['extraId'] ?? null
+            $item['extra_id'] ?? $item['extraId'] ?? null,
+            $item['override_map_settings'] ?? false
         );
     }
 
@@ -326,6 +348,7 @@ class Location
             'show_overview' => (int) $this->showInOverview,
             'extra_id' => $this->extraId,
             'settings' => $this->settings->toArray(),
+            'override_map_settings' => $this->overrideMapSettings,
         ];
     }
 }

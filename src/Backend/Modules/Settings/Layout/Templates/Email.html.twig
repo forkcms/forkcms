@@ -20,7 +20,7 @@
             {{ 'lbl.SendingEmails'|trans|ucfirst }}
           </legend>
           <div class="form-group">
-            <div class="form-row align-items-center">
+            <div class="row gx-3 align-items-center">
               <div class="col-lg-8">
                 {% form_field mailer_type %} {% form_field_error mailer_type %}
               </div>
@@ -31,7 +31,7 @@
             <small class="form-text text-muted">{{ 'msg.HelpSendingEmails'|trans }}</small>
             <span id="testEmailConnectionSpinner" class="pt-2 d-none">
               {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
-              <span class="sr-only">{{ 'lbl.Loading' }}</span>
+              <span class="visually-hidden">{{ 'lbl.Loading' }}</span>
             </span>
           </div>
           {{ macro.alert('danger', 'err.ErrorWhileSendingEmail'|trans, null, 'testEmailConnectionError', {'class': 'd-md-none'}, false) }}
@@ -127,12 +127,15 @@
       <div class="card-body">
         <div class="form-group">
           <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
-          <div class="form-inline">
-            {% form_field smtp_server %}
-            <span class="mx-1">:</span>
-            {% form_field smtp_port %}
-            {% form_field_error smtp_port %} {% form_field_error smtp_server %}
+          <div class="row">
+            <div class="col-lg-6 d-flex align-items-center">
+              {% form_field smtp_server %}
+              <span class="mx-1">:</span>
+              {% form_field smtp_port %}
+            </div>
           </div>
+          {% form_field_error smtp_port %}
+          {% form_field_error smtp_server %}
           <small class="form-text text-muted">{{ 'msg.HelpSMTPServer'|trans }}</small>
         </div>
         <div class="row">
@@ -160,7 +163,7 @@
   {% endif %}
   <div class="fork-module-actions">
     <div class="btn-toolbar">
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
       </div>
     </div>

@@ -5,7 +5,7 @@
         <li class="previous">
           <a href="{{ widgetPagesNavigation.previous.url }}" rel="prev">
             ←
-            <span class="sr-only">{{ 'lbl.PreviousPage'|trans|ucfirst }}: </span>
+            <span class="visually-hidden">{{ 'lbl.PreviousPage'|trans|ucfirst }}: </span>
             <span class="title">{{ widgetPagesNavigation.previous.title }}</span>
           </a>
         </li>
@@ -17,7 +17,7 @@
         <li class="parentLink">
           <a href="{{ widgetPagesNavigation.parent.url }}">
             ↑
-            <span class="sr-only">{{ 'lbl.ParentPage'|trans|ucfirst }}: </span>
+            <span class="visually-hidden">{{ 'lbl.ParentPage'|trans|ucfirst }}: </span>
             <span class="title">{{ widgetPagesNavigation.parent.title }}</span>
           </a>
         </li>
@@ -28,7 +28,7 @@
       {% block widget_next %}
         <li class="next">
           <a href="{{ widgetPagesNavigation.next.url }}" rel="next">
-            <span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }}: </span>
+            <span class="visually-hidden">{{ 'lbl.NextPage'|trans|ucfirst }}: </span>
             <span class="title">{{ widgetPagesNavigation.next.title }}</span>
             ➝
           </a>

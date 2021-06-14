@@ -49,7 +49,6 @@ class Index extends BackendBaseActionIndex
         $this->loadData();
 
         $this->loadDataGrid();
-        $this->loadSettingsForm();
 
         $this->parse();
         $this->display();
@@ -111,42 +110,6 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    protected function loadSettingsForm(): void
-    {
-        $mapTypes = [
-            'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
-            'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
-            'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
-            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        ];
-        $mapStyles = [
-            'standard' => BL::lbl('Default', $this->getModule()),
-            'custom' => BL::lbl('Custom', $this->getModule()),
-            'gray' => BL::lbl('Gray', $this->getModule()),
-            'blue' => BL::lbl('Blue', $this->getModule()),
-        ];
-
-        $zoomLevels = array_combine(
-            array_merge(['auto'], range(1, 18)),
-            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
-        );
-
-        $this->form = new BackendForm('settings');
-
-        // add map info (overview map)
-        $this->form->addHidden('map_id', 0);
-        $this->form->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
-        $this->form->addText('width', $this->settings['width']);
-        $this->form->addText('height', $this->settings['height']);
-        $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
-        $this->form->addDropdown(
-            'map_style',
-            $mapStyles,
-            $this->settings['map_style'] ?? null
-        );
-    }
-
     protected function parse(): void
     {
         parent::parse();
@@ -156,7 +119,5 @@ class Index extends BackendBaseActionIndex
 
         // assign to template
         $this->template->assign('items', $this->items);
-        $this->template->assign('settings', $this->settings);
-        $this->form->parse($this->template);
     }
 }

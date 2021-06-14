@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Tests\Tests\BlockEditor;
+namespace ForkCMS\Tests\BlockEditor;
 
 use Common\BlockEditor\Blocks\HeaderBlock;
 use Common\BlockEditor\EditorBlocks;

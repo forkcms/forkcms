@@ -7,10 +7,10 @@
         <li{% if not pagination.show_previous %} class="disabled"{% endif %}>
           {% if pagination.show_previous %}
             <a href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">
-              &larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span>
+              &larr;<span class="visually-hidden"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span>
             </a>
           {% else %}
-            <span>&larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span></span>
+            <span>&larr;<span class="visually-hidden"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span></span>
           {% endif %}
         </li>
 
@@ -49,10 +49,10 @@
         <li{% if not pagination.show_next %} class="disabled" {% endif %}>
           {% if pagination.show_next %}
             <a href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">
-              <span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;
+              <span class="visually-hidden">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;
             </a>
           {% else %}
-            <span><span class="sr-only">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;</span>
+            <span><span class="visually-hidden">{{ 'lbl.NextPage'|trans|ucfirst }} </span>&rarr;</span>
           {% endif %}
         </li>
       </ul>

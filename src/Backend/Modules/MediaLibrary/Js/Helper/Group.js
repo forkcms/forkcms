@@ -513,7 +513,7 @@ export class Group {
             if (id === item.id) {
               // Add HTML for MediaItem to Connect
               $currentItems.append(Templates.getHTMLForMediaItemToConnect(item))
-              window.mediaLibrary.mediaThumbUrl.set(item)
+              window.backend.mediaLibrary.helper.mediaThumbUrl.set(item)
             }
           })
         })
@@ -627,7 +627,7 @@ export class Group {
     if (disabled !== '') {
       $tabs.children(disabled).find('.nav-link').addClass('disabled')
     }
-    $tabs.children(enabled).children('a').attr('data-toggle', 'tab').first().tab('show')
+    $tabs.children(enabled).children('a').attr('data-bs-toggle', 'tab').first().tab('show')
 
     // get table
     const $tables = $('.mediaTable')

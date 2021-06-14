@@ -12,7 +12,7 @@
         <h2>{{ 'lbl.Group'|trans|ucfirst }}</h2>
       </div>
       <div class="card-body">
-        <div class="form-row">
+        <div class="row gx-3">
           <div class="col-lg-6">
             <div class="form-group">
               <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
@@ -21,14 +21,12 @@
           </div>
         </div>
         <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
-        <div class="form-row">
+        <div class="row gx-3">
           <div class="col-lg-6">
             <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  {{ macro.icon('calendar fa-fw') }}
-                  <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
-                </span>
+              <div class="input-group-text">
+                {{ macro.icon('calendar fa-fw') }}
+                <label class="visually-hidden" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
               </div>
               {% form_field expiration_date %}
             </div>
@@ -36,11 +34,9 @@
           </div>
           <div class="col-lg-6">
             <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  {{ macro.icon('clock fa-fw') }}
-                  <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
-                </span>
+              <div class="input-group-text">
+                {{ macro.icon('clock fa-fw') }}
+                <label class="visually-hidden" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
               </div>
               {% form_field expiration_time %}
             </div>
@@ -54,7 +50,7 @@
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ id ~ "#tabGroups", 'times', 'lbl.Cancel'|trans|ucfirst) }}
         </div>
-        <div class="btn-group ml-auto" role="group">
+        <div class="btn-group ms-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add" }) }}
         </div>
       </div>

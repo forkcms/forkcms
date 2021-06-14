@@ -35,7 +35,7 @@ final class PageNavigationType extends AbstractType
                 'label' => 'lbl.NavigationTitle',
                 'property_path' => 'navigationTitle',
                 'label_attr' => [
-                    'class' => 'sr-only',
+                    'class' => 'visually-hidden',
                 ],
             ]
         );

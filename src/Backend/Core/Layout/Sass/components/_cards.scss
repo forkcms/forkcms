@@ -121,7 +121,8 @@
         color: $body-color;
       }
 
-      @include hover-focus {
+      &:hover,
+      &:focus {
         text-decoration: none;
 
         .card-title {

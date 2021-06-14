@@ -57,8 +57,6 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->loadDeleteForm();
 
-            $this->loadSettingsForm();
-
             $this->parse();
             $this->display();
         } else {
@@ -110,10 +108,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('city', $this->record['city'])->makeRequired();
         $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country'])->makeRequired();
         $this->form->addHidden('redirect', 'overview');
-    }
 
-    protected function loadSettingsForm(): void
-    {
         $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
@@ -133,22 +128,31 @@ class Edit extends BackendBaseActionEdit
             array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
-        $this->settingsForm = new BackendForm('settings');
-
+        $this->form->addCheckbox('override_map_settings', $this->record['override_map_settings'])
+            ->setAttributes([
+                'data-target' => 'settings',
+                'data-role' => 'toggle-settings',
+            ]);
         // add map info (overview map)
-        $this->settingsForm->addHidden('map_id', $this->id);
-        $this->settingsForm->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
-        $this->settingsForm->addText('width', $this->settings['width']);
-        $this->settingsForm->addText('height', $this->settings['height']);
-        $this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
-        $this->settingsForm->addDropdown(
+        $this->form->addHidden('map_id', $this->id);
+        $this->form->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
+        $this->form->addText('width', $this->settings['width']);
+        $this->form->addText('height', $this->settings['height']);
+        $this->form->addHidden('centerLat', $this->settings['center']['lat'])
+            ->setAttribute('data-role', 'center-lat');
+        $this->form->addHidden('centerLng', $this->settings['center']['lng'])
+            ->setAttribute('data-role', 'center-lng');
+        $this->form->addHidden('lat', $this->record['lat']);
+        $this->form->addHidden('lng', $this->record['lng']);
+        $this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+        $this->form->addDropdown(
             'map_style',
             $mapStyles,
             $this->settings['map_style'] ?? null
         );
-        $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
-        $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
-        $this->settingsForm->addCheckbox('marker_overview', $this->record['show_overview']);
+        $this->form->addCheckbox('full_url', $this->settings['full_url']);
+        $this->form->addCheckbox('directions', $this->settings['directions']);
+        $this->form->addCheckbox('marker_overview', $this->record['show_overview']);
     }
 
     protected function parse(): void
@@ -159,8 +163,6 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('item', $this->record);
         $this->template->assign('settings', $this->settings);
         $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
-
-        $this->settingsForm->parse($this->template);
 
         // assign message if address was not be geocoded
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
@@ -182,6 +184,14 @@ class Edit extends BackendBaseActionEdit
             $this->form->getField('zip')->isFilled(BL::err('FieldIsRequired'));
             $this->form->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
+            if ($this->form->getField('override_map_settings')->isChecked()) {
+                $this->form->getField('zoom_level')->isFilled(BL::err('TitleIsRequired'));
+                $this->form->getField('width')->isFilled(BL::err('TitleIsRequired'));
+                $this->form->getField('height')->isFilled(BL::err('TitleIsRequired'));
+                $this->form->getField('map_type')->isFilled(BL::err('TitleIsRequired'));
+                $this->form->getField('map_style')->isFilled(BL::err('TitleIsRequired'));
+            }
+
             if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
@@ -194,6 +204,7 @@ class Edit extends BackendBaseActionEdit
                 $item['zip'] = $this->form->getField('zip')->getValue();
                 $item['city'] = $this->form->getField('city')->getValue();
                 $item['country'] = $this->form->getField('country')->getValue();
+                $item['override_map_settings'] = $this->form->getField('override_map_settings')->isChecked();
 
                 // check if it's necessary to geocode again
                 if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
@@ -216,6 +227,46 @@ class Edit extends BackendBaseActionEdit
 
                 // insert the item
                 BackendLocationModel::update($item);
+
+                $generalSettings = $this->get('fork.settings')->getForModule('Location');
+                $center = [
+                    'lat' => (float) $this->form->getField('centerLat')->getValue(),
+                    'lng' => (float) $this->form->getField('centerLng')->getValue(),
+                ];
+                if ($this->form->getField('override_map_settings')->isChecked()) {
+                    $height = (int) $this->form->getField('height')->getValue();
+                    $width = (int) $this->form->getField('width')->getValue();
+
+                    if ($width > 800) {
+                        $width = 800;
+                    }
+                    if ($width < 300) {
+                        $width = $generalSettings['width'];
+                    }
+                    if ($height < 150) {
+                        $height = $generalSettings['height'];
+                    }
+
+                    // no id given, this means we should update the main map
+                    BackendLocationModel::setMapSetting($this->id, 'zoom_level', (string) $this->form->getField('zoom_level')->getValue());
+                    BackendLocationModel::setMapSetting($this->id, 'map_type', (string) $this->form->getField('map_type')->getValue());
+                    BackendLocationModel::setMapSetting($this->id, 'map_style', (string) $this->form->getField('map_style')->getValue());
+                    BackendLocationModel::setMapSetting($this->id, 'center', (array) $center);
+                    BackendLocationModel::setMapSetting($this->id, 'height', (int) $height);
+                    BackendLocationModel::setMapSetting($this->id, 'width', (int) $width);
+                    BackendLocationModel::setMapSetting($this->id, 'directions', $this->form->getField('directions')->getValue());
+                    BackendLocationModel::setMapSetting($this->id, 'full_url', $this->form->getField('full_url')->getValue());
+                } else {
+                    $center = ['lat' => (float) $this->record['lat'], 'lng' =>(float)  $this->record['lng']];
+                    BackendLocationModel::setMapSetting($this->id, 'zoom_level', (string) $generalSettings['zoom_level']);
+                    BackendLocationModel::setMapSetting($this->id, 'map_type', (string) $generalSettings['map_type']);
+                    BackendLocationModel::setMapSetting($this->id, 'map_style', (string) 'standard');
+                    BackendLocationModel::setMapSetting($this->id, 'center', $center);
+                    BackendLocationModel::setMapSetting($this->id, 'height', (int)  $generalSettings['height']);
+                    BackendLocationModel::setMapSetting($this->id, 'width', (int)  $generalSettings['width']);
+                    BackendLocationModel::setMapSetting($this->id, 'directions', false);
+                    BackendLocationModel::setMapSetting($this->id, 'full_url', false);
+                }
 
                 // redirect to the overview
                 if ($this->form->getField('redirect')->getValue() == 'overview') {

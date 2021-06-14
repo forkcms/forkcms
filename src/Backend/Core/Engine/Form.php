@@ -80,8 +80,8 @@ class Form extends \Common\Core\Form
             $this->header->addJS(
                 '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js',
                 null,
-                false,
                 true,
+                false,
                 true
             );
         }
@@ -102,7 +102,7 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'custom-file-input');
+        $class = (string) ($class ?? 'form-control');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element
@@ -123,7 +123,7 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = (string) ($class ?? 'custom-file-input');
+        $class = (string) ($class ?? 'form-control');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element

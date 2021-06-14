@@ -82,7 +82,8 @@
   border-color: $gray-200;
   color: $gray-700;
 
-  @include hover-focus {
+  &:hover,
+  &:focus {
     background: darken($gray-200, 15%);
     border-color: darken($gray-200, 15%);
   }
@@ -91,7 +92,8 @@
 .btn-secondary {
   color: $blue-dark;
 
-  @include hover-focus {
+  &:hover,
+  &:focus {
     color: $primary;
   }
 }
@@ -101,7 +103,8 @@
 
   &.btn-move-click {
 
-    @include hover-focus {
+    &:hover,
+    &:focus {
       border-color: $black;
     }
   }
@@ -110,20 +113,9 @@
     font-size: $font-size-lg;
   }
 
-  @include hover-focus {
+  &:hover,
+  &:focus {
     color: $black;
-  }
-}
-
-.input-group-addon {
-  color: $body-color;
-
-  &.btn {
-    color: $primary;
-
-    &:hover {
-      color: $white;
-    }
   }
 }
 
