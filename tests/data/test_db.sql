@@ -2231,7 +2231,7 @@ VALUES
     (1533, 1, 'en', 'Backend', 'Pages', 'msg', 'CopySaveWarning', '<p><strong>Important:</strong> The copy hasn''t been saved yet.</p>', '2017-08-31 14:28:26'),
     (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26'),
     (1535, 1, 'en', 'Backend', 'Core', 'err', 'NotFound', 'This page was lost at sea.', '2017-08-31 14:28:18'),
-    (1536, 1, 'en', 'Backend', 'Core', 'lbl', 'CanonicalURL', 'canonical URL', '2021-02-09 20:36:18');
+    (1536, 1, 'en', 'Backend', 'Core', 'lbl', 'CanonicalURL', 'canonical URL', '2021-02-09 20:36:18'),
     (1537, 1, 'en', 'Frontend', 'Core', 'lbl', 'For', 'for', '2020-03-04 08:13:26'),
 	(1538, 1, 'en', 'Frontend', 'Core', 'lbl', 'InThe', 'in the', '2020-03-04 08:13:26'),
 	(1539, 1, 'en', 'Frontend', 'Core', 'lbl', 'ReadMore', 'read more', '2020-03-04 08:13:26'),
