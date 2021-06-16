@@ -2231,16 +2231,16 @@ VALUES
     (1533, 1, 'en', 'Backend', 'Pages', 'msg', 'CopySaveWarning', '<p><strong>Important:</strong> The copy hasn''t been saved yet.</p>', '2017-08-31 14:28:26'),
     (1534, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26'),
     (1535, 1, 'en', 'Backend', 'Core', 'err', 'NotFound', 'This page was lost at sea.', '2017-08-31 14:28:18'),
-    (1536, 1, 'en', 'Backend', 'Core', 'lbl', 'CanonicalURL', 'canonical URL', '2021-02-09 20:36:18');
+    (1536, 1, 'en', 'Backend', 'Core', 'lbl', 'CanonicalURL', 'canonical URL', '2021-02-09 20:36:18'),
     (1537, 1, 'en', 'Frontend', 'Core', 'lbl', 'For', 'for', '2020-03-04 08:13:26'),
-	(1538, 1, 'en', 'Frontend', 'Core', 'lbl', 'InThe', 'in the', '2020-03-04 08:13:26'),
-	(1539, 1, 'en', 'Frontend', 'Core', 'lbl', 'ReadMore', 'read more', '2020-03-04 08:13:26'),
-	(1540, 1, 'en', 'Frontend', 'Core', 'lbl', 'RSSFeed', 'RSS-feed', '2020-03-04 08:13:26'),
-	(1541, 1, 'en', 'Frontend', 'Core', 'lbl', 'Warning', 'Warning', '2020-03-04 08:13:26'),
-	(1542, 1, 'en', 'Frontend', 'Core', 'lbl', 'WithThe', 'with the', '2020-03-04 08:13:26'),
-	(1543, 1, 'en', 'Frontend', 'Core', 'msg', 'ArticlesFor', 'articles for %1$s', '2020-03-04 08:13:26'),
-	(1544, 1, 'en', 'Frontend', 'Core', 'msg', 'OldBrowser', 'You are using an outdated browsers. If you want to see the website like it was intended, you should upgrade your browser or install a decent browser such as <a href=\"https://www.google.com/chrome\">Google Chrome</a>.', '2020-03-04 08:13:26'),
-	(1545, 1, 'en', 'Frontend', 'Core', 'msg', 'Cookies', 'To enhance the user experience on this site we use <a href=\"/disclaimer\">cookies</a>.', '2020-03-04 08:13:26');
+    (1538, 1, 'en', 'Frontend', 'Core', 'lbl', 'InThe', 'in the', '2020-03-04 08:13:26'),
+    (1539, 1, 'en', 'Frontend', 'Core', 'lbl', 'ReadMore', 'read more', '2020-03-04 08:13:26'),
+    (1540, 1, 'en', 'Frontend', 'Core', 'lbl', 'RSSFeed', 'RSS-feed', '2020-03-04 08:13:26'),
+    (1541, 1, 'en', 'Frontend', 'Core', 'lbl', 'Warning', 'Warning', '2020-03-04 08:13:26'),
+    (1542, 1, 'en', 'Frontend', 'Core', 'lbl', 'WithThe', 'with the', '2020-03-04 08:13:26'),
+    (1543, 1, 'en', 'Frontend', 'Core', 'msg', 'ArticlesFor', 'articles for %1$s', '2020-03-04 08:13:26'),
+    (1544, 1, 'en', 'Frontend', 'Core', 'msg', 'OldBrowser', 'You are using an outdated browsers. If you want to see the website like it was intended, you should upgrade your browser or install a decent browser such as <a href=\"https://www.google.com/chrome\">Google Chrome</a>.', '2020-03-04 08:13:26'),
+    (1545, 1, 'en', 'Frontend', 'Core', 'msg', 'Cookies', 'To enhance the user experience on this site we use <a href=\"/disclaimer\">cookies</a>.', '2020-03-04 08:13:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;
