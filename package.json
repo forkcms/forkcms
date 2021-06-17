@@ -7,12 +7,12 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.5",
     "@fancyapps/fancybox": "^3.4.2",
     "@fortawesome/fontawesome-free": "^5.10.1",
     "@popperjs/core": "^2.6.0",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-loader": "^8.2.2",
     "bootstrap": "^4.5.0",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.9.0",
@@ -55,11 +55,11 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "@babel/preset-env"
     ]
   },
   "engines": {
-    "node": "^9.*"
+    "node": "lts/erbium"
   },
   "theme": "Bootstrap",
   "standard": {
