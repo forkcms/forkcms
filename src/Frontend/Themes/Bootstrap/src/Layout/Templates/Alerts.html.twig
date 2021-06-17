@@ -1,7 +1,7 @@
 {% macro alert(type, message, dismissable, id) %}
   <div{% if id %} id="{{ id }}"{% endif %} class="alert alert-{{ type }}" role="alert">
     {% if dismissable %}
-      <button type="button" class="close" data-dismiss="alert">×</button>
+      <button type="button" class="close" data-bs-dismiss="alert">×</button>
     {% endif %}
     {{ message|raw }}
   </div>
