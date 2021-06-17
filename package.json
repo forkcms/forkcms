@@ -41,7 +41,7 @@
     "requestanimationframe": "0.0.23",
     "sass-loader": "^8.0.2",
     "select2": "^4.0.12",
-    "select2-theme-bootstrap4": "^0.2.0-beta.4",
+    "select2-bootstrap-5-theme": "^1.1.1",
     "simple-ajax-uploader": "^2.6.7",
     "slick-carousel": "^1.6.0",
     "sortablejs": "^1.10.2",
