@@ -61,7 +61,7 @@
   "engines": {
     "node": "^9.*"
   },
-  "theme": "Bootstrap4",
+  "theme": "Bootstrap",
   "standard": {
     "globals": [
       "$",
