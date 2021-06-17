@@ -30,7 +30,7 @@ export class Forms {
   }
 
   select2 () {
-    $.fn.select2.defaults.set('theme', 'bootstrap')
+    $.fn.select2.defaults.set('theme', 'bootstrap-5')
 
     $.fn.select2.defaults.set('language', {
       noResults: () => {
