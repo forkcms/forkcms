@@ -7,18 +7,18 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.5",
     "@fancyapps/fancybox": "^3.4.2",
     "@fortawesome/fontawesome-free": "^5.10.1",
     "@popperjs/core": "^2.6.0",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-loader": "^8.2.2",
     "bootstrap": "^4.5.0",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": ">=3.4.1",
     "bootstrap-tagsinput": "git+https://github.com/mathiashelin/bootstrap-tagsinput.git",
-    "bootstrap5": "npm:bootstrap@^5.0.0-beta1",
+    "bootstrap5": "npm:bootstrap@^5.0.1",
     "ckeditor": "^4.12.1",
     "cropper": "^3.0.0-rc.2",
     "del": "^3.0.0",
@@ -55,13 +55,13 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "@babel/preset-env"
     ]
   },
   "engines": {
-    "node": "^9.*"
+    "node": "lts/erbium"
   },
-  "theme": "Bootstrap4",
+  "theme": "Bootstrap",
   "standard": {
     "globals": [
       "$",
