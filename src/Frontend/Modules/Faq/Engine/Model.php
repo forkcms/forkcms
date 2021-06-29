@@ -3,8 +3,11 @@
 namespace Frontend\Modules\Faq\Engine;
 
 use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Category\CategoryRepository;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Feedback\FeedbackRepository;
 use Backend\Modules\Faq\Domain\Question\Question;
+use Backend\Modules\Faq\Domain\Question\QuestionRepository;
 use Doctrine\ORM\NoResultException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -21,7 +24,7 @@ class Model implements FrontendTagsInterface
     public static function get(string $url): array
     {
         try {
-            return FrontendModel::get('faq.repository.question')->findOneByUrl(
+            return FrontendModel::get(QuestionRepository::class)->findOneByUrl(
                 $url,
                 Locale::frontendLanguage()
             )->toArray();
@@ -39,8 +42,8 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllForCategory(int $categoryId, int $limit = null, array $excludeIds = array()): array
     {
-        $questions = FrontendModel::get('faq.repository.question')->findByCategory(
-            FrontendModel::get('faq.repository.category')->find($categoryId),
+        $questions = FrontendModel::get(QuestionRepository::class)->findByCategory(
+            FrontendModel::get(CategoryRepository::class)->find($categoryId),
             Locale::frontendLanguage(),
             $limit,
             $excludeIds
@@ -60,7 +63,7 @@ class Model implements FrontendTagsInterface
 
     public static function getCategories(): array
     {
-        $categories = FrontendModel::get('faq.repository.category')->findBy(
+        $categories = FrontendModel::get(CategoryRepository::class)->findBy(
             ['locale' => Locale::frontendLanguage()],
             ['sequence' => 'DESC']
         );
@@ -80,7 +83,7 @@ class Model implements FrontendTagsInterface
     public static function getCategory(string $url): array
     {
         try {
-            return FrontendModel::get('faq.repository.category')->findOneByUrl(
+            return FrontendModel::get(CategoryRepository::class)->findOneByUrl(
                 $url,
                 Locale::frontendLanguage()
             )->toArray();
@@ -91,7 +94,7 @@ class Model implements FrontendTagsInterface
 
     public static function getCategoryById(int $id): array
     {
-        return FrontendModel::get('faq.repository.category')->findOneBy(
+        return FrontendModel::get(CategoryRepository::class)->findOneBy(
             [
                 'id' => $id,
                 'locale' => Locale::frontendLanguage()
@@ -110,7 +113,7 @@ class Model implements FrontendTagsInterface
     {
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+        $questions = FrontendModel::get(QuestionRepository::class)->findMultiple(
             $ids,
             Locale::frontendLanguage()
         );
@@ -139,7 +142,7 @@ class Model implements FrontendTagsInterface
         $itemUrl = (string) $url->getParameter(1);
 
         try {
-            return FrontendModel::get('faq.repository.question')->findOneByUrl(
+            return FrontendModel::get(QuestionRepository::class)->findOneByUrl(
                 $itemUrl,
                 Locale::frontendLanguage()
             )->getId();
@@ -159,7 +162,7 @@ class Model implements FrontendTagsInterface
 
                 return $questionArray;
             },
-            FrontendModel::get('faq.repository.question')->findMostRead(
+            FrontendModel::get(QuestionRepository::class)->findMostRead(
                 $limit,
                 Locale::frontendLanguage()
             )
@@ -168,10 +171,10 @@ class Model implements FrontendTagsInterface
 
     public static function getFaqsForCategory(int $categoryId): array
     {
-        $category = FrontendModel::get('faq.repository.category')->find($categoryId);
+        $category = FrontendModel::get(CategoryRepository::class)->find($categoryId);
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        $questions = FrontendModel::get('faq.repository.question')->findByCategory(
+        $questions = FrontendModel::get(QuestionRepository::class)->findByCategory(
             $category,
             Locale::frontendLanguage()
         );
@@ -206,7 +209,7 @@ class Model implements FrontendTagsInterface
 
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+        $questions = FrontendModel::get(QuestionRepository::class)->findMultiple(
             $relatedIDs,
             Locale::frontendLanguage()
         );
@@ -225,7 +228,7 @@ class Model implements FrontendTagsInterface
 
     public static function increaseViewCount(int $questionId): void
     {
-        $question = FrontendModel::get('faq.repository.question')->find($questionId);
+        $question = FrontendModel::get(QuestionRepository::class)->find($questionId);
         $question->increaseViewCount();
 
         FrontendModel::get('doctrine.orm.default_entity_manager')->flush();
@@ -234,11 +237,11 @@ class Model implements FrontendTagsInterface
     public static function saveFeedback(array $feedback): void
     {
         $feedback = new Feedback(
-            FrontendModel::get('faq.repository.question')->find($feedback['question_id']),
+            FrontendModel::get(QuestionRepository::class)->find($feedback['question_id']),
             $feedback['text']
         );
 
-        FrontendModel::get('faq.repository.feedback')->add($feedback);
+        FrontendModel::get(FeedbackRepository::class)->add($feedback);
     }
 
     /**
@@ -257,7 +260,7 @@ class Model implements FrontendTagsInterface
     {
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+        $questions = FrontendModel::get(QuestionRepository::class)->findMultiple(
             $ids,
             Locale::frontendLanguage()
         );
@@ -294,7 +297,7 @@ class Model implements FrontendTagsInterface
             return;
         }
 
-        $question = FrontendModel::get('faq.repository.question')->find($id);
+        $question = FrontendModel::get(QuestionRepository::class)->find($id);
 
         // update counter with current feedback (increase)
         if ($useful) {

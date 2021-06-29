@@ -10,14 +10,14 @@ services:
             - "80:80"
             - "443:443"
         depends_on:
-            - db
+            - db6
         env_file: ./var/docker/.env
         volumes:
             - .:/var/www/html:cached
             - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
-            - fork-cms-var:/var/www/html/var
+            - fork-cms6-var:/var/www/html/var
 
-    db:
+    db6:
         image: "mysql:5.7"
         restart: always
         ports:
@@ -32,10 +32,10 @@ services:
             # Uncomment the next line if you want to keep mysql in a data container
             # - db-data:/var/lib/mysql:rw
             # By default, use a bind-mounted host directory instead. It's harder to accidentally lose all your db data!
-            - ./var/docker/db/data:/var/lib/mysql:rw
+            - ./var/docker/db/data6:/var/lib/mysql:rw
             - ./tests/data/test_db.sql:/test_db.sql:ro
             - ./var/docker/db/scripts:/docker-entrypoint-initdb.d:ro
 
 volumes:
-    fork-cms-var: {}
-    db-data: {}
+    fork-cms6-var: {}
+    db6-data: {}

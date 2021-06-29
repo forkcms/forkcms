@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 
 class MediaItemDelete extends BackendBaseActionDelete
 {
@@ -45,7 +46,7 @@ class MediaItemDelete extends BackendBaseActionDelete
     {
         try {
             // Define MediaItem from repository
-            return $this->get('media_library.repository.item')->findOneById($id);
+            return $this->get(MediaItemRepository::class)->findOneById($id);
         } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(
                 $this->getBackLink(

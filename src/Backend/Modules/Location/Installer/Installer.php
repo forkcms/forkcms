@@ -7,6 +7,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Location\Domain\Location\Location;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
+use Common\Doctrine\Entity\CreateSchema;
 
 /**
  * Installer for the location module
@@ -26,7 +27,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get(CreateSchema::class)->forEntityClasses(
             [
                 Location::class,
                 LocationSetting::class,

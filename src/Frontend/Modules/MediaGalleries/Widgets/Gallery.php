@@ -3,6 +3,7 @@
 namespace Frontend\Modules\MediaGalleries\Widgets;
 
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
 use Frontend\Core\Engine\Base\Widget as BackendBaseWidget;
 
 /**
@@ -42,7 +43,7 @@ class Gallery extends BackendBaseWidget
 
         try {
             /** @var MediaGallery $mediaGallery */
-            $mediaGallery = $this->get('media_galleries.repository.gallery')->findOneById($this->data['gallery_id']);
+            $mediaGallery = $this->get(MediaGalleryRepository::class)->findOneById($this->data['gallery_id']);
         } catch (\Exception $e) {
             return null;
         }

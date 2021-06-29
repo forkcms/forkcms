@@ -4,8 +4,10 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,7 +30,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
         $this->output(
             Response::HTTP_OK,
             $mediaGroup instanceof MediaGroup
-                ? $this->get('media_library.repository.folder')->getCountsForMediaGroup($mediaGroup) : []
+                ? $this->get(MediaFolderRepository::class)->getCountsForMediaGroup($mediaGroup) : []
         );
     }
 
@@ -42,7 +44,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
         }
 
         try {
-            return $this->get('media_library.repository.group')->findOneById($id);
+            return $this->get(MediaGroupRepository::class)->findOneById($id);
         } catch (MediaGroupNotFound $mediaGroupNotFound) {
             return null;
         }

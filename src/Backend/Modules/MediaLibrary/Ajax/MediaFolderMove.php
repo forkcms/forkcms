@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\Pages\Engine\Model;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder $mediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException('Folder does not exist');
         }
@@ -64,7 +65,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder $mediaFolder */
-            $mediaFolder = $this->get('media_library.repository.folder')->findOneById($id);
+            $mediaFolder = $this->get(MediaFolderRepository::class)->findOneById($id);
 
             if ($typeOfDrop === Model::TYPE_OF_DROP_INSIDE) {
                 return $mediaFolder;

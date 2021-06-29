@@ -5,6 +5,7 @@ namespace Backend\Modules\ContentBlocks\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Common\Doctrine\Entity\CreateSchema;
 
 /**
  * Installer for the content blocks module
@@ -45,7 +46,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
+        Model::get(CreateSchema::class)->forEntityClass(ContentBlock::class);
     }
 
     private function configureSettings(): void

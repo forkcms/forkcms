@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 
 class MediaItemUpload extends BackendBaseActionAdd
@@ -28,7 +29,7 @@ class MediaItemUpload extends BackendBaseActionAdd
         $id = $this->getRequest()->query->get('folder');
 
         try {
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             return null;
         }

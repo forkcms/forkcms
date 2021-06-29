@@ -7,9 +7,12 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Comment\CommentRepository;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Doctrine\Repository\MetaRepository;
 use ForkCMS\Utility\Thumbnails;
 use Common\Doctrine\Entity\Meta;
 
@@ -206,7 +209,7 @@ class Model
 
     public static function deleteCategory(int $id): void
     {
-        $repository = BackendModel::get('blog.repository.category');
+        $repository = BackendModel::get(CategoryRepository::class);
         $category = $repository->find($id);
 
         if (!$category instanceof Category) {
@@ -235,7 +238,7 @@ class Model
 
     public static function deleteComments(array $ids): void
     {
-        $repository = BackendModel::get('blog.repository.comment');
+        $repository = BackendModel::get(CommentRepository::class);
         $comments = $repository->findById($ids);
 
         if (empty($comments)) {
@@ -260,7 +263,7 @@ class Model
 
     public static function deleteSpamComments(): void
     {
-        $comments = BackendModel::get('blog.repository.comment')->findBy(
+        $comments = BackendModel::get(CommentRepository::class)->findBy(
             [
                 'status' => 'spam',
                 'locale' => BL::getWorkingLanguage(),
@@ -299,14 +302,14 @@ class Model
 
     public static function existsCategory(int $id): bool
     {
-        $repository = BackendModel::get('blog.repository.category');
+        $repository = BackendModel::get(CategoryRepository::class);
 
         return $repository->find($id) instanceof Category;
     }
 
     public static function existsComment(int $id): bool
     {
-        $repository = BackendModel::get('blog.repository.comment');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return $repository->find($id) instanceof Comment;
     }
@@ -408,7 +411,7 @@ class Model
 
     public static function getCategory($id): array
     {
-        $category = BackendModel::get('blog.repository.category')
+        $category = BackendModel::get(CategoryRepository::class)
                                 ->find($id);
 
         if (!$category instanceof Category) {
@@ -423,7 +426,7 @@ class Model
      */
     public static function getCategoryId(string $title, string $language = null): int
     {
-        $category = BackendModel::get('blog.repository.category')
+        $category = BackendModel::get(CategoryRepository::class)
                                 ->findOneBy(
                                     [
                                         'title' => $title,
@@ -442,7 +445,7 @@ class Model
 
     public static function getComment(int $id): array
     {
-        $comment = BackendModel::get('blog.repository.comment')
+        $comment = BackendModel::get(CommentRepository::class)
                                ->find($id);
 
         if (!$comment instanceof Comment) {
@@ -476,7 +479,7 @@ class Model
 
     public static function getComments(array $ids): array
     {
-        $repository = BackendModel::get('blog.repository.comment');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return array_map(
             function (Comment $comment) {
@@ -492,7 +495,7 @@ class Model
 
     public static function getCommentStatusCount(): array
     {
-        $repository = BackendModel::get('blog.repository.comment');
+        $repository = BackendModel::get(CommentRepository::class);
 
         return $repository->listCountPerStatus(Locale::workingLocale());
     }
@@ -608,7 +611,7 @@ class Model
 
     public static function getUrlForCategory(string $url, int $id = null): string
     {
-        $repository = BackendModel::get('blog.repository.category');
+        $repository = BackendModel::get(CategoryRepository::class);
 
         return $repository->getUrl($url, $id);
     }
@@ -773,8 +776,7 @@ class Model
     public static function insertCategory(array $item, array $meta = null): int
     {
         if ($meta === null) {
-            $meta = BackendModel::get('fork.repository.meta')
-                                ->find($item['meta_id']);
+            $meta = BackendModel::get(MetaRepository::class)->find($item['meta_id']);
         } else {
             $meta = new Meta(
                 $meta['keywords'],
@@ -985,7 +987,7 @@ class Model
 
     public static function updateCategory(array $item, array $meta = null): void
     {
-        $category = BackendModel::get('blog.repository.category')
+        $category = BackendModel::get(CategoryRepository::class)
                                 ->find($item['id']);
 
         if (!$category instanceof Category) {
@@ -1017,7 +1019,7 @@ class Model
 
     public static function updateComment(array $item): void
     {
-        $comment = BackendModel::get('blog.repository.comment')
+        $comment = BackendModel::get(CommentRepository::class)
                                ->find($item['id']);
 
         if (!$comment instanceof Comment) {
@@ -1039,7 +1041,7 @@ class Model
 
     public static function updateCommentStatuses(array $ids, string $status): void
     {
-        $repository = BackendModel::get('blog.repository.comment');
+        $repository = BackendModel::get(CommentRepository::class);
         $comments = $repository->findById($ids);
 
         if (empty($comments)) {

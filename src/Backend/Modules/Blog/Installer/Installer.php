@@ -5,11 +5,13 @@ namespace Backend\Modules\Blog\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Common\BlockEditor\EditorBlocks;
+use Common\Doctrine\Entity\CreateSchema;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 use Backend\Modules\Pages\Domain\Page\PageRepository;
 
@@ -41,7 +43,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get(CreateSchema::class)->forEntityClasses(
             [
                 Comment::class,
                 Category::class,
@@ -178,7 +180,7 @@ class Installer extends ModuleInstaller
 
     private function getCategory(string $language): int
     {
-        $category = Model::get('blog.repository.category')->findOneByLocale($language);
+        $category = Model::get(CategoryRepository::class)->findOneByLocale($language);
 
         if (!$category instanceof Category) {
             return 0;

@@ -8,6 +8,7 @@ use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
 class MediaItemEdit extends BackendBaseActionEdit
@@ -86,7 +87,7 @@ class MediaItemEdit extends BackendBaseActionEdit
     {
         try {
             // Define MediaItem from repository
-            return $this->get('media_library.repository.item')->findOneById(
+            return $this->get(MediaItemRepository::class)->findOneById(
                 $this->getRequest()->query->get('id')
             );
         } catch (MediaItemNotFound $mediaItemNotFound) {

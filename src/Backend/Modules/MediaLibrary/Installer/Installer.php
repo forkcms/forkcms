@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Common\Doctrine\Entity\CreateSchema;
 
 /**
  * Installer for the MediaLibrary module
@@ -83,7 +84,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get(CreateSchema::class)->forEntityClasses(
             [
                 MediaFolder::class,
                 MediaGroup::class,

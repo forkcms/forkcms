@@ -6,10 +6,13 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,7 +64,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('NonExistingMediaFolder'));
         }
@@ -80,7 +83,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         if ($mediaGroup === null || $mediaGroup->getConnectedItems()->count() === 0) {
             if ($mediaFolder === null) {
-                return $this->get('media_library.repository.folder')->findDefault();
+                return $this->get(MediaFolderRepository::class)->findDefault();
             }
 
             return $mediaFolder;
@@ -107,7 +110,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         try {
             /** @var MediaGroup */
-            return $this->get('media_library.repository.group')->findOneById($id);
+            return $this->get(MediaGroupRepository::class)->findOneById($id);
         } catch (MediaGroupNotFound $mediaGroupNotFound) {
             return null;
         }
@@ -119,6 +122,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             return [];
         }
 
-        return $this->get('media_library.repository.item')->findByFolderAndAspectRatio($mediaFolder, $aspectRatio);
+        return $this->get(MediaItemRepository::class)->findByFolderAndAspectRatio($mediaFolder, $aspectRatio);
     }
 }

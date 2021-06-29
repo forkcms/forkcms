@@ -6,8 +6,10 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Common\Exception\AjaxExitException;
 use InvalidArgumentException;
@@ -60,7 +62,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         }
 
         // Movie url (= externalVideoId) already exists in our repository
-        if ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
+        if ($this->get(MediaItemRepository::class)->existsOneByUrl((string) $movieId)) {
             throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
         }
 
@@ -89,7 +91,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('ParentNotExists'));
         }

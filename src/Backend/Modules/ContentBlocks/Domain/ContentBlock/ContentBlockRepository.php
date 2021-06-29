@@ -4,16 +4,22 @@ namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
 use Common\Locale;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ContentBlock|null find($id, $lockMode = null, $lockVersion = null)
  * @method ContentBlock|null findOneBy(array $criteria, array $orderBy = null)
- * @method ContentBlock[]    findAll()
- * @method ContentBlock[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ContentBlock[] findAll()
+ * @method ContentBlock[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContentBlockRepository extends EntityRepository
+final class ContentBlockRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, ContentBlock::class);
+    }
+
     public function add(ContentBlock $contentBlock): void
     {
         // make sure the other revisions are archived

@@ -169,7 +169,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             case Type::MOVIE:
                 if ($storageType === StorageType::YOUTUBE) {
                     $absoluteUrl = Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
-                        Model::get('media_library.repository.item')->find($id)
+                        Model::get(MediaItemRepository::class)->find($id)
                     );
 
                     break;
@@ -177,20 +177,20 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
 
                 if ($storageType === StorageType::VIMEO) {
                     $absoluteUrl = Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
-                        Model::get('media_library.repository.item')->find($id)
+                        Model::get(MediaItemRepository::class)->find($id)
                     );
 
                     break;
                 }
 
                 $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
-                    Model::get('media_library.repository.item')->find($id)
+                    Model::get(MediaItemRepository::class)->find($id)
                 );
 
                 break;
             default:
                 $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
-                    Model::get('media_library.repository.item')->find($id)
+                    Model::get(MediaItemRepository::class)->find($id)
                 );
         }
 

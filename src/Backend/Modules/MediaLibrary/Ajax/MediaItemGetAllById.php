@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,6 +35,6 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
             return [];
         }
 
-        return $this->get('media_library.repository.item')->findById($ids);
+        return $this->get(MediaItemRepository::class)->findById($ids);
     }
 }

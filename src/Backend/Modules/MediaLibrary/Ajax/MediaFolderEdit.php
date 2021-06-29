@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Common\Exception\AjaxExitException;
 use Common\Uri;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         try {
             /** @var MediaFolder $mediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('MediaFolderDoesNotExists'));
         }

@@ -8,6 +8,7 @@ use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 
 /**
@@ -78,7 +79,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
     {
         try {
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById(
+            return $this->get(MediaGalleryRepository::class)->findOneById(
                 $this->getRequest()->query->get('id')
             );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {

@@ -4,10 +4,22 @@ namespace Backend\Modules\Blog\Domain\Comment;
 
 use Common\Locale;
 use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class CommentRepository extends EntityRepository
+/**
+ * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Comment|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Comment[] findAll()
+ * @method Comment[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+final class CommentRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Comment::class);
+    }
+
     public function listCountPerStatus(Locale $locale): array
     {
         $builder = $this->createQueryBuilder('c')

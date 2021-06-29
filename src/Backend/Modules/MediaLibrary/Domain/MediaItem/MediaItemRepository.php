@@ -4,7 +4,8 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method MediaItem|null find($id, $lockMode = null, $lockVersion = null)
@@ -13,8 +14,13 @@ use Doctrine\ORM\EntityRepository;
  * @method MediaItem[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @method MediaItem|null findOneByUrl(string $url)
  */
-final class MediaItemRepository extends EntityRepository
+final class MediaItemRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MediaItem::class);
+    }
+
     public function add(MediaItem $mediaItem): void
     {
         // We don't flush here, see http://disq.us/p/okjc6b

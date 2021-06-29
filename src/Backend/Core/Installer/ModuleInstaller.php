@@ -719,7 +719,7 @@ class ModuleInstaller
         $revision = $this->completePageRevisionRecord($revision, (array) $meta);
 
         /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
+        $metaRepository = BackendModel::get(MetaRepository::class);
         /** @var Meta $meta */
         $meta = $metaRepository->find($revision['meta_id']);
 

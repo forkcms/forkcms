@@ -245,12 +245,12 @@ class Model
 
     private static function getLocationRepository(): LocationRepository
     {
-        return BackendModel::get('location.repository.location');
+        return BackendModel::get(LocationRepository::class);
     }
 
     private static function getLocationSettingRepository(): LocationSettingRepository
     {
-        return BackendModel::get('location.repository.location_setting');
+        return BackendModel::get(LocationSettingRepository::class);
     }
 
     private static function getLocationsAsArray(array $locations): array

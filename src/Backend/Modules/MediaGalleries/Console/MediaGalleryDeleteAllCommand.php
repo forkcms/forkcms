@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Console;
 
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -56,7 +57,7 @@ class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
     private function deleteMediaGalleries(): void
     {
         /** @var array $mediaGalleries */
-        $mediaGalleries = $this->getContainer()->get('media_galleries.repository.gallery')->findAll();
+        $mediaGalleries = $this->getContainer()->get(MediaGalleryRepository::class)->findAll();
 
         if (empty($mediaGalleries)) {
             return;

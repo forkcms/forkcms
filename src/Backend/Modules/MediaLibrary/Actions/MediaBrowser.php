@@ -6,6 +6,7 @@ use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemSelectionDataGrid;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
@@ -30,7 +31,7 @@ class MediaBrowser extends BackendBaseAction
         $id = $this->getRequest()->query->getInt('folder');
 
         try {
-            return $this->get('media_library.repository.folder')->findOneById($id);
+            return $this->get(MediaFolderRepository::class)->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             return null;
         }
