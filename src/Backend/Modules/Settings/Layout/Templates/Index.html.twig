@@ -320,6 +320,29 @@
       </div>
     </div>
   </div>
+    <div class="row fork-module-content">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">{{ 'lbl.GoogleRecaptcha'|trans|ucfirst }}</h2>
+          </div>
+          <div class="panel-body">
+            {% if rbtGoogleRecaptchaVersionError %}
+              <div class="alert alert-danger">{{ rbtGoogleRecaptchaVersionError }}</div>
+            {% endif %}
+            <ul class="list-unstyled radiobuttonFieldCombo">
+              {% for googleRecaptchaVersionElement in google_recaptcha_version %}
+                <li class="radio">
+                  <div class="form-group">
+                    <label for="{{ googleRecaptchaVersionElement.id }}">{{ googleRecaptchaVersionElement.rbtGoogleRecaptchaVersion|raw }} {{ googleRecaptchaVersionElement.label }}</label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="panel panel-default">
