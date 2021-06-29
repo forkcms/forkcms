@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class MediaItemType extends AbstractType
 {
@@ -14,16 +15,20 @@ class MediaItemType extends AbstractType
 
         if ($builder->getData()->getMediaItemEntity()->getType()->isMovie()) {
             $label = 'lbl.MediaMovieTitle';
-            $this->addField($builder, 'url', 'lbl.MediaMovieId');
+            $builder->add(
+                'url',
+                TextType::class,
+                [
+                    'label' => 'lbl.MediaMovieId',
+                    'constraints' => [
+                        new Regex(['pattern' => '/^[a-zA-Z]+[a-zA-Z0-9._]+$/', 'message' => 'err.InvalidValue']),
+                    ],
+                ]
+            );
         }
 
-        $this->addField($builder, 'title', $label);
-    }
-
-    private function addField(FormBuilderInterface $builder, string $name, string $label): void
-    {
         $builder->add(
-            $name,
+            'title',
             TextType::class,
             [
                 'label' => $label,
