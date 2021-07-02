@@ -130,14 +130,22 @@ class Index extends BackendBaseActionIndex
         );
         $this->dgProfiles->setColumnFunction('htmlspecialchars', ['[display_name]'], 'display_name', false);
 
+        // prepare the possible mass actions
+        $actions = [
+            'delete' => BL::getLabel('Delete'),
+        ];
+
+        // if we have at least one group, add the AddToGroup mass action
+        if (count(BackendProfilesModel::getGroups()) > 0) {
+            $actions['addToGroup'] = BL::getLabel('AddToGroup');
+        }
+
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');
+
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            [
-                'addToGroup' => BL::getLabel('AddToGroup'),
-                'delete' => BL::getLabel('Delete'),
-            ],
+            $actions,
             'addToGroup',
             false,
             'form-control form-control-sm',

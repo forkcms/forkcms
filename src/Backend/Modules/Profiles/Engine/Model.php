@@ -338,7 +338,7 @@ class Model
                     'id' => $groupRight->getId(),
                     'group_id' => $groupRight->getGroup()->getId(),
                     'group_name' => $groupRight->getGroup()->getName(),
-                    'expires_on' => $groupRight->getExpiryDate()->getTimestamp(),
+                    'expires_on' => $groupRight->getExpiryDate() !== null ?$groupRight->getExpiryDate()->getTimestamp() : null,
                 ];
             },
             $groupRights
@@ -696,9 +696,13 @@ class Model
         $profile = BackendModel::get(ProfileRepository::class)->find($membership['profile_id']);
         $group = BackendModel::get(GroupRepository::class)->find($membership['group_id']);
 
+        $startsOn = new DateTime();
+        $startsOn->setTimestamp($membership['starts_on']);
+
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+            $expiresOn = new DateTime();
+            $expiresOn->setTimestamp($membership['expires_on']);
         }
 
         $existingGroupRight = $profile->getRights()->filter(
@@ -710,8 +714,8 @@ class Model
         if ($existingGroupRight instanceof GroupRight) {
             $existingGroupRight->update(
                 $group,
-                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
-                null
+                $startsOn,
+                $expiresOn
             );
 
             BackendModel::get('doctrine.orm.entity_manager')->flush();
@@ -722,7 +726,7 @@ class Model
         $groupRight = new GroupRight(
             $profile,
             $group,
-            DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+            $startsOn,
             $expiresOn
         );
 
@@ -969,11 +973,13 @@ class Model
         }
         $expiresOn = $groupRight->getExpiryDate();
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
+            $expiresOn = new DateTime();
+            $expiresOn->setTimestamp($membership['expires_on']);
         }
         $startsOn = $groupRight->getStartDate();
         if (array_key_exists('starts_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('U', $membership['starts_on']);
+            $startsOn = new DateTime();
+            $startsOn->setTimestamp($membership['starts_on']);
         }
 
         $groupRight->update($group, $startsOn, $expiresOn);
