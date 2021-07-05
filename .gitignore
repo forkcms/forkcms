@@ -21,6 +21,7 @@
 /bundles/*
 /css/*.css
 /js/*.js
+.vscode
 
 # Docker
 var/docker/db/data/*

@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Settings\Actions;
 
+use SpoonFilter;
 use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
@@ -199,6 +200,23 @@ class Index extends BackendBaseActionIndex
             'number_format',
             BackendModel::getNumberFormats(),
             $this->get('fork.settings')->get('Core', 'number_format')
+        );
+
+        // google recaptcha
+        $googleRecaptchaVersions = [
+            [
+                'value' => 'v2invisible',
+                'label' => SpoonFilter::ucfirst(BL::lbl('GoogleRecaptchaV2Invisible')),
+            ],
+            [
+                'value' => 'v3',
+                'label' => SpoonFilter::ucfirst(BL::lbl('GoogleRecaptchaV3')),
+            ],
+        ];
+        $this->form->addRadiobutton(
+            'google_recaptcha_version',
+            $googleRecaptchaVersions,
+            $this->get('fork.settings')->get('Core', 'google_recaptcha_version', 'v2invisible')
         );
 
         $activeLanguages = [];
@@ -406,7 +424,7 @@ class Index extends BackendBaseActionIndex
                     $domain = trim(str_replace(['www.', 'http://', 'https://'], '', $domain));
 
                     // invalid URL
-                    if (!\SpoonFilter::isURL('http://' . $domain)) {
+                    if (!SpoonFilter::isURL('http://' . $domain)) {
                         // set error
                         $this->form->getField('site_domains')->setError(BL::err('InvalidDomain'));
 
@@ -531,6 +549,13 @@ class Index extends BackendBaseActionIndex
                         '@' . ltrim($txtTwitterSiteName->getValue(), '@')
                     );
                 }
+
+                // google recaptcha settings
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'google_recaptcha_version',
+                    $this->form->getField('google_recaptcha_version')->getValue()
+                );
 
                 // ckfinder settings
                 $this->get('fork.settings')->set(
