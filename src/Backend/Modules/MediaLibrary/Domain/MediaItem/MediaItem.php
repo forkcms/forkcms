@@ -189,7 +189,12 @@ class MediaItem implements JsonSerializable
         );
 
         $mediaItem->setForFile($file);
-        $mediaItem->setResolutionFromPath($path);
+
+        if ($mediaItem->getMime() !== 'image/svg+xml') {
+            $mediaItem->setResolutionFromPath($path);
+        } else {
+            $mediaItem->setResolutionForSvg($path);
+        }
 
         return $mediaItem;
     }
@@ -216,6 +221,38 @@ class MediaItem implements JsonSerializable
 
             $this->setResolution($width, $height);
         }
+    }
+
+    private function setResolutionForSvg(string $path)
+    {
+        if (!$this->getType()->isImage()) {
+            throw new \LogicException('SVG file must be of type image.');
+        }
+
+        try {
+            $xmlget = simplexml_load_file($path);
+            $viewBoxString = $xmlget->attributes()->viewBox;
+            if ($viewBoxString !== null) {
+                $viewBox = explode(' ', $viewBoxString);
+                $width = (int) $viewBox[2];
+                $height = (int) $viewBox[3];
+            } else {
+                $width = (int) $xmlget->attributes()->width;
+                $height = (int) $xmlget->attributes()->height;
+            }
+
+            // no size defined in svg
+            if ($width === 0 && $height === 0) {
+                $width = 200;
+                $height = 200;
+            }
+        } catch (Exception $e) {
+            throw new Exception(
+                'Error happened when creating MediaItem from path "' . $path . '". The error = ' . $e->getMessage()
+            );
+        }
+
+        $this->setResolution($width, $height);
     }
 
     public static function createFromMovieUrl(
