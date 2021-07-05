@@ -23,6 +23,7 @@
     "cropper": "^3.0.0-rc.2",
     "dotenv": "^8.2.0",
     "fine-uploader": "^5.14.1",
+    "flatpickr": "^4.6.6",
     "generate-password": "^1.5.1",
     "highcharts": "^8.1.2",
     "jquery": "^3.5.1",
