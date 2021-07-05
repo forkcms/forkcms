@@ -446,7 +446,7 @@ class DataGrid extends \SpoonDataGrid
      * @param string[]|string $columns The column wherein the result will be printed.
      * @param bool $overwrite Should the original value be overwritten.
      */
-    public function setColumnFunction($function, $arguments, $columns, $overwrite = true): void
+    public function setColumnFunction($function, $arguments = null, $columns = null, $overwrite = true): void
     {
         // call the parent
         parent::setColumnFunction($function, $arguments, $columns, $overwrite);
