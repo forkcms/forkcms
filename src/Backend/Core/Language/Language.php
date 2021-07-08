@@ -243,6 +243,11 @@ class Language
      */
     public static function setLocale(string $language): void
     {
+        // set the locale on the symfony request object
+        $request = Model::getRequest();
+        $request->setLocale($language);
+        $request->setDefaultLocale(SITE_DEFAULT_LANGUAGE);
+
         $application = (!defined('APPLICATION') || APPLICATION === 'Console') ? 'Backend' : APPLICATION;
 
         // validate file, generate it if needed

@@ -5,6 +5,7 @@ namespace Frontend\Core\Engine;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
+use Frontend\Core\Language\Locale;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,9 +37,11 @@ class Url extends KernelLoader
         // add ourself to the reference so other classes can retrieve us
         $this->getContainer()->set('url', $this);
 
+        $request = Model::getRequest();
+        $requestUri = $request->getRequestUri();
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen(Model::getRequest()->getRequestUri()) !== 1 &&
-            mb_substr(Model::getRequest()->getRequestUri(), -1) === '/'
+        if (mb_strlen($requestUri) !== 1 &&
+            mb_substr($requestUri, -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
@@ -156,6 +159,8 @@ class Url extends KernelLoader
 
         // sets the locale file
         Language::setLocale($language);
+
+        $this->redirectToCorrectDomainForLocaleIfNeeded();
 
         // remove language from query string
         if ($hasMultiLanguages) {
@@ -357,5 +362,18 @@ class Url extends KernelLoader
         $url = trim($url, '/');
 
         return $url;
+    }
+
+    private function redirectToCorrectDomainForLocaleIfNeeded(): void
+    {
+        $request = Model::getRequest();
+        $domain = Locale::fromString($request->getLocale())->getDomain();
+
+        if ($request->getHttpHost() !== $domain) {
+            throw new RedirectException(
+                'Domain and locale do not match',
+                new RedirectResponse($request->getScheme() . '://' . $domain . $request->getRequestUri())
+            );
+        }
     }
 }

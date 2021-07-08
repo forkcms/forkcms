@@ -4,6 +4,7 @@ imports:
 parameters:
     site.multilanguage: true
     site.default_language: en
+    site.domain: localhost
 
 framework:
     test: ~
