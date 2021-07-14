@@ -1,6 +1,7 @@
 // plugins imports
 // You can specify which plugins you need
-import 'bootstrap'
+import * as bootstrap from 'bootstrap'
+window.bootstrap = bootstrap
 import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
@@ -115,3 +116,4 @@ $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
 })
+
