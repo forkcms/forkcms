@@ -133,6 +133,30 @@ export class Group {
       // get media for this folder
       this.getMedia()
     })
+
+    $('#searchMedia').on('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.config.mediaFolderId = $('#mediaFolders').val();
+      this.config.searchQuery = $('[name=query]').val();
+
+      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      this.getMedia()
+    })
+
+    $('[name=query]').on('keyup', (e) => {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.config.mediaFolderId = $('#mediaFolders').val();
+        this.config.searchQuery = $(this).val();
+
+        this.clearMediaCache(this.config.mediaFolderId);
+        this.getMedia()
+      }
+    })
   }
 
   /**
@@ -140,6 +164,13 @@ export class Group {
    */
   clearFoldersCache () {
     this.config.mediaFolders = false
+  }
+
+  /**
+   * Clear the media cache when necessary
+   */
+  clearMediaCache (mediaFolderId) {
+    media[mediaFolderId] = false
   }
 
   /**
@@ -381,6 +412,7 @@ export class Group {
         },
         group_id: (this.config.mediaGroups[this.config.currentMediaGroupId]) ? this.config.mediaGroups[this.config.currentMediaGroupId].id : null,
         folder_id: this.config.mediaFolderId,
+        query: this.config.searchQuery,
         aspect_ratio: this.config.currentAspectRatio
       },
       success: (json, textStatus) => {
