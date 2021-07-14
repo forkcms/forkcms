@@ -5,6 +5,7 @@ import { Config } from '../../../../Core/Js/Components/Config'
 import { Data } from '../../../../Core/Js/Components/Data'
 import { StringUtil } from '../../../../Core/Js/Components/StringUtil'
 import Sortable from 'sortablejs'
+import { EventUtil } from '../../../../Core/Js/Components/EventUtil'
 
 export class Group {
   constructor (configSet) {
@@ -145,18 +146,13 @@ export class Group {
       this.getMedia()
     })
 
-    $('[name=query]').on('keyup', (e) => {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        e.stopPropagation();
-
+    $('[name=query]').bind('keyup input', EventUtil.debounce((e) => {
         this.config.mediaFolderId = $('#mediaFolders').val();
         this.config.searchQuery = $(this).val();
 
-        this.clearMediaCache(this.config.mediaFolderId);
+        this.clearMediaCache(mediaFolderId);
         this.getMedia()
-      }
-    })
+      }, 400))
   }
 
   /**
