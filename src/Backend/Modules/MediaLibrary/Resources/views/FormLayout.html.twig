@@ -63,7 +63,7 @@
 {% endblock %}
 
 {% macro mediaItem(mediaItem) %}
-  <div class="mediaHolder mediaHolder{{ mediaItem.item.type|ucfirst }}" data-fork="mediaItem" data-folder-id="{{ mediaItem.item.folder.id }}" data-media-id="{{ mediaItem.item.id }}">
+  <div class="mediaHolder mediaHolder{{ mediaItem.item.type|ucfirst }}" data-fork="mediaItem" data-folder-id="{{ mediaItem.item.folder.id }}" data-media-id="{{ mediaItem.item.id }}" data-media-title="{{ mediaItem.item.title }}">
     {% if mediaItem.item.type.isAudio %}
       {# Audio #}
       <div class="icon"></div>
@@ -81,6 +81,10 @@
         <div class="icon"></div>
       </div>
     {% endif %}
+    <button type="button" class="editMediaItem btn btn-sm btn-icon-only" data-fork="edit" title="{{ 'lbl.Edit'|trans }}">
+      <span class="visually-hidden">{{ 'lbl.Edit'|trans|ucfirst }}</span>
+      <i class="fas fa-pencil"></i>
+    </button>
     <button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" title="{{ 'lbl.MediaDisconnect'|trans }}">
       <span class="visually-hidden">{{ 'lbl.MediaDisconnect'|trans|ucfirst }}</span>
       <i class="fas fa-times"></i>
