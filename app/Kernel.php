@@ -100,6 +100,8 @@ abstract class Kernel extends BaseKernel
         defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
         defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
 
+        defined('OFFLINE_PATH') || define('OFFLINE_PATH', PATH_WWW . '/offline');
+
         defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
         defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
         defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
