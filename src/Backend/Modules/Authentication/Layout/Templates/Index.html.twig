@@ -78,7 +78,7 @@
       {% form forgotPassword %}
       <div class="modal-header">
         <h4 class="modal-title" id="forgotPasswordDialogTitle">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-bs-dismiss":"modal"}) }}
         {{ macro.buttonIcon('', 'envelope', 'lbl.Send'|trans|ucfirst, 'btn-primary', {"id":"send", "name":"send", "type":"submit"}) }}
       </div>
       {% endform %}

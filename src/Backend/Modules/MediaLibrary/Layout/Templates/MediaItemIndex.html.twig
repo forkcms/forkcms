@@ -119,7 +119,7 @@
           </p>
         </div>
         <div class="modal-footer">
-          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" } ) }}
           {{ macro.buttonIcon('', 'check', 'lbl.Move'|trans|ucfirst, 'btn-primary', { "type":"submit" } ) }}
         </div>
       </div>
@@ -139,7 +139,7 @@
           </p>
         </div>
         <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" } ) }}
             {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
         </div>
       </div>
@@ -172,7 +172,7 @@
             {% endif %}
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" } ) }}
             {{ macro.buttonIcon(geturl('MediaFolderDelete') ~ '&id=' ~ mediaFolder.id, 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
           </div>
         </div>
@@ -200,7 +200,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" } ) }}
             {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editMediaFolderSubmit", 'type':"submit", "name":"edit" } ) }}
           </div>
         </div>

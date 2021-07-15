@@ -111,7 +111,7 @@
                 <p>{{ 'msg.ConfirmThemeInstall'|trans|format(name|e)|raw }}</p>
               </div>
               <div class="modal-footer">
-                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-bs-dismiss":"modal"}) }}
                 {{ macro.buttonIcon(geturl('install_theme') ~ '&theme=' ~ name, 'times', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
               </div>
             </div>
