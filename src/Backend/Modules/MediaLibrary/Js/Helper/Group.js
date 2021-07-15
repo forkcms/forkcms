@@ -22,6 +22,9 @@ export class Group {
     // add media dialog
     this.addMediaDialog()
 
+    // edit media dialog
+    this.editMediaDialog()
+
     // init sequences
     let newSequence = ''
     const element = document.querySelector('[data-sequence-drag-and-drop="media-connected"]')
@@ -153,6 +156,95 @@ export class Group {
         this.clearMediaCache(mediaFolderId);
         this.getMedia()
       }, 400))
+  }
+
+  /**
+   * Edit media in a dialog
+   */
+  editMediaDialog () {
+    const $editMediaDialog = $('[data-role=media-library-edit-dialog]')
+    const editModal = new bootstrap.Modal(document.querySelector('[data-role="media-library-edit-dialog"]'))
+    const $editMediaSubmit = $('#editMediaSubmit')
+    const $mediaItemTitleInput = $('#editMediaItemTile');
+    let $mediaItem;
+
+    $('[data-fork=connectedItems]').on('click', '[data-fork=edit]', (e) => {
+      $mediaItem = $(e.currentTarget).closest('[data-fork=mediaItem]')
+
+      $mediaItemTitleInput.val($mediaItem.data('mediaTitle'))
+
+      editModal.show()
+
+    })
+
+    $mediaItemTitleInput.keyup((e) => {
+      if (e.keyCode === 13) {
+        $editMediaSubmit.click()
+      }
+    })
+
+    $editMediaSubmit.click(() => {
+      if (!$mediaItem || !$mediaItem.data('mediaId')) {
+        return;
+      }
+
+      $editMediaDialog.find('.is-invalid').removeClass('is-invalid')
+      $editMediaDialog.find('.help-block').remove()
+
+      if ($mediaItemTitleInput.val() === "") {
+        $mediaItemTitleInput.addClass('is-invalid');
+
+        $('<span>').addClass('help-block')
+          .append(
+            $('<ul>').addClass('list-unstyled')
+              .append(
+                $('<li>').addClass('formError')
+                  .html(StringUtil.ucfirst(window.backend.locale.err('FieldIsRequired')))
+                  .prepend(
+                    $('<span>').addClass('fa fa-exclamation-triangle').attr('aria-hidden', 'true')
+                  )
+              )
+          )
+          .insertAfter($mediaItemTitleInput)
+
+        return;
+      }
+
+      $.ajax({
+        data: {
+          fork: {
+            module: 'MediaLibrary',
+            action: 'MediaItemEditTitle'
+          },
+          media_id: $mediaItem.data('mediaId'),
+          title: $mediaItemTitleInput.val()
+        },
+        success: (json, textStatus) => {
+          if (json.code !== 200) {
+            // show error if needed
+            if (jsBackend.debug) {
+              window.alert(textStatus)
+            }
+
+            return
+          }
+
+          Messages.add('success', json.message)
+
+          $mediaItem.data('mediaTitle', $mediaItemTitleInput.val())
+          $mediaItem.find('img').attr({
+            alt: $mediaItemTitleInput.val()
+          })
+
+          editModal.hide()
+        }
+      })
+    })
+
+    editModal.addEventListener('hidden.bs.modal', () => {
+      $mediaItem = null
+      $mediaItemTitleInput.val('')
+    })
   }
 
   /**
