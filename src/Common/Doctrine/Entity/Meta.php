@@ -322,6 +322,10 @@ class Meta implements JsonSerializable
 
     public function getCanonicalUrl(): ?string
     {
+        if ($this->unserialisedData === null) {
+            return null;
+        }
+
         if (array_key_exists('canonical_url', $this->unserialisedData)) {
             return $this->unserialisedData['canonical_url'];
         }
@@ -331,6 +335,10 @@ class Meta implements JsonSerializable
 
     public function isCanonicalUrlOverwrite(): bool
     {
+        if ($this->unserialisedData === null) {
+            return false;
+        }
+
         if (array_key_exists('canonicalUrlOverwrite', $this->unserialisedData)) {
             return (bool) $this->unserialisedData['canonical_url_overwrite'];
         }
