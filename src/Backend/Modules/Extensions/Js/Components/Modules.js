@@ -8,8 +8,8 @@ export class Modules {
     e.preventDefault()
 
     // get data
-    const href = $(e.currentTarget).attr('href')
-    let message = $(e.currentTarget).data('message')
+    const href = e.currentTarget.getAttribute('href')
+    let message = e.currentTarget.dataset.message
 
     if (typeof message === 'undefined') {
       message = window.backend.locale.msg('ConfirmModuleInstallDefault')
@@ -17,16 +17,18 @@ export class Modules {
 
     // the first is necessary to prevent multiple popups showing after a previous modal is dismissed without
     // refreshing the page
-    const $confirmation = $('.jsConfirmation').clone().first()
+    const exampleModal = document.querySelectorAll('.jsConfirmation')[0]
+    const confirmationModalHtml = exampleModal.cloneNode(true)
 
     // bind
     if (href !== '') {
       // set data
-      $confirmation.find('.jsConfirmationMessage').html(message)
-      $confirmation.find('.jsConfirmationSubmit').attr('href', $(e.currentTarget).attr('href'))
+      confirmationModalHtml.querySelectorAll('.jsConfirmationMessage')[0].innerHTML = message
+      confirmationModalHtml.querySelectorAll('.jsConfirmationSubmit')[0].setAttribute('href', href)
 
-      // open dialog
-      $confirmation.modal('show')
+      // open modal
+      const confirmationModal = new window.bootstrap.Modal(confirmationModalHtml)
+      confirmationModal.show()
     }
   }
 }

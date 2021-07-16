@@ -1,6 +1,16 @@
-{% if not privacyConsentDialogHide %}
-  <div id="privacyConsentDialog" tabindex="-1" role="dialog" aria-labelledby="privacyConsentDialogTitle" data-role="privacy_consent_dialog" data-backdrop="false">
-    <div class="modal-dialog"  role="document">
+{% if privacyConsentEnabled %}
+  <div
+    id="privacyConsentDialog"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="privacyConsentDialogTitle"
+    data-role="privacy_consent_dialog"
+    data-backdrop="false"
+    {% if privacyConsentDialogHide %}
+      style="display: none"
+    {% endif %}
+  >
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <form data-role="privacy_consent_dialog_form">
           <div class="modal-header">

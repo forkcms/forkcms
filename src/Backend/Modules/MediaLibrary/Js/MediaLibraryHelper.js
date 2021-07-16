@@ -14,6 +14,7 @@ export class MediaLibraryHelper {
       mediaGroups: {},
       currentMediaGroupId: 0,
       mediaFolderId: null,
+      searchQuery: null,
       currentAspectRatio: false,
       minimumMediaItemsCount: false,
       maximumMediaItemsCount: false,

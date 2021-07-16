@@ -2,3 +2,7 @@ codecov:
     notify:
         after_n_builds: 3 # Let codecov wait for unit-tests, integration tests and installer tests
         wait_for_ci: true
+
+github_checks:
+  # Disable inline annotations of code coverage in pull requests.
+  annotations: false

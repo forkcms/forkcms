@@ -1,4 +1,5 @@
 import { Meta } from '../../../Core/Js/Components/Meta'
+import { Config } from '../../../Core/Js/Components/Config'
 
 export class Blog {
   constructor () {
@@ -15,11 +16,12 @@ export class Blog {
     // variables
     let currentCategory = null
     const $addCategorySubmit = $('#addCategorySubmit')
-    const $addCategoryDialog = $('#addCategoryDialog')
+    const addCategoryModalSelector = document.getElementById('addCategoryDialog') ? document.getElementById('addCategoryDialog') : null
+    const addCategoryModal = addCategoryModalSelector ? new window.bootstrap.Modal(addCategoryModalSelector) : null
     const $categoryTitleError = $('#categoryTitleError')
     const $categoryId = $('#categoryId')
 
-    if ($addCategorySubmit.length > 0 && $addCategoryDialog.length > 0) {
+    if ($addCategorySubmit.length > 0 && addCategoryModal !== null) {
       $addCategorySubmit.click(() => {
         // hide errors
         $categoryTitleError.hide()
@@ -32,7 +34,7 @@ export class Blog {
           success: (json, textStatus) => {
             if (json.code !== 200) {
               // show error if needed
-              if (jsBackend.debug) window.alert(textStatus)
+              if (Config.isDebug()) window.alert(textStatus)
 
               // show message
               $categoryTitleError.show()
@@ -44,13 +46,13 @@ export class Blog {
               currentCategory = json.data.id
 
               // close dialog
-              $addCategoryDialog.modal('hide')
+              addCategoryModal.hide()
             }
           }
         })
       })
 
-      $addCategoryDialog.on('hide.bs.modal', () => {
+      addCategoryModalSelector.addEventListener('hide.bs.modal', () => {
         $categoryId.val(currentCategory)
       })
 
@@ -62,7 +64,7 @@ export class Blog {
           e.preventDefault()
 
           // open dialog
-          $addCategoryDialog.modal('show')
+          addCategoryModal.show()
         } else {
           // reset current category
           currentCategory = $categoryId.val()

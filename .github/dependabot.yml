@@ -1,0 +1,57 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - carakas
+  - jessedobbelaere
+  - tijsverkoyen
+  labels:
+  - Dependency bump
+  versioning-strategy: lockfile-only
+  ignore:
+  - dependency-name: phpstan/phpstan-symfony
+    versions:
+    - 0.12.16
+    - 0.12.17
+    - 0.12.18
+    - 0.12.19
+    - 0.12.20
+    - 0.12.21
+    - 0.12.22
+    - 0.12.23
+    - 0.12.24
+    - 0.12.25
+    - 0.12.26
+    - 0.12.27
+  - dependency-name: phpstan/phpstan
+    versions:
+    - 0.12.70
+    - 0.12.71
+    - 0.12.74
+    - 0.12.75
+    - 0.12.76
+    - 0.12.77
+    - 0.12.78
+    - 0.12.79
+    - 0.12.80
+    - 0.12.83
+    - 0.12.84
+  - dependency-name: swiftmailer/swiftmailer
+    versions:
+    - 6.2.5
+    - 6.2.6
+  - dependency-name: symfony/phpunit-bridge
+    versions:
+    - 5.2.2
+    - 5.2.3
+  - dependency-name: spoon/library
+    versions:
+    - 3.2.7
+  - dependency-name: doctrine/doctrine-bundle
+    versions:
+    - 1.12.13

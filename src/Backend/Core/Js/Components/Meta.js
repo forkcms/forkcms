@@ -17,6 +17,8 @@ export class Meta {
       metaKeywordsOverwriteSelector: '#metaKeywordsOverwrite',
       urlSelector: '#url',
       urlOverwriteSelector: '#urlOverwrite',
+      canonicalUrlSelector: '#canonicalUrlSelector',
+      canonicalUrlOverwriteSelector: '#canonicalUrlOverwriteSelector',
       generatedUrlSelector: '#generatedUrl',
       baseFieldSelector: '#baseFieldName',
       customSelector: '#custom',

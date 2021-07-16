@@ -160,7 +160,7 @@ abstract class Kernel extends BaseKernel
 
         $moduleNames = [];
         if ($this->isInstallingModule()) {
-            $moduleNames[] = $this->request->query->get('module');
+            $moduleNames[] = $this->request->query->get('module') ?? $_SERVER['INSTALLING_MODULE'];
         }
 
         try {
@@ -186,9 +186,14 @@ abstract class Kernel extends BaseKernel
 
     public function isInstallingModule(): bool
     {
-        return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
-               && $this->request->query->has('module')
-               && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
+        $isInstallingModuleHttp = preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
+           && $this->request->query->has('module')
+           && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames(), true);
+        $isInstallingModuleCli = PHP_SAPI === "cli"
+            && isset($_SERVER['INSTALLING_MODULE'])
+            && in_array($_SERVER['INSTALLING_MODULE'], $this->getAllPossibleModuleNames(), true);
+
+        return $isInstallingModuleHttp || $isInstallingModuleCli;
     }
 
     private function getAllPossibleModuleNames(): array

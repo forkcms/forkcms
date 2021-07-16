@@ -124,6 +124,8 @@ class Meta implements JsonSerializable
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
+        ?string $canonicalUrl,
+        bool $canonicalUrlOverwrite,
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
@@ -143,6 +145,14 @@ class Meta implements JsonSerializable
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
         $this->id = $id;
+
+        if ($canonicalUrlOverwrite) {
+            $this->unserialisedData['canonical_url'] = $canonicalUrl;
+            $this->unserialisedData['canonical_url_overwrite'] = $canonicalUrlOverwrite;
+        } else {
+            unset($this->unserialisedData['canonical_url']);
+            unset($this->unserialisedData['canonical_url_overwrite']);
+        }
     }
 
     public function update(
@@ -154,6 +164,8 @@ class Meta implements JsonSerializable
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
+        ?string $canonicalUrl = null,
+        bool $canonicalUrlOverwrite = false,
         string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
@@ -171,6 +183,14 @@ class Meta implements JsonSerializable
         $this->unserialisedData = $unserialisedData;
         $this->seoFollow = $seoFollow;
         $this->seoIndex = $seoIndex;
+
+        if ($canonicalUrlOverwrite) {
+            $this->unserialisedData['canonical_url'] = $canonicalUrl;
+            $this->unserialisedData['canonical_url_overwrite'] = $canonicalUrlOverwrite;
+        } else {
+            unset($this->unserialisedData['canonical_url']);
+            unset($this->unserialisedData['canonical_url_overwrite']);
+        }
     }
 
     /**
@@ -217,6 +237,8 @@ class Meta implements JsonSerializable
             $metaData['title_overwrite'],
             $metaData['url'],
             $metaData['url_overwrite'],
+            $metaData['canonical_url'],
+            $metaData['canonical_url_overwrite'],
             $metaData['custom'],
             array_key_exists('SEOFollow', $metaData) ? SEOFollow::fromString((string) $metaData['SEOFollow']) : null,
             array_key_exists('SEOIndex', $metaData) ? SEOIndex::fromString((string) $metaData['SEOIndex']) : null,
@@ -243,6 +265,8 @@ class Meta implements JsonSerializable
             $metaData['titleOverwrite'],
             $metaData['url'],
             $metaData['urlOverwrite'],
+            $metaData['canonical_url'],
+            $metaData['canonical_url_overwrite'],
             $metaData['custom'] ?? null,
             SEOFollow::fromString((string) $metaData['SEOFollow']),
             SEOIndex::fromString((string) $metaData['SEOIndex']),
@@ -294,6 +318,32 @@ class Meta implements JsonSerializable
     public function isUrlOverwrite(): bool
     {
         return $this->urlOverwrite;
+    }
+
+    public function getCanonicalUrl(): ?string
+    {
+        if ($this->unserialisedData === null) {
+            return null;
+        }
+
+        if (array_key_exists('canonical_url', $this->unserialisedData)) {
+            return $this->unserialisedData['canonical_url'];
+        }
+
+        return null;
+    }
+
+    public function isCanonicalUrlOverwrite(): bool
+    {
+        if ($this->unserialisedData === null) {
+            return false;
+        }
+
+        if (array_key_exists('canonicalUrlOverwrite', $this->unserialisedData)) {
+            return (bool) $this->unserialisedData['canonical_url_overwrite'];
+        }
+
+        return false;
     }
 
     public function getCustom(): ?string

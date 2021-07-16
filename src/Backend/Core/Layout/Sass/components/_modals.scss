@@ -5,13 +5,14 @@
   border-radius: $border-radius-sm;
 
   .modal-title {
-    font-size: $btn-font-size;
+    font-size: $font-size-base;
   }
 }
 
 .modal-header {
-  padding: $modal-header-padding;
+  border-bottom: 0;
   margin-bottom: 5px;
+  padding: $modal-header-padding;
 
   .close {
     font-size: 1.2rem;
@@ -24,11 +25,12 @@
   background: $white;
   border: 1px solid $gray-200;
   border-radius: $border-radius-sm;
-  margin: 0 30px;
-  padding: 20px;
+  margin: 0 $modal-inner-padding;
+  padding: $spacer * 1.25;
 }
 
 .modal-footer {
+  border-top: 0;
   padding: 15px 30px 25px;
 }
 

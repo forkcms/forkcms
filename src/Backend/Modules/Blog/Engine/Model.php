@@ -786,6 +786,8 @@ class Model
                 $meta['title'],
                 $meta['title_overwrite'] ?? false,
                 $meta['url'],
+                false,
+                $meta['url'],
                 false
             );
         }

@@ -1,3 +1,34 @@
+5.10.0  (2021-05-16)
+------------------
+
+Fixed:
+* Core: Fix double encoding in spoon library [#3400](https://github.com/forkcms/forkcms/pull/3400)
+* Core: Fix files not loading on some apache servers [#3361](https://github.com/forkcms/forkcms/pull/3361)
+* Core: Update packages [#3398](https://github.com/forkcms/forkcms/pull/3398) [#3394](https://github.com/forkcms/forkcms/pull/3394) [#3386](https://github.com/forkcms/forkcms/pull/3386) [#3385](https://github.com/forkcms/forkcms/pull/3385) [#3382](https://github.com/forkcms/forkcms/pull/3382) [#3364](https://github.com/forkcms/forkcms/pull/3364)
+* Blog: Fix broken thumbnail in the backend [#3360](https://github.com/forkcms/forkcms/pull/3360)
+* Pages: Fix usertemplates [#3371](https://github.com/forkcms/forkcms/pull/3371) [#3365](https://github.com/forkcms/forkcms/pull/3365)
+
+Security:
+* Authentication: Fix xss in redirect url [#3355](https://github.com/forkcms/forkcms/pull/3355) [#3353](https://github.com/forkcms/forkcms/pull/3353)
+* MediaLibrary: Fix xss in media item title [#3401](https://github.com/forkcms/forkcms/pull/3401)
+* MediaLibrary: Fix xss in video ids [#3402](https://github.com/forkcms/forkcms/pull/3402)
+* Search: Fix xss in search referrer [#3387](https://github.com/forkcms/forkcms/pull/3388)
+* Spoon: Fix xss in form input files [#3357](https://github.com/forkcms/forkcms/pull/3357)
+
+Added:
+* Core: Add canonical URL to SEO tab [#3188](https://github.com/forkcms/forkcms/pull/3188)
+* Core: Add CLI command to install a module [#3323](https://github.com/forkcms/forkcms/pull/3323)
+* Core: Throw an event when the session id changes [#3377](https://github.com/forkcms/forkcms/pull/3377)
+* MediaLibrary: Add edit button to media item within a form [#3192](https://github.com/forkcms/forkcms/pull/3192)
+* MediaLibrary: Added a search box to the media library [#3189](https://github.com/forkcms/forkcms/pull/3189)
+* Pages: Make it possible to set an id in a usertemplate [#3166](https://github.com/forkcms/forkcms/pull/3166)
+
+Changed:
+* Core: Improve GDPR consent dialog [#3372](https://github.com/forkcms/forkcms/pull/3372)
+* Github: No codecov annotations in PR's [#3378](https://github.com/forkcms/forkcms/pull/3378)
+* Github: Upgrade to native dependabot [#3384](https://github.com/forkcms/forkcms/pull/3384)
+
+
 5.9.3  (2021-03-21)
 ------------------
 

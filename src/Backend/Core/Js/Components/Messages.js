@@ -60,6 +60,7 @@ export class Messages {
     }
 
     // show
-    $('#' + uniqueId).toast('show')
+    const toast = new window.bootstrap.Toast(document.querySelector('#' + uniqueId))
+    toast.show()
   }
 }

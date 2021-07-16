@@ -1,2 +1,5 @@
 Options -ExecCGI
-php_flag engine off
+
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>

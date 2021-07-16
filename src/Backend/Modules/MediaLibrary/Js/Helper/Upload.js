@@ -121,6 +121,12 @@ export class Upload {
       --this.uploadedCount
       window.backend.mediaLibrary.helper.group.validateMinimumMaximumCount()
     })
+
+    // bind change to "Enable cropper" checkbox
+    $('[data-role="enable-cropper-checkbox"]').on('change', () => {
+      // Reset the fineuploader upload box so we can skip or use a scaling config for the cropper
+      $('#fine-uploader-gallery').unbind().empty()
+    })
   }
 
   toggleCropper () {
@@ -146,6 +152,14 @@ export class Upload {
    * Configure the uploader to trigger the cropper
    */
   getScalingConfig () {
+    // Skip scaling config for cropping if we don't have cropping enabled
+    if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+      return {
+        includeExif: false,
+      }
+    }
+
+    // Add a scaling config with custom resizer for our cropper feature
     return {
       includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
       sendOriginal: false,
