@@ -42,7 +42,7 @@ class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
                     throw new NotFoundHttpException('Source image could not be found', $e);
                 }
 
-                if ($binary->getFormat() === 'svg') {
+                if (in_array($binary->getMimeType(), ['image/svg', 'image/svg+xml'])) {
                     $this->cacheManager->store(
                         $binary,
                         $path,
