@@ -62,7 +62,7 @@ export class Group {
    * Adds add media dialog, where you can connect/disconnect media to a group
    */
   addMediaDialog () {
-    const $addMediaDialog = $('[data-role=media-library-add-dialog]')
+    const addMediaModal = new window.bootstrap.Modal(document.querySelectorAll('[data-role=media-library-add-dialog]')[0])
     const $addMediaSubmit = $('#addMediaSubmit')
 
     $addMediaSubmit.on('click', () => {
@@ -76,7 +76,7 @@ export class Group {
       Messages.add('success', window.backend.locale.msg('MediaGroupEdited'))
 
       // close the dialog
-      $addMediaDialog.modal('hide')
+      addMediaModal.hide()
     })
 
     // bind click when opening "add media dialog"
@@ -126,7 +126,7 @@ export class Group {
       window.backend.mediaLibrary.helper.upload.toggleUploadBoxes()
 
       // open dialog
-      $addMediaDialog.modal('show')
+      addMediaModal.show()
     })
 
     // bind change when selecting other folder
@@ -145,7 +145,7 @@ export class Group {
       this.config.mediaFolderId = $('#mediaFolders').val();
       this.config.searchQuery = $('[name=query]').val();
 
-      jsBackend.mediaLibraryHelper.group.clearMediaCache(mediaFolderId);
+      this.clearMediaCache(mediaFolderId);
       this.getMedia()
     })
 
@@ -163,7 +163,8 @@ export class Group {
    */
   editMediaDialog () {
     const $editMediaDialog = $('[data-role=media-library-edit-dialog]')
-    const editModal = new bootstrap.Modal(document.querySelector('[data-role="media-library-edit-dialog"]'))
+    const editModalSelector = document.querySelector('[data-role="media-library-edit-dialog"]')
+    const editModal = new window.bootstrap.Modal(editModalSelector)
     const $editMediaSubmit = $('#editMediaSubmit')
     const $mediaItemTitleInput = $('#editMediaItemTile');
     let $mediaItem;
@@ -241,7 +242,7 @@ export class Group {
       })
     })
 
-    editModal.addEventListener('hidden.bs.modal', () => {
+    editModalSelector.addEventListener('hide.bs.modal', () => {
       $mediaItem = null
       $mediaItemTitleInput.val('')
     })
@@ -723,31 +724,38 @@ export class Group {
     // Enable all because we can switch between different groups on the same page
     $tabs.children('.nav-link').removeClass('disabled, active')
 
-    let disabled = ''
-    let enabled = '.nav-item:eq(0)'
+    const tabsElement = document.querySelectorAll('#tabLibrary .nav-tabs')[0]
 
     // we have an image group
     if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image') {
-      disabled = '.nav-item:gt(0)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-image])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'file') {
-      disabled = '.nav-item:eq(0), .nav-item:eq(2), .nav-item:eq(3)'
-      enabled = '.nav-item:eq(1)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-file])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'movie') {
-      disabled = '.nav-item:eq(0), .nav-item:eq(1), .nav-item:eq(3)'
-      enabled = '.nav-item:eq(2)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-movie])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'audio') {
-      disabled = '.nav-item:lt(3)'
-      enabled = '.nav-item:eq(3)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-audio])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image-file') {
-      disabled = '.nav-item:eq(2), .nav-item:eq(3)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-image]):not([data-type-file])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     } else if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image-movie') {
-      disabled = '.nav-item:eq(1), .nav-item:eq(3)'
+      tabsElement.querySelectorAll('.nav-item:not([data-type-image]):not([data-type-movie])').forEach((tab) => {
+        tab.querySelector('.nav-link').classList.add('disabled')
+      })
     }
 
-    if (disabled !== '') {
-      $tabs.children(disabled).find('.nav-link').addClass('disabled')
-    }
-    $tabs.children(enabled).children('a').attr('data-bs-toggle', 'tab').first().tab('show')
+    const navItem = tabsElement.querySelectorAll('.nav-item:not(.disabled)')[0]
+    const navLink = new window.bootstrap.Tab(navItem.querySelectorAll('.nav-link')[0])
+    navLink.show()
 
     // get table
     const $tables = $('.mediaTable')

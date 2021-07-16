@@ -164,12 +164,6 @@
   width: auto;
 }
 
-.editMediaItem {
-  border-radius: 0;
-  display: block;
-  width: 100%;
-}
-
 .addUploadedMediaItem {
   align-items: center;
   border-radius: 100px;
@@ -202,6 +196,15 @@
   position: absolute;
   top: -15px;
   right: -15px;
+  width: auto;
+}
+
+.editMediaItem {
+  border-radius: 50px;
+  bottom: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  right: 5px;
   width: auto;
 }
 

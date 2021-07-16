@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,7 +45,7 @@ class MediaItemEditTitle extends BackendBaseAJAXAction
 
         try {
             /** @var MediaItem $mediaItem */
-            return $this->get('media_library.repository.item')->findOneById($id);
+            return $this->get(MediaItemRepository::class)->findOneById($id);
         } catch (MediaItemNotFound $mediaItemNotFound) {
             throw new AjaxExitException(Language::err('MediaItemDoesNotExists'));
         }
