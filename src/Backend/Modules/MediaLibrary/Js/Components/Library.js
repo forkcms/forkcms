@@ -69,8 +69,9 @@ export class Library {
   dataGrids () {
     if (window.location.hash === '') {
       // select first tab
-      const triggerEl = document.querySelector('#library .nav-item:first .nav-link')
-      const tab = new window.bootstrap.Tab(triggerEl)
+      const navItems = document.querySelectorAll('#library .nav-item')
+      const tabLink = navItems[0].querySelector('.nav-link')
+      const tab = new window.bootstrap.Tab(tabLink)
       tab.show()
     }
 
