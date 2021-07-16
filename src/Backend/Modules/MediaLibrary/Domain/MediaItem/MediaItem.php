@@ -190,7 +190,7 @@ class MediaItem implements JsonSerializable
 
         $mediaItem->setForFile($file);
 
-        if ($mediaItem->getMime() !== 'image/svg+xml') {
+        if (!in_array($mediaItem->getMime(), ['image/svg', 'image/svg+xml'])) {
             $mediaItem->setResolutionFromPath($path);
         } else {
             $mediaItem->setResolutionForSvg($path);
