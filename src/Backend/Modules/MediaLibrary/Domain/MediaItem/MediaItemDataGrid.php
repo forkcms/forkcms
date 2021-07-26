@@ -180,6 +180,8 @@ class MediaItemDataGrid extends DataGridDatabase
                 'url',
                 true
             );
+        } else {
+            $this->setColumnFunction('htmlspecialchars', ['[url]'], 'url', false);
         }
 
         // set column functions
@@ -201,7 +203,6 @@ class MediaItemDataGrid extends DataGridDatabase
 
         // our JS needs to know an id, so we can highlight it
         $this->setRowAttributes(['id' => 'row-[id]']);
-        $this->setColumnFunction('htmlspecialchars', ['[url]'], 'url', false);
         $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
     }
 }
