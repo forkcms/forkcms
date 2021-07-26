@@ -58,7 +58,7 @@
               </div>
               <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
                 <div class="form-group{% if txtMessageError %} has-danger{% endif %}">
-                  <label class="form-control-label" for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+                  <label class="form-label" for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
                   {% form_field_error message %} {% form_field message %}
                 </div>
                 <input class="btn btn-primary" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />

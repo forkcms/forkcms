@@ -122,7 +122,7 @@ variables that are available:
           <div class="row">
             <div class="col-sm-7">
               <div class="form-group{% if txtMessageError %} has-danger{% endif %}">
-                <label class="form-control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                <label class="form-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
                 <div class="controls">
                   {% form_field message %} {% form_field_error message %}
                 </div>
@@ -130,15 +130,15 @@ variables that are available:
             </div>
             <div class="col-sm-5">
               <div class="form-group{% if txtAuthorError %} has-danger{% endif %}">
-                <label class="form-control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                <label class="form-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
                 {% form_field author %} {% form_field_error author %}
               </div>
               <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
-                <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                <label class="form-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
                 {% form_field email %} {% form_field_error email %}
               </div>
               <div class="form-group{% if txtWebsiteError %} has-danger{% endif %}">
-                <label class="form-control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
+                <label class="form-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
                 {% form_field website %} {% form_field_error website %}
               </div>
             </div>

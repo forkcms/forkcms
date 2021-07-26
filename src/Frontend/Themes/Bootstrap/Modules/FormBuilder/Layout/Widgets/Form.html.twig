@@ -31,7 +31,7 @@
                 {# Input field, textarea's and dropdowns #}
                 {% if field.simple %}
                   <div class="form-group{% if field.error %} has-danger{% endif %}">
-                    <label class="form-control-label" for="{{ field.name|raw }}">
+                    <label class="form-label" for="{{ field.name|raw }}">
                       {{ field.label|raw }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
                     </label>
                     {{ field.html|raw }}
@@ -42,7 +42,7 @@
                 {# Mailmotor#}
                 {% if field.isMailmotor %}
                   <div class="form-group{% if field.error %} has-danger{% endif %}">
-                    <label class="form-control-label" for="{{ field.name }}">
+                    <label class="form-label" for="{{ field.name }}">
                       {{ field.html|raw }} {{ field.label|raw }}
                     </label>
                     {% if field.error %}<span class="form-control-feedback">{{ field.error|raw }}</span>{% endif %}
@@ -52,7 +52,7 @@
                 {# Radiobuttons and checkboxes #}
                 {% if field.multiple %}
                   <div class="form-group{% if field.error %} has-danger{% endif %}">
-                    <p class="form-control-label">
+                    <p class="form-label">
                       {{ field.label|raw }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
                     </p>
                     {% for checkbox in field.html %}
