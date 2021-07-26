@@ -6,7 +6,7 @@
 {% if locationItems %}
   <div id="locationIndex" class="location">
     <div id="map" data-role="fork-map-container" data-map-id="general" class="parseMap" style="height: {{ locationSettings.height }}px;">
-      <span class="sr-only">{{ 'lbl.Loading'|trans|ucfirst }}</span>
+      <span class="visually-hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
     </div>
 
     {% for location in locationItems %}

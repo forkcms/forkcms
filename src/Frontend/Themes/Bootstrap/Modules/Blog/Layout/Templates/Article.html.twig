@@ -9,22 +9,22 @@
 
       <div class="article-info">
         {{ 'msg.WrittenBy'|trans|ucfirst|format(nickname) }}
-        <span class="sr-only">{{ 'lbl.On'|trans }}</span>
+        <span class="visually-hidden">{{ 'lbl.On'|trans }}</span>
         <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP') }}">{{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</time>
       </div>
 
       <div class="row">
         <div class="col-md-6">
-          <span class="sr-only">{{ 'lbl.InThe'|trans }} </span>
+          <span class="visually-hidden">{{ 'lbl.InThe'|trans }} </span>
           {{ 'lbl.Category'|trans|ucfirst }}: <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
 
           {% if item.tags %}
-            <span class="sr-only">{{ 'lbl.WithThe'|trans }}</span>
+            <span class="visually-hidden">{{ 'lbl.WithThe'|trans }}</span>
             {{ 'lbl.Tags'|trans|ucfirst }}:
             <span itemprop="keywords">
                   {% for tag in item.tags %}
                     <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>
-                    {% if not loop.last %}<span class="sr-only">,</span>{% endif %}
+                    {% if not loop.last %}<span class="visually-hidden">,</span>{% endif %}
                   {% endfor %}
                 </span>
           {% endif %}
