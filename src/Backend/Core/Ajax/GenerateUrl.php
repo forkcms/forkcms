@@ -23,6 +23,7 @@ class GenerateUrl extends BackendBaseAJAXAction
         $parameters = $this->getRequest()->request->get('parameters', '');
 
         // cleanup values
+        $parameters = html_entity_decode($parameters);
         $parameters = @unserialize($parameters, ['allowed_classes' => [
             Locale::class,
         ]]);
