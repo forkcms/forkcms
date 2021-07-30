@@ -206,7 +206,7 @@ class Model
                 $data = $sourceData['data'];
 
                 if (array_key_exists('image', $data)) {
-                    $data['image'] = self::getImage($data['image'], $meta['url']);
+                    $data['image'] = self::copyImage($data['image'], $meta['url']);
                 }
 
                 $serializedData = serialize($data);
@@ -1672,7 +1672,7 @@ class Model
         $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
     }
 
-    private static function getImage(?string $image, string $metaUrl): ?string
+    private static function copyImage(?string $image, string $metaUrl): ?string
     {
         if ($image === null || $image === '') {
             return null;
