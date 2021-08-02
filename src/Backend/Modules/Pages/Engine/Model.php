@@ -4,6 +4,8 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use Common\Doctrine\Entity\Meta;
+use ForkCMS\Utility\Thumbnails;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
 use SpoonFilter;
@@ -198,6 +200,18 @@ class Model
             // init page
             $page = [];
 
+            // Get data from original page and copy image if one is set
+            $serializedData = null;
+            if ($sourceData['data'] !== null) {
+                $data = $sourceData['data'];
+
+                if (array_key_exists('image', $data)) {
+                    $data['image'] = self::copyImage($data['image'], $meta['url']);
+                }
+
+                $serializedData = serialize($data);
+            }
+
             // build page
             $page['id'] = $sourceData['id'];
             $page['user_id'] = BackendAuthentication::getUser()->getUserId();
@@ -219,7 +233,7 @@ class Model
             $page['allow_edit'] = $sourceData['allow_edit'];
             $page['allow_delete'] = $sourceData['allow_delete'];
             $page['sequence'] = $sourceData['sequence'];
-            $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
+            $page['data'] = $serializedData;
 
             // insert page, store the id, we need it when building the blocks
             $revisionId = self::insert($page);
@@ -1656,5 +1670,25 @@ class Model
         );
 
         $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+    }
+
+    private static function copyImage(?string $image, string $metaUrl): ?string
+    {
+        if ($image === null || $image === '') {
+            return null;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
+
+        $originalImagePath = $imagePath . '/source/' . $image;
+        $extension = pathinfo($originalImagePath, PATHINFO_EXTENSION);
+        $imageFilename = $metaUrl . '_' . time() . '.' . $extension;
+        $newImagePath = $imagePath . '/source/' . $imageFilename;
+
+        // make sure we have a separate image for the copy in case the original image gets removed
+        (new Filesystem())->copy($originalImagePath, $newImagePath);
+        BackendModel::get(Thumbnails::class)->generate($imagePath, $newImagePath);
+
+        return $imageFilename;
     }
 }
