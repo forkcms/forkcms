@@ -73,7 +73,8 @@ phpstan:
         - php bin/generate-parameters-gitlab
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
         - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
-        - php composer.phar install --quiet --ignore-platform-reqs
+        - php composer.phar install --quiet --ignore-platform-reqs --no-scripts
+        - php bin/console assetic:dump .
     script:
         - php -d memory_limit=-1 bin/phpstan analyze src
     stage: code quality
