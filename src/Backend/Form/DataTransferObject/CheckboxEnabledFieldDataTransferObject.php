@@ -2,7 +2,7 @@
 
 namespace Backend\Form\DataTransferObject;
 
-class EnabledFieldDataTransferObject
+class CheckboxEnabledFieldDataTransferObject
 {
     public bool $enableField = false;
 
