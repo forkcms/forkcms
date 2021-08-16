@@ -28,7 +28,6 @@ import { Config } from './Components/Config'
 import { BlockEditor } from './BlockEditor/BlockEditor'
 
 // modules imports
-import { Analytics } from '../../Modules/Analytics/Js/Analytics'
 import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Extensions } from '../../Modules/Extensions/Js/Extensions'
 import { Faq } from '../../Modules/Faq/Js/Faq'
@@ -73,7 +72,6 @@ export class Backend {
     this.blockEditor = new BlockEditor()
 
     // init modules
-    this.analytics = new Analytics()
     this.blog = new Blog()
     this.extensions = new Extensions()
     this.faq = new Faq()
