@@ -52,15 +52,11 @@ doctrine_orm_bridge:
     connection: default
 
 services:
-    fork.entity.create_schema:
-        class: Common\Doctrine\Entity\CreateSchema
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: true
-        arguments:
-            - "@doctrine.orm.entity_manager"
 
-    fork.repository.meta:
-        class: Common\Doctrine\Repository\MetaRepository
-        public: true
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Common\Doctrine\Entity\Meta
+    Common\Doctrine\Entity\CreateSchema:
+
+    Common\Doctrine\Repository\MetaRepository:

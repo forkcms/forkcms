@@ -2,6 +2,9 @@
 
 namespace Frontend\Modules\Blog\Engine;
 
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
+use Backend\Modules\Blog\Domain\Comment\CommentRepository;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\Mailer\Message;
 use Doctrine\ORM\NoResultException;
 use ForkCMS\Utility\Thumbnails;
@@ -149,11 +152,10 @@ class Model implements FrontendTagsInterface
     public static function getCategory(string $slug): array
     {
         try {
-            $category = FrontendModel::get('blog.repository.category')
-                                     ->findOneByUrl(
-                                         $slug,
-                                         Locale::frontendLanguage()
-                                     );
+            $category = FrontendModel::get(CategoryRepository::class)->findOneByUrl(
+                $slug,
+                Locale::frontendLanguage()
+            );
         } catch (NoResultException $e) {
             return [];
         }
@@ -493,7 +495,7 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        $comments = FrontendModel::get('blog.repository.comment')->findBy(
+        $comments = FrontendModel::get(CommentRepository::class)->findBy(
             [
                 'postId' => $blogPostId,
                 'status' => 'published',
@@ -751,7 +753,7 @@ class Model implements FrontendTagsInterface
     private static function completeBlogPost(array $blogPost): array
     {
         if (isset($blogPost['meta_id'])) {
-            $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
+            $blogPost['meta'] = FrontendModel::get(MetaRepository::class)->find($blogPost['meta_id']);
         }
 
         if (isset($blogPost['meta_data'])) {

@@ -1,7 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
     # Frontend helpers
     media_library.helper.frontend:
         class: Frontend\Modules\MediaLibrary\Helper\FrontendHelper
-        public: true
-        arguments:
-            - "@media_library.repository.group_item"

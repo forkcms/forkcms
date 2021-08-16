@@ -26,7 +26,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLoc
     public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
         /** @var MetaRepository $metaRepository */
-        $metaRepository = BackendModel::get('fork.repository.meta');
+        $metaRepository = BackendModel::get(MetaRepository::class);
 
         $toLanguage = $command->getToLocale();
         $fromLanguage = $command->getFromLocale();

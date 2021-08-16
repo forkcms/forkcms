@@ -40,7 +40,7 @@ final class PageDataRedirectType extends AbstractType implements PageDataTypeInt
                 'choices' => array_flip(BackendPagesModel::getPagesForDropdown()),
                 'label' => 'lbl.InternalLink',
                 'label_attr' => [
-                    'class' => 'sr-only',
+                    'class' => 'visually-hidden',
                 ],
             ]
         );
@@ -50,7 +50,7 @@ final class PageDataRedirectType extends AbstractType implements PageDataTypeInt
             [
                 'label' => 'lbl.ExternalLink',
                 'label_attr' => [
-                    'class' => 'sr-only',
+                    'class' => 'visually-hidden',
                 ],
             ]
         );

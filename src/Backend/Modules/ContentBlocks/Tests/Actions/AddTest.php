@@ -20,7 +20,7 @@ class AddTest extends BackendWebTestCase
             $client,
             '/private/en/content_blocks/add',
             [
-                'Title<abbr data-toggle="tooltip" aria-label="Required field" title="Required field">*</abbr>',
+                'Title<abbr data-bs-toggle="tooltip" aria-label="Required field" title="Required field">*</abbr>',
                 'Visible on site',
                 'Add content block',
             ]

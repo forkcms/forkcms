@@ -61,10 +61,10 @@ export class MultiTextBox {
         '<div class="form-group">' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-secondary' + (options.showIconOnly ? ' btn-icon-only' : '') + '">' +
+        '<button id="addButton-' + id + '" class="btn btn-secondary' + (options.showIconOnly ? ' btn-icon-only' : '') + '">' +
         '<span class="fas fa-plus-square" aria-hidden="true"></span>' +
-        '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
-        '</button></div>' +
+        '<span' + (options.showIconOnly ? ' class="visually-hidden"' : '') + '>' + options.addLabel + '</span>' +
+        '</button>' +
         '</div>' +
         '</div>' +
         '</div>'
@@ -246,10 +246,10 @@ export class MultiTextBox {
           for (const i in elements) {
             html += '    <div class="form-group"><div class="input-group">' +
               '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace('"', '&quot;') + '" />' +
-              '        <span class="input-group-append"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
+              '        <button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
               '           <span class="fas fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
-              '        </button></span>' +
+              '        </button>' +
               '    </div></div>'
           }
 

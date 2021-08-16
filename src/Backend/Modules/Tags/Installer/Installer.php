@@ -9,6 +9,7 @@ use Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraType;
 use Backend\Modules\Pages\Domain\PageBlock\PageBlockRepository;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
 use Backend\Modules\Tags\Domain\Tag\Tag;
+use Common\Doctrine\Entity\CreateSchema;
 use ForkCMS\Bundle\InstallerBundle\Language\Locale;
 
 /**
@@ -102,7 +103,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get(CreateSchema::class)->forEntityClasses(
             [
                 Tag::class,
                 ModuleTag::class,

@@ -3,7 +3,6 @@
 namespace Frontend\Core\Tests\Header;
 
 use Frontend\Core\Header\MetaLink;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class MetaLinkTest extends TestCase

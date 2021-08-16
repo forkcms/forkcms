@@ -53,7 +53,7 @@
   <tr
     {$footerAttributes}>
     <td colspan="{$numColumns}">
-      <div class="form-inline{option:massAction} jsMassAction"{/option:massAction}>
+      <div class="d-flex align-items-center{option:massAction} jsMassAction"{/option:massAction}>
         {option:massAction}
           {$massAction}
         {/option:massAction}

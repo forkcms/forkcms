@@ -3,6 +3,7 @@
 namespace Frontend\Modules\MediaLibrary\Widgets\Base;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 
 /**
@@ -20,7 +21,7 @@ class FrontendMediaWidget extends FrontendBaseWidget
         // We are loading in the MediaGroup for a custom module
         if (isset($this->data['group_id'])) {
             /** @var MediaGroup $mediaGroup */
-            $this->mediaGroup = $this->get('media_library.repository.group')->findOneById(
+            $this->mediaGroup = $this->get(MediaGroupRepository::class)->findOneById(
                 $this->data['group_id']
             );
 

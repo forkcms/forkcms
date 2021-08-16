@@ -22,7 +22,7 @@
     </label>
     {% form_field value %} {% form_field_error value %}
   </div>
-  <div class="form-row">
+  <div class="row gx-3">
     <div class="col-md-3">
       <div class="form-group">
         <label for="language" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
@@ -52,10 +52,10 @@
     <div class="btn-toolbar">
       {% if isAllowedAction('Delete') %}
         <div class="btn-group" role="group">
-          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
+          {{ macro.buttonIcon('', 'trash-alt', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete"}) }}
         </div>
       {% endif %}
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
       </div>
     </div>

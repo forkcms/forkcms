@@ -299,7 +299,7 @@
                 <translation language="zh"><![CDATA[通讯]]></translation>
                 <translation language="pl"><![CDATA[newsletter]]></translation>
             </item>
-            <item type="action" name="Subscribe">
+            <item type="slug" name="Subscribe">
                 <translation language="de"><![CDATA[Abonnieren]]></translation>
                 <translation language="el"><![CDATA[συνεισφέρω]]></translation>
                 <translation language="en"><![CDATA[subscribe]]></translation>
@@ -395,7 +395,7 @@
                 <translation language="zh"><![CDATA[<strong>请检查您的邮箱以确认您的邮件地址</strong><br/>在10分钟内，您会收到我们发送的邮件。<br/>您需要点击确认链接以确认订阅。 否则，您的邮件地址将不会添加到我们的邮件列表中。<br/>不要忘记检查您的垃圾邮件箱。]]></translation>
                 <translation language="pl"><![CDATA[<strong> SPRAWDŹ SWOJĄ SKRZYNKĘ, ABY POTWIERDZIĆ ADRES E-MAIL </strong> <br/> W ciągu 10 minut otrzymasz od nas wiadomość e-mail. <br/> Kliknij link potwierdzający, aby potwierdzić rejestrację, <br/> w przeciwnym razie Twój adres e-mail nie zostanie dodany do naszej listy mailingowej. <br/> Czasami ten e-mail może trafić do twojego SPAM-u.]]></translation>
             </item>
-            <item type="action" name="Unsubscribe">
+            <item type="slug" name="Unsubscribe">
                 <translation language="de"><![CDATA[abmelden]]></translation>
                 <translation language="el"><![CDATA[unsubscribe]]></translation>
                 <translation language="en"><![CDATA[unsubscribe]]></translation>

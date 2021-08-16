@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\Doctrine\Entity\Meta as MetaEntity;
+use Common\Doctrine\Repository\MetaRepository;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -118,7 +119,7 @@ class Meta
      */
     public function generateUrl(string $url): string
     {
-        return Model::get('fork.repository.meta')->generateUrl(
+        return Model::get(MetaRepository::class)->generateUrl(
             $url,
             $this->callback['class'],
             $this->callback['method'],

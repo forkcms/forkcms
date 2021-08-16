@@ -8,6 +8,7 @@ use Backend\Core\Language\Locale;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockDeleted;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
 
@@ -53,7 +54,7 @@ class Delete extends BackendBaseActionDelete
     private function getContentBlock(int $id): ContentBlock
     {
         try {
-            return $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
+            return $this->get(ContentBlockRepository::class)->findOneByIdAndLocale(
                 $id,
                 Locale::workingLocale()
             );

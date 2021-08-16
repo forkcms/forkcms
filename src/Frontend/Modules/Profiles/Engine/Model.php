@@ -3,8 +3,10 @@
 namespace Frontend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\ProfileRepository;
 use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\Setting\Setting;
+use Backend\Modules\Profiles\Domain\Setting\SettingRepository;
 use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -40,9 +42,9 @@ class Model
 
     public static function deleteSetting(int $profileId, string $name): void
     {
-        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
+        $SettingRepository = FrontendModel::get(SettingRepository::class);
 
-        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+        $profile = FrontendModel::get(ProfileRepository::class)->find($profileId);
         $Setting = $SettingRepository->findOneBy(
             [
                 'profile' => $profile,
@@ -55,17 +57,17 @@ class Model
 
     public static function existsByEmail(string $email, int $excludedId = 0): bool
     {
-        return FrontendModel::get('profile.repository.profile')->existsByEmail($email, $excludedId);
+        return FrontendModel::get(ProfileRepository::class)->existsByEmail($email, $excludedId);
     }
 
     public static function existsDisplayName(string $displayName, int $excludedId = 0): bool
     {
-        return FrontendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedId);
+        return FrontendModel::get(ProfileRepository::class)->existsByDisplayName($displayName, $excludedId);
     }
 
     public static function get(int $profileId): Profile
     {
-        return FrontendModel::get('profile.repository.profile')->find($profileId);
+        return FrontendModel::get(ProfileRepository::class)->find($profileId);
     }
 
     /**
@@ -162,7 +164,7 @@ class Model
 
     public static function getIdByEmail(string $email): ?int
     {
-        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+        $profile = FrontendModel::get(ProfileRepository::class)->findOneByEmail($email);
 
         if ($profile === null) {
             return null;
@@ -179,7 +181,7 @@ class Model
      */
     public static function getIdBySetting(string $name, $value): ?int
     {
-        $Setting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
+        $Setting = FrontendModel::get(SettingRepository::class)->findOneBy(
             [
                 'name' => $name,
                 'value' => $value,
@@ -242,8 +244,8 @@ class Model
 
     public static function getSetting(int $id, string $name): ?string
     {
-        $profile = FrontendModel::get('profile.repository.profile')->find($id);
-        $setting = FrontendModel::get('profile.repository.profile_setting')->findOneBy(
+        $profile = FrontendModel::get(ProfileRepository::class)->find($id);
+        $setting = FrontendModel::get(SettingRepository::class)->findOneBy(
             [
                 'profile' => $profile,
                 'name' => $name,
@@ -259,7 +261,7 @@ class Model
 
     public static function getSettings(int $profileId): array
     {
-        $profile = FrontendModel::get('profile.repository.profile')->find($profileId);
+        $profile = FrontendModel::get(ProfileRepository::class)->find($profileId);
         $Settings = $profile->getSettings();
 
         $settings = [];
@@ -286,7 +288,7 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        return FrontendModel::get('profile.repository.profile')->getUrl(
+        return FrontendModel::get(ProfileRepository::class)->getUrl(
             $url,
             $excludedId
         );
@@ -302,7 +304,7 @@ class Model
             $profile['url']
         );
 
-        FrontendModel::get('profile.repository.profile')->add($profileEntity);
+        FrontendModel::get(ProfileRepository::class)->add($profileEntity);
 
         return $profileEntity->getId();
     }
@@ -371,9 +373,9 @@ class Model
      */
     public static function setSetting(int $id, string $name, $value): void
     {
-        $SettingRepository = FrontendModel::get('profile.repository.profile_setting');
+        $SettingRepository = FrontendModel::get(SettingRepository::class);
 
-        $profile = FrontendModel::get('profile.repository.profile')->find($id);
+        $profile = FrontendModel::get(ProfileRepository::class)->find($id);
 
         $existingSetting = $SettingRepository->findOneBy(
             [
@@ -416,7 +418,7 @@ class Model
      */
     public static function update(int $id, array $values): int
     {
-        $profile = FrontendModel::get('profile.repository.profile')->find($id);
+        $profile = FrontendModel::get(ProfileRepository::class)->find($id);
 
         if (!$profile instanceof Profile) {
             return $id;
@@ -465,7 +467,7 @@ class Model
      */
     public static function getEncryptedPassword(string $email): ?string
     {
-        $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
+        $profile = FrontendModel::get(ProfileRepository::class)->findOneByEmail($email);
 
         if (!$profile instanceof Profile) {
             return null;

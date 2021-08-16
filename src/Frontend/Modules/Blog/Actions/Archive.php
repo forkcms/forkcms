@@ -88,7 +88,7 @@ class Archive extends FrontendBaseBlock
 
     private function getSlug(): string
     {
-        $yearIndex = $this->url->getParameter(0) === FL::act('Archive') ? 1 : 0;
+        $yearIndex = $this->url->getParameter(0) === FL::slg('Archive') ? 1 : 0;
         $monthIndex = $yearIndex + 1;
         $this->hasMonth = !empty($this->url->getParameter($monthIndex));
 

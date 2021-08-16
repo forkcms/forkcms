@@ -21,7 +21,7 @@ class UploadModuleTest extends BackendWebTestCase
             '/private/en/extensions/upload_module',
             [
                 'Install',
-                '<label for="file" class="custom-file-label">',
+                '<label for="file" class="form-label">',
             ]
         );
     }

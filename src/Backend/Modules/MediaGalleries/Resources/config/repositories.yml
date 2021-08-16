@@ -1,7 +1,7 @@
 services:
-    media_galleries.repository.gallery:
-        class: Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: true
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery
+
+    Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository:

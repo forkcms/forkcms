@@ -4,6 +4,7 @@ namespace Backend\Core\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Locale;
+use Common\Doctrine\Repository\MetaRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -26,7 +27,7 @@ class GenerateUrl extends BackendBaseAJAXAction
         $parameters = @unserialize($parameters, ['allowed_classes' => [Locale::class]]);
 
         // fetch generated meta url
-        $url = urldecode($this->get('fork.repository.meta')->generateUrl($url, $className, $methodName, $parameters));
+        $url = urldecode($this->get(MetaRepository::class)->generateUrl($url, $className, $methodName, $parameters));
 
         // output
         $this->output(Response::HTTP_OK, $url);

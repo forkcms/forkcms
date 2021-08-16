@@ -8,6 +8,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,7 +69,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         }
 
         // Folder name already exists
-        if ($this->get('media_library.repository.folder')->existsByName($name, $parent)) {
+        if ($this->get(MediaFolderRepository::class)->existsByName($name, $parent)) {
             throw new AjaxExitException(Language::err('MediaFolderExists'));
         }
 
@@ -85,7 +86,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         }
 
         try {
-            return $this->get('media_library.repository.folder')->findOneById($parentId);
+            return $this->get(MediaFolderRepository::class)->findOneById($parentId);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             throw new AjaxExitException(Language::err('ParentNotExists'));
         }

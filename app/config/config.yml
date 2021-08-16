@@ -6,9 +6,13 @@ parameters:
     fork.is_installed: true
 
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
-        public: true
         arguments:
             - "@twig"
             - "@templating.name_parser"
@@ -16,7 +20,6 @@ services:
 
     translator:
         class: Common\Language
-        public: true
         arguments:
             - "@translator.selector"
 

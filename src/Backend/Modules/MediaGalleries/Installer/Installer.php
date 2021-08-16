@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaGalleries\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use Common\Doctrine\Entity\CreateSchema;
 
 /**
  * Installer for the media module
@@ -22,7 +23,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClass(MediaGallery::class);
+        Model::get(CreateSchema::class)->forEntityClass(MediaGallery::class);
     }
 
     protected function configureBackendNavigation(): void

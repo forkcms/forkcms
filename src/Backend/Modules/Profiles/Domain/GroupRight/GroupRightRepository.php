@@ -3,10 +3,22 @@
 namespace Backend\Modules\Profiles\Domain\GroupRight;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-final class GroupRightRepository extends EntityRepository
+/**
+ * @method GroupRight|null find($id, $lockMode = null, $lockVersion = null)
+ * @method GroupRight|null findOneBy(array $criteria, array $orderBy = null)
+ * @method GroupRight[] findAll()
+ * @method GroupRight[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+final class GroupRightRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, GroupRight::class);
+    }
+
     public function add(GroupRight $groupRight): void
     {
         $this->getEntityManager()->persist($groupRight);

@@ -68,7 +68,7 @@ class AnalyseModel extends Model
         trigger_error('This method is no longer used in the core and will be removed in fork 6');
 
         $oldLocale = [];
-        $type = ['lbl', 'act', 'err', 'msg'];
+        $type = ['lbl', 'slg', 'err', 'msg'];
         $allBackendDBLocale = self::getTranslations($application, '', $type, [$language], '', '');
         foreach ($allBackendDBLocale as $localeRecord) {
             foreach ($localeRecord as $record) {

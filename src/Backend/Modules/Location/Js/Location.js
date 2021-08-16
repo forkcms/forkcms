@@ -19,13 +19,21 @@ export class Location {
     this.width = null
     this.zoomLevel = null
 
+    $('[data-role=toggle-settings]').on('change', () => {
+      $('#settings').hide()
+      if ($('[data-role=toggle-settings]').is(':checked')) {
+        $('#settings').show()
+      }
+    }).change()
+
     // only show a map when there are options and markers given
     if ($('#map').length > 0 && typeof markers !== 'undefined' && typeof mapOptions !== 'undefined') {
       this.showMap()
 
-      // add listeners for the zoom level and terrain
+      // add listeners for the zoom level and terrain and center
       google.maps.event.addListener(this.map, 'maptypeid_changed', this.setDropdownTerrain)
       google.maps.event.addListener(this.map, 'zoom_changed', this.setDropdownZoom)
+      google.maps.event.addListener(this.map, 'dragend', this.setCenter)
 
       // if the zoom level or map type changes in the dropdown, the map needs to change
       $('#zoomLevel').bind('change', () => {
@@ -33,15 +41,6 @@ export class Location {
       })
       $('#mapType').bind('change', $.proxy(this.setMapTerrain, this))
       $('#mapStyle').bind('change', $.proxy(this.setMapStyle, this))
-
-      // the panning save option
-      $('#saveLiveData').bind('click', (e) => {
-        e.preventDefault()
-
-        // save the live map data
-        this.getMapData()
-        this.saveLiveData()
-      })
     }
   }
 
@@ -68,7 +67,7 @@ export class Location {
       marker.setDraggable(true)
 
       // add event listener
-      google.maps.event.addListener(marker, 'dragend', function () {
+      google.maps.event.addListener(marker, 'dragend', () => {
         this.updateMarker(marker)
       })
     }
@@ -141,38 +140,10 @@ export class Location {
     window.location = reloadLocation
   }
 
-  /**
-   * Save live data will save the setting in database
-   */
-  saveLiveData () {
-    $.ajax({
-      data: {
-        fork: {module: 'Location', action: 'SaveLiveLocation'},
-        zoom: this.zoomLevel,
-        type: this.type,
-        style: this.style,
-        centerLat: this.centerLat,
-        centerLng: this.centerLng,
-        height: this.height,
-        width: this.width,
-        id: this.mapId,
-        link: this.showLink,
-        directions: this.showDirections,
-        showOverview: this.showOverview
-      },
-      success: (json, textStatus) => {
-        // reload the page on success
-        if (json.code === 200) {
-          // no redirect given, refresh the page
-          if (typeof $('input#redirect').val() === 'undefined') {
-            this.refreshPage('map-saved')
-          }
-
-          $('input#redirect').val('edit')
-          $('form#edit').submit()
-        }
-      }
-    })
+  setCenter () {
+    this.getMapData()
+    $('#centerLat').val(this.centerLat)
+    $('#centerLng').val(this.centerLng)
   }
 
   /**
@@ -303,21 +274,7 @@ export class Location {
    */
   updateMarker (marker) {
     this.getMapData()
-
-    const lat = marker.getPosition().lat()
-    const lng = marker.getPosition().lng()
-
-    $.ajax({
-      data: {
-        fork: {module: 'Location', action: 'UpdateMarker'},
-        id: this.mapId,
-        lat: lat,
-        lng: lng
-      },
-      success: (json, textStatus) => {
-        // reload the page on success
-        if (json.code === 200) this.saveLiveData()
-      }
-    })
+    $('[data-role=center-lat]').val(marker.getPosition().lat())
+    $('[data-role=center-lng]').val(marker.getPosition().lng())
   }
 }

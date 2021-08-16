@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaGroupMediaItemNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\Exception\MediaGroupMediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Countable;
 use Doctrine\Common\Collections\Collection;

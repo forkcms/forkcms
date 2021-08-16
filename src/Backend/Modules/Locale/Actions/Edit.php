@@ -130,8 +130,8 @@ class Edit extends BackendBaseActionEdit
 
             // value checks
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
-                // in case this is a 'act' type, there are special rules concerning possible values
-                if ($this->form->getField('type')->getValue() == 'act') {
+                // in case this is a 'slg' type, there are special rules concerning possible values
+                if ($this->form->getField('type')->getValue() == 'slg') {
                     if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }

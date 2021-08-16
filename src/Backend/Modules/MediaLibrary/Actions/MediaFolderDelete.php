@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 
 class MediaFolderDelete extends BackendBaseActionDelete
 {
@@ -32,7 +33,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
     private function abortWhenLastFolder(): void
     {
         // If this is the last folder, delete is not possible
-        if (count($this->get('media_library.repository.folder')->findAll()) === 1) {
+        if (count($this->get(MediaFolderRepository::class)->findAll()) === 1) {
             $this->redirect(
                 $this->getBackLink(
                     [
@@ -87,7 +88,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
     {
         try {
             /** @var MediaFolder */
-            return $this->get('media_library.repository.folder')->findOneById(
+            return $this->get(MediaFolderRepository::class)->findOneById(
                 $this->getRequest()->query->getInt('id')
             );
         } catch (MediaFolderNotFound $mediaFolderNotFound) {

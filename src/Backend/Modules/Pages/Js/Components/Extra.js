@@ -121,12 +121,12 @@ export class Extra {
       // make visible
       $blackWrapper.removeClass('block-not-visible')
       $label.find('[data-fa-i2svg]').attr('data-icon', 'eye')
-      $label.find('.sr-only').html(window.backend.locale.lbl('Hide'))
+      $label.find('.visually-hidden').html(window.backend.locale.lbl('Hide'))
     } else {
       // make invisible
       $blackWrapper.addClass('block-not-visible')
       $label.find('[data-fa-i2svg]').attr('data-icon', 'eye-slash')
-      $label.find('.sr-only').html(window.backend.locale.lbl('Show'))
+      $label.find('.visually-hidden').html(window.backend.locale.lbl('Show'))
     }
   }
 }

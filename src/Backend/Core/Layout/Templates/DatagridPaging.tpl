@@ -25,7 +25,7 @@
       {iteration:pagination.pages}
         {option:pagination.pages.current}
         <li class="page-item active">
-          <a href="{$pagination.pages.url}" class="page-link">{$pagination.pages.label}<span class="sr-only">({$lblPaginationCurrent})</span></a>
+          <a href="{$pagination.pages.url}" class="page-link">{$pagination.pages.label}<span class="visually-hidden">({$lblPaginationCurrent})</span></a>
         </li>
         {/option:pagination.pages.current}
         {option:!pagination.pages.current}

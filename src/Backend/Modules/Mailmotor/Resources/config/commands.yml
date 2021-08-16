@@ -6,6 +6,7 @@ services:
       - "@fork.settings"
     tags:
       - { name: command_handler, handles: Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings }
+
   mailmotor.handler.subscription:
     class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\SubscriptionHandler
     public: true
@@ -14,6 +15,7 @@ services:
       - "@fork.settings"
     tags:
       - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription }
+
   mailmotor.handler.unsubscription:
     class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\UnsubscriptionHandler
     public: true

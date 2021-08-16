@@ -1,8 +1,10 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
     location.handler.copy_widgets_to_other_locale:
         class: Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocaleHandler
-        public: true
-        arguments:
-            - '@Backend\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository'
         tags:
             - { name: command_handler, handles: Backend\Modules\Location\Domain\Location\Command\CopyLocationWidgetsToOtherLocale }

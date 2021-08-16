@@ -15,7 +15,7 @@ class Language
     /**
      * @var array
      */
-    private static $act = [];
+    private static $slg = [];
 
     /**
      * @var array
@@ -35,7 +35,7 @@ class Language
     /**
      * @var array
      */
-    private static $fallbackAct = [];
+    private static $fallbackSlg = [];
 
     /**
      * @var array
@@ -79,33 +79,33 @@ class Language
      *
      * @return string
      */
-    public static function getAction(string $key, bool $fallback = true): string
+    public static function getSlug(string $key, bool $fallback = true): string
     {
         // redefine
         $key = \SpoonFilter::toCamelCase($key);
 
         // if the action exists return it,
-        if (isset(self::$act[$key])) {
-            return self::$act[$key];
+        if (isset(self::$slg[$key])) {
+            return self::$slg[$key];
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackAct[$key])
+        if (isset(self::$fallbackSlg[$key])
             && $fallback === true
             && Model::getContainer()->getParameter('kernel.debug') === false
         ) {
-            return self::$fallbackAct[$key];
+            return self::$fallbackSlg[$key];
         }
 
         // otherwise return the key in label-format
         return '{$act' . $key . '}';
     }
 
-    public static function getActions(): array
+    public static function getSlugs(): array
     {
-        return Model::getContainer()->getParameter('kernel.debug') ? self::$act : array_merge(
-            self::$fallbackAct,
-            self::$act
+        return Model::getContainer()->getParameter('kernel.debug') ? self::$slg : array_merge(
+            self::$fallbackSlg,
+            self::$slg
         );
     }
 
@@ -334,7 +334,7 @@ class Language
             file_get_contents(FRONTEND_CACHE_PATH . '/Locale/en.json'),
             true
         );
-        self::$fallbackAct = (array) ($fallbackTranslations['act'] ?? []);
+        self::$fallbackSlg = (array) ($fallbackTranslations['slg'] ?? []);
         self::$fallbackErr = (array) ($fallbackTranslations['err'] ?? []);
         self::$fallbackLbl = (array) ($fallbackTranslations['lbl'] ?? []);
         self::$fallbackMsg = (array) ($fallbackTranslations['msg'] ?? []);
@@ -344,7 +344,7 @@ class Language
             file_get_contents(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json'),
             true
         );
-        self::$act = (array) ($translations['act'] ?? []);
+        self::$slg = (array) ($translations['slg'] ?? []);
         self::$err = (array) ($translations['err'] ?? []);
         self::$lbl = (array) ($translations['lbl'] ?? []);
         self::$msg = (array) ($translations['msg'] ?? []);
@@ -358,9 +358,9 @@ class Language
      *
      * @return string
      */
-    public static function act(string $key, bool $fallback = true): string
+    public static function slg(string $key, bool $fallback = true): string
     {
-        return self::getAction($key, $fallback);
+        return self::getSlug($key, $fallback);
     }
 
     /**

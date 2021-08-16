@@ -5,6 +5,7 @@ export class Meta {
   static doMeta (options, element) {
     // define defaults
     const defaults = {
+      pageId: null,
       metaIdSelector: '#metaId',
       pageTitleSelector: 'page_title',
       pageNavigationTitleSelector: 'page_navigation_title',
@@ -43,6 +44,13 @@ export class Meta {
 
       // generate url
       function generateUrl (url) {
+        if (options.pageId === '1') {
+          $(options.urlSelector).val('')
+          $(options.generatedUrlSelector).html('')
+
+          return
+        }
+
         // make the call
         $.ajax(
           {
@@ -58,6 +66,7 @@ export class Meta {
             },
             success: function (data, textStatus) {
               url = data.data
+
               $(options.urlSelector).val(url)
               $(options.generatedUrlSelector).html(url)
             },

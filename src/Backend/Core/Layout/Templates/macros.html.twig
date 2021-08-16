@@ -5,18 +5,18 @@
     <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
     {% spaceless %}
       {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
-      <span class="{% if iconOnly %}sr-only{% else %}btn-text{% endif %}">{{ label }}</span>
+      <span class="{% if iconOnly %}visually-hidden{% else %}btn-text{% endif %}">{{ label }}</span>
       {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
     {% endspaceless %}
     </a>
   {% else %}
-    {% if extra['data-toggle'] is defined and extra['type'] is not defined %}
+    {% if extra['data-bs-toggle'] is defined and extra['type'] is not defined %}
       {% set extra = extra|merge({'type' : 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
     {% spaceless %}
       {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
-      <span class="{% if iconOnly %}sr-only{% else %}btn-text{% endif %}">{{ label }}</span>
+      <span class="{% if iconOnly %}visually-hidden{% else %}btn-text{% endif %}">{{ label }}</span>
       {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
     {% endspaceless %}
     </button>
@@ -24,7 +24,7 @@
 {% endmacro %}
 
 {%- macro required() -%}
-  <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+  <abbr data-bs-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {%- endmacro -%}
 
 {% macro icon(icon, iconType = 'fas') %}
@@ -33,7 +33,7 @@
 
 {% macro infoTooltip(title) %}
   {% import _self as macro %}
-  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
+  <abbr tabindex="0" data-bs-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, addItemLink, addItemText, noItemsText) %}

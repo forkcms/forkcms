@@ -14,11 +14,16 @@
       <fieldset>
         <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
         <label for="theme" class="d-none">{{ 'lbl.Theme'|trans|ucfirst }}</label>
-        <div class="form-inline form-group">
-          {% form_field theme %}
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-10 col-xl-8 d-flex align-items-center">
+              {% form_field theme %}
+              <code class="mx-2">/Core/Layout/Templates/</code>
+              {% form_field file %}
+            </div>
+          </div>
           {% form_field_error theme %}
-          <code>/Core/Layout/Templates/</code>
-          {% form_field file %} {% form_field_error file %}
+          {% form_field_error file %}
         </div>
         <p>
           <small class="form-text text-muted">{{ 'msg.HelpTemplateLocation'|trans|raw }}</small>
@@ -43,11 +48,11 @@
             </label>
           </div>
           <div class="col-lg-9">
-            <div class="custom-file">
+            <div class="form-group">
+              <label for="defaultImage" class="form-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
               {% form_field default_image %}
-              <label for="defaultImage" class="custom-file-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+              {% form_field_error default_image %}
             </div>
-            {% form_field_error default_image %}
           </div>
         </div>
       </fieldset>
@@ -60,7 +65,7 @@
     <div id="positions" class="card-body">
       {% for position in positions %}
         <div class="form-group position jsPosition"{% if not position.i %} style="display: none"{% endif %}>
-          <div class="form-row">
+          <div class="row gx-3">
             {# Title & button to delete this position #}
             <div class="col-md-2">
               <label for="position{{ position.i }}">{{ 'lbl.Position'|trans|ucfirst }}</label>
@@ -72,19 +77,19 @@
                   {{ position.formElements.txtPosition.parse()|raw }}
                   {{ position.formElements.txtPositionError }}
                 </div>
-                <button class="btn btn-danger btn-icon-only jsDeletePosition ml-2">
+                <button class="btn btn-danger btn-icon-only jsDeletePosition ms-2">
                   {{ macro.icon('trash-alt') }}
-                  <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
+                  <span class="visually-hidden">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
                 </button>
               </div>
             </div>
           </div>
-          <div class="form-row jsBlocks">
+          <div class="row gx-3 jsBlocks">
             {# Default blocks for this position #}
             {% if position.blocks %}
               {% for block in position.blocks %}
                 <div class="col-md-10 offset-md-2 jsBlock">
-                  <div class="form-row">
+                  <div class="row gx-3">
                     <div class="col-lg-6">
                       <div class="form-group d-flex mb-2">
                         <div class="flex-grow-1">
@@ -92,9 +97,9 @@
                           {{ block.formElements.ddmTypeError }}
                         </div>
                         {# Button to remove block from this position #}
-                        <button class="btn btn-danger btn-icon-only jsDeleteBlock ml-2">
+                        <button class="btn btn-danger btn-icon-only jsDeleteBlock ms-2">
                           {{ macro.icon('trash-alt') }}
-                          <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
+                          <span class="visually-hidden">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
                         </button>
                       </div>
                     </div>

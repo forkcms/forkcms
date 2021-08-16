@@ -1,11 +1,13 @@
 services:
-    fork.validator.url:
-        class: ForkCMS\Bundle\CoreBundle\Validator\UrlValidator
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: true
 
+    fork.validator.url:
+        class: ForkCMS\Bundle\CoreBundle\Validator\UrlValidator
+
     ForkCMS\Bundle\CoreBundle\Validator\UniqueDataTransferObjectValidator:
-        public: true
-        autowire: true
         tags:
             - { name: validator.constraint_validator, alias: unique_data_transfer_object }
 

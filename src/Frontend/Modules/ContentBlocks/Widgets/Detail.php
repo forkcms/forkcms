@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\ContentBlocks\Widgets;
 
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Language\Locale;
 
@@ -14,7 +15,7 @@ class Detail extends FrontendBaseWidget
     {
         parent::execute();
 
-        $contentBlock = $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
+        $contentBlock = $this->get(ContentBlockRepository::class)->findOneByIdAndLocale(
             (int) $this->data['id'],
             Locale::frontendLanguage()
         );

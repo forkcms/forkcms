@@ -45,7 +45,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
     private function buildForm(): void
     {
-        $this->form = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
+        $this->form = new FrontendForm('own_question', '#' . FL::getSlug('OwnQuestion'));
         $this->form->addText('name')->setAttributes(['required' => null]);
         $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
         $this->form->addTextarea('message')->setAttributes(['required' => null]);

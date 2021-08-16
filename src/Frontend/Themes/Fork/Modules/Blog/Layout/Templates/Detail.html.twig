@@ -16,7 +16,7 @@
       </div>
       <div>
         {% if item.allow_comments %}
-          <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+          <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
             {% if not item.comments %}
               {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
             {% else %}
@@ -58,5 +58,9 @@
       <img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />
     {% endif %}
     {{ item.text|parse_blocks }}
+  </div>
+  <div data-v-share-buttons>
+    <p class="mb-2"><strong>{{ 'lbl.Share'|trans|ucfirst }}:</strong></p>
+    <v-share-buttons facebook twitter linkedin></v-share-buttons>
   </div>
 {% endblock %}

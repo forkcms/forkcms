@@ -95,7 +95,7 @@ class EditorType extends TextareaType
         $editorBlocks = new EditorBlocks();
         $optionsResolver->setDefaults(
             [
-                'attr' => ['class' => 'inputBlockEditor sr-only'],
+                'attr' => ['class' => 'inputBlockEditor visually-hidden'],
                 'blocks' => [
                     HeaderBlock::class,
                     ParagraphBlock::class,

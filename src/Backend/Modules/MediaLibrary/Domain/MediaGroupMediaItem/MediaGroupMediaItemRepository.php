@@ -2,10 +2,22 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-final class MediaGroupMediaItemRepository extends EntityRepository
+/**
+ * @method MediaGroupMediaItem|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MediaGroupMediaItem|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MediaGroupMediaItem[]    findAll()
+ * @method MediaGroupMediaItem[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+final class MediaGroupMediaItemRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, MediaGroupMediaItem::class);
+    }
+
     public function getAll(
         array $mediaGroupIds,
         bool $onlyGetFirstMediaItem

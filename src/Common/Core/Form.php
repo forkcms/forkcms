@@ -243,7 +243,7 @@ class Form extends \SpoonForm
     ): SpoonFormDropdown {
         $name = (string) $name;
         $multipleSelection = (bool) $multipleSelection;
-        $class = (string) ($class ?? 'form-control fork-form-select');
+        $class = (string) ($class ?? 'form-control form-select');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // special classes for multiple

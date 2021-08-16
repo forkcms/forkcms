@@ -10,13 +10,13 @@
   <div>
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
+        <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-bs-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-bs-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+        <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-bs-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
       </li>
     </ul>
     <div class="tab-content">
@@ -47,7 +47,7 @@
                   <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
                     {{ permission.chk|raw }}
                     <h4 class="card-title mb-0">
-                      <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                      <a class="collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#permission-list-{{ permission.id }}" aria-expanded="false">
                         {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
                       </a>
                     </h4>
@@ -63,7 +63,7 @@
   </div>
   <div id="pageButtons" class="fork-page-actions">
     <div class="btn-toolbar d-flex">
-      <div class="btn-group ml-auto" role="group">
+      <div class="btn-group ms-auto" role="group">
         {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"addButton", "name":"add"}) }}
       </div>
     </div>

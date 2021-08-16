@@ -3,9 +3,12 @@
   position: relative;
 
   .label {
+    background: $primary;
+    border-radius: 10px;
+    color: $white;
     margin-left: 10px;
-    position: absolute;
+    padding: 2px;
     right: 0;
-    font-size: 100%;
+    width: 100%;
   }
 }

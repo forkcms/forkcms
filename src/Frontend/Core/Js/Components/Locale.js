@@ -55,8 +55,8 @@ export class Locale {
   }
 
   // get an action
-  act (key) {
-    return this.get('act', key)
+  slg (key) {
+    return this.get('slg', key)
   }
 
   // get an error
