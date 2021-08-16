@@ -101,11 +101,11 @@ class EditorType extends TextareaType
                     ParagraphBlock::class,
                     ListBlock::class,
                     MediaLibraryImageBlock::class,
+                    MediaLibraryVideoBlock::class,
                     QuoteBlock::class,
                     UnderlineBlock::class,
                     ButtonBlock::class,
                     RawBlock::class,
-                    MediaLibraryVideoBlock::class,
                 ],
                 'constraints' => [
                     new Callback(
