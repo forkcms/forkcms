@@ -4824,24 +4824,6 @@
         <translation language="pt"><![CDATA[análise]]></translation>
         <translation language="pl"><![CDATA[analiza]]></translation>
       </item>
-      <item type="label" name="Analytics">
-        <translation language="nl"><![CDATA[analytics]]></translation>
-        <translation language="en"><![CDATA[analytics]]></translation>
-        <translation language="hu"><![CDATA[analytics]]></translation>
-        <translation language="it"><![CDATA[analitica]]></translation>
-        <translation language="ru"><![CDATA[Аналитика]]></translation>
-        <translation language="zh"><![CDATA[统计分析]]></translation>
-        <translation language="fr"><![CDATA[analyse]]></translation>
-        <translation language="de"><![CDATA[Analytics]]></translation>
-        <translation language="es"><![CDATA[analítica]]></translation>
-        <translation language="lt"><![CDATA[analitika]]></translation>
-        <translation language="uk"><![CDATA[Аналітика]]></translation>
-        <translation language="sv"><![CDATA[analytics]]></translation>
-        <translation language="el"><![CDATA[στατιστικά στοιχεία]]></translation>
-        <translation language="tr"><![CDATA[Analytics]]></translation>
-        <translation language="pt"><![CDATA[analytics]]></translation>
-        <translation language="pl"><![CDATA[analityka]]></translation>
-      </item>
       <item type="label" name="APIKey">
         <translation language="nl"><![CDATA[API key]]></translation>
         <translation language="en"><![CDATA[API key]]></translation>
