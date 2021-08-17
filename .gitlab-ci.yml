@@ -61,14 +61,25 @@ Install dependencies and build assets:
 
 
 # Code Quality section
-code_styles:
+PHP_CodeSniffer - check code styling:
     image: sumocoders/fork-php74:latest
+    services:
+        - mysql:5.7
+    before_script:
+        - *before_script_test_configuration
     script:
-        - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
+        - php bin/phpcs --report-full --report-junit=phpcs-report.xml
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: phpcs-report.xml
     stage: code quality
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
+    variables:
+        <<: *mysql_configuration
+    allow_failure: true
 
 phpstan:
     image: sumocoders/fork-php74:latest
