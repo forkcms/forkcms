@@ -3,11 +3,6 @@ stages:
     - code quality
     - test
 
-before_script:
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
-    - cp app/config/parameters.yml.dist app/config/parameters.yml
-
 
 # Cache default configuration
 cache: &global_cache
@@ -22,6 +17,10 @@ cache: &global_cache
         - node_modules
         - vendor
     policy: pull
+
+.mysql_configuration: &mysql_configuration
+    MYSQL_DATABASE: ci_test
+    MYSQL_ROOT_PASSWORD: root
 
 
 # Build section
@@ -57,7 +56,6 @@ phpstan:
     services:
         - mysql:5.7
     before_script:
-        - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
@@ -70,9 +68,7 @@ phpstan:
         - php74
         - docker
     variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
-
+        <<: *mysql_configuration
 
 # Test section
 run_functional_tests:
@@ -83,7 +79,6 @@ run_functional_tests:
         - mkdir /usr/local/etc/php/conf.d/disabled
         - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
         - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
         - touch src/Frontend/Core/Js/bundle.js
@@ -96,8 +91,7 @@ run_functional_tests:
         - php74
         - docker
     variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
+        <<: *mysql_configuration
 
 run_unit_tests:
     image: sumocoders/fork-php74:latest
@@ -107,7 +101,6 @@ run_unit_tests:
         - mkdir /usr/local/etc/php/conf.d/disabled
         - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
         - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
         - touch src/Frontend/Core/Js/bundle.js
@@ -120,5 +113,4 @@ run_unit_tests:
         - php74
         - docker
     variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
+        <<: *mysql_configuration
