@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d723a02198449e75935ea7a0bed96a9",
+    "content-hash": "73aacb1ad0b1a0952f5cd6ec22e119d0",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -7100,6 +7100,53 @@
             "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
             "homepage": "https://github.com/tijsverkoyen/Akismet",
             "time": "2016-07-19T13:50:18+00:00"
+        },
+        {
+            "name": "tijsverkoyen/convert-to-junit-xml",
+            "version": "v1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/ConvertToJUnitXML.git",
+                "reference": "31fce7caceecd61820f941912bc73ed49ff98294"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tijsverkoyen/ConvertToJUnitXML/zipball/31fce7caceecd61820f941912bc73ed49ff98294",
+                "reference": "31fce7caceecd61820f941912bc73ed49ff98294",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "^2.0.5|^3.0|^4.0|^5.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.2",
+                "symfony/var-dumper": "^4.2"
+            },
+            "bin": [
+                "convert-to-junit-xml"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TijsVerkoyen\\ConvertToJUnitXML\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "convert_to_junit_xml@verkoyen.eu"
+                }
+            ],
+            "description": "A tool to format various inputs into JUnit XML",
+            "support": {
+                "issues": "https://github.com/tijsverkoyen/ConvertToJUnitXML/issues",
+                "source": "https://github.com/tijsverkoyen/ConvertToJUnitXML/tree/v1.9.0"
+            },
+            "time": "2021-08-17T14:08:45+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
