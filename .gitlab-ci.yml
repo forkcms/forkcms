@@ -22,6 +22,25 @@ cache: &global_cache
     MYSQL_DATABASE: ci_test
     MYSQL_ROOT_PASSWORD: root
 
+.before_script_test_template: &before_script_test_configuration
+    # disable Xdebug and Blackfire extensions
+    - |
+        mkdir /usr/local/etc/php/conf.d/disabled
+        mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
+        mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
+    # import test DB
+    - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
+    # make sure bundle.js exists
+    - touch src/Frontend/Core/Js/bundle.js
+    # generate correct parameters.yml
+    - php bin/generate-parameters-gitlab
+    - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+    - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
+    # create assets for test env
+    - php bin/console --no-interaction assetic:dump .
+    # clear cache
+    - php bin/console --no-interaction forkcms:cache:clear
+
 
 # Build section
 Install dependencies and build assets:
@@ -56,11 +75,7 @@ phpstan:
     services:
         - mysql:5.7
     before_script:
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
-        - php bin/console assetic:dump .
+        - *before_script_test_configuration
     script:
         - php -d memory_limit=-1 bin/phpstan analyze src
     stage: code quality
@@ -76,14 +91,7 @@ run_functional_tests:
     services:
         - mysql:5.7
     before_script:
-        - mkdir /usr/local/etc/php/conf.d/disabled
-        - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
-        - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - touch src/Frontend/Core/Js/bundle.js
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - php bin/console forkcms:cache:clear -e test
+        - *before_script_test_configuration
     script:
         - php bin/simple-phpunit --testsuite=functional
     stage: test
@@ -98,14 +106,7 @@ run_unit_tests:
     services:
         - mysql:5.7
     before_script:
-        - mkdir /usr/local/etc/php/conf.d/disabled
-        - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
-        - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - touch src/Frontend/Core/Js/bundle.js
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - php bin/console forkcms:cache:clear -e test
+        - *before_script_test_configuration
     script:
         - php bin/simple-phpunit --testsuite=unit
     stage: test
