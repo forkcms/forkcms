@@ -73,6 +73,7 @@
     ],
     "ignore": [
       "/js/",
+      "src/Backend/Cache/",
       "src/Backend/Core/Js/ckeditor/",
       "src/Backend/Core/Js/ckfinder/",
       "src/Backend/Core/Js/highcharts.js",

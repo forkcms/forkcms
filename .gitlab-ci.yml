@@ -105,6 +105,24 @@ PHPStan - check for bugs:
         <<: *mysql_configuration
     allow_failure: true
 
+StandardJS - check code styling:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - php bin/convert-to-junit-xml convert:standardjs "$(nvm exec --silent node_modules/.bin/standard)" > standardjs-report.xml
+    after_script:
+        # Run it again so the output is visible in the job
+        - nvm exec node_modules/.bin/standard
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: standardjs-report.xml
+    stage: code quality
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+
 # Test section
 PHPUnit - Run functional tests:
     image: sumocoders/fork-php74:latest
