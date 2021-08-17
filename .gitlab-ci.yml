@@ -122,6 +122,73 @@ StandardJS - check code styling:
         - docker
     allow_failure: true
 
+TODOs - check for unfinished code:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - >
+            php bin/convert-to-junit-xml convert:grep "$(
+            find .
+            -path "./.github/*" -prune -o
+            -path "./bin/*" -prune -o
+            -path "./css/*" -prune -o
+            -path "./docs/*" -prune -o
+            -path "./fonts/*" -prune -o
+            -path "./images/*" -prune -o
+            -path "./js/*" -prune -o
+            -path "./node_modules/*" -prune -o
+            -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
+            -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
+            -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Frontend/Cache/*" -prune -o
+            -path "./tests/*" -prune -o
+            -path "./var/*" -prune -o
+            -path "./vendor/*" -prune -o
+            -path "./.gitlab-ci.yml" -prune -o
+            -path "./autoload.php" -prune -o
+            -path "./CHANGELOG.md" -prune -o
+            -path "./unresolved-todos-report.xml" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -not -type d
+            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+            )" > unresolved-todos-report.xml
+    after_script:
+        - >
+            find .
+            -path "./.github/*" -prune -o
+            -path "./bin/*" -prune -o
+            -path "./css/*" -prune -o
+            -path "./docs/*" -prune -o
+            -path "./fonts/*" -prune -o
+            -path "./images/*" -prune -o
+            -path "./js/*" -prune -o
+            -path "./node_modules/*" -prune -o
+            -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
+            -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
+            -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Frontend/Cache/*" -prune -o
+            -path "./tests/*" -prune -o
+            -path "./var/*" -prune -o
+            -path "./vendor/*" -prune -o
+            -path "./.gitlab-ci.yml" -prune -o
+            -path "./autoload.php" -prune -o
+            -path "./CHANGELOG.md" -prune -o
+            -path "./unresolved-todos-report.xml" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -not -type d
+            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit:
+                unresolved-todos-report.xml
+    stage: code quality
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
 
 # Test section
 PHPUnit - Run functional tests:
