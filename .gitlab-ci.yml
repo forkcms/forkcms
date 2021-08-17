@@ -81,20 +81,29 @@ PHP_CodeSniffer - check code styling:
         <<: *mysql_configuration
     allow_failure: true
 
-phpstan:
+PHPStan - check for bugs:
     image: sumocoders/fork-php74:latest
     services:
         - mysql:5.7
     before_script:
         - *before_script_test_configuration
+        - php bin/console cache:warmup --no-interaction --env=dev
     script:
-        - php -d memory_limit=-1 bin/phpstan analyze src
+        - php bin/phpstan analyze --memory-limit=-1 --error-format=junit --no-progress > phpstan-report.xml
+    after_script:
+        # Run it again so the output is visible in the job
+        - php bin/phpstan analyze --memory-limit=-1 --no-progress
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: phpstan-report.xml
     stage: code quality
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
     variables:
         <<: *mysql_configuration
+    allow_failure: true
 
 # Test section
 run_functional_tests:
