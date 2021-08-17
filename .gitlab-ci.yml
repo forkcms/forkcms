@@ -7,6 +7,41 @@ before_script:
     - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
     - cp app/config/parameters.yml.dist app/config/parameters.yml
 
+
+# Code Quality section
+code_styles:
+    image: sumocoders/fork-php74:latest
+    script:
+        - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
+    stage: code quality
+    tags:
+        - php74
+        - docker
+
+phpstan:
+    image: sumocoders/fork-php74:latest
+    services:
+        - mysql:5.7
+    before_script:
+        - curl -sS https://getcomposer.org/installer | php
+        - mysql -h mysql -u root -proot -e "create database ci_test"
+        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
+        - php bin/generate-parameters-gitlab
+        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+        - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
+        - php composer.phar install --quiet --ignore-platform-reqs --no-scripts
+        - php bin/console assetic:dump .
+    script:
+        - php -d memory_limit=-1 bin/phpstan analyze src
+    stage: code quality
+    tags:
+        - php74
+        - docker
+    variables:
+        MYSQL_DATABASE: ci
+        MYSQL_ROOT_PASSWORD: root
+
+# Test section
 run_functional_tests:
     image: sumocoders/fork-php74:latest
     services:
@@ -52,38 +87,6 @@ run_unit_tests:
     script:
         - php bin/simple-phpunit --testsuite=unit
     stage: test
-    tags:
-        - php74
-        - docker
-    variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
-
-code_styles:
-    image: sumocoders/fork-php74:latest
-    script:
-        - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
-    stage: code quality
-    tags:
-        - php74
-        - docker
-
-phpstan:
-    image: sumocoders/fork-php74:latest
-    services:
-        - mysql:5.7
-    before_script:
-        - curl -sS https://getcomposer.org/installer | php
-        - mysql -h mysql -u root -proot -e "create database ci_test"
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
-        - php composer.phar install --quiet --ignore-platform-reqs --no-scripts
-        - php bin/console assetic:dump .
-    script:
-        - php -d memory_limit=-1 bin/phpstan analyze src
-    stage: code quality
     tags:
         - php74
         - docker
