@@ -1,4 +1,5 @@
 stages:
+    - build
     - code quality
     - test
 
@@ -6,6 +7,39 @@ before_script:
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
     - cp app/config/parameters.yml.dist app/config/parameters.yml
+
+
+# Cache default configuration
+cache: &global_cache
+    key: "$CI_PIPELINE_ID"
+    paths:
+        - app/config/parameters.yml
+        - bin
+        - css
+        - fonts
+        - images
+        - js
+        - node_modules
+        - vendor
+    policy: pull
+
+
+# Build section
+Install dependencies and build assets:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts --no-progress
+        - COMPOSER_MEMORY_LIMIT=-1 composer run-script post-autoload-dump
+        - cp app/config/parameters.yml.dist app/config/parameters.yml
+        - nvm install
+        - nvm use
+        - nvm exec npm install --no-progress
+    cache:
+        <<: *global_cache
+        policy: pull-push
+    stage: build
+    tags:
+        - docker
 
 
 # Code Quality section
@@ -23,13 +57,11 @@ phpstan:
     services:
         - mysql:5.7
     before_script:
-        - curl -sS https://getcomposer.org/installer | php
         - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
         - cp app/config/parameters.yml.gitlab app/config/parameters.yml
         - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
-        - php composer.phar install --quiet --ignore-platform-reqs --no-scripts
         - php bin/console assetic:dump .
     script:
         - php -d memory_limit=-1 bin/phpstan analyze src
@@ -41,6 +73,7 @@ phpstan:
         MYSQL_DATABASE: ci
         MYSQL_ROOT_PASSWORD: root
 
+
 # Test section
 run_functional_tests:
     image: sumocoders/fork-php74:latest
@@ -50,8 +83,6 @@ run_functional_tests:
         - mkdir /usr/local/etc/php/conf.d/disabled
         - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
         - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - curl -sS https://getcomposer.org/installer | php
-        - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
         - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
@@ -76,8 +107,6 @@ run_unit_tests:
         - mkdir /usr/local/etc/php/conf.d/disabled
         - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
         - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - curl -sS https://getcomposer.org/installer | php
-        - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
         - mysql -h mysql -u root -proot -e "create database ci_test"
         - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
         - php bin/generate-parameters-gitlab
