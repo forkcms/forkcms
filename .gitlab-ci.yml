@@ -1,6 +1,7 @@
 stages:
     - build
     - code quality
+    - dependency scanning
     - test
 
 
@@ -184,6 +185,46 @@ TODOs - check for unfinished code:
             junit:
                 unresolved-todos-report.xml
     stage: code quality
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+
+# Dependency Scanning section
+NPM packages - check for vulnerabilities:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - php bin/convert-to-junit-xml convert:npm-audit "$(nvm exec --silent npm audit --json)" > npm-audit-report.xml
+    after_script:
+        # Run it again so the output is visible in the job output
+        - nvm exec npm audit
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: npm-audit-report.xml
+    stage: dependency scanning
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+PHP packages - check for vulnerabilities:
+    image: sumocoders/cli-tools-php74:latest
+    before_script:
+        - PHP_SC_VERSION=$(curl -s "https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/;s/^v//')
+        - curl -LSs https://github.com/fabpot/local-php-security-checker/releases/download/v${PHP_SC_VERSION}/local-php-security-checker_${PHP_SC_VERSION}_linux_amd64 > ./php-security-checker
+        - chmod +x ./php-security-checker
+    script:
+        - php bin/convert-to-junit-xml convert:sensiolabs-security-check "$(./php-security-checker --format=json)" > security-checker-report.xml
+    after_script:
+        # Run it again so the output is visible in the job output
+        - ./php-security-checker
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: security-checker-report.xml
+    stage: dependency scanning
     needs: ["Install dependencies and build assets"]
     tags:
         - docker
