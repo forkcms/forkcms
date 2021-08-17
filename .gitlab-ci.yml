@@ -106,32 +106,42 @@ PHPStan - check for bugs:
     allow_failure: true
 
 # Test section
-run_functional_tests:
+PHPUnit - Run functional tests:
     image: sumocoders/fork-php74:latest
     services:
         - mysql:5.7
     before_script:
         - *before_script_test_configuration
+        - sed -i -E 's/database\.name:(.*)ci_test$/database.name:\1ci/g' app/config/parameters.yml
+        - cat app/config/parameters.yml
     script:
-        - php bin/simple-phpunit --testsuite=functional
+        - php bin/simple-phpunit --testsuite=functional --log-junit phpunit-functional-report.xml
+    artifacts:
+        reports:
+            junit: phpunit-functional-report.xml
     stage: test
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
     variables:
         <<: *mysql_configuration
 
-run_unit_tests:
+PHPUnit - Run unit tests:
     image: sumocoders/fork-php74:latest
     services:
         - mysql:5.7
     before_script:
         - *before_script_test_configuration
+        - sed -i -E 's/database\.name:(.*)ci_test$/database.name:\1ci/g' app/config/parameters.yml
+        - cat app/config/parameters.yml
     script:
-        - php bin/simple-phpunit --testsuite=unit
+        - php bin/simple-phpunit --testsuite=unit --log-junit phpunit-unit-report.xml
+    artifacts:
+        reports:
+            junit: phpunit-unit-report.xml
     stage: test
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
     variables:
         <<: *mysql_configuration
