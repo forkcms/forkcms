@@ -265,7 +265,7 @@ class Model
                 $block['edited_on'] = BackendModel::getUTCDate();
 
                 // Overwrite the extra_id of the old content block with the id of the new one
-                if (in_array($block['extra_id'], $contentBlockOldIds, true)) {
+                if (in_array((int) $block['extra_id'], $contentBlockOldIds, true)) {
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
                 }
 
