@@ -3,6 +3,7 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use Backend\Modules\FormBuilder\Command\CopyFormWidgetsToOtherLocale;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use Common\Doctrine\Entity\Meta;
 use ForkCMS\Utility\Thumbnails;
@@ -117,6 +118,18 @@ class Model
 
             // define old block ids
             $locationWidgetOldIds = array_keys($locationWidgetIds);
+        }
+
+        $formWidgetOldIds = [];
+        $formWidgetIds = [];
+        if (BackendModel::isModuleInstalled('FormBuilder')) {
+            // copy form widgets and get copied widget ids
+            $copyFormWidgets = new CopyFormWidgetsToOtherLocale($toLocale, $fromLocale);
+            $commandBus->handle($copyFormWidgets);
+            $formWidgetIds = $copyFormWidgets->extraIdMap;
+
+            // define old block ids
+            $formWidgetOldIds = array_keys($formWidgetIds);
         }
 
         // get all old pages
@@ -257,8 +270,13 @@ class Model
                 }
 
                 // Overwrite the extra_id of the old location widget with the id of the new one
-                if ((count($locationWidgetOldIds) > 0) && in_array($block['extra_id'], $locationWidgetOldIds, true)) {
+                if ((count($locationWidgetOldIds) > 0) && in_array((int) $block['extra_id'], $locationWidgetOldIds, true)) {
                     $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                }
+
+                // Overwrite the extra_id of the old form widget with the id of the new one
+                if ((count($formWidgetOldIds) > 0) && in_array((int) $block['extra_id'], $formWidgetOldIds, true)) {
+                    $block['extra_id'] = $formWidgetIds[(int) $block['extra_id']];
                 }
 
                 // add block
