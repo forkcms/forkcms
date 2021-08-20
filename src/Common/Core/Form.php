@@ -152,7 +152,6 @@ class Form extends \SpoonForm
         // build attributes
         $attributes = [];
         $attributes['data-date-format'] = $mask;
-        //$attributes['data-default-date'] = date('d/m/Y');
         $attributes['data-role'] = 'fork-datepicker';
 
         // add extra classes based on type
