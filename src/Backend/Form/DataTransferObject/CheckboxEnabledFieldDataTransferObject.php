@@ -8,12 +8,9 @@ class CheckboxEnabledFieldDataTransferObject
 
     public string $field = '';
 
-    public static function create(bool $enableField, string $field): self
+    public function __construct(bool $enableField = false, string $field = '')
     {
-        $dto = new self();
-        $dto->enableField = $enableField;
-        $dto->field = $field;
-
-        return $dto;
+        $this->enableField = $enableField;
+        $this->field = $field;
     }
 }
