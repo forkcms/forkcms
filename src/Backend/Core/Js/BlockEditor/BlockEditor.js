@@ -5,10 +5,10 @@ import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import Underline from '@editorjs/underline'
 import MediaLibraryImage from './Blocks/MediaLibraryImage'
+import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
-import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 
 export class BlockEditor {
   constructor () {
