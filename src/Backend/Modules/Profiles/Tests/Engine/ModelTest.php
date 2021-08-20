@@ -178,8 +178,8 @@ final class ModelTest extends BackendWebTestCase
         $profileGroupData = [
             'profile_id' => LoadProfilesProfile::getProfileActiveId(),
             'group_id' => LoadProfilesGroup::getGroupId(),
-            'starts_on' => date('Y-m-d H:i:s', LoadProfilesGroupData::getStartsOnTimestamp()),
-            'expires_on' => date('Y-m-d H:i:s', LoadProfilesGroupData::getExpiresOnTimestamp()),
+            'starts_on' => LoadProfilesGroupData::getStartsOnTimestamp(),
+            'expires_on' => LoadProfilesGroupData::getExpiresOnTimestamp(),
         ];
 
         $profileGroupId = Model::insertProfileGroup($profileGroupData);
