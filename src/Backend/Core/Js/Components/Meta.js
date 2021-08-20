@@ -83,19 +83,19 @@ export class Meta {
         const title = (typeof element !== 'undefined') ? element.val() : $(this).val()
         const seoVueRefs = window.backend.seoVue.$refs
 
-        if (seoVueRefs[$pageTitle] !== undefined) {
+        if (seoVueRefs[$pageTitle] !== 'undefined') {
           seoVueRefs[$pageTitle].updateValue(title)
         }
 
-        if (seoVueRefs[$navigationTitle] !== undefined) {
+        if (seoVueRefs[$navigationTitle] !== 'undefined') {
           seoVueRefs[$navigationTitle].updateValue(title)
         }
 
-        if (seoVueRefs[$metaDescription] !== undefined) {
+        if (seoVueRefs[$metaDescription] !== 'undefined') {
           seoVueRefs[$metaDescription].updateValue(title)
         }
 
-        if (seoVueRefs[$metaKeywords] !== undefined) {
+        if (seoVueRefs[$metaKeywords] !== 'undefined') {
           seoVueRefs[$metaKeywords].updateValue(title)
         }
 
