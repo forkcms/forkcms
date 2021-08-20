@@ -188,7 +188,7 @@ final class ModelTest extends BackendWebTestCase
         self::assertEquals($profileGroupId, $addedProfileGroup['id']);
         self::assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
         self::assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
-        self::assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']->getTimestamp());
+        self::assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']);
 
         self::assertContains(
             [
