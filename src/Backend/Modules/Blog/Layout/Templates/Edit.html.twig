@@ -18,16 +18,15 @@
 
 {% block content %}
   <div id="app">
-    <checkbox-enable-field
-      checkbox-id="1234-check"
-      checkbox-label="enable field"
-      field-id="1234-field"
-      field-label="field"
-      field-name="1234-field-name"
-      data-field-value="value"
-      field-help-text="Extra tekst hier"
-      switch-check>
-    </checkbox-enable-field>
+    {{ macro.checkboxEnabledField(
+      "1234-check",
+      "enable field",
+      "1234-field",
+      "field",
+      "1234-field-name"
+      "Extra tekst hier",
+      "value"
+    ) }}
   </div>
 
   {% form edit %}

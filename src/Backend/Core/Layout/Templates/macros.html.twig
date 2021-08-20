@@ -1,3 +1,16 @@
+{% macro checkboxEnabledField(checkboxId, checkboxLabel, fieldId, fieldLabel, fieldName, fieldHelpText, dataFieldValue) %}
+  <checkbox-enable-field
+    checkbox-id="{{ checkboxId }}"
+    checkbox-label="{{ checkboxLabel }}"
+    field-id="{{ fieldId }}"
+    field-label="{{ fieldLabel }}"
+    field-name="{{  }}"
+    data-field-value="{{ dataFieldValue }}"
+    field-help-text="{{ fieldHelpText }}"
+    switch-check>
+  </checkbox-enable-field>
+{% endmacro %}
+
 {% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false, iconOnly = false) %}
   {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
