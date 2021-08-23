@@ -1,92 +1,273 @@
 stages:
+    - build
     - code quality
+    - dependency scanning
     - test
 
-before_script:
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
-    - cp app/config/parameters.yml.dist app/config/parameters.yml
 
-run_functional_tests:
+# Cache default configuration
+cache: &global_cache
+    key: "$CI_PIPELINE_ID"
+    paths:
+        - app/config/parameters.yml
+        - bin
+        - css
+        - fonts
+        - images
+        - js
+        - node_modules
+        - vendor
+    policy: pull
+
+.mysql_configuration: &mysql_configuration
+    MYSQL_DATABASE: ci_test
+    MYSQL_ROOT_PASSWORD: root
+
+.before_script_test_template: &before_script_test_configuration
+    # disable Xdebug and Blackfire extensions
+    - |
+        mkdir /usr/local/etc/php/conf.d/disabled
+        mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
+        mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
+    # import test DB
+    - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
+    # make sure bundle.js exists
+    - touch src/Frontend/Core/Js/bundle.js
+    # generate correct parameters.yml
+    - php bin/generate-parameters-gitlab
+    - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+    - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
+    # create assets for test env
+    - php bin/console --no-interaction assetic:dump .
+    # clear cache
+    - php bin/console --no-interaction forkcms:cache:clear
+
+
+# Build section
+Install dependencies and build assets:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts --no-progress
+        - COMPOSER_MEMORY_LIMIT=-1 composer run-script post-autoload-dump
+        - cp app/config/parameters.yml.dist app/config/parameters.yml
+        - nvm install
+        - nvm use
+        - nvm exec npm install --no-progress
+    cache:
+        <<: *global_cache
+        policy: pull-push
+    stage: build
+    tags:
+        - docker
+
+
+# Code Quality section
+PHP_CodeSniffer - check code styling:
     image: sumocoders/fork-php74:latest
     services:
         - mysql:5.7
     before_script:
-        - mkdir /usr/local/etc/php/conf.d/disabled
-        - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
-        - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - curl -sS https://getcomposer.org/installer | php
-        - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
-        - mysql -h mysql -u root -proot -e "create database ci_test"
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - touch src/Frontend/Core/Js/bundle.js
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - php bin/console forkcms:cache:clear -e test
+        - *before_script_test_configuration
     script:
-        - php bin/simple-phpunit --testsuite=functional
-    stage: test
-    tags:
-        - php74
-        - docker
-    variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
-
-run_unit_tests:
-    image: sumocoders/fork-php74:latest
-    services:
-        - mysql:5.7
-    before_script:
-        - mkdir /usr/local/etc/php/conf.d/disabled
-        - mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
-        - mv /usr/local/etc/php/conf.d/blackfire.ini /usr/local/etc/php/conf.d/disabled/blackfire.ini
-        - curl -sS https://getcomposer.org/installer | php
-        - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
-        - mysql -h mysql -u root -proot -e "create database ci_test"
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - touch src/Frontend/Core/Js/bundle.js
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - php bin/console forkcms:cache:clear -e test
-    script:
-        - php bin/simple-phpunit --testsuite=unit
-    stage: test
-    tags:
-        - php74
-        - docker
-    variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
-
-code_styles:
-    image: sumocoders/fork-php74:latest
-    script:
-        - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
+        - php bin/phpcs --report-full --report-junit=phpcs-report.xml
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: phpcs-report.xml
     stage: code quality
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
+    variables:
+        <<: *mysql_configuration
+    allow_failure: true
 
-phpstan:
+PHPStan - check for bugs:
     image: sumocoders/fork-php74:latest
     services:
         - mysql:5.7
     before_script:
-        - curl -sS https://getcomposer.org/installer | php
-        - mysql -h mysql -u root -proot -e "create database ci_test"
-        - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-        - php bin/generate-parameters-gitlab
-        - cp app/config/parameters.yml.gitlab app/config/parameters.yml
-        - sed -i -E 's/database\.name:(.*)ci$/database.name:\1ci_test/g' app/config/parameters.yml
-        - php composer.phar install --quiet --ignore-platform-reqs --no-scripts
-        - php bin/console assetic:dump .
+        - *before_script_test_configuration
+        - php bin/console cache:warmup --no-interaction --env=dev
     script:
-        - php -d memory_limit=-1 bin/phpstan analyze src
+        - php bin/phpstan analyze --memory-limit=-1 --error-format=junit --no-progress > phpstan-report.xml
+    after_script:
+        # Run it again so the output is visible in the job
+        - php bin/phpstan analyze --memory-limit=-1 --no-progress
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: phpstan-report.xml
     stage: code quality
+    needs: ["Install dependencies and build assets"]
     tags:
-        - php74
         - docker
     variables:
-        MYSQL_DATABASE: ci
-        MYSQL_ROOT_PASSWORD: root
+        <<: *mysql_configuration
+    allow_failure: true
+
+StandardJS - check code styling:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - php bin/convert-to-junit-xml convert:standardjs "$(nvm exec --silent node_modules/.bin/standard)" > standardjs-report.xml
+    after_script:
+        # Run it again so the output is visible in the job
+        - nvm exec node_modules/.bin/standard
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: standardjs-report.xml
+    stage: code quality
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+TODOs - check for unfinished code:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - >
+            php bin/convert-to-junit-xml convert:grep "$(
+            find .
+            -path "./.github/*" -prune -o
+            -path "./bin/*" -prune -o
+            -path "./css/*" -prune -o
+            -path "./docs/*" -prune -o
+            -path "./fonts/*" -prune -o
+            -path "./images/*" -prune -o
+            -path "./js/*" -prune -o
+            -path "./node_modules/*" -prune -o
+            -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
+            -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
+            -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Frontend/Cache/*" -prune -o
+            -path "./tests/*" -prune -o
+            -path "./var/*" -prune -o
+            -path "./vendor/*" -prune -o
+            -path "./.gitlab-ci.yml" -prune -o
+            -path "./autoload.php" -prune -o
+            -path "./CHANGELOG.md" -prune -o
+            -path "./unresolved-todos-report.xml" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -not -type d
+            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+            )" > unresolved-todos-report.xml
+    after_script:
+        - >
+            find .
+            -path "./.github/*" -prune -o
+            -path "./bin/*" -prune -o
+            -path "./css/*" -prune -o
+            -path "./docs/*" -prune -o
+            -path "./fonts/*" -prune -o
+            -path "./images/*" -prune -o
+            -path "./js/*" -prune -o
+            -path "./node_modules/*" -prune -o
+            -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
+            -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
+            -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Frontend/Cache/*" -prune -o
+            -path "./tests/*" -prune -o
+            -path "./var/*" -prune -o
+            -path "./vendor/*" -prune -o
+            -path "./.gitlab-ci.yml" -prune -o
+            -path "./autoload.php" -prune -o
+            -path "./CHANGELOG.md" -prune -o
+            -path "./unresolved-todos-report.xml" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -not -type d
+            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit:
+                unresolved-todos-report.xml
+    stage: code quality
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+
+# Dependency Scanning section
+NPM packages - check for vulnerabilities:
+    image: sumocoders/cli-tools-php74:latest
+    script:
+        - php bin/convert-to-junit-xml convert:npm-audit "$(nvm exec --silent npm audit --json)" > npm-audit-report.xml
+    after_script:
+        # Run it again so the output is visible in the job output
+        - nvm exec npm audit
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: npm-audit-report.xml
+    stage: dependency scanning
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+PHP packages - check for vulnerabilities:
+    image: sumocoders/cli-tools-php74:latest
+    before_script:
+        - PHP_SC_VERSION=$(curl -s "https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/;s/^v//')
+        - curl -LSs https://github.com/fabpot/local-php-security-checker/releases/download/v${PHP_SC_VERSION}/local-php-security-checker_${PHP_SC_VERSION}_linux_amd64 > ./php-security-checker
+        - chmod +x ./php-security-checker
+    script:
+        - php bin/convert-to-junit-xml convert:sensiolabs-security-check "$(./php-security-checker --format=json)" > security-checker-report.xml
+    after_script:
+        # Run it again so the output is visible in the job output
+        - ./php-security-checker
+    artifacts:
+        expire_in: 1 week
+        reports:
+            junit: security-checker-report.xml
+    stage: dependency scanning
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    allow_failure: true
+
+
+# Test section
+PHPUnit - Run functional tests:
+    image: sumocoders/fork-php74:latest
+    services:
+        - mysql:5.7
+    before_script:
+        - *before_script_test_configuration
+        - sed -i -E 's/database\.name:(.*)ci_test$/database.name:\1ci/g' app/config/parameters.yml
+        - cat app/config/parameters.yml
+    script:
+        - php bin/simple-phpunit --testsuite=functional --log-junit phpunit-functional-report.xml
+    artifacts:
+        reports:
+            junit: phpunit-functional-report.xml
+    stage: test
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    variables:
+        <<: *mysql_configuration
+
+PHPUnit - Run unit tests:
+    image: sumocoders/fork-php74:latest
+    services:
+        - mysql:5.7
+    before_script:
+        - *before_script_test_configuration
+        - sed -i -E 's/database\.name:(.*)ci_test$/database.name:\1ci/g' app/config/parameters.yml
+        - cat app/config/parameters.yml
+    script:
+        - php bin/simple-phpunit --testsuite=unit --log-junit phpunit-unit-report.xml
+    artifacts:
+        reports:
+            junit: phpunit-unit-report.xml
+    stage: test
+    needs: ["Install dependencies and build assets"]
+    tags:
+        - docker
+    variables:
+        <<: *mysql_configuration

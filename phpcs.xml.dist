@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg name="warning-severity" value="0"/>
+
+    <rule ref="PSR2"/>
+
+    <file>src/</file>
+
+    <exclude-pattern>src/Backend/Core/Js/ckeditor</exclude-pattern>
+    <exclude-pattern>src/Backend/Core/Js/ckfinder</exclude-pattern>
+    <exclude-pattern>src/Backend/Cache</exclude-pattern>
+    <exclude-pattern>src/Frontend/Cache</exclude-pattern>
+</ruleset>
