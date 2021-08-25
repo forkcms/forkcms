@@ -126,6 +126,8 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                 'url',
                 true
             );
+        } else {
+            $this->setColumnFunction('htmlspecialchars', ['[url]'], 'url', false);
         }
 
         // Add a button to select an item
@@ -152,7 +154,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             true
         );
         $this->setColumnFunction('htmlspecialchars', ['[title]'], 'title', false);
-        $this->setColumnFunction('htmlspecialchars', ['[url]'], 'url', false);
     }
 
     private function addDataAttributes(): void
