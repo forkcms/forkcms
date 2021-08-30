@@ -42,7 +42,18 @@ export class ConsentDialog {
         // store data in functional cookies for later usage
         Cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0, 6 * 30)
         Cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash, 6 * 30)
+
+        // trigger events
+        var eventName = 'privacyConsentLevel' + niceName
+        if (isChecked) {
+          eventName += 'Agreed'
+        } else {
+          eventName += 'Disagreed'
+        }
+        $(document).trigger(eventName)
       }
+
+      $(document).trigger('privacyConsentChanged')
 
       $consentDialog.hide()
     })

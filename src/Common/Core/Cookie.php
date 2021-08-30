@@ -71,6 +71,9 @@ final class Cookie
         bool $secure = null,
         bool $httpOnly = true
     ): void {
+        // remove from the new cookies array
+        $this->newCookiesHeaderBag->removeCookie($name, $path, $this->normalizeDomain($domain));
+
         // clear in the browser
         $this->newCookiesHeaderBag->clearCookie(
             $name,
@@ -79,9 +82,6 @@ final class Cookie
             $this->normalizeSecure($secure),
             $httpOnly
         );
-
-        // remove from the new cookies array
-        $this->newCookiesHeaderBag->removeCookie($name, $path, $this->normalizeDomain($domain));
 
         // remove from the request
         unset($_COOKIE[$name]);

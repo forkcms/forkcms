@@ -116,7 +116,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $this->emptyTestDatabase($database);
         $kernelDir = $client->getContainer()->getParameter('kernel.project_dir') . '/app';
         $this->importSQL(
-            $client->getContainer()->get('database'),
+            $database,
             file_get_contents($kernelDir . '/../tests/data/test_db.sql')
         );
     }

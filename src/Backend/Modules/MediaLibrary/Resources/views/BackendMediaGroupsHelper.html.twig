@@ -4,7 +4,8 @@
   {# In case of modules including this file the old way instead of the automatic include in the form template#}
   {{ set_included('MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig') }}
   {# Add new media dialog #}
-  <div class="modal fade" id="addMediaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addMediaDialogTitle" data-role="media-library-add-dialog">
+  <div class="modal fade" id="addMediaDialog" role="dialog" tabindex="-1" aria-hidden="true"
+    aria-labelledby="addMediaDialogTitle" data-role="media-library-add-dialog">
     <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -13,10 +14,12 @@
         <div class="modal-body">
           <ul class="nav nav-tabs justify-content-end" role="tablist">
             <li class="nav-item me-auto">
-              <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-bs-toggle="tab" aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+              <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-bs-toggle="tab"
+                aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-bs-toggle="tab" aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+              <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-bs-toggle="tab"
+                aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
@@ -24,73 +27,118 @@
               {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
             </div>
             <div role="tabpanel" class="tab-pane active show" id="tabLibrary" aria-labelledby="library-tab">
-              <div class="options">
-                <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
-                <select id="mediaFolders"></select>
-              </div>
-              <div class="options">
-                {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
-              </div>
-              <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#tabImage" aria-controls="tabImage" role="tab" data-bs-toggle="tab" aria-selected="true" id="image-tab">
-                    {{ 'lbl.MediaImages'|trans|ucfirst }}
-                    <span id="mediaCountImage">(0)</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#tabFile" aria-controls="tabFile" role="tab" data-bs-toggle="tab" aria-selected="false" id="file-tab">
-                    {{ 'lbl.MediaFiles'|trans|ucfirst }}
-                    <span id="mediaCountFile">(0)</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#tabMovie" aria-controls="tabMovie" role="tab" data-bs-toggle="tab" aria-selected="false" id="movie-tab">
-                    {{ 'lbl.MediaMovies'|trans|ucfirst }}
-                    <span id="mediaCountMovie">(0)</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#tabAudio" aria-controls="tabAudio" role="tab" data-bs-toggle="tab" aria-selected="false" id="audio-tab">
-                    {{ 'lbl.MediaAudio'|trans|ucfirst }}
-                    <span id="mediaCountAudio">(0)</span>
-                  </a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane show active" id="tabImage" aria-labelledby="image-tab">
-                  <div class="table-responsive">
-                    <table id="mediaTableImage" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="options">
+                    <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
+                    <select id="mediaFolders"></select>
                   </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="tabFile" aria-labelledby="file-tab">
-                  <div class="table-responsive">
-                    <table id="mediaTableFile" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                <div class="col-md-6">
+                  <div class="option">
+                    <div class="input-group">
+                      <input type="search" value="" name="query" class="form-control" />
+                      <span class="input-group-btn">
+                        {{ macro.buttonIcon('', 'search', 'lbl.Search'|trans|capitalize, 'btn-secondary', {'id': 'searchMedia', 'type' : 'button'}) }}
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="tabMovie" aria-labelledby="movie-tab">
-                  <div class="table-responsive">
-                    <table id="mediaTableMovie" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
-                  </div>
+                <div class="options">
+                  {{ macro.alert('warning', null, null, null, {'class': 'd-none', 'data-role': 'fork-media-count-error'}) }}
                 </div>
-                <div role="tabpanel" class="tab-pane" id="tabAudio" aria-labelledby="audio-tab">
-                  <div class="table-responsive">
-                    <table id="mediaTableAudio" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" data-type-image>
+                    <a class="nav-link active" href="#tabImage" aria-controls="tabImage" role="tab" data-bs-toggle="tab"
+                      aria-selected="true" id="image-tab">
+                      {{ 'lbl.MediaImages'|trans|ucfirst }}
+                      <span id="mediaCountImage">(0)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item" data-type-file>
+                    <a class="nav-link" href="#tabFile" aria-controls="tabFile" role="tab" data-bs-toggle="tab"
+                      aria-selected="false" id="file-tab">
+                      {{ 'lbl.MediaFiles'|trans|ucfirst }}
+                      <span id="mediaCountFile">(0)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item" data-type-movie>
+                    <a class="nav-link" href="#tabMovie" aria-controls="tabMovie" role="tab" data-bs-toggle="tab"
+                      aria-selected="false" id="movie-tab">
+                      {{ 'lbl.MediaMovies'|trans|ucfirst }}
+                      <span id="mediaCountMovie">(0)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item" data-type-audio>
+                    <a class="nav-link" href="#tabAudio" aria-controls="tabAudio" role="tab" data-bs-toggle="tab"
+                      aria-selected="false" id="audio-tab">
+                      {{ 'lbl.MediaAudio'|trans|ucfirst }}
+                      <span id="mediaCountAudio">(0)</span>
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane show active" id="tabImage" aria-labelledby="image-tab">
+                    <div class="table-responsive">
+                      <table id="mediaTableImage"
+                        class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tabFile" aria-labelledby="file-tab">
+                    <div class="table-responsive">
+                      <table id="mediaTableFile"
+                        class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tabMovie" aria-labelledby="movie-tab">
+                    <div class="table-responsive">
+                      <table id="mediaTableMovie"
+                        class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="tabAudio" aria-labelledby="audio-tab">
+                    <div class="table-responsive">
+                      <table id="mediaTableAudio"
+                        class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal">
+              {{ macro.icon('times') }}<span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+            </button>
+            <button id="addMediaSubmit" type="button" class="btn btn-primary">
+              {{ macro.icon('check') }}<span class="btn-text">{{ 'lbl.OK'|trans|ucfirst }}</span></button>
+          </div>
+        </div>
+      </div>
+      {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
+    </div>
+  </div>
+  {# Edit media dialog #}
+  <div class="modal fade" id="editMediaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="editMediaDialogTitle" data-role="media-library-edit-dialog">
+    <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="editMediaDialogTitle">{{ 'lbl.Edit'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editMediaItemTitle">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required() }}</label>
+            <input type="text" class="form-control" name="mediaItemTitle" id="editMediaItemTile" value="" />
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">
             {{ macro.icon('times') }}<span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
           </button>
-          <button id="addMediaSubmit" type="button" class="btn btn-primary">
-            {{ macro.icon('check') }}<span class="btn-text">{{ 'lbl.OK'|trans|ucfirst }}</span></button>
+          <button id="editMediaSubmit" type="button" class="btn btn-primary">
+            {{ macro.icon('check') }}<span class="btn-text">{{ 'lbl.Save'|trans|ucfirst }}</span></button>
         </div>
       </div>
     </div>
-    {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
   </div>
 {% endif %}

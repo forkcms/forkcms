@@ -204,7 +204,7 @@
               {% endif %}
             </div>
             <div class="modal-footer">
-              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
               {% if not blocked %}
                 {{ macro.buttonIcon(geturl('block') ~ '&id=' ~ profile.id, 'ban', 'lbl.Block'|trans|ucfirst, 'btn-warning') }}
               {% endif %}
@@ -238,7 +238,7 @@
             {% endif %}
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
 
             {% set macroText = 'lbl.Delete'|trans|ucfirst %}
             {% set macroIcon = 'trash' %}
