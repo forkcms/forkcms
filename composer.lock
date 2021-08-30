@@ -6087,16 +6087,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.41",
+            "version": "0.12.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3"
+                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3",
-                "reference": "4ae5cbe13a30ac1a377465a5d9dddfb1f1f5a0b3",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/2c240808116be56c7129d9d48b8dd40d1344e0eb",
+                "reference": "2c240808116be56c7129d9d48b8dd40d1344e0eb",
                 "shasum": ""
             },
             "require": {
@@ -6150,9 +6150,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.41"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.42"
             },
-            "time": "2021-07-18T07:21:50+00:00"
+            "time": "2021-08-18T06:56:59+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
