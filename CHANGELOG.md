@@ -1,8 +1,32 @@
-5.10.1  (2021-10-xx)
+5.11.0  (2021-08-31)
 ------------------
 
 Fixed:
+* ContentBlocks: Fix mapping old content blocks when copying pages [#3442](https://github.com/forkcms/forkcms/pull/3442)
+* Core: Fix array offset error for canonical url in meta [#3411](https://github.com/forkcms/forkcms/pull/3411)
+* Core: Fix deleting cookies [#3440](https://github.com/forkcms/forkcms/pull/3440)
+* Core: Fix encoding problem with generating urls [#3429](https://github.com/forkcms/forkcms/pull/3429)
+* Core: Fixed GenarteUrl to allow Backend Locale [#3423](https://github.com/forkcms/forkcms/pull/3423)
+* Core: Update packages [#3452](https://github.com/forkcms/forkcms/pull/3452) [#3447](https://github.com/forkcms/forkcms/pull/3447) [#3448](https://github.com/forkcms/forkcms/pull/3448) [#3451](https://github.com/forkcms/forkcms/pull/3451) [#3435](https://github.com/forkcms/forkcms/pull/3435) [#3437](https://github.com/forkcms/forkcms/pull/3437) [#3439](https://github.com/forkcms/forkcms/pull/3439) [#3408](https://github.com/forkcms/forkcms/pull/3408) [#3427](https://github.com/forkcms/forkcms/pull/3427)
+* Docs: Put code in code block [#3407](https://github.com/forkcms/forkcms/pull/3407)
+* Docs: Update old screenshots [#3210](https://github.com/forkcms/forkcms/pull/3210) [#3412](https://github.com/forkcms/forkcms/pull/3412)
+* MediaLibrary: Fix image preview [#3434](https://github.com/forkcms/forkcms/pull/3434)
+* MediaLibrary: Fix item preview in the editor [#3450](https://github.com/forkcms/forkcms/pull/3450)
+* Page: Duplicate page image when copying a page to a different locale [#3438](https://github.com/forkcms/forkcms/pull/3438)
+* Search: Fix search total for short terms [#3441](https://github.com/forkcms/forkcms/pull/3441)
 * Locale: Fixed exporting XML truncated by a few bytes
+
+Security:
+* Core: Fix xss issue in spoon form [#3453](https://github.com/forkcms/forkcms/pull/3453)
+* MediaLibrary: Fix xss in mediaitem type movie id on edit [#3406](https://github.com/forkcms/forkcms/pull/3406)
+
+Added:
+* Core: Add support for Google reCAPTCHA v3 [#3409](https://github.com/forkcms/forkcms/pull/3409)
+* FormBuilder: Copy forms and their widgets when making a language copy [#3445](https://github.com/forkcms/forkcms/pull/3445)
+* MediaLibrary: Add support for svg [#3424](https://github.com/forkcms/forkcms/pull/3424) [#3432](https://github.com/forkcms/forkcms/pull/3432)
+
+Changed:
+* Test: Minor database optimalisation [#3443](https://github.com/forkcms/forkcms/pull/3443)
 
 
 5.10.0  (2021-05-16)
