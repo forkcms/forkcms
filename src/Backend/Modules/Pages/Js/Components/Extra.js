@@ -74,7 +74,6 @@ export class Extra {
         const element = document.querySelector('#' + editorId)
 
         element.value = originalContent
-        console.log(element.value)
 
         const text = this.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]')))
         if (text !== '') {
