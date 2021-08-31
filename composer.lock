@@ -4472,16 +4472,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "3.2.11",
+            "version": "3.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "60e69d26577a418dc9e9c8e2fade51f5ff3f81b7"
+                "reference": "576e572f2b5f1ef51b7f7f59fc92310e4bc4a7e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/60e69d26577a418dc9e9c8e2fade51f5ff3f81b7",
-                "reference": "60e69d26577a418dc9e9c8e2fade51f5ff3f81b7",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/576e572f2b5f1ef51b7f7f59fc92310e4bc4a7e5",
+                "reference": "576e572f2b5f1ef51b7f7f59fc92310e4bc4a7e5",
                 "shasum": ""
             },
             "require": {
@@ -4505,9 +4505,9 @@
             "homepage": "http://www.spoon-library.com",
             "support": {
                 "issues": "https://github.com/forkcms/library/issues",
-                "source": "https://github.com/forkcms/library/tree/3.2.11"
+                "source": "https://github.com/forkcms/library/tree/3.2.12"
             },
-            "time": "2021-06-08T19:08:57+00:00"
+            "time": "2021-08-30T16:46:44+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
