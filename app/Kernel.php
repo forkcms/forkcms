@@ -80,7 +80,7 @@ abstract class Kernel extends BaseKernel
         Spoon::setDebug($container->getParameter('kernel.debug'));
         Spoon::setDebugEmail($container->getParameter('fork.debug_email'));
         Spoon::setDebugMessage($container->getParameter('fork.debug_message'));
-        Spoon::setCharset($container->getParameter('kernel.charset'));
+        Spoon::setCharset(strtolower($container->getParameter('kernel.charset')));
 
         /**
          * @deprecated SPOON_* constants are deprecated in favour of Spoon::set*().
