@@ -2,6 +2,7 @@ export class Extra {
   constructor () {
     this.blockTypeSwitcher()
     this.saveBlock()
+    this.cancelBlock()
     this.newBlock()
 
     // bind events
@@ -51,6 +52,37 @@ export class Extra {
       } else {
         $pageBlockPreview.addClass('d-none')
       }
+
+      $modal.modal('hide')
+    })
+  }
+
+  cancelBlock () {
+    $('[data-role="page-content-tab"]').on('click', '[data-role="page-block-cancel"]', (e) => {
+      const $modal = $(e.currentTarget).closest('.modal')
+      const originalContentField = $modal.find('[data-role="rich-text-original-content"]')
+      const $pageBlockWrapper = $modal.closest('[data-role="page-block-wrapper"]')
+      const $pageBlockPreview = $pageBlockWrapper.find('[data-role="page-block-preview"]')
+
+      // Read the original content from the hidden field
+      const originalContent = originalContentField.val()
+
+      // Save the original content again
+      const editors = document.querySelectorAll('textarea.inputBlockEditor')
+      editors.forEach((editor) => {
+        const editorId = editor.id + '-block-editor'
+        const element = document.querySelector('#' + editorId)
+
+        element.value = originalContent
+        console.log(element.value)
+
+        const text = this.getBlockPreview($.makeArray($modal.find('.ce-block [contenteditable]')))
+        if (text !== '') {
+          $pageBlockPreview.html(text)
+        } else {
+          $pageBlockPreview.html(window.backend.locale.lbl('NoContentToShow'))
+        }
+      });
 
       $modal.modal('hide')
     })

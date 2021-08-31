@@ -330,10 +330,12 @@
             <div data-role="page-block-content-type-wrapper" data-type="widget">{{ form_row(form.widgetExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.blockExtraId) }}</div>
             <div data-role="page-block-content-type-wrapper" data-type="rich_text">{{ form_row(form.html) }}</div>
+            <input type="hidden" data-role="rich-text-original-content" value="{{ form.html.vars.value }}" />
             {{ form_rest(form) }}
           </div>
           <div class="modal-footer d-flex">
             <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
+            {{ macro.buttonIcon('', 'cancel', 'lbl.Cancel'|trans|ucfirst, 'btn-secondary', {'type': 'button', 'data-role':'page-block-cancel'}) }}
             {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
           </div>
         </div>
