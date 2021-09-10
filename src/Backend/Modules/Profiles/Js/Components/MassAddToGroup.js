@@ -14,5 +14,8 @@ export class MassAddToGroup {
           $txtNewGroup.val(event.currentTarget.value)
         })
     )
+    // In the filter dropdown, we need an empty first option to search for anything
+    // But in this copy we only want real groups, so remove the first option
+    $('select[name="newGroup"]').children().first().remove()
   }
 }
