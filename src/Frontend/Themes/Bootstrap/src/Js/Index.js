@@ -1,5 +1,6 @@
 /* External library imports */
-import * as bootstrap from "bootstrap5/dist/js/bootstrap.js"
+import * as bootstrap from 'bootstrap5/dist/js/bootstrap.js'
+window.bootstrap = bootstrap
 import '@fortawesome/fontawesome-free/js/all'
 // import '@fancyapps/fancybox/dist/jquery.fancybox'
 
