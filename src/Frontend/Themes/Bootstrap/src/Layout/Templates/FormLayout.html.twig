@@ -1,4 +1,4 @@
-{% extends 'bootstrap_4_layout.html.twig' %}
+{% extends 'FormLayouts/bootstrap_5_layout.html.twig' %}
 
 {%- block form_label -%}
   {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
@@ -38,63 +38,3 @@
   {%- endif %}
 {%- endblock form_errors %}
 
-{# custom select #}
-{%- block choice_widget_collapsed -%}
-  {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
-    {% set required = false %}
-  {%- endif -%}
-  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="custom-select">
-    {%- if placeholder is not none -%}
-      <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
-    {%- endif -%}
-    {%- if preferred_choices|length > 0 -%}
-      {% set options = preferred_choices %}
-      {{- block('choice_widget_options') -}}
-      {%- if choices|length > 0 and separator is not none -%}
-        <option disabled="disabled">{{ separator }}</option>
-      {%- endif -%}
-    {%- endif -%}
-    {%- set options = choices -%}
-    {{- block('choice_widget_options') -}}
-  </select>
-{%- endblock choice_widget_collapsed -%}
-
-{# custom file input #}
-{% block form_widget_simple -%}
-  {% if type is not defined or type != 'hidden' %}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control' ~ (type|default('') == 'file' ? '-file custom-file-input' : ''))|trim}) -%}
-  {% endif %}
-  {%- if type is defined and (type == 'range' or type == 'color') %}
-    {# Attribute "required" is not supported #}
-    {%- set required = false -%}
-  {% endif %}
-  {{- parent() -}}
-{%- endblock form_widget_simple %}
-
-{# custom checkboxes #}
-{% block checkbox_widget -%}
-  {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
-  {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
-  <div class="custom-control custom-checkbox{{ 'checkbox-inline' in parent_label_class ? ' custom-control-inline' }}">
-    {{- form_label(form, null, { widget: block('sumo_custom_checkbox_widget'), label_attr: {'class': 'custom-control-label'} }) -}}
-  </div>
-{%- endblock checkbox_widget %}
-
-{# custom radio #}
-{% block radio_widget -%}
-  {%- set parent_label_class = parent_label_class|default(label_attr.class|default('')) -%}
-  {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}
-  <div class="custom-control custom-radio{{ 'radio-inline' in parent_label_class ? ' custom-control-inline' }}">
-    {{- form_label(form, null, { widget: block('sumo_custom_radio_widget'), label_attr: {'class': 'custom-control-label'} }) -}}
-  </div>
-{%- endblock radio_widget %}
-
-{% block sumo_custom_checkbox_widget %}
-  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) %}
-  <input type="checkbox" {% with { attr: attr} %}{{ block('widget_attributes') }}{% endwith %}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{% endblock sumo_custom_checkbox_widget %}
-
-{% block sumo_custom_radio_widget %}
-  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) %}
-  <input type="radio" {% with { attr: attr} %}{{ block('widget_attributes') }}{% endwith %}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-{% endblock sumo_custom_radio_widget %}

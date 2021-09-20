@@ -8,9 +8,9 @@
     <div class="form-inline">
 
       <div class="form-group{% if txtQError %} has-danger{% endif %}">
-        <label class="form-control-label sr-only" for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;</label>
+        <label class="form-label visually-hidden" for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;</label>
         {% form_field q %}
-        <input id="submit" class="btn btn-primary ml-2" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
+        <input id="submit" class="btn btn-primary ms-2" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
         {% form_field_error q %}
       </div>
     </div>

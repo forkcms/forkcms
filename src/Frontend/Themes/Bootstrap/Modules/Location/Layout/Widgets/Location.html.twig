@@ -10,12 +10,12 @@
       <div class="col-md-6">
         <div class="widget-map">
           <div data-role="fork-map-container" data-map-id="{{ widgetLocationItem.id }}" style="height: {{ widgetLocationSettings.height }}px;">
-            <span class="sr-only">{{ 'lbl.Loading'|trans|ucfirst }}</span>
+            <span class="visually-hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
           </div>
         </div>
         {% if widgetLocationSettings.full_url %}
           <a href="{{ widgetLocationSettings.maps_url }}" class="btn float-end" target="_blank" rel="noopener noreferrer">
-            <small>{{ 'lbl.ViewLargeMap'|trans|ucfirst }}<span class="sr-only"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span></small>
+            <small>{{ 'lbl.ViewLargeMap'|trans|ucfirst }}<span class="visually-hidden"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span></small>
           </a>
         {% endif %}
       </div>
@@ -39,7 +39,7 @@
             <form method="get" action="#">
               <h4>{{ 'lbl.GetDirections'|trans }}</h4>
               <div class="form-group">
-                <label class="form-control-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
+                <label class="form-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
                   {{ 'lbl.Start'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;
                 </label>
                 <div class="input-group">

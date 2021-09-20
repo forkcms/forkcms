@@ -12,14 +12,14 @@
     {# Category#}
     {% if settings.allow_multiple_categories %}
       <p class="mb-0">
-        <span class="sr-only">{{ 'lbl.In'|trans|ucfirst }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Category'|trans|ucfirst }}: <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+        <span class="visually-hidden">{{ 'lbl.In'|trans|ucfirst }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Category'|trans|ucfirst }}: <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
       </p>
     {% endif %}
 
     {# Tags#}
     {% if item.tags %}
       <p class="mb-0" itemprop="keywords">
-        <span class="sr-only">{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Tags'|trans|ucfirst }}:
+        <span class="visually-hidden">{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} </span>{{ 'lbl.Tags'|trans|ucfirst }}:
         {% for tag in item.tags %}
           <a class="badge badge-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>
         {% endfor %}
@@ -58,7 +58,7 @@
               </div>
               <div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
                 <div class="form-group{% if txtMessageError %} has-danger{% endif %}">
-                  <label class="form-control-label" for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+                  <label class="form-label" for="message">{{ 'msg.HowToImprove'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
                   {% form_field_error message %} {% form_field message %}
                 </div>
                 <input class="btn btn-primary" type="submit" name="comment" value="{{ 'lbl.Send'|trans|ucfirst }}" />

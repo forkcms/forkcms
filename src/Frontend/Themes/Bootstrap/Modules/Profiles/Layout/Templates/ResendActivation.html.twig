@@ -11,7 +11,7 @@
   {% if not resendActivationHideForm %}
     {% form resendActivation %}
     <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
-      <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }} <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+      <label class="form-label" for="email">{{ 'lbl.Email'|trans|ucfirst }} <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
       {% form_field email %}
       {% form_field_error email %}
     </div>

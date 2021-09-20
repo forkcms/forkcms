@@ -12,14 +12,14 @@
   {% form updateEmail %}
     <fieldset>
       <div class="form-group{% if txtPasswordError %} has-danger{% endif %}">
-        <label class="form-control-label" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <label class="form-label" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
         <div>
           {% form_field password %}
           {% form_field_error password %}
         </div>
       </div>
       <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
-        <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <label class="form-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
         <div>
           {% form_field email %}
           {% form_field_error email %}

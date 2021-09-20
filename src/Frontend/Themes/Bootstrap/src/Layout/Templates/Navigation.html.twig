@@ -1,8 +1,8 @@
 {% if navigation %}
   <ul class="navbar-nav me-auto">
     {% for nav in navigation %}
-      <li class="nav-item{% if nav.selected %} active{% endif %}">
-        <a class="nav-link" href="{{ nav.link }}" title="{{ nav.navigation_title }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title|e('html') }}</a>
+      <li class="nav-item">
+        <a class="nav-link{% if nav.selected %} active{% endif %}" href="{{ nav.link }}" title="{{ nav.navigation_title }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title|e('html') }}</a>
         {% if nav.selected %}{{ nav.children }}{% endif %}
       </li>
     {% endfor %}
