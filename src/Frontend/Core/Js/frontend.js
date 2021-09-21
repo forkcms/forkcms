@@ -136,7 +136,7 @@ jsFrontend.consentDialog = {
     var $consentDialog = $('*[data-role=privacy_consent_dialog]')
     var $consentForm = $('form[data-role=privacy_consent_dialog_form]')
 
-    $consentForm.on('click', '*[data-dismiss=modal]', function (e) {
+    $consentForm.on('click', '*[data-bs-dismiss=modal]', function (e) {
       e.preventDefault()
       $consentDialog.hide()
     })
