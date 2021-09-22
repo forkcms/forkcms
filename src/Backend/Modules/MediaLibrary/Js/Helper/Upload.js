@@ -10,7 +10,38 @@ export class Upload {
     this.uploadedCount = 0
 
     this.preInit()
+    this.init()
+  }
 
+  preInit () {
+    // bind change to upload_type
+    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
+
+    // bind click to add movie
+    $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
+
+    // bind change to upload folder
+    $('#uploadMediaFolderId').on('change', () => {
+      // update upload button
+      this.toggleUploadBoxes()
+    }).trigger('change')
+
+    // bind delete actions
+    $('#uploadedMedia').on('click', '[data-fork=disconnect]', (e) => {
+      $(e.currentTarget).parent().parent().remove()
+      --this.uploadedCount
+      window.backend.mediaLibrary.helper.group.validateMinimumMaximumCount()
+    })
+
+    // bind change to "Enable cropper" checkbox
+    $('[data-role="enable-cropper-checkbox"]').on('change', () => {
+      // Reset the fineuploader upload box so we can skip or use a scaling config for the cropper
+      $('#fine-uploader-gallery').unbind().empty()
+      this.init()
+    })
+  }
+
+  init () {
     // redefine media folder id
     this.config.mediaFolderId = $('#uploadMediaFolderId').val()
 
@@ -99,33 +130,6 @@ export class Upload {
           }
         }
       }
-    })
-  }
-
-  preInit () {
-    // bind change to upload_type
-    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
-
-    // bind click to add movie
-    $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
-
-    // bind change to upload folder
-    $('#uploadMediaFolderId').on('change', () => {
-      // update upload button
-      this.toggleUploadBoxes()
-    }).trigger('change')
-
-    // bind delete actions
-    $('#uploadedMedia').on('click', '[data-fork=disconnect]', (e) => {
-      $(e.currentTarget).parent().parent().remove()
-      --this.uploadedCount
-      window.backend.mediaLibrary.helper.group.validateMinimumMaximumCount()
-    })
-
-    // bind change to "Enable cropper" checkbox
-    $('[data-role="enable-cropper-checkbox"]').on('change', () => {
-      // Reset the fineuploader upload box so we can skip or use a scaling config for the cropper
-      $('#fine-uploader-gallery').unbind().empty()
     })
   }
 
