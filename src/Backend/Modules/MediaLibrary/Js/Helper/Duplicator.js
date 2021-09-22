@@ -27,7 +27,9 @@ export class Duplicator {
       cropper.enableCropper()
 
       // switch from "library"-tab to "upload"-tab
-      $('.nav-tabs a[href="#tabUploadMedia"]').tab('show')
+      const tab = document.querySelectorAll('.nav-tabs a[href="#tabUploadMedia"]')[0]
+      const tabObject = new bootstrap.Tab(tab)
+      tabObject.show()
 
       // let FineUploader handle the file
       const splittedUrl = mediaItemToDuplicate.url.split('.')
