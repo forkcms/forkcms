@@ -81,15 +81,12 @@ export class Navigation {
       })
 
       tooltip.addEventListener('mouseenter', () => {
-        console.log('mouseover')
         if ($wrapper.hasClass('navigation-collapsed') && $(window).width() > 787) {
-          console.log('ik mag tonen')
           tooltipObject.show()
         }
       })
 
       tooltip.addEventListener('mouseleave', () => {
-        console.log('mouseout')
         tooltipObject.hide()
       })
     }
