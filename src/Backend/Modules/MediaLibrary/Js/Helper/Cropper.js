@@ -20,19 +20,27 @@ export class Cropper {
     }
 
     this.isCropping = true
-    const $dialog = this.getDialog()
+    const $dialog = $(this.getDialog())
     this.switchToCropperModal($dialog)
     this.processNextImageInQueue($dialog)
   }
 
   getDialog () {
-    const $dialog = $('[data-role=media-library-add-dialog]')
+    const dialog2 = document.querySelectorAll('[data-role=media-library-add-dialog]')[0]
 
-    if ($dialog.length > 0) {
-      return $dialog.first()
+    if (typeof (dialog2) !== 'undefined' && dialog2 !== null) {
+      return dialog2
     }
 
-    return $('[data-role=media-library-cropper-dialog]').first()
+    return document.querySelectorAll('[data-role=media-library-cropper-dialog]')[0]
+  }
+
+  createDialogBootstrapModal () {
+    return new bootstrap.Modal(this.getDialog())
+  }
+
+  getDialogBootstrapModal () {
+    return bootstrap.Modal.getInstance(this.getDialog())
   }
 
   processNextImageInQueue ($dialog) {
@@ -122,7 +130,8 @@ export class Cropper {
     this.isCropping = false
     // check if it is a standalone dialog for the cropper
     if ($dialog.attr('data-role') === 'media-library-cropper-dialog') {
-      $dialog.modal('hide')
+      const dialogModal = this.getDialogBootstrapModal()
+      dialogModal.hide()
 
       return
     }
@@ -131,13 +140,14 @@ export class Cropper {
     $dialog.find('[data-role=media-library-cropper-modal]').addClass('d-none')
   }
 
-  switchToCropperModal ($dialog) {
+  switchToCropperModal ($dialog, dialogElement) {
     if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
       return
     }
 
     if (!$dialog.hasClass('in')) {
-      $dialog.modal('show')
+      const dialogModal = this.createDialogBootstrapModal()
+      dialogModal.show()
     }
 
     $dialog.find('[data-role=media-library-select-modal]').addClass('d-none')
