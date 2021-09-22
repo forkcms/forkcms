@@ -1,7 +1,6 @@
 /**
  * All methods related to duplicating an existing media item
  * which also show the crop tool in the process
- * global: jsBackend
  */
 import { Cropper } from './Cropper'
 

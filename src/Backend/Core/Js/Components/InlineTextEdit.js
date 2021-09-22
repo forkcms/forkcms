@@ -1,4 +1,5 @@
 import { StringUtil } from './StringUtil'
+import { Messages } from './Messages'
 
 export class InlineTextEdit {
   static inlineTextEdit (options, element) {
@@ -164,7 +165,7 @@ export class InlineTextEdit {
                 destroyElement()
 
                 // show message
-                jsBackend.messages.add('danger', $.parseJSON(XMLHttpRequest.responseText).message)
+                Messages.add('danger', $.parseJSON(XMLHttpRequest.responseText).message)
               }
             })
         } else {
