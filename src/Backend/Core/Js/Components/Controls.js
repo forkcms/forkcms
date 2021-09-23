@@ -130,7 +130,6 @@ export class Controls {
   // bind confirm message
   bindConfirm () {
     $('.jsConfirmationTrigger').on('click', (e) => {
-      console.log('jsConfirmationTrigger')
       // prevent default
       e.preventDefault()
 
