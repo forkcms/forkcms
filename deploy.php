@@ -93,3 +93,200 @@ set(
         'token' => get('sentry_token')
     ]
 );
+
+/*****************
+ * Task sections *
+ *****************/
+// Overrides from symfony and deployer-sumo
+/**
+ * Install assets from public dir of bundles
+ * @Override from symfony.php - don't know if we need this for Fork
+ */
+task(
+    'deploy:assets:install',
+    function () {
+        // do nothing
+    }
+)->desc('Generate and upload bundle assets');
+
+/**
+ * Migrate database
+ * @Override from symfony.php which executes doctrine:migrations
+ */
+task('database:migrate', function () {
+    // do nothing - delete when we start using doctrine:migrations
+})->desc('Migrate database');
+
+/**
+ * @Override from deployer-sumo/assets
+ */
+task('sumo:assets:install', function() {
+    // do nothing - no public directory in fork
+})->desc('Install bundle\'s web assets under a public directory');
+
+task(
+    'deploy:theme:build',
+    function () {
+        $packageFile = file_get_contents('package.json');
+        $package = json_decode($packageFile, true);
+
+        if (!array_key_exists('theme', $package)) {
+            writeln(
+                [
+                    '<comment>No theme found in package.json</comment>',
+                ]
+            );
+
+            return;
+        }
+
+        if (commandExist('nvm')) {
+            runLocally('nvm install');
+            runLocally('nvm exec node_modules/.bin/gulp build');
+        } else {
+            runLocally('node_modules/.bin/gulp build');
+        }
+    }
+)->desc('Generate bundle assets');
+after('deploy:update_code', 'deploy:theme:build');
+
+// Upload tasks
+task(
+    'deploy:theme:upload',
+    function () {
+        $packageFile = file_get_contents('package.json');
+        $package = json_decode($packageFile, true);
+
+        if (!array_key_exists('theme', $package)) {
+            writeln(
+                [
+                    '<comment>No theme found in package.json</comment>',
+                ]
+            );
+
+            return;
+        }
+
+        $theme = $package['theme'];
+        $remotePath = '{{release_path}}/src/Frontend/Themes/' . $theme . '/Core';
+
+        upload(__DIR__ . '/src/Frontend/Themes/' . $theme . '/Core/', $remotePath);
+     }
+)->desc('Upload bundle assets');
+after('deploy:theme:build', 'deploy:theme:upload');
+
+// Migrations
+task('database:migrations:run', function () {
+    if (!test('[ -d {{release_path}}/migrations/')) {
+        return;
+    }
+
+    cd('{{deploy_path}}/shared/');
+
+    if (!test('[ -f database_migrations ]')) {
+        run('touch database_migrations');
+    }
+
+    $parameters = Yaml::parse(run('cat app/config/parameters.yml'))['parameters'];
+    $executedMigrations = explode("\n", run('cat database_migrations'));
+
+    cd('{{release_path}}/migrations/');
+
+    $dirs = explode(',', run('find {{release_path}}/migrations/* -maxdepth 0 -type d | tr "\n" ","'));
+    foreach ($dirs as $dir) {
+        if (empty($dir)) {
+            continue;
+        }
+
+        $shortName = basename($dir);
+        if (in_array($shortName, $executedMigrations)) {
+            continue;
+        }
+
+        if (test('[ -f ' . $shortName . '/update.sql ]')) {
+            writeln('<comment>Running update.sql for ' . $shortName . '</comment>');
+
+            run('mysql --default-character-set="utf8" --host=' . $parameters['database.host'] . ' --port=' . $parameters['database.port'] . ' --user=' . $parameters['database.user'] . ' --password=' . $parameters['database.password'] . ' ' . $parameters['database.name'] . ' < ' . $shortName . '/update.sql');
+        }
+
+        if (test('[ -f ' . $shortName . '/update.php ]')) {
+            writeln('<comment>Running update.php for ' . $shortName . '</comment>');
+
+            run('cd {{release_path}} && {{bin/php}} ' . $dir . '/update.php');
+        }
+
+        run('echo ' . $shortName . ' | tee -a {{deploy_path}}/shared/database_migrations');
+    }
+
+    // remove DB backup
+    run('rm {{deploy_path}}/mysql_backup.sql');
+})->desc('Run database migrations');
+before('fork:cache:clear', 'database:migrations:run');
+
+task('locale:migrations:run', function () {
+    if (!test('[ -d {{release_path}}/migrations/')) {
+        return;
+    }
+
+    cd('{{deploy_path}}/shared/');
+
+    if (!test('[ -f locale_migrations ]')) {
+        run('touch locale_migrations');
+    }
+
+    $executedMigrations = explode("\n", run('cat locale_migrations'));
+
+    cd('{{release_path}}/migrations/');
+
+    $dirs = explode(',', run('find {{release_path}}/migrations/* -maxdepth 0 -type d | tr "\n" ","'));
+    foreach ($dirs as $dir) {
+        if (empty($dir)) {
+            continue;
+        }
+
+        $shortName = basename($dir);
+        if (in_array($shortName, $executedMigrations)) {
+            continue;
+        }
+
+        if (test('[ -f ' . $shortName . '/locale.xml ]')) {
+            writeln('<comment>Installing locale.xml for ' . $shortName . '</comment>');
+
+            run('{{bin/console}} forkcms:locale:import -f ' . $dir . '/locale.xml --env={{symfony_env}}');
+        }
+
+        run('echo ' . $shortName . ' | tee -a {{deploy_path}}/shared/locale_migrations');
+    }
+})->desc('Run locale migrations');
+before('database:migrations:run', 'locale:migrations:run');
+
+task(
+    'database:backup',
+    function () {
+        cd('{{deploy_path}}/shared/');
+        $parameters = Yaml::parse(run('cat app/config/parameters.yml'))['parameters'];
+
+        run('mysqldump --skip-lock-tables --default-character-set="utf8" --host=' . $parameters['database.host'] . ' --port=' . $parameters['database.port'] . ' --user=' . $parameters['database.user'] . ' --password=' . $parameters['database.password'] . ' ' . $parameters['database.name'] . ' > {{deploy_path}}/mysql_backup.sql');
+    }
+)->desc('Create a backup of the database');
+before('database:migrations:run', 'database:backup');
+
+task(
+    'fork:cache:clear',
+    function() {
+        run('{{bin/console}} fork:cache:clear --env={{symfony_env}}');
+        run('if [ -f {{deploy_path}}/shared/config/parameters.yml ]; then touch {{deploy_path}}/shared/config/parameters.yml; fi');
+    }
+)
+    ->desc('Clear Fork CMS cache');
+before('deploy:cache:clear', 'fork:cache:clear');
+
+/**********************
+ * Flow configuration *
+ **********************/
+// Clear the Opcache
+after('deploy:symlink', 'cachetool:clear:opcache');
+// Unlock the deploy when it failed
+after('deploy:failed', 'deploy:unlock');
+// Migrate database before symlink new release.
+before('deploy:symlink', 'database:migrate');
