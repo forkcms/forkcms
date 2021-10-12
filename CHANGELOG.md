@@ -1,3 +1,10 @@
+5.10.1  (2021-10-xx)
+------------------
+
+Fixed:
+* Locale: Fixed exporting XML truncated by a few bytes
+
+
 5.10.0  (2021-05-16)
 ------------------
 
