@@ -722,7 +722,7 @@ class Add extends BackendBaseActionAdd
 
     private function getHiddenJsonField(string $name, ?string $json): SpoonFormHidden
     {
-        return new class($name, $json) extends SpoonFormHidden {
+        return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
             public function getValue($allowHTML = null)
             {
                 return parent::getValue(true);
