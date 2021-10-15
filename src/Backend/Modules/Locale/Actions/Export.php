@@ -123,7 +123,7 @@ class Export extends BackendBaseActionIndex
             [
                 'Content-Disposition' => 'attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"',
                 'Content-Type' => 'application/octet-stream;charset=' . $charset,
-                'Content-Length' => '' . mb_strlen($xmlOutput),
+                'Content-Length' => '' . strlen($xmlOutput),
             ]
         );
     }
