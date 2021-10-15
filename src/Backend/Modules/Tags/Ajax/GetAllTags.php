@@ -14,6 +14,11 @@ class GetAllTags extends BackendBaseAJAXAction
     public function execute(): void
     {
         parent::execute();
-        $this->output(Response::HTTP_OK, BackendTagsModel::getTagNames());
+        $this->output(
+            Response::HTTP_OK,
+            BackendTagsModel::getFilteredTagNames(
+                $this->getRequest()->get('filter')
+            )
+        );
     }
 }

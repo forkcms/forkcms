@@ -59,6 +59,7 @@
               module: 'Tags',
               action: 'GetAllTags'
             },
+            filter: value
           },
           {
             timeout: 1000,

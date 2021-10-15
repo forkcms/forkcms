@@ -63,6 +63,26 @@ class Model
         );
     }
 
+    public static function getFilteredTagNames(?string $filter, string $language = null): array
+    {
+        if ($filter === '' || $filter === null) {
+            return self::getTagNames($language);
+        }
+
+        return array_map(
+            function (Tag $tag): string {
+                return $tag->getTag();
+            },
+            self::getTagRepository()->createQueryBuilder('t')
+                ->where('t.tag LIKE :filter')
+                ->andWhere('t.locale = :locale')
+                ->setParameter('filter', "%$filter%")
+                ->setParameter('locale', self::getLocale($language))
+                ->getQuery()
+                ->getResult()
+        );
+    }
+
     public static function getTagNames(string $language = null): array
     {
         return array_map(
