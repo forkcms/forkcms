@@ -3,7 +3,10 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use Backend\Modules\FormBuilder\Command\CopyFormWidgetsToOtherLocale;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use Common\Doctrine\Entity\Meta;
+use ForkCMS\Utility\Thumbnails;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
 use SpoonFilter;
@@ -117,6 +120,18 @@ class Model
             $locationWidgetOldIds = array_keys($locationWidgetIds);
         }
 
+        $formWidgetOldIds = [];
+        $formWidgetIds = [];
+        if (BackendModel::isModuleInstalled('FormBuilder')) {
+            // copy form widgets and get copied widget ids
+            $copyFormWidgets = new CopyFormWidgetsToOtherLocale($toLocale, $fromLocale);
+            $commandBus->handle($copyFormWidgets);
+            $formWidgetIds = $copyFormWidgets->extraIdMap;
+
+            // define old block ids
+            $formWidgetOldIds = array_keys($formWidgetIds);
+        }
+
         // get all old pages
         $ids = $database->getColumn(
             'SELECT id
@@ -198,6 +213,18 @@ class Model
             // init page
             $page = [];
 
+            // Get data from original page and copy image if one is set
+            $serializedData = null;
+            if ($sourceData['data'] !== null) {
+                $data = $sourceData['data'];
+
+                if (array_key_exists('image', $data)) {
+                    $data['image'] = self::copyImage($data['image'], $meta['url']);
+                }
+
+                $serializedData = serialize($data);
+            }
+
             // build page
             $page['id'] = $sourceData['id'];
             $page['user_id'] = BackendAuthentication::getUser()->getUserId();
@@ -219,7 +246,7 @@ class Model
             $page['allow_edit'] = $sourceData['allow_edit'];
             $page['allow_delete'] = $sourceData['allow_delete'];
             $page['sequence'] = $sourceData['sequence'];
-            $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
+            $page['data'] = $serializedData;
 
             // insert page, store the id, we need it when building the blocks
             $revisionId = self::insert($page);
@@ -238,13 +265,18 @@ class Model
                 $block['edited_on'] = BackendModel::getUTCDate();
 
                 // Overwrite the extra_id of the old content block with the id of the new one
-                if (in_array($block['extra_id'], $contentBlockOldIds, true)) {
+                if (in_array((int) $block['extra_id'], $contentBlockOldIds, true)) {
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
                 }
 
                 // Overwrite the extra_id of the old location widget with the id of the new one
-                if ((count($locationWidgetOldIds) > 0) && in_array($block['extra_id'], $locationWidgetOldIds, true)) {
+                if ((count($locationWidgetOldIds) > 0) && in_array((int) $block['extra_id'], $locationWidgetOldIds, true)) {
                     $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                }
+
+                // Overwrite the extra_id of the old form widget with the id of the new one
+                if ((count($formWidgetOldIds) > 0) && in_array((int) $block['extra_id'], $formWidgetOldIds, true)) {
+                    $block['extra_id'] = $formWidgetIds[(int) $block['extra_id']];
                 }
 
                 // add block
@@ -1656,5 +1688,25 @@ class Model
         );
 
         $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+    }
+
+    private static function copyImage(?string $image, string $metaUrl): ?string
+    {
+        if ($image === null || $image === '') {
+            return null;
+        }
+
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
+
+        $originalImagePath = $imagePath . '/source/' . $image;
+        $extension = pathinfo($originalImagePath, PATHINFO_EXTENSION);
+        $imageFilename = $metaUrl . '_' . time() . '.' . $extension;
+        $newImagePath = $imagePath . '/source/' . $imageFilename;
+
+        // make sure we have a separate image for the copy in case the original image gets removed
+        (new Filesystem())->copy($originalImagePath, $newImagePath);
+        BackendModel::get(Thumbnails::class)->generate($imagePath, $newImagePath);
+
+        return $imageFilename;
     }
 }

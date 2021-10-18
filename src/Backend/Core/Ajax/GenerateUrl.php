@@ -3,6 +3,7 @@
 namespace Backend\Core\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Language\Locale;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,7 +23,10 @@ class GenerateUrl extends BackendBaseAJAXAction
         $parameters = $this->getRequest()->request->get('parameters', '');
 
         // cleanup values
-        $parameters = @unserialize($parameters, ['allowed_classes' => false]);
+        $parameters = html_entity_decode($parameters);
+        $parameters = @unserialize($parameters, ['allowed_classes' => [
+            Locale::class,
+        ]]);
 
         // fetch generated meta url
         $url = urldecode($this->get('fork.repository.meta')->generateUrl($url, $className, $methodName, $parameters));

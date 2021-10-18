@@ -331,6 +331,12 @@ class Model
             // get all terms to search for (including synonyms)
             $terms = self::getSynonyms((string) $term);
 
+            // search on short terms
+            $shortSearchTerm = implode('%', $terms);
+            if (strlen($shortSearchTerm) < 4) {
+                return self::getTotalForShortTerm($shortSearchTerm);
+            }
+
             // build search terms
             $terms = self::buildTerm($terms);
 
@@ -362,6 +368,22 @@ class Model
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             $query,
             $params
+        );
+    }
+
+    private static function getTotalForShortTerm(string $term): int
+    {
+        return (int) FrontendModel::getContainer()->get('database')->getVar(
+            'SELECT COUNT(module)
+             FROM
+             (
+                 SELECT i.module
+                 FROM search_index AS i
+                 INNER JOIN search_modules AS m ON i.module = m.module
+                 WHERE i.value LIKE ? AND i.language = ? AND i.active = ? AND m.searchable = ?
+                 GROUP BY i.module, i.other_id
+             ) AS results',
+            ["%$term%", FRONTEND_LANGUAGE, true, true]
         );
     }
 

@@ -187,6 +187,8 @@ class MediaItemDataGrid extends DataGridDatabase
                 'url',
                 true
             );
+        } else {
+            $this->setColumnFunction('htmlspecialchars', ['[url]'], 'url', false);
         }
 
         // set column functions

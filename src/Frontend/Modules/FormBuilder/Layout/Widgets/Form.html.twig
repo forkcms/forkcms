@@ -90,7 +90,11 @@
                             document.getElementById("{{ formName }}").submit();
                           }
                         </script>
-                        <input type="submit" value="{{ submitValue }}" class="g-recaptcha inputSubmit btn btn-primary" data-sitekey="{{ siteKey }}" data-callback="recaptcha{{ formToken }}Submitted" data-size="invisible" />
+                        {% if googleRecaptchaVersion == 'v3' %}
+                          <input type="submit" value="{{ submitValue }}" class="g-recaptcha inputSubmit btn btn-primary" data-sitekey="{{ siteKey }}" data-callback="recaptcha{{ formToken }}Submitted" data-action="submit" />
+                        {% else %}
+                          <input type="submit" value="{{ submitValue }}" class="g-recaptcha inputSubmit btn btn-primary" data-sitekey="{{ siteKey }}" data-callback="recaptcha{{ formToken }}Submitted" data-size="invisible" />
+                        {% endif %}
                       {% else %}
                         <input type="submit" value="{{ submitValue }}" name="submit" class="inputSubmit btn btn-primary" />
                       {% endif %}

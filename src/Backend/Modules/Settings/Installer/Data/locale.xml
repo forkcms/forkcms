@@ -650,6 +650,18 @@
         <translation language="nl"><![CDATA[<code>%1$s</code> is een ongeldige variabele naam.]]></translation>
         <translation language="en"><![CDATA[<code>%1$s</code> is an invalid variable name.]]></translation>
       </item>
+      <item type="label" name="GoogleRecaptcha">
+        <translation language="nl"><![CDATA[Google reCAPTCHA]]></translation>
+        <translation language="en"><![CDATA[Google reCAPTCHA]]></translation>
+      </item>
+      <item type="label" name="GoogleRecaptchaV2Invisible">
+        <translation language="nl"><![CDATA[v2 invisible]]></translation>
+        <translation language="en"><![CDATA[v2 invisible]]></translation>
+      </item>
+      <item type="label" name="GoogleRecaptchaV3">
+        <translation language="nl"><![CDATA[v3]]></translation>
+        <translation language="en"><![CDATA[v3]]></translation>
+      </item>
     </Settings>
   </Backend>
   <Frontend>
