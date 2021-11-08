@@ -102,12 +102,29 @@ CKEDITOR.dialog.add(
                             type: 'text',
                             id: 'displayText',
                             label: editor.lang.medialibrary.displayText,
-                            validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.medialibrary.displayCannotBeEmpty),
                             setup: function (element) {
                                 this.setValue(element.getText());
                             },
+                            onShow: function (element) {
+                                // hide display text when linking a html element
+                                if (element.sender.element.htmlElement) {
+                                  this.getElement().getParent().getParent().hide();
+
+                                  return;
+                                }
+
+                                this.getElement().getParent().getParent().show();
+                            },
                             commit: function (element) {
-                                element.setText(this.getValue());
+                                // don't set display text when linking a html element
+                                if (element.htmlElement) {
+                                    return;
+                                }
+
+                                // fill in display text
+                                if (this.getValue()) {
+                                    element.setText(this.getValue());
+                                }
                             }
                         },
                         {
@@ -129,6 +146,11 @@ CKEDITOR.dialog.add(
                                     commit: function (element) {
                                         if (this.getDialog().getValueOf('tab', 'type') === 'email') {
                                             return;
+                                        }
+
+                                        // set url as text when no display text is given
+                                        if (!element.htmlElement && !element.getText()) {
+                                            element.setText(this.getValue());
                                         }
 
                                         element.setAttribute('href', this.getValue());
@@ -244,6 +266,7 @@ CKEDITOR.dialog.add(
 
                 var selection = editor.getSelection();
                 var initialText = selection.getSelectedText();
+                var initialElement = selection.getSelectedElement();
                 var element = selection.getStartElement();
 
                 if (element) {
@@ -255,6 +278,14 @@ CKEDITOR.dialog.add(
                     element = editor.document.createElement('a');
 
                     dialog.setValueOf('tab', initialText.match(urlRegex) ? 'url' : 'displayText', initialText);
+                }
+
+                // save initial element to new a-element
+                if (initialElement) {
+                    // element used for checks
+                    element.htmlElement = initialElement.$.outerHTML;
+                    // display element
+                    element.setHtml(initialElement.$.outerHTML);
                 }
 
                 this.element = element;
