@@ -26,13 +26,13 @@ export class Cropper {
   }
 
   getDialog () {
-    const dialog2 = document.querySelectorAll('[data-role=media-library-add-dialog]')[0]
+    const addDialog = document.querySelector('[data-role=media-library-add-dialog]')
 
-    if (typeof (dialog2) !== 'undefined' && dialog2 !== null) {
-      return dialog2
+    if (typeof (addDialog) !== 'undefined' && addDialog !== null) {
+      return addDialog
     }
 
-    return document.querySelectorAll('[data-role=media-library-cropper-dialog]')[0]
+    return document.querySelector('[data-role=media-library-cropper-dialog]')
   }
 
   createDialogBootstrapModal () {
