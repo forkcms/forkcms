@@ -721,7 +721,9 @@ export class Fields {
     $('#datetimeDialog').find('.defaultValue').show()
 
     // select first tab
-    $('#' + id + ' .nav-tabs .nav-link:first').tab('show')
+    const tab = document.querySelectorAll('#' + id + ' .nav-tabs .nav-link')[0]
+    const tabObject = new bootstrap.Tab(tab)
+    tabObject.show()
   }
 
   /**

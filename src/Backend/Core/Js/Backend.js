@@ -1,6 +1,6 @@
 // plugins imports
 // You can specify which plugins you need
-import * as bootstrap from 'bootstrap'
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.js'
 window.bootstrap = bootstrap
 import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'

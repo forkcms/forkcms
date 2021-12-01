@@ -1,3 +1,5 @@
+import { Config } from './Config'
+
 export class MultiTextBox {
   static multipleTextbox (options, element) {
     // define defaults
@@ -93,7 +95,7 @@ export class MultiTextBox {
                     const realData = []
 
                     // alert the user
-                    if (data.code !== 200 && jsBackend.debug) {
+                    if (data.code !== 200 && Config.isDebug()) {
                       window.alert(data.message)
                     }
 

@@ -69,25 +69,25 @@ export class Navigation {
   }
 
   tooltip () {
-    const $tooltip = $('[data-toggle="tooltip-nav"]')
     const $wrapper = $('.main-wrapper')
+    const tooltipElements = document.querySelectorAll('[data-toggle="tooltip-nav"]')
 
-    if ($tooltip.length > 0) {
-      $tooltip.tooltip({
+    for (let i = 0; i < tooltipElements.length; i++) {
+      const tooltip = tooltipElements[i]
+      const tooltipObject = new bootstrap.Tooltip(tooltip, {
         boundary: 'window',
         trigger: 'manual',
         placement: 'right'
       })
 
-      $tooltip.on('mouseover', (e) => {
+      tooltip.addEventListener('mouseenter', () => {
         if ($wrapper.hasClass('navigation-collapsed') && $(window).width() > 787) {
-          const $target = $(e.target)
-          $target.tooltip('show')
+          tooltipObject.show()
         }
       })
 
-      $tooltip.on('mouseout', (e) => {
-        $(e.target).tooltip('hide')
+      tooltip.addEventListener('mouseleave', () => {
+        tooltipObject.hide()
       })
     }
   }
