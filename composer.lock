@@ -1770,16 +1770,16 @@
         },
         {
             "name": "google/apiclient",
-            "version": "v1.1.8",
+            "version": "v1.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client.git",
-                "reference": "85309a3520bb5f53368d43e35fd24f43c9556323"
+                "reference": "19d7d735ee4cff0f8c14a234b5094b99d00ef278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/85309a3520bb5f53368d43e35fd24f43c9556323",
-                "reference": "85309a3520bb5f53368d43e35fd24f43c9556323",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/19d7d735ee4cff0f8c14a234b5094b99d00ef278",
+                "reference": "19d7d735ee4cff0f8c14a234b5094b99d00ef278",
                 "shasum": ""
             },
             "require": {
@@ -1811,9 +1811,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client/issues",
-                "source": "https://github.com/googleapis/google-api-php-client/tree/v1.1.8"
+                "source": "https://github.com/googleapis/google-api-php-client/tree/v1.1.9"
             },
-            "time": "2016-06-06T21:22:48+00:00"
+            "time": "2020-07-22T19:51:49+00:00"
         },
         {
             "name": "google/recaptcha",
