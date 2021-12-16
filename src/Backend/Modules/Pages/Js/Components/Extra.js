@@ -51,8 +51,6 @@ export class Extra {
       } else {
         $pageBlockPreview.addClass('d-none')
       }
-
-      $modal.modal('hide')
     })
   }
 

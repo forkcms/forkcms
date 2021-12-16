@@ -285,7 +285,7 @@ export class Controls {
             // get id
             const id = element.data('target')
 
-            $(id).modal('show')
+            $(id).show()
           } else {
             // no confirm
             $closestForm.submit()
