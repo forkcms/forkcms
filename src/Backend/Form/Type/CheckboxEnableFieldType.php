@@ -15,7 +15,7 @@ class CheckboxEnableFieldType extends AbstractType
     {
         $builder
             ->add(
-                'enableField',
+                'enabled',
                 SwitchType::class,
                 [
                     'required' => false,
@@ -23,7 +23,7 @@ class CheckboxEnableFieldType extends AbstractType
                 ]
             )
             ->add(
-                'field',
+                'value',
                 TextType::class,
                 [
                     'required' => false,

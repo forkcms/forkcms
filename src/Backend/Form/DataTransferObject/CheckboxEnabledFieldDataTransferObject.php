@@ -4,13 +4,13 @@ namespace Backend\Form\DataTransferObject;
 
 class CheckboxEnabledFieldDataTransferObject
 {
-    public bool $enableField = false;
+    public bool $enabled = false;
 
-    public string $field = '';
+    public string $value = '';
 
-    public function __construct(bool $enableField = false, string $field = '')
+    public function __construct(bool $enabled = false, string $value = '')
     {
-        $this->enableField = $enableField;
-        $this->field = $field;
+        $this->enabled = $enabled;
+        $this->value = $value;
     }
 }
