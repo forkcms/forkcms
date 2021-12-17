@@ -334,7 +334,7 @@
           </div>
           <div class="modal-footer d-flex">
             <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
-            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save'}) }}
+            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save', 'data-bs-dismiss':'modal'}) }}
           </div>
         </div>
       </div>

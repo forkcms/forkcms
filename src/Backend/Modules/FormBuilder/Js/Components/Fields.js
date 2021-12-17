@@ -239,7 +239,7 @@ export class Fields {
 
       // bind
       if (id !== '') {
-        $('#' + id).modal('show')
+        $('#' + id).show()
       }
     })
 
@@ -403,7 +403,7 @@ export class Fields {
                 )
 
                 // show dialog
-                $('#textboxDialog').modal('show')
+                $('#textboxDialog').show()
               } else if (data.data.field.type === 'textarea') {
                 // textarea edit
                 // fill in form
@@ -430,7 +430,7 @@ export class Fields {
                 )
 
                 // show dialog
-                $('#textareaDialog').modal('show')
+                $('#textareaDialog').show()
               } else if (data.data.field.type === 'datetime') {
                 // datetime edit
                 // fill in form
@@ -459,7 +459,7 @@ export class Fields {
                 )
 
                 // show dialog
-                $('#datetimeDialog').modal('show')
+                $('#datetimeDialog').show()
               } else if (data.data.field.type === 'dropdown') {
                 // dropdown edit
                 // fill in form
@@ -494,7 +494,7 @@ export class Fields {
                 }
 
                 // show dialog
-                $('#dropdownDialog').modal('show')
+                $('#dropdownDialog').show()
               } else if (data.data.field.type === 'radiobutton') {
                 // radiobutton edit
                 // fill in form
@@ -529,7 +529,7 @@ export class Fields {
                 }
 
                 // show dialog
-                $('#radiobuttonDialog').modal('show')
+                $('#radiobuttonDialog').show()
               } else if (data.data.field.type === 'checkbox') {
                 // checkbox edit
                 // fill in form
@@ -564,7 +564,7 @@ export class Fields {
                 }
 
                 // show dialog
-                $('#checkboxDialog').modal('show')
+                $('#checkboxDialog').show()
               } else if (data.data.field.type === 'mailmotor') {
                 // mailmotor edit
                 // fill in form
@@ -573,7 +573,7 @@ export class Fields {
                 $('#mailmotorListId').val(StringUtil.htmlDecode(data.data.field.settings.list_id))
 
                 // show dialog
-                $('#mailmotorDialog').modal('show')
+                $('#mailmotorDialog').show()
               } else if (data.data.field.type === 'heading') {
                 // heading edit
                 // fill in form
@@ -581,7 +581,7 @@ export class Fields {
                 $('#heading').val(StringUtil.htmlDecode(data.data.field.settings.values))
 
                 // show dialog
-                $('#headingDialog').modal('show')
+                $('#headingDialog').show()
               } else if (data.data.field.type === 'paragraph') {
                 // paragraph edit
                 // fill in form
@@ -589,7 +589,7 @@ export class Fields {
                 $('#paragraph').val(data.data.field.settings.values)
 
                 // show dialog
-                $('#paragraphDialog').modal('show')
+                $('#paragraphDialog').show()
               } else if (data.data.field.type === 'submit') {
                 // submit edit
                 // fill in form
@@ -597,7 +597,7 @@ export class Fields {
                 $('#submit').val(StringUtil.htmlDecode(data.data.field.settings.values))
 
                 // show dialog
-                $('#submitDialog').modal('show')
+                $('#submitDialog').show()
               }
 
               // validation form

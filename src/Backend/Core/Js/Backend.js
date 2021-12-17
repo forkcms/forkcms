@@ -6,8 +6,6 @@ import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
 import 'flatpickr'
-// TODO WEBPACK remove jquery ui, now used for sortable and datepicker
-import 'jquery-ui-dist/jquery-ui'
 
 // component imports
 import { Ajax } from './Components/Ajax'
@@ -115,4 +113,3 @@ $(window).on('load', () => {
   window.backend = new Backend()
   window.backend.initBackend()
 })
-
