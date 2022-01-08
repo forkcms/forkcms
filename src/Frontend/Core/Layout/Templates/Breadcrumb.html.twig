@@ -1,7 +1,7 @@
 <span class="sr-only">{{ 'lbl.YouAreHere'|trans }}</span>
 <ul class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList" role="navigation">
   {% for breadcrumb in breadcrumb %}
-    <li{% if loop.last %} class="active"{% endif %} itemprop="itemListElement" itemscope
+    <li class="breadcrumb-item{% if loop.last %} active{% endif %}" itemprop="itemListElement" itemscope
       itemtype="https://schema.org/ListItem">
       {% if breadcrumb.url and not loop.last %}
         {# set the full url or the item link will not validate #}
