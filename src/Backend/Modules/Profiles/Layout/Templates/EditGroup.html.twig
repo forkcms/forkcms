@@ -45,7 +45,7 @@
             <p>{{ 'msg.ConfirmDeleteGroup'|trans|format(group.name|e)|raw }}</p>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal" }) }}
             {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" }) }}
           </div>
         </div>

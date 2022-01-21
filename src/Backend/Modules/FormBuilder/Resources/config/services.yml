@@ -1,3 +1,6 @@
+imports:
+    - { resource: commands.yml }
+
 services:
     formbuilder.submitted.mailer:
         class: Frontend\Modules\FormBuilder\EventListener\FormBuilderSubmittedMailSubscriber

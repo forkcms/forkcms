@@ -68,7 +68,7 @@ export class Folders {
       e.preventDefault()
 
       // open dialog
-      $addFolderDialog.modal('show')
+      $addFolderDialog.show()
 
       // Focus the text field
       $('#addFolderTitle').focus()

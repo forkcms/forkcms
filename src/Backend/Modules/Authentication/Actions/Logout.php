@@ -14,6 +14,7 @@ class Logout extends BackendBaseAction
     public function execute(): void
     {
         parent::execute();
+        $this->checkToken();
         BackendAuthentication::logout();
 
         // redirect to login-screen

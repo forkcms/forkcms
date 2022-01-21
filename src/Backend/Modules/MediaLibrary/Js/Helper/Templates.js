@@ -111,7 +111,7 @@ export class Templates {
     }
 
     html += '<td class="url"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.url + '</label></td>'
-    html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.title + '</label></td>'
+    html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + StringUtil.htmlEncode(mediaItem.title) + '</label></td>'
     if (mediaItem.type === 'image') {
       html += '<td class="duplicate">'
       html += '<button type="button" data-media-item-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary btn-icon-only" title="' + StringUtil.ucfirst(window.backend.locale.lbl('MediaItemDuplicate')) + '">'

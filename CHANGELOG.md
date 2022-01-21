@@ -1,3 +1,71 @@
+5.11.0  (2021-10-14)
+------------------
+
+Fixed:
+* Core: Fix array offset error for canonical url in meta [#3411](https://github.com/forkcms/forkcms/pull/3411)
+* Core: Fix deleting cookies [#3440](https://github.com/forkcms/forkcms/pull/3440)
+* Core: Fix encoding problem with generating urls [#3429](https://github.com/forkcms/forkcms/pull/3429)
+* Core: Fixed GenarteUrl to allow Backend Locale [#3423](https://github.com/forkcms/forkcms/pull/3423)
+* Core: Update packages [#3452](https://github.com/forkcms/forkcms/pull/3452) [#3447](https://github.com/forkcms/forkcms/pull/3447) [#3448](https://github.com/forkcms/forkcms/pull/3448) [#3451](https://github.com/forkcms/forkcms/pull/3451) [#3435](https://github.com/forkcms/forkcms/pull/3435) [#3437](https://github.com/forkcms/forkcms/pull/3437) [#3439](https://github.com/forkcms/forkcms/pull/3439) [#3408](https://github.com/forkcms/forkcms/pull/3408) [#3427](https://github.com/forkcms/forkcms/pull/3427) [#3469](https://github.com/forkcms/forkcms/pull/3469) [#3467](https://github.com/forkcms/forkcms/pull/3467) [#3465](https://github.com/forkcms/forkcms/pull/3465) [#3462](https://github.com/forkcms/forkcms/pull/3462) [#3461](https://github.com/forkcms/forkcms/pull/3461) [#3459](https://github.com/forkcms/forkcms/pull/3459)
+* Core: Update the placeholder image URLs [#3463](https://github.com/forkcms/forkcms/pull/3463)
+* ContentBlocks: Fix mapping old content blocks when copying pages [#3442](https://github.com/forkcms/forkcms/pull/3442)
+* Docs: Put code in code block [#3407](https://github.com/forkcms/forkcms/pull/3407)
+* Docs: Update old screenshots [#3210](https://github.com/forkcms/forkcms/pull/3210) [#3412](https://github.com/forkcms/forkcms/pull/3412)
+* Locale: Fixed exporting XML truncated by a few bytes
+* Locale: Fixed truncated locale XML export [#3470](https://github.com/forkcms/forkcms/pull/3470)
+* MediaLibrary: Fix image preview [#3434](https://github.com/forkcms/forkcms/pull/3434)
+* MediaLibrary: Fix item preview in the editor [#3450](https://github.com/forkcms/forkcms/pull/3450)
+* Page: Duplicate page image when copying a page to a different locale [#3438](https://github.com/forkcms/forkcms/pull/3438)
+* Pages: Revert usertemplates fix since it is broken because of the nex security fixes [#3460](https://github.com/forkcms/forkcms/pull/3460)
+* Search: Fix search total for short terms [#3441](https://github.com/forkcms/forkcms/pull/3441)
+
+Security:
+* Core: Fix xss issue in spoon form [#3453](https://github.com/forkcms/forkcms/pull/3453)
+* Core: Prevent CSRF logout in the backend [#3471](https://github.com/forkcms/forkcms/pull/3471)
+* Core: SpoonLibrary expects the charset to be in lowercase, otherwise some xss protections fail [#3455](https://github.com/forkcms/forkcms/pull/3455)
+* MediaLibrary: Fix xss in mediaitem type movie id on edit [#3406](https://github.com/forkcms/forkcms/pull/3406)
+
+Added:
+* Core: Add support for Google reCAPTCHA v3 [#3409](https://github.com/forkcms/forkcms/pull/3409)
+* FormBuilder: Copy forms and their widgets when making a language copy [#3445](https://github.com/forkcms/forkcms/pull/3445)
+* MediaLibrary: Add support for svg [#3424](https://github.com/forkcms/forkcms/pull/3424) [#3432](https://github.com/forkcms/forkcms/pull/3432)
+
+Changed:
+* DX: Only run tests once on PR [#3468](https://github.com/forkcms/forkcms/pull/3468)
+* Test: Minor database optimalisation [#3443](https://github.com/forkcms/forkcms/pull/3443)
+
+
+5.10.0  (2021-05-16)
+------------------
+
+Fixed:
+* Core: Fix double encoding in spoon library [#3400](https://github.com/forkcms/forkcms/pull/3400)
+* Core: Fix files not loading on some apache servers [#3361](https://github.com/forkcms/forkcms/pull/3361)
+* Core: Update packages [#3398](https://github.com/forkcms/forkcms/pull/3398) [#3394](https://github.com/forkcms/forkcms/pull/3394) [#3386](https://github.com/forkcms/forkcms/pull/3386) [#3385](https://github.com/forkcms/forkcms/pull/3385) [#3382](https://github.com/forkcms/forkcms/pull/3382) [#3364](https://github.com/forkcms/forkcms/pull/3364)
+* Blog: Fix broken thumbnail in the backend [#3360](https://github.com/forkcms/forkcms/pull/3360)
+* Pages: Fix usertemplates [#3371](https://github.com/forkcms/forkcms/pull/3371) [#3365](https://github.com/forkcms/forkcms/pull/3365)
+
+Security:
+* Authentication: Fix xss in redirect url [#3355](https://github.com/forkcms/forkcms/pull/3355) [#3353](https://github.com/forkcms/forkcms/pull/3353)
+* MediaLibrary: Fix xss in media item title [#3401](https://github.com/forkcms/forkcms/pull/3401)
+* MediaLibrary: Fix xss in video ids [#3402](https://github.com/forkcms/forkcms/pull/3402)
+* Search: Fix xss in search referrer [#3387](https://github.com/forkcms/forkcms/pull/3388)
+* Spoon: Fix xss in form input files [#3357](https://github.com/forkcms/forkcms/pull/3357)
+
+Added:
+* Core: Add canonical URL to SEO tab [#3188](https://github.com/forkcms/forkcms/pull/3188)
+* Core: Add CLI command to install a module [#3323](https://github.com/forkcms/forkcms/pull/3323)
+* Core: Throw an event when the session id changes [#3377](https://github.com/forkcms/forkcms/pull/3377)
+* MediaLibrary: Add edit button to media item within a form [#3192](https://github.com/forkcms/forkcms/pull/3192)
+* MediaLibrary: Added a search box to the media library [#3189](https://github.com/forkcms/forkcms/pull/3189)
+* Pages: Make it possible to set an id in a usertemplate [#3166](https://github.com/forkcms/forkcms/pull/3166)
+
+Changed:
+* Core: Improve GDPR consent dialog [#3372](https://github.com/forkcms/forkcms/pull/3372)
+* Github: No codecov annotations in PR's [#3378](https://github.com/forkcms/forkcms/pull/3378)
+* Github: Upgrade to native dependabot [#3384](https://github.com/forkcms/forkcms/pull/3384)
+
+
 5.9.3  (2021-03-21)
 ------------------
 

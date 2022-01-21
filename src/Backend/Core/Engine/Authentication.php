@@ -4,6 +4,8 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Common\Events\ForkEvents;
+use Common\Events\ForkSessionIdChangedEvent;
 use RuntimeException;
 
 /**
@@ -349,6 +351,8 @@ class Authentication
         self::cleanupOldSessions();
 
         $session = BackendModel::getSession();
+        $oldSession = $session->getId();
+
         // create a new session for safety reasons
         if (!$session->migrate(true)) {
             throw new RuntimeException(
@@ -371,6 +375,12 @@ class Authentication
         $session->set('backend_logged_in', true);
         $session->set('backend_secret_key', $userSession['secret_key']);
 
+        // trigger changed session ID
+        BackendModel::get('event_dispatcher')->dispatch(
+            ForkEvents::FORK_EVENTS_SESSION_ID_CHANGED,
+            new ForkSessionIdChangedEvent($oldSession, $session->getId())
+        );
+
         // update/instantiate the value for the logged_in container.
         BackendModel::getContainer()->set('logged_in', true);
         self::$user = new User($userId);
@@ -386,7 +396,10 @@ class Authentication
         if (self::$alreadyLoggedOut) {
             return;
         }
+
         $session = BackendModel::getSession();
+        $oldSession = $session->getId();
+
         // remove all rows owned by the current user
         BackendModel::get('database')->delete('users_sessions', 'session_id = ?', $session->getId());
 
@@ -401,6 +414,12 @@ class Authentication
                 'For safety reasons the session should be regenerated. But apparently it failed.'
             );
         }
+
+        // trigger changed session ID
+        BackendModel::get('event_dispatcher')->dispatch(
+            ForkEvents::FORK_EVENTS_SESSION_ID_CHANGED,
+            new ForkSessionIdChangedEvent($oldSession, $session->getId())
+        );
 
         self::$alreadyLoggedOut = true;
     }

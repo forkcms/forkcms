@@ -181,6 +181,6 @@ export class Faq {
 
     const $modal = $('#confirmDeleteFeedback')
     $modal.siblings('#delete_id').val($(event.currentTarget).data('id'))
-    $modal.modal('show')
+    $modal.show()
   }
 }

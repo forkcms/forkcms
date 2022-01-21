@@ -120,6 +120,7 @@
     data-meta-keywords-selector="{{ form.keywords.vars.id }}"
     data-url-selector="{{ '#' ~ form.url.vars.id }}"
     data-url-overwrite-selector="{{ '#' ~ form.urlOverwrite.vars.id }}"
+    data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
     data-generated-url-selector="{{ form.vars.generated_url_selector }}"
     data-custom-selector="{{ '#' ~ customId }}"
     data-class-name-selector="{{ '#' ~ classId }}"
@@ -204,6 +205,18 @@
           </div>
           {{ form_errors(form.url) }}
           <small class="form-text text-muted">{{ 'msg.HelpMetaURL'|trans|raw }}</small>
+        </div>
+        <div class="form-group">
+          <ul class="list-unstyled checkboxTextFieldCombo">
+            <li class="checkbox">
+              <p>
+                {{ form_widget(form.canonicalUrlOverwrite) }}
+              </p>
+              {{ form_label(form.canonicalUrl) }}
+              {{ form_widget(form.canonicalUrl) }}
+              {{ form_errors(form.canonicalUrl) }}
+            </li>
+          </ul>
         </div>
       </div>
     </fieldset>

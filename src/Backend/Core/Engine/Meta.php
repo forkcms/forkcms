@@ -226,6 +226,36 @@ class Meta
         return (bool) $this->data['url_overwrite'];
     }
 
+    public function getCanonicalUrl(): ?string
+    {
+        if (!isset($this->data['data']) || !is_array($this->data['data'])) {
+            return null;
+        }
+
+        // not set so return null
+        if (!array_key_exists('canonical_url', $this->data['data'])) {
+            return null;
+        }
+
+        // return value
+        return urldecode($this->data['data']['canonical_url']);
+    }
+
+    public function getCanonicalUrlOverwrite(): bool
+    {
+        if (!isset($this->data['data']) || !is_array($this->data['data'])) {
+            return false;
+        }
+
+        // not set so return null
+        if (!array_key_exists('canonical_url_overwrite', $this->data['data'])) {
+            return false;
+        }
+
+        // return value
+        return (bool) $this->data['data']['canonical_url_overwrite'];
+    }
+
     /**
      * If the fields are disabled we don't have any values in the post.
      * When an error occurs in the other fields of the form the meta-fields would be cleared
@@ -244,6 +274,9 @@ class Meta
         }
         if (!isset($_POST['url'])) {
             $_POST['url'] = $this->data['url'] ?? null;
+        }
+        if (!isset($_POST['canonical_url'])) {
+            $_POST['canonical_url'] = $this->data['canonical_url'] ?? null;
         }
         if ($this->custom && !isset($_POST['meta_custom'])) {
             $_POST['meta_custom'] = $this->data['custom'] ?? null;
@@ -296,6 +329,16 @@ class Meta
             isset($this->data['url_overwrite']) && $this->data['url_overwrite']
         );
         $this->form->addText('url', isset($this->data['url']) ? urldecode($this->data['url']) : null);
+
+        // add canonical URL elements into the form
+        $this->form->addCheckbox(
+            'canonical_url_overwrite',
+            $this->getCanonicalUrlOverwrite()
+        );
+        $this->form->addText(
+            'canonical_url',
+            $this->getCanonicalUrl()
+        );
 
         // advanced SEO
         $indexValues = [
@@ -454,6 +497,11 @@ class Meta
             }
         }
 
+        // Canonical URL overwrite is checked
+        if ($this->form->getField('canonical_url_overwrite')->isChecked()) {
+            $this->form->getField('canonical_url')->isFilled(BackendLanguage::err('FieldIsRequired'));
+        }
+
         // if the form was submitted correctly the data array should be populated
         if (!$this->form->isCorrect()) {
             return;
@@ -481,6 +529,18 @@ class Meta
             )
         );
         $this->data['url_overwrite'] = $this->form->getField('url_overwrite')->isChecked();
+
+        if ($this->form->getField('canonical_url_overwrite')->isChecked()) {
+            $this->data['data']['canonical_url'] = $this->form->getField('canonical_url_overwrite')->getActualValue(
+                \SpoonFilter::htmlspecialcharsDecode($this->form->getField('canonical_url')->getValue()),
+                null
+            );
+            $this->data['data']['canonical_url_overwrite'] = true;
+        } else {
+            unset($this->data['data']['canonical_url']);
+            unset($this->data['data']['canonical_url_overwrite']);
+        }
+
         $this->data['custom'] = $this->custom && $this->form->getField('meta_custom')->isFilled()
             ? $this->form->getField('meta_custom')->getValue() : null;
         $this->data['seo_index'] = $this->form->getField('seo_index')->getValue();

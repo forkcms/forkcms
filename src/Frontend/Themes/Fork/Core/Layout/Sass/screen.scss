@@ -1,7 +1,7 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 
 // Bootstrap
-@import "~bootstrap/scss/functions";
+@import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
@@ -11,6 +11,7 @@
 @import '~photoswipe/src/css/main.scss';
 @import '~photoswipe/src/css/default-skin/default-skin.scss';
 @import '~slick-carousel/slick/slick.scss';
+@import '~flatpickr/dist/flatpickr';
 
 // Base
 @import 'base/type';
@@ -32,6 +33,7 @@
 @import 'components/navbar';
 @import 'components/sections';
 @import 'components/slider';
+@import 'components/date-time-picker';
 
 // Modules
 @import '../../../../../Modules/Search/Layout/Sass/Search';

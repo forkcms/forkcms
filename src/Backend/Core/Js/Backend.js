@@ -1,11 +1,11 @@
 // plugins imports
 // You can specify which plugins you need
-import 'bootstrap'
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.js'
+window.bootstrap = bootstrap
 import 'bootstrap-tagsinput/examples/lib/typeahead.js/dist/typeahead.bundle'
 import 'bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
 import 'select2/dist/js/select2.full'
-// TODO WEBPACK remove jquery ui, now used for sortable and datepicker
-import 'jquery-ui-dist/jquery-ui'
+import 'flatpickr'
 import Vue from 'vue'
 import CheckboxEnableField from './vue-components/CheckboxEnableField'
 
@@ -30,7 +30,6 @@ import { Config } from './Components/Config'
 import { BlockEditor } from './BlockEditor/BlockEditor'
 
 // modules imports
-import { Analytics } from '../../Modules/Analytics/Js/Analytics'
 import { Blog } from '../../Modules/Blog/Js/Blog'
 import { Extensions } from '../../Modules/Extensions/Js/Extensions'
 import { Faq } from '../../Modules/Faq/Js/Faq'
@@ -75,7 +74,6 @@ export class Backend {
     this.blockEditor = new BlockEditor()
 
     // init modules
-    this.analytics = new Analytics()
     this.blog = new Blog()
     this.extensions = new Extensions()
     this.faq = new Faq()

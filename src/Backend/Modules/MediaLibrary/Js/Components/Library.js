@@ -69,7 +69,10 @@ export class Library {
   dataGrids () {
     if (window.location.hash === '') {
       // select first tab
-      $('#library .nav-tabs .nav-item:first .nav-link').tab('show')
+      const navItems = document.querySelectorAll('#library .nav-item')
+      const tabLink = navItems[0].querySelector('.nav-link')
+      const tab = new window.bootstrap.Tab(tabLink)
+      tab.show()
     }
 
     // When mass action button is clicked
