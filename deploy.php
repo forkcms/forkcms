@@ -39,7 +39,7 @@ set('bin/composer', function () {
 
 // Define staging
 host('dev03.sumocoders.eu')
-    ->user('{{user}}')
+    ->user('sites')
     ->stage('staging')
     ->set('deploy_path', '~/apps/{{client}}/{{project}}')
     ->set('branch', 'staging')
