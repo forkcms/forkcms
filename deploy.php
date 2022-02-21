@@ -94,6 +94,10 @@ set(
     ]
 );
 
+// Limit the number of releases that should be kept
+set('keep_releases', 3);
+
+
 /*****************
  * Task sections *
  *****************/
