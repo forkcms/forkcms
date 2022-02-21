@@ -175,6 +175,16 @@ task(
 )->desc('Upload bundle assets');
 after('deploy:theme:build', 'deploy:theme:upload');
 
+task(
+    'fork:cache:clear',
+    function() {
+        run('{{bin/console}} fork:cache:clear --env={{symfony_env}}');
+        run('if [ -f {{deploy_path}}/shared/config/parameters.yml ]; then touch {{deploy_path}}/shared/config/parameters.yml; fi');
+    }
+)
+    ->desc('Clear Fork CMS cache');
+before('deploy:cache:clear', 'fork:cache:clear');
+
 // Migrations
 task('database:migrations:run', function () {
     if (!test('[ -d {{release_path}}/migrations/')) {
@@ -270,16 +280,6 @@ task(
     }
 )->desc('Create a backup of the database');
 before('database:migrations:run', 'database:backup');
-
-task(
-    'fork:cache:clear',
-    function() {
-        run('{{bin/console}} fork:cache:clear --env={{symfony_env}}');
-        run('if [ -f {{deploy_path}}/shared/config/parameters.yml ]; then touch {{deploy_path}}/shared/config/parameters.yml; fi');
-    }
-)
-    ->desc('Clear Fork CMS cache');
-before('deploy:cache:clear', 'fork:cache:clear');
 
 /**********************
  * Flow configuration *
