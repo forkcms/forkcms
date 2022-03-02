@@ -238,7 +238,7 @@ task('database:migrations:run', function () {
 before('fork:cache:clear', 'database:migrations:run');
 
 task('locale:migrations:run', function () {
-    if (!test('[ -d {{release_path}}/migrations/')) {
+    if (!test('[ -d {{release_path}}/migrations/ ]')) {
         return;
     }
 
