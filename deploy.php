@@ -191,7 +191,7 @@ before('deploy:cache:clear', 'fork:cache:clear');
 
 // Migrations
 task('database:migrations:run', function () {
-    if (!test('[ -d {{release_path}}/migrations/')) {
+    if (!test('[ -d {{release_path}}/migrations/ ]')) {
         return;
     }
 
