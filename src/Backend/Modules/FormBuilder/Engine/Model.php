@@ -152,6 +152,7 @@ class Model
     public static function deleteData(array $ids): void
     {
         $database = BackendModel::getContainer()->get('database');
+        $ids = array_map('intval', $ids);
 
         $database->delete('forms_data', 'id IN(' . implode(',', $ids) . ')');
         $database->delete('forms_data_fields', 'data_id IN(' . implode(',', $ids) . ')');
