@@ -501,7 +501,7 @@ class Model
             'SELECT *
              FROM blog_comments AS i
              WHERE i.id IN (' . implode(', ', array_fill(0, count($ids), '?')) . ')',
-            $ids
+            array_map('intval', $ids)
         );
     }
 
