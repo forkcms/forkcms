@@ -288,6 +288,7 @@ class Edit extends BackendBaseActionEdit
 
             // no errors?
             if ($this->form->isCorrect()) {
+                $reAuthenticate = false;
                 // build user-array
                 $user = ['id' => $this->id];
                 if (!$this->user->isGod()) {
@@ -330,6 +331,7 @@ class Edit extends BackendBaseActionEdit
 
                     // the password has changed
                     if ($this->record['password'] != $user['password']) {
+                        $reAuthenticate = true;
                         // save the login timestamp in the user's settings
                         $lastPasswordChange = BackendUsersModel::getSetting($user['id'], 'current_password_change');
                         $settings['current_password_change'] = time();
@@ -387,6 +389,14 @@ class Edit extends BackendBaseActionEdit
                 // save groups
                 if ($this->allowUserRights) {
                     BackendGroupsModel::insertMultipleGroups($this->id, $fields['groups']->getChecked());
+                }
+
+                if ($reAuthenticate) {
+                    BackendAuthentication::clearUserSessionsForId($this->id);
+                    if ($this->authenticatedUser->getUserId() == $this->id) {
+                        BackendAuthentication::logout();
+                        BackendAuthentication::loginUser($this->user->getEmail(), $fields['new_password']->getValue());
+                    }
                 }
 
                 // can only edit own profile
