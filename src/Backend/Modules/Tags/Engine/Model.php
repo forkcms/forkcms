@@ -28,8 +28,8 @@ class Model
         // get database
         $database = BackendModel::getContainer()->get('database');
 
-        // make sure $ids is an array
-        $ids = (array) $ids;
+        // make sure $ids is an array of integers
+        $ids = array_map('intval', (array) $ids);
 
         // delete tags
         $database->delete('tags', 'id IN (' . implode(',', $ids) . ')');
