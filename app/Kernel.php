@@ -4,6 +4,7 @@ namespace ForkCMS\App;
 
 use PDOException;
 use Spoon;
+use SpoonDatabase;
 use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
@@ -164,11 +165,25 @@ abstract class Kernel extends BaseKernel
         }
 
         try {
+            $databaseDefinition = $containerBuilder->getDefinition('database');
+            $databaseDefinition->setArguments(
+                array_map(
+                    static function (?string $parameter) use ($containerBuilder): ?string {
+                        if (preg_match('/^%(.*)%$/', $parameter, $matches)) {
+                            return $containerBuilder->resolveEnvPlaceholders(
+                                $containerBuilder->getParameter($matches[1]),
+                                true
+                            );
+                        }
+
+                        return $parameter;
+                    },
+                    $databaseDefinition->getArguments()
+                )
+            );
             $moduleNames = array_merge(
                 $moduleNames,
-                (array) $containerBuilder->get('database')->getColumn(
-                    'SELECT name FROM modules'
-                )
+                (array) $containerBuilder->get('database')->getColumn('SELECT name FROM modules')
             );
         } catch (SpoonDatabaseException $e) {
             $moduleNames = [];
