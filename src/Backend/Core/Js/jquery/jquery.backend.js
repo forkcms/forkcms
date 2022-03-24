@@ -1043,7 +1043,7 @@
         '    <div class="input-group">' +
         '        <select size="1" class="form-control select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">'
       for (var i = 0; i < possibleOptions.length; i++) {
-        html += '            <option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>'
+        html += '            <option value="' + $('<div>').text($(possibleOptions[i]).attr('value')).html() + '">' + $(possibleOptions[i]).text() + '</option>'
       }
 
       html += '        </select>' +
