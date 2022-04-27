@@ -1,6 +1,6 @@
 {% include "Core/Layout/Templates/Head.html.twig" %}
 
-<body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+<body class="{{ LANGUAGE }} {% if not privacyConsentDialogHide %}modal-open{% endif %}" itemscope itemtype="http://schema.org/WebPage">
 {# Site wide HTML just after body tag #}
 {{ siteHTMLStartOfBody|raw }}
 

@@ -1,0 +1,7 @@
+@media screen and (min-width: $screen-sm) {
+  body {
+    &.modal-open {
+      overflow: initial;
+    }
+  }
+}

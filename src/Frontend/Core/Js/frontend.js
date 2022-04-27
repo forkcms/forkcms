@@ -139,6 +139,7 @@ jsFrontend.consentDialog = {
     $consentForm.on('click', '*[data-dismiss=modal]', function (e) {
       e.preventDefault()
       $consentDialog.hide()
+      document.querySelector('body').classList.remove('modal-open')
     })
 
     $consentForm.on('submit', function (e) {
@@ -180,6 +181,7 @@ jsFrontend.consentDialog = {
       $(document).trigger('privacyConsentChanged')
 
       $consentDialog.hide()
+      document.querySelector('body').classList.remove('modal-open')
     })
   }
 }
