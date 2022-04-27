@@ -40,8 +40,17 @@ class Login extends FrontendBaseBlock
             $action .= '?queryString=' . $this->getRequest()->query->get('queryString');
         }
         $this->form = new FrontendForm('login', $action, 'post', 'loginForm');
-        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
-        $this->form->addPassword('password')->makeRequired();
+        $this->form
+            ->addText('email')
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('autocomplete', 'current-password')
+            ->makeRequired()
+        ;
         $this->form->addCheckbox('remember', true);
     }
 

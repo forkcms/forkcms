@@ -50,8 +50,17 @@ class ChangeEmail extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-        $this->form->addPassword('password')->makeRequired();
-        $this->form->addText('email', $this->profile->getEmail())->makeRequired()->setAttribute('type', 'email');
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('autocomplete', 'current-password')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addText('email', $this->profile->getEmail())
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
     }
 
     private function parse(): void

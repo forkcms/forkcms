@@ -49,9 +49,23 @@ class ChangePassword extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
-        $this->form->addPassword('old_password')->makeRequired();
-        $this->form->addPassword('new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
-        $this->form->addPassword('verify_new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
+        $this->form
+            ->addPassword('old_password')
+            ->setAttribute('autocomplete', 'current-password')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addPassword('new_password')
+            ->setAttribute('data-role', 'fork-new-password')
+            ->setAttribute('autocomplete', 'new-password')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addPassword('verify_new_password')
+            ->setAttribute('data-role', 'fork-new-password')
+            ->setAttribute('autocomplete', 'new-password')
+            ->makeRequired()
+        ;
         $this->form->addCheckbox('show_password')->setAttribute('data-role', 'fork-toggle-visible-password');
     }
 
