@@ -326,7 +326,10 @@ class Index extends BackendBaseActionIndex
 
     private function sanitizeQueryString(string $queryString, string $default): string
     {
-        if (!preg_match('/^\//', $queryString) or preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)) {
+        if (!preg_match('/^\//', $queryString)
+            || preg_match('/^\/\//', $queryString)
+            || preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)
+        ) {
             return $default;
         }
 

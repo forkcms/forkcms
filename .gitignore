@@ -23,6 +23,7 @@
 /css/*.css
 /js/*.js
 .vscode
+.idea
 
 # Docker
 var/docker/db/data/*

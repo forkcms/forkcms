@@ -436,4 +436,9 @@ class Authentication
         self::$allowedModules = [];
         self::$user = null;
     }
+
+    public static function clearUserSessionsForId(int $userId): void
+    {
+        BackendModel::get('database')->delete('users_sessions', 'user_id = ?', $userId);
+    }
 }
