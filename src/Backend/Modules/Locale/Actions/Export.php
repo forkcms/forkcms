@@ -5,6 +5,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,7 +48,7 @@ class Export extends BackendBaseActionIndex
             // create an array for the languages, surrounded by quotes (example: 'en')
             $languages = [];
             foreach ($this->filter['language'] as $key => $val) {
-                $languages[$key] = '\'' . $val . '\'';
+                $languages[$key] = '\'' . Locale::fromString($val) . '\'';
             }
 
             $query .= ' AND l.language IN (' . implode(',', $languages) . ')';
@@ -70,7 +71,9 @@ class Export extends BackendBaseActionIndex
             // create an array for the types, surrounded by quotes (example: 'lbl')
             $types = [];
             foreach ($this->filter['type'] as $key => $val) {
-                $types[$key] = '\'' . $val . '\'';
+                if (in_array($val, BackendLocaleModel::TYPES)) {
+                    $types[$key] = '\'' . $val . '\'';
+                }
             }
 
             $query .= ' AND l.type IN (' . implode(',', $types) . ')';
