@@ -58,8 +58,8 @@ class Authentication
      */
     public static function cleanupOldSessions(): void
     {
-        // remove all sessions that are invalid (older then 30 min)
-        BackendModel::get('database')->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+        $deleteIfOlderThan = (new DateTime('- 30 minutes', new DateTimeZone('UTC')))->format('Y-m-d H:i:s');
+        BackendModel::get('database')->delete('users_sessions', 'date <= ?', [$deleteIfOlderThan]);
     }
 
     /**
