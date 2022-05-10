@@ -127,7 +127,7 @@ deny from env=stayout
     # RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
     # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
     # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
-    # RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+    # RewriteRule ^(.*)$ https://www.<domain>.be/$1 [R=301,L]
 
     # src dir should pass via the front controller
     RewriteCond %{REQUEST_URI} ^/(src|src\/)$
