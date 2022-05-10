@@ -392,7 +392,7 @@ class TemplateModifiers extends BaseTwigModifiers
 
             return (string) $content;
         } catch (RedirectException $redirectException) {
-            throw new \Twig_Error('redirect fix from template modifier', null, null, $redirectException);
+            throw new \Twig_Error('redirect fix from template modifier', -1, null, $redirectException);
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
             if (FrontendModel::getContainer()->getParameter('kernel.debug')) {
