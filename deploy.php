@@ -45,17 +45,23 @@ host('dev03.sumocoders.eu')
     ->set('branch', 'staging')
     ->set('bin/php', 'php7.4')
     ->set('cachetool', '/var/run/php_74_fpm_sites.sock')
-    ->set('document_root', '~/php74/{{client}}/{{project}}');
+    ->set('document_root', '~/php74/{{client}}/{{project}}')
+    ->set('keep_releases', 3);
 
 // Define production
 //host('$host')
 //    ->user('{{user}}')
 //    ->stage('production')
-//    ->set('deploy_path', '~/apps/{{client}}/{{project}}')
+//    ->port(2244)
+//    ->set('http_user', '{{user')
+//    ->set('writable_mode', 'chmod')
+//    ->set('deploy_path', '~/wwwroot')
 //    ->set('branch', 'master')
 //    ->set('bin/php', '$phpBinary')
-//    ->set('cachetool', '$socketPath')
-//    ->set('document_root', '~/php74/{{client}}/{{project}}');
+//    ->set('bin/cachetool', '/data/vhosts/{{user}}/wwwroot/shared/cachetool-7.0.0.phar')
+//    ->set('cachetool', '/data/vhosts/{{user}}/.sock/$sockFile --tmp-dir=/data/vhosts/{{user}}/.temp')
+//    ->set('document_root', '~/wwwroot/www')
+//    ->set('keep_releases', 3);
 
 /*************************
  * No need to edit below *
