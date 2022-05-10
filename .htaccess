@@ -117,6 +117,7 @@ deny from env=stayout
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>
+    # SetEnvIf X-Forwarded-Proto "https" HTTPS=on
     # RewriteCond %{HTTP:X-Forwarded-Proto} !https
     # RewriteCond %{HTTPS} off
     # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
