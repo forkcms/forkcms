@@ -2,6 +2,12 @@ img {
   max-width: 100%;
 }
 
+// make sure images in a p tag (inserted through backend editor) have a max-width and max-height
+p img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .skip-content {
   height: 1px;
   position: absolute;
