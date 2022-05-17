@@ -117,17 +117,14 @@ deny from env=stayout
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>
+    # SetEnvIf X-Forwarded-Proto "https" HTTPS=on
     # RewriteCond %{HTTP:X-Forwarded-Proto} !https
     # RewriteCond %{HTTPS} off
-    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
-    # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
     # one url to rule them all
     # RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
-    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
-    # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
-    # RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+    # RewriteRule ^(.*)$ https://www.<domain>.be/$1 [R=301,L]
 
     # src dir should pass via the front controller
     RewriteCond %{REQUEST_URI} ^/(src|src\/)$
