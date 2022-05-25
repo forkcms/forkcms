@@ -193,9 +193,10 @@ task(
             return;
         }
 
-        if (commandExist('nvm')) {
-            runLocally('nvm install');
-            runLocally('nvm exec node_modules/.bin/gulp build');
+        $nvmPath = trim(shell_exec('echo $HOME/.nvm/nvm.sh'));
+
+        if (file_exists($nvmPath)) {
+            runLocally('. ' . $nvmPath . ' && nvm use && nvm exec node_modules/.bin/gulp build');
         } else {
             runLocally('node_modules/.bin/gulp build');
         }
