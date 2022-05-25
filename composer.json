@@ -59,9 +59,9 @@
         "symfony/phpunit-bridge": "*",
         "phpstan/phpstan": "^0.12.52",
         "phpstan/phpstan-symfony": "^0.12.7",
-        "deployer/deployer": "^6.8",
+        "deployer/deployer": "^7.0@beta",
         "deployer/recipes": "^6.2",
-        "tijsverkoyen/deployer-sumo": "^1.7"
+        "tijsverkoyen/deployer-sumo": "^2.3"
     },
     "config": {
         "bin-dir": "bin"
@@ -105,5 +105,7 @@
         "psr-4": {
             "ForkCMS\\Tests\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "521cf0e7cf3b824e9ea82d02e0c87da9",
+    "content-hash": "c9eb67b43c7d3f9d14e0959741bb1702",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -7553,42 +7553,22 @@
     "packages-dev": [
         {
             "name": "deployer/deployer",
-            "version": "v6.8.0",
+            "version": "v7.0.0-rc.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deployphp/deployer.git",
-                "reference": "4e243a64ed61e779fbb31c5a74e258a8e52fdaff"
+                "reference": "629973ee3d0ce78953b18500cba0695feec28c2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deployphp/deployer/zipball/4e243a64ed61e779fbb31c5a74e258a8e52fdaff",
-                "reference": "4e243a64ed61e779fbb31c5a74e258a8e52fdaff",
+                "url": "https://api.github.com/repos/deployphp/deployer/zipball/629973ee3d0ce78953b18500cba0695feec28c2b",
+                "reference": "629973ee3d0ce78953b18500cba0695feec28c2b",
                 "shasum": ""
             },
-            "require": {
-                "deployer/phar-update": "~2.2",
-                "php": "^7.2",
-                "pimple/pimple": "~3.0",
-                "symfony/console": "~2.7|~3.0|~4.0|~5.0",
-                "symfony/process": "~2.7|~3.0|~4.0|~5.0",
-                "symfony/yaml": "~2.7|~3.0|~4.0|~5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8"
-            },
             "bin": [
-                "bin/dep"
+                "deployer.phar"
             ],
             "type": "library",
-            "autoload": {
-                "files": [
-                    "src/Support/helpers.php",
-                    "src/functions.php"
-                ],
-                "psr-4": {
-                    "Deployer\\": "src/"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -7601,74 +7581,18 @@
             ],
             "description": "Deployment Tool",
             "homepage": "https://deployer.org",
+            "support": {
+                "docs": "https://deployer.org/docs",
+                "issues": "https://github.com/deployphp/deployer/issues",
+                "source": "https://github.com/deployphp/deployer"
+            },
             "funding": [
                 {
-                    "url": "https://github.com/antonmedv",
+                    "url": "https://github.com/sponsors/antonmedv",
                     "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/deployer",
-                    "type": "patreon"
                 }
             ],
-            "time": "2020-04-25T16:05:31+00:00"
-        },
-        {
-            "name": "deployer/phar-update",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/deployphp/phar-update.git",
-                "reference": "9ad07422f2cd43a1382ee8e134bdcd3a374848e3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/deployphp/phar-update/zipball/9ad07422f2cd43a1382ee8e134bdcd3a374848e3",
-                "reference": "9ad07422f2cd43a1382ee8e134bdcd3a374848e3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/console": "~2.7|~3.0|~4.0|~5.0"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "1.1.0",
-                "phpunit/phpunit": "3.7.*",
-                "symfony/process": "~2.7|~3.0|~4.0|~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Deployer\\Component\\PharUpdate\\": "src/",
-                    "Deployer\\Component\\PHPUnit\\": "src/PHPUnit/",
-                    "Deployer\\Component\\Version\\": "src/Version/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Herrera",
-                    "email": "kevin@herrera.io",
-                    "homepage": "http://kevin.herrera.io"
-                },
-                {
-                    "name": "Anton Medvedev",
-                    "email": "anton@medv.io",
-                    "homepage": "https://medv.io"
-                }
-            ],
-            "description": "Integrates Phar Update to Symfony Console.",
-            "homepage": "https://github.com/deployphp/phar-update",
-            "keywords": [
-                "console",
-                "phar",
-                "update"
-            ],
-            "abandoned": true,
-            "time": "2019-12-12T13:45:57+00:00"
+            "time": "2022-03-22T14:33:06+00:00"
         },
         {
             "name": "deployer/recipes",
@@ -7986,22 +7910,21 @@
         },
         {
             "name": "tijsverkoyen/deployer-sumo",
-            "version": "v1.7.0",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/deployer-sumo.git",
-                "reference": "f65f7146aea9d011abaf78abd364513da9d98f58"
+                "reference": "57c9d0efe45837b5aa71264f81a779b89e220636"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tijsverkoyen/deployer-sumo/zipball/f65f7146aea9d011abaf78abd364513da9d98f58",
-                "reference": "f65f7146aea9d011abaf78abd364513da9d98f58",
+                "url": "https://api.github.com/repos/tijsverkoyen/deployer-sumo/zipball/57c9d0efe45837b5aa71264f81a779b89e220636",
+                "reference": "57c9d0efe45837b5aa71264f81a779b89e220636",
                 "shasum": ""
             },
             "require": {
-                "deployer/deployer": "^6.8",
-                "deployer/recipes": "^6.2",
-                "symfony/dotenv": "^3.4 || ^5.3"
+                "deployer/deployer": "^7.0@beta",
+                "symfony/dotenv": "^3.4 || ^5.3 || ^6.0"
             },
             "type": "library",
             "autoload": {
@@ -8020,13 +7943,19 @@
                 }
             ],
             "description": "Deployer recipe with SumoCoders specific tasks",
-            "time": "2021-09-27T15:50:39+00:00"
+            "support": {
+                "issues": "https://github.com/tijsverkoyen/deployer-sumo/issues",
+                "source": "https://github.com/tijsverkoyen/deployer-sumo/tree/v2.3.2"
+            },
+            "time": "2022-05-04T13:09:17+00:00"
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "deployer/deployer": 10
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
@@ -8037,5 +7966,5 @@
         "ext-simplexml": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
