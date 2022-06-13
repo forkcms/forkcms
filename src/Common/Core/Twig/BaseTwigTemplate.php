@@ -144,10 +144,25 @@ abstract class BaseTwigTemplate extends TwigEngine
         // old theme checker
         if ($this->forkSettings->get('Core', 'theme') !== null) {
             $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'Fork'));
+            $themePath = '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'Fork');
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'Fork')
+                $themePath
             );
+
+            $rootDir = __DIR__ . '/../../../../';
+
+            if (file_exists(realpath($rootDir . $themePath. '/apple-touch-icon.png'))) {
+                $twig->addGlobal(
+                    'THEME_ICON',
+                    $themePath . '/apple-touch-icon.png'
+                );
+            } else {
+                $twig->addGlobal(
+                    'THEME_ICON',
+                    '/apple-touch-icon.png'
+                );
+            }
         }
 
         // settings
