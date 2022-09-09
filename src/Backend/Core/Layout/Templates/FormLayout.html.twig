@@ -1,9 +1,20 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
 {% block form_widget_simple %}
+  {% if not valid %}
+    {%- set attr = attr|merge({'aria-invalid': true, 'aria-describedby': name ~ '-error'}) -%}
+  {% endif %}
   {{ parent() }}
   {{ block('help') }}
 {% endblock %}
+
+{% block textarea_widget -%}
+  {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+  {% if not valid %}
+    {%- set attr = attr|merge({'aria-invalid': true, 'aria-describedby': name ~ '-error'}) -%}
+  {% endif %}
+  {{- parent() -}}
+{%- endblock textarea_widget %}
 
 {%- block form_label -%}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
@@ -63,13 +74,15 @@
 {% block form_errors -%}
   {% import "Layout/Templates/macros.html.twig" as macro %}
   {% if errors|length > 0 -%}
-    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    {% if form.parent %}<div class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-          <li {% if form.parent %}class="formError"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+          <li {% if form.parent %}class="formError"{% endif %} role="alert" id="{{ error.origin.name ~ '-error' }}">
+            {{ macro.icon('exclamation-triangle') }} {{ error.message }}
+          </li>
         {%- endfor -%}
     </ul>
-    {% if form.parent %}</span>{% else %}</div>{% endif %}
+    {% if form.parent %}</div>{% else %}</div>{% endif %}
   {%- endif %}
 {%- endblock form_errors %}
 

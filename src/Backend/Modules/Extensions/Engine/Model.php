@@ -839,7 +839,7 @@ class Model
         $information['name'] = (string) $module->name;
         $information['version'] = (string) $module->version;
         $information['requirements'] = (array) $module->requirements;
-        $information['description'] = (string) $module->description;
+        $information['description'] = strip_tags((string) $module->description, '<h1><h2><h3><h4><h5><h6><p><li><a>');
         $information['cronjobs'] = [];
 
         // authors
@@ -900,7 +900,7 @@ class Model
         $information['version'] = (string) $theme->version;
         $information['requirements'] = (array) $theme->requirements;
         $information['thumbnail'] = (string) $theme->thumbnail;
-        $information['description'] = (string) $theme->description;
+        $information['description'] = strip_tags((string) $theme->description, '<h1><h2><h3><h4><h5><h6><p><li><a>');
 
         // authors
         foreach ($xml->xpath('/theme/authors/author') as $author) {
