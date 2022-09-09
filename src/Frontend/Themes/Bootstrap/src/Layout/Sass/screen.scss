@@ -1,5 +1,8 @@
 @charset 'UTF-8';
 
+// import fonts first - remove when using CDN
+@import "base/fonts";
+
 // Bootstrap
 @import "bootstrap5/scss/functions";
 @import 'bootstrap5/scss/variables';
