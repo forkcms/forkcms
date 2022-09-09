@@ -1,0 +1,17 @@
+@mixin font-import($font-name, $font-file, $style: normal, $weight: 400) {
+
+  @font-face {
+    font-family: "#{$font-name}";
+    src: url("../Fonts/#{$font-file}.eot"); /* IE9 Compat Modes */
+    src: url("../Fonts/#{$font-file}.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */
+    url("../Fonts/#{$font-file}.woff2") format('woff2'),
+    url("../Fonts/#{$font-file}.woff") format('woff'), /* Modern Browsers */
+    url("../Fonts/#{$font-file}.ttf")  format('truetype'), /* Safari, Android, iOS */
+    url("../Fonts/#{$font-file}.svg") format('svg'); /* Legacy iOS */
+
+    font-style:   $style;
+    font-weight:  $weight;
+  }
+}
+
+//@include font-import(Helvatica, Helvetica, normal, 400);

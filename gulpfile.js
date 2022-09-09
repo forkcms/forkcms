@@ -270,7 +270,6 @@ const del = require('del')
 const plumber = require('gulp-plumber')
 const iconfont = require('gulp-iconfont')
 const consolidate = require('gulp-consolidate')
-const fontgen = require('gulp-fontgen')
 const webpackStream = require('webpack-stream')
 const webpack = require('webpack')
 const imagemin = require('gulp-imagemin')
@@ -321,15 +320,10 @@ gulp.task('build:theme:fonts:generate-iconfont', function () {
     .pipe(livereload())
 })
 
-gulp.task('build:theme:fonts:generate-webfonts', function () {
-  return gulp.plumbedSrc(`${paths.src}/Layout/Fonts/**/*.{ttf,otf}`)
-    .pipe(fontgen({
-      options: {
-        stylesheet: false
-      },
-      dest: `${paths.core}/Layout/Fonts/`
-    }))
-    .pipe(livereload())
+gulp.task('build:theme:fonts:copy-fonts', function () {
+  return gulp.src(`${paths.src}/Layout/Fonts/**/*`)
+      .pipe(gulp.dest(`${paths.core}/Layout/Fonts/`))
+      .pipe(livereload())
 })
 
 gulp.task('build:theme:sass:generate-development-css', function () {
@@ -401,7 +395,7 @@ const buildTheme = gulp.series(
   gulp.parallel(
     'build:assets:copy-images-vendors',
     'build:theme:fonts:generate-iconfont',
-    'build:theme:fonts:generate-webfonts',
+    'build:theme:fonts:copy-fonts',
     'build:theme:sass:generate-production-css',
     'build:theme:webpack:generate-production-js',
     'build:theme:assets:copy-templates',
