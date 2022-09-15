@@ -344,6 +344,8 @@ jsBackend.ckeditor = {
     // The CSS file(s) to be used to apply style to editor content.
     // It should reflect the CSS used in the target pages where the content is to be displayed.
     contentsCss: [],
+    // Skip some selectors: formelements
+    stylesheetParser_skipSelectors: /(^select\.|^textarea\.|^\.)/i,
 
     // buttons
     toolbar_Full: [
