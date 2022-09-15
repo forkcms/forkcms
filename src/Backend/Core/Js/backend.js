@@ -436,7 +436,6 @@ jsBackend.ckeditor = {
     jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language')
 
     // content Css
-    jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/screen.css')
     if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css')
     jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css')
     if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css')
