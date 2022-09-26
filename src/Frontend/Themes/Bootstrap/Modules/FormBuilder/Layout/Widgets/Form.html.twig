@@ -56,9 +56,10 @@
                       {{ field.label|raw }}{% if field.required %}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
                     </p>
                     {% for checkbox in field.html %}
-                      <div class="checkbox">
-                        <label for="{{ checkbox.id|raw }}">
-                          {{ checkbox.field|raw }} {{ checkbox.label|raw }}
+                      <div class="form-check">
+                        {{ checkbox.field|raw }}
+                        <label for="{{ checkbox.id|raw }}" class="form-check-label">
+                          {{ checkbox.label|raw }}
                         </label>
                       </div>
                     {% endfor %}
