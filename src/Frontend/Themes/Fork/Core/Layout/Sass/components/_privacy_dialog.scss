@@ -1,8 +1,21 @@
 #privacyConsentDialog {
   position: fixed;
+  display: block;
+  height: auto;
+  max-height: calc(100vh - env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  top: 0;
   bottom: 0;
+  width: 100vw;
   z-index: $zindex-modal - 1;
   font-size: $font-size-small;
+  overflow-y: auto;
+
+  form {
+    max-height: 100%;
+    overflow-y: auto;
+  }
 
   .modal-dialog {
     margin: $padding-base-vertical;
@@ -10,5 +23,12 @@
     .modal-header, .modal-body, .modal-footer {
       padding: $padding-small-horizontal $padding-small-horizontal;
     }
+  }
+
+  @media screen and (min-width: $screen-sm) {
+    left: unset;
+    right: unset;
+    top: unset;
+    width: auto;
   }
 }
