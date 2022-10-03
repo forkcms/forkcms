@@ -168,6 +168,8 @@ class Form extends FrontendBaseWidget
                 $defaultValues = $field['settings']['default_values'] ?? null;
 
                 if ($field['type'] === 'dropdown') {
+                    $item['classname'] .= ' form-select';
+
                     // values and labels are the same
                     $values = array_combine($values, $values);
 
@@ -192,12 +194,14 @@ class Form extends FrontendBaseWidget
                     // get content
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] === 'radiobutton') {
+                    $item['classname'] .= ' form-check-input';
                     // create element
                     $rbt = $this->form->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $rbt->parse();
                 } elseif ($field['type'] === 'checkbox') {
+                    $item['classname'] .= ' form-check-input';
                     // reset
                     $newValues = [];
 
