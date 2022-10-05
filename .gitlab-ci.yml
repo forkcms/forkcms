@@ -129,6 +129,7 @@ TODOs - check for unfinished code:
         - >
             php bin/convert-to-junit-xml convert:grep "$(
             find .
+            -path "./.git/*" -prune -o
             -path "./.github/*" -prune -o
             -path "./bin/*" -prune -o
             -path "./css/*" -prune -o
@@ -138,10 +139,28 @@ TODOs - check for unfinished code:
             -path "./js/*" -prune -o
             -path "./node_modules/*" -prune -o
             -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/backend.js" -prune -o
+            -path "./src/Backend/Core/Layout/Sass/*" -prune -o
+            -path "./src/Backend/Core/Engine/DataGrid.php" -prune -o
+            -path "./src/Backend/Modules/Location/Layout/Templates/Index.html.twig" -prune -o
+            -path "./src/Backend/Modules/MediaGalleries/*" -prune -o
+            -path "./src/Backend/Modules/FormBuilder/*" -prune -o
+            -path "./src/Backend/Modules/Tags/DataFixtures/LoadTagsModulesTags.php" -prune -o
+            -path "./src/Backend/Modules/MediaLibrary/*" -prune -o
+            -path "./src/Backend/Modules/ContentBlocks/*" -prune -o
             -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
             -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
             -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Backend/DependencyInjection/BackendExtension.php" -prune -o
+            -path "./src/Backend/Modules/*/Installer/*" -prune -o
+            -path "./src/Common/*" -prune -o
+            -path "./src/ForkCMS/*" -prune -o
             -path "./src/Frontend/Cache/*" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -path "./src/Frontend/Modules/MediaLibrary/*" -prune -o
+            -path "./src/Frontend/Themes/Bootstrap/*" -prune -o
+            -path "./src/Frontend/Themes/Fork/*" -prune -o
+            -path "./src/Frontend/Themes/Custom/Core/Js/bundle.js" -prune -o
             -path "./tests/*" -prune -o
             -path "./var/*" -prune -o
             -path "./vendor/*" -prune -o
@@ -149,13 +168,13 @@ TODOs - check for unfinished code:
             -path "./autoload.php" -prune -o
             -path "./CHANGELOG.md" -prune -o
             -path "./unresolved-todos-report.xml" -prune -o
-            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
             -not -type d
-            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+            -exec grep -niH -E "\b(FIXME|TODO)\b" {} \;
             )" > unresolved-todos-report.xml
     after_script:
         - >
             find .
+            -path "./.git/*" -prune -o
             -path "./.github/*" -prune -o
             -path "./bin/*" -prune -o
             -path "./css/*" -prune -o
@@ -165,10 +184,28 @@ TODOs - check for unfinished code:
             -path "./js/*" -prune -o
             -path "./node_modules/*" -prune -o
             -path "./src/Backend/Cache/*" -prune -o
+            -path "./src/Backend/Core/Js/backend.js" -prune -o
+            -path "./src/Backend/Core/Layout/Sass/*" -prune -o
+            -path "./src/Backend/Core/Engine/DataGrid.php" -prune -o
+            -path "./src/Backend/Modules/Location/Layout/Templates/Index.html.twig" -prune -o
+            -path "./src/Backend/Modules/MediaGalleries/*" -prune -o
+            -path "./src/Backend/Modules/FormBuilder/*" -prune -o
+            -path "./src/Backend/Modules/Tags/DataFixtures/LoadTagsModulesTags.php" -prune -o
+            -path "./src/Backend/Modules/MediaLibrary/*" -prune -o
+            -path "./src/Backend/Modules/ContentBlocks/*" -prune -o
             -path "./src/Backend/Core/Js/ckeditor/*" -prune -o
             -path "./src/Backend/Core/Js/ckfinder/*" -prune -o
             -path "./src/Backend/Core/Js/jquery/*" -prune -o
+            -path "./src/Backend/DependencyInjection/BackendExtension.php" -prune -o
+            -path "./src/Backend/Modules/*/Installer/*" -prune -o
+            -path "./src/Common/*" -prune -o
+            -path "./src/ForkCMS/*" -prune -o
             -path "./src/Frontend/Cache/*" -prune -o
+            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
+            -path "./src/Frontend/Modules/MediaLibrary/*" -prune -o
+            -path "./src/Frontend/Themes/Bootstrap/*" -prune -o
+            -path "./src/Frontend/Themes/Fork/*" -prune -o
+            -path "./src/Frontend/Themes/Custom/Core/Js/bundle.js" -prune -o
             -path "./tests/*" -prune -o
             -path "./var/*" -prune -o
             -path "./vendor/*" -prune -o
@@ -176,9 +213,8 @@ TODOs - check for unfinished code:
             -path "./autoload.php" -prune -o
             -path "./CHANGELOG.md" -prune -o
             -path "./unresolved-todos-report.xml" -prune -o
-            -path "./src/Frontend/Core/Layout/Css/screen.css" -prune -o
             -not -type d
-            -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW)\b" {} \;
+            -exec grep -niH -E "\b(FIXME|TODO)\b" {} \;
     artifacts:
         expire_in: 1 week
         reports:
