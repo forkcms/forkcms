@@ -1,0 +1,27 @@
+.blog-quote {
+  padding: ($spacer * 2) $spacer;
+  background-color: $gray-100;
+  position: relative;
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .quote-icon {
+    position: absolute;
+    font-size: 36px;
+    top: -28px;
+    color: $primary;
+  }
+
+  .quote-text {
+    color: $blue;
+    font-weight: 600;
+  }
+
+  figure {
+    margin-bottom: 0;
+  }
+
+  .blockquote {
+    margin-bottom: 0;
+  }
+}

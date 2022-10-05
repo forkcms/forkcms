@@ -1,7 +1,42 @@
 [
     {
-        "title": "test",
-        "description": "just a simple test",
-        "file": "test.html"
+        "title": "Full width text",
+        "description": "With title and paragraph",
+        "file": "fullwidth-text.html"
+    },
+    {
+        "title": "2 cols, L image R text",
+        "description": "2 columns with image left and text right",
+        "file": "image-l-text-r.html"
+    },
+    {
+        "title": "2 cols, L text R image",
+        "description": "2 columns with text left and image right",
+        "file": "text-l-image-r.html"
+    },
+    {
+        "title": "2 cols, L image R image",
+        "description": "2 columns with image left and image right",
+        "file": "image-l-image-r.html"
+    },
+    {
+        "title": "2 cols",
+        "description": "2 columns with text left and text right",
+        "file": "text-l-text-r.html"
+    },
+    {
+        "title": "Full width image",
+        "description": "Full width image",
+        "file": "img-fullwidth.html"
+    },
+    {
+        "title": "Blockquote",
+        "description": "Block with image, quote and citation",
+        "file": "quote.html"
+    },
+    {
+        "title": "80% wide column text-center",
+        "description": "80% wide column with centered text",
+        "file": "col8-text.html"
     }
 ]
