@@ -10,7 +10,7 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="page-header page-header-login">
           <div class="site-info">
-            <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">
+            <img class="site-icon" src="{{ THEME_ICON }}" alt="Fork CMS logo">
             <div class="site-text">
               <h1 class="site-title">{{ SITE_TITLE }}</h1>
               <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
