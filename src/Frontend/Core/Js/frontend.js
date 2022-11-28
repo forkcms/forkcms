@@ -135,10 +135,13 @@ jsFrontend.consentDialog = {
 
     var $consentDialog = $('*[data-role=privacy_consent_dialog]')
     var $consentForm = $('form[data-role=privacy_consent_dialog_form]')
+    // set class on the body to prevent background scrolling when scrolling in the modal
+    document.querySelector('body').classList.add('modal-open')
 
     $consentForm.on('click', '*[data-dismiss=modal]', function (e) {
       e.preventDefault()
       $consentDialog.hide()
+      document.querySelector('body').classList.remove('modal-open')
     })
 
     $consentForm.on('submit', function (e) {
@@ -180,6 +183,7 @@ jsFrontend.consentDialog = {
       $(document).trigger('privacyConsentChanged')
 
       $consentDialog.hide()
+      document.querySelector('body').classList.remove('modal-open')
     })
   }
 }
