@@ -166,7 +166,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         $this->setRowAttributes($attributes);
     }
 
-    protected function addButton(string $id, string $type, string $storageType)
+    public static function addButton(string $id, string $type, string $storageType)
     {
         switch ($type) {
             case Type::MOVIE:

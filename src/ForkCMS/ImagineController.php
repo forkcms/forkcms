@@ -2,74 +2,174 @@
 
 namespace ForkCMS;
 
+use ForkCMS\Imagine\Service\FilterService;
 use Imagine\Exception\RuntimeException;
+use Liip\ImagineBundle\Config\Controller\ControllerConfig;
 use Liip\ImagineBundle\Exception\Binary\Loader\NotLoadableException;
 use Liip\ImagineBundle\Exception\Imagine\Filter\NonExistingFilterException;
+use Liip\ImagineBundle\Imagine\Cache\Helper\PathHelper;
+use Liip\ImagineBundle\Imagine\Cache\SignerInterface;
+use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Kernel;
 
-class ImagineController extends \Liip\ImagineBundle\Controller\ImagineController
+class ImagineController
 {
     /**
-     * This action applies a given filter to a given image, optionally saves the image and outputs it to the browser at the same time.
+     * @var \Liip\ImagineBundle\Service\FilterService
+     */
+    private $filterService;
+
+    /**
+     * @var DataManager
+     */
+    private $dataManager;
+
+    /**
+     * @var SignerInterface
+     */
+    private $signer;
+
+    /**
+     * @var ControllerConfig
+     */
+    private $controllerConfig;
+
+    /**
+     * @see \Liip\ImagineBundle\Controller\ImageController
+     */
+    public function __construct(
+        FilterService $filterService,
+        DataManager $dataManager,
+        SignerInterface $signer,
+        ?ControllerConfig $controllerConfig = null
+    ) {
+        $this->filterService = $filterService;
+        $this->dataManager = $dataManager;
+        $this->signer = $signer;
+
+        if (null === $controllerConfig) {
+            @trigger_error(sprintf(
+                'Instantiating "%s" without a forth argument of type "%s" is deprecated since 2.2.0 and will be required in 3.0.',
+                self::class,
+                ControllerConfig::class
+            ), E_USER_DEPRECATED);
+        }
+
+        $this->controllerConfig = $controllerConfig ?? new ControllerConfig(301);
+    }
+
+    /**
+     * This action applies a given filter to a given image, saves the image and redirects the browser to the stored
+     * image.
      *
-     * @param Request $request
-     * @param string  $path
-     * @param string  $filter
+     * The resulting image is cached so subsequent requests will redirect to the cached image instead applying the
+     * filter and storing the image again.
      *
-     * @throws \RuntimeException
-     * @throws BadRequestHttpException
+     * @param string $path
+     * @param string $filter
+     *
+     * @throws RuntimeException
+     * @throws NotFoundHttpException
      *
      * @return RedirectResponse
      */
     public function filterAction(Request $request, $path, $filter)
     {
-        // decoding special characters and whitespaces from path obtained from url
-        $path = urldecode($path);
+        $path = PathHelper::urlPathToFilePath($path);
         $resolver = $request->get('resolver');
 
-        try {
-            if (!$this->cacheManager->isStored($path, $filter, $resolver)) {
-                try {
-                    $binary = $this->dataManager->find($filter, $path);
-                } catch (NotLoadableException $e) {
-                    if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
-                        return new RedirectResponse($defaultImageUrl);
-                    }
+        return $this->createRedirectResponse(function () use ($path, $filter, $resolver, $request) {
+            return $this->filterService->getUrlOfFilteredImage(
+                $path,
+                $filter,
+                $resolver,
+                $this->isWebpSupported($request)
+            );
+        }, $path, $filter);
+    }
 
-                    throw new NotFoundHttpException('Source image could not be found', $e);
-                }
+    /**
+     * This action applies a given filter -merged with additional runtime filters- to a given image, saves the image and
+     * redirects the browser to the stored image.
+     *
+     * The resulting image is cached so subsequent requests will redirect to the cached image instead applying the
+     * filter and storing the image again.
+     *
+     * @param string $hash
+     * @param string $path
+     * @param string $filter
+     *
+     * @throws RuntimeException
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     *
+     * @return RedirectResponse
+     */
+    public function filterRuntimeAction(Request $request, $hash, $path, $filter)
+    {
+        $resolver = $request->get('resolver');
+        $path = PathHelper::urlPathToFilePath($path);
+        $runtimeConfig = $this->getFiltersBc($request);
 
-                if (in_array($binary->getMimeType(), ['image/svg', 'image/svg+xml'])) {
-                    $this->cacheManager->store(
-                        $binary,
-                        $path,
-                        $filter,
-                        $resolver
-                    );
-                } else {
-                    $this->cacheManager->store(
-                        $this->filterManager->applyFilter($binary, $filter),
-                        $path,
-                        $filter,
-                        $resolver
-                    );
-                }
-            }
-
-            return new RedirectResponse($this->cacheManager->resolve($path, $filter, $resolver), $this->redirectResponseCode);
-        } catch (NonExistingFilterException $e) {
-            $message = sprintf('Could not locate filter "%s" for path "%s". Message was "%s"', $filter, $path, $e->getMessage());
-
-            if (null !== $this->logger) {
-                $this->logger->debug($message);
-            }
-
-            throw new NotFoundHttpException($message, $e);
-        } catch (RuntimeException $e) {
-            throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
+        if (true !== $this->signer->check($hash, $path, $runtimeConfig)) {
+            throw new BadRequestHttpException(sprintf('Signed url does not pass the sign check for path "%s" and filter "%s" and runtime config %s', $path, $filter, json_encode($runtimeConfig)));
         }
+
+        return $this->createRedirectResponse(function () use ($path, $filter, $runtimeConfig, $resolver, $request) {
+            return $this->filterService->getUrlOfFilteredImageWithRuntimeFilters(
+                $path,
+                $filter,
+                $runtimeConfig,
+                $resolver,
+                $this->isWebpSupported($request)
+            );
+        }, $path, $filter, $hash);
+    }
+
+    private function getFiltersBc(Request $request): array
+    {
+        if (version_compare(Kernel::VERSION, '5.1', '>=')) {
+            try {
+                return $request->query->all('filters');
+            } catch (BadRequestHttpException $e) {
+                // for strict BC - BadRequestException seems more suited to this situation.
+                // remove the try-catch in version 3
+                throw new NotFoundHttpException(sprintf('Filters must be an array. Value was "%s"', $request->query->get('filters')));
+            }
+        }
+
+        $runtimeConfig = $request->query->get('filters', []);
+
+        if (!\is_array($runtimeConfig)) {
+            throw new NotFoundHttpException(sprintf('Filters must be an array. Value was "%s"', $runtimeConfig));
+        }
+
+        return $runtimeConfig;
+    }
+
+    private function createRedirectResponse(\Closure $url, string $path, string $filter, ?string $hash = null): RedirectResponse
+    {
+        try {
+            return new RedirectResponse($url(), $this->controllerConfig->getRedirectResponseCode());
+        } catch (NotLoadableException $exception) {
+            if (null !== $this->dataManager->getDefaultImageUrl($filter)) {
+                return new RedirectResponse($this->dataManager->getDefaultImageUrl($filter));
+            }
+
+            throw new NotFoundHttpException(sprintf('Source image for path "%s" could not be found', $path), $exception);
+        } catch (NonExistingFilterException $exception) {
+            throw new NotFoundHttpException(sprintf('Requested non-existing filter "%s"', $filter), $exception);
+        } catch (RuntimeException $exception) {
+            throw new \RuntimeException(vsprintf('Unable to create image for path "%s" and filter "%s". Message was "%s"', [$hash ? sprintf('%s/%s', $hash, $path) : $path, $filter, $exception->getMessage()]), 0, $exception);
+        }
+    }
+
+    private function isWebpSupported(Request $request): bool
+    {
+        return false !== mb_stripos($request->headers->get('accept', ''), 'image/webp');
     }
 }

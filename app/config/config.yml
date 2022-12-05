@@ -142,6 +142,16 @@ services:
     liip_imagine.cache.manager.public:
         alias: liip_imagine.cache.manager
         public: true
+    liip_imagine.service.filter:
+        class: ForkCMS\Imagine\Service\FilterService
+        public: true
+        arguments:
+            - "@liip_imagine.data.manager"
+            - "@liip_imagine.filter.manager"
+            - "@liip_imagine.cache.manager"
+            - "%liip_imagine.webp.generate%"
+            - "%liip_imagine.webp.options%"
+            - "@logger"
     mailmotor.factory.public:
         alias: mailmotor.factory
         public: true

@@ -10,10 +10,10 @@
         "blog",
         "php"
     ],
-    "homepage": "http://www.fork-cms.com/",
+    "homepage": "https://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^7.1",
+        "php": "^7.4",
         "ext-json": "*",
         "ext-zip": "*",
         "ext-gd": "*",
@@ -28,7 +28,7 @@
         "league/flysystem": "~1.0",
         "league/flysystem-aws-s3-v3": "^1.0.13",
         "league/flysystem-cached-adapter": "^1.0.6",
-        "liip/imagine-bundle": "^1.7",
+        "liip/imagine-bundle": "^2.9.0",
         "mailmotor/campaignmonitor-bundle": "^2.0",
         "mailmotor/mailchimp-bundle": "^3.0",
         "mailmotor/mailmotor-bundle": "^3.0",
