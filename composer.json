@@ -43,7 +43,7 @@
         "swiftmailer/swiftmailer": "^6.0",
         "symfony/monolog-bundle": "^3.1",
         "symfony/swiftmailer-bundle": "^3.0",
-        "symfony/symfony": "^4.0",
+        "symfony/symfony": "^4.4",
         "tijsverkoyen/css-to-inline-styles": "^2.0",
         "phpoffice/phpspreadsheet": "^1.12",
         "composer/package-versions-deprecated": "^1.11",
@@ -52,7 +52,7 @@
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
-        "symfony/var-dumper": "^4.0",
+        "symfony/var-dumper": "^4.4",
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/phpunit-bridge": "^4.0",
         "phpstan/phpstan": "^0.12.52",
