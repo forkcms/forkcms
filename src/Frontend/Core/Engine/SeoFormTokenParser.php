@@ -17,7 +17,7 @@ class SeoFormTokenParser extends AbstractTokenParser
         $stream = $this->parser->getStream();
         if ($stream->getCurrent()->getType() !== Token::BLOCK_END_TYPE) {
             $error = sprintf("'%s' does not require any arguments.", $this->getTag());
-            throw new \Twig_Error_Syntax(
+            throw new SyntaxError(
                 $error,
                 $token->getLine(),
                 $this->parser->getStream()->getSourceContext()->getPath()

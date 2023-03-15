@@ -7,6 +7,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
 
 /**
@@ -33,24 +34,24 @@ final class MediaFolderInvalidateBackendCacheSubscriber implements EventSubscrib
         ];
     }
 
-    private function invalidateBackendCacheForMediaFolders(LifecycleEventArgs $eventArgs): void
+    private function invalidateBackendCacheForMediaFolders(PostPersistEventArgs $eventArgs): void
     {
         if ($eventArgs->getObject() instanceof MediaFolder || $eventArgs->getObject() instanceof MediaItem) {
             $this->mediaFolderCache->delete();
         }
     }
 
-    public function postPersist(LifecycleEventArgs $eventArgs): void
+    public function postPersist(PostPersistEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }
 
-    public function postUpdate(LifecycleEventArgs $eventArgs): void
+    public function postUpdate(PostPersistEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }
 
-    public function postRemove(LifecycleEventArgs $eventArgs): void
+    public function postRemove(PostPersistEventArgs $eventArgs): void
     {
         $this->invalidateBackendCacheForMediaFolders($eventArgs);
     }

@@ -7,9 +7,9 @@ namespace Common\Core\Twig\Extensions;
  */
 
 use Backend\Core\Engine\Authentication;
+use Twig\Environment;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use Twig_Environment;
 
 class TwigFilters
 {
@@ -17,10 +17,10 @@ class TwigFilters
      * //http://twig.sensiolabs.org/doc/advanced.html#id2
      * returns a collection of Twig SimpleFilters
      *
-     * @param Twig_Environment $twig
+     * @param Environment $twig
      * @param string $app
      */
-    public static function addFilters(Twig_Environment $twig, string $app): void
+    public static function addFilters(Environment $twig, string $app): void
     {
         if ($app === 'Backend') {
             $twig->addFunction(

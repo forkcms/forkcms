@@ -30,7 +30,7 @@ class MediaGroupMediaItem implements JsonSerializable
      * @ORM\ManyToOne(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
      *     inversedBy="connectedItems",
-     *     cascade="persist"
+     *     cascade={"persist"}
      * )
      * @ORM\JoinColumn(
      *     name="mediaGroupId",
@@ -47,7 +47,7 @@ class MediaGroupMediaItem implements JsonSerializable
      * @ORM\ManyToOne(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
      *     inversedBy="groups",
-     *     cascade="persist",
+     *     cascade={"persist"},
      *     fetch="EAGER"
      * )
      * @ORM\JoinColumn(

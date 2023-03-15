@@ -6,6 +6,7 @@ use Backend\Modules\MediaLibrary\Manager\FileManager;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use SimpleBus\Message\Bus\MessageBus;
@@ -65,7 +66,7 @@ final class MediaItemSubscriber implements EventSubscriber
         }
     }
 
-    public function postPersist(LifecycleEventArgs $eventArgs): void
+    public function postPersist(PostPersistEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getObject();
         if (!$entity instanceof MediaItem) {
@@ -75,7 +76,7 @@ final class MediaItemSubscriber implements EventSubscriber
         $this->generateThumbnails($entity);
     }
 
-    public function postRemove(LifecycleEventArgs $eventArgs): void
+    public function postRemove(PostPersistEventArgs $eventArgs): void
     {
         $entity = $eventArgs->getObject();
         if (!$entity instanceof MediaItem) {

@@ -11,8 +11,10 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Templating\TemplateNameParserInterface;
-use Twig_Environment;
-use Twig_FactoryRuntimeLoader;
+use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
  * This is a twig template wrapper
@@ -26,7 +28,7 @@ class TwigTemplate extends BaseTwigTemplate
     private $themePath;
 
     public function __construct(
-        Twig_Environment $environment,
+        Environment $environment,
         TemplateNameParserInterface $parser,
         FileLocatorInterface $locator
     ) {
@@ -58,8 +60,8 @@ class TwigTemplate extends BaseTwigTemplate
     {
         $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
         $this->environment->setLoader(
-            new \Twig_Loader_Chain(
-                [$this->environment->getLoader(), new \Twig_Loader_Filesystem($this->getLoadingFolders())]
+            new ChainLoader(
+                [$this->environment->getLoader(), new FilesystemLoader($this->getLoadingFolders())]
             )
         );
     }
@@ -69,7 +71,7 @@ class TwigTemplate extends BaseTwigTemplate
         $rendererEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'), $this->environment);
         $csrfTokenManager = Model::get('security.csrf.token_manager');
         $this->environment->addRuntimeLoader(
-            new Twig_FactoryRuntimeLoader(
+            new FactoryRuntimeLoader(
                 [
                     FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
                         return new FormRenderer($rendererEngine, $csrfTokenManager);

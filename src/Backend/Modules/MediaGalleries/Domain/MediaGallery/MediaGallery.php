@@ -86,7 +86,7 @@ class MediaGallery
      *
      * @ORM\OneToOne(
      *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
-     *      cascade="persist",
+     *      cascade={"persist"},
      *      orphanRemoval=true
      * )
      * @ORM\JoinColumn(

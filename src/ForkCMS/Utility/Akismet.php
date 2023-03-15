@@ -257,8 +257,7 @@ class Akismet
         string $url = null,
         string $permalink = null,
         string $type = null
-    ): bool
-    {
+    ): bool {
         // possible answers
         $possibleResponses = ['true', 'false'];
 
@@ -381,8 +380,7 @@ class Akismet
         string $type = null,
         string $referrer = null,
         array  $others = []
-    ): bool
-    {
+    ): bool {
         // possible answers
         $possibleResponses = ['Thanks for making the web a better place.'];
 
@@ -465,8 +463,7 @@ class Akismet
         string $type = null,
         string $referrer = null,
         array  $others = []
-    ): bool
-    {
+    ): bool {
         // possible answers
         $possibleResponses = ['Thanks for making the web a better place.'];
 

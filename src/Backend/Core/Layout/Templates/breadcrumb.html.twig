@@ -1,15 +1,15 @@
 <ol class="breadcrumb">
-  {% for topLevelItem in navigation if topLevelItem.active %}
+  {% for topLevelItem in navigation|filter(topLevelItem => topLevelItem.active) %}
     <li>
       <a href="/private/{{ LANGUAGE }}/{{ topLevelItem.url }}">{{ ('lbl.'~topLevelItem.label)|trans|ucfirst }}</a>
     </li>
     {% if topLevelItem.children is not empty %}
-      {% for secondaryItem in topLevelItem.children if secondaryItem.active %}
+      {% for secondaryItem in topLevelItem.children|filter(secondaryItem => secondaryItem.active) %}
         <li>
           <a href="/private/{{ LANGUAGE }}/{{ secondaryItem.url }}">{{ ('lbl.'~secondaryItem.label)|trans|ucfirst }}</a>
         </li>
         {% if secondaryItem.children is not empty %}
-          {% for tertiaryItem in secondaryItem.children if tertiaryItem.active %}
+          {% for tertiaryItem in secondaryItem.children|filter(tertiaryItem => tertiaryItem.active) %}
             <li>
               <a href="/private/{{ LANGUAGE }}/{{ tertiaryItem.url }}">{{ ('lbl.'~tertiaryItem.label)|trans|ucfirst }}</a>
             </li>
