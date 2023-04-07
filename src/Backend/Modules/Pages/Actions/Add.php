@@ -766,6 +766,12 @@ class Add extends BackendBaseActionAdd
                 $url = FRONTEND_FILES_URL . '/Pages/UserTemplate';
                 foreach ($images as $image) {
                     $imagePath = $image->getAttribute('src');
+
+                    // skip empty images
+                    if ($imagePath === '') {
+                        continue;
+                    }
+
                     $basename = pathinfo($imagePath, PATHINFO_FILENAME);
                     $extension = pathinfo($imagePath, PATHINFO_EXTENSION);
                     $originalFilename = $basename . '.' . $extension;
