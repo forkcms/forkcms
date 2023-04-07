@@ -43,7 +43,7 @@ class Url extends KernelLoader
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
-                    mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
+                    mb_substr(Model::getRequest()->getUri(), 0, -1),
                     Response::HTTP_FOUND
                 )
             );
@@ -127,7 +127,7 @@ class Url extends KernelLoader
 
     public function getQueryString(): string
     {
-        return rtrim(Model::getRequest()->getRequestUri(), '/');
+        return filter_var(rtrim(Model::getRequest()->getRequestUri(), '/'), FILTER_SANITIZE_URL);
     }
 
     /**
@@ -145,7 +145,7 @@ class Url extends KernelLoader
     private function processQueryString(): void
     {
         // store the query string local, so we don't alter it.
-        $queryString = trim(Model::getRequest()->getPathInfo(), '/');
+        $queryString = filter_var(trim(Model::getRequest()->getPathInfo(), '/'), FILTER_SANITIZE_URL);
 
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
         $language = $this->determineLanguage($queryString);
