@@ -48,13 +48,13 @@
         "phpoffice/phpspreadsheet": "^1.12",
         "composer/package-versions-deprecated": "^1.11",
         "guzzlehttp/guzzle": "^6.5",
-        "doctrine/annotations": "*"
+        "doctrine/annotations": "^1.14"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
         "symfony/var-dumper": "^4.0",
         "squizlabs/php_codesniffer": "^3.5",
-        "symfony/phpunit-bridge": "^4.0",
+        "symfony/phpunit-bridge": "^4.3",
         "phpstan/phpstan": "^0.12.52",
         "phpstan/phpstan-symfony": "^0.12.7"
     },

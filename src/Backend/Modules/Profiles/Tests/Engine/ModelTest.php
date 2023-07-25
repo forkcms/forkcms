@@ -192,8 +192,8 @@ final class ModelTest extends BackendWebTestCase
 
         self::assertContains(
             [
-                'id' => $profileGroupId,
-                'group_id' => LoadProfilesGroup::getGroupId(),
+                'id' => (string) $profileGroupId,
+                'group_id' => (string) LoadProfilesGroup::getGroupId(),
                 'group_name' => LoadProfilesGroup::PROFILES_GROUP_NAME,
                 'expires_on' => $profileGroupData['expires_on'],
             ],
