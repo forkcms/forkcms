@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use JsonSerializable;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * MediaGroup MediaItem
@@ -16,11 +18,12 @@ use JsonSerializable;
 class MediaGroupMediaItem implements JsonSerializable
 {
     /**
-     * @var string
+     * @var UuidInterface
      *
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class=UuidGenerator::class)
+     * @ORM\Column(type="uuid", unique=true)
      */
     private $id;
 
