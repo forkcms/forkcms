@@ -40,6 +40,7 @@ class Add extends BackendBaseActionAdd
         $this->form
             ->addText('email', null, 255)
             ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
         ;
         $this->form->addPassword(
             'password',
@@ -47,11 +48,20 @@ class Add extends BackendBaseActionAdd
             75,
             'form-control passwordGenerator',
             'form-control danger passwordGenerator'
-        )->setAttributes(['autocomplete' => 'off']);
-        $this->form->addPassword('confirm_password', null, 75)->setAttributes(['autocomplete' => 'off']);
-        $this->form->addText('name', null, 255);
-        $this->form->addText('surname', null, 255);
-        $this->form->addText('nickname', null, 24);
+        )->setAttributes(['autocomplete' => 'new-password']);
+        $this->form->addPassword('confirm_password', null, 75)->setAttributes(['autocomplete' => 'new-password']);
+        $this->form
+            ->addText('name', null, 255)
+            ->setAttribute('autocomplete', 'given-name')
+        ;
+        $this->form
+            ->addText('surname', null, 255)
+            ->setAttribute('autocomplete', 'family-name')
+        ;
+        $this->form
+            ->addText('nickname', null, 24)
+            ->setAttribute('autocomplete', 'username')
+        ;
         $this->form->addImage('avatar');
 
         $this->form->addDropdown(

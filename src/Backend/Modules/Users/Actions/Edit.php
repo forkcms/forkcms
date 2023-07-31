@@ -116,13 +116,23 @@ class Edit extends BackendBaseActionEdit
         $this->form
             ->addText('email', $this->record['email'], 255)
             ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
         ;
         if ($this->user->isGod()) {
             $this->form->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
-        $this->form->addText('name', $this->record['settings']['name'], 255);
-        $this->form->addText('surname', $this->record['settings']['surname'], 255);
-        $this->form->addText('nickname', $this->record['settings']['nickname'], 24);
+        $this->form
+            ->addText('name', $this->record['settings']['name'], 255)
+            ->setAttribute('autocomplete', 'given-name')
+        ;
+        $this->form
+            ->addText('surname', $this->record['settings']['surname'], 255)
+            ->setAttribute('autocomplete', 'family-name')
+        ;
+        $this->form
+            ->addText('nickname', $this->record['settings']['nickname'], 24)
+            ->setAttribute('autocomplete', 'username')
+        ;
         $this->form->addImage('avatar');
 
         // password
@@ -132,9 +142,9 @@ class Edit extends BackendBaseActionEdit
             $this->form->addPassword('new_password', null, 75);
             $this->form->addPassword('confirm_password', null, 75);
 
-            // disable autocomplete
-            $this->form->getField('new_password')->setAttributes(['autocomplete' => 'off']);
-            $this->form->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
+            // add autocomplete attributes
+            $this->form->getField('new_password')->setAttributes(['autocomplete' => 'new-password']);
+            $this->form->getField('confirm_password')->setAttributes(['autocomplete' => 'new-password']);
         }
 
         // settings

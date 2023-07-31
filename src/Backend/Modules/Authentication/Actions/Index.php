@@ -53,14 +53,19 @@ class Index extends BackendBaseActionIndex
             ->addText('backend_email')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
             ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
         ;
         $this->form
             ->addPassword('backend_password')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
+            ->setAttribute('autocomplete', 'current-password')
         ;
 
         $this->formForgotPassword = new BackendForm('forgotPassword');
-        $this->formForgotPassword->addText('backend_email_forgot');
+        $this->formForgotPassword
+            ->addText('backend_email_forgot')
+            ->setAttribute('autocomplete', 'email')
+        ;
     }
 
     public function parse(): void
