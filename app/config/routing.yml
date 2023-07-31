@@ -1,7 +1,7 @@
 # Add your custom routes for Symfony bundles above this line
 
 _liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:

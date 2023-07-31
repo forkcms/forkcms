@@ -1,6 +1,6 @@
 <ul class="nav navbar-nav navbar-sidebar">
-  {% for mainItem in navigation %}
-    {% for subItem in mainItem.children if mainItem.active %}
+  {% for mainItem in navigation|filter(mainItem => mainItem.active) %}
+    {% for subItem in mainItem.children %}
       <li class="nav-item{% if subItem.active %} active{% endif %}">
         <a href="/private/{{ LANGUAGE }}/{{ subItem.url }}">{{ ('lbl.'~subItem.label)|trans|ucfirst }}</a>
         {% if subItem.children is defined and subItem.active %}

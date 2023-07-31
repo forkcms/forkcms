@@ -39,7 +39,7 @@ class MediaItem implements JsonSerializable
      * @ORM\ManyToOne(
      *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
      *      inversedBy="items",
-     *      cascade="persist"
+     *      cascade={"persist"}
      * )
      * @ORM\JoinColumn(
      *      name="mediaFolderId",

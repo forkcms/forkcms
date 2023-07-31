@@ -3,6 +3,7 @@
 namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
+use ForkCMS\Utility\Akismet;
 use ForkCMS\Utility\Thumbnails;
 use InvalidArgumentException;
 use RuntimeException;
@@ -10,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use TijsVerkoyen\Akismet\Akismet;
 
 /**
  * This class will initiate the frontend-application
@@ -351,10 +351,7 @@ class Model extends BaseModel
     {
         array_walk_recursive(
             $data,
-            static function (&$key, &$value) {
-                if (is_string($key)) {
-                    $key = htmlspecialchars($key);
-                }
+            static function (&$value) {
                 if (is_string($value)) {
                     $value = htmlspecialchars($value);
                 }

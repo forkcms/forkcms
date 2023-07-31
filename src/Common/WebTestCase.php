@@ -37,7 +37,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $client = static::createClient();
         $data = $this->getProvidedData();
         $data[] = $client;
-        $this->__construct($this->getName(), $data, $this->dataDescription());
+        $this->__construct($this->getName(), $data, $this->dataName());
 
         $this->resetDataBase($client);
     }

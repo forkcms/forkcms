@@ -2,12 +2,39 @@
 
 <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="autoload.php"
          stderr="true"
 >
+    <coverage>
+        <include>
+            <directory>src</directory>
+        </include>
+        <exclude>
+            <directory>src/*/*Bundle/Resources</directory>
+            <directory>src/*/*Bundle/Tests</directory>
+            <directory>src/*/Bundle/*Bundle/Resources</directory>
+            <directory>src/*/Bundle/*Bundle/Tests</directory>
+            <directory>src/*Bundle/Resources</directory>
+            <directory>src/*Bundle/Tests</directory>
+            <directory>src/Backend/Cache</directory>
+            <directory>src/Backend/Core/Js</directory>
+            <directory>src/Backend/Core/Tests</directory>
+            <directory>src/Backend/Core/Installer</directory>
+            <directory>src/Backend/Modules/*/DataFixtures</directory>
+            <directory>src/Backend/Modules/*/Installer</directory>
+            <directory>src/Backend/Modules/*/Tests</directory>
+            <directory>src/Common/Tests</directory>
+            <directory>src/Frontend/Cache</directory>
+            <directory>src/Frontend/Core/Tests</directory>
+            <directory>src/Frontend/Modules/*/DataFixtures</directory>
+            <directory>src/Frontend/Modules/*/Tests</directory>
+            <file>src/Common/WebTestCase.php</file>
+        </exclude>
+    </coverage>
+
     <testsuites>
         <testsuite name="installer">
             <directory>src/ForkCMS/Bundle/InstallerBundle/Tests</directory>
@@ -53,7 +80,7 @@
             <exclude>src/Backend/Modules/Settings/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Tags/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Users/Tests/Actions</exclude>
-            <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
+            <exclude>src/Frontend/Core/Tests/Engine/AjaxTest.php</exclude>
         </testsuite>
 
         <testsuite name="functional">
@@ -62,37 +89,11 @@
             <directory>src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>src/*Bundle/Tests/Controller</directory>
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
-            <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
+            <directory>src/Frontend/Core/Tests/Engine/AjaxTest.php</directory>
             <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests</exclude>
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Tests</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Tests</directory>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*Bundle/Tests</directory>
-                <directory>src/Backend/Cache</directory>
-                <directory>src/Backend/Core/Js</directory>
-                <directory>src/Backend/Core/Tests</directory>
-                <directory>src/Backend/Core/Installer</directory>
-                <directory>src/Backend/Modules/*/DataFixtures</directory>
-                <directory>src/Backend/Modules/*/Installer</directory>
-                <directory>src/Backend/Modules/*/Tests</directory>
-                <directory>src/Common/Tests</directory>
-                <directory>src/Frontend/Cache</directory>
-                <directory>src/Frontend/Core/Tests</directory>
-                <directory>src/Frontend/Modules/*/DataFixtures</directory>
-                <directory>src/Frontend/Modules/*/Tests</directory>
-                <file>src/Common/WebTestCase.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
     <php>
         <server name="KERNEL_DIR" value="app/" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />

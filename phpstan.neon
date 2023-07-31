@@ -57,4 +57,4 @@ parameters:
     - '#Constant BACKEND_CACHE_PATH not found.#'
     - '#Constant SITE_DEFAULT_TITLE not found.#'
   symfony:
-    container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
+    container_xml_path: var/cache/dev/appForkCMS_App_AppKernelDevDebugContainer.xml

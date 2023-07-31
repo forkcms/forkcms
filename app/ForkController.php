@@ -6,17 +6,17 @@ use Backend\Core\Engine\Ajax as BackendAjax;
 use Backend\Core\Engine\Backend;
 use Frontend\Core\Engine\Ajax as FrontendAjax;
 use Frontend\Core\Engine\Frontend;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
 use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Error;
+use Twig\Error\Error;
 
 /**
  * Application routing
  */
-class ForkController extends Controller
+class ForkController extends AbstractController
 {
     const DEFAULT_APPLICATION = 'Frontend';
 
@@ -106,7 +106,7 @@ class ForkController extends Controller
             return $application->display();
         } catch (RedirectException $ex) {
             return $ex->getResponse();
-        } catch (Twig_Error $twigError) {
+        } catch (Error $twigError) {
             if ($twigError->getPrevious() instanceof RedirectException) {
                 return $twigError->getPrevious()->getResponse();
             }

@@ -14,14 +14,11 @@
   <title>Installer - Fork CMS</title>
   <link rel="shortcut icon" href="/src/Backend/favicon.ico" />
   <link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/Css/screen.css" />
-  {% stylesheets '@ForkCMSInstallerBundle/Resources/public/css/*' %}
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-  {% endstylesheets %}
+  <link rel="stylesheet" type="text/css" media="screen" href="/src/ForkCMS/Bundle/InstallerBundle/Resources/public/css/installer.css" />
   <script type="text/javascript" src="/js/vendors/jquery.min.js"></script>
   <script type="text/javascript" src="/js/vendors/jquery-migrate.min.js"></script>
-  {% javascripts '@ForkCMSInstallerBundle/Resources/public/js/*' %}
-  <script type="text/javascript" src="{{ asset_url }}"></script>
-  {% endjavascripts %}
+  <script type="text/javascript" src="/src/ForkCMS/Bundle/InstallerBundle/Resources/public/js/backend.js"></script>
+  <script type="text/javascript" src="/src/ForkCMS/Bundle/InstallerBundle/Resources/public/js/install.js"></script>
 </head>
 <body id="installer">
   <div id="root-installer">

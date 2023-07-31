@@ -26,12 +26,12 @@ framework:
                 default_lifetime: 3600
 
 # Assetic Configuration
-assetic:
-    debug: "%kernel.debug%"
-    use_controller: false
-    bundles: [ 'ForkCMSInstallerBundle' ]
-    filters:
-        cssrewrite: ~
+#assetic:
+#    debug: "%kernel.debug%"
+#    use_controller: false
+#    bundles: [ 'ForkCMSInstallerBundle' ]
+#    filters:
+#        cssrewrite: ~
 
 monolog:
     handlers:

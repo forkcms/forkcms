@@ -65,10 +65,10 @@
 {% endblock checkbox_radio_label %}
 
 {%- block label_asterisk -%}
-  {% spaceless %}
+  {% apply spaceless %}
     {% import 'Layout/Templates/macros.html.twig' as macro %}
     {{ macro.required }}
-  {% endspaceless %}
+  {% endapply %}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
@@ -241,7 +241,7 @@
 {%- endblock meta_widget -%}
 
 {% block fork_image_widget %}
-  {% spaceless %}
+  {% apply spaceless %}
     <div class="row">
       {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
       {% if show_preview or show_remove_image %}
@@ -262,12 +262,12 @@
         {% endif %}
       </div>
     </div>
-  {% endspaceless %}
+  {% endapply %}
 {% endblock %}
 
 {% block fork_file_widget %}
   {% import "Layout/Templates/macros.html.twig" as macro %}
-  {% spaceless %}
+  {% apply spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
       {% if help_text_message %}
@@ -289,11 +289,11 @@
         {% endif %}
       </div>
     {% endif %}
-  {% endspaceless %}
+  {% endapply %}
 {% endblock %}
 
 {% block bootstrap_collection_row %}
-  {% spaceless %}
+  {% apply spaceless %}
     {% import "Layout/Templates/macros.html.twig" as macro %}
     {% if prototype is defined %}
       {% set prototype_vars = {} %}
@@ -351,7 +351,7 @@
         </div>
       </div>
     </div>
-  {% endspaceless %}
+  {% endapply %}
 {% endblock bootstrap_collection_row %}
 
 {% block media_group_row %}
