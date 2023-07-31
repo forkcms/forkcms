@@ -101,7 +101,6 @@ class Edit extends BackendBaseActionEdit
         $this->form->addCheckbox('new_email');
         $this->form
             ->addText('email', $this->profile['email'])
-            ->setAttribute('autocomplete', 'email')
         ;
         $this->form->addCheckbox('new_password');
         $this->form
@@ -114,36 +113,28 @@ class Edit extends BackendBaseActionEdit
         ;
         $this->form
             ->addText('display_name', $this->profile['display_name'])
-            ->setAttribute('autocomplete', 'username')
             ->makeRequired()
         ;
         $this->form
             ->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'))
-            ->setAttribute('autocomplete', 'given-name')
         ;
         $this->form
             ->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'))
-            ->setAttribute('autocomplete', 'family-name')
         ;
         $this->form
             ->addText('city', BackendProfilesModel::getSetting($this->id, 'city'))
-            ->setAttribute('autocomplete', 'address-level2')
         ;
         $this->form
             ->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'))
-            ->setAttribute('autocomplete', 'sex')
         ;
         $this->form
             ->addDropdown('day', array_combine($days, $days), $birthDay)
-            ->setAttribute('autocomplete', 'bday-day')
         ;
         $this->form
             ->addDropdown('month', $months, $birthMonth)
-            ->setAttribute('autocomplete', 'bday-month')
         ;
         $this->form
             ->addDropdown('year', array_combine($years, $years), (int) $birthYear)
-            ->setAttribute('autocomplete', 'bday-year')
         ;
         $this->form
             ->addDropdown(

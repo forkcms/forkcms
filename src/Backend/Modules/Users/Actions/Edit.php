@@ -116,22 +116,18 @@ class Edit extends BackendBaseActionEdit
         $this->form
             ->addText('email', $this->record['email'], 255)
             ->setAttribute('type', 'email')
-            ->setAttribute('autocomplete', 'email')
         ;
         if ($this->user->isGod()) {
             $this->form->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
         $this->form
             ->addText('name', $this->record['settings']['name'], 255)
-            ->setAttribute('autocomplete', 'given-name')
         ;
         $this->form
             ->addText('surname', $this->record['settings']['surname'], 255)
-            ->setAttribute('autocomplete', 'family-name')
         ;
         $this->form
             ->addText('nickname', $this->record['settings']['nickname'], 24)
-            ->setAttribute('autocomplete', 'username')
         ;
         $this->form->addImage('avatar');
 

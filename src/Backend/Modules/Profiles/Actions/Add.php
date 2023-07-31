@@ -74,7 +74,6 @@ class Add extends BackendBaseActionAdd
         $this->form
             ->addText('email')
             ->setAttribute('type', 'email')
-            ->setAttribute('autocomplete', 'email')
             ->makeRequired()
         ;
         $this->form
@@ -88,40 +87,31 @@ class Add extends BackendBaseActionAdd
 
         $this->form
             ->addText('display_name')
-            ->setAttribute('autocomplete', 'username')
             ->makeRequired()
         ;
         $this->form
             ->addText('first_name')
-            ->setAttribute('autocomplete', 'given-name')
         ;
         $this->form
             ->addText('last_name')
-            ->setAttribute('autocomplete', 'family-name')
         ;
         $this->form
             ->addText('city')
-            ->setAttribute('autocomplete', 'address-level2')
         ;
         $this->form
             ->addDropdown('gender', $genderValues)
-            ->setAttribute('autocomplete', 'sex')
         ;
         $this->form
             ->addDropdown('day', array_combine($days, $days))
-            ->setAttribute('autocomplete', 'bday-day')
         ;
         $this->form
             ->addDropdown('month', $months)
-            ->setAttribute('autocomplete', 'bday-month')
         ;
         $this->form
             ->addDropdown('year', array_combine($years, $years))
-            ->setAttribute('autocomplete', 'bday-year')
         ;
         $this->form
             ->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()))
-            ->setAttribute('autocomplete', 'country-name')
         ;
         $this->form->addTextarea('about');
 
