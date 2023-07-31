@@ -1,3 +1,26 @@
+5.12.0  (2023-07-31)
+------------------
+
+Fixed:
+* Core: Fix redirecting in parseWidget [#3513](https://github.com/forkcms/forkcms/pull/3513)
+* Core: Make privacy consent dialog scrollable on mobile [#3507](https://github.com/forkcms/forkcms/pull/3507)
+* Core: Make the old session clean-up method timezone aware [#3511](https://github.com/forkcms/forkcms/pull/3511)
+* Core: Move the apple touch icon to the theme [#3512](https://github.com/forkcms/forkcms/pull/3512)
+* Pages: Allow the use of install in a page title [#3533](https://github.com/forkcms/forkcms/pull/3533)
+* Pages: Skip empty images while copying a page [#3545](https://github.com/forkcms/forkcms/pull/3545)
+
+Security:
+* Core: Fix Open Redirect issue [#3547](https://github.com/forkcms/forkcms/pull/3547)
+
+Added:
+* CLI: Reset password CLI command [#3491](https://github.com/forkcms/forkcms/pull/3491)
+* Profiles: Autocomplete attributes [#3508](https://github.com/forkcms/forkcms/pull/3508)[#3548](https://github.com/forkcms/forkcms/pull/3548)
+
+Changed:
+* Core: Added PHP8 support and bumped minimum to 7.4 [#3538](https://github.com/forkcms/forkcms/pull/3538)
+* Core: Switched to symfony 4.4 [#3538](https://github.com/forkcms/forkcms/pull/3538)
+
+
 5.11.1  (2022-03-24)
 ------------------
 
