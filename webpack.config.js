@@ -1,301 +1,204 @@
 const Encore = require('@symfony/webpack-encore')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
-const dotenv = require('dotenv')
-const env = dotenv.config()
+const { execSync } = require('child_process')
+const fs = require('fs');
 
-if (env.error) {
-  throw env.error
-}
+const extensionConfig = JSON.parse(execSync("bin/console forkcms:extensions:webpack-config -vvv", (error, jsonConfig, stderr) => {
+  if (error) {
+    console.log(`error: ${error.message}`)
+    return
+  }
+  if (stderr) {
+    console.log(`stderr: ${stderr}`)
+    return
+  }
+}).toString())
 
-const themePaths = {
-  build: `src/Frontend/Themes/${env.parsed.THEME}/Core/build`,
-  core: `src/Frontend/Themes/${env.parsed.THEME}/Core`
-}
-
-// START INSTALLER SETUP
-//
-
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
-if (!Encore.isRuntimeEnvironmentConfigured()) {
-  // Set the runtime environment
-  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
-}
-
-Encore
-  .setOutputPath('src/ForkCMS/Bundle/InstallerBundle/Resources/public/build/')
-  .setPublicPath('/src/ForkCMS/Bundle/InstallerBundle/Resources/public/build')
-  .setManifestKeyPrefix('src/ForkCMS/Bundle/InstallerBundle/Resources/public/build/')
-
-  .addEntry('installer', './src/ForkCMS/Bundle/InstallerBundle/Resources/public/Js/Installer.js')
-  .addStyleEntry('screen', './src/ForkCMS/Bundle/InstallerBundle/Resources/public/Sass/screen.scss')
-
-  .cleanupOutputBeforeBuild()
-
-  // will require an extra script tag for runtime.js
-  // but, you probably want this, unless you're building a single-page app
-  .enableSingleRuntimeChunk()
-  .enableSassLoader((options) => {}, {
-    resolveUrlLoader: false
-  })
-  .enablePostCssLoader()
-  // enables @babel/preset-env polyfills
-  .enableSourceMaps(!Encore.isProduction())
-  // enables hashed filenames (e.g. app.abc123.css)
-  .enableVersioning(Encore.isProduction())
-
-  .autoProvidejQuery()
-  .autoProvideVariables({
-    moment: 'moment'
-  })
-
-  // enables @babel/preset-env polyfills
-  .configureBabel(() => {}, {
-    useBuiltIns: 'usage',
-    corejs: 3
-  })
-
-  .configureWatchOptions((watchOptions) => {
-    watchOptions.poll = 250
-  })
-
-  .enableBuildNotifications(true, (options) => {
-    options.alwaysNotify = true
-  })
-
-  .addPlugin(new LiveReloadPlugin())
-
-// build the first configuration
-const installerConfig = Encore.getWebpackConfig()
-
-// Set a unique name for the config (needed later!)
-installerConfig.name = 'installerConfig'
-
-// reset Encore to build the next config
-Encore.reset()
+const THEME_PATH = {'output':'public/assets/themes', 'public':'/assets/themes'}
+const MODULE_PATH = {'output':'public/assets/modules', 'public':'/assets/modules'}
+const EXPORTS = []
 
 //
-// END INSTALLER SETUP
+// THEMES SETUP
+//
+for (const THEME_CONFIG of extensionConfig.themes) {
+  // Manually configure the runtime environment if not already configured yet by the "encore" command.
+  // It's useful when you use tools that rely on webpack.config.js file.
+  if (!Encore.isRuntimeEnvironmentConfigured()) {
+    // Set the runtime environment
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+  }
 
+  Encore
+    .setOutputPath(`${THEME_PATH.output}`)
+    .setPublicPath(`${THEME_PATH.public}/`)
+    .configureImageRule()
+    .configureFontRule()
+    // enables @babel/preset-env polyfills
+    .enableSourceMaps(!Encore.isProduction())
+    // enables hashed filenames (e.g. app.abc123.css)
+    .enableVersioning(Encore.isProduction())
+    .cleanupOutputBeforeBuild()
+    .configureWatchOptions((watchOptions) => {
+      // polling is useful when running Encore inside a Virtual Machine
+      watchOptions.poll = 250
+    })
+    .enableBuildNotifications(true, (options) => {
+      options.alwaysNotify = true
+      options.title = 'Theme: ' + THEME_CONFIG.name
+      options.emoji = true
+      options.contentImage = 'public/apple-touch-icon.png'
+    })
+    .addPlugin(new LiveReloadPlugin())
+    .disableSingleRuntimeChunk() // we will never load more than one team
+    .enableVueLoader()
+    .autoProvidejQuery()
+    .autoProvideVariables({
+      moment: 'moment'
+    })
+    // enables @babel/preset-env polyfills
+    .configureBabel(() => {
+    }, {
+      useBuiltIns: 'usage',
+      corejs: 3
+    })
+    .enableSassLoader((options) => {
+    }, {
+      resolveUrlLoader: true
+    })
+    .enablePostCssLoader()
+
+  const COPY_FILES_CONFIGS = []
+  for (const THEME_CONFIG of extensionConfig.themes) {
+    const THEME_PUBLIC_DIR = `${THEME_CONFIG.path}/public`
+    const THEME_JS_DIR = `${THEME_CONFIG.path}/webpack/js`
+    const THEME_SCSS_DIR = `${THEME_CONFIG.path}/webpack/scss`
+    if (fs.existsSync(THEME_PUBLIC_DIR)) {
+      COPY_FILES_CONFIGS.push({
+        from: THEME_PUBLIC_DIR,
+        to: `./${THEME_CONFIG.name}/[path][name].[ext]`
+      })
+    }
+    if (fs.existsSync(THEME_JS_DIR)) {
+      fs.readdirSync(THEME_JS_DIR).forEach((file) => {
+        if (file.endsWith('.js') && !file.startsWith('_')) {
+          Encore.addEntry(`${THEME_CONFIG.name}/js/` + file.slice(0, -3), `${THEME_JS_DIR}/${file}`)
+        }
+      })
+    }
+    if (fs.existsSync(THEME_SCSS_DIR)) {
+      fs.readdirSync(THEME_SCSS_DIR).forEach((file) => {
+        if (file.endsWith('.scss') && !file.startsWith('_')) {
+          Encore.addStyleEntry(`${THEME_CONFIG.name}/css/` + file.slice(0, -5), `${THEME_SCSS_DIR}/${file}`)
+        }
+      })
+    }
+  }
+  Encore.copyFiles(COPY_FILES_CONFIGS)
+
+  // build the second configuration
+  const webpackConfig = Encore.getWebpackConfig()
+
+  // Set a unique name for the config (needed later!)
+  webpackConfig.name = 'ThemeConfig'
+
+  EXPORTS.push(webpackConfig)
+  Encore.reset()
+}
+
+//
+// END THEMES SETUP
+//
 // ===========================
-
-// START BACKEND
 //
+// START MODULES SETUP
+//
+for (const APPLICATION of ['Installer', 'Frontend', 'Backend']) {
+  // Manually configure the runtime environment if not already configured yet by the "encore" command.
+  // It's useful when you use tools that rely on webpack.config.js file.
+  if (!Encore.isRuntimeEnvironmentConfigured()) {
+    // Set the runtime environment
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+  }
 
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
-if (!Encore.isRuntimeEnvironmentConfigured()) {
-  // Set the runtime environment
-  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
+  Encore
+    .setOutputPath(`${MODULE_PATH.output}/${APPLICATION}`)
+    .setPublicPath(`${MODULE_PATH.public}/${APPLICATION}/`)
+    .configureImageRule()
+    .configureFontRule()
+    // enables @babel/preset-env polyfills
+    .enableSourceMaps(!Encore.isProduction())
+    // enables hashed filenames (e.g. app.abc123.css)
+    .enableVersioning(Encore.isProduction())
+    .cleanupOutputBeforeBuild()
+    .configureWatchOptions((watchOptions) => {
+      // polling is useful when running Encore inside a Virtual Machine
+      watchOptions.poll = 250
+    })
+    .enableBuildNotifications(true, (options) => {
+      options.alwaysNotify = true
+      options.title = 'Application: ' + APPLICATION
+      options.emoji = true
+      options.contentImage = 'public/apple-touch-icon.png'
+    })
+    .addPlugin(new LiveReloadPlugin())
+    .enableSingleRuntimeChunk()
+    .enableVueLoader()
+    .autoProvidejQuery()
+    .autoProvideVariables({
+      moment: 'moment'
+    })
+    // enables @babel/preset-env polyfills
+    .configureBabel(() => {
+    }, {
+      useBuiltIns: 'usage',
+      corejs: 3
+    })
+    .enableSassLoader((options) => {
+    }, {
+      resolveUrlLoader: true
+    })
+    .enablePostCssLoader()
+
+  const COPY_FILES_CONFIGS = []
+  for (const MODULE_CONFIG of extensionConfig.modules) {
+    const MODULE_PUBLIC_DIR = `${MODULE_CONFIG.path}/${APPLICATION}/public`
+    const MODULE_APPLICATION_JS_DIR = `${MODULE_CONFIG.path}/${APPLICATION}/webpack/js`
+    const MODULE_APPLICATION_SCSS_DIR = `${MODULE_CONFIG.path}/${APPLICATION}/webpack/scss`
+    if (fs.existsSync(MODULE_PUBLIC_DIR)) {
+      COPY_FILES_CONFIGS.push({
+        from: MODULE_PUBLIC_DIR,
+        to: `./${MODULE_CONFIG.name}/[path][name].[ext]`
+      })
+    }
+    if (fs.existsSync(MODULE_APPLICATION_JS_DIR)) {
+      fs.readdirSync(MODULE_APPLICATION_JS_DIR).forEach((file) => {
+        if (file.endsWith('.js') && !file.startsWith('_')) {
+          Encore.addEntry(`${MODULE_CONFIG.name}/js/` + file.slice(0, -3), `${MODULE_APPLICATION_JS_DIR}/${file}`)
+        }
+      })
+    }
+    if (fs.existsSync(MODULE_APPLICATION_SCSS_DIR)) {
+      fs.readdirSync(MODULE_APPLICATION_SCSS_DIR).forEach((file) => {
+        if (file.endsWith('.scss') && !file.startsWith('_')) {
+          Encore.addStyleEntry(`${MODULE_CONFIG.name}/css/` + file.slice(0, -5), `${MODULE_APPLICATION_SCSS_DIR}/${file}`)
+        }
+      })
+    }
+  }
+  Encore.copyFiles(COPY_FILES_CONFIGS)
+
+  // build the second configuration
+  const webpackConfig = Encore.getWebpackConfig()
+
+  // Set a unique name for the config (needed later!)
+  webpackConfig.name = APPLICATION + 'Config'
+
+  EXPORTS.push(webpackConfig)
+  Encore.reset()
 }
 
-Encore
-  .setOutputPath('src/Backend/Core/build/')
-  .setPublicPath('/src/Backend/Core/build')
-  .setManifestKeyPrefix('src/Backend/Core/build/')
-
-  .addEntry('backend', './src/Backend/Core/Js/Backend.js')
-  .addStyleEntry('screen', './src/Backend/Core/Layout/Sass/screen.scss')
-
-  .cleanupOutputBeforeBuild()
-
-  // will require an extra script tag for runtime.js
-  // but, you probably want this, unless you're building a single-page app
-  .enableSingleRuntimeChunk()
-  .enableSassLoader((options) => {}, {
-    resolveUrlLoader: false
-  })
-  .enablePostCssLoader()
-  // enables @babel/preset-env polyfills
-  .enableSourceMaps(!Encore.isProduction())
-  // enables hashed filenames (e.g. app.abc123.css)
-  .enableVersioning(Encore.isProduction())
-
-  .copyFiles({
-    from: './src/Backend/Core/Layout/images',
-    to: './src/Backend/Core/Build/images/[path][name].[ext]'
-  })
-
-  .autoProvidejQuery()
-  .autoProvideVariables({
-    moment: 'moment'
-  })
-
-  // enables @babel/preset-env polyfills
-  .configureBabel(() => {}, {
-    useBuiltIns: 'usage',
-    corejs: 3
-  })
-
-  .configureWatchOptions((watchOptions) => {
-    watchOptions.poll = 250
-  })
-
-  .enableBuildNotifications(true, (options) => {
-    options.alwaysNotify = true
-  })
-
-  .addPlugin(new LiveReloadPlugin())
-
-// build the first configuration
-const backendConfig = Encore.getWebpackConfig()
-
-// Set a unique name for the config (needed later!)
-backendConfig.name = 'backendConfig'
-
-// reset Encore to build the next config
-Encore.reset()
-
 //
-// END BACKEND SETUP
+// END MODULES SETUP
 
-// ===========================
-
-// START FRONTEND CORE SETUP
-//
-
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
-if (!Encore.isRuntimeEnvironmentConfigured()) {
-  // Set the runtime environment
-  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
-}
-
-Encore
-  .setOutputPath('src/Frontend/Core/build/')
-  .setPublicPath('/src/Frontend/Core/build')
-  .setManifestKeyPrefix('src/Frontend/Core/build/')
-
-  .addEntry('frontend', './src/Frontend/Core/Js/Frontend.js')
-  .addStyleEntry('screen', './src/Frontend/Core/Layout/Sass/screen.scss')
-
-  .cleanupOutputBeforeBuild()
-
-  // will require an extra script tag for runtime.js
-  // but, you probably want this, unless you're building a single-page app
-  .enableSingleRuntimeChunk()
-  .enableSassLoader((options) => {}, {
-    resolveUrlLoader: false
-  })
-  .enablePostCssLoader()
-
-  .enableVueLoader()
-
-  .configureUrlLoader()
-  // enables @babel/preset-env polyfills
-  .enableSourceMaps(!Encore.isProduction())
-  // enables hashed filenames (e.g. app.abc123.css)
-  .enableVersioning(Encore.isProduction())
-
-  .copyFiles({
-    from: './src/Frontend/Core/Layout/Images',
-    to: './src/Frontend/Core/Build/Images/[path][name].[ext]'
-  })
-
-  .autoProvidejQuery()
-  .autoProvideVariables({
-    moment: 'moment'
-  })
-
-  // enables @babel/preset-env polyfills
-  .configureBabel(() => {}, {
-    useBuiltIns: 'usage',
-    corejs: 3
-  })
-
-  .configureWatchOptions((watchOptions) => {
-    // polling is useful when running Encore inside a Virtual Machine
-    watchOptions.poll = 250
-  })
-
-  .enableBuildNotifications(true, (options) => {
-    options.alwaysNotify = true
-  })
-
-  .addPlugin(new LiveReloadPlugin())
-
-// build the first configuration
-const frontendConfig = Encore.getWebpackConfig()
-
-// Set a unique name for the config (needed later!)
-frontendConfig.name = 'frontendConfig'
-
-// reset Encore to build the next config
-Encore.reset()
-
-//
-// END FRONTEND CORE SETUP
-
-// START FRONTEND THEME SETUP
-//
-
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
-if (!Encore.isRuntimeEnvironmentConfigured()) {
-  // Set the runtime environment
-  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
-}
-
-Encore
-  .setOutputPath(`${themePaths.build}`)
-  .setPublicPath(`/${themePaths.build}/`)
-  .setManifestKeyPrefix(`${themePaths.build}`)
-
-  .addEntry('frontend', `./${themePaths.core}/Js/Index.js`)
-  .addStyleEntry('screen', `./${themePaths.core}/Layout/Sass/screen.scss`)
-
-  .cleanupOutputBeforeBuild()
-
-  // will require an extra script tag for runtime.js
-  // but, you probably want this, unless you're building a single-page app
-  .enableSingleRuntimeChunk()
-  .enableSassLoader((options) => {}, {
-    resolveUrlLoader: false
-  })
-  .enablePostCssLoader()
-
-  .enableVueLoader()
-
-  .configureUrlLoader()
-  // enables @babel/preset-env polyfills
-  .enableSourceMaps(!Encore.isProduction())
-  // enables hashed filenames (e.g. app.abc123.css)
-  .enableVersioning(Encore.isProduction())
-
-  .copyFiles({
-    from: `/${themePaths.core}/Layout/Images`,
-    to: `/${themePaths.build}/images/[path][name].[ext]`
-  })
-
-  .autoProvidejQuery()
-  .autoProvideVariables({
-    moment: 'moment'
-  })
-
-  // enables @babel/preset-env polyfills
-  .configureBabel(() => {}, {
-    useBuiltIns: 'usage',
-    corejs: 3
-  })
-
-  .configureWatchOptions((watchOptions) => {
-    // polling is useful when running Encore inside a Virtual Machine
-    watchOptions.poll = 250
-  })
-
-  .enableBuildNotifications(true, (options) => {
-    options.alwaysNotify = true
-  })
-
-  .addPlugin(new LiveReloadPlugin())
-
-// build the second configuration
-const frontendThemeConfig = Encore.getWebpackConfig()
-
-// Set a unique name for the config (needed later!)
-frontendThemeConfig.name = 'frontendThemeConfig'
-
-//
-// END FRONTEND THEME SETUP
-
-module.exports = [installerConfig, backendConfig, frontendConfig, frontendThemeConfig]
+module.exports = EXPORTS

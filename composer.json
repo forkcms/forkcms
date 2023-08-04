@@ -13,59 +13,76 @@
     "homepage": "https://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.1",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-zip": "*",
         "ext-gd": "*",
         "ext-intl": "*",
+        "ext-pdo": "*",
+        "ext-spl": "*",
         "ext-simplexml": "*",
-        "behat/transliterator": "~1.0",
-        "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/orm": "^2.7",
-        "google/apiclient": "~1.1.2",
-        "google/recaptcha": "^1.2",
+        "ext-libxml": "*",
+        "doctrine/doctrine-bundle": "^2.3",
+        "doctrine/orm": "^2.8",
+        "google/recaptcha": "~1.1",
         "jeroendesloovere/geolocation-php-api": "^2.1",
-        "league/flysystem": "~1.0",
-        "league/flysystem-aws-s3-v3": "^1.0.13",
-        "league/flysystem-cached-adapter": "^1.0.6",
-        "liip/imagine-bundle": "*",
-        "mailmotor/campaignmonitor-bundle": "^3.0",
-        "mailmotor/mailchimp-bundle": "^4.0",
-        "mailmotor/mailmotor-bundle": "^4.0",
-        "matthiasmullie/minify": "~1.3",
-        "matthiasmullie/scrapbook": "^1.3",
-        "pimple/pimple": "^3.2",
-        "ramsey/uuid": "^4.0",
-        "ramsey/uuid-doctrine": "^2.0",
-        "simple-bus/doctrine-orm-bridge": "6.2.*",
-        "simple-bus/symfony-bridge": "~6.2",
-        "spoon/library": "^3.0",
-        "swiftmailer/swiftmailer": "^6.0",
-        "symfony/monolog-bundle": "^3.1",
-        "symfony/swiftmailer-bundle": "^3.0",
-        "symfony/symfony": "^4.0",
+        "liip/imagine-bundle": "^2.5",
+        "symfony/monolog-bundle": "^3.7",
         "tijsverkoyen/akismet": "1.1.*",
-        "friendsofsymfony/rest-bundle": "^2.5",
-        "jms/serializer-bundle": "^2.4",
         "codex-team/editor.js": "^2.0",
         "beberlei/doctrineextensions": "^1.2",
         "symfony/webpack-encore-bundle": "^1.7",
-        "tijsverkoyen/css-to-inline-styles": "^2.0",
         "phpoffice/phpspreadsheet": "^1.12",
         "composer/package-versions-deprecated": "^1.11",
-        "guzzlehttp/guzzle": "^6.5",
-        "doctrine/annotations": "^1.14"
+        "symfony/flex": "^2.0",
+        "sensio/framework-extra-bundle": "^6.1",
+        "symfony/asset": "^6.0",
+        "symfony/mailer": "^6.0",
+        "symfony/form": "^6.0",
+        "symfony/security-bundle": "^6.0",
+        "symfony/translation": "^6.0",
+        "symfony/validator": "^6.0",
+        "doctrine/doctrine-migrations-bundle": "^3.1",
+        "symfony/proxy-manager-bridge": "^6.0",
+        "symfony/twig-bundle": "^6.0",
+        "twig/extra-bundle": "^3.0",
+        "twig/twig": "^3.0",
+        "symfony/debug-bundle": "^6.0",
+        "symfony/yaml": "^6.0",
+        "doctrine/annotations": "^1.0",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "symfony/property-access": "^6.0",
+        "symfony/property-info": "^6.0",
+        "symfony/serializer": "^6.0",
+        "symfony/messenger": "^6.0",
+        "beberlei/assert": "^3.3",
+        "symfony/rate-limiter": "^6.0",
+        "symfony/http-client": "^6.0",
+        "symfony/templating": "^6.0",
+        "pageon/pageon-doctrine-data-grid-bundle": "^0.1.3",
+        "stof/doctrine-extensions-bundle": "^1.7",
+        "symfony/uid": "6.*",
+        "composer/semver": "^3.2",
+        "symfony/html-sanitizer": "^6.1.0",
+        "scienta/doctrine-json-functions": "^5.0",
+        "twig/intl-extra": "^3.3",
+        "symfony/expression-language": "6.*"
     },
     "require-dev": {
-        "jdorn/sql-formatter": "1.2.17",
-        "symfony/var-dumper": "^4.0",
-        "squizlabs/php_codesniffer": "^3.5",
-        "symfony/phpunit-bridge": "^4.3",
-        "phpstan/phpstan": "^0.12.52",
-        "phpstan/phpstan-symfony": "^0.12.7",
-        "phpstan/phpstan-doctrine": "^0.12.22"
+        "squizlabs/php_codesniffer": "dev-master as 3.6.0",
+        "symfony/phpunit-bridge": "^6.0",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-symfony": "^1.0",
+        "phpstan/phpstan-doctrine": "^1.0",
+        "symfony/var-dumper": "^6.0",
+        "symfony/dotenv": "^6.0",
+        "symfony/maker-bundle": "^1.31",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "symfony/stopwatch": "^6.0",
+        "symfony/web-profiler-bundle": "^6.0",
+        "symfony/browser-kit": "^6.0"
     },
     "config": {
         "bin-dir": "bin"
@@ -75,29 +92,19 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "test": [
-            "Composer\\Config::disableProcessTimeout",
-            "./bin/simple-phpunit"
-        ],
-        "post-install-cmd": [
-            "php bin/console forkcms:cache:clear",
-            "php bin/console cache:clear --no-warmup",
-            "php bin/console cache:warmup"
-        ],
-        "post-update-cmd": [
-            "php bin/console forkcms:cache:clear",
-            "php bin/console cache:clear --no-warmup",
-            "php bin/console cache:warmup"
-        ]
+        "test": "symfony php bin/simple-phpunit",
+        "phpstan": "APP_DEBUG=1 symfony console cache:warm -q -edev && symfony php -d memory_limit=-1 bin/phpstan -vvv analyze src -c phpstan.neon",
+        "phpcs": "symfony php -d memory_limit=-1 bin/phpcs --extensions=php --standard=fork.phpcs.xml",
+        "post-install-cmd": [],
+        "post-update-cmd": [],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
     },
     "autoload": {
         "psr-4": {
-            "Frontend\\": "src/Frontend",
-            "Backend\\": "src/Backend",
-            "Common\\": "src/Common",
-            "Console\\": "src/Console",
-            "ForkCMS\\": "src/ForkCMS",
-            "ForkCMS\\App\\": "app"
+            "ForkCMS\\": "src"
         },
         "exclude-from-classmap": [
             "**/Tests/",
@@ -108,6 +115,15 @@
     "autoload-dev": {
         "psr-4": {
             "ForkCMS\\Tests\\": "tests/"
+        }
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": true,
+            "require": "6.*"
         }
     }
 }

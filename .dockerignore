@@ -28,7 +28,7 @@ var/docker/db/data/
 vendor/
 .idea
 var/cache/*
-var/logs/*
-app/config/parameters.yml
+var/log/*
+config/parameters.yaml
 src/Backend/Cache/*/*
 src/Frontend/Cache/*/*

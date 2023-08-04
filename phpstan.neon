@@ -4,58 +4,24 @@ includes:
   - vendor/phpstan/phpstan-doctrine/rules.neon
 
 parameters:
-  level: 1
+  level: 6
   reportUnmatchedIgnoredErrors: false
   paths:
     - src
   scanFiles:
-    - vendor/google/apiclient/src/Google/Task/Retryable.php
-    - vendor/spoon/library/spoon/form/form.php
   bootstrapFiles:
-    - autoload.php
-  excludes_analyse:
-    - src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder/
-    - src/*/Tests/*
-    - src/Common/WebTestCase.php
-    - src/Backend/Cache
-    - src/Frontend/Cache
+    - src/bootstrap.php
+  excludePaths:
+    - src/Core/tests/*
+    - src/Themes/*
+    - src/Maker/*
+    - src/Modules/*/tests/*
   earlyTerminatingMethodCalls:
-    Frontend\Core\Engine\Page:
-      - redirect
-      - redirectToLogin
-    Backend\Core\Engine\Base\Action:
-      - redirect
-    Backend\Core\Engine\Url:
-      - redirect
-      - redirectToErrorPage
-    Frontend\Core\Engine\Url:
-      - redirectToLanguage
-  ignoreErrors:
-    - '#Constant ACTION_GROUP_TAG not found.#'
-    - '#Constant ACTION_RIGHTS_LEVEL not found.#'
-    - '#Constant APPLICATION not found.#'
-    - '#Constant BACKEND_CACHE_PATH not found.#'
-    - '#Constant BACKEND_CACHE_URL not found.#'
-    - '#Constant BACKEND_CORE_PATH not found.#'
-    - '#Constant BACKEND_MODULES_PATH not found.#'
-    - '#Constant BACKEND_PATH not found.#'
-    - '#Constant FORK_VERSION not found.#'
-    - '#Constant FRONTEND_CACHE_PATH not found.#'
-    - '#Constant FRONTEND_CACHE_URL not found.#'
-    - '#Constant FRONTEND_CORE_PATH not found.#'
-    - '#Constant FRONTEND_CORE_URL not found.#'
-    - '#Constant FRONTEND_FILES_PATH not found.#'
-    - '#Constant FRONTEND_FILES_URL not found.#'
-    - '#Constant FRONTEND_LANGUAGE not found.#'
-    - '#Constant FRONTEND_MODULES_PATH not found.#'
-    - '#Constant FRONTEND_PATH not found.#'
-    - '#Constant FRONTEND_THEMES_PATH not found.#'
-    - '#Constant LANGUAGE not found.#'
-    - '#Constant NAMED_APPLICATION not found.#'
-    - '#Constant PATH_WWW not found.#'
-    - '#Constant SITE_DEFAULT_TITLE not found.#'
-    - '#Constant SITE_URL not found.#'
   symfony:
-    container_xml_path: var/cache/dev/appForkCMS_App_AppKernelDevDebugContainer.xml
+    container_xml_path: var/cache/dev/ForkCMS_Core_Domain_Kernel_KernelDevDebugContainer.xml
   doctrine:
-    objectManagerLoader: tests/object-manager.php
+    objectManagerLoader: src/Core/tests/ObjectManager.php
+  parallel:
+    jobSize: 20
+    maximumNumberOfProcesses: 32
+    minimumNumberOfJobsPerProcess: 2

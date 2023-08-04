@@ -1,6 +1,8 @@
 # Configuration
-/app/config/parameters.yml
-/app/config/cli-install.yml
+/config/parameters.yaml
+/config/cli-install.yaml
+
+fork-cms-installation-configuration.yaml
 
 # Libraries
 /vendor/*
@@ -15,8 +17,8 @@
 .*.swp
 .DS_Store
 /var/cache/*
-/var/logs/*
-/app/sessions/*
+/var/log/*
+/var/sessions/*
 /bin/*
 !bin/console
 /bundles/*
@@ -27,7 +29,6 @@
 /src/Frontend/Core/build
 /src/Frontend/Themes/*/Core/build
 .vscode
-.idea
 
 # Docker
 var/docker/db/data/*
@@ -41,3 +42,36 @@ docker-compose.override.yml
 
 # PHPUnit
 /.phpunit.result.cache
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/assets/installer
+/public/assets/modules
+/public/assets/themes
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

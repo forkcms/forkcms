@@ -4,5 +4,5 @@ codecov:
         wait_for_ci: true
 
 github_checks:
-  # Disable inline annotations of code coverage in pull requests.
-  annotations: false
+    # Disable inline annotations of code coverage in pull requests.
+    annotations: false
