@@ -23,7 +23,7 @@ security:
       login_throttling:
         max_attempts: 3
         interval: '15 minutes'
-      custom_authenticator: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
+      #@TODO custom_authenticator: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
       logout:
         path: backend_logout
     frontend:
