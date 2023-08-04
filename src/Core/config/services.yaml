@@ -16,6 +16,10 @@ services:
       - '../tests'
       - '../Domain/PDO'
 
+  ForkCMS\Core\Domain\Settings\SettingsListener:
+    tags:
+      - { name: doctrine.event_listener, event: preFlush }
+
   ForkCMS\Core\Domain\Router\ModuleRouteLoader:
     arguments:
       - !tagged_iterator { tag: forkcms.routing.loader }
