@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Form;
+namespace ForkCMS\Core\Domain\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatePickerType extends DateType
 {
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         // Set all the fixed attributes required to make Flatpickr work
         $view->vars['attr']['data-role'] = 'fork-datepicker';
