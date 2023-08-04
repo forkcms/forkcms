@@ -40,10 +40,12 @@ final class TranslationRepository extends ServiceEntityRepository
         $entityManager->flush();
     }
 
-    public function save(Translation $translation): void
+    public function save(Translation ...$translations): void
     {
         $entityManager = $this->getEntityManager();
-        $entityManager->persist($translation);
+        foreach ($translations as $translation) {
+            $entityManager->persist($translation);
+        }
 
         try {
             $entityManager->flush();

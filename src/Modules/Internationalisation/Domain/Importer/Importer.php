@@ -48,6 +48,8 @@ final class Importer
         $locales = $this->installedLocaleRepository->findAllIndexed();
         $modules = $this->moduleRepository->findAllIndexed();
         $fallbackLocale = Locale::fallback()->value;
+        $existingTranslations = [];
+        $newTranslations = [];
         foreach ($translations as $translation) {
             $application = $translation->getDomain()->getApplication();
             $moduleName = $translation->getDomain()->getModuleName();
@@ -68,13 +70,16 @@ final class Importer
                 continue;
             }
 
-            $existingTranslation = $this->translationRepository->find($translation->getId());
+            $existingTranslation = $existingTranslations[$translation->getId()]
+                ?? $newTranslations[$translation->getId()]
+                ?? $this->translationRepository->find($translation->getId());
+
             if ($existingTranslation !== null) {
                 if ($overwriteConflicts) {
                     $existingTranslation->change($translation->getValue());
-                    $this->translationRepository->save($existingTranslation);
+                    $existingTranslations[$translation->getId()] = $existingTranslation;
                     $importResult->addUpdated($existingTranslation);
-                    $this->eventDispatcher->dispatch(new TranslationChangedEvent($translation));
+
                     continue;
                 }
 
@@ -82,11 +87,13 @@ final class Importer
                 continue;
             }
 
-            $this->translationRepository->save($translation);
+            $newTranslations[$translation->getId()] = $translation;
             $importResult->addImported($translation);
-            $this->eventDispatcher->dispatch(new TranslationCreatedEvent($translation));
         }
 
+        $this->translationRepository->save(...$existingTranslations, ...$newTranslations);
+        $this->eventDispatcher->dispatch(new TranslationChangedEvent(...$existingTranslations));
+        $this->eventDispatcher->dispatch(new TranslationCreatedEvent(...$newTranslations));
         $filesystem = new Filesystem();
         $translationsDirectory = $this->cacheDir . '/translations';
         if ($filesystem->exists($translationsDirectory)) {
