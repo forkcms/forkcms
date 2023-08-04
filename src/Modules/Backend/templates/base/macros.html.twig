@@ -1,0 +1,123 @@
+{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false, iconOnly = false) %}
+  {% import _self as macro %}
+  {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
+  {% if url %}
+    <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
+    {% apply spaceless %}
+      {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
+      <span class="{% if iconOnly %}visually-hidden{% else %}btn-text{% endif %}">{{ label }}</span>
+      {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
+    {% endapply %}
+    </a>
+  {% else %}
+    {% if extra['data-bs-toggle'] is defined and extra['type'] is not defined %}
+      {% set extra = extra|merge({'type' : 'button'}) %}
+    {% endif %}
+    <button class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
+    {% apply spaceless %}
+      {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
+      <span class="{% if iconOnly %}visually-hidden{% else %}btn-text{% endif %}">{{ label }}</span>
+      {% if iconRight %}{{ macro.icon(icon) }}{% endif %}
+    {% endapply %}
+    </button>
+  {% endif %}
+{% endmacro %}
+
+{%- macro required() -%}
+  <abbr data-bs-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+{%- endmacro -%}
+
+{% macro icon(icon, iconType = 'fas') %}
+  <i class="{{ iconType }} fa-{{ icon }}"></i>
+{% endmacro %}
+
+{% macro infoTooltip(title, icon = 'info-circle', iconType = 'fas') %}
+  {% import _self as macro %}
+  <abbr tabindex="0" data-bs-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon(icon, iconType) }}</abbr>
+{% endmacro %}
+
+{% macro dataGrid(dataGrid, addItemLink, addItemText, noItemsText) %}
+  {% import _self as macro %}
+  {% if dataGrid %}
+    <div class="table-responsive">
+      {{ dataGrid|raw }}
+    </div>
+  {% else %}
+    {{ macro.emptyState(addItemLink, addItemText, noItemsText) }}
+  {% endif %}
+{% endmacro %}
+
+{% macro alert(type, message, dismissable = false, id, extraAttributes = [], active = true, showIcon = true) %}
+  {% import _self as macro %}
+
+  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
+
+  {% if active %}
+    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
+  {% else %}
+    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' hide'}) %}
+  {% endif %}
+
+  {% set role = 'status' %}
+  {% set live = 'polite' %}
+  {% set autohide = false %}
+  {% set dismissableClass = ' d-none' %}
+
+  {% if type == 'success' or type == 'info' %}
+    {% set autohide = true %}
+  {% endif %}
+
+  {% if type == 'danger' or type == 'warning' %}
+    {% set role = 'alert' %}
+    {% set live = 'assertive' %}
+  {% endif %}
+
+  {% if type == 'danger' %}
+    {% set dismissableClass = '' %}
+  {% endif %}
+
+  {% if dismissable == true %}
+    {% set dismissableClass = '' %}
+  {% endif %}
+
+  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="{{ autohide }}" data-delay="5000">
+    <div class="toast-body">
+      {% if dismissable == true %}
+        <button type="button" class="btn-close{{ dismissableClass }}" data-dismiss="toast" aria-label="{{ 'lbl.Close'|trans }}"></button>
+      {% endif %}
+      {% if message %}
+        {% if showIcon == true and type == 'danger' %}
+          {{ macro.icon('times-circle toast-icon', 'far') }}
+        {% elseif showIcon == true and type == 'success' %}
+          {{ macro.icon('check-circle toast-icon', 'far') }}
+        {% elseif showIcon == true and type == 'info' %}
+          {{ macro.icon('info-circle toast-icon') }}
+        {% elseif showIcon == true and type == 'warning' %}
+          {{ macro.icon('exclamation-triangle toast-icon') }}
+        {% endif %}
+        {% if '</p>' in message or '</ul>' in message %}
+          {{ message|raw }}
+        {% else %}
+          <p>
+            {{ message|raw }}
+          </p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro emptyState(addItemLink, addItemText, noItemsText, addItemLinkExtraAttributes) %}
+  {% set addItemText = addItemText|default('msg.AddItem'|trans|raw) %}
+  {% set noItemsText = noItemsText|default('msg.NoItems'|trans|raw) %}
+
+  <div class="empty-state">
+    <img class="empty-state-illustration mb-4" src="{{ BACKEND_CORE_URL }}/Layout/images/empty-state.svg" alt="">
+    <p class="text-black mb-2"><strong>{{ noItemsText|raw }}</strong></p>
+    {% if not addItemLink is null %}
+      <a class="empty-state-add" href="{{ addItemLink }}"{% for attrname, attrvalue in addItemLinkExtraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ addItemText|trans|ucfirst }}
+      </a>
+    {% endif %}
+  </div>
+{% endmacro %}

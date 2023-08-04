@@ -1,0 +1,82 @@
+{%- if backend_form is defined %}{% form_theme backend_form '@Backend/base/formTheme.html.twig' %}{% endif -%}
+<!DOCTYPE html>
+<html lang="{{ app.user is not null ? app.user.setting('locale') : app.request.locale }}">
+
+{% include "@Backend/base/head.html.twig" %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+<body id="{{ bodyID }}" class="{{ bodyClass }}">
+
+{% include "@Backend/base/header.html.twig" %}
+<div class="main-wrapper{% if hideActionbar is defined and hideActionbar %} main-wrapper-without-subnavigation{% endif %}{% if sidebarTree is defined %} main-wrapper-tree{% endif%}">
+  <div class="sidebar">
+    {% include "@Backend/base/navigation.html.twig" %}
+
+    {% block sidebarSubNavigation %}
+      {% if hideActionbar is not defined or not hideActionbar %}
+        <div class="sub-navigation">
+          <nav id="content-subnavigation" class="fork-nav-sidebar" {% if activeParent is defined and activeParent %}aria-label="{{ activeParent }}{% endif %}">
+            {% include "@Backend/base/subnavigation.html.twig" with { 'navigation': navigation } %}
+          </nav>
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+  {% include "@Backend/base/messaging.html.twig" %}
+  <div id="root">
+    <main id="content" class="content-wrapper">
+      <div class="content-main{% if hideActionbar is not defined or not hideActionbar %} content-main-without-subnavigation{% endif %}">
+        {% if hideActionbar is not defined or not hideActionbar %}
+          <div class="content-action-bar">
+            <div class="container-fluid">
+              <div class="row align-items-center fork-module-heading">
+                {% set _block = block('actionbar')|trim %}
+                {% if _block is not empty %}
+                  <div class="col-sm-6">
+                    {% include "@Backend/base/breadcrumb.html.twig" with { 'navigation': navigation } %}
+                  </div>
+                  <div class="col-sm-6">
+                    {% block actionbar %}{% endblock %}
+                  </div>
+                {% endif %}
+                {% if _block is empty %}
+                  <div class="col-12">
+                    {% include "@Backend/base/breadcrumb.html.twig" with { 'navigation': navigation } %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="content">
+          <div class="container-fluid container-fluid-large" data-content-container>
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="root-footer"></div>
+  </div>
+  {% if sidebarTree is defined %}<div class="footer-pages">{% endif%}
+  {% include "@Backend/base/footer.html.twig" %}
+  {% if sidebarTree is defined %}</div>{% endif%}
+  <div class="modal fade" data-fork-role="confirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="forkDefaultConfirmTitle">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="forkDefaultConfirmTitle">{{ 'lbl.ConfirmTitle'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <p data-fork-role="confirmation-message"></p>
+        </div>
+        <div class="modal-footer">
+          {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { 'data-bs-dismiss':'modal', 'type':'button' }) }}
+          {{ macro.buttonIcon('#', 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { 'data-fork-role': 'confirmation-submit'}) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

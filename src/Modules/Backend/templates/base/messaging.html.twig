@@ -1,0 +1,25 @@
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+<div id="messaging" class="toast-messaging-wrapper" data-messaging-wrapper>
+  <noscript>
+    {{ macro.alert('warning', 'err.JavascriptNotEnabled'|trans|ucfirst) }}
+  </noscript>
+
+  {{ macro.alert('danger', 'err.CookiesNotEnabled'|trans|ucfirst, null, 'noCookies', [], false) }}
+
+  {% if form_error is defined and form_error %}{{ macro.alert('danger', 'err.FormError'|trans|ucfirst) }}{% endif %}
+  {% if usingRevision is defined and usingRevision %}{{ macro.alert('info', 'msg.UsingARevision'|trans|ucfirst, null, null, {'class': 'toast-inline'}) }}{% endif %}
+  {% if usingDraft is defined and usingDraft %}{{ macro.alert('info', 'msg.UsingADraft'|trans|ucfirst, null, null, {'class': 'toast-inline'}) }}{% endif %}
+  {% for message in app.flashes('success') %}
+    {{ macro.alert('success', message|trans|raw) }}
+  {% endfor %}
+  {% for message in app.flashes('error') %}
+    {{ macro.alert('danger', message|trans|raw) }}
+  {% endfor %}
+  {% for message in app.flashes('warning') %}
+    {{ macro.alert('warning', message|trans|raw) }}
+  {% endfor %}
+  {% for message in app.flashes('info') %}
+    {{ macro.alert('info', message|trans|raw) }}
+  {% endfor %}
+</div>

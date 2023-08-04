@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Backend\Controller\LoginController:
+    public: true
+
+  ForkCMS\Modules\Backend\Controller\BackendController:
+    public: true
+    arguments:
+      - !tagged_locator { tag: forkcms.backend.action }
+
+  ForkCMS\Modules\Backend\Controller\BackendAjaxController:
+    public: true
+    arguments:
+      - !tagged_locator { tag: forkcms.backend.ajax_action }

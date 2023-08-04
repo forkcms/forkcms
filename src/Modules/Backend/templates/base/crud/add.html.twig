@@ -1,0 +1,28 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+{% set crudIndexModule = null %}
+{% set crudIndexParameters = [] %}
+{% set crudIndexRelative = false %}
+{% set crudIndexLocale = null %}
+
+{% block content %}
+  {% if formTheme is defined %}
+    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig',formTheme] %}
+  {% endif %}
+  {{ form_start(backend_form) }}
+  {{ form_widget(backend_form) }}
+  {{ form_errors(backend_form) }}
+  {{ form_rest(backend_form) }}
+
+  <div class="btn-toolbar">
+    {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
+      <div class="btn-group" role="group">
+        {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crudIndexLocale), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+      </div>
+    {% endif %}
+    <div class="btn-group ms-auto" role="group">
+      {{ macro.buttonIcon('', submitIcon|default('plus-square'), submitLabel|default('lbl.Add'|trans|ucfirst), submitClass|default('btn-primary')) }}
+    </div>
+  </div>
+  {{ form_end(backend_form) }}
+{% endblock %}

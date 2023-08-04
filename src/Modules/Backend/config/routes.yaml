@@ -1,0 +1,29 @@
+backend_ajax:
+  path: /private/ajax/{_locale}/{module}/{action}/{slug?}
+  controller: ForkCMS\Modules\Backend\Controller\BackendAjaxController
+  condition: "request.isXmlHttpRequest()"
+  defaults:
+    module: ~
+    action: ~
+  requirements:
+    module: '[a-z][a-z0-9_]*[a-z0-9]*'
+    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    slug: .+
+
+backend_logout:
+  path: /private/{_locale}/backend/authentication_logout
+
+backend_login:
+  path: /private/{_locale}/backend/authentication_login
+  controller: ForkCMS\Modules\Backend\Controller\LoginController
+
+backend_action:
+  path: /private/{_locale}/{module}/{action}/{slug?}
+  controller: ForkCMS\Modules\Backend\Controller\BackendController
+  defaults:
+    module: ~
+    action: ~
+  requirements:
+    module: '[a-z][a-z0-9_]*[a-z0-9]*'
+    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    slug: .+

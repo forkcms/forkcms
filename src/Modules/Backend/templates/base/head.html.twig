@@ -1,0 +1,28 @@
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% if page_title %}{{ page_title|ucfirst }} | {% endif %}{{ SITE_TITLE }} | Fork CMS</title>
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <script defer data-search-pseudo-elements src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" integrity="sha384-b3ua1l97aVGAPEIe48b4TC60WUQbQaGi2jqAWM90y0OZXZeyaTCWtBTKtjW2GXG1" crossorigin="anonymous"></script>
+
+  <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7COpen+Sans:400,600' rel='stylesheet' type='text/css'>
+
+  {{ encore_entry_script_tags('Backend/js/Backend', null, 'BackendConfig') }}
+  {{ encore_entry_link_tags('Backend/css/screen', null, 'BackendConfig') }}
+  {% for jsFile in jsFiles %}
+    <script src="/{{ jsFile }}"></script>
+  {% endfor %}
+  {% for cssFile in cssFiles %}
+    <link href="/{{ cssFile }}" rel="stylesheet">
+  {% endfor %}
+
+  {% if app.debug %}
+    <script src="http://localhost:35729/livereload.js"></script>
+  {% endif %}
+
+  {{ jsData|raw }}
+</head>

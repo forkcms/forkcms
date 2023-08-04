@@ -1,0 +1,46 @@
+{% import '@Backend/base/macros.html.twig' as macro %}
+<div class="main-navigation">
+  <nav class="navbar navbar-dark">
+    <ul class="nav navbar-nav">
+      {% for item in navigation %}
+        {% set iconKey = item.label.name|lower %}
+        {% set icon = 'file' %}
+        {% set iconType = 'fas' %}
+        {% if iconKey == 'dashboard' %}
+          {% set icon = 'tachometer-alt' %}
+        {% elseif iconKey == 'pages' %}
+          {% set iconType = 'far ' %}
+        {% elseif iconKey == 'medialibrary' %}
+          {% set icon = 'images' %}
+        {% elseif iconKey == 'modules' %}
+          {% set icon = 'cube' %}
+        {% elseif iconKey == 'marketing' %}
+          {% set icon = 'chart-area' %}
+        {% elseif iconKey == 'settings' %}
+          {% set icon = 'cog' %}
+        {% endif %}
+
+        <li class="nav-item nav-item-{{ item.label.name|lower }}{% if item.active is defined and item.active %} active{% endif %}">
+          <a class="nav-link" href="{{ path('backend_action', item.slug.routeParameters) }}" data-toggle="tooltip-nav"
+             title="{{ item.label|trans|ucfirst }}" data-container="body" data-placement="right">
+            {{ macro.icon(icon ~ ' fa-fw', iconType) }}
+            <span class="nav-item-text">{{ item.label|trans|ucfirst }}</span>
+            {% if item.active is defined and item.active %}<span class="visually-hidden">({{ 'lbl.Current'|trans }})</span>{% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  <a href="#" class="arrow-right js-nav-next">
+    {{ macro.icon('chevron-right') }}
+  </a>
+  <a href="#" class="arrow-left js-nav-prev">
+    {{ macro.icon('chevron-left') }}
+  </a>
+  <div class="toggle-nav-collapse d-none d-lg-block">
+    <button class="js-toggle-nav" role="button">
+      {{ macro.icon('chevron-left') }}
+      <span class="visually-hidden js-nav-screen-text"></span>
+    </button>
+  </div>
+</div>
