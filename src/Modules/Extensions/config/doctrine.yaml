@@ -1,0 +1,4 @@
+doctrine:
+  dbal:
+    types:
+      modules__extensions__module__module_name: ForkCMS\Modules\Extensions\Domain\Module\ModuleNameDBALType

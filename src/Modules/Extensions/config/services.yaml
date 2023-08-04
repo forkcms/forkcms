@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      bool $forkIsInstalled: '%fork.is_installed%'
+
+  ForkCMS\Modules\Extensions\Domain\:
+    resource: '../Domain/*'
+    exclude:
+      - '../Domain/Module/InstalledModules'
+
