@@ -1,0 +1,176 @@
+# follow symlinks & disallow directory listing
+# note: your hosting company might not allow these directives to be set. In that case,
+# you should either find another hosting company (advised) or remove the line below.
+Options +FollowSymlinks -Indexes
+DirectorySlash Off
+
+# Make sure the htaccessfile is protected
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
+
+# file etags (used when comparing local cached file to server file)
+FileETag MTime Size
+
+########## Begin - Common hacking tools and bandwidth hoggers block
+## By SigSiu.net and @nikosdion.
+# This line also disables Akeeba Remote Control 2.5 and earlier
+SetEnvIf user-agent "Indy Library" stayout=1
+
+# The following rules are for bandwidth-hogging download tools
+SetEnvIf user-agent "libwww-perl" stayout=1
+SetEnvIf user-agent "Download Demon" stayout=1
+SetEnvIf user-agent "GetRight" stayout=1
+SetEnvIf user-agent "GetWeb!" stayout=1
+SetEnvIf user-agent "Go!Zilla" stayout=1
+SetEnvIf user-agent "Go-Ahead-Got-It" stayout=1
+SetEnvIf user-agent "GrabNet" stayout=1
+SetEnvIf user-agent "TurnitinBot" stayout=1
+# This line denies access to all of the above tools
+deny from env=stayout
+########## End - Common hacking tools and bandwidth hoggers block
+
+<IfModule mod_rewrite.c>
+    # set environment variable to let PHP know that urls are being rewritten
+    RewriteRule .* - [E=MOD_REWRITE:1]
+
+    # Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
+    RewriteCond %{REQUEST_METHOD} ^TRACE
+    RewriteRule .* - [F]
+
+    # nice urls
+    RewriteEngine On
+    RewriteBase /
+
+    # allow our root index.php
+    RewriteRule ^index\.php$ - [L]
+
+    # forbidden extensions
+    RewriteRule \.asp - [F]
+    RewriteRule \.cgi - [F]
+    RewriteRule \.htm - [F]
+    RewriteRule \.jsp - [F]
+    RewriteRule \.md - [F]
+    RewriteRule \.phar - [F]
+    RewriteRule \.php - [F]
+    RewriteRule \.php2 - [F]
+    RewriteRule \.php3 - [F]
+    RewriteRule \.php4 - [F]
+    RewriteRule \.php5 - [F]
+    RewriteRule \.php6 - [F]
+    RewriteRule \.php7 - [F]
+    RewriteRule \.php8 - [F]
+    RewriteRule \.php9 - [F]
+    RewriteRule \.pht - [F]
+    RewriteRule \.phtml - [F]
+    RewriteRule \.pl - [F]
+    RewriteRule \.py - [F]
+    RewriteRule \.sh - [F]
+    RewriteRule \.shtml - [F]
+    RewriteRule \.twig - [F]
+    RewriteRule \.xhtml - [F]
+
+    # forbidden files
+    RewriteRule Dockerfile - [F]
+    RewriteRule \.dockerignore - [F]
+    RewriteRule \.editorconfig - [F]
+    RewriteRule \.env - [F]
+    RewriteRule \.env.dist - [F]
+    RewriteRule \.env.local - [F]
+    RewriteRule \.gitattributes - [F]
+    RewriteRule \.gitignore - [F]
+    RewriteRule \.htaccess - [F]
+    RewriteRule \.php-version - [F]
+    RewriteRule \.scrutinizer.yml - [F]
+    RewriteRule bower\.json - [F]
+    RewriteRule codecov\.yml - [F]
+    RewriteRule composer\.json - [F]
+    RewriteRule composer\.lock - [F]
+    RewriteRule docker-compose\.override\.yml - [F]
+    RewriteRule docker-compose\.yml - [F]
+    RewriteRule gulpfile\.js - [F]
+    RewriteRule package\.json - [F]
+    RewriteRule phpstan\.neon - [F]
+    RewriteRule phpunit\.xml\.dist - [F]
+    RewriteRule yarn\.lock - [F]
+
+    # forbidden directories
+    RewriteRule \.git - [F]
+    RewriteRule \.github - [F]
+    RewriteRule config - [F]
+    RewriteRule bin/.* - [F]
+    RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+    RewriteRule src/Console/.* - [F]
+    RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
+    RewriteRule src/Frontend/Files/MediaLibrary/uploads - [F]
+    RewriteRule var/docker/.* - [F]
+    RewriteRule var/log - [F]
+    RewriteRule vendor/.* - [F]
+
+    # redirect all traffic to https
+    # <IfModule headers_module>
+    #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # </IfModule>
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteCond %{HTTPS} off
+    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+    # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # one url to rule them all
+    # RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
+    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+    # RewriteCond %{HTTP_HOST} !.*localhost(:\d+)?$ [NC]
+    # RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+
+    # src dir should pass via the front controller
+    RewriteCond %{REQUEST_URI} ^/(src|src\/)$
+    RewriteRule . /index.php [NC,L]
+
+    # handle urls
+    RewriteCond %{REQUEST_URI} !^$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php [NC,L]
+</IfModule>
+
+# file caching in browser
+<IfModule mod_expires.c>
+    ExpiresActive On
+    <FilesMatch "\.(?i:ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|woff2|eot)$">
+        ExpiresDefault "access plus 1 month"
+    </FilesMatch>
+</IfModule>
+
+# gzip on Apache 2
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript application/json image/svg+xml
+
+    # these browsers do not support deflate
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4.0[678] no-gzip
+    BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+
+    SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
+</IfModule>
+
+# gzip on Apache 1
+<IfModule mod_gzip.c>
+    mod_gzip_on Yes
+
+    mod_gzip_item_include mime ^application/javascript$
+    mod_gzip_item_include mime ^application/x-javascript$
+    mod_gzip_item_include mime ^application/json$
+    mod_gzip_item_include mime ^application/xhtml+xml$
+    mod_gzip_item_include mime ^application/xml$
+    mod_gzip_item_include mime ^text/css$
+    mod_gzip_item_include mime ^text/html$
+    mod_gzip_item_include mime ^text/javascript$
+    mod_gzip_item_include mime ^text/plain$
+    mod_gzip_item_include mime ^text/xml$
+    mod_gzip_item_exclude mime ^image/
+
+    # browser issues
+    mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
+</IfModule>
