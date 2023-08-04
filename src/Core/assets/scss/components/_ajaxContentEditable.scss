@@ -1,0 +1,9 @@
+[data-role="ajax-content-editable"] {
+  display: inline-block;
+  padding-right: 2.75em;
+  min-height: 2em;
+
+  + button {
+    margin-left: -2.75em;
+  }
+}
