@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+  <name>Fork</name>
+  <version>1.0.0</version>
+  <requirements>
+    <minimum_version>6.0.0</minimum_version>
+    <maximum_version>7.0.0</maximum_version>
+  </requirements>
+  <authors>
+    <author>
+      <name>Katrien Vanhaute</name>
+      <url>https://www.linkedin.com/in/katrienvh</url>
+    </author>
+    <author>
+      <name>Jelmer Prins</name>
+      <url>https://pageon.be</url>
+    </author>
+  </authors>
+  <thumbnail>images/thumbnail.png</thumbnail>
+  <description>
+    <![CDATA[Default theme with a bit of a Fork CMS flavour]]>
+  </description>
+  <meta_navigation supported="false"/>
+  <templates>
+    <template name="Default" path="Default.html.twig" image="true" default="true">
+      <layout>
+        [/,/,top],
+        [main,main,main]
+      </layout>
+    </template>
+    <template name="Home" path="Home.html.twig" image="true">
+      <layout>
+        [/,/,top],
+        [main,main,main]
+      </layout>
+    </template>
+  </templates>
+</theme>

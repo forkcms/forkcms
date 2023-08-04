@@ -1,4 +1,4 @@
-{% if privacyConsentEnabled and not privacyConsentDialogHide %}
+{% if privacyConsentEnabled %}
   <div
     id="privacyConsentDialog"
     tabindex="-1"
@@ -14,10 +14,8 @@
       <div class="modal-content">
         <form data-role="privacy_consent_dialog_form">
           <div class="modal-header">
-            <h5 id="privacyConsentDialogTitle">{{ 'msg.PrivacyConsentDialogTitle'|trans|raw }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 id="privacyConsentDialogTitle">{{ 'lbl.PrivacyConsentDialogTitle'|trans|ucfirst }}</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}"></button>
           </div>
           <div class="modal-body">
             <p>
@@ -25,48 +23,48 @@
             </p>
 
             <div class="form-group">
-              <div class="custom-control custom-checkbox">
+              <div class="form-check form-switch">
                 <input name="privacyConsentLevelFunctionalCheckbox" id="privacyConsentLevelFunctionalCheckbox"
                   type="checkbox" checked disabled aria-describedby="privacyConsentLevelFunctionalHelpBlock"
                   data-role="privacy-level"
                   data-value="functional"
-                  class="custom-control-input"
+                  class="form-check-input"
                 >
-                <label id="privacyConsentLevelFunctionalCheckbox" class="custom-control-label">
-                  {{ 'msg.PrivacyConsentLevelFunctionalTitle'|trans|raw }}
+                <label id="privacyConsentLevelFunctionalCheckbox" class="form-check-label">
+                  {{ 'lbl.PrivacyConsentLevelFunctional'|trans|ucfirst }}
                 </label>
               </div>
               <small id="privacyConsentLevelFunctionalHelpBlock" class="text-muted form-text">
-                {{ 'msg.PrivacyConsentLevelFunctionalText'|trans|raw }}
+                {{ 'msg.PrivacyConsentLevelFunctional'|trans|raw }}
               </small>
             </div>
 
             {% for level in privacyConsentDialogLevels %}
-              <div class="form-group">
-                <div class="custom-control custom-checkbox">
+              <div class="form-group mt-1">
+                <div class="form-check form-switch">
                   <input name="privacyConsentLevel{{ level|ucfirst }}Checkbox"
                     id="privacyConsentLevel{{ level|ucfirst }}Checkbox" type="checkbox"
                     aria-describedby="privacyConsentLevel{{ level|ucfirst }}HelpBlock"
                     data-role="privacy-level"
                     data-value="{{ level }}"
-                    class="custom-control-input"
+                    class="form-check-input"
                   >
-                  <label for="privacyConsentLevel{{ level|ucfirst }}Checkbox" id="privacyConsentLevel{{ level|ucfirst }}Checkbox" class="custom-control-label">
-                    {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst ~ 'Title')|trans|raw }}
+                  <label for="privacyConsentLevel{{ level|ucfirst }}Checkbox" id="privacyConsentLevel{{ level|ucfirst }}Checkbox" class="form-check-label">
+                    {{ ('lbl.PrivacyConsentLevel' ~ level|ucfirst)|trans|ucfirst }}
                   </label>
                 </div>
                 <small id="privacyConsentLevel{{ level|ucfirst }}HelpBlock" class="text-muted form-text">
-                  {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst ~ 'Text')|trans|raw }}
+                  {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst)|trans|raw }}
                 </small>
               </div>
             {% endfor %}
-            <p>
+            <p class="mt-3">
               {{ 'msg.PrivacyConsentDialogAfter'|trans|raw }}
             </p>
           </div>
           <div class="modal-footer">
             <button type="submit" data-role="privacy_consent_dialog_save_button" class="btn btn-sm btn-primary">
-              {{ 'msg.PrivacyConsentDialogSave'|trans }}
+              {{ 'lbl.PrivacyConsentDialogSave'|trans|ucfirst }}
             </button>
           </div>
         </form>
