@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% import 'navigation.html.twig' as nav %}
+
+{% block navigation %}
+  {{ nav.navigation('step-1') }}
+{% endblock %}
+
+{% block content %}
+  <div class="row fork-module-messages">
+    <div class="col-md-12">
+      {% if checker.hasErrors %}
+        <div class="alert alert-danger">
+          <p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
+        </div>
+      {% endif %}
+      {% if checker.hasWarnings and not checker.hasErrors %}
+        <div class="alert alert-warning">
+          <p>Your server might not run Fork CMS properly.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <form action="/" method="get" id="step2" class="forkForms submitWithLink">
+    <div class="fork-module-content">
+      <input type="hidden" name="step" value="2" />
+      <div id="requirementsInformation">
+        {% for requirementCategory in checker.requirementCategories %}
+          <div class="card card-default mb-3">
+            <div class="card-heading">
+              <h3 class="card-title">{{ requirementCategory.name }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="list-group list-group-flush">
+                {% for requirement in requirementCategory.requirements %}
+                  <div class="alert alert-{{ requirement.status.name }}">
+                    <h3 class="list-group-item-heading">{{ requirement.name }}</h3>
+                    <p class="list-group-item-text">{{ requirement.message|raw }}</p>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card-footer">
+      {% if checker.hasWarnings and not checker.hasErrors %}
+        <div class="btn-toolbar justify-content-end">
+          <div class="btn-group" role="group">
+            <a href="{{ path('install_step1', {ignoreWarnings:true}) }}" id="installerButton" class="btn btn-primary">
+              <span class="fas fa-download" aria-hidden="true"></span> Install anyway
+            </a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </form>
+{% endblock %}

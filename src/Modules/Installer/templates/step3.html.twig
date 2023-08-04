@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% import 'navigation.html.twig' as nav %}
+
+{% block navigation %}
+  {{ nav.navigation('step-3') }}
+{% endblock %}
+
+{% block content %}
+
+  {{ form_start(form) }}
+  <div class="fork-module-messages">
+    {{ form_errors(form) }}
+  </div>
+  <div class="fork-module-content">
+    <div class="card card-primary">
+      <div class="card-heading">
+        <h3 class="card-title">Settings</h3>
+      </div>
+      <div class="card-body">
+        <fieldset>
+          <legend>Modules</legend>
+          <label>Which modules would you like to install?</label>
+          <div id="moduleList" class="form-group">
+            {{ form_widget(form.modules) }}
+            {{ form_errors(form.modules) }}
+          </div>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            Example data<br>
+            <small class="text-muted form-text">If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</small>
+            <small class="text-muted form-text">(The blog-module is required and will be installed)</small>
+          </legend>
+          <div class="form-group">
+            {{ form_row(form.installExampleData) }}
+            {{ form_errors(form.installExampleData) }}
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-footer">
+        <div class="btn-toolbar justify-content-between">
+          <div class="btn-group" role="group">
+            <a href="{{ path('install_step2') }}" class="btn btn-default">
+              <span class="fa fa-chevron-left" aria-hidden="true"></span> Previous
+            </a>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
+              Next <span class="fa fa-chevron-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+
+{% endblock %}

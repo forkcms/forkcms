@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% import 'navigation.html.twig' as nav %}
+
+{% block navigation %}
+  {{ nav.navigation('step-2') }}
+{% endblock %}
+
+{% block content %}
+  {{ form_start(form) }}
+  <div class="fork-module-messages">
+    {{ form_errors(form) }}
+  </div>
+  <div class="fork-module-content">
+    <div class="card card-primary">
+      <div class="card-heading">
+        <h3 class="card-title">Settings</h3>
+      </div>
+      <div class="card-body">
+        <fieldset>
+          <legend>
+            Locales<br>
+            <small class="text-muted form-text">
+              Will your site be available in multiple locales or just one? Changing this setting later on will change your URL structure.
+            </small>
+          </legend>
+          <div class="form-group">
+            {{ form_widget(form.multilingual) }}
+            {{ form_errors(form.multilingual) }}
+          </div>
+          <ul data-fork-cms-role="multilingual-wrapper" class="list-unstyled" style="display: none;">
+            {{ form_widget(form.locales) }}
+            {{ form_errors(form.locales) }}
+          </ul>
+          <div class="form-group">
+            {{ form_label(form.defaultLocale) }}
+            {{ form_widget(form.defaultLocale, { 'attr' : { 'class' : 'form-control' }}) }}
+            {{ form_errors(form.defaultLocale) }}
+          </div>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            CMS user interface locales<br>
+            <small class="text-muted form-text">What locales do you want to install for your users in the CMS interface?</small>
+          </legend>
+          <div class="form-group">
+            {{ form_widget(form.sameInterfaceLocale) }}
+            {{ form_errors(form.sameInterfaceLocale) }}
+          </div>
+          {{ form_label(form.sameInterfaceLocale) }}
+          <div data-fork-cms-role="user-locales" class="form-group" style="display: none;">
+            {{ form_label(form.userLocales) }}
+            {{ form_widget(form.userLocales) }}
+            {{ form_errors(form.userLocales) }}
+          </div>
+          <div class="form-group">
+            {{ form_label(form.defaultUserLocale) }}
+            {{ form_widget(form.defaultUserLocale, { 'attr' : { 'class' : 'form-control' }}) }}
+            {{ form_errors(form.defaultUserLocale) }}
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-footer">
+        <div class="btn-toolbar justify-content-end">
+          <div class="btn-group" role="group">
+            <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
+              Next <span class="fa fa-chevron-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+
+{% endblock %}

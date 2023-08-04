@@ -1,0 +1,139 @@
+#installer {
+  h2,
+  h3 {
+    float: none;
+  }
+
+  h3 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+
+  .card-footer {
+    border-top: 0;
+    background: $white;
+  }
+
+  .header {
+    background: $white;
+
+    h2 {
+      color: $body-color;
+      font-size: 25px;
+    }
+  }
+
+  .card-heading .card-title {
+    line-height: $line-height-lg;
+    margin: 0;
+  }
+
+  .installer-navigation-wrapper {
+    background: $blue-dark;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      li {
+        color: $white;
+        -webkit-font-smoothing: antialiased;
+        padding: 0;
+        line-height: 2.8em;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+
+        &.active {
+          background: $primary;
+
+          &:before {
+            border-left: 23px solid $blue-dark;
+            border-right: 23px solid transparent;
+            border-top: 23px solid transparent;
+            border-bottom: 23px solid transparent;
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: -1px;
+          }
+
+          + li:before {
+            border-left: 23px solid $primary;
+            border-right: 23px solid transparent;
+            border-top: 23px solid transparent;
+            border-bottom: 23px solid transparent;
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+          }
+        }
+
+        &:first-of-type.active:before {
+          display: none;
+        }
+      }
+    }
+
+    p {
+      color: $white;
+      -webkit-font-smoothing: antialiased;
+      text-align: center;
+      margin: 13px 0;
+    }
+  }
+}
+
+@mixin sticky-footer($footer-height, $root-selector: unquote("#root-installer"), $root-footer-selector: unquote("#root-footer-installer"), $footer-selector: unquote("#footer-installer")) {
+  html, body {
+    height: 100%;
+  }
+
+  #{$root-selector} {
+    clear: both;
+    min-height: 100%;
+    height: auto !important;
+    margin-bottom: -$footer-height;
+    #{$root-footer-selector} {
+      height: $footer-height;
+    }
+  }
+
+  #{$footer-selector} {
+    clear: both;
+    position: relative;
+    height: $footer-height;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  @include sticky-footer(100px);
+}
+
+
+
+#step2 .list-group-item-success h4,
+#step2 .list-group-item-danger h4  {
+    color: white;
+}
+
+#step2 .list-group-item-success a,
+#step2 .list-group-item-danger a  {
+    color: white;
+}
+
+.help-block.errorMessage,
+.has-error .control-label {
+    color: #d0021b;
+}
+
+option:disabled {
+  display:none;
+}

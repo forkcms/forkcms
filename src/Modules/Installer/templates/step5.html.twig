@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+{% import 'navigation.html.twig' as nav %}
+
+{% block navigation %}
+  {{ nav.navigation('step-5') }}
+{% endblock %}
+
+{% block content %}
+
+  {{ form_start(form) }}
+  <div class="fork-module-messages">
+    {{ form_errors(form) }}
+  </div>
+  <div class="fork-module-content">
+    <div class="card card-primary">
+      <div class="card-heading">
+        <h3 class="card-title">Settings</h3>
+      </div>
+      <div class="card-body">
+        <fieldset>
+          <legend>
+            Enter the e-mail address and password you'd like to use to log in.
+          </legend>
+          <div class="form-group{% if form.email.vars.errors|length %} has-error{% endif %}">
+            <label for="install_login_email">Email</label>
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+          </div>
+
+          <div class="form-group{% if form.password.first.vars.errors|length %} has-error{% endif %}">
+            {{ form_label(form.password.first) }}
+
+            <div class="mb-2">
+              <span class="passwordStrength ms-auto" data-id="install_authentication_password_first" data-role="password-strength-meter">
+                <span class="badge bg-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
+                <span class="badge bg-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
+                <span class="badge bg-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
+                <span class="badge bg-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
+              </span>
+              <small class="text-muted form-text">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</small>
+            </div>
+
+            {{ form_widget(form.password.first) }}
+            {{ form_errors(form.password.first) }}
+          </div>
+
+          {{ form_row(form.password.second) }}
+
+        </fieldset>
+        <fieldset>
+          <legend>
+            Debug mode<br>
+            <small class="text-muted form-text">Warning: debug mode is only useful when developing on Fork CMS.</small>
+            <small class="text-muted form-text">You can enable debug mode by adding "<code>SetEnv APP_DEBUG 1</code>" in your virtualhosts or .env.local file.</small>
+            <small class="text-muted form-text">(Exception emails will be sent to this email address)</small>
+          </legend>
+          <div class="form-group last">
+            {{ form_row(form.differentDebugEmail) }}
+            <div data-fork-cms-role="different-debug-email-wrapper" style="display: none;">
+              {{ form_widget(form.debugEmail) }}
+              {{ form_errors(form.debugEmail) }}
+            </div>
+          </div>
+        </fieldset>
+        <fieldset class="last">
+          <legend>
+            Save installation configuration<br>
+            <small class="text-muted form-text">Warning: if you enable this a file with the name <code>fork-cms-installation-configuration.yaml</code> will be created in the root directory.</small>
+          </legend>
+          <div class="form-group last">
+            {{ form_row(form.saveConfiguration) }}
+            <div data-fork-cms-role="save-configuration-wrapper" style="display: none;">
+              {{ form_widget(form.saveConfigurationWithCredentials) }}
+              {{ form_errors(form.saveConfigurationWithCredentials) }}
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-footer">
+        <div class="btn-toolbar justify-content-between">
+          <div class="btn-group" role="group">
+            <a href="{{ path('install_step4') }}" class="btn btn-default">
+              <span class="fa fa-chevron-left" aria-hidden="true"></span>&nbsp;
+              Previous
+            </a>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
+              Finish installation
+              <div id="ajaxSpinner" style="float: left; margin-top: 4px; display: none;" aria-label="please wait while fork is installing">
+                <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+
+{% endblock %}

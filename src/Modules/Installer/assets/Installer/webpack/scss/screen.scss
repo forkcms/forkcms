@@ -1,0 +1,25 @@
+// Bootstrap
+@import "~bootstrap/scss/functions";
+@import '~bootstrap/scss/variables';
+@import '../../../../../Backend/assets/Backend/webpack/scss/bootstrap-variables';
+@import '../../../../../Backend/assets/Backend/webpack/scss/bootstrap-imports';
+
+// Plugins
+@import '~select2/src/scss/core';
+
+// Base
+@import '../../../../../Backend/assets/Backend/webpack/scss/base/base';
+@import '../../../../../Backend/assets/Backend/webpack/scss/base/typography';
+
+// Components
+// Insert components here. Put all components in the components/ directory
+// eg. @import 'components/buttons';
+@import '../../../../../Backend/assets/Backend/webpack/scss/components/cards';
+@import '../../../../../Backend/assets/Backend/webpack/scss/components/header';
+@import '../../../../../Backend/assets/Backend/webpack/scss/components/content-wrapper';
+@import '../../../../../Backend/assets/Backend/webpack/scss/components/forms';
+@import 'components/installer';
+
+// Layout
+@import '../../../../../Backend/assets/Backend/webpack/scss/layouts/fork';
+@import '../../../../../Backend/assets/Backend/webpack/scss/layouts/footer';

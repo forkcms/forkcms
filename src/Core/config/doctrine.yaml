@@ -1,6 +1,7 @@
 doctrine:
   dbal:
     types:
+      core__settings__settings_bag: ForkCMS\Core\Domain\Settings\SettingsBagDBALType
       datetime_immutable: ForkCMS\Core\Domain\Doctrine\UTCDateTimeImmutableDBALType
       datetime_mutable: ForkCMS\Core\Domain\Doctrine\UTCDateTimeMutableDBALType
       time_immutable: ForkCMS\Core\Domain\Doctrine\UTCTimeImmutableDBALType

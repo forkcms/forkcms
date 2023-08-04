@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+{% import 'navigation.html.twig' as nav %}
+
+{% block navigation %}
+  {{ nav.navigation('step-4') }}
+{% endblock %}
+
+{% block content %}
+
+  {{ form_start(form) }}
+  <div class="fork-module-messages">
+    {{ form_errors(form) }}
+    <div id="javascriptDisabled" class="alert alert-danger">
+      <p class="mb-0">Javascript should be enabled.</p>
+    </div>
+  </div>
+  <div class="fork-module-content">
+    <div class="card card-primary">
+      <div class="card-heading">
+        <h3 class="card-title">Settings</h3>
+      </div>
+      <div class="card-body">
+        <fieldset class="last">
+          <legend>Enter your database details. Make sure this database already exists.</legend>
+          <div class="form-group">
+            <label for="install_database_databaseHostname">
+              Hostname
+              <abbr title="Required field">*</abbr>
+            </label>
+            <div class="form-group">
+              <div class="d-flex align-items-center">
+                {{ form_widget(form.databaseHostname, {'attr': {'class': 'w-auto me-2'}}) }} : {{ form_widget(form.databasePort, {'attr': {'class': 'w-auto ms-2'}}) }}
+              </div>
+              <small class="text-muted form-text">If you are working locally, your hostname is probably <code>127.0.0.1</code> or <code>localhost</code>.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="install_database_databaseName">
+              Database
+              <abbr title="Required field">*</abbr>
+            </label>
+            {{ form_widget(form.databaseName) }}
+            <small class="text-muted form-text">Make sure this database is empty!</small>
+          </div>
+          <div class="form-group">
+            <label for="install_database_databaseUsername">
+              Username
+              <abbr title="Required field">*</abbr>
+            </label>
+            {{ form_widget(form.databaseUsername) }}
+          </div>
+          <div class="form-group">
+            <label for="install_database_databasePassword">
+              Password
+              <abbr title="Required field">*</abbr>
+            </label>
+            {{ form_widget(form.databasePassword) }}
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-footer">
+        <div class="btn-toolbar justify-content-between">
+          <div class="btn-group" role="group">
+            <a href="{{ path('install_step3') }}" class="btn btn-default">
+              <span class="fa fa-chevron-left" aria-hidden="true"></span> Previous
+            </a>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
+              Next <span class="fa fa-chevron-right" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+
+{% endblock %}

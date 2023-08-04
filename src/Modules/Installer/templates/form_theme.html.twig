@@ -1,0 +1,202 @@
+{% extends 'bootstrap_5_layout.html.twig' %}
+
+{% block form_widget_simple %}
+  {{ parent() }}
+  {{ block('help') }}
+{% endblock %}
+
+{%- block form_label -%}
+  {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
+    {% if label is not same as(false) %}
+      {% if label is empty %}
+        {% set label = id|trans({}, translation_domain)|capitalize %}
+      {% else %}
+        {% set label = label|trans({}, translation_domain)|capitalize %}
+      {% endif %}
+      {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+      {% endif %}
+      {% set label_attr_class = '' %}
+      {% if horizontal is defined and horizontal %}
+        {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
+      {% endif %}
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? '  required' : ' optional'), 'for': form.vars.id }) %}
+      <label {% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
+      </label>
+
+    {% endif %}
+  {% endif %}
+{%- endblock form_label -%}
+
+{% block checkbox_radio_label %}
+  {% if widget is defined %}
+    {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-check-label')|trim, 'for': form.vars.id}) %}
+    {% if required %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if parent_label_class is defined %}
+      {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+    {% endif %}
+    {% if label is not same as(false) and label is empty %}
+      {%- if label_format is not empty -%}
+        {% set label = label_format|replace({
+          '%name%': name,
+          '%id%': id,
+        }) %}
+      {%- else -%}
+        {% set label = name|humanize %}
+      {%- endif -%}
+    {% endif %}
+    {{- widget|raw }}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)|capitalize) -}}
+    </label>
+  {% endif %}
+{% endblock checkbox_radio_label %}
+
+{%- block label_asterisk -%}
+  {% apply spaceless %}
+    {% import 'macros.html.twig' as macro %}
+    {{ macro.required }}
+  {% endapply %}
+{%- endblock label_asterisk -%}
+
+{% block form_errors -%}
+  {% import 'macros.html.twig' as macro %}
+  {% if errors|length > 0 -%}
+    {% if form.parent %}<small class="form-text text-muted">{% else %}<div class="alert alert-danger">{% endif %}
+    <ul class="list-unstyled mb-0">
+      {%- for error in errors -%}
+        <li {% if form.parent %}class="invalid-feedback"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
+      {%- endfor -%}
+    </ul>
+    {% if form.parent %}</small>{% else %}</div>{% endif %}
+  {%- endif %}
+{%- endblock form_errors %}
+
+{% block choice_widget_collapsed -%}
+  {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) %}
+  {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+    {% set required = false %}
+  {%- endif -%}
+  <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    {%- if placeholder is not none -%}
+      <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+    {%- endif -%}
+    {%- if preferred_choices|length > 0 -%}
+      {% set options = preferred_choices %}
+      {{- block('choice_widget_options') -}}
+      {%- if choices|length > 0 and separator is not none -%}
+        <option disabled="disabled">{{ separator }}</option>
+      {%- endif -%}
+    {%- endif -%}
+    {%- set options = choices -%}
+    {{- block('choice_widget_options') -}}
+  </select>
+{%- endblock %}
+
+{% block bootstrap_collection_row %}
+  {% apply spaceless %}
+    {% import 'macros.html.twig' as macro %}
+    {% if prototype is defined %}
+      {% set prototype_vars = {} %}
+      {% if style is defined %}
+        {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+      {% endif %}
+      {% set prototype_html = form_widget(prototype, prototype_vars) %}
+      {% if form.vars.allow_delete %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar">' %}
+        {% if form.vars.allow_sequence %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|capitalize}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|capitalize}) ~ '</div>' %}
+        {% endif %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><button class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|capitalize|raw ~ '</button></div></div>' %}
+      {% endif %}
+
+      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+      <div class="card card-default">
+        <div class="card-heading">
+          {{ form_label(form) }}
+        </div>
+        <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
+          {% for field in form %}
+            <li class="list-group-item">
+              {{ form_widget(field) }}
+              {{ form_errors(field) }}
+              {% if form.vars.allow_delete or form.vars.allow_sequence %}
+                <div class="btn-toolbar">
+                  {% if form.vars.allow_sequence %}
+                    <div class="btn-group pull-left">
+                      <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('reorder') }}</span>
+                      {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|capitalize}) }}
+                      {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|capitalize}) }}
+                    </div>
+                  {% endif %}
+                  {% if form.vars.allow_delete %}
+                    <div class="btn-group pull-right">
+                      <button class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|capitalize|raw }}</button>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="card-footer clearfix">
+          {% if form.vars.allow_add %}
+            <div class="btn-group pull-right">
+              <button class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|capitalize|raw }}</button>
+            </div>
+          {% endif %}
+          {{ form_errors(form) }}
+        </div>
+      </div>
+    </div>
+  {% endapply %}
+{% endblock bootstrap_collection_row %}
+
+{% block form_row %}
+  <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{- form_label(form) -}}
+    {{- form_widget(form) -}}
+    {% if (not compound or force_error|default(false)) and not valid %}
+      {{- form_errors(form) -}}
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block editor_row %}
+  <div class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} card-danger{% endif %}">
+    <div class="card-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="card-body">
+      {{- form_widget(form) -}}
+    </div>
+    {% if (not compound or force_error|default(false)) and not valid %}
+      <div class="card-footer">
+        {{- form_errors(form) -}}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block help %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
+  {% endfor %}
+{% endblock %}
+
+{%- block collection_row -%}
+  <div class="card card-default">
+    <div class="card-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="card-body">
+      {{- form_widget(form) -}}
+    </div>
+  </div>
+{%- endblock collection_row -%}
