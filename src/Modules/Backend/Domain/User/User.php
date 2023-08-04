@@ -187,11 +187,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             return [];
         }
 
+        // @TODO reenable once the actions are made
         $roles = [
             'ROLE_USER',
-            NotFound::getActionSlug()->asModuleAction()->asRole(),
-            AuthenticationLogin::getActionSlug()->asModuleAction()->asRole(),
-            AuthenticationResetPassword::getActionSlug()->asModuleAction()->asRole(),
+            //NotFound::getActionSlug()->asModuleAction()->asRole(),
+            //AuthenticationLogin::getActionSlug()->asModuleAction()->asRole(),
+            //AuthenticationResetPassword::getActionSlug()->asModuleAction()->asRole(),
         ];
         $groupRoles = [];
 

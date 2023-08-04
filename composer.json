@@ -68,7 +68,8 @@
         "symfony/html-sanitizer": "^6.1.0",
         "scienta/doctrine-json-functions": "^5.0",
         "twig/intl-extra": "^3.3",
-        "symfony/expression-language": "6.*"
+        "symfony/expression-language": "6.*",
+        "symfony/lock": "6.*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",

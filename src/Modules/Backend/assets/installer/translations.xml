@@ -1,0 +1,1662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="Import">
+      <translation locale="nl"><![CDATA[importeer]]></translation>
+      <translation locale="en"><![CDATA[import]]></translation>
+      <translation locale="hu"><![CDATA[import]]></translation>
+      <translation locale="it"><![CDATA[importa]]></translation>
+      <translation locale="ru"><![CDATA[Импорт]]></translation>
+      <translation locale="zh"><![CDATA[导入]]></translation>
+      <translation locale="de"><![CDATA[importieren]]></translation>
+      <translation locale="fr"><![CDATA[importer]]></translation>
+      <translation locale="es"><![CDATA[importar]]></translation>
+      <translation locale="lt"><![CDATA[importas]]></translation>
+      <translation locale="uk"><![CDATA[Імпорт]]></translation>
+      <translation locale="sv"><![CDATA[importera]]></translation>
+      <translation locale="el"><![CDATA[εισαγωγή]]></translation>
+      <translation locale="pt"><![CDATA[importar]]></translation>
+      <translation locale="pl"><![CDATA[importuj]]></translation>
+    </item>
+    <item type="message" name="SettingsSaved">
+      <translation locale="nl"><![CDATA[De instellingen werden gewijzigd.]]></translation>
+      <translation locale="en"><![CDATA[The settings were saved.]]></translation>
+      <translation locale="fr"><![CDATA[Vos modifications ont été enregistrées.]]></translation>
+      <translation locale="hu"><![CDATA[A beállítások elmentve.]]></translation>
+      <translation locale="it"><![CDATA[Le impostazioni sono state salvate.]]></translation>
+      <translation locale="ru"><![CDATA[Изменения сохранены.]]></translation>
+      <translation locale="zh"><![CDATA[设置已保存。]]></translation>
+      <translation locale="de"><![CDATA[Die Einstellungen wurden gespeichert.]]></translation>
+      <translation locale="es"><![CDATA[Tu configuración ha sido guardada.]]></translation>
+      <translation locale="lt"><![CDATA[Nustatymai išsaugoti.]]></translation>
+      <translation locale="uk"><![CDATA[Налаштування збережені]]></translation>
+      <translation locale="sv"><![CDATA[Dina inställningar har sparats.]]></translation>
+      <translation locale="el"><![CDATA[Οι ρυθμίσεις σας αποθηκεύτηκαν.]]></translation>
+      <translation locale="pl"><![CDATA[Ustawienia zostały zapisane]]></translation>
+      <translation locale="pt"><![CDATA[As suas preferências foram guardadas com sucesso.]]></translation>
+    </item>
+    <item type="label" name="ModuleSettings">
+      <translation locale="nl"><![CDATA[module-instellingen]]></translation>
+      <translation locale="en"><![CDATA[module settings]]></translation>
+      <translation locale="hu"><![CDATA[modul beállítások]]></translation>
+      <translation locale="it"><![CDATA[impostazioni modulo]]></translation>
+      <translation locale="ru"><![CDATA[Настройки модуля]]></translation>
+      <translation locale="zh"><![CDATA[模块设置]]></translation>
+      <translation locale="de"><![CDATA[Modul-Einstellungen]]></translation>
+      <translation locale="fr"><![CDATA[réglages module]]></translation>
+      <translation locale="es"><![CDATA[configuración del módulo]]></translation>
+      <translation locale="lt"><![CDATA[cmodulio nustatymai]]></translation>
+      <translation locale="uk"><![CDATA[Налаштування модуля]]></translation>
+      <translation locale="sv"><![CDATA[modulinställningar]]></translation>
+      <translation locale="el"><![CDATA[ρυθμίσεις ενότητας]]></translation>
+      <translation locale="pt"><![CDATA[configuração do módulo]]></translation>
+      <translation locale="pl"><![CDATA[ustawienia modułu]]></translation>
+    </item>
+    <item type="label" name="File">
+      <translation locale="nl"><![CDATA[bestand]]></translation>
+      <translation locale="en"><![CDATA[file]]></translation>
+      <translation locale="hu"><![CDATA[fájl]]></translation>
+      <translation locale="it"><![CDATA[file]]></translation>
+      <translation locale="ru"><![CDATA[Файл]]></translation>
+      <translation locale="zh"><![CDATA[文件]]></translation>
+      <translation locale="de"><![CDATA[Datei]]></translation>
+      <translation locale="fr"><![CDATA[fichier]]></translation>
+      <translation locale="es"><![CDATA[fichero]]></translation>
+      <translation locale="lt"><![CDATA[byla]]></translation>
+      <translation locale="uk"><![CDATA[Файл]]></translation>
+      <translation locale="sv"><![CDATA[fil]]></translation>
+      <translation locale="el"><![CDATA[αρχείο]]></translation>
+      <translation locale="pl"><![CDATA[plik]]></translation>
+      <translation locale="pt"><![CDATA[ficheiro]]></translation>
+    </item>
+    <item type="label" name="Copy">
+      <translation locale="nl"><![CDATA[kopieer]]></translation>
+      <translation locale="en"><![CDATA[copy]]></translation>
+      <translation locale="hu"><![CDATA[másol]]></translation>
+      <translation locale="it"><![CDATA[copia]]></translation>
+      <translation locale="ru"><![CDATA[Копировать]]></translation>
+      <translation locale="zh"><![CDATA[复制]]></translation>
+      <translation locale="de"><![CDATA[kopieren]]></translation>
+      <translation locale="fr"><![CDATA[copier]]></translation>
+      <translation locale="es"><![CDATA[copiar]]></translation>
+      <translation locale="uk"><![CDATA[Копіювати]]></translation>
+      <translation locale="lt"><![CDATA[kopijuoti]]></translation>
+      <translation locale="el"><![CDATA[Αντιγραφή]]></translation>
+      <translation locale="pl"><![CDATA[kopiuj]]></translation>
+      <translation locale="pt"><![CDATA[copiar]]></translation>
+    </item>
+    <item type="message" name="ClickToEdit">
+      <translation locale="nl"><![CDATA[Klik om te wijzigen.]]></translation>
+      <translation locale="en"><![CDATA[Click to edit]]></translation>
+      <translation locale="hu"><![CDATA[Klikk a szerkesztéshez]]></translation>
+      <translation locale="ru"><![CDATA[Нажмите для изменения]]></translation>
+      <translation locale="it"><![CDATA[Clicca per modificare]]></translation>
+      <translation locale="zh"><![CDATA[点击编辑]]></translation>
+      <translation locale="fr"><![CDATA[Cliquer pour éditer]]></translation>
+      <translation locale="de"><![CDATA[zum Editieren klicken]]></translation>
+      <translation locale="es"><![CDATA[Click para editar]]></translation>
+      <translation locale="lt"><![CDATA[Redagavimui paspauskite]]></translation>
+      <translation locale="uk"><![CDATA[Натисніть для редагування.]]></translation>
+      <translation locale="sv"><![CDATA[Klicka för att ändra]]></translation>
+      <translation locale="el"><![CDATA[Κάντε κλικ γιά διορθώσεις]]></translation>
+      <translation locale="tr"><![CDATA[Düzenlemek için tıklayın]]></translation>
+      <translation locale="pt"><![CDATA[Clique para editar]]></translation>
+      <translation locale="pl"><![CDATA[Kliknij aby edytować]]></translation>
+    </item>
+    <item type="label" name="UpdateFilter">
+      <translation locale="nl"><![CDATA[filter updaten]]></translation>
+      <translation locale="en"><![CDATA[update filter]]></translation>
+      <translation locale="hu"><![CDATA[filter frissítés]]></translation>
+      <translation locale="ru"><![CDATA[Обновить фильтр]]></translation>
+      <translation locale="it"><![CDATA[aggiorna filtro]]></translation>
+      <translation locale="zh"><![CDATA[更新滤镜]]></translation>
+      <translation locale="fr"><![CDATA[mettre à jour]]></translation>
+      <translation locale="de"><![CDATA[Filter updaten]]></translation>
+      <translation locale="es"><![CDATA[actualizar filtro]]></translation>
+      <translation locale="lt"><![CDATA[atnaujinti filtrą]]></translation>
+      <translation locale="uk"><![CDATA[Оновити фільтр]]></translation>
+      <translation locale="sv"><![CDATA[uppdatera filter]]></translation>
+      <translation locale="el"><![CDATA[αναβάθμιση φίλτρου]]></translation>
+      <translation locale="pt"><![CDATA[actualizar filtro]]></translation>
+      <translation locale="pl"><![CDATA[aktualizuj filtr]]></translation>
+    </item>
+    <item type="error" name="AlphaNumericCharactersOnly">
+      <translation locale="nl"><![CDATA[Enkel alfanumerieke karakters zijn toegestaan.]]></translation>
+      <translation locale="en"><![CDATA[Only alphanumeric characters are allowed.]]></translation>
+      <translation locale="hu"><![CDATA[Csak alfanumerikus karakterek megengedettek.]]></translation>
+      <translation locale="it"><![CDATA[Sono consentiti solo caratteri alfanumerici.]]></translation>
+      <translation locale="ru"><![CDATA[Только буквы.]]></translation>
+      <translation locale="zh"><![CDATA[只允许字母和数字。]]></translation>
+      <translation locale="fr"><![CDATA[Seuls les caractères alpha-numériques sont autorisés.]]></translation>
+      <translation locale="de"><![CDATA[Nur alphanumerische Zeichen sind erlaubt.]]></translation>
+      <translation locale="es"><![CDATA[Solo carácteres alfanumericos son aceptados.]]></translation>
+      <translation locale="lt"><![CDATA[Tik raidės>]]></translation>
+      <translation locale="sv"><![CDATA[Endast alfanumeriska tecken är tillåtna.]]></translation>
+      <translation locale="el"><![CDATA[Επιτρέπονται μόνον αλφαριθμητικοί χαρακτήρες.]]></translation>
+      <translation locale="pt"><![CDATA[Apenas caractéres alfanuméricos são permitidos.]]></translation>
+      <translation locale="pl"><![CDATA[Dozwolone są tylko znaki alfanumeryczne.]]></translation>
+    </item>
+    <item type="error" name="FirstLetterMustBeACapitalLetter">
+      <translation locale="nl"><![CDATA[De eerste letter moet een hoofdletter zijn.]]></translation>
+      <translation locale="en"><![CDATA[The first letter must be a capital letter.]]></translation>
+      <translation locale="de"><![CDATA[Der erste Buchstabe muss ein Großbuchstabe sein.]]></translation>
+      <translation locale="fr"><![CDATA[La première lettre doit être une majuscule.]]></translation>
+    </item>
+    <item type="label" name="MoveUpOnePosition">
+      <translation locale="nl"><![CDATA[verplaats één positie omhoog]]></translation>
+      <translation locale="en"><![CDATA[move up one position]]></translation>
+      <translation locale="pt"><![CDATA[mover uma posição para cima]]></translation>
+      <translation locale="pl"><![CDATA[przesuń jedną pozycję w górę]]></translation>
+    </item>
+    <item type="label" name="MoveDownOnePosition">
+      <translation locale="nl"><![CDATA[verplaats één positie omlaag]]></translation>
+      <translation locale="pt"><![CDATA[mover uma posição para baixo]]></translation>
+      <translation locale="en"><![CDATA[move down one position]]></translation>
+      <translation locale="pl"><![CDATA[przesuń jedną pozycję w dół]]></translation>
+    </item>
+    <item type="error" name="NotUnique">
+      <translation locale="nl"><![CDATA[Deze waarde wordt al gebruikt.]]></translation>
+      <translation locale="en"><![CDATA[This value is already used.]]></translation>
+      <translation locale="it"><![CDATA[Questo valore è già stato utilizzato.]]></translation>
+      <translation locale="ru"><![CDATA[Это значение уже используется.]]></translation>
+      <translation locale="de"><![CDATA[Dieser Wert wird bereits verwendet.]]></translation>
+      <translation locale="fr"><![CDATA[Cette valeur est déjà utilisée.]]></translation>
+      <translation locale="es"><![CDATA[Este valor ya se ha utilizado.]]></translation>
+      <translation locale="uk"><![CDATA[Це значення вже використовується.]]></translation>
+      <translation locale="el"><![CDATA[Αυτή η τιμή χρησιμοποιείται ήδη.]]></translation>
+      <translation locale="pl"><![CDATA[Ta wartość jest już wykorzystywana.]]></translation>
+      <translation locale="pt"><![CDATA[Este valor já está a ser usado.]]></translation>
+    </item>
+    <item type="label" name="Backend">
+      <translation locale="nl"><![CDATA[backend]]></translation>
+      <translation locale="en"><![CDATA[backend]]></translation>
+      <translation locale="hu"><![CDATA[backend]]></translation>
+      <translation locale="it"><![CDATA[backend]]></translation>
+      <translation locale="ru"><![CDATA[ПУ]]></translation>
+      <translation locale="zh"><![CDATA[后台]]></translation>
+      <translation locale="de"><![CDATA[Backend]]></translation>
+      <translation locale="fr"><![CDATA[backend]]></translation>
+      <translation locale="es"><![CDATA[backend]]></translation>
+      <translation locale="lt"><![CDATA[Administravimas]]></translation>
+      <translation locale="uk"><![CDATA[Панель управління]]></translation>
+      <translation locale="sv"><![CDATA[bakände]]></translation>
+      <translation locale="el"><![CDATA[πίσω όψη]]></translation>
+      <translation locale="tr"><![CDATA[Yönetim paneli]]></translation>
+      <translation locale="pt"><![CDATA[Backend]]></translation>
+      <translation locale="pl"><![CDATA[backend]]></translation>
+    </item>
+    <item type="label" name="DebugMode">
+      <translation locale="nl"><![CDATA[debug]]></translation>
+      <translation locale="en"><![CDATA[debug]]></translation>
+      <translation locale="hu"><![CDATA[fejlesztői]]></translation>
+      <translation locale="it"><![CDATA[debug]]></translation>
+      <translation locale="ru"><![CDATA[Отладка]]></translation>
+      <translation locale="zh"><![CDATA[调试模式]]></translation>
+      <translation locale="de"><![CDATA[Debug]]></translation>
+      <translation locale="fr"><![CDATA[Debug]]></translation>
+      <translation locale="es"><![CDATA[Debug]]></translation>
+      <translation locale="lt"><![CDATA[testavimo]]></translation>
+      <translation locale="uk"><![CDATA[відладки]]></translation>
+      <translation locale="sv"><![CDATA[debug]]></translation>
+      <translation locale="el"><![CDATA[debug]]></translation>
+      <translation locale="tr"><![CDATA[ayıklama modu]]></translation>
+      <translation locale="pt"><![CDATA[Modo Debug]]></translation>
+      <translation locale="pl"><![CDATA[debugowanie]]></translation>
+    </item>
+    <item type="error" name="JavascriptNotEnabled">
+      <translation locale="nl"><![CDATA[Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.]]></translation>
+      <translation locale="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
+      <translation locale="hu"><![CDATA[A Fork CMS használatához engedélyezni kell a javascriptet. Kapcsold be, majd frissítsd az oldal.]]></translation>
+      <translation locale="it"><![CDATA[Per usare Fork CMS, javascript deve essere abilitato. Abilita javascript e ricarica la pagina.]]></translation>
+      <translation locale="ru"><![CDATA[Включите Javascript для работы с системой Fork CMS.]]></translation>
+      <translation locale="zh"><![CDATA[Fork CMS需要用到Javascript。请激活javascript后刷新页面。]]></translation>
+      <translation locale="fr"><![CDATA[Pour utiliser Fork CMS, javascript doit être activé. Veuillez activer javascript et rafraîchir cette page.]]></translation>
+      <translation locale="de"><![CDATA[Fork CMS benötigt Javascript. Aktiviere Javascript und lade die Seite neu.]]></translation>
+      <translation locale="es"><![CDATA[Para usar Fork CMS, javascript necesita ser activado. Activa javascript y refresca esta página.]]></translation>
+      <translation locale="lt"><![CDATA[Įjungti javascript, BŪTINA!]]></translation>
+      <translation locale="sv"><![CDATA[För att använda Fork CMS, javascript behövs vara aktiverat. Aktivera javascript och uppdatera denna sida.]]></translation>
+      <translation locale="el"><![CDATA[Γιά να χρησιμοποιήσετε το Fork CMS, η javascript πρέπει να είναι ενεργοποιημένη. Ενεργοποιήστε τη javascript και ανανεώστε τη σελίδα.]]></translation>
+      <translation locale="tr"><![CDATA[Fork CMS kullanmak için javascript etkin olması gerekiyor. Javascripti etkinleştir ve bu sayfayı yenileyin.]]></translation>
+      <translation locale="pt"><![CDATA[Para utilizar o Fork CMS o Javascript deve estar activado no seu browser. Active o Javascript e refresque a página.]]></translation>
+      <translation locale="pl"><![CDATA[Aby korzystać z Fork CMS, Javascript musi być włączony w przeglądarce. Aktywuj javascript i odśwież tę stronę.]]></translation>
+    </item>
+    <item type="error" name="CookiesNotEnabled">
+      <translation locale="nl"><![CDATA[Om Fork CMS te gebruiken moeten cookies geactiveerd zijn in uw browser. Activeer cookies en vernieuw deze pagina.]]></translation>
+      <translation locale="en"><![CDATA[You need to enable cookies in order to use Fork CMS. Activate cookies and refresh this page.]]></translation>
+      <translation locale="hu"><![CDATA[Engedélyezned kell a cookie-k használatát a Fork CMS érdekében. Kapcsold be, majd frissítsd az oldalt.]]></translation>
+      <translation locale="it"><![CDATA[Devi abilitare i cookie per usare Fork CMS. Attiva i cookie e ricarica questa pagina.]]></translation>
+      <translation locale="ru"><![CDATA[Включите Cookie для работы с сайтом, и обновите страницу.]]></translation>
+      <translation locale="zh"><![CDATA[Fork CMS需要你开启Cookies。请激活Cookies功能后刷新页面。]]></translation>
+      <translation locale="fr"><![CDATA[Vous devez accepter les cookies pour utiliser Fork CMS. Veuillez accepter les cookies puis rafraîchir cette page.]]></translation>
+      <translation locale="de"><![CDATA[Du musst Cookies aktivieren um Fork CMS benutzen zu können. Nach dem Aktivieren bitte die Seite neu laden.]]></translation>
+      <translation locale="es"><![CDATA[Necesitas activar las cookies para usar Fork CMS. Activa las cookies y refresca esta página.]]></translation>
+      <translation locale="lt"><![CDATA[Norėdami naršyti, įjungkite Slapukus(Cookie) ir perkraukite puslapį (F5)]]></translation>
+      <translation locale="sv"><![CDATA[Du behöver aktivera cookies för att använda Fork CMS. Aktivera cookies och uppdatera denna sida.]]></translation>
+      <translation locale="el"><![CDATA[Πρέπει να ενεργοποιήσετε τα cookies γιά να χρησιμοποιήσετε το Fork CMS. Ενεργοποιήστε τα cookies και ανανεώστε τη σελίδα.]]></translation>
+      <translation locale="tr"><![CDATA[Fork CMS kullanmak için çerezleri etkinleştirmeniz gerekir. Çerezleri etkinleştirin ve bu sayfayı yenileyin.]]></translation>
+      <translation locale="pt"><![CDATA[Para utilizar o Fork CMS os cookies devem ser activados. Activar cookies e refresque a página.]]></translation>
+      <translation locale="pl"><![CDATA[Aby korzystać z Fork CMS, pliki cookie muszą być aktywowane w przeglądarce. Aktywuj pliki cookie i odśwież stronę.]]></translation>
+    </item>
+    <item type="label" name="Delete">
+      <translation locale="nl"><![CDATA[verwijderen]]></translation>
+      <translation locale="en"><![CDATA[delete]]></translation>
+      <translation locale="hu"><![CDATA[törlés]]></translation>
+      <translation locale="it"><![CDATA[elimina]]></translation>
+      <translation locale="ru"><![CDATA[Удалить]]></translation>
+      <translation locale="zh"><![CDATA[删除]]></translation>
+      <translation locale="de"><![CDATA[löschen]]></translation>
+      <translation locale="fr"><![CDATA[effacer]]></translation>
+      <translation locale="es"><![CDATA[eliminar]]></translation>
+      <translation locale="lt"><![CDATA[trinti]]></translation>
+      <translation locale="uk"><![CDATA[Видалити]]></translation>
+      <translation locale="sv"><![CDATA[ta bort]]></translation>
+      <translation locale="el"><![CDATA[διαγραφή]]></translation>
+      <translation locale="pl"><![CDATA[usuń]]></translation>
+      <translation locale="pt"><![CDATA[eliminar]]></translation>
+    </item>
+    <item type="message" name="ConfirmDelete">
+      <translation locale="nl"><![CDATA[Ben je zeker dat je "%1$s" wil verwijderen?]]></translation>
+      <translation locale="en"><![CDATA[Are you sure you want to delete "%1$s"?]]></translation>
+      <translation locale="it"><![CDATA[Sei sicuro di voler eliminare "%1$s"?]]></translation>
+      <translation locale="ru"><![CDATA[Удалить "%1$s"?]]></translation>
+      <translation locale="zh"><![CDATA[你确定要删除“%1$s”吗？]]></translation>
+      <translation locale="de"><![CDATA[Bist du sicher, dass du "%1$s" löschen willst?]]></translation>
+      <translation locale="fr"><![CDATA[Etes-vous sûr de vouloir effacer "%1$s"?]]></translation>
+      <translation locale="hu"><![CDATA[Biztos hogy törölni akarod "%1$s"-(o)t?]]></translation>
+      <translation locale="es"><![CDATA[¿Estás seguro de que quieres eliminar a "%1$s"?]]></translation>
+      <translation locale="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το "%1$s";]]></translation>
+      <translation locale="pl"><![CDATA[Jesteś pewien że chcesz usunąć "%1$s"?]]></translation>
+      <translation locale="pt"><![CDATA[Tem a certeza que deseja quer remover o objecto?]]></translation>
+      <translation locale="lt"><![CDATA[Ar tikrai norite ištrinti?]]></translation>
+      <translation locale="uk"><![CDATA[Ви впевнені, що бажаєте видалити?]]></translation>
+      <translation locale="sv"><![CDATA[Är du säger på att du vill ta bort detta objektet? ]]></translation>
+    </item>
+    <item type="label" name="OK">
+      <translation locale="nl"><![CDATA[OK]]></translation>
+      <translation locale="en"><![CDATA[OK]]></translation>
+      <translation locale="hu"><![CDATA[OK]]></translation>
+      <translation locale="ru"><![CDATA[ОК]]></translation>
+      <translation locale="it"><![CDATA[OK]]></translation>
+      <translation locale="zh"><![CDATA[好]]></translation>
+      <translation locale="de"><![CDATA[OK]]></translation>
+      <translation locale="fr"><![CDATA[OK]]></translation>
+      <translation locale="es"><![CDATA[OK]]></translation>
+      <translation locale="lt"><![CDATA[GERAI]]></translation>
+      <translation locale="uk"><![CDATA[ОК]]></translation>
+      <translation locale="sv"><![CDATA[OK]]></translation>
+      <translation locale="el"><![CDATA[ΟΚ]]></translation>
+      <translation locale="pt"><![CDATA[OK]]></translation>
+      <translation locale="pl"><![CDATA[OK]]></translation>
+    </item>
+    <item type="error" name="NotFound">
+      <translation locale="nl"><![CDATA[Deze pagina is verloren gegaan op zee.]]></translation>
+      <translation locale="en"><![CDATA[This page was lost at sea.]]></translation>
+      <translation locale="de"><![CDATA[Diese Seite ging auf See verloren.]]></translation>
+      <translation locale="fr"><![CDATA[Cette page a été perdue en mer.]]></translation>
+      <translation locale="es"><![CDATA[Esta página se perdió en el mar.]]></translation>
+      <translation locale="it"><![CDATA[Questa pagina è stata persa in mare.]]></translation>
+      <translation locale="pl"><![CDATA[Ta strona została zagubiona na morzu.]]></translation>
+      <translation locale="ru"><![CDATA[Эта страница была потеряна в море.]]></translation>
+    </item>
+    <item type="label" name="RememberMe">
+      <translation locale="nl"><![CDATA[onthoud mij]]></translation>
+      <translation locale="en"><![CDATA[remember me]]></translation>
+      <translation locale="fr"><![CDATA[conservez mes coordonnées]]></translation>
+      <translation locale="hu"><![CDATA[emlékezz rám]]></translation>
+      <translation locale="it"><![CDATA[ricordami]]></translation>
+      <translation locale="ru"><![CDATA[Запомнить меня]]></translation>
+      <translation locale="zh"><![CDATA[记住我]]></translation>
+      <translation locale="de"><![CDATA[merken]]></translation>
+      <translation locale="es"><![CDATA[recordarme]]></translation>
+      <translation locale="lt"><![CDATA[atsiminti]]></translation>
+      <translation locale="uk"><![CDATA[Запам'ятати мене]]></translation>
+      <translation locale="sv"><![CDATA[kom ihåg mig]]></translation>
+      <translation locale="el"><![CDATA[απομνημόνευση]]></translation>
+      <translation locale="pl"><![CDATA[zapamietaj  mnie]]></translation>
+      <translation locale="tr"><![CDATA[Beni hatırla]]></translation>
+      <translation locale="pt"><![CDATA[recordar-me]]></translation>
+    </item>
+    <item type="label" name="Password">
+      <translation locale="nl"><![CDATA[wachtwoord]]></translation>
+      <translation locale="en"><![CDATA[password]]></translation>
+      <translation locale="fr"><![CDATA[mot de passe]]></translation>
+      <translation locale="hu"><![CDATA[jelszó]]></translation>
+      <translation locale="it"><![CDATA[password]]></translation>
+      <translation locale="ru"><![CDATA[Пароль]]></translation>
+      <translation locale="zh"><![CDATA[密码]]></translation>
+      <translation locale="de"><![CDATA[Passwort]]></translation>
+      <translation locale="es"><![CDATA[contraseña]]></translation>
+      <translation locale="lt"><![CDATA[slaptažodis]]></translation>
+      <translation locale="uk"><![CDATA[Пароль]]></translation>
+      <translation locale="sv"><![CDATA[lösenord]]></translation>
+      <translation locale="el"><![CDATA[κωδικός]]></translation>
+      <translation locale="pl"><![CDATA[hasło]]></translation>
+      <translation locale="tr"><![CDATA[şifre]]></translation>
+      <translation locale="pt"><![CDATA[senha]]></translation>
+    </item>
+    <item type="message" name="ForgotPassword">
+      <translation locale="nl"><![CDATA[Wachtwoord vergeten?]]></translation>
+      <translation locale="en"><![CDATA[Forgot your password?]]></translation>
+      <translation locale="fr"><![CDATA[Mot de passe oublié?]]></translation>
+      <translation locale="hu"><![CDATA[Elfelejtetted a jelszavad?]]></translation>
+      <translation locale="it"><![CDATA[Password dimenticata?]]></translation>
+      <translation locale="ru"><![CDATA[Забыли пароль?]]></translation>
+      <translation locale="zh"><![CDATA[忘记密码]]></translation>
+      <translation locale="de"><![CDATA[Passwort vergessen?]]></translation>
+      <translation locale="es"><![CDATA[¿Contraseña olvidada?]]></translation>
+      <translation locale="lt"><![CDATA[Priminti slaptažodį?]]></translation>
+      <translation locale="uk"><![CDATA[Забули пароль?]]></translation>
+      <translation locale="sv"><![CDATA[Glömt ditt lösenord?]]></translation>
+      <translation locale="el"><![CDATA[Ξεχάσατε τον Κωδικό σας;]]></translation>
+      <translation locale="pl"><![CDATA[zapomniałes hasła?]]></translation>
+      <translation locale="tr"><![CDATA[Şifrenizi mi unuttunuz?]]></translation>
+      <translation locale="pt"><![CDATA[Esqueceu-se da sua senha?]]></translation>
+    </item>
+    <item type="label" name="LogIn">
+      <translation locale="nl"><![CDATA[aanmelden]]></translation>
+      <translation locale="en"><![CDATA[log in]]></translation>
+      <translation locale="hu"><![CDATA[belépés]]></translation>
+      <translation locale="ru"><![CDATA[Логин]]></translation>
+      <translation locale="it"><![CDATA[accedi]]></translation>
+      <translation locale="zh"><![CDATA[登录]]></translation>
+      <translation locale="de"><![CDATA[einloggen]]></translation>
+      <translation locale="fr"><![CDATA[connexion]]></translation>
+      <translation locale="es"><![CDATA[entrar]]></translation>
+      <translation locale="lt"><![CDATA[jungtis]]></translation>
+      <translation locale="uk"><![CDATA[Логін]]></translation>
+      <translation locale="sv"><![CDATA[logga in]]></translation>
+      <translation locale="el"><![CDATA[σύνδεση]]></translation>
+      <translation locale="tr"><![CDATA[Giriş]]></translation>
+      <translation locale="pt"><![CDATA[login]]></translation>
+      <translation locale="pl"><![CDATA[zaloguj się]]></translation>
+    </item>
+    <item type="label" name="Email">
+      <translation locale="nl"><![CDATA[e-mail]]></translation>
+      <translation locale="en"><![CDATA[e-mail]]></translation>
+      <translation locale="hu"><![CDATA[e-mail]]></translation>
+      <translation locale="it"><![CDATA[email]]></translation>
+      <translation locale="fr"><![CDATA[e-mail]]></translation>
+      <translation locale="ru"><![CDATA[e-mail]]></translation>
+      <translation locale="zh"><![CDATA[Email]]></translation>
+      <translation locale="de"><![CDATA[E-Mail]]></translation>
+      <translation locale="es"><![CDATA[e-mail]]></translation>
+      <translation locale="uk"><![CDATA[e-mail]]></translation>
+      <translation locale="lt"><![CDATA[el.paštas]]></translation>
+      <translation locale="sv"><![CDATA[e-post]]></translation>
+      <translation locale="el"><![CDATA[e-mail]]></translation>
+      <translation locale="pl"><![CDATA[e-mail]]></translation>
+      <translation locale="tr"><![CDATA[e-posta]]></translation>
+      <translation locale="pt"><![CDATA[e-mail]]></translation>
+    </item>
+    <item type="label" name="Cancel">
+      <translation locale="nl"><![CDATA[annuleer]]></translation>
+      <translation locale="en"><![CDATA[cancel]]></translation>
+      <translation locale="hu"><![CDATA[törölni]]></translation>
+      <translation locale="it"><![CDATA[cancella]]></translation>
+      <translation locale="ru"><![CDATA[Отмена]]></translation>
+      <translation locale="zh"><![CDATA[取消]]></translation>
+      <translation locale="de"><![CDATA[abbrechen]]></translation>
+      <translation locale="fr"><![CDATA[annuler]]></translation>
+      <translation locale="es"><![CDATA[cancelar]]></translation>
+      <translation locale="lt"><![CDATA[atšaukti]]></translation>
+      <translation locale="uk"><![CDATA[Відміна]]></translation>
+      <translation locale="sv"><![CDATA[avbryt]]></translation>
+      <translation locale="el"><![CDATA[ακύρωση]]></translation>
+      <translation locale="pl"><![CDATA[anuluj]]></translation>
+      <translation locale="tr"><![CDATA[iptal et]]></translation>
+      <translation locale="pt"><![CDATA[cancelar]]></translation>
+    </item>
+    <item type="label" name="Close">
+      <translation locale="nl"><![CDATA[sluiten]]></translation>
+      <translation locale="en"><![CDATA[close]]></translation>
+      <translation locale="hu"><![CDATA[bezár]]></translation>
+      <translation locale="it"><![CDATA[chiudi]]></translation>
+      <translation locale="fr"><![CDATA[fermer]]></translation>
+      <translation locale="ru"><![CDATA[Закрыть]]></translation>
+      <translation locale="zh"><![CDATA[关闭]]></translation>
+      <translation locale="de"><![CDATA[schließen]]></translation>
+      <translation locale="es"><![CDATA[Cerrar]]></translation>
+      <translation locale="uk"><![CDATA[Закрити]]></translation>
+      <translation locale="lt"><![CDATA[uždaryti]]></translation>
+      <translation locale="sv"><![CDATA[stäng]]></translation>
+      <translation locale="el"><![CDATA[κλείσιμο]]></translation>
+      <translation locale="pl"><![CDATA[zakmnij]]></translation>
+      <translation locale="tr"><![CDATA[kapat]]></translation>
+      <translation locale="pt"><![CDATA[fechar]]></translation>
+    </item>
+    <item type="label" name="Send">
+      <translation locale="nl"><![CDATA[verstuur]]></translation>
+      <translation locale="en"><![CDATA[send]]></translation>
+      <translation locale="hu"><![CDATA[küld]]></translation>
+      <translation locale="it"><![CDATA[invia]]></translation>
+      <translation locale="fr"><![CDATA[envoyer]]></translation>
+      <translation locale="ru"><![CDATA[Отправить]]></translation>
+      <translation locale="zh"><![CDATA[发送]]></translation>
+      <translation locale="de"><![CDATA[senden]]></translation>
+      <translation locale="es"><![CDATA[enviar]]></translation>
+      <translation locale="lt"><![CDATA[siųsti]]></translation>
+      <translation locale="uk"><![CDATA[Надіслати]]></translation>
+      <translation locale="sv"><![CDATA[skicka]]></translation>
+      <translation locale="el"><![CDATA[αποστολή]]></translation>
+      <translation locale="pl"><![CDATA[wyslij]]></translation>
+      <translation locale="tr"><![CDATA[gönder]]></translation>
+      <translation locale="pt"><![CDATA[enviar]]></translation>
+    </item>
+    <item type="error" name="EmailIsRequired">
+      <translation locale="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
+      <translation locale="en"><![CDATA[E-mail is a required field.]]></translation>
+      <translation locale="hu"><![CDATA[Az e-mail mező kötelező.]]></translation>
+      <translation locale="it"><![CDATA[Email è un campo obbligatorio.]]></translation>
+      <translation locale="fr"><![CDATA[E-mail est un champ requis.]]></translation>
+      <translation locale="ru"><![CDATA[E-mail - обязательное поле.]]></translation>
+      <translation locale="zh"><![CDATA[Email是必填项。]]></translation>
+      <translation locale="de"><![CDATA[E-Mail-Adresse ist ein Pflichtfeld.]]></translation>
+      <translation locale="es"><![CDATA[E-mail es un campo requerido.]]></translation>
+      <translation locale="lt"><![CDATA[El.paštas - būtinas laukas.]]></translation>
+      <translation locale="uk"><![CDATA[E-mail - обов'язкове поле.]]></translation>
+      <translation locale="sv"><![CDATA[E-post är ett obligatoriskt fält.]]></translation>
+      <translation locale="el"><![CDATA[Το Email είναι υποχρεωτικό πεδίο.]]></translation>
+      <translation locale="pl"><![CDATA[Pole e-mail jest wymagane.]]></translation>
+      <translation locale="pt"><![CDATA[Endereço de email é um campo obrigatório.]]></translation>
+    </item>
+    <item type="error" name="InvalidNumber">
+      <translation locale="nl"><![CDATA[Ongeldig getal.]]></translation>
+      <translation locale="en"><![CDATA[Invalid number.]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen szám.]]></translation>
+      <translation locale="ru"><![CDATA[Неверный номер.]]></translation>
+      <translation locale="it"><![CDATA[Numero non valido.]]></translation>
+      <translation locale="zh"><![CDATA[无效的数字。]]></translation>
+      <translation locale="fr"><![CDATA[Nombre incorrect.]]></translation>
+      <translation locale="de"><![CDATA[Ungültige Nummer.]]></translation>
+      <translation locale="es"><![CDATA[Número no válido.]]></translation>
+      <translation locale="lt"><![CDATA[Neteisingas numeris.]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltigt nummer.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρος αριθμός.]]></translation>
+      <translation locale="pt"><![CDATA[Número inválido.]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowy numer.]]></translation>
+    </item>
+    <item type="error" name="InvalidDate">
+      <translation locale="nl"><![CDATA[Ongeldige datum.]]></translation>
+      <translation locale="en"><![CDATA[Invalid date.]]></translation>
+      <translation locale="fr"><![CDATA[Date invalide.]]></translation>
+      <translation locale="hu"><![CDATA[Rossz dátum.]]></translation>
+      <translation locale="it"><![CDATA[Data non valida.]]></translation>
+      <translation locale="ru"><![CDATA[Неправильная дата.]]></translation>
+      <translation locale="zh"><![CDATA[日期格式恐怕不正确哦。]]></translation>
+      <translation locale="de"><![CDATA[Ungültiges Datum.]]></translation>
+      <translation locale="es"><![CDATA[Fecha invalida.]]></translation>
+      <translation locale="lt"><![CDATA[Neteisinga data.]]></translation>
+      <translation locale="uk"><![CDATA[Неправильна дата]]></translation>
+      <translation locale="sv"><![CDATA[Felaktigt datum.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρη ημερομηνία.]]></translation>
+      <translation locale="pl"><![CDATA[Niepoprawna data.]]></translation>
+      <translation locale="tr"><![CDATA[Geçersiz tarih.]]></translation>
+      <translation locale="pt"><![CDATA[Data inválida.]]></translation>
+    </item>
+    <item type="error" name="InvalidDateRange">
+      <translation locale="nl"><![CDATA[Ongeldig datum bereik]]></translation>
+      <translation locale="en"><![CDATA[Invalid date range.]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen dátumtartomány.]]></translation>
+      <translation locale="it"><![CDATA[Intervallo di date non valido.]]></translation>
+      <translation locale="ru"><![CDATA[Недопустимый диапазон дат.]]></translation>
+      <translation locale="zh"><![CDATA[无效的日期范围。]]></translation>
+      <translation locale="fr"><![CDATA[Etendue de date invalide.]]></translation>
+      <translation locale="de"><![CDATA[Ungültiger Zeitraum.]]></translation>
+      <translation locale="es"><![CDATA[Rango de fecha no válido.]]></translation>
+      <translation locale="lt"><![CDATA[Negalimas datos diapazonas.]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltigt datumspann.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρο εύρος ημερομηνιών.]]></translation>
+      <translation locale="tr"><![CDATA[Geçersiz tarih aralığı.]]></translation>
+      <translation locale="pt"><![CDATA[O intervalo não é válido.]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowy zakres dat.]]></translation>
+    </item>
+    <item type="error" name="InvalidEmail">
+      <translation locale="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
+      <translation locale="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
+      <translation locale="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
+      <translation locale="it"><![CDATA[Devi fornire una email valida.]]></translation>
+      <translation locale="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
+      <translation locale="ru"><![CDATA[Введите правильный E-mail.]]></translation>
+      <translation locale="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
+      <translation locale="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
+      <translation locale="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
+      <translation locale="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
+      <translation locale="uk"><![CDATA[Введіт правильний e-mail]]></translation>
+      <translation locale="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
+      <translation locale="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
+      <translation locale="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
+      <translation locale="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
+    </item>
+    <item type="error" name="InvalidValue">
+      <translation locale="nl"><![CDATA[Ongeldige waarde.]]></translation>
+      <translation locale="en"><![CDATA[Invalid value.]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen érték.]]></translation>
+      <translation locale="ru"><![CDATA[Неверное значение.]]></translation>
+      <translation locale="it"><![CDATA[Valore non valido.]]></translation>
+      <translation locale="zh"><![CDATA[无效的值。]]></translation>
+      <translation locale="fr"><![CDATA[Valeur incorrecte.]]></translation>
+      <translation locale="de"><![CDATA[Ungültiger Wert.]]></translation>
+      <translation locale="es"><![CDATA[Valor no válido.]]></translation>
+      <translation locale="lt"><![CDATA[Neteisinga reikšmė.]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltigt värde.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρη τιμή.]]></translation>
+      <translation locale="pt"><![CDATA[Valor inválido.]]></translation>
+    </item>
+    <item type="error" name="InvalidURL">
+      <translation locale="nl"><![CDATA[Ongeldige URL.]]></translation>
+      <translation locale="en"><![CDATA[Invalid URL.]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen URL.]]></translation>
+      <translation locale="ru"><![CDATA[Неверный URL.]]></translation>
+      <translation locale="it"><![CDATA[URL non valido.]]></translation>
+      <translation locale="zh"><![CDATA[无效的URL链接。]]></translation>
+      <translation locale="fr"><![CDATA[URL incorrecte.]]></translation>
+      <translation locale="de"><![CDATA[Ungültige URL.]]></translation>
+      <translation locale="es"><![CDATA[URL no válida.]]></translation>
+      <translation locale="lt"><![CDATA[Neteisingas URL.]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltig URL.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρη διεύθυνση URL.]]></translation>
+      <translation locale="tr"><![CDATA[Geçersiz URL.]]></translation>
+      <translation locale="pt"><![CDATA[URL inválido.]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowe URL.]]></translation>
+    </item>
+    <item type="error" name="InvalidTime">
+      <translation locale="nl"><![CDATA[Ongeldige tijd.]]></translation>
+      <translation locale="en"><![CDATA[Invalid time.]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen idő.]]></translation>
+      <translation locale="it"><![CDATA[Orario non valido.]]></translation>
+      <translation locale="ru"><![CDATA[Неверное время.]]></translation>
+      <translation locale="zh"><![CDATA[无效的时间。]]></translation>
+      <translation locale="fr"><![CDATA[Temps non valide]]></translation>
+      <translation locale="de"><![CDATA[Ungültige Zeit.]]></translation>
+      <translation locale="es"><![CDATA[Hora no válida.]]></translation>
+      <translation locale="lt"><![CDATA[Neteisingas laikas.]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltig tid.]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρη ώρα.]]></translation>
+      <translation locale="tr"><![CDATA[Geçersiz zaman.]]></translation>
+      <translation locale="pl"><![CDATA[Niepoprawny czas]]></translation>
+      <translation locale="pt"><![CDATA[Hora inválida.]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowy czas.]]></translation>
+    </item>
+    <item type="error" name="EmailIsRequired">
+      <translation locale="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
+      <translation locale="en"><![CDATA[E-mail is a required field.]]></translation>
+      <translation locale="hu"><![CDATA[Az e-mail mező kötelező.]]></translation>
+      <translation locale="it"><![CDATA[Email è un campo obbligatorio.]]></translation>
+      <translation locale="fr"><![CDATA[E-mail est un champ requis.]]></translation>
+      <translation locale="ru"><![CDATA[E-mail - обязательное поле.]]></translation>
+      <translation locale="zh"><![CDATA[Email是必填项。]]></translation>
+      <translation locale="de"><![CDATA[E-Mail-Adresse ist ein Pflichtfeld.]]></translation>
+      <translation locale="es"><![CDATA[E-mail es un campo requerido.]]></translation>
+      <translation locale="lt"><![CDATA[El.paštas - būtinas laukas.]]></translation>
+      <translation locale="uk"><![CDATA[E-mail - обов'язкове поле.]]></translation>
+      <translation locale="sv"><![CDATA[E-post är ett obligatoriskt fält.]]></translation>
+      <translation locale="el"><![CDATA[Το Email είναι υποχρεωτικό πεδίο.]]></translation>
+      <translation locale="pl"><![CDATA[Pole e-mail jest wymagane.]]></translation>
+      <translation locale="pt"><![CDATA[Endereço de email é um campo obrigatório.]]></translation>
+    </item>
+    <item type="error" name="FieldIsRequired">
+      <translation locale="nl"><![CDATA[Dit veld is verplicht.]]></translation>
+      <translation locale="en"><![CDATA[This field is required.]]></translation>
+      <translation locale="fr"><![CDATA[Ce champ est obligatoire.]]></translation>
+      <translation locale="hu"><![CDATA[Ez a mező kötelező.]]></translation>
+      <translation locale="it"><![CDATA[Questo campo è obbligatorio.]]></translation>
+      <translation locale="ru"><![CDATA[Обязательное поле.]]></translation>
+      <translation locale="zh"><![CDATA[必填]]></translation>
+      <translation locale="de"><![CDATA[Dieses Feld ist ein Pflichtfeld.]]></translation>
+      <translation locale="es"><![CDATA[Este campo es requerido.]]></translation>
+      <translation locale="lt"><![CDATA[Būtinas laukelis.]]></translation>
+      <translation locale="uk"><![CDATA[Обов'язкове поло]]></translation>
+      <translation locale="sv"><![CDATA[Detta fält är obligatoriskt.]]></translation>
+      <translation locale="el"><![CDATA[Αυτό το πεδίο είναι υποχρεωτικό]]></translation>
+      <translation locale="pl"><![CDATA[To pole jest wymagane.]]></translation>
+      <translation locale="pt"><![CDATA[Este campo é obrigatório.]]></translation>
+    </item>
+    <item type="error" name="FileTooBig">
+      <translation locale="nl"><![CDATA[maximum bestandsgrootte: %1$s]]></translation>
+      <translation locale="en"><![CDATA[maximum filesize: %1$s]]></translation>
+      <translation locale="hu"><![CDATA[maximális fájlméret: %1$s]]></translation>
+      <translation locale="it"><![CDATA[dimensione massima: %1$s]]></translation>
+      <translation locale="ru"><![CDATA[максимальный размер: %1$s]]></translation>
+      <translation locale="zh"><![CDATA[不大于%1$s]]></translation>
+      <translation locale="de"><![CDATA[(maximale Dateigröße: %1$s)]]></translation>
+      <translation locale="fr"><![CDATA[taille de fichier maximale: %1$s]]></translation>
+      <translation locale="es"><![CDATA[(máximo tamaño del archivo: %1$s)]]></translation>
+      <translation locale="lt"><![CDATA[(maksimalus dydis: %1$s)]]></translation>
+      <translation locale="sv"><![CDATA[maximal filstorlek: %1$s]]></translation>
+      <translation locale="el"><![CDATA[μέγιστο μέγεθος αρχείου: %1$s]]></translation>
+      <translation locale="pt"><![CDATA[tamanho máximo de ficheiro: %1$s]]></translation>
+    </item>
+    <item type="error" name="SomethingWentWrong">
+      <translation locale="nl"><![CDATA[Er ging iets mis.]]></translation>
+      <translation locale="en"><![CDATA[Something went wrong.]]></translation>
+      <translation locale="hu"><![CDATA[Valami elromlott.]]></translation>
+      <translation locale="it"><![CDATA[Qualcosa è andato storto.]]></translation>
+      <translation locale="fr"><![CDATA[Un erreur est survenue.]]></translation>
+      <translation locale="ru"><![CDATA[Ошибка.]]></translation>
+      <translation locale="zh"><![CDATA[出错了，抱歉。]]></translation>
+      <translation locale="de"><![CDATA[Etwas ist schief gelaufen.]]></translation>
+      <translation locale="es"><![CDATA[Algo salió mal.]]></translation>
+      <translation locale="lt"><![CDATA[Klaida.]]></translation>
+      <translation locale="uk"><![CDATA[Помилка]]></translation>
+      <translation locale="sv"><![CDATA[Någonting gick fel.]]></translation>
+      <translation locale="el"><![CDATA[Συνέβη κάποιο σφάλμα.]]></translation>
+      <translation locale="pl"><![CDATA[Coś poszło nie tak.]]></translation>
+      <translation locale="pt"><![CDATA[Ocorreu um erro.]]></translation>
+    </item>
+    <item type="error" name="NumericCharactersOnly">
+      <translation locale="nl"><![CDATA[Enkel numerieke karakters zijn toegestaan.]]></translation>
+      <translation locale="en"><![CDATA[Only numeric characters are allowed.]]></translation>
+      <translation locale="fr"><![CDATA[Seuls les caractères numériques sont acceptés.]]></translation>
+      <translation locale="hu"><![CDATA[Csak numerikus karakterek megengedettek.]]></translation>
+      <translation locale="it"><![CDATA[Sono permessi solo caratteri numerici.]]></translation>
+      <translation locale="ru"><![CDATA[Разрешены только цифры.]]></translation>
+      <translation locale="zh"><![CDATA[只允许输入数字。]]></translation>
+      <translation locale="de"><![CDATA[Nur numerische Zeichen sind erlaubt.]]></translation>
+      <translation locale="es"><![CDATA[Solo carácteres numericos son aceptados.]]></translation>
+      <translation locale="lt"><![CDATA[Galimi tik skaičiai.]]></translation>
+      <translation locale="uk"><![CDATA[Дозволені лише цифри.]]></translation>
+      <translation locale="sv"><![CDATA[Endast numeriska tecken är tillåtna.]]></translation>
+      <translation locale="el"><![CDATA[Επιτρέπονται μόνον αριθμοί]]></translation>
+      <translation locale="pl"><![CDATA[Dozwolone sa tylko znaki numeryczne.]]></translation>
+      <translation locale="pt"><![CDATA[Apenas caractéres numéricos são aceites.]]></translation>
+    </item>
+    <item type="error" name="NumericCharactersOnly">
+      <translation locale="nl"><![CDATA[Enkel numerieke karakters zijn toegestaan.]]></translation>
+      <translation locale="en"><![CDATA[Only numeric characters are allowed.]]></translation>
+      <translation locale="fr"><![CDATA[Seuls les caractères numériques sont acceptés.]]></translation>
+      <translation locale="hu"><![CDATA[Csak numerikus karakterek megengedettek.]]></translation>
+      <translation locale="it"><![CDATA[Sono permessi solo caratteri numerici.]]></translation>
+      <translation locale="ru"><![CDATA[Разрешены только цифры.]]></translation>
+      <translation locale="zh"><![CDATA[只允许输入数字。]]></translation>
+      <translation locale="de"><![CDATA[Nur numerische Zeichen sind erlaubt.]]></translation>
+      <translation locale="es"><![CDATA[Solo carácteres numericos son aceptados.]]></translation>
+      <translation locale="lt"><![CDATA[Galimi tik skaičiai.]]></translation>
+      <translation locale="uk"><![CDATA[Дозволені лише цифри.]]></translation>
+      <translation locale="sv"><![CDATA[Endast numeriska tecken är tillåtna.]]></translation>
+      <translation locale="el"><![CDATA[Επιτρέπονται μόνον αριθμοί]]></translation>
+      <translation locale="pl"><![CDATA[Dozwolone sa tylko znaki numeryczne.]]></translation>
+      <translation locale="pt"><![CDATA[Apenas caractéres numéricos]]></translation>
+    </item>
+    <item type="error" name="AlphaNumericCharactersOnly">
+      <translation locale="nl"><![CDATA[Enkel alfanumerieke karakters zijn toegestaan.]]></translation>
+      <translation locale="en"><![CDATA[Only alphanumeric characters are allowed.]]></translation>
+      <translation locale="hu"><![CDATA[Csak alfanumerikus karakterek megengedettek.]]></translation>
+      <translation locale="it"><![CDATA[Sono consentiti solo caratteri alfanumerici.]]></translation>
+      <translation locale="ru"><![CDATA[Только буквы.]]></translation>
+      <translation locale="zh"><![CDATA[只允许字母和数字。]]></translation>
+      <translation locale="fr"><![CDATA[Seuls les caractères alpha-numériques sont autorisés.]]></translation>
+      <translation locale="de"><![CDATA[Nur alphanumerische Zeichen sind erlaubt.]]></translation>
+      <translation locale="es"><![CDATA[Solo carácteres alfanumericos son aceptados.]]></translation>
+      <translation locale="lt"><![CDATA[Tik raidės>]]></translation>
+      <translation locale="sv"><![CDATA[Endast alfanumeriska tecken är tillåtna.]]></translation>
+      <translation locale="el"><![CDATA[Επιτρέπονται μόνον αλφαριθμητικοί χαρακτήρες.]]></translation>
+      <translation locale="pt"><![CDATA[Apenas caractéres alfanuméricos são permitidos.]]></translation>
+      <translation locale="pl"><![CDATA[Dozwolone są tylko znaki alfanumeryczne.]]></translation>
+    </item>
+    <item type="error" name="AlterSequenceFailed">
+      <translation locale="nl"><![CDATA[Volgorde wijzigen mislukt.]]></translation>
+      <translation locale="en"><![CDATA[Alter sequence failed.]]></translation>
+      <translation locale="hu"><![CDATA[Alter szekvenciát sikerült.]]></translation>
+      <translation locale="it"><![CDATA[Alter sequenza non riuscita.]]></translation>
+      <translation locale="ru"><![CDATA[Не удалось изменить последовательность.]]></translation>
+      <translation locale="zh"><![CDATA[改變序列失敗。]]></translation>
+      <translation locale="fr"><![CDATA[Alter séquence échoué.]]></translation>
+      <translation locale="de"><![CDATA[Alter Sequenz fehlgeschlagen.]]></translation>
+      <translation locale="es"><![CDATA[Alteran la secuencia fallado.]]></translation>
+      <translation locale="lt"><![CDATA[Nepavyko pakeisti seka.]]></translation>
+      <translation locale="sv"><![CDATA[Alter sekvens misslyckades.]]></translation>
+      <translation locale="el"><![CDATA[Οι ενέργειες γιά την αλλαγή απέτυχαν.]]></translation>
+      <translation locale="pt"><![CDATA[A alteração da sequência falhou.]]></translation>
+      <translation locale="pl"><![CDATA[Zmiana kolejności nie powiodła się.]]></translation>
+    </item>
+    <item type="error" name="ExtensionNotAllowed">
+      <translation locale="nl"><![CDATA[Ongeldig bestandstype. (toegelaten: %1$s)]]></translation>
+      <translation locale="en"><![CDATA[Invalid file type. (allowed: %1$s)]]></translation>
+      <translation locale="hu"><![CDATA[Helytelen fálj típus. (megengedett: %1$s)]]></translation>
+      <translation locale="it"><![CDATA[Tipo di file non valido (consentiti: %1$s).]]></translation>
+      <translation locale="ru"><![CDATA[Недопустимый формат файла. (Разрешены: %1$s)]]></translation>
+      <translation locale="zh"><![CDATA[无效的文件格式。（只允许：%1$s)]]></translation>
+      <translation locale="fr"><![CDATA[Type de fichier non valide.  (autorisés: %1$s)]]></translation>
+      <translation locale="de"><![CDATA[Ungültiger Dateityp. (erlaubt: %1$s)]]></translation>
+      <translation locale="es"><![CDATA[Tipo de archivo no válido. (permitido: %1$s)]]></translation>
+      <translation locale="lt"><![CDATA[Negalimas failo formatas. (galimi: %1$s)]]></translation>
+      <translation locale="sv"><![CDATA[Ogiltigt filtyp. (tillåtna: %1$s)]]></translation>
+      <translation locale="el"><![CDATA[Μη έγκυρος τύπος αρχείου. (επιτρεπόμενος: %1$s)]]></translation>
+      <translation locale="pt"><![CDATA[Tipo de ficheiro inválido (tipos permitidos: "%1$s").]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowy typ pliku. (dozwolone:%1$s)]]></translation>
+    </item>
+    <item type="error" name="ValuesDontMatch">
+      <translation locale="nl"><![CDATA[De waarden komen niet overeen.]]></translation>
+      <translation locale="en"><![CDATA[The values don't match.]]></translation>
+      <translation locale="hu"><![CDATA[Az értékek nem egyeznek.]]></translation>
+      <translation locale="it"><![CDATA[I valori non corrispondono.]]></translation>
+      <translation locale="ru"><![CDATA[Значения не совпадают.]]></translation>
+      <translation locale="zh"><![CDATA[值不匹配。]]></translation>
+      <translation locale="fr"><![CDATA[Les valeurs ne correspondent pas.]]></translation>
+      <translation locale="de"><![CDATA[Die Werte passen nicht.]]></translation>
+      <translation locale="es"><![CDATA[Los valores no coinciden.]]></translation>
+      <translation locale="lt"><![CDATA[Reikšmės nesutampa.]]></translation>
+      <translation locale="uk"><![CDATA[Значения не совпадают]]></translation>
+      <translation locale="sv"><![CDATA[värden matchar inte.]]></translation>
+      <translation locale="el"><![CDATA[Οι τιμές δεν ταιριάζουν.]]></translation>
+      <translation locale="tr"><![CDATA[Değerler eşleşmiyor.]]></translation>
+      <translation locale="pt"><![CDATA[Os valores não coincidem.]]></translation>
+      <translation locale="pl"><![CDATA[Wartości nie są zgodne.]]></translation>
+    </item>
+    <item type="label" name="OpenNavigation">
+      <translation locale="nl"><![CDATA[klap navigatie open]]></translation>
+      <translation locale="en"><![CDATA[open navigation]]></translation>
+      <translation locale="fr"><![CDATA[ouvrir la navigation]]></translation>
+      <translation locale="ru"><![CDATA[Открытая навигация]]></translation>
+      <translation locale="el"><![CDATA[Άνοιγμα πλοήγησης]]></translation>
+      <translation locale="hu"><![CDATA[Nyissa meg a navigációt]]></translation>
+      <translation locale="zh"><![CDATA[打開導航]]></translation>
+      <translation locale="de"><![CDATA[Öffnen Sie die Navigation]]></translation>
+      <translation locale="pt"><![CDATA[abrir navegação]]></translation>
+      <translation locale="pl"><![CDATA[otwórz nawigację]]></translation>
+    </item>
+    <item type="label" name="CloseNavigation">
+      <translation locale="nl"><![CDATA[navigatie dichtklappen]]></translation>
+      <translation locale="en"><![CDATA[close navigation]]></translation>
+      <translation locale="fr"><![CDATA[fermer la navigation]]></translation>
+      <translation locale="ru"><![CDATA[закрыть навигацию]]></translation>
+      <translation locale="el"><![CDATA[κλείστε την πλοήγηση]]></translation>
+      <translation locale="hu"><![CDATA[zárja be a navigációt]]></translation>
+      <translation locale="zh"><![CDATA[關閉導航]]></translation>
+      <translation locale="de"><![CDATA[schließe die Navigation]]></translation>
+      <translation locale="pt"><![CDATA[fechar navegação]]></translation>
+      <translation locale="pl"><![CDATA[zamknij nawigację]]></translation>
+    </item>
+    <item type="label" name="Next">
+      <translation locale="nl"><![CDATA[volgende]]></translation>
+      <translation locale="en"><![CDATA[next]]></translation>
+      <translation locale="hu"><![CDATA[következő]]></translation>
+      <translation locale="it"><![CDATA[successivo]]></translation>
+      <translation locale="fr"><![CDATA[suivant]]></translation>
+      <translation locale="ru"><![CDATA[Следующий]]></translation>
+      <translation locale="zh"><![CDATA[下一步]]></translation>
+      <translation locale="de"><![CDATA[nächste]]></translation>
+      <translation locale="es"><![CDATA[Siguiente]]></translation>
+      <translation locale="lt"><![CDATA[kitas]]></translation>
+      <translation locale="uk"><![CDATA[Далі]]></translation>
+      <translation locale="sv"><![CDATA[nästa]]></translation>
+      <translation locale="el"><![CDATA[επόμενη]]></translation>
+      <translation locale="pl"><![CDATA[następny]]></translation>
+      <translation locale="tr"><![CDATA[sonraki]]></translation>
+      <translation locale="pt"><![CDATA[seguinte]]></translation>
+    </item>
+    <item type="label" name="Previous">
+      <translation locale="nl"><![CDATA[vorige]]></translation>
+      <translation locale="en"><![CDATA[previous]]></translation>
+      <translation locale="hu"><![CDATA[előző]]></translation>
+      <translation locale="it"><![CDATA[precedente]]></translation>
+      <translation locale="fr"><![CDATA[précédent]]></translation>
+      <translation locale="ru"><![CDATA[Предыдущий]]></translation>
+      <translation locale="zh"><![CDATA[上一步]]></translation>
+      <translation locale="de"><![CDATA[vorherige]]></translation>
+      <translation locale="es"><![CDATA[previo]]></translation>
+      <translation locale="lt"><![CDATA[atgal]]></translation>
+      <translation locale="uk"><![CDATA[Попередній]]></translation>
+      <translation locale="sv"><![CDATA[föregående]]></translation>
+      <translation locale="el"><![CDATA[προηγούμενη]]></translation>
+      <translation locale="pl"><![CDATA[poprzedni]]></translation>
+      <translation locale="tr"><![CDATA[önceki]]></translation>
+      <translation locale="pt"><![CDATA[anterior]]></translation>
+    </item>
+    <item type="label" name="Loading">
+      <translation locale="nl"><![CDATA[loading]]></translation>
+      <translation locale="en"><![CDATA[loading]]></translation>
+      <translation locale="hu"><![CDATA[töltés]]></translation>
+      <translation locale="it"><![CDATA[caricamento]]></translation>
+      <translation locale="ru"><![CDATA[Загрузка]]></translation>
+      <translation locale="zh"><![CDATA[加载中]]></translation>
+      <translation locale="de"><![CDATA[lädt]]></translation>
+      <translation locale="fr"><![CDATA[chargement]]></translation>
+      <translation locale="es"><![CDATA[cargando]]></translation>
+      <translation locale="lt"><![CDATA[vykdoma]]></translation>
+      <translation locale="uk"><![CDATA[Завантаження]]></translation>
+      <translation locale="sv"><![CDATA[laddar]]></translation>
+      <translation locale="el"><![CDATA[φόρτωση]]></translation>
+      <translation locale="pt"><![CDATA[a carregar]]></translation>
+      <translation locale="pl"><![CDATA[ładowanie]]></translation>
+    </item>
+    <item type="label" name="Current">
+      <translation locale="nl"><![CDATA[huidig]]></translation>
+      <translation locale="en"><![CDATA[current]]></translation>
+    </item>
+    <item type="label" name="Groups">
+      <translation locale="nl"><![CDATA[groepen]]></translation>
+      <translation locale="en"><![CDATA[groups]]></translation>
+      <translation locale="hu"><![CDATA[csoportok]]></translation>
+      <translation locale="it"><![CDATA[gruppi]]></translation>
+      <translation locale="ru"><![CDATA[Группы]]></translation>
+      <translation locale="zh"><![CDATA[组]]></translation>
+      <translation locale="de"><![CDATA[Gruppen]]></translation>
+      <translation locale="fr"><![CDATA[groupes]]></translation>
+      <translation locale="es"><![CDATA[grupos]]></translation>
+      <translation locale="lt"><![CDATA[grupės]]></translation>
+      <translation locale="uk"><![CDATA[Групи]]></translation>
+      <translation locale="sv"><![CDATA[grupper]]></translation>
+      <translation locale="el"><![CDATA[ομάδες]]></translation>
+      <translation locale="pl"><![CDATA[grupy]]></translation>
+      <translation locale="pt"><![CDATA[grupos]]></translation>
+    </item>
+    <item type="label" name="Settings">
+      <translation locale="nl"><![CDATA[instellingen]]></translation>
+      <translation locale="en"><![CDATA[settings]]></translation>
+      <translation locale="ru"><![CDATA[Настройки]]></translation>
+      <translation locale="el"><![CDATA[ρυθμίσεις]]></translation>
+      <translation locale="uk"><![CDATA[Нашатування]]></translation>
+      <translation locale="hu"><![CDATA[beállítások]]></translation>
+      <translation locale="zh"><![CDATA[设置]]></translation>
+      <translation locale="de"><![CDATA[Einstellungen]]></translation>
+      <translation locale="pt"><![CDATA[configurações]]></translation>
+      <translation locale="pl"><![CDATA[ustawienia]]></translation>
+    </item>
+    <item type="label" name="Edit">
+      <translation locale="nl"><![CDATA[wijzigen]]></translation>
+      <translation locale="en"><![CDATA[edit]]></translation>
+      <translation locale="hu"><![CDATA[szerkeszt]]></translation>
+      <translation locale="it"><![CDATA[modifica]]></translation>
+      <translation locale="ru"><![CDATA[Редактировать]]></translation>
+      <translation locale="zh"><![CDATA[编辑]]></translation>
+      <translation locale="de"><![CDATA[bearbeiten]]></translation>
+      <translation locale="fr"><![CDATA[éditer]]></translation>
+      <translation locale="es"><![CDATA[editar]]></translation>
+      <translation locale="lt"><![CDATA[keisti]]></translation>
+      <translation locale="uk"><![CDATA[Редагувати]]></translation>
+      <translation locale="sv"><![CDATA[ändra]]></translation>
+      <translation locale="el"><![CDATA[μεταβολή]]></translation>
+      <translation locale="pl"><![CDATA[edytuj]]></translation>
+      <translation locale="pt"><![CDATA[editar]]></translation>
+    </item>
+    <item type="message" name="Added">
+      <translation locale="nl"><![CDATA[Het item werd toegevoegd.]]></translation>
+      <translation locale="en"><![CDATA[The item was added.]]></translation>
+      <translation locale="hu"><![CDATA[Az elem hozzáadva.]]></translation>
+      <translation locale="ru"><![CDATA[Добавлено.]]></translation>
+      <translation locale="it"><![CDATA[L'elemento è stato aggiunto.]]></translation>
+      <translation locale="zh"><![CDATA[条目已添加。]]></translation>
+      <translation locale="fr"><![CDATA[L'élément à été ajouté]]></translation>
+      <translation locale="de"><![CDATA[Der Eintrag wurde hinzugefügt.]]></translation>
+      <translation locale="es"><![CDATA[El objeto fue agregado.]]></translation>
+      <translation locale="lt"><![CDATA[sukurta]]></translation>
+      <translation locale="uk"><![CDATA[Додано]]></translation>
+      <translation locale="sv"><![CDATA[Objektet tillagt]]></translation>
+      <translation locale="el"><![CDATA[Το αντικείμενο προστέθηκε.]]></translation>
+      <translation locale="tr"><![CDATA[Bu öğe eklendi.]]></translation>
+      <translation locale="pt"><![CDATA[O item foi adicionado]]></translation>
+      <translation locale="pl"><![CDATA[Pozycja została dodana.]]></translation>
+    </item>
+    <item type="message" name="Edited">
+      <translation locale="nl"><![CDATA[Het item werd opgeslagen.]]></translation>
+      <translation locale="en"><![CDATA[The item was saved.]]></translation>
+      <translation locale="hu"><![CDATA[Mentve.]]></translation>
+      <translation locale="it"><![CDATA[L'elemento è stato salvato.]]></translation>
+      <translation locale="ru"><![CDATA[Сохранено.]]></translation>
+      <translation locale="zh"><![CDATA[已保存。]]></translation>
+      <translation locale="fr"><![CDATA[L'élément a été enregistré]]></translation>
+      <translation locale="de"><![CDATA[Der Eintrag wurde gespeichert.]]></translation>
+      <translation locale="es"><![CDATA[El obejto fue salvado.]]></translation>
+      <translation locale="lt"><![CDATA[išsaugota]]></translation>
+      <translation locale="uk"><![CDATA[Збережено]]></translation>
+      <translation locale="sv"><![CDATA[Objektet sparades.]]></translation>
+      <translation locale="el"><![CDATA[Το αντικείμενο αποθηκεύτηκε.]]></translation>
+      <translation locale="pl"><![CDATA[Pozycja została zapisana.]]></translation>
+      <translation locale="pt"><![CDATA[O objecto foi guardado.]]></translation>
+    </item>
+    <item type="message" name="Deleted">
+      <translation locale="nl"><![CDATA[Het item werd verwijderd.]]></translation>
+      <translation locale="en"><![CDATA[The item was deleted.]]></translation>
+      <translation locale="hu"><![CDATA[Törölve.]]></translation>
+      <translation locale="ru"><![CDATA[Удалено.]]></translation>
+      <translation locale="it"><![CDATA[Questo elemento è stato eliminato.]]></translation>
+      <translation locale="zh"><![CDATA[已删除。]]></translation>
+      <translation locale="fr"><![CDATA[L'élément a été supprimé.]]></translation>
+      <translation locale="de"><![CDATA[Der Eintrag wurde gelöscht.]]></translation>
+      <translation locale="es"><![CDATA[El objeto ha sido eliminado.]]></translation>
+      <translation locale="lt"><![CDATA[Ištrinta]]></translation>
+      <translation locale="uk"><![CDATA[Видалено.]]></translation>
+      <translation locale="sv"><![CDATA[Detta objekt togs bort.]]></translation>
+      <translation locale="el"><![CDATA[Το αντικείμενο διεγράφη.]]></translation>
+      <translation locale="pt"><![CDATA[O objecto foi eliminado.]]></translation>
+      <translation locale="pl"><![CDATA[Pozycja została usunięta.]]></translation>
+    </item>
+    <item type="label" name="Add">
+      <translation locale="nl"><![CDATA[toevoegen]]></translation>
+      <translation locale="en"><![CDATA[add]]></translation>
+      <translation locale="hu"><![CDATA[hozzáad]]></translation>
+      <translation locale="it"><![CDATA[aggiungi]]></translation>
+      <translation locale="ru"><![CDATA[Добавить]]></translation>
+      <translation locale="zh"><![CDATA[添加]]></translation>
+      <translation locale="de"><![CDATA[hinzufügen]]></translation>
+      <translation locale="fr"><![CDATA[ajouter]]></translation>
+      <translation locale="es"><![CDATA[agregar]]></translation>
+      <translation locale="lt"><![CDATA[naujas]]></translation>
+      <translation locale="uk"><![CDATA[Додати]]></translation>
+      <translation locale="sv"><![CDATA[lägg till]]></translation>
+      <translation locale="el"><![CDATA[προσθήκη]]></translation>
+      <translation locale="pl"><![CDATA[dodaj]]></translation>
+      <translation locale="tr"><![CDATA[ekle]]></translation>
+      <translation locale="pt"><![CDATA[adicionar]]></translation>
+    </item>
+    <item type="label" name="Name">
+      <translation locale="nl"><![CDATA[naam]]></translation>
+      <translation locale="en"><![CDATA[name]]></translation>
+      <translation locale="hu"><![CDATA[keresztnév]]></translation>
+      <translation locale="it"><![CDATA[nome]]></translation>
+      <translation locale="ru"><![CDATA[Имя]]></translation>
+      <translation locale="zh"><![CDATA[名]]></translation>
+      <translation locale="de"><![CDATA[Name]]></translation>
+      <translation locale="fr"><![CDATA[nom]]></translation>
+      <translation locale="es"><![CDATA[nombre]]></translation>
+      <translation locale="lt"><![CDATA[vardas]]></translation>
+      <translation locale="uk"><![CDATA[Ім'я]]></translation>
+      <translation locale="sv"><![CDATA[namn]]></translation>
+      <translation locale="el"><![CDATA[όνομα]]></translation>
+      <translation locale="pt"><![CDATA[nome]]></translation>
+      <translation locale="pl"><![CDATA[nazwisko]]></translation>
+    </item>
+    <item type="label" name="UserGroupAdd">
+      <translation locale="nl"><![CDATA[groep toevoegen]]></translation>
+      <translation locale="en"><![CDATA[add group]]></translation>
+      <translation locale="it"><![CDATA[aggiungi gruppo]]></translation>
+      <translation locale="ru"><![CDATA[Добавить группу]]></translation>
+      <translation locale="zh"><![CDATA[添加用户组]]></translation>
+      <translation locale="de"><![CDATA[Gruppe hinzufügen]]></translation>
+      <translation locale="fr"><![CDATA[ajouter un groupe]]></translation>
+      <translation locale="hu"><![CDATA[csoport hozzáadása]]></translation>
+      <translation locale="uk"><![CDATA[Додати групу]]></translation>
+      <translation locale="es"><![CDATA[agregar grupo]]></translation>
+      <translation locale="lt"><![CDATA[nauja grupė]]></translation>
+      <translation locale="el"><![CDATA[Προσθήκη ομάδας]]></translation>
+      <translation locale="pl"><![CDATA[Dodaj grupę]]></translation>
+      <translation locale="pt"><![CDATA[adicionar grupo]]></translation>
+    </item>
+    <item type="label" name="Description">
+      <translation locale="nl"><![CDATA[beschrijving]]></translation>
+      <translation locale="en"><![CDATA[description]]></translation>
+      <translation locale="hu"><![CDATA[leírás]]></translation>
+      <translation locale="it"><![CDATA[descrizione]]></translation>
+      <translation locale="ru"><![CDATA[Описание]]></translation>
+      <translation locale="zh"><![CDATA[描述]]></translation>
+      <translation locale="de"><![CDATA[Beschreibung]]></translation>
+      <translation locale="fr"><![CDATA[description]]></translation>
+      <translation locale="es"><![CDATA[descripción]]></translation>
+      <translation locale="lt"><![CDATA[aprašymas]]></translation>
+      <translation locale="uk"><![CDATA[Опис]]></translation>
+      <translation locale="sv"><![CDATA[beskrivning]]></translation>
+      <translation locale="el"><![CDATA[περιγραφή]]></translation>
+      <translation locale="pl"><![CDATA[opis]]></translation>
+      <translation locale="pt"><![CDATA[descrição]]></translation>
+    </item>
+    <item type="label" name="Filename">
+      <translation locale="nl"><![CDATA[bestandsnaam]]></translation>
+      <translation locale="en"><![CDATA[filename]]></translation>
+      <translation locale="hu"><![CDATA[fájl név]]></translation>
+      <translation locale="it"><![CDATA[nome file]]></translation>
+      <translation locale="ru"><![CDATA[Имя файла]]></translation>
+      <translation locale="zh"><![CDATA[文件名]]></translation>
+      <translation locale="de"><![CDATA[Dateiname]]></translation>
+      <translation locale="fr"><![CDATA[nom de fichier]]></translation>
+      <translation locale="es"><![CDATA[nombre de archivo]]></translation>
+      <translation locale="lt"><![CDATA[bylos pavadinimas]]></translation>
+      <translation locale="uk"><![CDATA[Ім'я файла]]></translation>
+      <translation locale="sv"><![CDATA[filnamn]]></translation>
+      <translation locale="el"><![CDATA[όνομα αρχείου]]></translation>
+      <translation locale="pl"><![CDATA[nazwa pliku]]></translation>
+      <translation locale="pt"><![CDATA[nome de ficheiro]]></translation>
+    </item>
+    <item type="label" name="Users">
+      <translation locale="nl"><![CDATA[gebruikers]]></translation>
+      <translation locale="en"><![CDATA[users]]></translation>
+      <translation locale="hu"><![CDATA[felhasználók]]></translation>
+      <translation locale="ru"><![CDATA[Пользователи]]></translation>
+      <translation locale="it"><![CDATA[utenti]]></translation>
+      <translation locale="zh"><![CDATA[用户]]></translation>
+      <translation locale="de"><![CDATA[Benutzer]]></translation>
+      <translation locale="fr"><![CDATA[utilisateurs]]></translation>
+      <translation locale="es"><![CDATA[usuarios]]></translation>
+      <translation locale="lt"><![CDATA[narys]]></translation>
+      <translation locale="uk"><![CDATA[Користувачі]]></translation>
+      <translation locale="sv"><![CDATA[användare]]></translation>
+      <translation locale="el"><![CDATA[χρήστες]]></translation>
+      <translation locale="tr"><![CDATA[Üyeler]]></translation>
+      <translation locale="pt"><![CDATA[utilizadores]]></translation>
+      <translation locale="pl"><![CDATA[użytkownicy]]></translation>
+    </item>
+    <item type="label" name="RequiredField">
+      <translation locale="nl"><![CDATA[verplicht veld]]></translation>
+      <translation locale="en"><![CDATA[required field]]></translation>
+      <translation locale="hu"><![CDATA[kötelező mező]]></translation>
+      <translation locale="it"><![CDATA[campo obbligatorio]]></translation>
+      <translation locale="fr"><![CDATA[champ requis]]></translation>
+      <translation locale="ru"><![CDATA[Обязательное поле]]></translation>
+      <translation locale="zh"><![CDATA[必填]]></translation>
+      <translation locale="de"><![CDATA[Pflichtfeld]]></translation>
+      <translation locale="es"><![CDATA[campo requerido]]></translation>
+      <translation locale="lt"><![CDATA[būtini laukeliai]]></translation>
+      <translation locale="uk"><![CDATA[Обов'язкове поле]]></translation>
+      <translation locale="sv"><![CDATA[obligatoriskt fält]]></translation>
+      <translation locale="el"><![CDATA[υποχρεωτικό πεδίο]]></translation>
+      <translation locale="pl"><![CDATA[wymagane pole]]></translation>
+      <translation locale="tr"><![CDATA[Doldurulması zorunlu alan]]></translation>
+      <translation locale="pt"><![CDATA[campo obrigatório]]></translation>
+    </item>
+    <item type="label" name="UserStatistics">
+      <translation locale="en"><![CDATA[user statistics]]></translation>
+      <translation locale="nl"><![CDATA[gebruiker statistieken]]></translation>
+    </item>
+    <item type="label" name="SearchTerm">
+      <translation locale="nl"><![CDATA[zoekterm]]></translation>
+      <translation locale="en"><![CDATA[searchterm]]></translation>
+      <translation locale="hu"><![CDATA[keresési feltételek]]></translation>
+      <translation locale="it"><![CDATA[termine di ricerca]]></translation>
+      <translation locale="fr"><![CDATA[chercher le terme]]></translation>
+      <translation locale="ru"><![CDATA[Ключевые слова]]></translation>
+      <translation locale="zh"><![CDATA[搜索词]]></translation>
+      <translation locale="de"><![CDATA[Suchbegriff]]></translation>
+      <translation locale="es"><![CDATA[buscar el término]]></translation>
+      <translation locale="lt"><![CDATA[raktažodžiai]]></translation>
+      <translation locale="uk"><![CDATA[Ключові слова]]></translation>
+      <translation locale="sv"><![CDATA[sökterm]]></translation>
+      <translation locale="el"><![CDATA[όρος αναζήτησης]]></translation>
+      <translation locale="pl"><![CDATA[Szukaj frazy]]></translation>
+      <translation locale="tr"><![CDATA[arama terimi]]></translation>
+      <translation locale="pt"><![CDATA[termo de pesquisa]]></translation>
+    </item>
+    <item type="label" name="PreviousPage">
+      <translation locale="nl"><![CDATA[vorige pagina]]></translation>
+      <translation locale="en"><![CDATA[previous page]]></translation>
+      <translation locale="hu"><![CDATA[előző oldal]]></translation>
+      <translation locale="ru"><![CDATA[Пред. страница]]></translation>
+      <translation locale="it"><![CDATA[prossima pagina]]></translation>
+      <translation locale="zh"><![CDATA[上一篇]]></translation>
+      <translation locale="de"><![CDATA[vorherige Seite]]></translation>
+      <translation locale="fr"><![CDATA[page précédente]]></translation>
+      <translation locale="es"><![CDATA[página previa]]></translation>
+      <translation locale="lt"><![CDATA[buvę puslapiai]]></translation>
+      <translation locale="uk"><![CDATA[Поп. сторінка]]></translation>
+      <translation locale="sv"><![CDATA[föregående sida]]></translation>
+      <translation locale="el"><![CDATA[προηγούμενη σελίδα]]></translation>
+      <translation locale="tr"><![CDATA[önceki sayfa]]></translation>
+      <translation locale="pt"><![CDATA[página anterior]]></translation>
+      <translation locale="pl"><![CDATA[poprzednia strona]]></translation>
+    </item>
+    <item type="label" name="NextPage">
+      <translation locale="nl"><![CDATA[volgende pagina]]></translation>
+      <translation locale="en"><![CDATA[next page]]></translation>
+      <translation locale="hu"><![CDATA[következő oldal]]></translation>
+      <translation locale="it"><![CDATA[pagina successiva]]></translation>
+      <translation locale="fr"><![CDATA[page suivante]]></translation>
+      <translation locale="ru"><![CDATA[Следующая страница]]></translation>
+      <translation locale="zh"><![CDATA[后页]]></translation>
+      <translation locale="de"><![CDATA[nächste Seite]]></translation>
+      <translation locale="es"><![CDATA[Siguiente Página]]></translation>
+      <translation locale="lt"><![CDATA[kitas puslapis]]></translation>
+      <translation locale="uk"><![CDATA[Наступна сторінка]]></translation>
+      <translation locale="sv"><![CDATA[nästa sida]]></translation>
+      <translation locale="el"><![CDATA[επόμενη σελίδα]]></translation>
+      <translation locale="pl"><![CDATA[następna strona]]></translation>
+      <translation locale="tr"><![CDATA[Sonraki sayfa]]></translation>
+      <translation locale="pt"><![CDATA[página seguinte]]></translation>
+    </item>
+    <item type="label" name="Filter">
+      <translation locale="nl"><![CDATA[filter]]></translation>
+      <translation locale="en"><![CDATA[filter]]></translation>
+    </item>
+    <item type="label" name="Status">
+      <translation locale="nl"><![CDATA[status]]></translation>
+      <translation locale="en"><![CDATA[status]]></translation>
+      <translation locale="hu"><![CDATA[státusz]]></translation>
+      <translation locale="ru"><![CDATA[Статус]]></translation>
+      <translation locale="it"><![CDATA[stato]]></translation>
+      <translation locale="zh"><![CDATA[状态]]></translation>
+      <translation locale="de"><![CDATA[Status]]></translation>
+      <translation locale="fr"><![CDATA[statut]]></translation>
+      <translation locale="es"><![CDATA[estado]]></translation>
+      <translation locale="lt"><![CDATA[būklė]]></translation>
+      <translation locale="uk"><![CDATA[Статус]]></translation>
+      <translation locale="sv"><![CDATA[status]]></translation>
+      <translation locale="el"><![CDATA[κατάσταση]]></translation>
+      <translation locale="tr"><![CDATA[durum]]></translation>
+      <translation locale="pl"><![CDATA[status]]></translation>
+      <translation locale="pt"><![CDATA[status]]></translation>
+    </item>
+    <item type="label" name="Save">
+      <translation locale="nl"><![CDATA[opslaan]]></translation>
+      <translation locale="en"><![CDATA[save]]></translation>
+      <translation locale="fr"><![CDATA[enregistrer]]></translation>
+      <translation locale="hu"><![CDATA[ment]]></translation>
+      <translation locale="it"><![CDATA[salva]]></translation>
+      <translation locale="ru"><![CDATA[Сохранить]]></translation>
+      <translation locale="zh"><![CDATA[保存]]></translation>
+      <translation locale="de"><![CDATA[speichern]]></translation>
+      <translation locale="es"><![CDATA[guardar]]></translation>
+      <translation locale="lt"><![CDATA[išsaugoti]]></translation>
+      <translation locale="uk"><![CDATA[Зберегти]]></translation>
+      <translation locale="sv"><![CDATA[spara]]></translation>
+      <translation locale="el"><![CDATA[αποθήκευση]]></translation>
+      <translation locale="pl"><![CDATA[zapisz]]></translation>
+      <translation locale="tr"><![CDATA[Kaydet]]></translation>
+      <translation locale="pt"><![CDATA[guardar]]></translation>
+    </item>
+    <item type="label" name="NoResultsFound">
+      <translation locale="nl"><![CDATA[geen resultaten gevonden]]></translation>
+      <translation locale="en"><![CDATA[no results found]]></translation>
+      <translation locale="de"><![CDATA[keine Ergebnisse gefunden]]></translation>
+      <translation locale="fr"><![CDATA[aucun résultat trouvé]]></translation>
+    </item>
+    <item type="label" name="Authentication">
+      <translation locale="nl"><![CDATA[authenticatie]]></translation>
+      <translation locale="en"><![CDATA[authentication]]></translation>
+      <translation locale="hu"><![CDATA[hitelesítés]]></translation>
+      <translation locale="it"><![CDATA[autenticazione]]></translation>
+      <translation locale="ru"><![CDATA[Аутентификация]]></translation>
+      <translation locale="zh"><![CDATA[权限]]></translation>
+      <translation locale="de"><![CDATA[Authentifizierung]]></translation>
+      <translation locale="fr"><![CDATA[authentification]]></translation>
+      <translation locale="es"><![CDATA[auntentificación]]></translation>
+      <translation locale="lt"><![CDATA[autentifikavimas]]></translation>
+      <translation locale="uk"><![CDATA[Аутентифікація]]></translation>
+      <translation locale="sv"><![CDATA[autentisering]]></translation>
+      <translation locale="el"><![CDATA[πιστοποίηση]]></translation>
+      <translation locale="pt"><![CDATA[autenticação]]></translation>
+      <translation locale="pl"><![CDATA[autoryzacja]]></translation>
+    </item>
+    <item type="label" name="Details">
+      <translation locale="nl"><![CDATA[details]]></translation>
+      <translation locale="en"><![CDATA[details]]></translation>
+      <translation locale="it"><![CDATA[dettagli]]></translation>
+      <translation locale="ru"><![CDATA[Детали]]></translation>
+      <translation locale="zh"><![CDATA[详情]]></translation>
+      <translation locale="de"><![CDATA[Details]]></translation>
+      <translation locale="fr"><![CDATA[détails]]></translation>
+      <translation locale="hu"><![CDATA[részletek]]></translation>
+      <translation locale="es"><![CDATA[detalles]]></translation>
+      <translation locale="lt"><![CDATA[detaliau]]></translation>
+      <translation locale="uk"><![CDATA[Деталі]]></translation>
+      <translation locale="sv"><![CDATA[detaljer]]></translation>
+      <translation locale="el"><![CDATA[λεπτομέρειες]]></translation>
+      <translation locale="pt"><![CDATA[detalhes]]></translation>
+      <translation locale="pl"><![CDATA[szczegóły]]></translation>
+    </item>
+    <item type="label" name="Yes">
+      <translation locale="nl"><![CDATA[ja]]></translation>
+      <translation locale="en"><![CDATA[yes]]></translation>
+      <translation locale="ru"><![CDATA[да]]></translation>
+      <translation locale="fr"><![CDATA[oui]]></translation>
+      <translation locale="es"><![CDATA[Sí]]></translation>
+      <translation locale="de"><![CDATA[ja]]></translation>
+      <translation locale="lt"><![CDATA[taip]]></translation>
+      <translation locale="uk"><![CDATA[Так]]></translation>
+      <translation locale="sv"><![CDATA[ja]]></translation>
+      <translation locale="hu"><![CDATA[igen]]></translation>
+      <translation locale="el"><![CDATA[ναί]]></translation>
+      <translation locale="zh"><![CDATA[是]]></translation>
+      <translation locale="tr"><![CDATA[Evet]]></translation>
+      <translation locale="pt"><![CDATA[sim]]></translation>
+      <translation locale="pl"><![CDATA[Tak]]></translation>
+    </item>
+    <item type="label" name="No">
+      <translation locale="nl"><![CDATA[nee]]></translation>
+      <translation locale="en"><![CDATA[no]]></translation>
+      <translation locale="ru"><![CDATA[нет]]></translation>
+      <translation locale="fr"><![CDATA[non]]></translation>
+      <translation locale="es"><![CDATA[No]]></translation>
+      <translation locale="de"><![CDATA[nein]]></translation>
+      <translation locale="lt"><![CDATA[ne]]></translation>
+      <translation locale="uk"><![CDATA[Ні]]></translation>
+      <translation locale="sv"><![CDATA[nej]]></translation>
+      <translation locale="hu"><![CDATA[no]]></translation>
+      <translation locale="el"><![CDATA[όχι]]></translation>
+      <translation locale="zh"><![CDATA[不]]></translation>
+      <translation locale="pt"><![CDATA[não]]></translation>
+      <translation locale="pl"><![CDATA[Nie]]></translation>
+    </item>
+    <item type="label" name="Export">
+      <translation locale="nl"><![CDATA[exporteer]]></translation>
+      <translation locale="en"><![CDATA[export]]></translation>
+      <translation locale="hu"><![CDATA[export]]></translation>
+      <translation locale="it"><![CDATA[esporta]]></translation>
+      <translation locale="ru"><![CDATA[Экспорт]]></translation>
+      <translation locale="zh"><![CDATA[导出]]></translation>
+      <translation locale="de"><![CDATA[exportieren]]></translation>
+      <translation locale="fr"><![CDATA[exporter]]></translation>
+      <translation locale="es"><![CDATA[exportar]]></translation>
+      <translation locale="lt"><![CDATA[eksportas]]></translation>
+      <translation locale="uk"><![CDATA[Експорт]]></translation>
+      <translation locale="sv"><![CDATA[exportera]]></translation>
+      <translation locale="el"><![CDATA[εξαγωγή]]></translation>
+      <translation locale="pl"><![CDATA[eksportuj]]></translation>
+      <translation locale="pt"><![CDATA[exportar]]></translation>
+    </item>
+    <item type="label" name="Active">
+      <translation locale="nl"><![CDATA[actief]]></translation>
+      <translation locale="en"><![CDATA[active]]></translation>
+      <translation locale="it"><![CDATA[attivo]]></translation>
+      <translation locale="ru"><![CDATA[Активный]]></translation>
+      <translation locale="zh"><![CDATA[活动]]></translation>
+      <translation locale="de"><![CDATA[aktiv]]></translation>
+      <translation locale="fr"><![CDATA[actif]]></translation>
+      <translation locale="hu"><![CDATA[aktív]]></translation>
+      <translation locale="es"><![CDATA[activo]]></translation>
+      <translation locale="uk"><![CDATA[Активний]]></translation>
+      <translation locale="lt"><![CDATA[aktyvus]]></translation>
+      <translation locale="el"><![CDATA[Ενεργή]]></translation>
+      <translation locale="pl"><![CDATA[Aktywny]]></translation>
+    </item>
+    <item type="label" name="Default">
+      <translation locale="nl"><![CDATA[standaard]]></translation>
+      <translation locale="en"><![CDATA[default]]></translation>
+      <translation locale="hu"><![CDATA[alap]]></translation>
+      <translation locale="it"><![CDATA[default]]></translation>
+      <translation locale="ru"><![CDATA[По умолчанию]]></translation>
+      <translation locale="zh"><![CDATA[默认]]></translation>
+      <translation locale="de"><![CDATA[Standard]]></translation>
+      <translation locale="fr"><![CDATA[défaut]]></translation>
+      <translation locale="es"><![CDATA[defecto]]></translation>
+      <translation locale="lt"><![CDATA[standartinis]]></translation>
+      <translation locale="uk"><![CDATA[За замовченням]]></translation>
+      <translation locale="sv"><![CDATA[standard]]></translation>
+      <translation locale="el"><![CDATA[εξορισμού]]></translation>
+      <translation locale="pl"><![CDATA[domyślne]]></translation>
+      <translation locale="pt"><![CDATA[por defeito]]></translation>
+    </item>
+    <item type="label" name="Dashboard">
+      <translation locale="nl"><![CDATA[dashboard]]></translation>
+      <translation locale="en"><![CDATA[dashboard]]></translation>
+      <translation locale="hu"><![CDATA[vezérlőpult]]></translation>
+      <translation locale="it"><![CDATA[dashboard]]></translation>
+      <translation locale="ru"><![CDATA[Панель управления]]></translation>
+      <translation locale="zh"><![CDATA[控制面板]]></translation>
+      <translation locale="de"><![CDATA[Dashboard]]></translation>
+      <translation locale="fr"><![CDATA[tableau de bord]]></translation>
+      <translation locale="es"><![CDATA[dashboard]]></translation>
+      <translation locale="lt"><![CDATA[valdymas]]></translation>
+      <translation locale="uk"><![CDATA[Панель Управління]]></translation>
+      <translation locale="sv"><![CDATA[instrumentpanel]]></translation>
+      <translation locale="el"><![CDATA[περιοχή διαχείρισης]]></translation>
+      <translation locale="tr"><![CDATA[gösterge paneli]]></translation>
+      <translation locale="pt"><![CDATA[dashboard]]></translation>
+      <translation locale="pl"><![CDATA[panel sterowania]]></translation>
+    </item>
+    <item type="label" name="VisitWebsite">
+      <translation locale="nl"><![CDATA[bezoek website]]></translation>
+      <translation locale="en"><![CDATA[visit website]]></translation>
+      <translation locale="hu"><![CDATA[oldal megtekintése]]></translation>
+      <translation locale="ru"><![CDATA[Посетить сайт]]></translation>
+      <translation locale="it"><![CDATA[visita sito web]]></translation>
+      <translation locale="zh"><![CDATA[访问网站]]></translation>
+      <translation locale="de"><![CDATA[Website besuchen]]></translation>
+      <translation locale="fr"><![CDATA[visiter le site]]></translation>
+      <translation locale="es"><![CDATA[visitar sitio web]]></translation>
+      <translation locale="lt"><![CDATA[aplankyti tinklapį]]></translation>
+      <translation locale="uk"><![CDATA[Відвідати сайт]]></translation>
+      <translation locale="sv"><![CDATA[visa hemsida]]></translation>
+      <translation locale="el"><![CDATA[επισκεφθήτε τον ιστοχώρο]]></translation>
+      <translation locale="pt"><![CDATA[visitar o website]]></translation>
+      <translation locale="pl"><![CDATA[odwiedź witrynę]]></translation>
+    </item>
+    <item type="label" name="NowEditing">
+      <translation locale="nl"><![CDATA[je bewerkt nu]]></translation>
+      <translation locale="en"><![CDATA[now editing]]></translation>
+      <translation locale="hu"><![CDATA[most szerkesztett]]></translation>
+      <translation locale="ru"><![CDATA[Редактируется]]></translation>
+      <translation locale="it"><![CDATA[modificando]]></translation>
+      <translation locale="zh"><![CDATA[正在编辑]]></translation>
+      <translation locale="de"><![CDATA[wird bearbeitet]]></translation>
+      <translation locale="fr"><![CDATA[édition]]></translation>
+      <translation locale="es"><![CDATA[editando ahora]]></translation>
+      <translation locale="lt"><![CDATA[Redaguojama]]></translation>
+      <translation locale="uk"><![CDATA[Редагується]]></translation>
+      <translation locale="sv"><![CDATA[nu redigeras]]></translation>
+      <translation locale="el"><![CDATA[μεταβολή σε εξέλιξη]]></translation>
+      <translation locale="pl"><![CDATA[teraz edytujesz]]></translation>
+      <translation locale="pt"><![CDATA[a editar]]></translation>
+    </item>
+    <item type="label" name="SignOut">
+      <translation locale="nl"><![CDATA[afmelden]]></translation>
+      <translation locale="en"><![CDATA[sign out]]></translation>
+      <translation locale="hu"><![CDATA[kilépés]]></translation>
+      <translation locale="ru"><![CDATA[Выход]]></translation>
+      <translation locale="it"><![CDATA[disconnetti]]></translation>
+      <translation locale="zh"><![CDATA[登出]]></translation>
+      <translation locale="de"><![CDATA[abmelden]]></translation>
+      <translation locale="fr"><![CDATA[déconnexion]]></translation>
+      <translation locale="es"><![CDATA[salir]]></translation>
+      <translation locale="lt"><![CDATA[atsijungti]]></translation>
+      <translation locale="uk"><![CDATA[Вихід]]></translation>
+      <translation locale="sv"><![CDATA[logga ut]]></translation>
+      <translation locale="el"><![CDATA[αποσύνδεση]]></translation>
+      <translation locale="pt"><![CDATA[logout]]></translation>
+      <translation locale="pl"><![CDATA[wyloguj się]]></translation>
+    </item>
+    <item type="label" name="EditProfile">
+      <translation locale="nl"><![CDATA[bewerk profiel]]></translation>
+      <translation locale="en"><![CDATA[edit profile]]></translation>
+      <translation locale="hu"><![CDATA[profil szerkesztése]]></translation>
+      <translation locale="it"><![CDATA[modifica profilo]]></translation>
+      <translation locale="ru"><![CDATA[Редактировать профиль]]></translation>
+      <translation locale="zh"><![CDATA[编辑个人档案]]></translation>
+      <translation locale="de"><![CDATA[Profil bearbeiten]]></translation>
+      <translation locale="fr"><![CDATA[éditer le profil]]></translation>
+      <translation locale="es"><![CDATA[editar perfil]]></translation>
+      <translation locale="lt"><![CDATA[keisti profilį]]></translation>
+      <translation locale="uk"><![CDATA[Редагувати профіль]]></translation>
+      <translation locale="sv"><![CDATA[ändra profil]]></translation>
+      <translation locale="el"><![CDATA[μεταβολή προφίλ]]></translation>
+      <translation locale="pl"><![CDATA[edytuj profil]]></translation>
+      <translation locale="pt"><![CDATA[editar perfil]]></translation>
+    </item>
+    <item type="label" name="ConfirmTitle">
+      <translation locale="nl"><![CDATA[Ben je zeker?]]></translation>
+      <translation locale="en"><![CDATA[Are you sure?]]></translation>
+    </item>
+    <item type="message" name="ConfirmDefault">
+      <translation locale="nl"><![CDATA[Ben je zeker dat je deze actie wilt uitvoeren?]]></translation>
+      <translation locale="en"><![CDATA[Are you sure you want to perform this action?]]></translation>
+      <translation locale="pt"><![CDATA[Tem a certeza que pertende efectuar esta acção?]]></translation>
+    </item>
+    <Backend>
+      <item type="label" name="NumberOfUsers">
+        <translation locale="nl"><![CDATA[aantal gebruikers]]></translation>
+        <translation locale="en"><![CDATA[number of users]]></translation>
+        <translation locale="it"><![CDATA[numero di utenti]]></translation>
+        <translation locale="ru"><![CDATA[Кол-во пользователей]]></translation>
+        <translation locale="zh"><![CDATA[用户数量]]></translation>
+        <translation locale="fr"><![CDATA[nombre d'utilisateurs]]></translation>
+        <translation locale="hu"><![CDATA[felhasználók száma]]></translation>
+        <translation locale="de"><![CDATA[Benutzeranzahl]]></translation>
+        <translation locale="es"><![CDATA[número de usuarios]]></translation>
+        <translation locale="uk"><![CDATA[К-ть користувачів]]></translation>
+        <translation locale="el"><![CDATA[Πλήθος χρηστών]]></translation>
+        <translation locale="pl"><![CDATA[ilość użytkowników]]></translation>
+        <translation locale="pt"><![CDATA[número de utilizadores]]></translation>
+      </item>
+      <item type="label" name="NumberOfUsers">
+        <translation locale="nl"><![CDATA[aantal gebruikers]]></translation>
+        <translation locale="en"><![CDATA[number of users]]></translation>
+        <translation locale="it"><![CDATA[numero di utenti]]></translation>
+        <translation locale="ru"><![CDATA[Кол-во пользователей]]></translation>
+        <translation locale="zh"><![CDATA[用户数量]]></translation>
+        <translation locale="fr"><![CDATA[nombre d'utilisateurs]]></translation>
+        <translation locale="hu"><![CDATA[felhasználók száma]]></translation>
+        <translation locale="de"><![CDATA[Benutzeranzahl]]></translation>
+        <translation locale="es"><![CDATA[número de usuarios]]></translation>
+        <translation locale="uk"><![CDATA[К-ть користувачів]]></translation>
+        <translation locale="el"><![CDATA[Πλήθος χρηστών]]></translation>
+        <translation locale="pl"><![CDATA[ilość użytkowników]]></translation>
+        <translation locale="pt"><![CDATA[número de utilizadores]]></translation>
+      </item>
+      <item type="label" name="Action">
+        <translation locale="nl"><![CDATA[actie]]></translation>
+        <translation locale="en"><![CDATA[action]]></translation>
+        <translation locale="it"><![CDATA[azione]]></translation>
+        <translation locale="ru"><![CDATA[Действия]]></translation>
+        <translation locale="zh"><![CDATA[行为]]></translation>
+        <translation locale="fr"><![CDATA[action]]></translation>
+        <translation locale="hu"><![CDATA[használ]]></translation>
+        <translation locale="de"><![CDATA[Aktion]]></translation>
+        <translation locale="es"><![CDATA[acción]]></translation>
+        <translation locale="uk"><![CDATA[Дії]]></translation>
+        <translation locale="lt"><![CDATA[veiksmas]]></translation>
+        <translation locale="el"><![CDATA[Ενέργεια]]></translation>
+        <translation locale="pl"><![CDATA[Działanie]]></translation>
+        <translation locale="pt"><![CDATA[acção]]></translation>
+      </item>
+      <item type="label" name="Actions">
+        <translation locale="nl"><![CDATA[acties]]></translation>
+        <translation locale="en"><![CDATA[actions]]></translation>
+        <translation locale="it"><![CDATA[azioni]]></translation>
+        <translation locale="ru"><![CDATA[Действия]]></translation>
+        <translation locale="zh"><![CDATA[行为]]></translation>
+        <translation locale="de"><![CDATA[Aktionen]]></translation>
+        <translation locale="hu"><![CDATA[használ]]></translation>
+        <translation locale="fr"><![CDATA[actions]]></translation>
+        <translation locale="es"><![CDATA[acciones]]></translation>
+        <translation locale="uk"><![CDATA[Дії]]></translation>
+        <translation locale="lt"><![CDATA[veiksmai]]></translation>
+        <translation locale="el"><![CDATA[Ενέργειες]]></translation>
+        <translation locale="pl"><![CDATA[Działania]]></translation>
+        <translation locale="pt"><![CDATA[acções]]></translation>
+      </item>
+      <item type="label" name="AjaxActions">
+        <translation locale="nl"><![CDATA[ajax acties]]></translation>
+        <translation locale="en"><![CDATA[ajax actions]]></translation>
+        <translation locale="it"><![CDATA[ajax azioni]]></translation>
+        <translation locale="de"><![CDATA[ajax Aktionen]]></translation>
+        <translation locale="hu"><![CDATA[ajax használ]]></translation>
+        <translation locale="fr"><![CDATA[ajax actions]]></translation>
+        <translation locale="es"><![CDATA[ajax acciones]]></translation>
+        <translation locale="lt"><![CDATA[ajax veiksmai]]></translation>
+        <translation locale="pt"><![CDATA[ajax acções]]></translation>
+      </item>
+      <item type="label" name="Widget">
+        <translation locale="nl"><![CDATA[widget]]></translation>
+        <translation locale="en"><![CDATA[widget]]></translation>
+        <translation locale="hu"><![CDATA[widget]]></translation>
+        <translation locale="ru"><![CDATA[Виджет]]></translation>
+        <translation locale="it"><![CDATA[widget]]></translation>
+        <translation locale="zh"><![CDATA[小工具]]></translation>
+        <translation locale="de"><![CDATA[Widget]]></translation>
+        <translation locale="fr"><![CDATA[widget]]></translation>
+        <translation locale="es"><![CDATA[widget]]></translation>
+        <translation locale="lt"><![CDATA[plėtinys]]></translation>
+        <translation locale="uk"><![CDATA[Віджет]]></translation>
+        <translation locale="sv"><![CDATA[manick]]></translation>
+        <translation locale="el"><![CDATA[μικροεφαρμογή]]></translation>
+        <translation locale="tr"><![CDATA[widget]]></translation>
+        <translation locale="pt"><![CDATA[widget]]></translation>
+        <translation locale="pl"><![CDATA[widget]]></translation>
+      </item>
+      <item type="label" name="Widgets">
+        <translation locale="nl"><![CDATA[widgets]]></translation>
+        <translation locale="en"><![CDATA[widgets]]></translation>
+        <translation locale="hu"><![CDATA[widgetek]]></translation>
+        <translation locale="ru"><![CDATA[Виджеты]]></translation>
+        <translation locale="it"><![CDATA[widget]]></translation>
+        <translation locale="zh"><![CDATA[小工具]]></translation>
+        <translation locale="de"><![CDATA[Widgets]]></translation>
+        <translation locale="fr"><![CDATA[widgets]]></translation>
+        <translation locale="es"><![CDATA[widgets]]></translation>
+        <translation locale="lt"><![CDATA[plėtiniai]]></translation>
+        <translation locale="uk"><![CDATA[Віджети]]></translation>
+        <translation locale="sv"><![CDATA[manicker]]></translation>
+        <translation locale="el"><![CDATA[μικροεφαρμογές]]></translation>
+        <translation locale="tr"><![CDATA[widget'lar]]></translation>
+        <translation locale="pt"><![CDATA[widgets]]></translation>
+        <translation locale="pl"><![CDATA[widgety]]></translation>
+      </item>
+      <item type="label" name="Dashboard">
+        <translation locale="nl"><![CDATA[dashboard]]></translation>
+        <translation locale="en"><![CDATA[dashboard]]></translation>
+        <translation locale="hu"><![CDATA[vezérlőpult]]></translation>
+        <translation locale="it"><![CDATA[dashboard]]></translation>
+        <translation locale="ru"><![CDATA[Панель управления]]></translation>
+        <translation locale="zh"><![CDATA[控制面板]]></translation>
+        <translation locale="de"><![CDATA[Dashboard]]></translation>
+        <translation locale="fr"><![CDATA[tableau de bord]]></translation>
+        <translation locale="es"><![CDATA[dashboard]]></translation>
+        <translation locale="lt"><![CDATA[valdymas]]></translation>
+        <translation locale="uk"><![CDATA[Панель Управління]]></translation>
+        <translation locale="sv"><![CDATA[instrumentpanel]]></translation>
+        <translation locale="el"><![CDATA[περιοχή διαχείρισης]]></translation>
+        <translation locale="tr"><![CDATA[gösterge paneli]]></translation>
+        <translation locale="pt"><![CDATA[dashboard]]></translation>
+        <translation locale="pl"><![CDATA[panel sterowania]]></translation>
+      </item>
+      <item type="label" name="DisplayName">
+        <translation locale="nl"><![CDATA[weergavenaam]]></translation>
+        <translation locale="en"><![CDATA[display name]]></translation>
+        <translation locale="fr"><![CDATA[nom d'affichage]]></translation>
+        <translation locale="hu"><![CDATA[becenév]]></translation>
+        <translation locale="it"><![CDATA[nome visualizzato]]></translation>
+        <translation locale="ru"><![CDATA[Имя на сайте]]></translation>
+        <translation locale="zh"><![CDATA[显示名称]]></translation>
+        <translation locale="de"><![CDATA[Nickname]]></translation>
+        <translation locale="es"><![CDATA[Nombre a mostrar]]></translation>
+        <translation locale="uk"><![CDATA[Ім'я на сайті]]></translation>
+        <translation locale="lt"><![CDATA[rodomas vardas]]></translation>
+        <translation locale="sv"><![CDATA[visningsnamn]]></translation>
+        <translation locale="el"><![CDATA[εμφανιζόμενο όνομα]]></translation>
+        <translation locale="pl"><![CDATA[Wyświetl imię i nazwisko]]></translation>
+        <translation locale="tr"><![CDATA[Görüntü ismi]]></translation>
+        <translation locale="pt"><![CDATA[Nome de exibição]]></translation>
+      </item>
+      <item type="label" name="ConfirmPassword">
+        <translation locale="nl"><![CDATA[bevestig wachtwoord]]></translation>
+        <translation locale="en"><![CDATA[confirm password]]></translation>
+        <translation locale="hu"><![CDATA[jelszó elfogadása]]></translation>
+        <translation locale="it"><![CDATA[conferma password]]></translation>
+        <translation locale="ru"><![CDATA[Подтверждение]]></translation>
+        <translation locale="zh"><![CDATA[确认密码]]></translation>
+        <translation locale="de"><![CDATA[Passwort bestätigen]]></translation>
+        <translation locale="fr"><![CDATA[confirmer le mot de passe]]></translation>
+        <translation locale="es"><![CDATA[comfirmar contraseña]]></translation>
+        <translation locale="lt"><![CDATA[patvirtinti slaptažodį]]></translation>
+        <translation locale="uk"><![CDATA[Підтверження]]></translation>
+        <translation locale="sv"><![CDATA[bekräfta lösenord]]></translation>
+        <translation locale="el"><![CDATA[επιβεβαίωση κωδικού]]></translation>
+        <translation locale="tr"><![CDATA[şifreyi onayla]]></translation>
+        <translation locale="pt"><![CDATA[confirmar senha]]></translation>
+        <translation locale="pl"><![CDATA[potwierdź hasło]]></translation>
+      </item>
+      <item type="label" name="AccessToBackend">
+        <translation locale="nl"><![CDATA[Geef deze account toegang tot het CMS.]]></translation>
+        <translation locale="en"><![CDATA[Enable CMS access for this account.]]></translation>
+        <translation locale="it"><![CDATA[Abilita l'accesso tramite CMS per questo account.]]></translation>
+        <translation locale="ru"><![CDATA[Разрешить доступ к CMS этому аккунту.]]></translation>
+        <translation locale="zh"><![CDATA[允许CMS到达这个帐户。]]></translation>
+        <translation locale="de"><![CDATA[Aktiviere CMS-Zugang für dieses Konto.]]></translation>
+        <translation locale="hu"><![CDATA[CMS hozzáférés engedélyezése a fiókhoz.]]></translation>
+        <translation locale="fr"><![CDATA[Activer l'accès CMS pour ce compte.]]></translation>
+        <translation locale="es"><![CDATA[Activa el acceso CMS para esta cuenta.]]></translation>
+        <translation locale="el"><![CDATA[Δώσε άδεια πρόσβασης στο CMS γιά αυτόν το λογαριασμό.]]></translation>
+        <translation locale="pl"><![CDATA[Włącz dostęp do CMS dla tego konta.]]></translation>
+      </item>
+      <item type="label" name="SuperAdmin">
+        <translation locale="nl"><![CDATA[super administrator (geeft toegang tot alles)]]></translation>
+        <translation locale="en"><![CDATA[super admin (grant access to everything)]]></translation>
+      </item>
+      <item type="message" name="UserEdited">
+        <translation locale="nl"><![CDATA[De instellingen voor "%user%" werden opgeslagen.]]></translation>
+        <translation locale="en"><![CDATA[The settings for "%user%" were saved.]]></translation>
+        <translation locale="it"><![CDATA[Le impostazioni di "%user%" sono state salvate.]]></translation>
+        <translation locale="ru"><![CDATA[Настройки для пользователя "%user%" сохранены.]]></translation>
+        <translation locale="zh"><![CDATA[“%user%”的设置已保存。]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%user%" beállításai elmentve.]]></translation>
+        <translation locale="de"><![CDATA[Die Einstellungen für "%user%" wurden gespeichert.]]></translation>
+        <translation locale="fr"><![CDATA[Les réglages pour "%user%" ont été enregistrés.]]></translation>
+        <translation locale="es"><![CDATA[Las configuraciones para "%user%" han sido guardadas.]]></translation>
+        <translation locale="el"><![CDATA[Οι ρυθμίσεις γιά "%user%" αποθηκεύτηκαν.]]></translation>
+        <translation locale="pl"><![CDATA[Ustawienia dla "%user%" zostały zapisane.]]></translation>
+      </item>
+      <item type="error" name="PasswordIsTooShort">
+        <translation locale="nl"><![CDATA[Het ingegeven wachtwoord is te kort.]]></translation>
+        <translation locale="en"><![CDATA[The password is too short.]]></translation>
+      </item>
+      <item type="message" name="UserAdded">
+        <translation locale="nl"><![CDATA[De gebruiker "%user%" werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The user "%user%" was added.]]></translation>
+        <translation locale="it"><![CDATA[L'utente "%user%" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Пользователь "%user%" добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[用户“%user%”已添加。]]></translation>
+        <translation locale="fr"><![CDATA[L'utilisateur "%user%" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%user%" felhasználó hozzáadva.]]></translation>
+        <translation locale="de"><![CDATA[Der Benutzer "%user%" wurde hinzugefügt.]]></translation>
+        <translation locale="es"><![CDATA[El usuario "%user%" ha sido agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Користувача "%user%" додано.]]></translation>
+        <translation locale="el"><![CDATA[Προστέθηκε ο χρήστης "%user%".]]></translation>
+        <translation locale="pl"><![CDATA[Użytkownik "%user%" został dodany.]]></translation>
+      </item>
+      <item type="message" name="UserGroupAdded">
+        <translation locale="nl"><![CDATA["%userGroup%" is toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA["%userGroup%" has been added.]]></translation>
+        <translation locale="it"><![CDATA["%userGroup%" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA["%userGroup%" - добавлено.]]></translation>
+        <translation locale="zh"><![CDATA[“%userGroup”已添加．]]></translation>
+        <translation locale="de"><![CDATA["%userGroup%" wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA["%userGroup%" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA["%userGroup%" hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA["%userGroup%" ha sido agregado.]]></translation>
+        <translation locale="uk"><![CDATA["%userGroup%" - додано.]]></translation>
+        <translation locale="el"><![CDATA[Το "%userGroup%" προστέθηκε.]]></translation>
+        <translation locale="pl"><![CDATA["%userGroup%" został dodany.]]></translation>
+        <translation locale="pt"><![CDATA["%userGroup%" foi adicionado.]]></translation>
+      </item>
+      <item type="message" name="UserGroupDeleted">
+        <translation locale="nl"><![CDATA["%userGroup%" is verwijderd.]]></translation>
+        <translation locale="en"><![CDATA["%userGroup%" has been deleted.]]></translation>
+        <translation locale="it"><![CDATA["%userGroup%" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA["%userGroup%" - удалено.]]></translation>
+        <translation locale="zh"><![CDATA[“%userGroup”已添加。]]></translation>
+        <translation locale="de"><![CDATA["%userGroup%" wurde gelöscht.]]></translation>
+        <translation locale="hu"><![CDATA["%userGroup%" törölve.]]></translation>
+        <translation locale="fr"><![CDATA["%userGroup%" a été effacé.]]></translation>
+        <translation locale="es"><![CDATA["%userGroup%" ha sido eliminado.]]></translation>
+        <translation locale="el"><![CDATA[Το "%userGroup%" διεγράφη.]]></translation>
+        <translation locale="pl"><![CDATA["%userGroup%" został usunięty.]]></translation>
+        <translation locale="pt"><![CDATA["%userGroup%" foi removido.]]></translation>
+      </item>
+      <item type="message" name="UserGroupEdited">
+        <translation locale="nl"><![CDATA[wijzigingen aan "%userGroup%" werden opgeslaan.]]></translation>
+        <translation locale="en"><![CDATA[changes for "%userGroup%" has been saved.]]></translation>
+        <translation locale="it"><![CDATA[le modifiche per "%userGroup%" sono state salvate.]]></translation>
+        <translation locale="ru"><![CDATA["%userGroup%" - изменено.]]></translation>
+        <translation locale="zh"><![CDATA[“%userGroup”的变更已保存。]]></translation>
+        <translation locale="de"><![CDATA[Änderungen an "%userGroup%" wurden gespeichert.]]></translation>
+        <translation locale="hu"><![CDATA["%userGroup%" változásai elmentve.]]></translation>
+        <translation locale="fr"><![CDATA[Les changements pour "%userGroup%" ont été enregistrés.]]></translation>
+        <translation locale="es"><![CDATA[los cambios para "%userGroup%" han sido guardados.]]></translation>
+        <translation locale="el"><![CDATA[Οι αλλαγές στο "%userGroup%" έχουν αποθηκευτεί.]]></translation>
+        <translation locale="pl"><![CDATA[zmiany dla "%userGroup%" zostały zapisane.]]></translation>
+        <translation locale="pt"><![CDATA[As alterações feitas a "%userGroup%" foram guardadas.]]></translation>
+      </item>
+      <item type="label" name="LastFailedLoginAttempt">
+        <translation locale="nl"><![CDATA[laatste mislukte aanmelding]]></translation>
+        <translation locale="en"><![CDATA[last failed login attempt]]></translation>
+        <translation locale="ru"><![CDATA[Последняя неудачная авторизация]]></translation>
+        <translation locale="el"><![CDATA[τελευταία ανεπιτυχής απόπειρα σύνδεσης]]></translation>
+        <translation locale="hu"><![CDATA[utolsó sikertelen bejelentkezési kísérlet]]></translation>
+        <translation locale="zh"><![CDATA[上一次登录尝试失败]]></translation>
+        <translation locale="de"><![CDATA[letzter fehlgeschlagener Login-Versuch]]></translation>
+        <translation locale="pt"><![CDATA[última tentativa de login falhada]]></translation>
+        <translation locale="pl"><![CDATA[ostatne nieudane logowanie]]></translation>
+      </item>
+      <item type="label" name="LastLogin">
+        <translation locale="nl"><![CDATA[laatste aanmelding]]></translation>
+        <translation locale="en"><![CDATA[last login]]></translation>
+        <translation locale="ru"><![CDATA[Последняя авторизация]]></translation>
+        <translation locale="el"><![CDATA[τελευταία σύνδεση]]></translation>
+        <translation locale="hu"><![CDATA[utolsó belépés]]></translation>
+        <translation locale="zh"><![CDATA[上一次登录]]></translation>
+        <translation locale="de"><![CDATA[letzter Login]]></translation>
+        <translation locale="pt"><![CDATA[último login]]></translation>
+        <translation locale="pl"><![CDATA[ostatnie logowanie]]></translation>
+      </item>
+      <item type="label" name="LastPasswordChange">
+        <translation locale="nl"><![CDATA[laatste aanpassing wachtwoord]]></translation>
+        <translation locale="en"><![CDATA[last password change]]></translation>
+        <translation locale="ru"><![CDATA[Последняя смена пароля]]></translation>
+        <translation locale="el"><![CDATA[τελευταία αλλαγή κωδικού]]></translation>
+        <translation locale="hu"><![CDATA[utolsó jelszó változtatás]]></translation>
+        <translation locale="zh"><![CDATA[上一次更改密码]]></translation>
+        <translation locale="de"><![CDATA[letzte Passwortänderung]]></translation>
+        <translation locale="pt"><![CDATA[última alteração de senha]]></translation>
+        <translation locale="pl"><![CDATA[ostatnia zmiana hasła]]></translation>
+      </item>
+      <item type="label" name="Never">
+        <translation locale="nl"><![CDATA[nooit]]></translation>
+        <translation locale="en"><![CDATA[never]]></translation>
+        <translation locale="ru"><![CDATA[никогда]]></translation>
+        <translation locale="el"><![CDATA[ποτέ]]></translation>
+        <translation locale="hu"><![CDATA[soha]]></translation>
+        <translation locale="zh"><![CDATA[永不]]></translation>
+        <translation locale="de"><![CDATA[nie]]></translation>
+        <translation locale="pt"><![CDATA[nunca]]></translation>
+        <translation locale="pl"><![CDATA[nigdy]]></translation>
+      </item>
+    </Backend>
+  </Backend>
+</translations>

@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="Widget">
+      <translation locale="nl"><![CDATA[widget]]></translation>
+      <translation locale="en"><![CDATA[widget]]></translation>
+      <translation locale="hu"><![CDATA[widget]]></translation>
+      <translation locale="ru"><![CDATA[Виджет]]></translation>
+      <translation locale="it"><![CDATA[widget]]></translation>
+      <translation locale="zh"><![CDATA[小工具]]></translation>
+      <translation locale="de"><![CDATA[Widget]]></translation>
+      <translation locale="fr"><![CDATA[widget]]></translation>
+      <translation locale="es"><![CDATA[widget]]></translation>
+      <translation locale="lt"><![CDATA[plėtinys]]></translation>
+      <translation locale="uk"><![CDATA[Віджет]]></translation>
+      <translation locale="sv"><![CDATA[manick]]></translation>
+      <translation locale="el"><![CDATA[μικροεφαρμογή]]></translation>
+      <translation locale="tr"><![CDATA[widget]]></translation>
+      <translation locale="pt"><![CDATA[widget]]></translation>
+      <translation locale="pl"><![CDATA[widget]]></translation>
+    </item>
+    <item type="label" name="Themes">
+      <translation locale="nl"><![CDATA[thema's]]></translation>
+      <translation locale="en"><![CDATA[themes]]></translation>
+      <translation locale="hu"><![CDATA[témák]]></translation>
+      <translation locale="ru"><![CDATA[Оформление]]></translation>
+      <translation locale="it"><![CDATA[temi]]></translation>
+      <translation locale="zh"><![CDATA[主题]]></translation>
+      <translation locale="de"><![CDATA[Themes]]></translation>
+      <translation locale="fr"><![CDATA[thèmes]]></translation>
+      <translation locale="es"><![CDATA[temas]]></translation>
+      <translation locale="lt"><![CDATA[šablonai]]></translation>
+      <translation locale="uk"><![CDATA[Теми]]></translation>
+      <translation locale="sv"><![CDATA[teman]]></translation>
+      <translation locale="el"><![CDATA[θέματα]]></translation>
+      <translation locale="tr"><![CDATA[temalar]]></translation>
+      <translation locale="pl"><![CDATA[szablony]]></translation>
+      <translation locale="pt"><![CDATA[temas]]></translation>
+      <translation locale="pl"><![CDATA[motywy]]></translation>
+    </item>
+    <item type="label" name="Extensions">
+      <translation locale="nl"><![CDATA[extensions]]></translation>
+      <translation locale="en"><![CDATA[extensions]]></translation>
+      <translation locale="ru"><![CDATA[расширения]]></translation>
+      <translation locale="es"><![CDATA[extensiones]]></translation>
+      <translation locale="de"><![CDATA[Erweiterungen]]></translation>
+      <translation locale="lt"><![CDATA[plėtiniai]]></translation>
+      <translation locale="uk"><![CDATA[Розширення]]></translation>
+      <translation locale="hu"><![CDATA[kiegészítők]]></translation>
+      <translation locale="sv"><![CDATA[tillägg]]></translation>
+      <translation locale="el"><![CDATA[επεκτάσεις]]></translation>
+      <translation locale="zh"><![CDATA[扩展插件]]></translation>
+      <translation locale="pt"><![CDATA[extensões]]></translation>
+      <translation locale="pl"><![CDATA[rozszerzenia]]></translation>
+    </item>
+    <item type="label" name="Modules">
+      <translation locale="nl"><![CDATA[modules]]></translation>
+      <translation locale="en"><![CDATA[modules]]></translation>
+      <translation locale="hu"><![CDATA[modulok]]></translation>
+      <translation locale="it"><![CDATA[moduli]]></translation>
+      <translation locale="ru"><![CDATA[Модули]]></translation>
+      <translation locale="zh"><![CDATA[模块]]></translation>
+      <translation locale="de"><![CDATA[Module]]></translation>
+      <translation locale="fr"><![CDATA[modules]]></translation>
+      <translation locale="es"><![CDATA[módulos]]></translation>
+      <translation locale="lt"><![CDATA[moduliai]]></translation>
+      <translation locale="uk"><![CDATA[Модулі]]></translation>
+      <translation locale="sv"><![CDATA[moduler]]></translation>
+      <translation locale="el"><![CDATA[ενότητες]]></translation>
+      <translation locale="pt"><![CDATA[módulos]]></translation>
+      <translation locale="pl"><![CDATA[moduły]]></translation>
+    </item>
+    <Extensions>
+      <item type="label" name="ThemeSelection">
+        <translation locale="nl"><![CDATA[thema-keuze]]></translation>
+        <translation locale="en"><![CDATA[theme selection]]></translation>
+        <translation locale="hu"><![CDATA[téma választó]]></translation>
+        <translation locale="it"><![CDATA[scelta tema]]></translation>
+        <translation locale="ru"><![CDATA[Выбор оформления]]></translation>
+        <translation locale="zh"><![CDATA[选择主题]]></translation>
+        <translation locale="de"><![CDATA[Theme-Auswahl]]></translation>
+        <translation locale="fr"><![CDATA[sélection de thème]]></translation>
+        <translation locale="es"><![CDATA[selección de tema]]></translation>
+        <translation locale="lt"><![CDATA[šablono pasirinkimas]]></translation>
+        <translation locale="uk"><![CDATA[Вибір оформлення]]></translation>
+        <translation locale="sv"><![CDATA[välj tema]]></translation>
+        <translation locale="el"><![CDATA[επιλογή θέματος]]></translation>
+        <translation locale="tr"><![CDATA[tema şeçimi]]></translation>
+        <translation locale="pl"><![CDATA[wybór szablonu]]></translation>
+        <translation locale="pt"><![CDATA[selecção de temas]]></translation>
+        <translation locale="pl"><![CDATA[wybór motywu]]></translation>
+      </item>
+      <item type="label" name="ThemeTemplates">
+        <translation locale="nl"><![CDATA[templates]]></translation>
+        <translation locale="en"><![CDATA[templates]]></translation>
+        <translation locale="hu"><![CDATA[sablonok]]></translation>
+        <translation locale="it"><![CDATA[template]]></translation>
+        <translation locale="ru"><![CDATA[Шаблоны]]></translation>
+        <translation locale="zh"><![CDATA[模板]]></translation>
+        <translation locale="de"><![CDATA[Templates]]></translation>
+        <translation locale="fr"><![CDATA[templates]]></translation>
+        <translation locale="es"><![CDATA[temas]]></translation>
+        <translation locale="lt"><![CDATA[šablonai]]></translation>
+        <translation locale="uk"><![CDATA[Шаблони]]></translation>
+        <translation locale="sv"><![CDATA[mallar]]></translation>
+        <translation locale="el"><![CDATA[πρότυπα]]></translation>
+        <translation locale="tr"><![CDATA[şablonlar]]></translation>
+        <translation locale="pt"><![CDATA[templates]]></translation>
+        <translation locale="pl"><![CDATA[szablony]]></translation>
+      </item>
+      <item type="label" name="FindThemes">
+        <translation locale="nl"><![CDATA[vind thema's]]></translation>
+        <translation locale="en"><![CDATA[find themes]]></translation>
+        <translation locale="ru"><![CDATA[поиск тем оформления]]></translation>
+        <translation locale="es"><![CDATA[encontrar temas]]></translation>
+        <translation locale="de"><![CDATA[Themes finden]]></translation>
+        <translation locale="uk"><![CDATA[Знайти теми]]></translation>
+        <translation locale="hu"><![CDATA[sablonok keresése]]></translation>
+        <translation locale="sv"><![CDATA[hitta teman]]></translation>
+        <translation locale="lt"><![CDATA[ieškoti šablono]]></translation>
+        <translation locale="el"><![CDATA[Αναζήτηση θεμάτων]]></translation>
+        <translation locale="zh"><![CDATA[搜寻主题]]></translation>
+        <translation locale="pl"><![CDATA[znajdź motywy]]></translation>
+        <translation locale="pt"><![CDATA[pesquisar temas]]></translation>
+      </item>
+      <item type="label" name="Install">
+        <translation locale="nl"><![CDATA[installeer]]></translation>
+        <translation locale="en"><![CDATA[install]]></translation>
+        <translation locale="ru"><![CDATA[установить]]></translation>
+        <translation locale="es"><![CDATA[instalar]]></translation>
+        <translation locale="de"><![CDATA[installieren]]></translation>
+        <translation locale="uk"><![CDATA[Встановити]]></translation>
+        <translation locale="hu"><![CDATA[telepítés]]></translation>
+        <translation locale="sv"><![CDATA[installera]]></translation>
+        <translation locale="lt"><![CDATA[instaliuoti]]></translation>
+        <translation locale="el"><![CDATA[Εγκατάσταση]]></translation>
+        <translation locale="zh"><![CDATA[安装]]></translation>
+        <translation locale="pl"><![CDATA[zainstaluj]]></translation>
+        <translation locale="pt"><![CDATA[instalar]]></translation>
+      </item>
+      <item type="label" name="ThemeDetail">
+        <translation locale="nl"><![CDATA[thema]]></translation>
+        <translation locale="en"><![CDATA[theme]]></translation>
+        <translation locale="ru"><![CDATA[тема]]></translation>
+        <translation locale="de"><![CDATA[Theme]]></translation>
+        <translation locale="es"><![CDATA[tema]]></translation>
+        <translation locale="uk"><![CDATA[Тема]]></translation>
+        <translation locale="hu"><![CDATA[sablon]]></translation>
+        <translation locale="sv"><![CDATA[teman]]></translation>
+        <translation locale="el"><![CDATA[Θέμα]]></translation>
+        <translation locale="zh"><![CDATA[主题]]></translation>
+        <translation locale="pl"><![CDATA[motyw]]></translation>
+        <translation locale="pt"><![CDATA[tema]]></translation>
+      </item>
+      <item type="label" name="ModuleDetail">
+        <translation locale="nl"><![CDATA[Module]]></translation>
+        <translation locale="en"><![CDATA[Module]]></translation>
+        <translation locale="fr"><![CDATA[Module]]></translation>
+      </item>
+      <item type="label" name="InstallableThemes">
+        <translation locale="nl"><![CDATA[niet geïnstalleerde thema's']]></translation>
+        <translation locale="en"><![CDATA[not installed themes]]></translation>
+        <translation locale="ru"><![CDATA[Неустановленные темы оформления]]></translation>
+        <translation locale="es"><![CDATA[temas no instalados]]></translation>
+        <translation locale="de"><![CDATA[nicht installierte Themes]]></translation>
+        <translation locale="uk"><![CDATA[Немає встановлених тем]]></translation>
+        <translation locale="hu"><![CDATA[nincsen telepített sablonok]]></translation>
+        <translation locale="sv"><![CDATA[ej installerade teman]]></translation>
+        <translation locale="el"><![CDATA[Μη εγκατεστημένα θέματα]]></translation>
+        <translation locale="zh"><![CDATA[未安装主题]]></translation>
+        <translation locale="pl"><![CDATA[nie zainstalowane motywy]]></translation>
+        <translation locale="pt"><![CDATA[temas não instalados]]></translation>
+      </item>
+      <item type="message" name="ConfirmThemeInstall">
+        <translation locale="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
+        <translation locale="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
+        <translation locale="ru"><![CDATA[Вы действительно хотите установить эту тему?]]></translation>
+        <translation locale="es"><![CDATA[¿Estás seguro de instalar el tema "%1$s"?]]></translation>
+        <translation locale="de"><![CDATA[Möchtest du dieses Theme wirklich installieren?]]></translation>
+        <translation locale="hu"><![CDATA[Biztos telepíted a(z) "%1$s" sablont?]]></translation>
+        <translation locale="sv"><![CDATA[Är du säker du vill installera detta tema?]]></translation>
+        <translation locale="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε αυτό το θέμα;]]></translation>
+        <translation locale="zh"><![CDATA[你确定要安装这个主题？]]></translation>
+        <translation locale="pl"><![CDATA[Jesteś pewien że chcesz zainstalować motyw?]]></translation>
+        <translation locale="pt"><![CDATA[Tem a certeza que deseja instalar este tema?]]></translation>
+      </item>
+      <item type="error" name="InformationFileCouldNotBeLoaded">
+        <translation locale="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
+        <translation locale="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+        <translation locale="ru"><![CDATA[Файл info.xml присутствует, но не может быть загружен. Проверьте содержимое файла XML.]]></translation>
+        <translation locale="es"><![CDATA[Un archivo info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
+        <translation locale="de"><![CDATA[Eine info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
+        <translation locale="hu"><![CDATA[Az info.xml fájl létezik, de nem töltődött be. Ellenőrizd, hogy valid XML e a tartalom.]]></translation>
+        <translation locale="sv"><![CDATA[info.xml fil är finns men den kan inte laddas. Verifiera om innehållet är giltig XML.]]></translation>
+        <translation locale="zh"><![CDATA[info.xml文件已递交但它无法被加载。请确认它的内容是否是有效的XML。]]></translation>
+        <translation locale="el"><![CDATA[Βρέθηκε ένα αρχείο info.xml, αλλά δεν έγινε δυνατό να φορτωθεί. Επιβεβαιώστε οτι το περιεχόμενο είναι έγκυρο τύπου XML.]]></translation>
+        <translation locale="pl"><![CDATA[Dostępny jest plik info.xml, ale nie można go załadować. Sprawdź, czy ma poprawną składnię XML.]]></translation>
+        <translation locale="pt"><![CDATA[Foi encontrado um ficheiro info.xml, mas não foi possível carregá-lo. Verifique se o ficheiro contem XML válido.]]></translation>
+      </item>
+      <item type="error" name="InformationFileIsEmpty">
+        <translation locale="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
+        <translation locale="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+        <translation locale="ru"><![CDATA[Файл info.xml присутствует, но либо пустой, либо содержит неправильную информацию.]]></translation>
+        <translation locale="es"><![CDATA[Un archivo info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
+        <translation locale="de"><![CDATA[Eine info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
+        <translation locale="hu"><![CDATA[Az info.xml létezik, de nem üres vagy nem tartalmaz értékes információt.]]></translation>
+        <translation locale="sv"><![CDATA[info.xml fil är men är antingen tom eller innehåller den inte värdefull information.]]></translation>
+        <translation locale="zh"><![CDATA[info.xml文件已递交但它有可能是空的或它不包含有价值的信息。]]></translation>
+        <translation locale="el"><![CDATA[Το αρχείο info.xmp υπάρχει, αλλά είτε είναι άδειο είτε δεν περιέχει χρήσιμες πληροφορίες.]]></translation>
+        <translation locale="pl"><![CDATA[Istnieje plik info.xml, ale jest pusty lub nie zawiera użytecznych informacji.]]></translation>
+        <translation locale="pt"><![CDATA[Foi encontrado um ficheiro info.xml mas este encontra-se vazio ou não contem informação útil.]]></translation>
+      </item>
+      <item type="error" name="InformationFileIsMissing">
+        <translation locale="nl"><![CDATA[Er is geen informatie beschikbaar.]]></translation>
+        <translation locale="en"><![CDATA[There is no information available.]]></translation>
+        <translation locale="ru"><![CDATA[Необходимая информация отсутствует.]]></translation>
+        <translation locale="es"><![CDATA[No hay información disponible.]]></translation>
+        <translation locale="de"><![CDATA[Es sind keine Informationen verfügbar.]]></translation>
+        <translation locale="hu"><![CDATA[Nincs elérhető információ.]]></translation>
+        <translation locale="sv"><![CDATA[Det finns ingen information tillgänglig.]]></translation>
+        <translation locale="el"><![CDATA[Δεν υπάρχουν διαθέσιμες πληροφορίες.]]></translation>
+        <translation locale="zh"><![CDATA[没有可用信息。]]></translation>
+        <translation locale="pl"><![CDATA[Brak dostepnej informacji.]]></translation>
+        <translation locale="pt"><![CDATA[Não existe informação disponível.]]></translation>
+      </item>
+      <item type="error" name="InformationVersionTooHigh">
+        <translation locale="nl"><![CDATA[De fork versie moet lager zijn dan %maximumVersion% maar je gebruikt versie %currentVersion%.]]></translation>
+        <translation locale="en"><![CDATA[The fork version needs to be below %maximumVersion% but you are running %currentVersion%.]]></translation>
+      </item>
+      <item type="error" name="InformationVersionTooLow">
+        <translation locale="nl"><![CDATA[De fork versie moet minstens %minimumVersion% zijn maar je gebruikt versie %currentVersion%.]]></translation>
+        <translation locale="en"><![CDATA[The fork version needs to be at least %minimumVersion% but you are running %currentVersion%.]]></translation>
+      </item>
+      <item type="message" name="InformationModuleIsNotInstalled">
+        <translation locale="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
+        <translation locale="en"><![CDATA[This module is not yet installed.]]></translation>
+        <translation locale="ru"><![CDATA[Данный модуль еще не установлен.]]></translation>
+        <translation locale="es"><![CDATA[Este módulo no está instalado aun.]]></translation>
+        <translation locale="de"><![CDATA[Dieses Modul ist noch nicht installiert.]]></translation>
+        <translation locale="hu"><![CDATA[Ez a modul nem lett telepítve.]]></translation>
+        <translation locale="sv"><![CDATA[Denna modul är ännu inte installerad.]]></translation>
+        <translation locale="el"><![CDATA[Αυτή η ενότητα δεν έχει ακόμη εγκατασταθεί.]]></translation>
+        <translation locale="zh"><![CDATA[这个模块还没被安装。]]></translation>
+        <translation locale="pl"><![CDATA[Ten moduł nie jest jeszcze zainstalowany.]]></translation>
+        <translation locale="pt"><![CDATA[Este módulo ainda não se encontra instalado.]]></translation>
+      </item>
+      <item type="message" name="InformationThemeIsNotInstalled">
+        <translation locale="nl"><![CDATA[Dit thema is nog niet geïnstalleerd.]]></translation>
+        <translation locale="en"><![CDATA[This theme is not yet installed.]]></translation>
+        <translation locale="ru"><![CDATA[Данная тема оформления еще не установлена​​.]]></translation>
+        <translation locale="es"><![CDATA[Este tema no está instalado aun.]]></translation>
+        <translation locale="de"><![CDATA[Dieses Theme ist noch nicht installiert.]]></translation>
+        <translation locale="hu"><![CDATA[Ez a sablon nem lett telepítve.]]></translation>
+        <translation locale="sv"><![CDATA[Detta tema är ännu inte installerad.]]></translation>
+        <translation locale="el"><![CDATA[Αυτό το θέμα δεν έχει ακόμη εγκατασταθεί.]]></translation>
+        <translation locale="zh"><![CDATA[这个主题还未被安装]]></translation>
+        <translation locale="pl"><![CDATA[Ten motyw nie jest jeszcze zainstalowany.]]></translation>
+        <translation locale="pt"><![CDATA[Este tema ainda não se encontra instalado.]]></translation>
+      </item>
+      <item type="message" name="ThemeInstalled">
+        <translation locale="nl"><![CDATA[Het thema "%theme%" werd geïnstalleerd.]]></translation>
+        <translation locale="en"><![CDATA[The theme "%theme%" was installed.]]></translation>
+        <translation locale="ru"><![CDATA[Тема "%theme%" успешно установлена.]]></translation>
+        <translation locale="es"><![CDATA[El tema "%theme%" fue instalado.]]></translation>
+        <translation locale="de"><![CDATA[Das Theme "%theme%" wurde installiert.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%theme%" sablon telepítve.]]></translation>
+        <translation locale="sv"><![CDATA[tema "%theme%" installerades.]]></translation>
+        <translation locale="el"><![CDATA[Το θέμα "%theme%" εγκαταστάθηκε.]]></translation>
+        <translation locale="zh"><![CDATA[主题“%theme%”已经被安装。]]></translation>
+        <translation locale="pl"><![CDATA[Motyw "%theme%" został zainstalowany.]]></translation>
+        <translation locale="pt"><![CDATA[O tema "%theme%" foi instalado com sucesso.]]></translation>
+      </item>
+      <item type="label" name="InstalledThemes">
+        <translation locale="nl"><![CDATA[geïnstalleerde thema's]]></translation>
+        <translation locale="en"><![CDATA[installed themes]]></translation>
+        <translation locale="ru"><![CDATA[установленные темы оформления]]></translation>
+        <translation locale="es"><![CDATA[temas instalados]]></translation>
+        <translation locale="de"><![CDATA[installierte Themes]]></translation>
+        <translation locale="uk"><![CDATA[Встановлені теми]]></translation>
+        <translation locale="hu"><![CDATA[telepített sablonok]]></translation>
+        <translation locale="sv"><![CDATA[installerade teman]]></translation>
+        <translation locale="el"><![CDATA[Εγκατεστημένα θέματα]]></translation>
+        <translation locale="zh"><![CDATA[已安装主题]]></translation>
+        <translation locale="pl"><![CDATA[zainstalowane motywy]]></translation>
+        <translation locale="pt"><![CDATA[temas instalados]]></translation>
+      </item>
+      <item type="label" name="SelectedTheme">
+        <translation locale="nl"><![CDATA[geselecteerd thema]]></translation>
+        <translation locale="en"><![CDATA[selected theme]]></translation>
+        <translation locale="pl"><![CDATA[wybierz motyw]]></translation>
+        <translation locale="pt"><![CDATA[tema seleccionado]]></translation>
+      </item>
+      <item type="label" name="UseThisTheme">
+        <translation locale="nl"><![CDATA[gebruik dit thema]]></translation>
+        <translation locale="en"><![CDATA[use this theme]]></translation>
+        <translation locale="pl"><![CDATA[użyj tego motywu]]></translation>
+        <translation locale="pt"><![CDATA[utilizar este tema]]></translation>
+      </item>
+      <item type="message" name="ConfirmThemeActivation">
+        <translation locale="nl"><![CDATA[Ben je zeker dat je dit thema wil gebruiken?]]></translation>
+        <translation locale="en"><![CDATA[Are you sure you want to use this theme?]]></translation>
+      </item>
+      <item type="message" name="ThemeActivated">
+        <translation locale="nl"><![CDATA[Je gebruikt nu het thema "%theme%".]]></translation>
+        <translation locale="en"><![CDATA[You are now using the theme "%theme%".]]></translation>
+      </item>
+      <item type="message" name="ThemeTemplateAdded">
+        <translation locale="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The template "%1$s" was added.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%1$s" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%1$s" добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[模板 “%1$s” 已添加。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%1$s" wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%1$s" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%1$s" fue agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Шаблон для "%1$s" додано.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%1$s" har lagts till.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" προστέθηκε.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%1$s" został dodany.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%1$s" foi adicionado.]]></translation>
+      </item>
+      <item type="message" name="HelpPositionsLayoutText">
+        <translation locale="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rij toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p>]]></translation>
+        <translation locale="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p>]]></translation>
+        <translation locale="it"><![CDATA[<strong>Una rappresentazione visuale da usare nel modulo della pagina.</strong><ul><li>Aggiungi una riga: usa <strong>[]</strong></li><li>Rifletti una posizione: usa <strong>nome della posizione</strong></li><li>Rifletti un'area non modificabile: usa <strong>/</strong></li></ul><p>Se vuoi che una posizione sia visualizzata più larga o alta nella sua rappresentazione grafica, ripeti la posizione diverse volte (sia orizzontalmente, sia verticalemente, in modo da formare un rettangolo)</p>]]></translation>
+        <translation locale="ru"><![CDATA[<strong>Визуальное представление для страниц модуля.</strong><ul><li>Добавление строки: используйте <strong>[]</strong></li><li>Позиционирование: <strong>имя позиции</strong></li><li>Нередактируемая сецкия: <strong>/</strong></li></ul><p>Если вы хотите изменить графическое представление,</p>]]></translation>
+        <translation locale="zh"><![CDATA[<strong>视觉元素可以不在页面模块中使用</strong><ul><li>添加一行，使用 <strong>[]</strong></li><li>显示一个位置： <strong>位置名称</strong></li><li>显示一个不可编辑区域：使用<strong>/</strong></li></ul><p>如果你想一个位置能显示它所使用的图形元素的宽度或高度，重复它的位置几次（包括水平方向和垂直方向，但这个形状必须是一个矩形)</p>]]></translation>
+        <translation locale="fr"><![CDATA[<strong>Une représentation visuelle utilisée sur la page de modules</strong><ul><li>Ajouter un rang: utiliser <strong>[]</strong></li><li>Spécifier une position: utiliser <strong>nom de la position</strong></li><li>Spécifier une zone non-éditable: utiliser <strong>/</strong></li></ul><p>Si vous voulez qu'une position s'affiche de façon plus large ou plus grande dans sa représentation graphique, répétez la position plusieurs fois (à la fois horizontale et verticale, mais la forme doit former un rectangle)</p>]]></translation>
+        <translation locale="de"><![CDATA[<strong>Visuelle Repräsentation zur Verwendung im Seitenmodul.</strong><ul><li>Füge eine Reihe hinzu: benutze <strong>[]</strong></li><li>Stelle eine Position dar: benutze <strong>Positionsname</strong></li><li>Stelle einen nicht-editierbaren Bereich dar: benutze <strong>/</strong></li></ul><p>Wenn du eine Position in der grafischen Repräsentation breiter oder höher dargestellt haben möchtest, kannst du die Position mehrfach wiederholen (sowohl horizontal als auch vertikal, die Form sollte aber ein Rechteck bilden)</p>]]></translation>
+        <translation locale="hu"><![CDATA[<strong>Vizuálisan kell használni az oldal-modult.</strong><ul><li>Sor hozzáadása: <strong>[]</strong> használata</li><li>Pozíció jelzése: <strong>pozíció neve</strong> használata</li><li>Nem szerkeszthető-terület jelzése: <strong>/</strong> használata</li></ul><p>Ha magasabb vagy szélesebb terület kell, akkor használd több alkalommal a helyet. (mind vízszintesen és függőlegesen, csak téglalap legyen)</p>]]></translation>
+        <translation locale="es"><![CDATA[<strong>Una representación visual para ser utilizada en el módulo páginas.</strong><ul><li>Agregar una fila: usa <strong>[]</strong></li><li>Reflejar una posición: usa <strong>nombre de la posición</strong></li><li>Reflejar un área no editable: usa <strong>/</strong></li></ul><p>Si deseas que una posición se muestre más ancha o más alta en su representación gráfica, repite varias veces la posición (horizontal y verticalmente, pero el conjunto debe formar un rectángulo)</p>]]></translation>
+        <translation locale="pl"><![CDATA[<strong> Do wizualnej reprezentacji modułu stron. </strong> <ul> <li> Dodaj wiersz: użyj <strong> [] </strong> </li> <li> Wyświetl pozycję: użyj nazwy pozycji <strong> </strong> </li> <li> Obszar, który nie może być dostosowywany: użyj <strong> / </strong> </li> </ul> <p> Jeśli chcesz wyświetlać pozycję szerszą lub wyższą w grafice reprezentacyjnej, powtarzaj pozycję kilkakrotnie (zarówno w poziomie, jak iw pionie, ale kształt musi pozostać prostokątny)]]></translation>
+        <translation locale="pt"><![CDATA[<strong>Uma representação visual para ser utilizada no módulo Páginas.</strong><ul><li>Adicionar uma linha: use <strong>[]</strong></li><li>Reflectir uma posição: use <strong>nome da posição</strong></li><li>Reflectir uma área não editável: use <strong>/</strong></li></ul><p>Se deseja que a posição se apresente mais larga ou mais alta na sua representação gráfica, repita a posição multiplas vezes (tanto horizontalmente como verticalmente, no entanto o conjunto deve formar um rectângulo)</p>]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateFormat">
+        <translation locale="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="it"><![CDATA[es.[left,main,right],[/,main,/]]]></translation>
+        <translation locale="ru"><![CDATA[прим. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="zh"><![CDATA[例如：[left,main,right],[/,main,/]]]></translation>
+        <translation locale="de"><![CDATA[z.B. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="fr"><![CDATA[ex [left,main,right],[/,main,/]]]></translation>
+        <translation locale="hu"><![CDATA[pl. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="es"><![CDATA[e.j. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="sv"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="el"><![CDATA[πχ. [left,main,right],[/,main,/]]]></translation>
+        <translation locale="pl"><![CDATA[np. [lewa, główna, prawa],[/,główna,/]]]></translation>
+        <translation locale="pt"><![CDATA[ex.:[left,main,right],[/,main,/]]]></translation>
+      </item>
+      <item type="label" name="Layout">
+        <translation locale="nl"><![CDATA[layout]]></translation>
+        <translation locale="en"><![CDATA[layout]]></translation>
+        <translation locale="hu"><![CDATA[elrendezés]]></translation>
+        <translation locale="it"><![CDATA[layout]]></translation>
+        <translation locale="ru"><![CDATA[Макет]]></translation>
+        <translation locale="zh"><![CDATA[布局]]></translation>
+        <translation locale="de"><![CDATA[Layout]]></translation>
+        <translation locale="fr"><![CDATA[layout]]></translation>
+        <translation locale="es"><![CDATA[layout]]></translation>
+        <translation locale="lt"><![CDATA[maketas]]></translation>
+        <translation locale="uk"><![CDATA[Макет]]></translation>
+        <translation locale="sv"><![CDATA[layout]]></translation>
+        <translation locale="el"><![CDATA[σχεδίαση]]></translation>
+        <translation locale="pt"><![CDATA[layout]]></translation>
+        <translation locale="pl"><![CDATA[rozkład]]></translation>
+      </item>
+      <item type="label" name="Template">
+        <translation locale="nl"><![CDATA[template]]></translation>
+        <translation locale="en"><![CDATA[template]]></translation>
+        <translation locale="hu"><![CDATA[sablon]]></translation>
+        <translation locale="it"><![CDATA[template]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон]]></translation>
+        <translation locale="zh"><![CDATA[模板]]></translation>
+        <translation locale="de"><![CDATA[Template]]></translation>
+        <translation locale="fr"><![CDATA[template]]></translation>
+        <translation locale="es"><![CDATA[tema]]></translation>
+        <translation locale="lt"><![CDATA[šablonas]]></translation>
+        <translation locale="uk"><![CDATA[Шаблон]]></translation>
+        <translation locale="sv"><![CDATA[mall]]></translation>
+        <translation locale="el"><![CDATA[πρότυπο]]></translation>
+        <translation locale="tr"><![CDATA[şablon]]></translation>
+        <translation locale="pl"><![CDATA[szablon]]></translation>
+        <translation locale="pt"><![CDATA[template]]></translation>
+      </item>
+      <item type="label" name="PathToTemplate">
+        <translation locale="nl"><![CDATA[Pad naar de template]]></translation>
+        <translation locale="en"><![CDATA[Path to template]]></translation>
+        <translation locale="it"><![CDATA[Path del template]]></translation>
+        <translation locale="ru"><![CDATA[Путь к шаблону]]></translation>
+        <translation locale="zh"><![CDATA[模板路径]]></translation>
+        <translation locale="de"><![CDATA[Pfad zum Template]]></translation>
+        <translation locale="fr"><![CDATA[Chemin vers le template]]></translation>
+        <translation locale="hu"><![CDATA[A sablon útvonala]]></translation>
+        <translation locale="es"><![CDATA[Ruta de la plantilla]]></translation>
+        <translation locale="sv"><![CDATA[Sökväg till mall]]></translation>
+        <translation locale="el"><![CDATA[Διαδρομή προς το πρότυπο.]]></translation>
+        <translation locale="pl"><![CDATA[Ścieżka do szablonu.]]></translation>
+        <translation locale="pt"><![CDATA[Caminho para o template]]></translation>
+      </item>
+      <item type="label" name="Theme">
+        <translation locale="nl"><![CDATA[thema]]></translation>
+        <translation locale="en"><![CDATA[theme]]></translation>
+        <translation locale="ru"><![CDATA[тема]]></translation>
+        <translation locale="de"><![CDATA[Theme]]></translation>
+        <translation locale="es"><![CDATA[tema]]></translation>
+        <translation locale="uk"><![CDATA[Тема]]></translation>
+        <translation locale="hu"><![CDATA[sablon]]></translation>
+        <translation locale="sv"><![CDATA[teman]]></translation>
+        <translation locale="el"><![CDATA[Θέμα]]></translation>
+        <translation locale="zh"><![CDATA[主题]]></translation>
+        <translation locale="pl"><![CDATA[motyw]]></translation>
+        <translation locale="pt"><![CDATA[tema]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateLocation">
+        <translation locale="nl"><![CDATA[Plaats de templates in de map <code>Frontend/base</code> van je thema.]]></translation>
+        <translation locale="en"><![CDATA[Put your templates in the <code>Frontend/base</code> folder of your theme.]]></translation>
+        <translation locale="it"><![CDATA[Metti i tuoi template nella cartella <code>Frontend/base</code> del tuo tema.]]></translation>
+        <translation locale="ru"><![CDATA[Путь для шаблонов <code>Frontend/base</code>.]]></translation>
+        <translation locale="zh"><![CDATA[将你的模板放置在你的主题文件夹<code>Frontend/base</code> 中。]]></translation>
+        <translation locale="de"><![CDATA[Leg deine Templates im Ordner <code>Frontend/base</code> deines Themes ab.]]></translation>
+        <translation locale="fr"><![CDATA[Placez les templates dans le répertoire <code>Frontend/base</code> de votre thème.]]></translation>
+        <translation locale="hu"><![CDATA[Tedd a sablonodad a témád <code>Frontend/base</code> mappájába.]]></translation>
+        <translation locale="es"><![CDATA[Pon tus plantillas en la carpeta <code>Frontend/base</code> de tu tema.]]></translation>
+        <translation locale="sv"><![CDATA[Lägg dina mallar i <code>core/layout/mallar</code> mapp av ditt tema.]]></translation>
+        <translation locale="el"><![CDATA[Τοποθετήσατε τα πρότυπά σας στο φάκελο <code>Frontend/base</code> του θέματός σας.]]></translation>
+        <translation locale="pl"><![CDATA[Umieść szablony w katalogu <code>Frontend/base</ code> swojego motywu.]]></translation>
+        <translation locale="pt"><![CDATA[Coloque o template na directoria <code>Frontend/base</code> do seu tema.]]></translation>
+      </item>
+      <item type="error" name="TemplateFileNotFound">
+        <translation locale="nl"><![CDATA[Het template bestand bestaat niet.]]></translation>
+        <translation locale="en"><![CDATA[The template file is missing.]]></translation>
+        <translation locale="pl"><![CDATA[Brakuje pliku szablonu.]]></translation>
+        <translation locale="pt"><![CDATA[O template não foi encontrado.]]></translation>
+      </item>
+      <item type="error" name="InvalidTemplateSyntax">
+        <translation locale="nl"><![CDATA[Ongeldige syntax.]]></translation>
+        <translation locale="en"><![CDATA[Invalid syntax.]]></translation>
+        <translation locale="it"><![CDATA[Sintassi non valida.]]></translation>
+        <translation locale="ru"><![CDATA[Неправильный синтакс.]]></translation>
+        <translation locale="zh"><![CDATA[无效的语法。]]></translation>
+        <translation locale="de"><![CDATA[Ungültige Syntax.]]></translation>
+        <translation locale="fr"><![CDATA[Syntaxe non-valide]]></translation>
+        <translation locale="hu"><![CDATA[Érvénytelen szintaxis.]]></translation>
+        <translation locale="es"><![CDATA[Sintaxis inválida.]]></translation>
+        <translation locale="sv"><![CDATA[Ogiltigt syntax.]]></translation>
+        <translation locale="el"><![CDATA[Μη έγκυρη σύνταξη εντολής.]]></translation>
+        <translation locale="pl"><![CDATA[Nieprawidłowa składnia.]]></translation>
+        <translation locale="pt"><![CDATA[Sintaxe inválida.]]></translation>
+      </item>
+      <item type="error" name="ThemeNameDoesntMatch">
+        <translation locale="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in info.xml.]]></translation>
+        <translation locale="en"><![CDATA[The theme's folder name doesn't match the theme name in info.xml.]]></translation>
+        <translation locale="ru"><![CDATA[Название каталога темы не совпадает с названием, определенным в файле info.xml.]]></translation>
+        <translation locale="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en info.xml.]]></translation>
+        <translation locale="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der info.xml stimmen nicht überein.]]></translation>
+        <translation locale="hu"><![CDATA[A sablon neve nem egyezik az info.xml sablon névvel.]]></translation>
+        <translation locale="sv"><![CDATA[temats mappnamn matchar inte temanamn i info.xml.]]></translation>
+        <translation locale="zh"><![CDATA[主题文件名和info.xml里的主题名称不匹配。]]></translation>
+        <translation locale="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
+        <translation locale="pl"><![CDATA[Nazwa folderu motywu nie jest zgodna z nazwą motywu w pliku info.xml.]]></translation>
+        <translation locale="pt"><![CDATA[O nome da directoria do tema não corresponde ao nome do tema no ficheiro info.xml.]]></translation>
+      </item>
+      <item type="error" name="ModuleNameDoesntMatch">
+        <translation locale="nl"><![CDATA[De module mapnaam komt niet overeen met de modulenaam in info.xml.]]></translation>
+        <translation locale="en"><![CDATA[The module's folder name doesn't match the module name in info.xml.]]></translation>
+      </item>
+      <item type="error" name="NoAlphaNumPositionName">
+        <translation locale="nl"><![CDATA[De positienaam "%1$s" is niet alfanumeriek.]]></translation>
+        <translation locale="en"><![CDATA[Position "%1$s" is not alphanumerical.]]></translation>
+        <translation locale="it"><![CDATA[La posizione "%1$s" non è alfanumerica.]]></translation>
+        <translation locale="ru"><![CDATA["%1$s" - неправильное название.]]></translation>
+        <translation locale="zh"><![CDATA[位置 "%1$s" 非字母或数字。]]></translation>
+        <translation locale="de"><![CDATA[Position "%1$s" ist nicht alphanumerisch.]]></translation>
+        <translation locale="fr"><![CDATA[La position "%1$s" n'est pas alphanumérique.]]></translation>
+        <translation locale="hu"><![CDATA[A "%1$s" pozíció nem alfanumerikus.]]></translation>
+        <translation locale="es"><![CDATA[La posición "%1$s" no es alfanumérica.]]></translation>
+        <translation locale="sv"><![CDATA[Position "%1$s" är inte alfanummeriskt.]]></translation>
+        <translation locale="el"><![CDATA[Το όνομα της θέσης "%1$s" δεν είναι αλφαριθμητικό.]]></translation>
+        <translation locale="pl"><![CDATA[Pozycja "%1$s" nie jest alfanumeryczna.]]></translation>
+        <translation locale="pt"><![CDATA[A posição "%1$s" não é alfanumérica.]]></translation>
+      </item>
+      <item type="error" name="NonExistingPositionName">
+        <translation locale="nl"><![CDATA[De positienaam "%1$s" is niet gedefiniëerd.]]></translation>
+        <translation locale="en"><![CDATA[Position "%1$s" is not defined.]]></translation>
+        <translation locale="it"><![CDATA[La posizione "%1$s" non è definita.]]></translation>
+        <translation locale="ru"><![CDATA["%1$s" - нет названия.]]></translation>
+        <translation locale="zh"><![CDATA[位置 "%1$s" 未定义。]]></translation>
+        <translation locale="de"><![CDATA[Position "%1$s" ist nicht definiert.]]></translation>
+        <translation locale="fr"><![CDATA[La position "%1$s" n'est pas définie.]]></translation>
+        <translation locale="hu"><![CDATA[A "%1$s" pozíció nem definiált.]]></translation>
+        <translation locale="es"><![CDATA[La posción "%1$s" no está definida.]]></translation>
+        <translation locale="sv"><![CDATA[Position "%1$s" är inte defined.]]></translation>
+        <translation locale="el"><![CDATA[Η θέση "%1$s" δεν έχει καθοριστεί.]]></translation>
+        <translation locale="pl"><![CDATA[Pozycja dla "%1$s" nie jest zdefiniowana.]]></translation>
+        <translation locale="pt"><![CDATA[A posição "%1$s" não se encontra definida.]]></translation>
+      </item>
+      <item type="label" name="AddPosition">
+        <translation locale="nl"><![CDATA[positie toevoegen]]></translation>
+        <translation locale="en"><![CDATA[add position]]></translation>
+        <translation locale="it"><![CDATA[aggiungi posizione]]></translation>
+        <translation locale="ru"><![CDATA[Добавить расположение]]></translation>
+        <translation locale="zh"><![CDATA[添加位置]]></translation>
+        <translation locale="de"><![CDATA[Position hinzufügen]]></translation>
+        <translation locale="fr"><![CDATA[ajouter une position]]></translation>
+        <translation locale="hu"><![CDATA[pozíció hozzáadása]]></translation>
+        <translation locale="es"><![CDATA[agregar posición]]></translation>
+        <translation locale="uk"><![CDATA[Додати розташування]]></translation>
+        <translation locale="lt"><![CDATA[nauja pozicija]]></translation>
+        <translation locale="sv"><![CDATA[lägg till position]]></translation>
+        <translation locale="el"><![CDATA[Προσθήκη θέσης]]></translation>
+        <translation locale="pl"><![CDATA[dodaj pozycję]]></translation>
+        <translation locale="pt"><![CDATA[adicionar posição]]></translation>
+      </item>
+      <item type="label" name="DeletePosition">
+        <translation locale="nl"><![CDATA[positie verwijderen]]></translation>
+        <translation locale="en"><![CDATA[delete position]]></translation>
+        <translation locale="it"><![CDATA[elimina posizione]]></translation>
+        <translation locale="ru"><![CDATA[Удалить расположение]]></translation>
+        <translation locale="zh"><![CDATA[删除位置]]></translation>
+        <translation locale="de"><![CDATA[Position löschen]]></translation>
+        <translation locale="fr"><![CDATA[effacer la position]]></translation>
+        <translation locale="hu"><![CDATA[pozíció törlése]]></translation>
+        <translation locale="es"><![CDATA[eliminar posición]]></translation>
+        <translation locale="uk"><![CDATA[Видалити розташування]]></translation>
+        <translation locale="sv"><![CDATA[ta bort position]]></translation>
+        <translation locale="lt"><![CDATA[trinti poziciją]]></translation>
+        <translation locale="el"><![CDATA[Διαγραφή θέσης]]></translation>
+        <translation locale="pl"><![CDATA[usuń pozycję]]></translation>
+        <translation locale="pt"><![CDATA[remover posição]]></translation>
+      </item>
+      <item type="label" name="Positions">
+        <translation locale="nl"><![CDATA[posities]]></translation>
+        <translation locale="en"><![CDATA[positions]]></translation>
+        <translation locale="it"><![CDATA[posizioni]]></translation>
+        <translation locale="ru"><![CDATA[Расположения]]></translation>
+        <translation locale="zh"><![CDATA[位置]]></translation>
+        <translation locale="de"><![CDATA[Positionen]]></translation>
+        <translation locale="fr"><![CDATA[positions]]></translation>
+        <translation locale="hu"><![CDATA[pozíciók]]></translation>
+        <translation locale="es"><![CDATA[posiciones]]></translation>
+        <translation locale="lt"><![CDATA[pozicijos]]></translation>
+        <translation locale="uk"><![CDATA[Розташування]]></translation>
+        <translation locale="sv"><![CDATA[postioner]]></translation>
+        <translation locale="el"><![CDATA[θέσεις]]></translation>
+        <translation locale="pt"><![CDATA[posições]]></translation>
+        <translation locale="pl"><![CDATA[pozycje]]></translation>
+      </item>
+      <item type="label" name="PositionBlock">
+        <translation locale="nl"><![CDATA[blok]]></translation>
+        <translation locale="en"><![CDATA[block]]></translation>
+      </item>
+      <item type="error" name="DuplicatePositionName">
+        <translation locale="nl"><![CDATA[De positienaam "%1$s" is gedupliceerd.]]></translation>
+        <translation locale="en"><![CDATA[Position "%1$s" is duplicated.]]></translation>
+        <translation locale="it"><![CDATA[La posizione "%1$s" è duplicata.]]></translation>
+        <translation locale="ru"><![CDATA["%1$s" - дублировано.]]></translation>
+        <translation locale="zh"><![CDATA[位置 "%1$s" 重复了。]]></translation>
+        <translation locale="fr"><![CDATA[La position "%1$s" est en double.]]></translation>
+        <translation locale="de"><![CDATA[Der Positionsname "%1$s" existiert bereits.]]></translation>
+        <translation locale="hu"><![CDATA[A "%1$s" pozíció duplikált.]]></translation>
+        <translation locale="es"><![CDATA[La posición "%1$s" está duplicada.]]></translation>
+        <translation locale="sv"><![CDATA[Position "%1$s" är dublett.]]></translation>
+        <translation locale="el"><![CDATA[Η θέση "%1$s" είναι ήδη κατειλημμένη.]]></translation>
+        <translation locale="pl"><![CDATA[Pozycja "%1$s" jest duplikatem.]]></translation>
+        <translation locale="pt"><![CDATA[A posição "%1$s" encontra-se duplicada.]]></translation>
+      </item>
+      <item type="message" name="DeletedTemplate">
+        <translation locale="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
+        <translation locale="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%1$s" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%1$s" удален.]]></translation>
+        <translation locale="zh"><![CDATA[模板“%1$s”已删除。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%1$s" wurde gelöscht.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%1$s" a été effacé.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon törölve.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%1$s" fue eliminada.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%1$s" är borttaget.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" διεγράφη.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%1$s" został usunięty.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%1$s" foi removido.]]></translation>
+      </item>
+      <item type="message" name="EditedTemplate">
+        <translation locale="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
+        <translation locale="en"><![CDATA[The template "%1$s" was saved.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%1$s" è stato salvato.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%1$s" изменен.]]></translation>
+        <translation locale="zh"><![CDATA[模板“%1$s”已保存。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%1$s" wurde gespeichert.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%1$s" a été enregistré.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon elmentve.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%1$s" fue guardada.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%1$s" sparades.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" αποθηκεύτηκε.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%1$s" został zapisany.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%1$s" foi guardado.]]></translation>
+      </item>
+      <item type="label" name="Overwrite">
+        <translation locale="nl"><![CDATA[overschrijf]]></translation>
+        <translation locale="en"><![CDATA[overwrite]]></translation>
+        <translation locale="it"><![CDATA[sovrascrivi]]></translation>
+        <translation locale="ru"><![CDATA[Перезаписать]]></translation>
+        <translation locale="zh"><![CDATA[重写]]></translation>
+        <translation locale="de"><![CDATA[überschreiben]]></translation>
+        <translation locale="fr"><![CDATA[écraser]]></translation>
+        <translation locale="hu"><![CDATA[felülír]]></translation>
+        <translation locale="es"><![CDATA[sobreescribir]]></translation>
+        <translation locale="uk"><![CDATA[Перезаписати]]></translation>
+        <translation locale="sv"><![CDATA[skriva över]]></translation>
+        <translation locale="el"><![CDATA[Επικάλυψη]]></translation>
+        <translation locale="pl"><![CDATA[nadpisz]]></translation>
+        <translation locale="pt"><![CDATA[substituir]]></translation>
+      </item>
+      <item type="message" name="HelpOverwrite">
+        <translation locale="nl"><![CDATA[<strong>Opgelet!</strong> Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
+        <translation locale="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
+        <translation locale="it"><![CDATA[<strong>Attenzione!</strong> Selezionando questa checkbox il contenuto di ogni pagina verrà resettato ai valori di default scelti qui.]]></translation>
+        <translation locale="ru"><![CDATA[<strong>Осторожно!</strong> Все содержание может быть сброшено по-умолчанию.]]></translation>
+        <translation locale="zh"><![CDATA[<strong>注意！</strong> 选中这个复选框项目将会使每个页面重置回默认的勾选状态。]]></translation>
+        <translation locale="de"><![CDATA[<strong>Aufpassen!</strong> Das aktivieren dieser Checkbox führt dazu, dass die Inhalte aller Seiten auf die oberhalb gewählten Standardwerte zurückgesetzt werden.]]></translation>
+        <translation locale="fr"><![CDATA[<strong>Attention!</strong> Cocher cette case entrainera une réinitialisation du contenu de chaque page aux valeurs par défaut.]]></translation>
+        <translation locale="hu"><![CDATA[<strong>Figyelem!</strong> Ha bejelölöd ezt az opciót, akkor minden oldal tartalma visszaáll a fenti alapértelmezettre.]]></translation>
+        <translation locale="es"><![CDATA[<strong>¡Atención!</strong> Seleccionado esta casilla el contenido de la página sera reseteado al valor por defecto elegido aquí arriba.]]></translation>
+        <translation locale="sv"><![CDATA[<strong>Attention!</strong> Checking detta checkbox kommer att cause innehållet av every sida till be återställ till defaults chosen här-above.]]></translation>
+        <translation locale="pl"><![CDATA[<strong> Uwaga! </strong> Zaznaczenie tego pola wyboru spowoduje zresetowanie zawartości każdej strony do wartości domyślnych wybranych powyżej!]]></translation>
+        <translation locale="pt"><![CDATA[<strong>Atenção!</strong> Se seleccionar esta checkbox, o conteúdo de cada página será redefinido para os valores seleccionados acima!]]></translation>
+      </item>
+      <item type="label" name="InstallableModules">
+        <translation locale="nl"><![CDATA[niet geïnstalleerde modules]]></translation>
+        <translation locale="en"><![CDATA[not installed modules]]></translation>
+        <translation locale="ru"><![CDATA[Неустановленные модули]]></translation>
+        <translation locale="es"><![CDATA[módulos no instalados]]></translation>
+        <translation locale="de"><![CDATA[nicht installierte Module]]></translation>
+        <translation locale="uk"><![CDATA[Немає встановлених модулів]]></translation>
+        <translation locale="hu"><![CDATA[nincsen telepített modulok]]></translation>
+        <translation locale="sv"><![CDATA[ej installerade moduler]]></translation>
+        <translation locale="el"><![CDATA[Μη εγκατεστημένες ενότητες]]></translation>
+        <translation locale="zh"><![CDATA[未安装模块]]></translation>
+        <translation locale="pl"><![CDATA[nie zainstalowane moduły]]></translation>
+        <translation locale="pt"><![CDATA[módulos não instalados]]></translation>
+      </item>
+      <item type="label" name="InstalledModules">
+        <translation locale="nl"><![CDATA[geïnstalleerde modules]]></translation>
+        <translation locale="en"><![CDATA[installed modules]]></translation>
+        <translation locale="ru"><![CDATA[установленные модули]]></translation>
+        <translation locale="es"><![CDATA[módulos instalados]]></translation>
+        <translation locale="de"><![CDATA[installierte Module]]></translation>
+        <translation locale="uk"><![CDATA[Встановлені модулі]]></translation>
+        <translation locale="hu"><![CDATA[telepített modulok]]></translation>
+        <translation locale="sv"><![CDATA[installerade moduler]]></translation>
+        <translation locale="el"><![CDATA[Εγκατεστημένες ενότητες]]></translation>
+        <translation locale="zh"><![CDATA[已安装模块]]></translation>
+        <translation locale="pl"><![CDATA[zainstalowane moduły]]></translation>
+        <translation locale="pt"><![CDATA[módulos instalados]]></translation>
+      </item>
+      <item type="message" name="NoModulesInstalled">
+        <translation locale="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
+        <translation locale="en"><![CDATA[No modules installed.]]></translation>
+        <translation locale="ru"><![CDATA[Нет установленных модулей.]]></translation>
+        <translation locale="de"><![CDATA[Es sind keine Module installiert.]]></translation>
+        <translation locale="es"><![CDATA[Ningún módulo está instalado.]]></translation>
+        <translation locale="hu"><![CDATA[Nincs modul telepítve.]]></translation>
+        <translation locale="sv"><![CDATA[Inga moduler installerad.]]></translation>
+        <translation locale="el"><![CDATA[Δεν υπάρχουν εγκατεστημένες ενότητες.]]></translation>
+        <translation locale="zh"><![CDATA[没有模块被安装。]]></translation>
+        <translation locale="pl"><![CDATA[Brak zainstalowanych modułów.]]></translation>
+        <translation locale="pt"><![CDATA[Não há módulos instalados.]]></translation>
+      </item>
+      <item type="message" name="ConfirmModuleInstall">
+        <translation locale="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
+        <translation locale="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+        <translation locale="ru"><![CDATA[Вы действительно хотите установить модуль "%1$s"?]]></translation>
+        <translation locale="es"><![CDATA[¿Estás seguro de instalar el módulo "%1$s"?]]></translation>
+        <translation locale="de"><![CDATA[Möchtest du das Modul "%1$s" wirklich installieren?]]></translation>
+        <translation locale="hu"><![CDATA[Biztos telepíted a(z) "%1$s" modult?]]></translation>
+        <translation locale="sv"><![CDATA[Är du säker du vill installera modulen "%1$s"?]]></translation>
+        <translation locale="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε την ενότητα "%1$s";]]></translation>
+        <translation locale="zh"><![CDATA[你确定要删除模块“%1$s”吗？]]></translation>
+        <translation locale="pl"><![CDATA[Jesteś pewien że chcesz zainstalować moduł "%1$s"?]]></translation>
+        <translation locale="pt"><![CDATA[Tem a certeza que deseja instalar o módulo "%1$s"?]]></translation>
+      </item>
+      <item type="label" name="FindModules">
+        <translation locale="nl"><![CDATA[vind modules]]></translation>
+        <translation locale="en"><![CDATA[find modules]]></translation>
+        <translation locale="ru"><![CDATA[поиск модулей]]></translation>
+        <translation locale="es"><![CDATA[encontrar módulos]]></translation>
+        <translation locale="de"><![CDATA[Module finden]]></translation>
+        <translation locale="uk"><![CDATA[Знайти модулі]]></translation>
+        <translation locale="hu"><![CDATA[modulok keresése]]></translation>
+        <translation locale="sv"><![CDATA[hitta moduler]]></translation>
+        <translation locale="lt"><![CDATA[ieškoti modulio]]></translation>
+        <translation locale="el"><![CDATA[Αναζήτηση ενοτήτων]]></translation>
+        <translation locale="zh"><![CDATA[搜寻模块]]></translation>
+        <translation locale="pl"><![CDATA[znajdź moduły]]></translation>
+        <translation locale="pt"><![CDATA[pesquisar módulos]]></translation>
+      </item>
+      <item type="label" name="Version">
+        <translation locale="nl"><![CDATA[versie]]></translation>
+        <translation locale="en"><![CDATA[version]]></translation>
+        <translation locale="ru"><![CDATA[версия]]></translation>
+        <translation locale="es"><![CDATA[versión]]></translation>
+        <translation locale="de"><![CDATA[Version]]></translation>
+        <translation locale="uk"><![CDATA[Версія]]></translation>
+        <translation locale="hu"><![CDATA[verzió]]></translation>
+        <translation locale="sv"><![CDATA[version]]></translation>
+        <translation locale="el"><![CDATA[Έκδοση]]></translation>
+        <translation locale="zh"><![CDATA[版本]]></translation>
+        <translation locale="pl"><![CDATA[wersja]]></translation>
+        <translation locale="pt"><![CDATA[versão]]></translation>
+      </item>
+      <item type="message" name="ModuleInstalled">
+        <translation locale="nl"><![CDATA[De module "%module%" werd geïnstalleerd.]]></translation>
+        <translation locale="en"><![CDATA[The module "%module%" was installed.]]></translation>
+        <translation locale="ru"><![CDATA[Модуль "%module%" успешно установлен.]]></translation>
+        <translation locale="es"><![CDATA[El módulo "%module%" fue instalado.]]></translation>
+        <translation locale="de"><![CDATA[Das Modul "%module%" wurde installiert.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%module%" modul telepítve.]]></translation>
+        <translation locale="sv"><![CDATA[modul "%module%" installerades.]]></translation>
+        <translation locale="el"><![CDATA[Η ενότητα "%module%" εγκαταστάθηκε.]]></translation>
+        <translation locale="zh"><![CDATA[模块“%module%”已安装。]]></translation>
+        <translation locale="pl"><![CDATA[Moduł "%module%" został zainstalowany.]]></translation>
+        <translation locale="pt"><![CDATA[O módulo "%module%" foi instalado.]]></translation>
+      </item>
+      <item type="label" name="Templates">
+        <translation locale="nl"><![CDATA[templates]]></translation>
+        <translation locale="en"><![CDATA[templates]]></translation>
+        <translation locale="hu"><![CDATA[sablonok]]></translation>
+        <translation locale="it"><![CDATA[template]]></translation>
+        <translation locale="ru"><![CDATA[Шаблоны]]></translation>
+        <translation locale="zh"><![CDATA[模板]]></translation>
+        <translation locale="de"><![CDATA[Templates]]></translation>
+        <translation locale="fr"><![CDATA[templates]]></translation>
+        <translation locale="es"><![CDATA[temas]]></translation>
+        <translation locale="lt"><![CDATA[šablonai]]></translation>
+        <translation locale="uk"><![CDATA[Шаблони]]></translation>
+        <translation locale="sv"><![CDATA[mallar]]></translation>
+        <translation locale="el"><![CDATA[πρότυπα]]></translation>
+        <translation locale="tr"><![CDATA[şablonlar]]></translation>
+        <translation locale="pt"><![CDATA[templates]]></translation>
+        <translation locale="pl"><![CDATA[szablony]]></translation>
+      </item>
+      <item type="label" name="Authors">
+        <translation locale="nl"><![CDATA[auteurs]]></translation>
+        <translation locale="en"><![CDATA[authors]]></translation>
+        <translation locale="ru"><![CDATA[авторы]]></translation>
+        <translation locale="es"><![CDATA[autores]]></translation>
+        <translation locale="de"><![CDATA[Autoren]]></translation>
+        <translation locale="uk"><![CDATA[Автори]]></translation>
+        <translation locale="hu"><![CDATA[szerzők]]></translation>
+        <translation locale="lt"><![CDATA[autoriai]]></translation>
+        <translation locale="sv"><![CDATA[författare]]></translation>
+        <translation locale="el"><![CDATA[Συγγραφείς]]></translation>
+        <translation locale="zh"><![CDATA[作者]]></translation>
+        <translation locale="pl"><![CDATA[autorzy]]></translation>
+        <translation locale="pt"><![CDATA[autores]]></translation>
+      </item>
+      <item type="label" name="Preview">
+        <translation locale="nl"><![CDATA[preview]]></translation>
+        <translation locale="en"><![CDATA[preview]]></translation>
+        <translation locale="hu"><![CDATA[előnézet]]></translation>
+        <translation locale="ru"><![CDATA[Предпросмотр]]></translation>
+        <translation locale="it"><![CDATA[anteprima]]></translation>
+        <translation locale="zh"><![CDATA[预览]]></translation>
+        <translation locale="de"><![CDATA[Vorschau]]></translation>
+        <translation locale="fr"><![CDATA[aperçu]]></translation>
+        <translation locale="es"><![CDATA[vista previa]]></translation>
+        <translation locale="lt"><![CDATA[peržiūra]]></translation>
+        <translation locale="uk"><![CDATA[Предперегляд]]></translation>
+        <translation locale="sv"><![CDATA[förhandsvisa]]></translation>
+        <translation locale="el"><![CDATA[προεπισκόπιση]]></translation>
+        <translation locale="tr"><![CDATA[önizleme]]></translation>
+        <translation locale="pl"><![CDATA[podgląd]]></translation>
+        <translation locale="pt"><![CDATA[vista prévia]]></translation>
+        <translation locale="pl"><![CDATA[podgląd]]></translation>
+      </item>
+      <item type="label" name="TemplatePath">
+        <translation locale="nl"><![CDATA[Pad naar de template]]></translation>
+        <translation locale="en"><![CDATA[Path to template]]></translation>
+        <translation locale="it"><![CDATA[Path del template]]></translation>
+        <translation locale="ru"><![CDATA[Путь к шаблону]]></translation>
+        <translation locale="zh"><![CDATA[模板路径]]></translation>
+        <translation locale="de"><![CDATA[Pfad zum Template]]></translation>
+        <translation locale="fr"><![CDATA[Chemin vers le template]]></translation>
+        <translation locale="hu"><![CDATA[A sablon útvonala]]></translation>
+        <translation locale="es"><![CDATA[Ruta de la plantilla]]></translation>
+        <translation locale="sv"><![CDATA[Sökväg till mall]]></translation>
+        <translation locale="el"><![CDATA[Διαδρομή προς το πρότυπο.]]></translation>
+        <translation locale="pl"><![CDATA[Ścieżka do szablonu.]]></translation>
+        <translation locale="pt"><![CDATA[Caminho para o template]]></translation>
+      </item>
+      <item type="label" name="Events">
+        <translation locale="nl"><![CDATA[evenementen (hooks)]]></translation>
+        <translation locale="en"><![CDATA[events (hooks)]]></translation>
+        <translation locale="ru"><![CDATA[события (hooks)]]></translation>
+        <translation locale="es"><![CDATA[eventos (hooks)]]></translation>
+        <translation locale="de"><![CDATA[Events (hooks)]]></translation>
+        <translation locale="hu"><![CDATA[események (horog)]]></translation>
+        <translation locale="sv"><![CDATA[händelse (hookar)]]></translation>
+        <translation locale="el"><![CDATA[Συμβάντα (hooks)]]></translation>
+        <translation locale="zh"><![CDATA[事件（hooks）]]></translation>
+        <translation locale="pl"><![CDATA[wydarzenia (haki)]]></translation>
+        <translation locale="pt"><![CDATA[eventos (hooks)]]></translation>
+      </item>
+    </Extensions>
+  </Backend>
+</translations>

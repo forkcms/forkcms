@@ -1,0 +1,1718 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="Locale">
+      <translation locale="nl"><![CDATA[locale]]></translation>
+      <translation locale="en"><![CDATA[locale]]></translation>
+      <translation locale="hu"><![CDATA[nyelv]]></translation>
+      <translation locale="it"><![CDATA[locale]]></translation>
+      <translation locale="ru"><![CDATA[Язык]]></translation>
+      <translation locale="zh"><![CDATA[放置]]></translation>
+      <translation locale="fr"><![CDATA[langue]]></translation>
+      <translation locale="de"><![CDATA[Locale]]></translation>
+      <translation locale="es"><![CDATA[local]]></translation>
+      <translation locale="lt"><![CDATA[Kalba]]></translation>
+      <translation locale="uk"><![CDATA[Мова]]></translation>
+      <translation locale="sv"><![CDATA[språk]]></translation>
+      <translation locale="el"><![CDATA[τοπικές ρυθμίσεις]]></translation>
+      <translation locale="pt"><![CDATA[locale]]></translation>
+      <translation locale="pl"><![CDATA[język]]></translation>
+    </item>
+    <item type="label" name="Internationalisation">
+      <translation locale="nl"><![CDATA[vertalingen]]></translation>
+      <translation locale="en"><![CDATA[internationalisation]]></translation>
+    </item>
+    <item type="label" name="Languages">
+      <translation locale="nl"><![CDATA[talen]]></translation>
+      <translation locale="en"><![CDATA[languages]]></translation>
+      <translation locale="hu"><![CDATA[nyelvek]]></translation>
+      <translation locale="it"><![CDATA[lingue]]></translation>
+      <translation locale="ru"><![CDATA[Языки]]></translation>
+      <translation locale="zh"><![CDATA[语言]]></translation>
+      <translation locale="de"><![CDATA[Sprachen]]></translation>
+      <translation locale="fr"><![CDATA[languages]]></translation>
+      <translation locale="es"><![CDATA[idiomas]]></translation>
+      <translation locale="lt"><![CDATA[kalbos]]></translation>
+      <translation locale="uk"><![CDATA[Мови]]></translation>
+      <translation locale="sv"><![CDATA[språk]]></translation>
+      <translation locale="el"><![CDATA[γλώσσες]]></translation>
+      <translation locale="pt"><![CDATA[idiomas]]></translation>
+      <translation locale="pl"><![CDATA[języki]]></translation>
+    </item>
+    <item type="label" name="Translations">
+      <translation locale="nl"><![CDATA[vertalingen]]></translation>
+      <translation locale="en"><![CDATA[translations]]></translation>
+      <translation locale="hu"><![CDATA[fordítások]]></translation>
+      <translation locale="ru"><![CDATA[Языки]]></translation>
+      <translation locale="it"><![CDATA[traduzioni]]></translation>
+      <translation locale="zh"><![CDATA[翻译]]></translation>
+      <translation locale="de"><![CDATA[Übersetzungen]]></translation>
+      <translation locale="fr"><![CDATA[traductions]]></translation>
+      <translation locale="es"><![CDATA[traducciones]]></translation>
+      <translation locale="lt"><![CDATA[vertimai]]></translation>
+      <translation locale="uk"><![CDATA[Мова]]></translation>
+      <translation locale="sv"><![CDATA[översättningar]]></translation>
+      <translation locale="el"><![CDATA[μεταφράσεις]]></translation>
+      <translation locale="tr"><![CDATA[Çeviriler]]></translation>
+      <translation locale="pt"><![CDATA[traduções]]></translation>
+      <translation locale="pl"><![CDATA[tłumaczenia]]></translation>
+    </item>
+    <item type="message" name="HelpDateFormatLong">
+      <translation locale="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
+      <translation locale="en"><![CDATA[Format that's used on overview and detail pages.]]></translation>
+      <translation locale="it"><![CDATA[Formato usato sulla panoramica e sui dettagli delle pagine.]]></translation>
+      <translation locale="ru"><![CDATA[Формат для страниц с полной статьей.]]></translation>
+      <translation locale="zh"><![CDATA[用于概览和详细页面的格式。]]></translation>
+      <translation locale="hu"><![CDATA[Használt formátumok áttekintése és részletes oldala.]]></translation>
+      <translation locale="fr"><![CDATA[Format utilisé pour les vues d'ensemble et les pages de détail.]]></translation>
+      <translation locale="de"><![CDATA[Format welches für Übersichts- und Detail-Seiten verwendet wird.]]></translation>
+      <translation locale="es"><![CDATA[Formato que se utiliza en las páginas de resumen y detalle.]]></translation>
+      <translation locale="el"><![CDATA[Η μορφή που χρησιμοποιείται στις συνοπτικές και αναλυτικές σελίδες.]]></translation>
+      <translation locale="pl"><![CDATA[Format wykorzystywany na stronach podglądowych i szczegółowych.]]></translation>
+    </item>
+    <item type="message" name="HelpDateFormatShort">
+      <translation locale="nl"><![CDATA[Dit formaat wordt voornamelijk gebruikt bij tabelweergaves.]]></translation>
+      <translation locale="en"><![CDATA[This format is mostly used in table overviews.]]></translation>
+      <translation locale="it"><![CDATA[Questo formato è principalmente usato nelle panoramiche tabulari.]]></translation>
+      <translation locale="ru"><![CDATA[Формат, который используется для кратких и подробных страниц.]]></translation>
+      <translation locale="zh"><![CDATA[这种格式通常用于表格概览。]]></translation>
+      <translation locale="hu"><![CDATA[Ez a formátum többnyire táblázat áttekintésére.]]></translation>
+      <translation locale="fr"><![CDATA[Format utilisé dans les tables de vue d'ensemble.]]></translation>
+      <translation locale="de"><![CDATA[Dieses Format wird meist in tabellarischen Übersichten verwendet.]]></translation>
+      <translation locale="es"><![CDATA[Este formato se utiliza principalmente en resúmenes.]]></translation>
+      <translation locale="el"><![CDATA[Αυτή η μορφή χρησιμοποιείται κυρίως στην επισκόπηση πινάκων.]]></translation>
+      <translation locale="pl"><![CDATA[Format wykorzystywany głównie w podglądach tabeli.]]></translation>
+    </item>
+    <item type="label" name="DateFormatShort">
+      <translation locale="nl"><![CDATA[kort datumformaat]]></translation>
+      <translation locale="en"><![CDATA[short date format]]></translation>
+      <translation locale="hu"><![CDATA[rövid dátumformátum]]></translation>
+      <translation locale="ru"><![CDATA[Короткий формат]]></translation>
+      <translation locale="it"><![CDATA[formato corto delle date]]></translation>
+      <translation locale="zh"><![CDATA[短日期格式]]></translation>
+      <translation locale="de"><![CDATA[kurzes Datumsformat]]></translation>
+      <translation locale="fr"><![CDATA[format de date court]]></translation>
+      <translation locale="es"><![CDATA[formato corto de fecha]]></translation>
+      <translation locale="lt"><![CDATA[sutrumpintas datos formatas]]></translation>
+      <translation locale="uk"><![CDATA[Короткий формат]]></translation>
+      <translation locale="sv"><![CDATA[kort datumformat]]></translation>
+      <translation locale="el"><![CDATA[σύντομη μορφή ημερομηνίας]]></translation>
+      <translation locale="pt"><![CDATA[formato de data curto]]></translation>
+      <translation locale="pl"><![CDATA[krótki format daty]]></translation>
+    </item>
+    <item type="label" name="DateFormatLong">
+      <translation locale="nl"><![CDATA[lang datumformaat]]></translation>
+      <translation locale="en"><![CDATA[long date format]]></translation>
+      <translation locale="hu"><![CDATA[hosszú dátumformátum]]></translation>
+      <translation locale="it"><![CDATA[formato esteso data]]></translation>
+      <translation locale="ru"><![CDATA[Длинный формат]]></translation>
+      <translation locale="zh"><![CDATA[日期格式]]></translation>
+      <translation locale="de"><![CDATA[langes Datumsformat]]></translation>
+      <translation locale="fr"><![CDATA[format de date long]]></translation>
+      <translation locale="es"><![CDATA[formato largo de fecha]]></translation>
+      <translation locale="lt"><![CDATA[išplėstas formatas]]></translation>
+      <translation locale="uk"><![CDATA[Довгий формат дати]]></translation>
+      <translation locale="sv"><![CDATA[långa datumformat]]></translation>
+      <translation locale="el"><![CDATA[μακροσκελής μορφή ημερομηνίας]]></translation>
+      <translation locale="pt"><![CDATA[formato de data longo]]></translation>
+      <translation locale="pl"><![CDATA[długi format daty]]></translation>
+    </item>
+    <item type="label" name="TimeFormat">
+      <translation locale="nl"><![CDATA[formaat tijd]]></translation>
+      <translation locale="en"><![CDATA[time format]]></translation>
+      <translation locale="hu"><![CDATA[idő formátum]]></translation>
+      <translation locale="ru"><![CDATA[Формат времени]]></translation>
+      <translation locale="it"><![CDATA[formato date]]></translation>
+      <translation locale="zh"><![CDATA[时间格式]]></translation>
+      <translation locale="de"><![CDATA[Zeitformat]]></translation>
+      <translation locale="fr"><![CDATA[format de temps]]></translation>
+      <translation locale="es"><![CDATA[formato de hora]]></translation>
+      <translation locale="lt"><![CDATA[datos formatas]]></translation>
+      <translation locale="uk"><![CDATA[Формат Часу]]></translation>
+      <translation locale="sv"><![CDATA[tidsformat]]></translation>
+      <translation locale="el"><![CDATA[μορφή ώρας]]></translation>
+      <translation locale="tr"><![CDATA[saat biçimi]]></translation>
+      <translation locale="pt"><![CDATA[formato de hora]]></translation>
+      <translation locale="pl"><![CDATA[format czasu]]></translation>
+    </item>
+    <item type="label" name="NumberFormat">
+      <translation locale="nl"><![CDATA[formaat getallen]]></translation>
+      <translation locale="en"><![CDATA[number format]]></translation>
+      <translation locale="hu"><![CDATA[szám formátum]]></translation>
+      <translation locale="ru"><![CDATA[Числовой формат]]></translation>
+      <translation locale="it"><![CDATA[formato numero]]></translation>
+      <translation locale="zh"><![CDATA[数字格式]]></translation>
+      <translation locale="de"><![CDATA[Nummernformat]]></translation>
+      <translation locale="fr"><![CDATA[format de nombre]]></translation>
+      <translation locale="es"><![CDATA[formato de número]]></translation>
+      <translation locale="lt"><![CDATA[skaičiaus formatas]]></translation>
+      <translation locale="uk"><![CDATA[Числовий формат]]></translation>
+      <translation locale="sv"><![CDATA[nummerformat]]></translation>
+      <translation locale="el"><![CDATA[μορφή αριθμού]]></translation>
+      <translation locale="pt"><![CDATA[formato de número]]></translation>
+      <translation locale="pl"><![CDATA[format liczb]]></translation>
+    </item>
+    <item type="label" name="DateTimeOrder">
+      <translation locale="nl"><![CDATA[datum en tijd volgorde]]></translation>
+      <translation locale="en"><![CDATA[date time order]]></translation>
+    </item>
+
+    <item type="label" name="EN">
+      <translation locale="nl"><![CDATA[Engels]]></translation>
+      <translation locale="en"><![CDATA[English]]></translation>
+      <translation locale="hu"><![CDATA[Angol]]></translation>
+      <translation locale="it"><![CDATA[Inglese]]></translation>
+      <translation locale="fr"><![CDATA[anglais]]></translation>
+      <translation locale="ru"><![CDATA[Английский]]></translation>
+      <translation locale="de"><![CDATA[Englisch]]></translation>
+      <translation locale="uk"><![CDATA[англійська]]></translation>
+      <translation locale="sv"><![CDATA[Engelska]]></translation>
+      <translation locale="lt"><![CDATA[Angliškai]]></translation>
+      <translation locale="el"><![CDATA[Αγγλικά]]></translation>
+      <translation locale="zh"><![CDATA[英语]]></translation>
+      <translation locale="pl"><![CDATA[Angielski]]></translation>
+      <translation locale="tr"><![CDATA[İngilizce]]></translation>
+      <translation locale="pt"><![CDATA[Inglês]]></translation>
+    </item>
+    <item type="label" name="FR">
+      <translation locale="nl"><![CDATA[Frans]]></translation>
+      <translation locale="en"><![CDATA[French]]></translation>
+      <translation locale="hu"><![CDATA[Francia]]></translation>
+      <translation locale="it"><![CDATA[Francese]]></translation>
+      <translation locale="fr"><![CDATA[français]]></translation>
+      <translation locale="ru"><![CDATA[Французский]]></translation>
+      <translation locale="de"><![CDATA[Französisch]]></translation>
+      <translation locale="uk"><![CDATA[французька]]></translation>
+      <translation locale="sv"><![CDATA[Franska]]></translation>
+      <translation locale="lt"><![CDATA[Prancūzų]]></translation>
+      <translation locale="el"><![CDATA[Γαλλικά]]></translation>
+      <translation locale="zh"><![CDATA[法语]]></translation>
+      <translation locale="pl"><![CDATA[Francuski]]></translation>
+      <translation locale="tr"><![CDATA[Fransızca]]></translation>
+      <translation locale="pt"><![CDATA[Francês]]></translation>
+    </item>
+    <item type="label" name="ES">
+      <translation locale="nl"><![CDATA[Spaans]]></translation>
+      <translation locale="en"><![CDATA[Spanish]]></translation>
+      <translation locale="hu"><![CDATA[spanyol]]></translation>
+      <translation locale="ru"><![CDATA[Испанский]]></translation>
+      <translation locale="it"><![CDATA[Spagnolo]]></translation>
+      <translation locale="fr"><![CDATA[Espagnol]]></translation>
+      <translation locale="de"><![CDATA[Spanisch]]></translation>
+      <translation locale="uk"><![CDATA[іспаньска]]></translation>
+      <translation locale="es"><![CDATA[Español]]></translation>
+      <translation locale="lt"><![CDATA[Ispaniškai]]></translation>
+      <translation locale="sv"><![CDATA[Spanska]]></translation>
+      <translation locale="el"><![CDATA[Ισπανικά]]></translation>
+      <translation locale="zh"><![CDATA[西班牙语]]></translation>
+      <translation locale="pl"><![CDATA[Hiszpański]]></translation>
+      <translation locale="tr"><![CDATA[İspanyolca]]></translation>
+      <translation locale="pt"><![CDATA[Espanhol]]></translation>
+    </item>
+    <item type="label" name="LT">
+      <translation locale="nl"><![CDATA[Litouws]]></translation>
+      <translation locale="en"><![CDATA[Lithuanian]]></translation>
+      <translation locale="ru"><![CDATA[Литовский]]></translation>
+      <translation locale="de"><![CDATA[Litauisch]]></translation>
+      <translation locale="lt"><![CDATA[Lietuviškai]]></translation>
+      <translation locale="uk"><![CDATA[литовська]]></translation>
+      <translation locale="es"><![CDATA[Lituano]]></translation>
+      <translation locale="hu"><![CDATA[litván]]></translation>
+      <translation locale="sv"><![CDATA[Litauiska]]></translation>
+      <translation locale="el"><![CDATA[Λιθουανικά]]></translation>
+      <translation locale="zh"><![CDATA[立陶宛语]]></translation>
+      <translation locale="pt"><![CDATA[Lituano]]></translation>
+      <translation locale="pl"><![CDATA[Litewski]]></translation>
+    </item>
+    <item type="label" name="NL">
+      <translation locale="nl"><![CDATA[Nederlands]]></translation>
+      <translation locale="en"><![CDATA[Dutch]]></translation>
+      <translation locale="hu"><![CDATA[Holland]]></translation>
+      <translation locale="it"><![CDATA[Olandese]]></translation>
+      <translation locale="fr"><![CDATA[Néerlandais]]></translation>
+      <translation locale="ru"><![CDATA[Голландский]]></translation>
+      <translation locale="zh"><![CDATA[荷兰语]]></translation>
+      <translation locale="de"><![CDATA[Niederländisch]]></translation>
+      <translation locale="es"><![CDATA[holandes]]></translation>
+      <translation locale="lt"><![CDATA[olandiškai]]></translation>
+      <translation locale="uk"><![CDATA[голандська]]></translation>
+      <translation locale="sv"><![CDATA[Holländska]]></translation>
+      <translation locale="el"><![CDATA[Ολλανδικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Flemenkçe]]></translation>
+      <translation locale="pt"><![CDATA[Neerlandês]]></translation>
+    </item>
+    <item type="label" name="TR">
+      <translation locale="hu"><![CDATA[török]]></translation>
+      <translation locale="ru"><![CDATA[Турецкий]]></translation>
+      <translation locale="it"><![CDATA[Turco]]></translation>
+      <translation locale="zh"><![CDATA[土耳其语]]></translation>
+      <translation locale="de"><![CDATA[türkisch]]></translation>
+      <translation locale="fr"><![CDATA[Turque]]></translation>
+      <translation locale="nl"><![CDATA[Turks]]></translation>
+      <translation locale="en"><![CDATA[Turkish]]></translation>
+      <translation locale="es"><![CDATA[Turco]]></translation>
+      <translation locale="lt"><![CDATA[Turkiškai]]></translation>
+      <translation locale="uk"><![CDATA[турецька]]></translation>
+      <translation locale="sv"><![CDATA[Turkiska]]></translation>
+      <translation locale="el"><![CDATA[Τούρκικα]]></translation>
+      <translation locale="tr"><![CDATA[Türkçe]]></translation>
+      <translation locale="pl"><![CDATA[Turecki]]></translation>
+      <translation locale="pt"><![CDATA[turco]]></translation>
+    </item>
+    <item type="label" name="PL">
+      <translation locale="hu"><![CDATA[lengyel]]></translation>
+      <translation locale="ru"><![CDATA[Польский]]></translation>
+      <translation locale="it"><![CDATA[Polacco]]></translation>
+      <translation locale="zh"><![CDATA[波兰语]]></translation>
+      <translation locale="de"><![CDATA[polnisch]]></translation>
+      <translation locale="fr"><![CDATA[Polonais]]></translation>
+      <translation locale="nl"><![CDATA[Pools]]></translation>
+      <translation locale="en"><![CDATA[Polish]]></translation>
+      <translation locale="es"><![CDATA[Polaco]]></translation>
+      <translation locale="lt"><![CDATA[Lenkiškai]]></translation>
+      <translation locale="uk"><![CDATA[польська]]></translation>
+      <translation locale="sv"><![CDATA[Polska]]></translation>
+      <translation locale="el"><![CDATA[Πολωνικά]]></translation>
+      <translation locale="pl"><![CDATA[Polski]]></translation>
+      <translation locale="tr"><![CDATA[Lehçe]]></translation>
+      <translation locale="pt"><![CDATA[polaco]]></translation>
+    </item>
+    <item type="label" name="PT">
+      <translation locale="nl"><![CDATA[Portugees]]></translation>
+      <translation locale="en"><![CDATA[Portuguese]]></translation>
+      <translation locale="ru"><![CDATA[Португальский]]></translation>
+      <translation locale="lt"><![CDATA[Portoghese]]></translation>
+      <translation locale="de"><![CDATA[Portugiesisch]]></translation>
+      <translation locale="uk"><![CDATA[Португальська]]></translation>
+      <translation locale="es"><![CDATA[Portugués]]></translation>
+      <translation locale="hu"><![CDATA[Portugál]]></translation>
+      <translation locale="sv"><![CDATA[Portugisiska]]></translation>
+      <translation locale="el"><![CDATA[Πορτογαλικά]]></translation>
+      <translation locale="zh"><![CDATA[葡萄牙语]]></translation>
+      <translation locale="pt"><![CDATA[Português]]></translation>
+      <translation locale="pl"><![CDATA[Portugalski]]></translation>
+    </item>
+    <item type="label" name="UK">
+      <translation locale="nl"><![CDATA[Oekraïens]]></translation>
+      <translation locale="en"><![CDATA[Ukrainian]]></translation>
+      <translation locale="ru"><![CDATA[Украинский]]></translation>
+      <translation locale="lt"><![CDATA[Ukrainiečių]]></translation>
+      <translation locale="de"><![CDATA[Ukrainisch]]></translation>
+      <translation locale="uk"><![CDATA[українська]]></translation>
+      <translation locale="es"><![CDATA[Ucraniano]]></translation>
+      <translation locale="hu"><![CDATA[ukrán]]></translation>
+      <translation locale="sv"><![CDATA[Ukrianska]]></translation>
+      <translation locale="el"><![CDATA[Ουκρανικά]]></translation>
+      <translation locale="zh"><![CDATA[乌克兰语]]></translation>
+      <translation locale="pt"><![CDATA[Ucraniano]]></translation>
+      <translation locale="pl"><![CDATA[Ukraiński]]></translation>
+    </item>
+    <item type="label" name="SV">
+      <translation locale="nl"><![CDATA[Zweeds]]></translation>
+      <translation locale="en"><![CDATA[Swedish]]></translation>
+      <translation locale="ru"><![CDATA[Шведский]]></translation>
+      <translation locale="lt"><![CDATA[Švediškai]]></translation>
+      <translation locale="de"><![CDATA[Schwedisch]]></translation>
+      <translation locale="es"><![CDATA[Sueco]]></translation>
+      <translation locale="uk"><![CDATA[шведська]]></translation>
+      <translation locale="hu"><![CDATA[svéd]]></translation>
+      <translation locale="sv"><![CDATA[Svenska]]></translation>
+      <translation locale="el"><![CDATA[Σουηδικά]]></translation>
+      <translation locale="zh"><![CDATA[瑞典语]]></translation>
+      <translation locale="pt"><![CDATA[Sueco]]></translation>
+      <translation locale="pl"><![CDATA[Szwedzki]]></translation>
+    </item>
+    <item type="label" name="RU">
+      <translation locale="hu"><![CDATA[orosz]]></translation>
+      <translation locale="ru"><![CDATA[Русский]]></translation>
+      <translation locale="it"><![CDATA[Russo]]></translation>
+      <translation locale="zh"><![CDATA[俄罗斯语]]></translation>
+      <translation locale="de"><![CDATA[russisch]]></translation>
+      <translation locale="fr"><![CDATA[Russe]]></translation>
+      <translation locale="nl"><![CDATA[Russisch]]></translation>
+      <translation locale="en"><![CDATA[Russian]]></translation>
+      <translation locale="es"><![CDATA[Ruso]]></translation>
+      <translation locale="lt"><![CDATA[Rusiškai]]></translation>
+      <translation locale="uk"><![CDATA[російська]]></translation>
+      <translation locale="sv"><![CDATA[Ryska]]></translation>
+      <translation locale="el"><![CDATA[Ρώσσικα]]></translation>
+      <translation locale="pl"><![CDATA[Rosyjski]]></translation>
+      <translation locale="tr"><![CDATA[Rusca]]></translation>
+      <translation locale="pt"><![CDATA[Russo]]></translation>
+    </item>
+    <item type="label" name="IT">
+      <translation locale="hu"><![CDATA[olasz]]></translation>
+      <translation locale="ru"><![CDATA[Итальянский]]></translation>
+      <translation locale="it"><![CDATA[Italiano]]></translation>
+      <translation locale="zh"><![CDATA[意大利语]]></translation>
+      <translation locale="de"><![CDATA[Italienisch]]></translation>
+      <translation locale="fr"><![CDATA[Italien]]></translation>
+      <translation locale="nl"><![CDATA[Italiaans]]></translation>
+      <translation locale="en"><![CDATA[Italian]]></translation>
+      <translation locale="es"><![CDATA[Italiano]]></translation>
+      <translation locale="lt"><![CDATA[Itališkai]]></translation>
+      <translation locale="uk"><![CDATA[італійська]]></translation>
+      <translation locale="sv"><![CDATA[Italienska]]></translation>
+      <translation locale="el"><![CDATA[Ιταλικά]]></translation>
+      <translation locale="pl"><![CDATA[Włoski]]></translation>
+      <translation locale="tr"><![CDATA[İtalyanca]]></translation>
+      <translation locale="pt"><![CDATA[Italiano]]></translation>
+    </item>
+    <item type="label" name="HU">
+      <translation locale="lt"><![CDATA[Vengriškai.]]></translation>
+      <translation locale="hu"><![CDATA[magyar]]></translation>
+      <translation locale="ru"><![CDATA[Венгерский]]></translation>
+      <translation locale="it"><![CDATA[Ungherese]]></translation>
+      <translation locale="de"><![CDATA[Ungarisch]]></translation>
+      <translation locale="fr"><![CDATA[Hongrois]]></translation>
+      <translation locale="nl"><![CDATA[Hongaars]]></translation>
+      <translation locale="en"><![CDATA[Hungarian]]></translation>
+      <translation locale="uk"><![CDATA[угорська]]></translation>
+      <translation locale="es"><![CDATA[Húngaro]]></translation>
+      <translation locale="sv"><![CDATA[Ungerska]]></translation>
+      <translation locale="el"><![CDATA[Ουγγρικά]]></translation>
+      <translation locale="zh"><![CDATA[匈牙利语]]></translation>
+      <translation locale="tr"><![CDATA[Macar]]></translation>
+      <translation locale="pt"><![CDATA[Hungaro]]></translation>
+      <translation locale="pl"><![CDATA[Węgierski]]></translation>
+    </item>
+    <item type="label" name="EL">
+      <translation locale="nl"><![CDATA[Grieks]]></translation>
+      <translation locale="en"><![CDATA[Greek]]></translation>
+      <translation locale="ru"><![CDATA[Греческий]]></translation>
+      <translation locale="de"><![CDATA[Griechisch]]></translation>
+      <translation locale="lt"><![CDATA[Graikiškai]]></translation>
+      <translation locale="uk"><![CDATA[грецька]]></translation>
+      <translation locale="es"><![CDATA[Griego]]></translation>
+      <translation locale="hu"><![CDATA[görök]]></translation>
+      <translation locale="sv"><![CDATA[Grekiska]]></translation>
+      <translation locale="el"><![CDATA[Ελληνικά]]></translation>
+      <translation locale="zh"><![CDATA[希腊语]]></translation>
+      <translation locale="pt"><![CDATA[Grego]]></translation>
+      <translation locale="pl"><![CDATA[Grecki]]></translation>
+    </item>
+    <item type="label" name="ZH">
+      <translation locale="zh"><![CDATA[中文]]></translation>
+      <translation locale="ru"><![CDATA[Китайский]]></translation>
+      <translation locale="hu"><![CDATA[kínai]]></translation>
+      <translation locale="de"><![CDATA[chineisch]]></translation>
+      <translation locale="fr"><![CDATA[Chinois]]></translation>
+      <translation locale="nl"><![CDATA[Chinees]]></translation>
+      <translation locale="en"><![CDATA[Chinese]]></translation>
+      <translation locale="it"><![CDATA[cinese]]></translation>
+      <translation locale="es"><![CDATA[Chino]]></translation>
+      <translation locale="lt"><![CDATA[Kiniečių]]></translation>
+      <translation locale="uk"><![CDATA[китайська]]></translation>
+      <translation locale="sv"><![CDATA[Kinesiska]]></translation>
+      <translation locale="el"><![CDATA[Κινέζικα]]></translation>
+      <translation locale="tr"><![CDATA[Çince]]></translation>
+      <translation locale="pt"><![CDATA[Chinês]]></translation>
+      <translation locale="pl"><![CDATA[Chiński]]></translation>
+    </item>
+    <item type="label" name="DE">
+      <translation locale="nl"><![CDATA[Duits]]></translation>
+      <translation locale="en"><![CDATA[German]]></translation>
+      <translation locale="hu"><![CDATA[német]]></translation>
+      <translation locale="ru"><![CDATA[Немецкий]]></translation>
+      <translation locale="it"><![CDATA[Tedesco]]></translation>
+      <translation locale="zh"><![CDATA[德语]]></translation>
+      <translation locale="fr"><![CDATA[Allemand]]></translation>
+      <translation locale="de"><![CDATA[Deutsch]]></translation>
+      <translation locale="es"><![CDATA[Alemán]]></translation>
+      <translation locale="lt"><![CDATA[Vokiškai]]></translation>
+      <translation locale="uk"><![CDATA[німецька]]></translation>
+      <translation locale="sv"><![CDATA[Tyska]]></translation>
+      <translation locale="el"><![CDATA[Γερμανικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Almanca]]></translation>
+      <translation locale="pt"><![CDATA[Alemão]]></translation>
+    </item>
+    <item type="label" name="BG">
+      <translation locale="zh"><![CDATA[比利时语]]></translation>
+      <translation locale="hu"><![CDATA[bulgár]]></translation>
+      <translation locale="de"><![CDATA[Bulgarisch]]></translation>
+      <translation locale="fr"><![CDATA[Bulgare]]></translation>
+      <translation locale="nl"><![CDATA[Bulgaars]]></translation>
+      <translation locale="en"><![CDATA[Bulgarian]]></translation>
+      <translation locale="ru"><![CDATA[Болгарский]]></translation>
+      <translation locale="it"><![CDATA[bulgaro]]></translation>
+      <translation locale="es"><![CDATA[Bulgaro]]></translation>
+      <translation locale="lt"><![CDATA[Bulgariškai]]></translation>
+      <translation locale="uk"><![CDATA[болгарський]]></translation>
+      <translation locale="sv"><![CDATA[Bulgarian]]></translation>
+      <translation locale="el"><![CDATA[Βουλγαρικά]]></translation>
+      <translation locale="tr"><![CDATA[Bulgar]]></translation>
+      <translation locale="pt"><![CDATA[bulgaro]]></translation>
+      <translation locale="pl"><![CDATA[Bułgarski]]></translation>
+    </item>
+    <item type="label" name="CS">
+      <translation locale="nl"><![CDATA[Tsjechisch]]></translation>
+      <translation locale="en"><![CDATA[Czech]]></translation>
+      <translation locale="ru"><![CDATA[Чешский]]></translation>
+      <translation locale="de"><![CDATA[Tschechisch]]></translation>
+      <translation locale="lt"><![CDATA[Čekiškai]]></translation>
+      <translation locale="uk"><![CDATA[чеська]]></translation>
+      <translation locale="es"><![CDATA[Checo]]></translation>
+      <translation locale="hu"><![CDATA[cseh]]></translation>
+      <translation locale="sv"><![CDATA[Tjeckiska]]></translation>
+      <translation locale="el"><![CDATA[Τσέχικα]]></translation>
+      <translation locale="zh"><![CDATA[捷克语]]></translation>
+      <translation locale="pt"><![CDATA[checo]]></translation>
+      <translation locale="pl"><![CDATA[Czeski]]></translation>
+    </item>
+    <item type="message" name="EN">
+      <translation locale="nl"><![CDATA[Engels]]></translation>
+      <translation locale="en"><![CDATA[English]]></translation>
+      <translation locale="hu"><![CDATA[Angol]]></translation>
+      <translation locale="it"><![CDATA[Inglese]]></translation>
+      <translation locale="fr"><![CDATA[anglais]]></translation>
+      <translation locale="ru"><![CDATA[Английский]]></translation>
+      <translation locale="de"><![CDATA[Englisch]]></translation>
+      <translation locale="uk"><![CDATA[англійська]]></translation>
+      <translation locale="sv"><![CDATA[Engelska]]></translation>
+      <translation locale="lt"><![CDATA[Angliškai]]></translation>
+      <translation locale="el"><![CDATA[Αγγλικά]]></translation>
+      <translation locale="zh"><![CDATA[英语]]></translation>
+      <translation locale="pl"><![CDATA[Angielski]]></translation>
+      <translation locale="tr"><![CDATA[İngilizce]]></translation>
+      <translation locale="pt"><![CDATA[Inglês]]></translation>
+    </item>
+    <item type="message" name="FR">
+      <translation locale="nl"><![CDATA[Frans]]></translation>
+      <translation locale="en"><![CDATA[French]]></translation>
+      <translation locale="hu"><![CDATA[Francia]]></translation>
+      <translation locale="it"><![CDATA[Francese]]></translation>
+      <translation locale="fr"><![CDATA[français]]></translation>
+      <translation locale="ru"><![CDATA[Французский]]></translation>
+      <translation locale="de"><![CDATA[Französisch]]></translation>
+      <translation locale="uk"><![CDATA[французька]]></translation>
+      <translation locale="sv"><![CDATA[Franska]]></translation>
+      <translation locale="lt"><![CDATA[Prancūzų]]></translation>
+      <translation locale="el"><![CDATA[Γαλλικά]]></translation>
+      <translation locale="zh"><![CDATA[法语]]></translation>
+      <translation locale="pl"><![CDATA[Francuski]]></translation>
+      <translation locale="tr"><![CDATA[Fransızca]]></translation>
+      <translation locale="pt"><![CDATA[Francês]]></translation>
+    </item>
+    <item type="message" name="ES">
+      <translation locale="nl"><![CDATA[Spaans]]></translation>
+      <translation locale="en"><![CDATA[Spanish]]></translation>
+      <translation locale="hu"><![CDATA[spanyol]]></translation>
+      <translation locale="ru"><![CDATA[Испанский]]></translation>
+      <translation locale="it"><![CDATA[Spagnolo]]></translation>
+      <translation locale="fr"><![CDATA[Espagnol]]></translation>
+      <translation locale="de"><![CDATA[Spanisch]]></translation>
+      <translation locale="uk"><![CDATA[іспаньска]]></translation>
+      <translation locale="es"><![CDATA[Español]]></translation>
+      <translation locale="lt"><![CDATA[Ispaniškai]]></translation>
+      <translation locale="sv"><![CDATA[Spanska]]></translation>
+      <translation locale="el"><![CDATA[Ισπανικά]]></translation>
+      <translation locale="zh"><![CDATA[西班牙语]]></translation>
+      <translation locale="pl"><![CDATA[Hiszpański]]></translation>
+      <translation locale="tr"><![CDATA[İspanyolca]]></translation>
+      <translation locale="pt"><![CDATA[Espanhol]]></translation>
+    </item>
+    <item type="message" name="LT">
+      <translation locale="nl"><![CDATA[Litouws]]></translation>
+      <translation locale="en"><![CDATA[Lithuanian]]></translation>
+      <translation locale="ru"><![CDATA[Литовский]]></translation>
+      <translation locale="de"><![CDATA[Litauisch]]></translation>
+      <translation locale="lt"><![CDATA[Lietuviškai]]></translation>
+      <translation locale="uk"><![CDATA[литовська]]></translation>
+      <translation locale="es"><![CDATA[Lituano]]></translation>
+      <translation locale="hu"><![CDATA[litván]]></translation>
+      <translation locale="sv"><![CDATA[Litauiska]]></translation>
+      <translation locale="el"><![CDATA[Λιθουανικά]]></translation>
+      <translation locale="zh"><![CDATA[立陶宛语]]></translation>
+      <translation locale="pt"><![CDATA[Lituano]]></translation>
+      <translation locale="pl"><![CDATA[Litewski]]></translation>
+    </item>
+    <item type="message" name="NL">
+      <translation locale="nl"><![CDATA[Nederlands]]></translation>
+      <translation locale="en"><![CDATA[Dutch]]></translation>
+      <translation locale="hu"><![CDATA[Holland]]></translation>
+      <translation locale="it"><![CDATA[Olandese]]></translation>
+      <translation locale="fr"><![CDATA[Néerlandais]]></translation>
+      <translation locale="ru"><![CDATA[Голландский]]></translation>
+      <translation locale="zh"><![CDATA[荷兰语]]></translation>
+      <translation locale="de"><![CDATA[Niederländisch]]></translation>
+      <translation locale="es"><![CDATA[holandes]]></translation>
+      <translation locale="lt"><![CDATA[olandiškai]]></translation>
+      <translation locale="uk"><![CDATA[голандська]]></translation>
+      <translation locale="sv"><![CDATA[Holländska]]></translation>
+      <translation locale="el"><![CDATA[Ολλανδικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Flemenkçe]]></translation>
+      <translation locale="pt"><![CDATA[Neerlandês]]></translation>
+    </item>
+    <item type="message" name="TR">
+      <translation locale="hu"><![CDATA[török]]></translation>
+      <translation locale="ru"><![CDATA[Турецкий]]></translation>
+      <translation locale="it"><![CDATA[Turco]]></translation>
+      <translation locale="zh"><![CDATA[土耳其语]]></translation>
+      <translation locale="de"><![CDATA[türkisch]]></translation>
+      <translation locale="fr"><![CDATA[Turque]]></translation>
+      <translation locale="nl"><![CDATA[Turks]]></translation>
+      <translation locale="en"><![CDATA[Turkish]]></translation>
+      <translation locale="es"><![CDATA[Turco]]></translation>
+      <translation locale="lt"><![CDATA[Turkiškai]]></translation>
+      <translation locale="uk"><![CDATA[турецька]]></translation>
+      <translation locale="sv"><![CDATA[Turkiska]]></translation>
+      <translation locale="el"><![CDATA[Τούρκικα]]></translation>
+      <translation locale="tr"><![CDATA[Türkçe]]></translation>
+      <translation locale="pl"><![CDATA[Turecki]]></translation>
+      <translation locale="pt"><![CDATA[turco]]></translation>
+    </item>
+    <item type="message" name="PL">
+      <translation locale="hu"><![CDATA[lengyel]]></translation>
+      <translation locale="ru"><![CDATA[Польский]]></translation>
+      <translation locale="it"><![CDATA[Polacco]]></translation>
+      <translation locale="zh"><![CDATA[波兰语]]></translation>
+      <translation locale="de"><![CDATA[polnisch]]></translation>
+      <translation locale="fr"><![CDATA[Polonais]]></translation>
+      <translation locale="nl"><![CDATA[Pools]]></translation>
+      <translation locale="en"><![CDATA[Polish]]></translation>
+      <translation locale="es"><![CDATA[Polaco]]></translation>
+      <translation locale="lt"><![CDATA[Lenkiškai]]></translation>
+      <translation locale="uk"><![CDATA[польська]]></translation>
+      <translation locale="sv"><![CDATA[Polska]]></translation>
+      <translation locale="el"><![CDATA[Πολωνικά]]></translation>
+      <translation locale="pl"><![CDATA[Polski]]></translation>
+      <translation locale="tr"><![CDATA[Lehçe]]></translation>
+      <translation locale="pt"><![CDATA[polaco]]></translation>
+    </item>
+    <item type="message" name="PT">
+      <translation locale="nl"><![CDATA[Portugees]]></translation>
+      <translation locale="en"><![CDATA[Portuguese]]></translation>
+      <translation locale="ru"><![CDATA[Португальский]]></translation>
+      <translation locale="lt"><![CDATA[Portoghese]]></translation>
+      <translation locale="de"><![CDATA[Portugiesisch]]></translation>
+      <translation locale="uk"><![CDATA[Португальська]]></translation>
+      <translation locale="es"><![CDATA[Portugués]]></translation>
+      <translation locale="hu"><![CDATA[Portugál]]></translation>
+      <translation locale="sv"><![CDATA[Portugisiska]]></translation>
+      <translation locale="el"><![CDATA[Πορτογαλικά]]></translation>
+      <translation locale="zh"><![CDATA[葡萄牙语]]></translation>
+      <translation locale="pt"><![CDATA[Português]]></translation>
+      <translation locale="pl"><![CDATA[Portugalski]]></translation>
+    </item>
+    <item type="message" name="UK">
+      <translation locale="nl"><![CDATA[Oekraïens]]></translation>
+      <translation locale="en"><![CDATA[Ukrainian]]></translation>
+      <translation locale="ru"><![CDATA[Украинский]]></translation>
+      <translation locale="lt"><![CDATA[Ukrainiečių]]></translation>
+      <translation locale="de"><![CDATA[Ukrainisch]]></translation>
+      <translation locale="uk"><![CDATA[українська]]></translation>
+      <translation locale="es"><![CDATA[Ucraniano]]></translation>
+      <translation locale="hu"><![CDATA[ukrán]]></translation>
+      <translation locale="sv"><![CDATA[Ukrianska]]></translation>
+      <translation locale="el"><![CDATA[Ουκρανικά]]></translation>
+      <translation locale="zh"><![CDATA[乌克兰语]]></translation>
+      <translation locale="pt"><![CDATA[Ucraniano]]></translation>
+      <translation locale="pl"><![CDATA[Ukraiński]]></translation>
+    </item>
+    <item type="message" name="SV">
+      <translation locale="nl"><![CDATA[Zweeds]]></translation>
+      <translation locale="en"><![CDATA[Swedish]]></translation>
+      <translation locale="ru"><![CDATA[Шведский]]></translation>
+      <translation locale="lt"><![CDATA[Švediškai]]></translation>
+      <translation locale="de"><![CDATA[Schwedisch]]></translation>
+      <translation locale="es"><![CDATA[Sueco]]></translation>
+      <translation locale="uk"><![CDATA[шведська]]></translation>
+      <translation locale="hu"><![CDATA[svéd]]></translation>
+      <translation locale="sv"><![CDATA[Svenska]]></translation>
+      <translation locale="el"><![CDATA[Σουηδικά]]></translation>
+      <translation locale="zh"><![CDATA[瑞典语]]></translation>
+      <translation locale="pt"><![CDATA[Sueco]]></translation>
+      <translation locale="pl"><![CDATA[Szwedzki]]></translation>
+    </item>
+    <item type="message" name="RU">
+      <translation locale="hu"><![CDATA[orosz]]></translation>
+      <translation locale="ru"><![CDATA[Русский]]></translation>
+      <translation locale="it"><![CDATA[Russo]]></translation>
+      <translation locale="zh"><![CDATA[俄罗斯语]]></translation>
+      <translation locale="de"><![CDATA[russisch]]></translation>
+      <translation locale="fr"><![CDATA[Russe]]></translation>
+      <translation locale="nl"><![CDATA[Russisch]]></translation>
+      <translation locale="en"><![CDATA[Russian]]></translation>
+      <translation locale="es"><![CDATA[Ruso]]></translation>
+      <translation locale="lt"><![CDATA[Rusiškai]]></translation>
+      <translation locale="uk"><![CDATA[російська]]></translation>
+      <translation locale="sv"><![CDATA[Ryska]]></translation>
+      <translation locale="el"><![CDATA[Ρώσσικα]]></translation>
+      <translation locale="pl"><![CDATA[Rosyjski]]></translation>
+      <translation locale="tr"><![CDATA[Rusca]]></translation>
+      <translation locale="pt"><![CDATA[Russo]]></translation>
+    </item>
+    <item type="message" name="IT">
+      <translation locale="hu"><![CDATA[olasz]]></translation>
+      <translation locale="ru"><![CDATA[Итальянский]]></translation>
+      <translation locale="it"><![CDATA[Italiano]]></translation>
+      <translation locale="zh"><![CDATA[意大利语]]></translation>
+      <translation locale="de"><![CDATA[Italienisch]]></translation>
+      <translation locale="fr"><![CDATA[Italien]]></translation>
+      <translation locale="nl"><![CDATA[Italiaans]]></translation>
+      <translation locale="en"><![CDATA[Italian]]></translation>
+      <translation locale="es"><![CDATA[Italiano]]></translation>
+      <translation locale="lt"><![CDATA[Itališkai]]></translation>
+      <translation locale="uk"><![CDATA[італійська]]></translation>
+      <translation locale="sv"><![CDATA[Italienska]]></translation>
+      <translation locale="el"><![CDATA[Ιταλικά]]></translation>
+      <translation locale="pl"><![CDATA[Włoski]]></translation>
+      <translation locale="tr"><![CDATA[İtalyanca]]></translation>
+      <translation locale="pt"><![CDATA[Italiano]]></translation>
+    </item>
+    <item type="message" name="HU">
+      <translation locale="lt"><![CDATA[Vengriškai.]]></translation>
+      <translation locale="hu"><![CDATA[magyar]]></translation>
+      <translation locale="ru"><![CDATA[Венгерский]]></translation>
+      <translation locale="it"><![CDATA[Ungherese]]></translation>
+      <translation locale="de"><![CDATA[Ungarisch]]></translation>
+      <translation locale="fr"><![CDATA[Hongrois]]></translation>
+      <translation locale="nl"><![CDATA[Hongaars]]></translation>
+      <translation locale="en"><![CDATA[Hungarian]]></translation>
+      <translation locale="uk"><![CDATA[угорська]]></translation>
+      <translation locale="es"><![CDATA[Húngaro]]></translation>
+      <translation locale="sv"><![CDATA[Ungerska]]></translation>
+      <translation locale="el"><![CDATA[Ουγγρικά]]></translation>
+      <translation locale="zh"><![CDATA[匈牙利语]]></translation>
+      <translation locale="tr"><![CDATA[Macar]]></translation>
+      <translation locale="pt"><![CDATA[Hungaro]]></translation>
+      <translation locale="pl"><![CDATA[Węgierski]]></translation>
+    </item>
+    <item type="message" name="EL">
+      <translation locale="nl"><![CDATA[Grieks]]></translation>
+      <translation locale="en"><![CDATA[Greek]]></translation>
+      <translation locale="ru"><![CDATA[Греческий]]></translation>
+      <translation locale="de"><![CDATA[Griechisch]]></translation>
+      <translation locale="lt"><![CDATA[Graikiškai]]></translation>
+      <translation locale="uk"><![CDATA[грецька]]></translation>
+      <translation locale="es"><![CDATA[Griego]]></translation>
+      <translation locale="hu"><![CDATA[görök]]></translation>
+      <translation locale="sv"><![CDATA[Grekiska]]></translation>
+      <translation locale="el"><![CDATA[Ελληνικά]]></translation>
+      <translation locale="zh"><![CDATA[希腊语]]></translation>
+      <translation locale="pt"><![CDATA[Grego]]></translation>
+      <translation locale="pl"><![CDATA[Grecki]]></translation>
+    </item>
+    <item type="message" name="ZH">
+      <translation locale="zh"><![CDATA[中文]]></translation>
+      <translation locale="ru"><![CDATA[Китайский]]></translation>
+      <translation locale="hu"><![CDATA[kínai]]></translation>
+      <translation locale="de"><![CDATA[chineisch]]></translation>
+      <translation locale="fr"><![CDATA[Chinois]]></translation>
+      <translation locale="nl"><![CDATA[Chinees]]></translation>
+      <translation locale="en"><![CDATA[Chinese]]></translation>
+      <translation locale="it"><![CDATA[cinese]]></translation>
+      <translation locale="es"><![CDATA[Chino]]></translation>
+      <translation locale="lt"><![CDATA[Kiniečių]]></translation>
+      <translation locale="uk"><![CDATA[китайська]]></translation>
+      <translation locale="sv"><![CDATA[Kinesiska]]></translation>
+      <translation locale="el"><![CDATA[Κινέζικα]]></translation>
+      <translation locale="tr"><![CDATA[Çince]]></translation>
+      <translation locale="pt"><![CDATA[Chinês]]></translation>
+      <translation locale="pl"><![CDATA[Chiński]]></translation>
+    </item>
+    <item type="message" name="DE">
+      <translation locale="nl"><![CDATA[Duits]]></translation>
+      <translation locale="en"><![CDATA[German]]></translation>
+      <translation locale="hu"><![CDATA[német]]></translation>
+      <translation locale="ru"><![CDATA[Немецкий]]></translation>
+      <translation locale="it"><![CDATA[Tedesco]]></translation>
+      <translation locale="zh"><![CDATA[德语]]></translation>
+      <translation locale="fr"><![CDATA[Allemand]]></translation>
+      <translation locale="de"><![CDATA[Deutsch]]></translation>
+      <translation locale="es"><![CDATA[Alemán]]></translation>
+      <translation locale="lt"><![CDATA[Vokiškai]]></translation>
+      <translation locale="uk"><![CDATA[німецька]]></translation>
+      <translation locale="sv"><![CDATA[Tyska]]></translation>
+      <translation locale="el"><![CDATA[Γερμανικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Almanca]]></translation>
+      <translation locale="pt"><![CDATA[Alemão]]></translation>
+    </item>
+    <item type="message" name="BG">
+      <translation locale="zh"><![CDATA[比利时语]]></translation>
+      <translation locale="hu"><![CDATA[bulgár]]></translation>
+      <translation locale="de"><![CDATA[Bulgarisch]]></translation>
+      <translation locale="fr"><![CDATA[Bulgare]]></translation>
+      <translation locale="nl"><![CDATA[Bulgaars]]></translation>
+      <translation locale="en"><![CDATA[Bulgarian]]></translation>
+      <translation locale="ru"><![CDATA[Болгарский]]></translation>
+      <translation locale="it"><![CDATA[bulgaro]]></translation>
+      <translation locale="es"><![CDATA[Bulgaro]]></translation>
+      <translation locale="lt"><![CDATA[Bulgariškai]]></translation>
+      <translation locale="uk"><![CDATA[болгарський]]></translation>
+      <translation locale="sv"><![CDATA[Bulgarian]]></translation>
+      <translation locale="el"><![CDATA[Βουλγαρικά]]></translation>
+      <translation locale="tr"><![CDATA[Bulgar]]></translation>
+      <translation locale="pt"><![CDATA[bulgaro]]></translation>
+      <translation locale="pl"><![CDATA[Bułgarski]]></translation>
+    </item>
+    <item type="message" name="CS">
+      <translation locale="nl"><![CDATA[Tsjechisch]]></translation>
+      <translation locale="en"><![CDATA[Czech]]></translation>
+      <translation locale="ru"><![CDATA[Чешский]]></translation>
+      <translation locale="de"><![CDATA[Tschechisch]]></translation>
+      <translation locale="lt"><![CDATA[Čekiškai]]></translation>
+      <translation locale="uk"><![CDATA[чеська]]></translation>
+      <translation locale="es"><![CDATA[Checo]]></translation>
+      <translation locale="hu"><![CDATA[cseh]]></translation>
+      <translation locale="sv"><![CDATA[Tjeckiska]]></translation>
+      <translation locale="el"><![CDATA[Τσέχικα]]></translation>
+      <translation locale="zh"><![CDATA[捷克语]]></translation>
+      <translation locale="pt"><![CDATA[checo]]></translation>
+      <translation locale="pl"><![CDATA[Czeski]]></translation>
+    </item>
+    <Internationalisation>
+      <item type="label" name="ReferenceCode">
+        <translation locale="nl"><![CDATA[referentiecode]]></translation>
+        <translation locale="en"><![CDATA[reference code]]></translation>
+        <translation locale="hu"><![CDATA[referencia kód]]></translation>
+        <translation locale="ru"><![CDATA[Реферальный код]]></translation>
+        <translation locale="it"><![CDATA[codice di riferimento]]></translation>
+        <translation locale="zh"><![CDATA[参考代码]]></translation>
+        <translation locale="fr"><![CDATA[code de référence]]></translation>
+        <translation locale="de"><![CDATA[Referenz-Code]]></translation>
+        <translation locale="es"><![CDATA[código de referencia]]></translation>
+        <translation locale="lt"><![CDATA[persiuntimo kodas]]></translation>
+        <translation locale="uk"><![CDATA[Референс код]]></translation>
+        <translation locale="sv"><![CDATA[referenskod]]></translation>
+        <translation locale="el"><![CDATA[κωδικός αναφοράς]]></translation>
+        <translation locale="pt"><![CDATA[código de referência]]></translation>
+        <translation locale="pl"><![CDATA[kod referencyjny]]></translation>
+      </item>
+      <item type="message" name="HelpReferenceCode">
+        <translation locale="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation locale="en"><![CDATA[The English reference for the translation]]></translation>
+        <translation locale="it"><![CDATA[Il riferimento Inglese per la traduzione]]></translation>
+        <translation locale="ru"><![CDATA[Англ.]]></translation>
+        <translation locale="zh"><![CDATA[翻译的英语参考版本]]></translation>
+        <translation locale="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
+        <translation locale="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
+        <translation locale="fr"><![CDATA[La référence anglaise pour la traduction.]]></translation>
+        <translation locale="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
+        <translation locale="uk"><![CDATA[Англ.]]></translation>
+        <translation locale="el"><![CDATA[Τα Αγγλικά ως αναφορά γιά τη μετάφραση]]></translation>
+        <translation locale="pl"><![CDATA[Angielski odnośnik dla tłumaczenia]]></translation>
+        <translation locale="pt"><![CDATA[A referência inglesa para a tradução]]></translation>
+      </item>
+      <item type="error" name="TranslationAlreadyExists">
+        <translation locale="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
+        <translation locale="en"><![CDATA[This translation already exists.]]></translation>
+        <translation locale="it"><![CDATA[Questa traduzione è già presente.]]></translation>
+        <translation locale="ru"><![CDATA[Перевод уже существует.]]></translation>
+        <translation locale="zh"><![CDATA[这个翻译已存在。]]></translation>
+        <translation locale="de"><![CDATA[Diese Übersetzung gibt es bereits.]]></translation>
+        <translation locale="hu"><![CDATA[Ez a fordítás létezik.]]></translation>
+        <translation locale="fr"><![CDATA[Cette traduction existe déjà.]]></translation>
+        <translation locale="es"><![CDATA[Esta traducción ya existe.]]></translation>
+        <translation locale="uk"><![CDATA[Переклад вже існує]]></translation>
+        <translation locale="el"><![CDATA[Αυτή η μετάφραση υπάρχει ήδη.]]></translation>
+        <translation locale="pl"><![CDATA[Te tłumaczenie już istnieje.]]></translation>
+        <translation locale="pt"><![CDATA[Esta tradução já existe.]]></translation>
+      </item>
+      <item type="label" name="Translation">
+        <translation locale="nl"><![CDATA[vertaling]]></translation>
+        <translation locale="en"><![CDATA[translation]]></translation>
+        <translation locale="hu"><![CDATA[fordítás]]></translation>
+        <translation locale="ru"><![CDATA[Язык]]></translation>
+        <translation locale="it"><![CDATA[traduzione]]></translation>
+        <translation locale="zh"><![CDATA[翻译]]></translation>
+        <translation locale="de"><![CDATA[Übersetzung]]></translation>
+        <translation locale="fr"><![CDATA[traduction]]></translation>
+        <translation locale="es"><![CDATA[traducción]]></translation>
+        <translation locale="lt"><![CDATA[vertimas]]></translation>
+        <translation locale="uk"><![CDATA[Мова]]></translation>
+        <translation locale="sv"><![CDATA[översättning]]></translation>
+        <translation locale="el"><![CDATA[μετάφραση]]></translation>
+        <translation locale="tr"><![CDATA[çeviri]]></translation>
+        <translation locale="pt"><![CDATA[tradução]]></translation>
+        <translation locale="pl"><![CDATA[tłumaczenie]]></translation>
+      </item>
+      <item type="label" name="Type">
+        <translation locale="nl"><![CDATA[type]]></translation>
+        <translation locale="en"><![CDATA[type]]></translation>
+        <translation locale="hu"><![CDATA[típus]]></translation>
+        <translation locale="ru"><![CDATA[Тип]]></translation>
+        <translation locale="it"><![CDATA[tipo]]></translation>
+        <translation locale="zh"><![CDATA[类型]]></translation>
+        <translation locale="fr"><![CDATA[type]]></translation>
+        <translation locale="de"><![CDATA[Typ]]></translation>
+        <translation locale="es"><![CDATA[tipo]]></translation>
+        <translation locale="lt"><![CDATA[tipas]]></translation>
+        <translation locale="uk"><![CDATA[Тип]]></translation>
+        <translation locale="sv"><![CDATA[typ]]></translation>
+        <translation locale="el"><![CDATA[τύπος]]></translation>
+        <translation locale="pt"><![CDATA[tipo]]></translation>
+        <translation locale="pl"><![CDATA[rodzaj]]></translation>
+      </item>
+      <item type="label" name="Application">
+        <translation locale="nl"><![CDATA[applicatie]]></translation>
+        <translation locale="en"><![CDATA[application]]></translation>
+        <translation locale="hu"><![CDATA[program]]></translation>
+        <translation locale="it"><![CDATA[applicazione]]></translation>
+        <translation locale="ru"><![CDATA[Приложение]]></translation>
+        <translation locale="zh"><![CDATA[应用程序]]></translation>
+        <translation locale="fr"><![CDATA[application]]></translation>
+        <translation locale="de"><![CDATA[Anwendung]]></translation>
+        <translation locale="es"><![CDATA[aplicación]]></translation>
+        <translation locale="lt"><![CDATA[aplikacija]]></translation>
+        <translation locale="uk"><![CDATA[Додаток]]></translation>
+        <translation locale="sv"><![CDATA[läge]]></translation>
+        <translation locale="el"><![CDATA[εφαρμογή]]></translation>
+        <translation locale="tr"><![CDATA[uygulama]]></translation>
+        <translation locale="pl"><![CDATA[aplikacja]]></translation>
+        <translation locale="pt"><![CDATA[aplicação]]></translation>
+      </item>
+      <item type="label" name="Module">
+        <translation locale="nl"><![CDATA[module]]></translation>
+        <translation locale="en"><![CDATA[module]]></translation>
+        <translation locale="fr"><![CDATA[module]]></translation>
+        <translation locale="de"><![CDATA[Modul]]></translation>
+        <translation locale="zh"><![CDATA[模块]]></translation>
+        <translation locale="hu"><![CDATA[modul]]></translation>
+        <translation locale="it"><![CDATA[modulo]]></translation>
+        <translation locale="ru"><![CDATA[Модуль]]></translation>
+        <translation locale="es"><![CDATA[módulo]]></translation>
+        <translation locale="lt"><![CDATA[modulis]]></translation>
+        <translation locale="uk"><![CDATA[Модуль]]></translation>
+        <translation locale="sv"><![CDATA[modul]]></translation>
+        <translation locale="el"><![CDATA[ενότητα]]></translation>
+        <translation locale="pt"><![CDATA[módulo]]></translation>
+        <translation locale="pl"><![CDATA[moduł]]></translation>
+      </item>
+      <item type="label" name="TranslationTypeMessage">
+        <translation locale="nl"><![CDATA[bericht]]></translation>
+        <translation locale="en"><![CDATA[message]]></translation>
+        <translation locale="hu"><![CDATA[üzenet]]></translation>
+        <translation locale="it"><![CDATA[messaggio]]></translation>
+        <translation locale="fr"><![CDATA[message]]></translation>
+        <translation locale="ru"><![CDATA[Сообщение]]></translation>
+        <translation locale="zh"><![CDATA[消息]]></translation>
+        <translation locale="de"><![CDATA[Nachricht]]></translation>
+        <translation locale="es"><![CDATA[Mensaje]]></translation>
+        <translation locale="lt"><![CDATA[žinutė]]></translation>
+        <translation locale="uk"><![CDATA[Повідомлення]]></translation>
+        <translation locale="sv"><![CDATA[meddelande]]></translation>
+        <translation locale="el"><![CDATA[μήνυμα]]></translation>
+        <translation locale="pl"><![CDATA[wiadomość]]></translation>
+        <translation locale="tr"><![CDATA[mesaj]]></translation>
+        <translation locale="pt"><![CDATA[mensagem]]></translation>
+      </item>
+      <item type="label" name="TranslationTypeLabel">
+        <translation locale="nl"><![CDATA[label]]></translation>
+        <translation locale="en"><![CDATA[label]]></translation>
+        <translation locale="hu"><![CDATA[felirat]]></translation>
+        <translation locale="it"><![CDATA[etichetta]]></translation>
+        <translation locale="ru"><![CDATA[Метка]]></translation>
+        <translation locale="zh"><![CDATA[标签]]></translation>
+        <translation locale="de"><![CDATA[Label]]></translation>
+        <translation locale="fr"><![CDATA[label]]></translation>
+        <translation locale="es"><![CDATA[label]]></translation>
+        <translation locale="lt"><![CDATA[žymeklis]]></translation>
+        <translation locale="uk"><![CDATA[Мітка]]></translation>
+        <translation locale="sv"><![CDATA[etikett]]></translation>
+        <translation locale="el"><![CDATA[ετικέτα]]></translation>
+        <translation locale="pt"><![CDATA[etiqueta]]></translation>
+        <translation locale="pl"><![CDATA[etykieta]]></translation>
+      </item>
+      <item type="label" name="TranslationTypeError">
+        <translation locale="nl"><![CDATA[error]]></translation>
+        <translation locale="en"><![CDATA[error]]></translation>
+        <translation locale="hu"><![CDATA[hiba]]></translation>
+        <translation locale="it"><![CDATA[errore]]></translation>
+        <translation locale="ru"><![CDATA[Ошибки]]></translation>
+        <translation locale="zh"><![CDATA[错误]]></translation>
+        <translation locale="de"><![CDATA[Fehler]]></translation>
+        <translation locale="fr"><![CDATA[erreur]]></translation>
+        <translation locale="es"><![CDATA[error]]></translation>
+        <translation locale="lt"><![CDATA[klaida]]></translation>
+        <translation locale="uk"><![CDATA[Помилки]]></translation>
+        <translation locale="sv"><![CDATA[fel]]></translation>
+        <translation locale="el"><![CDATA[σφάλμα]]></translation>
+        <translation locale="pl"><![CDATA[błąd]]></translation>
+        <translation locale="pt"><![CDATA[erro]]></translation>
+      </item>
+      <item type="label" name="TranslationTypeSlug">
+        <translation locale="nl"><![CDATA[slug]]></translation>
+        <translation locale="en"><![CDATA[slug]]></translation>
+      </item>
+      <item type="label" name="ApplicationBackend">
+        <translation locale="nl"><![CDATA[backend]]></translation>
+        <translation locale="en"><![CDATA[backend]]></translation>
+        <translation locale="hu"><![CDATA[backend]]></translation>
+        <translation locale="it"><![CDATA[backend]]></translation>
+        <translation locale="ru"><![CDATA[ПУ]]></translation>
+        <translation locale="zh"><![CDATA[后台]]></translation>
+        <translation locale="de"><![CDATA[Backend]]></translation>
+        <translation locale="fr"><![CDATA[backend]]></translation>
+        <translation locale="es"><![CDATA[backend]]></translation>
+        <translation locale="lt"><![CDATA[Administravimas]]></translation>
+        <translation locale="uk"><![CDATA[Панель управління]]></translation>
+        <translation locale="sv"><![CDATA[bakände]]></translation>
+        <translation locale="el"><![CDATA[πίσω όψη]]></translation>
+        <translation locale="tr"><![CDATA[Yönetim paneli]]></translation>
+        <translation locale="pt"><![CDATA[Backend]]></translation>
+        <translation locale="pl"><![CDATA[backend]]></translation>
+      </item>
+      <item type="label" name="ApplicationFrontend">
+        <translation locale="nl"><![CDATA[frontend]]></translation>
+        <translation locale="en"><![CDATA[frontend]]></translation>
+        <translation locale="hu"><![CDATA[frontend]]></translation>
+        <translation locale="it"><![CDATA[frontend]]></translation>
+        <translation locale="ru"><![CDATA[Сайт]]></translation>
+        <translation locale="zh"><![CDATA[前端]]></translation>
+        <translation locale="fr"><![CDATA[frontend]]></translation>
+        <translation locale="de"><![CDATA[Frontend]]></translation>
+        <translation locale="es"><![CDATA[frontend]]></translation>
+        <translation locale="lt"><![CDATA[išorė]]></translation>
+        <translation locale="uk"><![CDATA[Сайт]]></translation>
+        <translation locale="sv"><![CDATA[framsida]]></translation>
+        <translation locale="el"><![CDATA[εμπρός όψη]]></translation>
+        <translation locale="pt"><![CDATA[frontend]]></translation>
+        <translation locale="pl"><![CDATA[frontend]]></translation>
+      </item>
+      <item type="label" name="ApplicationConsole">
+        <translation locale="nl"><![CDATA[console]]></translation>
+        <translation locale="en"><![CDATA[console]]></translation>
+      </item>
+      <item type="label" name="TranslationAdd">
+        <translation locale="nl"><![CDATA[vertaling toevoegen]]></translation>
+        <translation locale="en"><![CDATA[add translation]]></translation>
+        <translation locale="hu"><![CDATA[új fordítás]]></translation>
+        <translation locale="it"><![CDATA[aggiungi traduzione]]></translation>
+        <translation locale="ru"><![CDATA[Добавить перевод]]></translation>
+        <translation locale="zh"><![CDATA[添加翻译语言]]></translation>
+        <translation locale="de"><![CDATA[Übersetzung hinzufügen]]></translation>
+        <translation locale="fr"><![CDATA[ajouter une traduction]]></translation>
+        <translation locale="es"><![CDATA[agregar traducción]]></translation>
+        <translation locale="uk"><![CDATA[Додати переклад]]></translation>
+        <translation locale="lt"><![CDATA[naujas vertimas]]></translation>
+        <translation locale="el"><![CDATA[Προσθήκη μετάφρασης]]></translation>
+        <translation locale="pl"><![CDATA[Dodaj tłumaczenie]]></translation>
+        <translation locale="pt"><![CDATA[adicionar tradução]]></translation>
+      </item>
+      <item type="message" name="NoItemsFilter">
+        <translation locale="nl"><![CDATA[Er zijn geen vertalingen voor deze filter.]]></translation>
+        <translation locale="en"><![CDATA[There are no translations yet for this filter.]]></translation>
+        <translation locale="it"><![CDATA[Non ci sono ancora traduzioni per questo filtro.]]></translation>
+        <translation locale="ru"><![CDATA[Нет значений для этого фильтра.]]></translation>
+        <translation locale="zh"><![CDATA[这个滤镜结果下还没有翻译。There are no translations yet.]]></translation>
+        <translation locale="hu"><![CDATA[Még nincsenek fordítások ebben a szűrőben.]]></translation>
+        <translation locale="fr"><![CDATA[Il n'y a pas encore de traduction pour ce filtre]]></translation>
+        <translation locale="de"><![CDATA[Mit diesem Filter konnten keine Übersetzungen gefunden werden.]]></translation>
+        <translation locale="es"><![CDATA[No hay traducción apra este filtro aun.]]></translation>
+        <translation locale="uk"><![CDATA[Немає значень для цього фільтра.]]></translation>
+        <translation locale="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο.]]></translation>
+        <translation locale="pl"><![CDATA[Nie ma jeszcze tłumaczenia dla tego filtra.]]></translation>
+        <translation locale="pt"><![CDATA[Não foram encontradas traduções para este filtro.]]></translation>
+      </item>
+      <item type="message" name="FilterToSeeTheMatchingTranslations">
+        <translation locale="nl"><![CDATA[Filter ergens op om de bijpassende vertalingen te zien.]]></translation>
+        <translation locale="en"><![CDATA[Filter on something to see the matching translations.]]></translation>
+      </item>
+      <item type="label" name="Types">
+        <translation locale="nl"><![CDATA[types]]></translation>
+        <translation locale="en"><![CDATA[types]]></translation>
+        <translation locale="hu"><![CDATA[típus]]></translation>
+        <translation locale="it"><![CDATA[tipologie]]></translation>
+        <translation locale="ru"><![CDATA[Типы]]></translation>
+        <translation locale="zh"><![CDATA[类型]]></translation>
+        <translation locale="de"><![CDATA[Typen]]></translation>
+        <translation locale="fr"><![CDATA[types]]></translation>
+        <translation locale="es"><![CDATA[tipos]]></translation>
+        <translation locale="uk"><![CDATA[Типи]]></translation>
+        <translation locale="lt"><![CDATA[Tipai]]></translation>
+        <translation locale="el"><![CDATA[Τύποι]]></translation>
+        <translation locale="pl"><![CDATA[typy]]></translation>
+        <translation locale="pt"><![CDATA[tipos]]></translation>
+      </item>
+      <item type="message" name="NotFiltered">
+        <translation locale="nl"><![CDATA[Niet gefilterd]]></translation>
+        <translation locale="en"><![CDATA[Not filtered]]></translation>
+      </item>
+      <item type="label" name="TranslationImport">
+        <translation locale="nl"><![CDATA[importeer]]></translation>
+        <translation locale="en"><![CDATA[import]]></translation>
+        <translation locale="hu"><![CDATA[import]]></translation>
+        <translation locale="it"><![CDATA[importa]]></translation>
+        <translation locale="ru"><![CDATA[Импорт]]></translation>
+        <translation locale="zh"><![CDATA[导入]]></translation>
+        <translation locale="de"><![CDATA[importieren]]></translation>
+        <translation locale="fr"><![CDATA[importer]]></translation>
+        <translation locale="es"><![CDATA[importar]]></translation>
+        <translation locale="lt"><![CDATA[importas]]></translation>
+        <translation locale="uk"><![CDATA[Імпорт]]></translation>
+        <translation locale="sv"><![CDATA[importera]]></translation>
+        <translation locale="el"><![CDATA[εισαγωγή]]></translation>
+        <translation locale="pt"><![CDATA[importar]]></translation>
+        <translation locale="pl"><![CDATA[importuj]]></translation>
+      </item>
+      <item type="label" name="Imported">
+        <translation locale="nl"><![CDATA[geïmporteerd]]></translation>
+        <translation locale="en"><![CDATA[imported]]></translation>
+      </item>
+      <item type="label" name="Updated">
+        <translation locale="nl"><![CDATA[geüpdate]]></translation>
+        <translation locale="en"><![CDATA[updated]]></translation>
+      </item>
+      <item type="label" name="Skipped">
+        <translation locale="nl"><![CDATA[overgeslagen]]></translation>
+        <translation locale="en"><![CDATA[skipped]]></translation>
+      </item>
+      <item type="label" name="Failed">
+        <translation locale="nl"><![CDATA[mislukt]]></translation>
+        <translation locale="en"><![CDATA[failed]]></translation>
+      </item>
+      <item type="label" name="Overwrite">
+        <translation locale="nl"><![CDATA[overschrijf]]></translation>
+        <translation locale="en"><![CDATA[overwrite]]></translation>
+        <translation locale="it"><![CDATA[sovrascrivi]]></translation>
+        <translation locale="ru"><![CDATA[Перезаписать]]></translation>
+        <translation locale="zh"><![CDATA[重写]]></translation>
+        <translation locale="de"><![CDATA[überschreiben]]></translation>
+        <translation locale="fr"><![CDATA[écraser]]></translation>
+        <translation locale="hu"><![CDATA[felülír]]></translation>
+        <translation locale="es"><![CDATA[sobreescribir]]></translation>
+        <translation locale="uk"><![CDATA[Перезаписати]]></translation>
+        <translation locale="sv"><![CDATA[skriva över]]></translation>
+        <translation locale="el"><![CDATA[Επικάλυψη]]></translation>
+        <translation locale="pl"><![CDATA[nadpisz]]></translation>
+        <translation locale="pt"><![CDATA[substituir]]></translation>
+      </item>
+      <item type="label" name="EnabledForWebsite">
+        <translation locale="nl"><![CDATA[toegankelijk zijn voor bezoekers]]></translation>
+        <translation locale="en"><![CDATA[accessible for visitors]]></translation>
+      </item>
+      <item type="label" name="EnabledForUser">
+        <translation locale="nl"><![CDATA[beschikbaar als interface taal]]></translation>
+        <translation locale="en"><![CDATA[available as interface locale]]></translation>
+      </item>
+      <item type="label" name="DefaultForWebsite">
+        <translation locale="nl"><![CDATA[standaard taal voor bezoekers]]></translation>
+        <translation locale="en"><![CDATA[default locale for visitors]]></translation>
+      </item>
+      <item type="label" name="DefaultForUser">
+        <translation locale="nl"><![CDATA[standaard interface taal]]></translation>
+        <translation locale="en"><![CDATA[default interface locale]]></translation>
+      </item>
+      <item type="label" name="EnabledForBrowserLocaleRedirect">
+        <translation locale="nl"><![CDATA[Automatische redirect op basis van browsertaal]]></translation>
+        <translation locale="en"><![CDATA[Automatic redirect based upon their browser language.]]></translation>
+      </item>
+    </Internationalisation>
+  </Backend>
+  <Frontend>
+
+    <item type="label" name="EN">
+      <translation locale="nl"><![CDATA[Engels]]></translation>
+      <translation locale="en"><![CDATA[English]]></translation>
+      <translation locale="hu"><![CDATA[Angol]]></translation>
+      <translation locale="it"><![CDATA[Inglese]]></translation>
+      <translation locale="fr"><![CDATA[anglais]]></translation>
+      <translation locale="ru"><![CDATA[Английский]]></translation>
+      <translation locale="de"><![CDATA[Englisch]]></translation>
+      <translation locale="uk"><![CDATA[англійська]]></translation>
+      <translation locale="sv"><![CDATA[Engelska]]></translation>
+      <translation locale="lt"><![CDATA[Angliškai]]></translation>
+      <translation locale="el"><![CDATA[Αγγλικά]]></translation>
+      <translation locale="zh"><![CDATA[英语]]></translation>
+      <translation locale="pl"><![CDATA[Angielski]]></translation>
+      <translation locale="tr"><![CDATA[İngilizce]]></translation>
+      <translation locale="pt"><![CDATA[Inglês]]></translation>
+    </item>
+    <item type="label" name="FR">
+      <translation locale="nl"><![CDATA[Frans]]></translation>
+      <translation locale="en"><![CDATA[French]]></translation>
+      <translation locale="hu"><![CDATA[Francia]]></translation>
+      <translation locale="it"><![CDATA[Francese]]></translation>
+      <translation locale="fr"><![CDATA[français]]></translation>
+      <translation locale="ru"><![CDATA[Французский]]></translation>
+      <translation locale="de"><![CDATA[Französisch]]></translation>
+      <translation locale="uk"><![CDATA[французька]]></translation>
+      <translation locale="sv"><![CDATA[Franska]]></translation>
+      <translation locale="lt"><![CDATA[Prancūzų]]></translation>
+      <translation locale="el"><![CDATA[Γαλλικά]]></translation>
+      <translation locale="zh"><![CDATA[法语]]></translation>
+      <translation locale="pl"><![CDATA[Francuski]]></translation>
+      <translation locale="tr"><![CDATA[Fransızca]]></translation>
+      <translation locale="pt"><![CDATA[Francês]]></translation>
+    </item>
+    <item type="label" name="ES">
+      <translation locale="nl"><![CDATA[Spaans]]></translation>
+      <translation locale="en"><![CDATA[Spanish]]></translation>
+      <translation locale="hu"><![CDATA[spanyol]]></translation>
+      <translation locale="ru"><![CDATA[Испанский]]></translation>
+      <translation locale="it"><![CDATA[Spagnolo]]></translation>
+      <translation locale="fr"><![CDATA[Espagnol]]></translation>
+      <translation locale="de"><![CDATA[Spanisch]]></translation>
+      <translation locale="uk"><![CDATA[іспаньска]]></translation>
+      <translation locale="es"><![CDATA[Español]]></translation>
+      <translation locale="lt"><![CDATA[Ispaniškai]]></translation>
+      <translation locale="sv"><![CDATA[Spanska]]></translation>
+      <translation locale="el"><![CDATA[Ισπανικά]]></translation>
+      <translation locale="zh"><![CDATA[西班牙语]]></translation>
+      <translation locale="pl"><![CDATA[Hiszpański]]></translation>
+      <translation locale="tr"><![CDATA[İspanyolca]]></translation>
+      <translation locale="pt"><![CDATA[Espanhol]]></translation>
+    </item>
+    <item type="label" name="LT">
+      <translation locale="nl"><![CDATA[Litouws]]></translation>
+      <translation locale="en"><![CDATA[Lithuanian]]></translation>
+      <translation locale="ru"><![CDATA[Литовский]]></translation>
+      <translation locale="de"><![CDATA[Litauisch]]></translation>
+      <translation locale="lt"><![CDATA[Lietuviškai]]></translation>
+      <translation locale="uk"><![CDATA[литовська]]></translation>
+      <translation locale="es"><![CDATA[Lituano]]></translation>
+      <translation locale="hu"><![CDATA[litván]]></translation>
+      <translation locale="sv"><![CDATA[Litauiska]]></translation>
+      <translation locale="el"><![CDATA[Λιθουανικά]]></translation>
+      <translation locale="zh"><![CDATA[立陶宛语]]></translation>
+      <translation locale="pt"><![CDATA[Lituano]]></translation>
+      <translation locale="pl"><![CDATA[Litewski]]></translation>
+    </item>
+    <item type="label" name="NL">
+      <translation locale="nl"><![CDATA[Nederlands]]></translation>
+      <translation locale="en"><![CDATA[Dutch]]></translation>
+      <translation locale="hu"><![CDATA[Holland]]></translation>
+      <translation locale="it"><![CDATA[Olandese]]></translation>
+      <translation locale="fr"><![CDATA[Néerlandais]]></translation>
+      <translation locale="ru"><![CDATA[Голландский]]></translation>
+      <translation locale="zh"><![CDATA[荷兰语]]></translation>
+      <translation locale="de"><![CDATA[Niederländisch]]></translation>
+      <translation locale="es"><![CDATA[holandes]]></translation>
+      <translation locale="lt"><![CDATA[olandiškai]]></translation>
+      <translation locale="uk"><![CDATA[голандська]]></translation>
+      <translation locale="sv"><![CDATA[Holländska]]></translation>
+      <translation locale="el"><![CDATA[Ολλανδικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Flemenkçe]]></translation>
+      <translation locale="pt"><![CDATA[Neerlandês]]></translation>
+    </item>
+    <item type="label" name="TR">
+      <translation locale="hu"><![CDATA[török]]></translation>
+      <translation locale="ru"><![CDATA[Турецкий]]></translation>
+      <translation locale="it"><![CDATA[Turco]]></translation>
+      <translation locale="zh"><![CDATA[土耳其语]]></translation>
+      <translation locale="de"><![CDATA[türkisch]]></translation>
+      <translation locale="fr"><![CDATA[Turque]]></translation>
+      <translation locale="nl"><![CDATA[Turks]]></translation>
+      <translation locale="en"><![CDATA[Turkish]]></translation>
+      <translation locale="es"><![CDATA[Turco]]></translation>
+      <translation locale="lt"><![CDATA[Turkiškai]]></translation>
+      <translation locale="uk"><![CDATA[турецька]]></translation>
+      <translation locale="sv"><![CDATA[Turkiska]]></translation>
+      <translation locale="el"><![CDATA[Τούρκικα]]></translation>
+      <translation locale="tr"><![CDATA[Türkçe]]></translation>
+      <translation locale="pl"><![CDATA[Turecki]]></translation>
+      <translation locale="pt"><![CDATA[turco]]></translation>
+    </item>
+    <item type="label" name="PL">
+      <translation locale="hu"><![CDATA[lengyel]]></translation>
+      <translation locale="ru"><![CDATA[Польский]]></translation>
+      <translation locale="it"><![CDATA[Polacco]]></translation>
+      <translation locale="zh"><![CDATA[波兰语]]></translation>
+      <translation locale="de"><![CDATA[polnisch]]></translation>
+      <translation locale="fr"><![CDATA[Polonais]]></translation>
+      <translation locale="nl"><![CDATA[Pools]]></translation>
+      <translation locale="en"><![CDATA[Polish]]></translation>
+      <translation locale="es"><![CDATA[Polaco]]></translation>
+      <translation locale="lt"><![CDATA[Lenkiškai]]></translation>
+      <translation locale="uk"><![CDATA[польська]]></translation>
+      <translation locale="sv"><![CDATA[Polska]]></translation>
+      <translation locale="el"><![CDATA[Πολωνικά]]></translation>
+      <translation locale="pl"><![CDATA[Polski]]></translation>
+      <translation locale="tr"><![CDATA[Lehçe]]></translation>
+      <translation locale="pt"><![CDATA[polaco]]></translation>
+    </item>
+    <item type="label" name="PT">
+      <translation locale="nl"><![CDATA[Portugees]]></translation>
+      <translation locale="en"><![CDATA[Portuguese]]></translation>
+      <translation locale="ru"><![CDATA[Португальский]]></translation>
+      <translation locale="lt"><![CDATA[Portoghese]]></translation>
+      <translation locale="de"><![CDATA[Portugiesisch]]></translation>
+      <translation locale="uk"><![CDATA[Португальська]]></translation>
+      <translation locale="es"><![CDATA[Portugués]]></translation>
+      <translation locale="hu"><![CDATA[Portugál]]></translation>
+      <translation locale="sv"><![CDATA[Portugisiska]]></translation>
+      <translation locale="el"><![CDATA[Πορτογαλικά]]></translation>
+      <translation locale="zh"><![CDATA[葡萄牙语]]></translation>
+      <translation locale="pt"><![CDATA[Português]]></translation>
+      <translation locale="pl"><![CDATA[Portugalski]]></translation>
+    </item>
+    <item type="label" name="UK">
+      <translation locale="nl"><![CDATA[Oekraïens]]></translation>
+      <translation locale="en"><![CDATA[Ukrainian]]></translation>
+      <translation locale="ru"><![CDATA[Украинский]]></translation>
+      <translation locale="lt"><![CDATA[Ukrainiečių]]></translation>
+      <translation locale="de"><![CDATA[Ukrainisch]]></translation>
+      <translation locale="uk"><![CDATA[українська]]></translation>
+      <translation locale="es"><![CDATA[Ucraniano]]></translation>
+      <translation locale="hu"><![CDATA[ukrán]]></translation>
+      <translation locale="sv"><![CDATA[Ukrianska]]></translation>
+      <translation locale="el"><![CDATA[Ουκρανικά]]></translation>
+      <translation locale="zh"><![CDATA[乌克兰语]]></translation>
+      <translation locale="pt"><![CDATA[Ucraniano]]></translation>
+      <translation locale="pl"><![CDATA[Ukraiński]]></translation>
+    </item>
+    <item type="label" name="SV">
+      <translation locale="nl"><![CDATA[Zweeds]]></translation>
+      <translation locale="en"><![CDATA[Swedish]]></translation>
+      <translation locale="ru"><![CDATA[Шведский]]></translation>
+      <translation locale="lt"><![CDATA[Švediškai]]></translation>
+      <translation locale="de"><![CDATA[Schwedisch]]></translation>
+      <translation locale="es"><![CDATA[Sueco]]></translation>
+      <translation locale="uk"><![CDATA[шведська]]></translation>
+      <translation locale="hu"><![CDATA[svéd]]></translation>
+      <translation locale="sv"><![CDATA[Svenska]]></translation>
+      <translation locale="el"><![CDATA[Σουηδικά]]></translation>
+      <translation locale="zh"><![CDATA[瑞典语]]></translation>
+      <translation locale="pt"><![CDATA[Sueco]]></translation>
+      <translation locale="pl"><![CDATA[Szwedzki]]></translation>
+    </item>
+    <item type="label" name="RU">
+      <translation locale="hu"><![CDATA[orosz]]></translation>
+      <translation locale="ru"><![CDATA[Русский]]></translation>
+      <translation locale="it"><![CDATA[Russo]]></translation>
+      <translation locale="zh"><![CDATA[俄罗斯语]]></translation>
+      <translation locale="de"><![CDATA[russisch]]></translation>
+      <translation locale="fr"><![CDATA[Russe]]></translation>
+      <translation locale="nl"><![CDATA[Russisch]]></translation>
+      <translation locale="en"><![CDATA[Russian]]></translation>
+      <translation locale="es"><![CDATA[Ruso]]></translation>
+      <translation locale="lt"><![CDATA[Rusiškai]]></translation>
+      <translation locale="uk"><![CDATA[російська]]></translation>
+      <translation locale="sv"><![CDATA[Ryska]]></translation>
+      <translation locale="el"><![CDATA[Ρώσσικα]]></translation>
+      <translation locale="pl"><![CDATA[Rosyjski]]></translation>
+      <translation locale="tr"><![CDATA[Rusca]]></translation>
+      <translation locale="pt"><![CDATA[Russo]]></translation>
+    </item>
+    <item type="label" name="IT">
+      <translation locale="hu"><![CDATA[olasz]]></translation>
+      <translation locale="ru"><![CDATA[Итальянский]]></translation>
+      <translation locale="it"><![CDATA[Italiano]]></translation>
+      <translation locale="zh"><![CDATA[意大利语]]></translation>
+      <translation locale="de"><![CDATA[Italienisch]]></translation>
+      <translation locale="fr"><![CDATA[Italien]]></translation>
+      <translation locale="nl"><![CDATA[Italiaans]]></translation>
+      <translation locale="en"><![CDATA[Italian]]></translation>
+      <translation locale="es"><![CDATA[Italiano]]></translation>
+      <translation locale="lt"><![CDATA[Itališkai]]></translation>
+      <translation locale="uk"><![CDATA[італійська]]></translation>
+      <translation locale="sv"><![CDATA[Italienska]]></translation>
+      <translation locale="el"><![CDATA[Ιταλικά]]></translation>
+      <translation locale="pl"><![CDATA[Włoski]]></translation>
+      <translation locale="tr"><![CDATA[İtalyanca]]></translation>
+      <translation locale="pt"><![CDATA[Italiano]]></translation>
+    </item>
+    <item type="label" name="HU">
+      <translation locale="lt"><![CDATA[Vengriškai.]]></translation>
+      <translation locale="hu"><![CDATA[magyar]]></translation>
+      <translation locale="ru"><![CDATA[Венгерский]]></translation>
+      <translation locale="it"><![CDATA[Ungherese]]></translation>
+      <translation locale="de"><![CDATA[Ungarisch]]></translation>
+      <translation locale="fr"><![CDATA[Hongrois]]></translation>
+      <translation locale="nl"><![CDATA[Hongaars]]></translation>
+      <translation locale="en"><![CDATA[Hungarian]]></translation>
+      <translation locale="uk"><![CDATA[угорська]]></translation>
+      <translation locale="es"><![CDATA[Húngaro]]></translation>
+      <translation locale="sv"><![CDATA[Ungerska]]></translation>
+      <translation locale="el"><![CDATA[Ουγγρικά]]></translation>
+      <translation locale="zh"><![CDATA[匈牙利语]]></translation>
+      <translation locale="tr"><![CDATA[Macar]]></translation>
+      <translation locale="pt"><![CDATA[Hungaro]]></translation>
+      <translation locale="pl"><![CDATA[Węgierski]]></translation>
+    </item>
+    <item type="label" name="EL">
+      <translation locale="nl"><![CDATA[Grieks]]></translation>
+      <translation locale="en"><![CDATA[Greek]]></translation>
+      <translation locale="ru"><![CDATA[Греческий]]></translation>
+      <translation locale="de"><![CDATA[Griechisch]]></translation>
+      <translation locale="lt"><![CDATA[Graikiškai]]></translation>
+      <translation locale="uk"><![CDATA[грецька]]></translation>
+      <translation locale="es"><![CDATA[Griego]]></translation>
+      <translation locale="hu"><![CDATA[görök]]></translation>
+      <translation locale="sv"><![CDATA[Grekiska]]></translation>
+      <translation locale="el"><![CDATA[Ελληνικά]]></translation>
+      <translation locale="zh"><![CDATA[希腊语]]></translation>
+      <translation locale="pt"><![CDATA[Grego]]></translation>
+      <translation locale="pl"><![CDATA[Grecki]]></translation>
+    </item>
+    <item type="label" name="ZH">
+      <translation locale="zh"><![CDATA[中文]]></translation>
+      <translation locale="ru"><![CDATA[Китайский]]></translation>
+      <translation locale="hu"><![CDATA[kínai]]></translation>
+      <translation locale="de"><![CDATA[chineisch]]></translation>
+      <translation locale="fr"><![CDATA[Chinois]]></translation>
+      <translation locale="nl"><![CDATA[Chinees]]></translation>
+      <translation locale="en"><![CDATA[Chinese]]></translation>
+      <translation locale="it"><![CDATA[cinese]]></translation>
+      <translation locale="es"><![CDATA[Chino]]></translation>
+      <translation locale="lt"><![CDATA[Kiniečių]]></translation>
+      <translation locale="uk"><![CDATA[китайська]]></translation>
+      <translation locale="sv"><![CDATA[Kinesiska]]></translation>
+      <translation locale="el"><![CDATA[Κινέζικα]]></translation>
+      <translation locale="tr"><![CDATA[Çince]]></translation>
+      <translation locale="pt"><![CDATA[Chinês]]></translation>
+      <translation locale="pl"><![CDATA[Chiński]]></translation>
+    </item>
+    <item type="label" name="DE">
+      <translation locale="nl"><![CDATA[Duits]]></translation>
+      <translation locale="en"><![CDATA[German]]></translation>
+      <translation locale="hu"><![CDATA[német]]></translation>
+      <translation locale="ru"><![CDATA[Немецкий]]></translation>
+      <translation locale="it"><![CDATA[Tedesco]]></translation>
+      <translation locale="zh"><![CDATA[德语]]></translation>
+      <translation locale="fr"><![CDATA[Allemand]]></translation>
+      <translation locale="de"><![CDATA[Deutsch]]></translation>
+      <translation locale="es"><![CDATA[Alemán]]></translation>
+      <translation locale="lt"><![CDATA[Vokiškai]]></translation>
+      <translation locale="uk"><![CDATA[німецька]]></translation>
+      <translation locale="sv"><![CDATA[Tyska]]></translation>
+      <translation locale="el"><![CDATA[Γερμανικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Almanca]]></translation>
+      <translation locale="pt"><![CDATA[Alemão]]></translation>
+    </item>
+    <item type="label" name="BG">
+      <translation locale="zh"><![CDATA[比利时语]]></translation>
+      <translation locale="hu"><![CDATA[bulgár]]></translation>
+      <translation locale="de"><![CDATA[Bulgarisch]]></translation>
+      <translation locale="fr"><![CDATA[Bulgare]]></translation>
+      <translation locale="nl"><![CDATA[Bulgaars]]></translation>
+      <translation locale="en"><![CDATA[Bulgarian]]></translation>
+      <translation locale="ru"><![CDATA[Болгарский]]></translation>
+      <translation locale="it"><![CDATA[bulgaro]]></translation>
+      <translation locale="es"><![CDATA[Bulgaro]]></translation>
+      <translation locale="lt"><![CDATA[Bulgariškai]]></translation>
+      <translation locale="uk"><![CDATA[болгарський]]></translation>
+      <translation locale="sv"><![CDATA[Bulgarian]]></translation>
+      <translation locale="el"><![CDATA[Βουλγαρικά]]></translation>
+      <translation locale="tr"><![CDATA[Bulgar]]></translation>
+      <translation locale="pt"><![CDATA[bulgaro]]></translation>
+      <translation locale="pl"><![CDATA[Bułgarski]]></translation>
+    </item>
+    <item type="label" name="CS">
+      <translation locale="nl"><![CDATA[Tsjechisch]]></translation>
+      <translation locale="en"><![CDATA[Czech]]></translation>
+      <translation locale="ru"><![CDATA[Чешский]]></translation>
+      <translation locale="de"><![CDATA[Tschechisch]]></translation>
+      <translation locale="lt"><![CDATA[Čekiškai]]></translation>
+      <translation locale="uk"><![CDATA[чеська]]></translation>
+      <translation locale="es"><![CDATA[Checo]]></translation>
+      <translation locale="hu"><![CDATA[cseh]]></translation>
+      <translation locale="sv"><![CDATA[Tjeckiska]]></translation>
+      <translation locale="el"><![CDATA[Τσέχικα]]></translation>
+      <translation locale="zh"><![CDATA[捷克语]]></translation>
+      <translation locale="pt"><![CDATA[checo]]></translation>
+      <translation locale="pl"><![CDATA[Czeski]]></translation>
+    </item>
+    <item type="message" name="EN">
+      <translation locale="nl"><![CDATA[Engels]]></translation>
+      <translation locale="en"><![CDATA[English]]></translation>
+      <translation locale="hu"><![CDATA[Angol]]></translation>
+      <translation locale="it"><![CDATA[Inglese]]></translation>
+      <translation locale="fr"><![CDATA[anglais]]></translation>
+      <translation locale="ru"><![CDATA[Английский]]></translation>
+      <translation locale="de"><![CDATA[Englisch]]></translation>
+      <translation locale="uk"><![CDATA[англійська]]></translation>
+      <translation locale="sv"><![CDATA[Engelska]]></translation>
+      <translation locale="lt"><![CDATA[Angliškai]]></translation>
+      <translation locale="el"><![CDATA[Αγγλικά]]></translation>
+      <translation locale="zh"><![CDATA[英语]]></translation>
+      <translation locale="pl"><![CDATA[Angielski]]></translation>
+      <translation locale="tr"><![CDATA[İngilizce]]></translation>
+      <translation locale="pt"><![CDATA[Inglês]]></translation>
+    </item>
+    <item type="message" name="FR">
+      <translation locale="nl"><![CDATA[Frans]]></translation>
+      <translation locale="en"><![CDATA[French]]></translation>
+      <translation locale="hu"><![CDATA[Francia]]></translation>
+      <translation locale="it"><![CDATA[Francese]]></translation>
+      <translation locale="fr"><![CDATA[français]]></translation>
+      <translation locale="ru"><![CDATA[Французский]]></translation>
+      <translation locale="de"><![CDATA[Französisch]]></translation>
+      <translation locale="uk"><![CDATA[французька]]></translation>
+      <translation locale="sv"><![CDATA[Franska]]></translation>
+      <translation locale="lt"><![CDATA[Prancūzų]]></translation>
+      <translation locale="el"><![CDATA[Γαλλικά]]></translation>
+      <translation locale="zh"><![CDATA[法语]]></translation>
+      <translation locale="pl"><![CDATA[Francuski]]></translation>
+      <translation locale="tr"><![CDATA[Fransızca]]></translation>
+      <translation locale="pt"><![CDATA[Francês]]></translation>
+    </item>
+    <item type="message" name="ES">
+      <translation locale="nl"><![CDATA[Spaans]]></translation>
+      <translation locale="en"><![CDATA[Spanish]]></translation>
+      <translation locale="hu"><![CDATA[spanyol]]></translation>
+      <translation locale="ru"><![CDATA[Испанский]]></translation>
+      <translation locale="it"><![CDATA[Spagnolo]]></translation>
+      <translation locale="fr"><![CDATA[Espagnol]]></translation>
+      <translation locale="de"><![CDATA[Spanisch]]></translation>
+      <translation locale="uk"><![CDATA[іспаньска]]></translation>
+      <translation locale="es"><![CDATA[Español]]></translation>
+      <translation locale="lt"><![CDATA[Ispaniškai]]></translation>
+      <translation locale="sv"><![CDATA[Spanska]]></translation>
+      <translation locale="el"><![CDATA[Ισπανικά]]></translation>
+      <translation locale="zh"><![CDATA[西班牙语]]></translation>
+      <translation locale="pl"><![CDATA[Hiszpański]]></translation>
+      <translation locale="tr"><![CDATA[İspanyolca]]></translation>
+      <translation locale="pt"><![CDATA[Espanhol]]></translation>
+    </item>
+    <item type="message" name="LT">
+      <translation locale="nl"><![CDATA[Litouws]]></translation>
+      <translation locale="en"><![CDATA[Lithuanian]]></translation>
+      <translation locale="ru"><![CDATA[Литовский]]></translation>
+      <translation locale="de"><![CDATA[Litauisch]]></translation>
+      <translation locale="lt"><![CDATA[Lietuviškai]]></translation>
+      <translation locale="uk"><![CDATA[литовська]]></translation>
+      <translation locale="es"><![CDATA[Lituano]]></translation>
+      <translation locale="hu"><![CDATA[litván]]></translation>
+      <translation locale="sv"><![CDATA[Litauiska]]></translation>
+      <translation locale="el"><![CDATA[Λιθουανικά]]></translation>
+      <translation locale="zh"><![CDATA[立陶宛语]]></translation>
+      <translation locale="pt"><![CDATA[Lituano]]></translation>
+      <translation locale="pl"><![CDATA[Litewski]]></translation>
+    </item>
+    <item type="message" name="NL">
+      <translation locale="nl"><![CDATA[Nederlands]]></translation>
+      <translation locale="en"><![CDATA[Dutch]]></translation>
+      <translation locale="hu"><![CDATA[Holland]]></translation>
+      <translation locale="it"><![CDATA[Olandese]]></translation>
+      <translation locale="fr"><![CDATA[Néerlandais]]></translation>
+      <translation locale="ru"><![CDATA[Голландский]]></translation>
+      <translation locale="zh"><![CDATA[荷兰语]]></translation>
+      <translation locale="de"><![CDATA[Niederländisch]]></translation>
+      <translation locale="es"><![CDATA[holandes]]></translation>
+      <translation locale="lt"><![CDATA[olandiškai]]></translation>
+      <translation locale="uk"><![CDATA[голандська]]></translation>
+      <translation locale="sv"><![CDATA[Holländska]]></translation>
+      <translation locale="el"><![CDATA[Ολλανδικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Flemenkçe]]></translation>
+      <translation locale="pt"><![CDATA[Neerlandês]]></translation>
+    </item>
+    <item type="message" name="TR">
+      <translation locale="hu"><![CDATA[török]]></translation>
+      <translation locale="ru"><![CDATA[Турецкий]]></translation>
+      <translation locale="it"><![CDATA[Turco]]></translation>
+      <translation locale="zh"><![CDATA[土耳其语]]></translation>
+      <translation locale="de"><![CDATA[türkisch]]></translation>
+      <translation locale="fr"><![CDATA[Turque]]></translation>
+      <translation locale="nl"><![CDATA[Turks]]></translation>
+      <translation locale="en"><![CDATA[Turkish]]></translation>
+      <translation locale="es"><![CDATA[Turco]]></translation>
+      <translation locale="lt"><![CDATA[Turkiškai]]></translation>
+      <translation locale="uk"><![CDATA[турецька]]></translation>
+      <translation locale="sv"><![CDATA[Turkiska]]></translation>
+      <translation locale="el"><![CDATA[Τούρκικα]]></translation>
+      <translation locale="tr"><![CDATA[Türkçe]]></translation>
+      <translation locale="pl"><![CDATA[Turecki]]></translation>
+      <translation locale="pt"><![CDATA[turco]]></translation>
+    </item>
+    <item type="message" name="PL">
+      <translation locale="hu"><![CDATA[lengyel]]></translation>
+      <translation locale="ru"><![CDATA[Польский]]></translation>
+      <translation locale="it"><![CDATA[Polacco]]></translation>
+      <translation locale="zh"><![CDATA[波兰语]]></translation>
+      <translation locale="de"><![CDATA[polnisch]]></translation>
+      <translation locale="fr"><![CDATA[Polonais]]></translation>
+      <translation locale="nl"><![CDATA[Pools]]></translation>
+      <translation locale="en"><![CDATA[Polish]]></translation>
+      <translation locale="es"><![CDATA[Polaco]]></translation>
+      <translation locale="lt"><![CDATA[Lenkiškai]]></translation>
+      <translation locale="uk"><![CDATA[польська]]></translation>
+      <translation locale="sv"><![CDATA[Polska]]></translation>
+      <translation locale="el"><![CDATA[Πολωνικά]]></translation>
+      <translation locale="pl"><![CDATA[Polski]]></translation>
+      <translation locale="tr"><![CDATA[Lehçe]]></translation>
+      <translation locale="pt"><![CDATA[polaco]]></translation>
+    </item>
+    <item type="message" name="PT">
+      <translation locale="nl"><![CDATA[Portugees]]></translation>
+      <translation locale="en"><![CDATA[Portuguese]]></translation>
+      <translation locale="ru"><![CDATA[Португальский]]></translation>
+      <translation locale="lt"><![CDATA[Portoghese]]></translation>
+      <translation locale="de"><![CDATA[Portugiesisch]]></translation>
+      <translation locale="uk"><![CDATA[Португальська]]></translation>
+      <translation locale="es"><![CDATA[Portugués]]></translation>
+      <translation locale="hu"><![CDATA[Portugál]]></translation>
+      <translation locale="sv"><![CDATA[Portugisiska]]></translation>
+      <translation locale="el"><![CDATA[Πορτογαλικά]]></translation>
+      <translation locale="zh"><![CDATA[葡萄牙语]]></translation>
+      <translation locale="pt"><![CDATA[Português]]></translation>
+      <translation locale="pl"><![CDATA[Portugalski]]></translation>
+    </item>
+    <item type="message" name="UK">
+      <translation locale="nl"><![CDATA[Oekraïens]]></translation>
+      <translation locale="en"><![CDATA[Ukrainian]]></translation>
+      <translation locale="ru"><![CDATA[Украинский]]></translation>
+      <translation locale="lt"><![CDATA[Ukrainiečių]]></translation>
+      <translation locale="de"><![CDATA[Ukrainisch]]></translation>
+      <translation locale="uk"><![CDATA[українська]]></translation>
+      <translation locale="es"><![CDATA[Ucraniano]]></translation>
+      <translation locale="hu"><![CDATA[ukrán]]></translation>
+      <translation locale="sv"><![CDATA[Ukrianska]]></translation>
+      <translation locale="el"><![CDATA[Ουκρανικά]]></translation>
+      <translation locale="zh"><![CDATA[乌克兰语]]></translation>
+      <translation locale="pt"><![CDATA[Ucraniano]]></translation>
+      <translation locale="pl"><![CDATA[Ukraiński]]></translation>
+    </item>
+    <item type="message" name="SV">
+      <translation locale="nl"><![CDATA[Zweeds]]></translation>
+      <translation locale="en"><![CDATA[Swedish]]></translation>
+      <translation locale="ru"><![CDATA[Шведский]]></translation>
+      <translation locale="lt"><![CDATA[Švediškai]]></translation>
+      <translation locale="de"><![CDATA[Schwedisch]]></translation>
+      <translation locale="es"><![CDATA[Sueco]]></translation>
+      <translation locale="uk"><![CDATA[шведська]]></translation>
+      <translation locale="hu"><![CDATA[svéd]]></translation>
+      <translation locale="sv"><![CDATA[Svenska]]></translation>
+      <translation locale="el"><![CDATA[Σουηδικά]]></translation>
+      <translation locale="zh"><![CDATA[瑞典语]]></translation>
+      <translation locale="pt"><![CDATA[Sueco]]></translation>
+      <translation locale="pl"><![CDATA[Szwedzki]]></translation>
+    </item>
+    <item type="message" name="RU">
+      <translation locale="hu"><![CDATA[orosz]]></translation>
+      <translation locale="ru"><![CDATA[Русский]]></translation>
+      <translation locale="it"><![CDATA[Russo]]></translation>
+      <translation locale="zh"><![CDATA[俄罗斯语]]></translation>
+      <translation locale="de"><![CDATA[russisch]]></translation>
+      <translation locale="fr"><![CDATA[Russe]]></translation>
+      <translation locale="nl"><![CDATA[Russisch]]></translation>
+      <translation locale="en"><![CDATA[Russian]]></translation>
+      <translation locale="es"><![CDATA[Ruso]]></translation>
+      <translation locale="lt"><![CDATA[Rusiškai]]></translation>
+      <translation locale="uk"><![CDATA[російська]]></translation>
+      <translation locale="sv"><![CDATA[Ryska]]></translation>
+      <translation locale="el"><![CDATA[Ρώσσικα]]></translation>
+      <translation locale="pl"><![CDATA[Rosyjski]]></translation>
+      <translation locale="tr"><![CDATA[Rusca]]></translation>
+      <translation locale="pt"><![CDATA[Russo]]></translation>
+    </item>
+    <item type="message" name="IT">
+      <translation locale="hu"><![CDATA[olasz]]></translation>
+      <translation locale="ru"><![CDATA[Итальянский]]></translation>
+      <translation locale="it"><![CDATA[Italiano]]></translation>
+      <translation locale="zh"><![CDATA[意大利语]]></translation>
+      <translation locale="de"><![CDATA[Italienisch]]></translation>
+      <translation locale="fr"><![CDATA[Italien]]></translation>
+      <translation locale="nl"><![CDATA[Italiaans]]></translation>
+      <translation locale="en"><![CDATA[Italian]]></translation>
+      <translation locale="es"><![CDATA[Italiano]]></translation>
+      <translation locale="lt"><![CDATA[Itališkai]]></translation>
+      <translation locale="uk"><![CDATA[італійська]]></translation>
+      <translation locale="sv"><![CDATA[Italienska]]></translation>
+      <translation locale="el"><![CDATA[Ιταλικά]]></translation>
+      <translation locale="pl"><![CDATA[Włoski]]></translation>
+      <translation locale="tr"><![CDATA[İtalyanca]]></translation>
+      <translation locale="pt"><![CDATA[Italiano]]></translation>
+    </item>
+    <item type="message" name="HU">
+      <translation locale="lt"><![CDATA[Vengriškai.]]></translation>
+      <translation locale="hu"><![CDATA[magyar]]></translation>
+      <translation locale="ru"><![CDATA[Венгерский]]></translation>
+      <translation locale="it"><![CDATA[Ungherese]]></translation>
+      <translation locale="de"><![CDATA[Ungarisch]]></translation>
+      <translation locale="fr"><![CDATA[Hongrois]]></translation>
+      <translation locale="nl"><![CDATA[Hongaars]]></translation>
+      <translation locale="en"><![CDATA[Hungarian]]></translation>
+      <translation locale="uk"><![CDATA[угорська]]></translation>
+      <translation locale="es"><![CDATA[Húngaro]]></translation>
+      <translation locale="sv"><![CDATA[Ungerska]]></translation>
+      <translation locale="el"><![CDATA[Ουγγρικά]]></translation>
+      <translation locale="zh"><![CDATA[匈牙利语]]></translation>
+      <translation locale="tr"><![CDATA[Macar]]></translation>
+      <translation locale="pt"><![CDATA[Hungaro]]></translation>
+      <translation locale="pl"><![CDATA[Węgierski]]></translation>
+    </item>
+    <item type="message" name="EL">
+      <translation locale="nl"><![CDATA[Grieks]]></translation>
+      <translation locale="en"><![CDATA[Greek]]></translation>
+      <translation locale="ru"><![CDATA[Греческий]]></translation>
+      <translation locale="de"><![CDATA[Griechisch]]></translation>
+      <translation locale="lt"><![CDATA[Graikiškai]]></translation>
+      <translation locale="uk"><![CDATA[грецька]]></translation>
+      <translation locale="es"><![CDATA[Griego]]></translation>
+      <translation locale="hu"><![CDATA[görök]]></translation>
+      <translation locale="sv"><![CDATA[Grekiska]]></translation>
+      <translation locale="el"><![CDATA[Ελληνικά]]></translation>
+      <translation locale="zh"><![CDATA[希腊语]]></translation>
+      <translation locale="pt"><![CDATA[Grego]]></translation>
+      <translation locale="pl"><![CDATA[Grecki]]></translation>
+    </item>
+    <item type="message" name="ZH">
+      <translation locale="zh"><![CDATA[中文]]></translation>
+      <translation locale="ru"><![CDATA[Китайский]]></translation>
+      <translation locale="hu"><![CDATA[kínai]]></translation>
+      <translation locale="de"><![CDATA[chineisch]]></translation>
+      <translation locale="fr"><![CDATA[Chinois]]></translation>
+      <translation locale="nl"><![CDATA[Chinees]]></translation>
+      <translation locale="en"><![CDATA[Chinese]]></translation>
+      <translation locale="it"><![CDATA[cinese]]></translation>
+      <translation locale="es"><![CDATA[Chino]]></translation>
+      <translation locale="lt"><![CDATA[Kiniečių]]></translation>
+      <translation locale="uk"><![CDATA[китайська]]></translation>
+      <translation locale="sv"><![CDATA[Kinesiska]]></translation>
+      <translation locale="el"><![CDATA[Κινέζικα]]></translation>
+      <translation locale="tr"><![CDATA[Çince]]></translation>
+      <translation locale="pt"><![CDATA[Chinês]]></translation>
+      <translation locale="pl"><![CDATA[Chiński]]></translation>
+    </item>
+    <item type="message" name="DE">
+      <translation locale="nl"><![CDATA[Duits]]></translation>
+      <translation locale="en"><![CDATA[German]]></translation>
+      <translation locale="hu"><![CDATA[német]]></translation>
+      <translation locale="ru"><![CDATA[Немецкий]]></translation>
+      <translation locale="it"><![CDATA[Tedesco]]></translation>
+      <translation locale="zh"><![CDATA[德语]]></translation>
+      <translation locale="fr"><![CDATA[Allemand]]></translation>
+      <translation locale="de"><![CDATA[Deutsch]]></translation>
+      <translation locale="es"><![CDATA[Alemán]]></translation>
+      <translation locale="lt"><![CDATA[Vokiškai]]></translation>
+      <translation locale="uk"><![CDATA[німецька]]></translation>
+      <translation locale="sv"><![CDATA[Tyska]]></translation>
+      <translation locale="el"><![CDATA[Γερμανικά]]></translation>
+      <translation locale="pl"><![CDATA[Niemiecki]]></translation>
+      <translation locale="tr"><![CDATA[Almanca]]></translation>
+      <translation locale="pt"><![CDATA[Alemão]]></translation>
+    </item>
+    <item type="message" name="BG">
+      <translation locale="zh"><![CDATA[比利时语]]></translation>
+      <translation locale="hu"><![CDATA[bulgár]]></translation>
+      <translation locale="de"><![CDATA[Bulgarisch]]></translation>
+      <translation locale="fr"><![CDATA[Bulgare]]></translation>
+      <translation locale="nl"><![CDATA[Bulgaars]]></translation>
+      <translation locale="en"><![CDATA[Bulgarian]]></translation>
+      <translation locale="ru"><![CDATA[Болгарский]]></translation>
+      <translation locale="it"><![CDATA[bulgaro]]></translation>
+      <translation locale="es"><![CDATA[Bulgaro]]></translation>
+      <translation locale="lt"><![CDATA[Bulgariškai]]></translation>
+      <translation locale="uk"><![CDATA[болгарський]]></translation>
+      <translation locale="sv"><![CDATA[Bulgarian]]></translation>
+      <translation locale="el"><![CDATA[Βουλγαρικά]]></translation>
+      <translation locale="tr"><![CDATA[Bulgar]]></translation>
+      <translation locale="pt"><![CDATA[bulgaro]]></translation>
+      <translation locale="pl"><![CDATA[Bułgarski]]></translation>
+    </item>
+    <item type="message" name="CS">
+      <translation locale="nl"><![CDATA[Tsjechisch]]></translation>
+      <translation locale="en"><![CDATA[Czech]]></translation>
+      <translation locale="ru"><![CDATA[Чешский]]></translation>
+      <translation locale="de"><![CDATA[Tschechisch]]></translation>
+      <translation locale="lt"><![CDATA[Čekiškai]]></translation>
+      <translation locale="uk"><![CDATA[чеська]]></translation>
+      <translation locale="es"><![CDATA[Checo]]></translation>
+      <translation locale="hu"><![CDATA[cseh]]></translation>
+      <translation locale="sv"><![CDATA[Tjeckiska]]></translation>
+      <translation locale="el"><![CDATA[Τσέχικα]]></translation>
+      <translation locale="zh"><![CDATA[捷克语]]></translation>
+      <translation locale="pt"><![CDATA[checo]]></translation>
+      <translation locale="pl"><![CDATA[Czeski]]></translation>
+    </item>
+  </Frontend>
+</translations>
