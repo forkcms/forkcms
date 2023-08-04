@@ -10,3 +10,10 @@ services:
     exclude:
       - '../Domain/Module/InstalledModules'
 
+  ForkCMS\Modules\Extensions\Domain\Module\InstalledModules:
+    arguments:
+      - '%fork.is_installed%'
+
+  ForkCMS\Modules\Extensions\Domain\Module\ModuleInstallerLocator:
+    arguments:
+      - !tagged_iterator { tag: 'forkcms.module.installer' }
