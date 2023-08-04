@@ -1,20 +1,15 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace ForkCMS\Core\Domain\Doctrine;
 
 use DateTime;
-use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
 
-class UTCDateTimeType extends DateTimeType
+class UTCDateTimeMutableDBALType extends DateTimeType
 {
-    /** @var DateTimeZone */
-    private static $utc;
-
-    /** @var DateTimeZone */
-    private static $defaultTimeZone;
+    use UTCDBALTrait;
 
     /**
      * @param DateTime|null $dateTime
@@ -59,23 +54,5 @@ class UTCDateTimeType extends DateTimeType
         $dateTime->setTimezone(self::getDefaultTimeZone());
 
         return $dateTime;
-    }
-
-    private static function getUtc(): DateTimeZone
-    {
-        if (self::$utc === null) {
-            self::$utc = new DateTimeZone('UTC');
-        }
-
-        return self::$utc;
-    }
-
-    private static function getDefaultTimeZone(): DateTimeZone
-    {
-        if (self::$defaultTimeZone === null) {
-            self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
-        }
-
-        return self::$defaultTimeZone;
     }
 }
