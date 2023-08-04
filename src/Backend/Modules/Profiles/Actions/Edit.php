@@ -99,23 +99,51 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         $this->form->addCheckbox('new_email');
-        $this->form->addText('email', $this->profile['email']);
+        $this->form
+            ->addText('email', $this->profile['email'])
+        ;
         $this->form->addCheckbox('new_password');
-        $this->form->addPassword('password');
-        $this->form->addPassword('password_repeat');
-        $this->form->addText('display_name', $this->profile['display_name'])->makeRequired();
-        $this->form->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
-        $this->form->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
-        $this->form->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
-        $this->form->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'));
-        $this->form->addDropdown('day', array_combine($days, $days), $birthDay);
-        $this->form->addDropdown('month', $months, $birthMonth);
-        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
-        $this->form->addDropdown(
-            'country',
-            Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
-            BackendProfilesModel::getSetting($this->id, 'country')
-        );
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('autocomplete', 'new-password')
+        ;
+        $this->form
+            ->addPassword('password_repeat')
+            ->setAttribute('autocomplete', 'new-password')
+        ;
+        $this->form
+            ->addText('display_name', $this->profile['display_name'])
+            ->makeRequired()
+        ;
+        $this->form
+            ->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'))
+        ;
+        $this->form
+            ->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'))
+        ;
+        $this->form
+            ->addText('city', BackendProfilesModel::getSetting($this->id, 'city'))
+        ;
+        $this->form
+            ->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'))
+        ;
+        $this->form
+            ->addDropdown('day', array_combine($days, $days), $birthDay)
+        ;
+        $this->form
+            ->addDropdown('month', $months, $birthMonth)
+        ;
+        $this->form
+            ->addDropdown('year', array_combine($years, $years), (int) $birthYear)
+        ;
+        $this->form
+            ->addDropdown(
+                'country',
+                Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
+                BackendProfilesModel::getSetting($this->id, 'country')
+            )
+            ->setAttribute('autocomplete', 'country-name')
+        ;
         $this->form->addTextarea('about', BackendProfilesModel::getSetting($this->id, 'about'));
 
         // set default elements dropdowns

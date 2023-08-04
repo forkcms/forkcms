@@ -38,14 +38,6 @@ webpack_encore:
         frontendConfig: '%kernel.project_dir%/src/Frontend/Core/build'
         frontendThemeConfig: '%kernel.project_dir%/src/Frontend/Themes/%env(resolve:THEME)%/Core/build'
 
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [ 'ForkCMSInstallerBundle' ]
-    filters:
-        cssrewrite: ~
-
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"

@@ -43,9 +43,23 @@ class Register extends FrontendBaseBlock
     {
         $this->form = new FrontendForm('register', null, null, 'registerForm');
 
-        $this->form->addText('display_name')->makeRequired();
-        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
-        $this->form->addPassword('password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
+        $this->form
+            ->addText('display_name')
+            ->setAttribute('autocomplete', 'username')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addText('email')
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('data-role', 'fork-new-password')
+            ->setAttribute('autocomplete', 'new-password')
+            ->makeRequired()
+        ;
         $this->form->addCheckbox('show_password')->setAttribute('data-role', 'fork-toggle-visible-password');
     }
 

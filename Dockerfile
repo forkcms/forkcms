@@ -20,7 +20,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends --allow-downgra
 RUN docker-php-ext-install pdo_mysql
 
 # Install zip & unzip
-RUN apt-get update && apt-get install -y libzip-dev zip && \
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    unzip && \
     docker-php-ext-install zip && \
     rm -rf /var/lib/apt/lists/*
 

@@ -72,29 +72,62 @@ class Settings extends FrontendBaseBlock
     {
         $this->form = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
 
-        $this->form->addText('display_name', $this->profile->getDisplayName())->makeRequired();
+        $this->form
+            ->addText('display_name', $this->profile->getDisplayName())
+            ->setAttribute('autocomplete', 'username')
+            ->makeRequired()
+        ;
         if (!$this->displayNameCanStillBeChanged()) {
             $this->form->getField('display_name')->setAttribute('disabled', 'disabled');
         }
-        $this->form->addText('first_name', $this->profile->getSetting('first_name'));
-        $this->form->addText('last_name', $this->profile->getSetting('last_name'));
+        $this->form
+            ->addText('first_name', $this->profile->getSetting('first_name'))
+            ->setAttribute('autocomplete', 'given-name')
+        ;
+        $this->form
+            ->addText('last_name', $this->profile->getSetting('last_name'))
+            ->setAttribute('autocomplete', 'family-name')
+        ;
         $this->form->addText('email', $this->profile->getEmail())->setAttribute('disabled', 'disabled');
-        $this->form->addText('city', $this->profile->getSetting('city'));
-        $this->form->addDropdown(
-            'country',
-            Intl::getRegionBundle()->getCountryNames(LANGUAGE),
-            $this->profile->getSetting('country')
-        )->setDefaultElement('');
-        $this->form->addDropdown(
-            'gender',
-            $this->getGenderOptions(),
-            $this->profile->getSetting('gender')
-        )->setDefaultElement('');
+        $this->form
+            ->addText('city', $this->profile->getSetting('city'))
+            ->setAttribute('autocomplete', 'address-level2')
+        ;
+        $this->form
+            ->addDropdown(
+                'country',
+                Intl::getRegionBundle()->getCountryNames(LANGUAGE),
+                $this->profile->getSetting('country')
+            )
+            ->setDefaultElement('')
+            ->setAttribute('autocomplete', 'country-name')
+        ;
+        $this->form
+            ->addDropdown(
+                'gender',
+                $this->getGenderOptions(),
+                $this->profile->getSetting('gender')
+            )
+            ->setDefaultElement('')
+            ->setAttribute('autocomplete', 'sex')
+        ;
         ['days' => $days, 'months' => $months, 'years' => $years] = $this->getBirthDateOptions();
         ['year' => $birthYear, 'month' => $birthMonth, 'day' => $birthDay] = $this->getBirthDate();
-        $this->form->addDropdown('day', array_combine($days, $days), $birthDay)->setDefaultElement('');
-        $this->form->addDropdown('month', $months, $birthMonth)->setDefaultElement('');
-        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear)->setDefaultElement('');
+        $this->form
+            ->addDropdown('day', array_combine($days, $days), $birthDay)
+            ->setAttribute('autocomplete', 'bday-day')
+            ->setDefaultElement('')
+        ;
+        $this->form
+            ->addDropdown('month', $months, $birthMonth)
+            ->setAttribute('autocomplete', 'bday-month')
+            ->setDefaultElement('')
+        ;
+        $this->form
+            ->addDropdown('year', array_combine($years, $years), (int) $birthYear)
+            ->setAttribute('autocomplete', 'bday-year')
+            ->setDefaultElement('')
+        ;
         $this->form->addImage('avatar');
         $this->form->addTextarea('about', $this->profile->getSetting('about'));
     }

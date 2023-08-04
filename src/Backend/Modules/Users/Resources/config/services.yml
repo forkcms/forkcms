@@ -1,0 +1,3 @@
+services:
+    Backend\Modules\Users\Console\ResetPasswordCommand:
+        tags: [console.command]

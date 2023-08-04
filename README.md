@@ -4,7 +4,6 @@
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable)](https://packagist.org/packages/forkcms/forkcms)
 [![License](https://poser.pugx.org/forkcms/forkcms/license)](https://packagist.org/packages/forkcms/forkcms)
 [![Code Coverage](https://codecov.io/gh/forkcms/forkcms/branch/master/graph/badge.svg?token=ahj70hVO29)](http://codecov.io/github/forkcms/forkcms?branch=master)
-[![Slack Status](https://fork-cms.herokuapp.com/badge.svg)](https://fork-cms.herokuapp.com/)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](http://docs.fork-cms.com/)
 [![huntr.dev | the place to protect open source](https://cdn.huntr.dev/huntr_security_badge.svg)](https://huntr.dev)
 

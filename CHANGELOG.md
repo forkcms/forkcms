@@ -1,3 +1,52 @@
+5.12.0  (2023-07-31)
+------------------
+
+Fixed:
+* Core: Fix redirecting in parseWidget [#3513](https://github.com/forkcms/forkcms/pull/3513)
+* Core: Make privacy consent dialog scrollable on mobile [#3507](https://github.com/forkcms/forkcms/pull/3507)
+* Core: Make the old session clean-up method timezone aware [#3511](https://github.com/forkcms/forkcms/pull/3511)
+* Core: Move the apple touch icon to the theme [#3512](https://github.com/forkcms/forkcms/pull/3512)
+* Pages: Allow the use of install in a page title [#3533](https://github.com/forkcms/forkcms/pull/3533)
+* Pages: Skip empty images while copying a page [#3545](https://github.com/forkcms/forkcms/pull/3545)
+
+Security:
+* Core: Fix Open Redirect issue [#3547](https://github.com/forkcms/forkcms/pull/3547)
+
+Added:
+* CLI: Reset password CLI command [#3491](https://github.com/forkcms/forkcms/pull/3491)
+* Profiles: Autocomplete attributes [#3508](https://github.com/forkcms/forkcms/pull/3508)[#3548](https://github.com/forkcms/forkcms/pull/3548)
+
+Changed:
+* Core: Added PHP8 support and bumped minimum to 7.4 [#3538](https://github.com/forkcms/forkcms/pull/3538)
+* Core: Switched to symfony 4.4 [#3538](https://github.com/forkcms/forkcms/pull/3538)
+
+
+5.11.1  (2022-03-24)
+------------------
+
+Fixed:
+* Core: Add missing aria attributes on form errors [#3485](https://github.com/forkcms/forkcms/pull/3485)
+* Core: Fix adding links on images in ckeditor [#3478](https://github.com/forkcms/forkcms/pull/3478)
+* Core: Fix database env variables not resolving before checking installed module [#3502](https://github.com/forkcms/forkcms/pull/3502)
+* Core: Update packages [#3500](https://github.com/forkcms/forkcms/pull/3500) [#3482](https://github.com/forkcms/forkcms/pull/3482) [#3483](https://github.com/forkcms/forkcms/pull/3483) [#3489](https://github.com/forkcms/forkcms/pull/3489) [#3490](https://github.com/forkcms/forkcms/pull/3490) [#3492](https://github.com/forkcms/forkcms/pull/3492)
+* Blog: Fix translation in wordpress import page [#3484](https://github.com/forkcms/forkcms/pull/3484)
+* Pages: Fix default breadcrumb style [#3487](https://github.com/forkcms/forkcms/pull/3487)
+
+
+Security:
+
+_All these security issues require access to the backend before they can be exploited._
+
+* Core: Fix xss bug in multiple select box [#3501](https://github.com/forkcms/forkcms/pull/3501)
+* Authentication: Intercept a redirect to a different domain on login using // at the start of the queryparameter [#3494](https://github.com/forkcms/forkcms/pull/3494)
+* Authentication: Reauthenticate a user after password change to log out other sessions [#3493](https://github.com/forkcms/forkcms/pull/3493)
+* Blog: Prevent sql injection in the backend through bulk action marking comments as spam [#3497](https://github.com/forkcms/forkcms/pull/3497)
+* Extensions: Prevent xss in the backend in the theme and module detail page through the description [#3499](https://github.com/forkcms/forkcms/pull/3499)
+* FormBuilder: Prevent sql injection in the backend through bulk deletion of submitted data [#3495](https://github.com/forkcms/forkcms/pull/3495)
+* Locale: Prevent sql injection in the backend through export of translations [#3498](https://github.com/forkcms/forkcms/pull/3498)
+* Tags: Prevent sql injection in the backend through bulk deletion of tags [#3496](https://github.com/forkcms/forkcms/pull/3496)
+
+
 5.11.0  (2021-10-14)
 ------------------
 

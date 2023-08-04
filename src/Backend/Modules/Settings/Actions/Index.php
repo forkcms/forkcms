@@ -2,8 +2,8 @@
 
 namespace Backend\Modules\Settings\Actions;
 
+use ForkCMS\Utility\Akismet;
 use SpoonFilter;
-use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;

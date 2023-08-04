@@ -4,7 +4,7 @@
     {% for row in table %}
       <tr>
         {% for template in row %}
-          <td {% spaceless %}
+          <td {% apply spaceless %}
             {% if template.rowspan > 1 %} rowspan="{{ template.rowspan }}"{% endif %}
             {% if template.colspan > 1 %} colspan="{{ template.colspan }}"{% endif %}
             {% if not template.exists %}
@@ -14,7 +14,7 @@
             {% else %}
               >
             {% endif %}
-            {% endspaceless %}
+            {% endapply %}
 
             {% if not template.exists %}
               &nbsp;

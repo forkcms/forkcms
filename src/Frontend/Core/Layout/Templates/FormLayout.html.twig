@@ -38,7 +38,7 @@
 {%- endblock form_errors %}
 
 {% block fork_image_widget %}
-  {% spaceless %}
+  {% apply spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
       {% if help_text_message %}
@@ -57,11 +57,11 @@
         {% endif %}
       </div>
     {% endif %}
-  {% endspaceless %}
+  {% endapply %}
 {% endblock %}
 
 {% block fork_file_widget %}
-  {% spaceless %}
+  {% apply spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
       {% if help_text_message %}
@@ -83,11 +83,11 @@
         {% endif %}
       </div>
     {% endif %}
-  {% endspaceless %}
+  {% endapply %}
 {% endblock %}
 
 {% block bootstrap_collection_row %}
-  {% spaceless %}
+  {% apply spaceless %}
     {% if prototype is defined %}
       {% set prototype_vars = {} %}
       {% if style is defined %}
@@ -131,5 +131,5 @@
         </div>
       </div>
     </div>
-  {% endspaceless %}
+  {% endapply %}
 {% endblock bootstrap_collection_row %}

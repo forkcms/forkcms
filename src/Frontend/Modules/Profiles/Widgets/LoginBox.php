@@ -36,8 +36,17 @@ class LoginBox extends FrontendBaseWidget
             'login',
             FrontendNavigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
         );
-        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
-        $this->form->addPassword('password')->makeRequired();
+        $this->form
+            ->addText('email')
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('autocomplete', 'current-password')
+            ->makeRequired()
+        ;
         $this->form->addCheckbox('remember', true);
 
         // parse the form

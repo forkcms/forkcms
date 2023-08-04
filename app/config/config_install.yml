@@ -16,14 +16,6 @@ framework:
     templating:
         engines: ['twig']
 
-# Assetic Configuration
-assetic:
-    debug:          "%kernel.debug%"
-    use_controller: false
-    bundles:        [ 'ForkCMSInstallerBundle' ]
-    filters:
-        cssrewrite: ~
-
 monolog:
     handlers:
         main:

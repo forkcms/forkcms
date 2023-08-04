@@ -36,7 +36,12 @@ class ForgotPassword extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
+        $this->form
+            ->addText('email')
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
     }
 
     private function parse(): void

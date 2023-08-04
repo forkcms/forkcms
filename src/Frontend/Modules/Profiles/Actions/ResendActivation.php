@@ -41,7 +41,12 @@ class ResendActivation extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('resendActivation', null, null, 'resendActivation');
-        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
+        $this->form
+            ->addText('email')
+            ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
+            ->makeRequired()
+        ;
     }
 
     private function parse(): void

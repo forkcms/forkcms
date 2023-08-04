@@ -76,21 +76,43 @@ class Add extends BackendBaseActionAdd
             ->setAttribute('type', 'email')
             ->makeRequired()
         ;
-        $this->form->addPassword('password');
+        $this->form
+            ->addPassword('password')
+            ->setAttribute('autocomplete', 'new-password')
+        ;
 
         if (!$this->notifyProfile) {
             $this->form->getField('password')->makeRequired();
         }
 
-        $this->form->addText('display_name')->makeRequired();
-        $this->form->addText('first_name');
-        $this->form->addText('last_name');
-        $this->form->addText('city');
-        $this->form->addDropdown('gender', $genderValues);
-        $this->form->addDropdown('day', array_combine($days, $days));
-        $this->form->addDropdown('month', $months);
-        $this->form->addDropdown('year', array_combine($years, $years));
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
+        $this->form
+            ->addText('display_name')
+            ->makeRequired()
+        ;
+        $this->form
+            ->addText('first_name')
+        ;
+        $this->form
+            ->addText('last_name')
+        ;
+        $this->form
+            ->addText('city')
+        ;
+        $this->form
+            ->addDropdown('gender', $genderValues)
+        ;
+        $this->form
+            ->addDropdown('day', array_combine($days, $days))
+        ;
+        $this->form
+            ->addDropdown('month', $months)
+        ;
+        $this->form
+            ->addDropdown('year', array_combine($years, $years))
+        ;
+        $this->form
+            ->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()))
+        ;
         $this->form->addTextarea('about');
 
         // set default elements dropdowns

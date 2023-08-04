@@ -53,14 +53,19 @@ class Index extends BackendBaseActionIndex
             ->addText('backend_email')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
             ->setAttribute('type', 'email')
+            ->setAttribute('autocomplete', 'email')
         ;
         $this->form
             ->addPassword('backend_password')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
+            ->setAttribute('autocomplete', 'current-password')
         ;
 
         $this->formForgotPassword = new BackendForm('forgotPassword');
-        $this->formForgotPassword->addText('backend_email_forgot');
+        $this->formForgotPassword
+            ->addText('backend_email_forgot')
+            ->setAttribute('autocomplete', 'email')
+        ;
     }
 
     public function parse(): void
@@ -326,7 +331,10 @@ class Index extends BackendBaseActionIndex
 
     private function sanitizeQueryString(string $queryString, string $default): string
     {
-        if (!preg_match('/^\//', $queryString) or preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)) {
+        if (!preg_match('/^\//', $queryString)
+            || preg_match('/^\/\//', $queryString)
+            || preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)
+        ) {
             return $default;
         }
 

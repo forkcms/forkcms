@@ -27,6 +27,7 @@
 /src/Frontend/Core/build
 /src/Frontend/Themes/*/Core/build
 .vscode
+.idea
 
 # Docker
 var/docker/db/data/*

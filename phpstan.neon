@@ -56,6 +56,6 @@ parameters:
     - '#Constant SITE_DEFAULT_TITLE not found.#'
     - '#Constant SITE_URL not found.#'
   symfony:
-    container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
+    container_xml_path: var/cache/dev/appForkCMS_App_AppKernelDevDebugContainer.xml
   doctrine:
     objectManagerLoader: tests/object-manager.php
