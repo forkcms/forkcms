@@ -1,0 +1,16 @@
+<form method="get" action="{{ action }}" enctype="application/x-www-form-urlencoded">
+  <div class="input-group input-group-sm">
+    {% if fields|length > 1 %}
+      <select class="form-select" name="{{ filterFieldName }}">
+        {% for field, label in fields %}
+          <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    {% else %}
+      <input type="hidden" name="{{ filterFieldName }}" value="{{ fields|keys|first }}"/>
+    {% endif %}
+    <input class="form-control" type="search" {% if selectedField in fields|keys %}value="{{ selectedValue }}"{% endif%} name="{{ filterValueName }}"
+           placeholder="{{ 'lbl.SearchTerm'|trans|ucfirst }}"/>
+    <button class="btn btn-primary">{% if options.button == 'Filter' %}{{ 'lbl.Filter'|trans|ucfirst }}{% else %}{{ options.button|ucfirst }}{% endif %}</button>
+  </div>
+</form>
