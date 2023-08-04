@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $twigBridgeRoutingExcension: '@twig.extension.routing'
+  _instanceof:
+    Symfony\Component\Console\Command\Command:
+      bind:
+        string $rootDir: '%kernel.project_dir%'
+        bool $forkIsInstalled: '%fork.is_installed%'
+
+  ForkCMS\Core\:
+    resource: '../*'
+    exclude:
+      - '../tests'
+      - '../Domain/PDO'
+
+  ForkCMS\Core\Domain\Router\ModuleRouteLoader:
+    arguments:
+      - !tagged_iterator { tag: forkcms.routing.loader }
+    tags:
+      - { name: routing.loader }
+
+  ForkCMS\Core\DependencyInjection\CoreRouteLoader:
+    arguments:
+      - '@routing.loader.yml'
+
+  Twig\Extension\StringLoaderExtension:
