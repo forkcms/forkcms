@@ -13,7 +13,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [7.4, 8.0]
+                php: [8.1]
                 testsuite: ["functional", "unit", "installer"]
         name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
@@ -36,7 +36,7 @@ jobs:
                   key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             - name: Setup PHP with coverage
-              if: ${{ matrix.php == '7.4' }}
+              if: ${{ matrix.php == '8.1' }}
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
@@ -44,7 +44,7 @@ jobs:
                   coverage: PCOV
 
             - name: Setup PHP without coverage
-              if: ${{ matrix.php != '7.4' }}
+              if: ${{ matrix.php != '8.1' }}
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
@@ -54,45 +54,43 @@ jobs:
             - name: Prepare test env
               run: |
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
-                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
-                  cp app/config/parameters.yml.test app/config/parameters.yml
 
             - name: Install dependencies
               env:
-                  FORK_ENV: test
+                  APP_ENV: test
               run: composer install -o
 
             - name: Install Node
-              uses: actions/setup-node@v2-beta
+              uses: actions/setup-node@v2
               with:
-                  node-version: 12 # current LTS
+                  node-version: 14 # current LTS
             - run: npm install
 
             - run: webpack
 
             - name: Execute tests with coverage
-              if: ${{ matrix.php == '7.4' }}
+              if: ${{ matrix.php == '8.1' }}
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
 
             - name: Execute tests without coverage
-              if: ${{ matrix.php != '7.4' }}
+              if: ${{ matrix.php != '8.1' }}
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
 
             - name: Display error logs on failure
               if: ${{ failure() }}
               run: |
-                  [ -r var/logs/installer/debug.log ] && cat var/logs/installer/debug.log
-                  [ -r var/logs/test/debug.log ] && cat var/logs/test/debug.log
-                  [ -r var/logs/test_instal/debug.log ] && cat var/logs/test_instal/debug.log
-                  [ -r var/logs/prod/debug.log ] && cat var/logs/prod/debug.log
-                  [ -r var/logs/dev/debug.log ] && cat var/logs/dev/debug.log
+                  [ -r var/log/installer/debug.log ] && cat var/log/installer/debug.log
+                  [ -r var/log/test/debug.log ] && cat var/log/test/debug.log
+                  [ -r var/log/test_instal/debug.log ] && cat var/log/test_instal/debug.log
+                  [ -r var/log/prod/debug.log ] && cat var/log/prod/debug.log
+                  [ -r var/log/dev/debug.log ] && cat var/log/dev/debug.log
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1
-              if: ${{ matrix.php == '7.4' }}
+              if: ${{ matrix.php == '8.1' }}
               with:
-                file: ${{ matrix.testsuite}}.clover
-                flags: ${{ matrix.testsuite}}
+                  file: ${{ matrix.testsuite}}.clover
+                  flags: ${{ matrix.testsuite}}
 
     phpstan:
         name: PHPStan - Static Code Analysis
@@ -113,20 +111,18 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.4
+                  php-version: 8.1
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
             - name: Prepare test env
               run: |
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
-                  mysql -h 127.0.0.1 -uroot -pkingtriton forkcms_test < tests/data/test_db.sql
-                  cp app/config/parameters.yml.test app/config/parameters.yml
 
             - name: Install dependencies
               run: composer install -o
               env:
-                  FORK_ENV: dev
+                  APP_ENV: dev
 
             - name: Run PHPStan
               run: bin/phpstan analyze --error-format github src
@@ -147,7 +143,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.4
+                  php-version: 8.1
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -155,7 +151,7 @@ jobs:
               run: composer install -o
 
             - name: Run PHP Codesniffer
-              run: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
+              run: bin/phpcs --standard=PSR12 --extensions=php --warning-severity=9 --exclude=Generic.Files.LineLength --report=full "src"
 
     frontend:
         name: npm test
@@ -164,9 +160,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
             - name: Install Node
-              uses: actions/setup-node@v2-beta
+              uses: actions/setup-node@v2
               with:
-                  node-version: 12 # current LTS
+                  node-version: 14 # current LTS
             - run: npm install
             - run: npm test
 
@@ -186,7 +182,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 7.4
+                  php-version: 8.1
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -207,9 +203,9 @@ jobs:
                   docker-compose ps "app" | grep -q "Up"
 
             - name: Install Node
-              uses: actions/setup-node@v2-beta
+              uses: actions/setup-node@v2
               with:
-                  node-version: 12 # current LTS
+                  node-version: 14 # current LTS
             - run: npm install
 
             - run: webpack
