@@ -2,11 +2,22 @@
 
 namespace ForkCMS\Core\Domain\Kernel;
 
+use ForkCMS\Core\DependencyInjection\CoreExtension;
+use ForkCMS\Core\Domain\PDO\ForkConnection;
+use ForkCMS\Modules\Extensions\Domain\Module\InstalledModules;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstallerLocator;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Installer\DependencyInjection\InstallerExtension;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class Kernel extends BaseKernel
 {
@@ -47,11 +58,23 @@ class Kernel extends BaseKernel
     {
         $container = parent::buildContainer();
 
-        // @TODO: Implement loading core extension and the installer extension
+        $container->registerExtension(new CoreExtension());
+        $container->registerExtension(new InstallerExtension());
 
         $this->registerModuleExtensions($container);
 
         return $container;
+    }
+
+    final protected function configureRoutes(RoutingConfigurator $routes): void
+    {
+        if ($this->isInstalled()) {
+            $this->configureLiveRoutes($routes);
+
+            return;
+        }
+
+        $this->configureInstallerRoutes($routes);
     }
 
     private function configureLiveContainer(ContainerConfigurator $container): void
@@ -77,9 +100,118 @@ class Kernel extends BaseKernel
         }
     }
 
+    private function configureLiveRoutes(RoutingConfigurator $routes): void
+    {
+        $websiteLocales = ForkConnection::get()->getWebsiteLocales();
+        $defaults = [
+            '_locale' => array_search(true, $websiteLocales),
+        ];
+        $requirements = [
+            '_locale' => implode('|', array_keys($websiteLocales)),
+        ];
+        $importWithDefaultsAndRequirements = static function ($resource) use (
+            $routes,
+            $defaults,
+            $requirements,
+        ): void {
+            $routes->import($resource)
+                ->requirements($requirements)
+                ->defaults($defaults);
+        };
+        $importWithDefaultsAndRequirements(self::ROOT_DIR . 'config/{routes}/' . $this->environment . '/*.yaml');
+        $importWithDefaultsAndRequirements(self::ROOT_DIR . 'config/{routes}/*.yaml');
+
+        if (is_file(self::ROOT_DIR . 'config/routes.yaml')) {
+            $importWithDefaultsAndRequirements(self::ROOT_DIR . 'config/routes.yaml');
+        }
+    }
+
+    private function configureInstallerRoutes(RoutingConfigurator $routes): void
+    {
+        $routes->import(self::ROOT_DIR . 'config/{routes}/install/*.yaml');
+    }
+
+    /** @return ModuleName[] */
+    protected function getInstalledModules(ContainerBuilder $container): array
+    {
+        if ($container->getParameter('fork.is_installed') === false) {
+            return ModuleInstallerLocator::moduleNamesFromFileSystem();
+        }
+
+        $modules = InstalledModules::fromContainer($container)();
+        if ($this->isInstallingModule()) {
+            $modules[] = ModuleName::fromString($_POST['action']['id']);
+        }
+
+        return $modules;
+    }
+
     private function registerModuleExtensions(ContainerBuilder $container): void
     {
-        // @TODO
+        $filesystem = new Filesystem();
+        foreach ($this->getInstalledModules($container) as $module) {
+            $finder = new Finder();
+            $moduleDirectory = self::ROOT_DIR . '/src/Modules/' . $module;
+
+            if (!$filesystem->exists($moduleDirectory)) {
+                continue;
+            }
+
+            $domainDirectory = $moduleDirectory . '/Domain';
+            if ($filesystem->exists($domainDirectory)) {
+                $container->prependExtensionConfig(
+                    'doctrine',
+                    [
+                        'orm' => [
+                            'mappings' => [
+                                $module->getName() => [
+                                    'type' => 'annotation',
+                                    'is_bundle' => false,
+                                    'dir' => $domainDirectory,
+                                    'prefix' => 'ForkCMS\\Modules\\' . $module . '\\Domain',
+                                ],
+                                $module->getName() => [
+                                    'type' => 'attribute',
+                                    'is_bundle' => false,
+                                    'dir' => $domainDirectory,
+                                    'prefix' => 'ForkCMS\\Modules\\' . $module . '\\Domain',
+                                ],
+                            ],
+                        ],
+                    ]
+                );
+            }
+
+            $dependencyInjectionNamespace = 'ForkCMS\\Modules\\' . $module . '\\DependencyInjection\\';
+            $dependencyInjectionExtension = $dependencyInjectionNamespace . $module . 'Extension';
+
+            if (class_exists($dependencyInjectionExtension)) {
+                $container->registerExtension(new $dependencyInjectionExtension());
+            }
+
+            $compilerPassDirectory = $moduleDirectory . '/DependencyInjection/CompilerPass/';
+            if ($filesystem->exists($compilerPassDirectory)) {
+                $compilerPassNamespace = $dependencyInjectionNamespace . 'CompilerPass\\';
+                foreach ($finder->in($compilerPassDirectory)->files()->name('*.php') as $compilerPassFile) {
+                    $compilerPassFQCN = $compilerPassNamespace . substr($compilerPassFile->getFilename(), 0, -4);
+                    $compilerPass = new $compilerPassFQCN();
+                    $type = method_exists($compilerPass, 'getType')
+                        ? $compilerPass->getType() : PassConfig::TYPE_BEFORE_OPTIMIZATION;
+                    $priority = method_exists($compilerPass, 'getPriority')
+                        ? $compilerPass->getPriority() : 0;
+                    $container->addCompilerPass(
+                        $compilerPass,
+                        $type,
+                        $priority
+                    );
+                }
+            }
+        }
+
+        // ensure these extensions are implicitly loaded
+        $container->getCompilerPassConfig()->setMergePass(
+            new MergeExtensionConfigurationPass(array_keys($container->getExtensions()))
+        );
     }
 
     final public function getContainerClass(): string
