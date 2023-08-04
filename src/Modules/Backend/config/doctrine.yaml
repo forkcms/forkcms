@@ -1,0 +1,8 @@
+doctrine:
+  dbal:
+    types:
+      modules__backend__action__action_slug: ForkCMS\Modules\Backend\Domain\Action\ActionSlugDBALType
+      modules__backend__action__action_name: ForkCMS\Modules\Backend\Domain\Action\ActionNameDBALType
+      modules__backend__ajax_action__ajax_action_slug: ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlugDBALType
+      modules__backend__ajax_action__ajax_action_name: ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionNameDBALType
+      modules__backend__widget__widget_name: ForkCMS\Modules\Backend\Domain\Widget\WidgetNameDBALType

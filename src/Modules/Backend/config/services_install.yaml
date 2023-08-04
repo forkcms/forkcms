@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Backend\Domain\:
+    resource: '../Domain/*'
+    exclude:
+      - '../Domain/UserGroup/UserGroupType.php'

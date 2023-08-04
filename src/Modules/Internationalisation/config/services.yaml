@@ -1,0 +1,32 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      string $rootDir: '%kernel.project_dir%'
+      string $cacheDir: '%kernel.cache_dir%'
+
+  ForkCMS\Modules\Internationalisation\Domain\:
+    resource: '../Domain/*'
+    exclude:
+      - '../Domain/Translator/ForkTranslator.php'
+      - '../Domain/Importer/Importer.php'
+      - '../Domain/Twig'
+
+  ForkCMS\Modules\Internationalisation\Domain\Translation\ForkTranslationLoader:
+    tags:
+      - { name: translation.loader, alias: db }
+
+  ForkCMS\Modules\Internationalisation\Domain\Importer\XmlImporter:
+
+  ForkCMS\Modules\Internationalisation\Domain\Importer\Importer:
+    arguments:
+      - !tagged_locator { tag: 'forkcms.translation.importer', default_index_method: 'forExtension' }
+
+  ForkCMS\Modules\Internationalisation\Domain\Exporter\XmlExporter:
+
+  ForkCMS\Modules\Internationalisation\Domain\Exporter\Exporter:
+    arguments:
+      - !tagged_locator { tag: 'forkcms.translation.exporter', default_index_method: 'forExtension' }
+
+  ForkCMS\Modules\Internationalisation\DependencyInjection\InternationalisationRouteLoader:

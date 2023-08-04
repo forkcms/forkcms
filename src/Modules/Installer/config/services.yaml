@@ -1,0 +1,27 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      string $rootDir: '%kernel.project_dir%'
+      bool $forkIsInstalled: '%fork.is_installed%'
+
+  ForkCMS\Modules\Installer\:
+    resource: '../*'
+    exclude:
+      - '../Controller'
+      - '../Domain/Installer/InstallerConnectionFactory.php'
+      - '../Domain/Configuration/ConfigurationParser.php'
+      - '../Domain/Requirements/RequirementsChecker.php'
+
+  ForkCMS\Modules\Installer\Domain\Configuration\ConfigurationParser:
+    arguments:
+      $rootDir: '%kernel.project_dir%'
+
+  ForkCMS\Core\Installer\CoreInstaller:
+    tags:
+      - { name: forkcms.module.installer }
+
+  module_installers:
+    namespace: ForkCMS\Modules\
+    resource: '../../*/Installer'

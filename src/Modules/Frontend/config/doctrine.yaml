@@ -1,0 +1,6 @@
+doctrine:
+  dbal:
+    types:
+      modules__frontend__meta__seo_follow: ForkCMS\Modules\Frontend\Domain\Meta\SEOFollowDBALType
+      modules__frontend__meta__seo_index: ForkCMS\Modules\Frontend\Domain\Meta\SEOIndexDBALType
+      modules__frontend__block__block_name: ForkCMS\Modules\Frontend\Domain\Block\BlockNameDBALType

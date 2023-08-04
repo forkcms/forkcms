@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      string $rootDir: '%kernel.project_dir%'
+
+  ForkCMS\Modules\Installer\Controller\:
+    resource: '../Controller/*'
+    public: true
+
+  doctrine.dbal.connection_factory:
+    class: ForkCMS\Modules\Installer\Domain\Installer\InstallerConnectionFactory
+    arguments:
+      - "%doctrine.dbal.connection_factory.types%"
+

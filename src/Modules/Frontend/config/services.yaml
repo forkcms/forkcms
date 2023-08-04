@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $metaCallbacks: !tagged_locator { tag: 'forkcms.frontend.meta.callback' }
+
+  ForkCMS\Modules\Frontend\Domain\:
+    resource: '../Domain/*'
+    exclude:
+      '../Domain/Meta/AddMetaSubscriber.php'
+
+  ForkCMS\Modules\Frontend\DependencyInjection\FrontendRouteLoader:
+    arguments:
+      - '@routing.loader.yml'
+
