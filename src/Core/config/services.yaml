@@ -9,12 +9,15 @@ services:
       bind:
         string $rootDir: '%kernel.project_dir%'
         bool $forkIsInstalled: '%fork.is_installed%'
+    Symfony\Bundle\MakerBundle\MakerInterface:
+      tags:
+        - { name: maker.command }
 
-  ForkCMS\Core\:
-    resource: '../*'
+  ForkCMS\Core\Domain\:
+    resource: '../Domain/*'
     exclude:
-      - '../tests'
       - '../Domain/PDO'
+      - '../Domain/Kernel/Kernel.php'
 
   ForkCMS\Core\Domain\Settings\SettingsListener:
     tags:

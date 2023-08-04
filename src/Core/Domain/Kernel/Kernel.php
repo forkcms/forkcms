@@ -43,18 +43,18 @@ class Kernel extends BaseKernel
         return $this->isInstalled || !str_ends_with($this->environment, 'install');
     }
 
-    final protected function configureContainer(ContainerConfigurator $container): void
+    protected function configureContainer(ContainerConfigurator $containerConfigurator): void
     {
         if ($this->isInstalled()) {
-            $this->configureLiveContainer($container);
+            $this->configureLiveContainer($containerConfigurator);
 
             return;
         }
 
-        $this->configureInstallerContainer($container);
+        $this->configureInstallerContainer($containerConfigurator);
     }
 
-    final protected function buildContainer(): ContainerBuilder
+    protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
 
@@ -66,7 +66,7 @@ class Kernel extends BaseKernel
         return $container;
     }
 
-    final protected function configureRoutes(RoutingConfigurator $routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
         if ($this->isInstalled()) {
             $this->configureLiveRoutes($routes);
@@ -77,26 +77,26 @@ class Kernel extends BaseKernel
         $this->configureInstallerRoutes($routes);
     }
 
-    private function configureLiveContainer(ContainerConfigurator $container): void
+     private function configureLiveContainer(ContainerConfigurator $containerConfigurator): void
     {
-        $container->import(self::ROOT_DIR . 'config/{packages}/*.yaml');
-        $container->import(self::ROOT_DIR . 'config/{packages}/' . $this->environment . '/*.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/*.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/' . $this->environment . '/*.yaml');
 
-        $container->import(self::ROOT_DIR . 'config/services.yaml');
-        $container->import(self::ROOT_DIR . 'config/{services}_' . $this->environment . '.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/services.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{services}_' . $this->environment . '.yaml');
     }
 
-    private function configureInstallerContainer(ContainerConfigurator $container): void
+    private function configureInstallerContainer(ContainerConfigurator $containerConfigurator): void
     {
-        $container->import(self::ROOT_DIR . 'config/{packages}/*.yaml');
-        $container->import(self::ROOT_DIR . 'config/{packages}/install/*.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/*.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/install/*.yaml');
         if ($this->environment === 'test_install') {
-            $container->import(self::ROOT_DIR . 'config/{packages}/test_install/*.yaml');
+            $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/test_install/*.yaml');
         }
 
-        $container->import(self::ROOT_DIR . 'config/{services}_install.yaml');
+        $containerConfigurator->import(self::ROOT_DIR . 'config/{services}_install.yaml');
         if ($this->environment === 'test_install') {
-            $container->import(self::ROOT_DIR . 'config/{services}_test_install.yaml');
+            $containerConfigurator->import(self::ROOT_DIR . 'config/{services}_test_install.yaml');
         }
     }
 
@@ -214,7 +214,7 @@ class Kernel extends BaseKernel
         );
     }
 
-    final public function getContainerClass(): string
+    public function getContainerClass(): string
     {
         return parent::getContainerClass();
     }
