@@ -1,0 +1,4 @@
+framework:
+  test: true
+  session:
+    storage_factory_id: ForkCMS\Core\Tests\MockArraySessionStorageFactory

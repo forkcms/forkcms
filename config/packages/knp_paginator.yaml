@@ -1,0 +1,14 @@
+knp_paginator:
+  page_range: 5                    # default page range used in pagination control
+  page_limit: 100                    # page limit for pagination control; to disable set this field to ~ (null)
+  default_options:
+    page_name: page                # page query parameter name
+    sort_field_name: sort          # sort field query parameter name; to disable sorting set this field to ~ (null)
+    sort_direction_name: direction # sort direction query parameter name
+    distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    page_out_of_range: fix         # if page number exceeds the last page. Options: 'fix'(return last page); 'throwException'
+    default_limit: 10              # default number of items per page
+  template:
+    pagination: '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'     # sliding pagination controls template
+    sortable: '@KnpPaginator/Pagination/bootstrap_v5_fa_sortable_link.html.twig' # sort link template
+    filtration: '@KnpPaginator/Pagination/bootstrap_v5_filtration.html.twig'

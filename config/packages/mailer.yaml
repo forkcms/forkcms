@@ -1,0 +1,4 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+# @TODO check if we need this

@@ -1,0 +1,4 @@
+parameters:
+  database.name: '%env(FORK_DATABASE_NAME)%'
+  kernel.secret: '%env(APP_SECRET)%'
+  fork.is_installed: true

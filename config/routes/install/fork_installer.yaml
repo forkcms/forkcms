@@ -1,0 +1,41 @@
+install_step1:
+  path: /install/1
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\RequirementCheckerController
+install_step2:
+  path: /install/2
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\LocalesController
+install_step3:
+  path: /install/3
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\ModulesController
+install_step4:
+  path: /install/4
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\DatabaseController
+install_step5:
+  path: /install/5
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\AuthenticationController
+install_step6:
+  path: /install/6
+  defaults:
+    _controller: ForkCMS\Modules\Installer\Controller\InstallController
+install_redirect:
+  path: /install
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'install_step1'
+fallback_redirect:
+  path: /{slug}
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'install_step1'
+  requirements:
+    slug: ".+"
+home_redirect:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    route: 'install_step1'

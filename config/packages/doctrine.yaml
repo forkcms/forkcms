@@ -1,0 +1,65 @@
+doctrine:
+  dbal:
+    default_connection: default
+    connections:
+      default:
+        driver: "pdo_%env(FORK_DATABASE_DRIVER)%"
+        host: "%env(FORK_DATABASE_HOST)%"
+        port: "%env(FORK_DATABASE_PORT)%"
+        dbname: "%env(FORK_DATABASE_NAME)%"
+        user: "%env(FORK_DATABASE_USER)%"
+        password: "%env(FORK_DATABASE_PASSWORD)%"
+        charset: utf8mb4
+        default_table_options:
+          charset: utf8mb4
+          collate: utf8mb4_unicode_ci
+#    types:
+#      seo_follow: Common\Doctrine\Type\SEOFollowType
+#      seo_index: Common\Doctrine\Type\SEOIndexType
+#      locale: Common\Doctrine\Type\LocaleType
+#      datetime: Common\Doctrine\Type\UTCDateTimeType
+#      datetimetz: Common\Doctrine\Type\UTCDateTimeType
+#      time: Common\Doctrine\Type\UTCTimeType
+#
+  orm:
+    auto_generate_proxy_classes: "%kernel.debug%"
+    entity_managers:
+      default:
+        connection: default
+        auto_mapping: true
+        filters:
+          softdeleteable:
+            class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+            enabled: true
+        dql:
+          numeric_functions:
+            ceil: DoctrineExtensions\Query\Mysql\Ceil
+            unix_timestamp: DoctrineExtensions\Query\Mysql\UnixTimestamp
+            least: DoctrineExtensions\Query\Mysql\Least
+          string_functions:
+            group_concat: DoctrineExtensions\Query\Mysql\GroupConcat
+            ifelse: DoctrineExtensions\Query\Mysql\IfElse
+            JSON_APPEND: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonAppend
+            JSON_ARRAY: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonArray
+            JSON_ARRAY_APPEND: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonArrayAppend
+            JSON_ARRAY_INSERT: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonArrayInsert
+            JSON_CONTAINS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContains
+            JSON_CONTAINS_PATH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonContainsPath
+            JSON_DEPTH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonDepth
+            JSON_EXTRACT: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonExtract
+            JSON_OVERLAPS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonOverlaps
+            JSON_INSERT: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonInsert
+            JSON_KEYS: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonKeys
+            JSON_LENGTH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonLength
+            JSON_MERGE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonMerge
+            JSON_MERGE_PATCH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonMergePatch
+            JSON_OBJECT: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonObject
+            JSON_PRETTY: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonPretty
+            JSON_QUOTE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonQuote
+            JSON_REMOVE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonRemove
+            JSON_REPLACE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonReplace
+            JSON_SEARCH: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonSearch
+            JSON_SET: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonSet
+            JSON_TYPE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonType
+            JSON_UNQUOTE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonUnquote
+            JSON_VALID: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonValid

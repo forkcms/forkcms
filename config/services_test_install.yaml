@@ -1,0 +1,7 @@
+parameters:
+  site.multilanguage: true
+  site.default_language: en
+  fork.is_installed: false
+
+services:
+  ForkCMS\Core\Tests\MockArraySessionStorageFactory:

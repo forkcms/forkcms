@@ -1,0 +1,41 @@
+#parameters:
+#    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
+#    fork.form.default_preferred_editor: 'block-editor'
+#    fork.form.available_editors:
+#        ck-editor: 'CK Editor'
+#        html: 'HTML'
+#        block-editor: 'Block Editor'
+#
+#services:
+#    _defaults:
+#        autowire: true
+#        autoconfigure: true
+#        public: true
+#
+#    Common\BlockEditor\Blocks\:
+#        resource: '../../src/Common/BlockEditor/Blocks'
+#        tags: ['fork.block_editor.block']
+#
+#    Common\Form\DatePickerType:
+#        tags:
+#          - { name: form.type }
+#
+#    Backend\Form\Type\EditorType:
+#        tags:
+#            - { name: form.type, alias: editor}
+#
+#    Backend\Form\Type\MetaType:
+#        tags:
+#            - { name: form.type, alias: meta}
+#
+#    Common\Form\ImageType:
+#        tags:
+#            - { name: form.type, alias: image}
+#
+#    Common\Form\FileType:
+#        tags:
+#            - { name: form.type, alias: file}
+#
+#    Common\Form\Extension\DateTypeExtension:
+#        tags:
+#            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\DateType }

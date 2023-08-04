@@ -1,0 +1,6 @@
+twig:
+  debug: "%kernel.debug%"
+  strict_variables: "%kernel.debug%"
+
+#  form_themes:
+#    - '%fork.form.theme%'

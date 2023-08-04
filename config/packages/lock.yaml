@@ -1,0 +1,2 @@
+framework:
+    lock: '%env(FORK_DATABASE_DRIVER)%:host=%env(FORK_DATABASE_HOST)%;port=%env(FORK_DATABASE_PORT)%;dbname=%env(FORK_DATABASE_NAME)%;charset=utf8mb4;user=%env(FORK_DATABASE_USER)%;password=%env(FORK_DATABASE_PASSWORD)%'

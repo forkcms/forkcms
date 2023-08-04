@@ -1,0 +1,38 @@
+security:
+  enable_authenticator_manager: true
+  password_hashers:
+    ForkCMS\Modules\Backend\Domain\User\User:
+      algorithm: auto
+  providers:
+    backend_user_provider:
+      entity:
+        class: ForkCMS\Modules\Backend\Domain\User\User
+        property: email
+  firewalls:
+    backend:
+      pattern: ^/private
+      lazy: true
+      provider: backend_user_provider
+      remember_me:
+        secret: '%kernel.secret%'
+        path: /private
+        samesite: 'strict'
+        token_provider:
+          doctrine: true
+        secure: true
+      login_throttling:
+        max_attempts: 3
+        interval: '15 minutes'
+      custom_authenticator: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
+      logout:
+        path: backend_logout
+    frontend:
+      pattern: ^/
+      security: false
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/private/\w\w/backend/authentication_login, roles: PUBLIC_ACCESS }
+    - { path: ^/private/\w\w/backend/authentication_logout, roles: PUBLIC_ACCESS }
+    - { path: ^/private, roles: ROLE_USER }

@@ -1,0 +1,5 @@
+parameters:
+  fork.is_installed: false
+  fork.form.theme: 'form_theme.html.twig'
+  database.name: '%env(FORK_DATABASE_NAME)%'
+  kernel.secret: 'forkinstaller'

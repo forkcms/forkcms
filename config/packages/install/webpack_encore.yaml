@@ -1,0 +1,3 @@
+webpack_encore:
+  builds:
+    InstallerConfig: '%kernel.project_dir%/public/assets/modules/Installer'

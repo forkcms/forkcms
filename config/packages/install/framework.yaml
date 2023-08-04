@@ -1,0 +1,21 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+  secret: 'installer'
+  csrf_protection: true
+  default_locale: 'en'
+  #http_method_override: true
+
+  # Enables session support. Note that the session will ONLY be started if you read or write from it.
+  # Remove or comment this section to explicitly disable session support.
+  session:
+    handler_id: ~
+
+  #esi: true
+  #fragments: true
+  php_errors:
+    log: true
+
+  serializer: true
+  assets:
+    packages: # create the "assets.packages" service
+  form: ~

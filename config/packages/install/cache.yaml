@@ -1,0 +1,3 @@
+framework:
+  cache:
+    prefix_seed: forkcms/install

@@ -1,0 +1,6 @@
+twig:
+  default_path: '%kernel.project_dir%/src/Core/templates/Installer'
+  debug: "%kernel.debug%"
+  strict_variables: "%kernel.debug%"
+  form_themes:
+    - '%fork.form.theme%'
