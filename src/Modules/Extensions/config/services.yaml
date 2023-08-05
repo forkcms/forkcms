@@ -17,3 +17,6 @@ services:
   ForkCMS\Modules\Extensions\Domain\Module\ModuleInstallerLocator:
     arguments:
       - !tagged_iterator { tag: 'forkcms.module.installer' }
+
+  ForkCMS\Modules\Extensions\Console\:
+    resource: '../Console/*'
