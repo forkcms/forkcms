@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>Backend</name>
+  <version>1.0.0</version>
+  <requirements>
+    <minimum_version>6.0.0</minimum_version>
+    <maximum_version>7.0.0</maximum_version>
+  </requirements>
+  <authors>
+    <author>
+      <name><![CDATA[Jelmer Prins]]></name>
+      <url><![CDATA[https://pageon.be]]></url>
+    </author>
+  </authors>
+  <description>
+    <![CDATA[
+      This module contains the authentication, users, user groups, dashboard and error page for the backend. Also contains the routing for the actions and ajax actions of the backend.
+    ]]>
+  </description>
+  <events>
+    <event class="ForkCMS\Modules\Backend\Domain\User\Event\BuildUserSettingsFormEvent"><![CDATA[Thrown when building the form for users. Can be used to add additional settings to backend users.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\User\Event\UserCreatedEvent"><![CDATA[Thrown when a user is created.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\User\Event\UserChangedEvent"><![CDATA[Thrown when a user is changed.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\User\Event\UserDeletedEvent"><![CDATA[Thrown when a user is deleted.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\UserGroup\Event\UserGroupCreatedEvent"><![CDATA[Thrown when a user group is created.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\UserGroup\Event\UserGroupChangedEvent"><![CDATA[Thrown when a user group is changed.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\UserGroup\Event\UserGroupDeletedEvent"><![CDATA[Thrown when a user group is deleted.]]></event>
+  </events>
+</module>

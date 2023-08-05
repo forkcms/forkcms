@@ -2,12 +2,22 @@
 
 namespace ForkCMS\Modules\Backend\Installer;
 
+use ForkCMS\Modules\Backend\Backend\Actions\Dashboard;
+use ForkCMS\Modules\Backend\Backend\Actions\UserAdd;
+use ForkCMS\Modules\Backend\Backend\Actions\UserDelete;
+use ForkCMS\Modules\Backend\Backend\Actions\UserEdit;
+use ForkCMS\Modules\Backend\Backend\Actions\UserGroupAdd;
+use ForkCMS\Modules\Backend\Backend\Actions\UserGroupDelete;
+use ForkCMS\Modules\Backend\Backend\Actions\UserGroupEdit;
+use ForkCMS\Modules\Backend\Backend\Actions\UserGroupIndex;
+use ForkCMS\Modules\Backend\Backend\Actions\UserIndex;
 use ForkCMS\Modules\Backend\Domain\NavigationItem\NavigationItem;
 use ForkCMS\Modules\Backend\Domain\User\Command\CreateUser;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroup;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
 use ForkCMS\Modules\Installer\Domain\Configuration\InstallerConfiguration;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 
@@ -29,6 +39,36 @@ final class BackendInstaller extends ModuleInstaller
     public function install(): void
     {
         $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
+        $this->createBackendPages();
+    }
+
+    private function createBackendPages(): void
+    {
+        $this->getOrCreateBackendNavigationItem(
+            label: TranslationKey::label('Dashboard'),
+            slug: Dashboard::getActionSlug(),
+            sequence: 0,
+        );
+        $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('Users'),
+            UserIndex::getActionSlug(),
+            $this->getSettingsNavigationItem(),
+            [
+                UserAdd::getActionSlug(),
+                UserEdit::getActionSlug(),
+                UserDelete::getActionSlug(),
+            ],
+        );
+        $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('Groups'),
+            UserGroupIndex::getActionSlug(),
+            $this->getSettingsNavigationItem(),
+            [
+                UserGroupAdd::getActionSlug(),
+                UserGroupEdit::getActionSlug(),
+                UserGroupDelete::getActionSlug(),
+            ],
+        );
     }
 
     private function createAdminUser(): void
