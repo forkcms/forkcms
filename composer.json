@@ -61,7 +61,7 @@
         "symfony/rate-limiter": "^6.0",
         "symfony/http-client": "^6.0",
         "symfony/templating": "^6.0",
-        "pageon/pageon-doctrine-data-grid-bundle": "^0.1.3",
+        "pageon/pageon-doctrine-data-grid-bundle": "^0.1.24",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/uid": "6.*",
         "composer/semver": "^3.2",
