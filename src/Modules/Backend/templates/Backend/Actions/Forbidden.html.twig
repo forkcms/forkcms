@@ -1,0 +1,27 @@
+{% extends '@Backend/base/empty.html.twig' %}
+
+{% block bodyAttributes %}
+  id="{{ bodyID }}"
+  class="{{ bodyClass }}"
+{% endblock %}
+
+{% block content %}
+  <div id="root">
+    <nav class="navbar navbar-dark align-content-center justify-content-center">
+      <a class="navbar-brand" href="{{ path('backend_action') }}">
+        <h1 class="text-white">{{ SITE_TITLE }}</h1>
+      </a>
+    </nav>
+    <div class="fork-error-page-background">
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <img src="{{ asset('assets/modules/Backend/Backend/images/forbidden.png') }}" class="img-fluid" alt="{{ message|trans }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-center">
+      <h2 class="display-5 pt-5">{{ message|trans }}</h2>
+    </div>
+  </div>
+{% endblock %}
