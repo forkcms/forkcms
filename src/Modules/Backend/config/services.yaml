@@ -13,3 +13,18 @@ services:
   ForkCMS\Modules\Backend\DependencyInjection\BackendRouteLoader:
     arguments:
       - '@routing.loader.yml'
+
+  ForkCMS\Modules\Backend\Backend\Actions\:
+    resource: '../Backend/Actions/*'
+
+  ForkCMS\Modules\Backend\Backend\Ajax\:
+    resource: '../Backend/Ajax/*'
+
+  ForkCMS\Modules\Backend\Backend\Widgets\:
+    resource: '../Backend/Widgets/*'
+
+  ForkCMS\Modules\Backend\Backend\Actions\NotFound:
+    public: true
+
+  ForkCMS\Modules\Backend\Console\:
+    resource: '../Console/*'

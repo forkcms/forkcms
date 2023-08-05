@@ -1,0 +1,52 @@
+{% extends '@Backend/base/crud/edit.html.twig' %}
+{% set crudIndexAction = 'UserIndex' %}
+
+{% block content %}
+  <div class="content-block content-block-pb">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tr>
+          <td rowspan="{{ app.user.settings.has('last_authentication_failure') ? 5 : 4 }}" class="text-center align-middle">
+            <label for="avatar">
+              <img class="rounded-circle rounded-circle-size-user" src="{{ '@BackendModule:image/no-avatar.gif'|imagine_filter('backend_avatar') }}" alt="{{ user.displayName }}" />
+            </label>
+          </td>
+          <th class="border-start">{{ 'lbl.DisplayName'|trans|ucfirst }}:</th>
+          <td>{{ user.displayName }}</td>
+        </tr>
+        <tr>
+          <th class="border-start">{{ 'lbl.Email'|trans|ucfirst }}:</th>
+          <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+          <th class="border-start">{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
+          <td>
+            {% if app.user.settings.has('last_authentication_success') %}
+              {{ app.user.setting('last_authentication_success')|user_format_datetime }}
+            {% else %}
+              {{ 'lbl.NoPreviousLogin'|trans|ucfirst }}
+            {% endif %}
+          </td>
+        </tr>
+        {% if app.user.settings.has('last_authentication_failure') %}
+          <tr>
+            <th class="border-start">{{ 'lbl.LastFailedLoginAttempt'|trans|ucfirst }}:</th>
+            <td>{{ app.user.setting('last_authentication_failure')|user_format_datetime }}</td>
+          </tr>
+        {% endif %}
+        <tr>
+          <th class="border-start">{{ 'lbl.LastPasswordChange'|trans|ucfirst }}:</th>
+          <td>
+            {% if app.user.settings.has('last_password_change') %}
+              {{ app.user.setting('last_password_change')|user_format_datetime }}
+            {% else %}
+              {{ 'lbl.Never'|trans|ucfirst }}
+            {% endif %}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  {{ parent()}}
+{% endblock %}
