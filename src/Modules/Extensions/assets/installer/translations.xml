@@ -70,6 +70,21 @@
       <translation locale="pt"><![CDATA[módulos]]></translation>
       <translation locale="pl"><![CDATA[moduły]]></translation>
     </item>
+    <item type="error" name="InvalidXML">
+      <translation locale="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
+      <translation locale="en"><![CDATA[This is an invalid XML-file.]]></translation>
+      <translation locale="it"><![CDATA[Questo è un file XML non valido.]]></translation>
+      <translation locale="ru"><![CDATA[Недопустимый XML файл.]]></translation>
+      <translation locale="zh"><![CDATA[这是一个无效的xml文件。]]></translation>
+      <translation locale="hu"><![CDATA[Ez egy érvénytelen XML-fájl.]]></translation>
+      <translation locale="fr"><![CDATA[Fichier XML non valide]]></translation>
+      <translation locale="de"><![CDATA[Die XMl-Datei beinhalte fehlerhafte Daten.]]></translation>
+      <translation locale="es"><![CDATA[Este es un archivo XML no válido.]]></translation>
+      <translation locale="uk"><![CDATA[Неприпустимий XML-файл]]></translation>
+      <translation locale="el"><![CDATA[Αυτό το αρχείο XML δεν είναι έγκυρο.]]></translation>
+      <translation locale="pl"><![CDATA[Nieprawidłowy plik XML.]]></translation>
+      <translation locale="pt"><![CDATA[O ficheiro XML não é válido.]]></translation>
+    </item>
     <Extensions>
       <item type="label" name="ThemeSelection">
         <translation locale="nl"><![CDATA[thema-keuze]]></translation>
