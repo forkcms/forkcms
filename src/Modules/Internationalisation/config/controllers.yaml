@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Internationalisation\Controller\JsTranslationsController:
+    public: true

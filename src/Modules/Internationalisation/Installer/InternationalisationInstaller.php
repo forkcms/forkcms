@@ -4,6 +4,14 @@ namespace ForkCMS\Modules\Internationalisation\Installer;
 
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
 use ForkCMS\Modules\Installer\Domain\Configuration\InstallerConfiguration;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\ModuleSettings;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationAdd;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationDelete;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationEdit;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationExport;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationImport;
+use ForkCMS\Modules\Internationalisation\Backend\Actions\TranslationIndex;
+use ForkCMS\Modules\Internationalisation\Backend\Ajax\TranslationEdit as TranslationEditAjax;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocale;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocaleDataTransferObject;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
@@ -23,6 +31,8 @@ final class InternationalisationInstaller extends ModuleInstaller
     public function install(): void
     {
         $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
+        $this->createBackendPages();
+        $this->configureBackendAjaxActions();
     }
 
     private function setInstalledLocales(): void
@@ -62,5 +72,31 @@ final class InternationalisationInstaller extends ModuleInstaller
 
             $this->installedLocaleRepository->save(InstalledLocale::fromDataTransferObject($installedLocale));
         }
+    }
+
+    private function createBackendPages(): void
+    {
+        $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('Translations'),
+            TranslationIndex::getActionSlug(),
+            $this->getSettingsNavigationItem(),
+            [
+                TranslationAdd::getActionSlug(),
+                TranslationEdit::getActionSlug(),
+                TranslationDelete::getActionSlug(),
+                TranslationImport::getActionSlug(),
+                TranslationExport::getActionSlug(),
+            ],
+        );
+        $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('Languages'),
+            ModuleSettings::getActionSlug(),
+            $this->getModuleSettingsNavigationItem()
+        );
+    }
+
+    private function configureBackendAjaxActions(): void
+    {
+        $this->allowGroupToAccessModuleAjaxAction(TranslationEditAjax::getAjaxActionSlug()->asModuleAction());
     }
 }

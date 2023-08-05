@@ -6,12 +6,21 @@ services:
       string $rootDir: '%kernel.project_dir%'
       string $cacheDir: '%kernel.cache_dir%'
 
+  ForkCMS\Modules\Internationalisation\Console\:
+    resource: '../Console/*'
+
   ForkCMS\Modules\Internationalisation\Domain\:
     resource: '../Domain/*'
     exclude:
       - '../Domain/Translator/ForkTranslator.php'
       - '../Domain/Importer/Importer.php'
       - '../Domain/Twig'
+
+  ForkCMS\Modules\Internationalisation\Backend\Actions\:
+    resource: '../Backend/Actions/*'
+
+  ForkCMS\Modules\Internationalisation\Backend\Ajax\:
+    resource: '../Backend/Ajax/*'
 
   ForkCMS\Modules\Internationalisation\Domain\Translation\ForkTranslationLoader:
     tags:

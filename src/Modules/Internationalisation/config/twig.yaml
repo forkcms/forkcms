@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Internationalisation\Domain\Twig\:
+    resource: '../Domain/Twig/*'
+
+  twig.extension.intl:
+    alias: ForkCMS\Modules\Internationalisation\Domain\Twig\ForkIntlExtension

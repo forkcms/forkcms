@@ -1,0 +1,73 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+{% set crudIndexModule = null %}
+{% set crudIndexParameters = [] %}
+{% set crudIndexRelative = false %}
+{% set crudIndexLocale = null %}
+
+{% block content %}
+  {% if importResults is defined %}
+    <dl>
+      <dt>{{ 'lbl.Imported'|trans|ucfirst}}</dt>
+      <dd>{{ importResults.importedCount|trans|ucfirst }}</dd>
+      <dt>{{ 'lbl.Updated'|trans|ucfirst}}</dt>
+      <dd>{{ importResults.updatedCount }}</dd>
+      <dt>{{ 'lbl.Skipped'|trans|ucfirst}}</dt>
+      <dd>{{ importResults.skippedCount }}</dd>
+      <dt>{{ 'lbl.Failed'|trans|ucfirst}}</dt>
+      <dd>
+        <details class="table-responsive">
+          <summary>{{ importResults.failed|count }}</summary>
+          <table class="table table-striped">
+            <thead>
+            <th>{{ 'lbl.Application'|trans|ucfirst }}</th>
+            <th>{{ 'lbl.Module'|trans|ucfirst }}</th>
+            <th>{{ 'lbl.Type'|trans|ucfirst }}</th>
+            <th>{{ 'lbl.Name'|trans|ucfirst }}</th>
+            <th>{{ 'lbl.Locale'|trans|ucfirst }}</th>
+            <th>{{ 'lbl.Translation'|trans|ucfirst }}</th>
+            </thead>
+            <tbody>
+              {% for failed in importResults.failed %}
+                <tr>
+                  <td>{{ failed.domain.application|trans }}</td>
+                  <td>{{ failed.domain.moduleName|trans }}</td>
+                  <td>{{ failed.key.type|trans }}</td>
+                  <td>{{ failed.key.name }}</td>
+                  <td>{{ failed.locale|trans }}</td>
+                  <td>{{ failed.value }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </details>
+      </dd>
+    </dl>
+
+    <div class="btn-toolbar">
+      {% if is_allowed('TranslationIndex') %}
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(action_path('TranslationIndex'), 'list', 'lbl.TranslationIndex'|trans|ucfirst, 'btn-default') }}
+        </div>
+      {% endif %}
+      <div class="btn-group ms-auto" role="group">
+        {{ macro.buttonIcon('', 'upload', 'lbl.Import'|trans|ucfirst, 'btn-primary') }}
+      </div>
+    </div>
+  {% else %}
+    {{ form_start(backend_form) }}
+    {{ form_rest(backend_form) }}
+
+    <div class="btn-toolbar">
+      {% if is_allowed('TranslationIndex') %}
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(action_path('TranslationIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+        </div>
+      {% endif %}
+      <div class="btn-group ms-auto" role="group">
+        {{ macro.buttonIcon('', 'upload', 'lbl.Import'|trans|ucfirst, 'btn-primary') }}
+      </div>
+    </div>
+    {{ form_end(backend_form) }}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block actionbar %}
+  {% if is_allowed('TranslationAdd') or exportUrl is defined or is_allowed('TranslationImport') %}
+    <div class="btn-toolbar justify-content-end">
+      <div class="btn-group" role="group">
+        {% if exportUrl is defined %}
+          {{ macro.buttonIcon(exportUrl, 'download', 'lbl.Export'|trans|ucfirst, 'btn-default') }}
+        {% endif %}
+        {% if is_allowed('TranslationImport') %}
+          {{ macro.buttonIcon(action_path('TranslationImport'), 'upload', 'lbl.Import'|trans|ucfirst, 'btn-default') }}
+        {% endif %}
+        {% if is_allowed('TranslationAdd') %}
+          {{ macro.buttonIcon(action_path('TranslationAdd'), 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-success') }}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {{ form_start(backend_form) }}
+  <div class="card card-default">
+    <div class="card-heading">
+      <h2>{{ 'lbl.Filter'|trans|ucfirst }}</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+          {{ form_row(backend_form.application) }}
+          {{ form_row(backend_form.moduleName) }}
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-lg-5 col-xl-6">
+              {{ form_row(backend_form.type) }}
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-7 col-xl-6">
+              {{ form_row(backend_form.locale) }}
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-xl-4">
+          <div class="row">
+            <div class="col-md-12 col-lg-6 col-xl-12">{{ form_row(backend_form.name) }}</div>
+            <div class="col-md-12 col-lg-6 col-xl-12">{{ form_row(backend_form.value) }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-toolbar justify-content-end">
+        {{ macro.buttonIcon(null, 'sync', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary') }}
+      </div>
+    </div>
+  </div>
+  {{ form_rest(backend_form) }}
+  {{ form_end(backend_form) }}
+  {% if notFiltered is defined %}
+    {{ pageon_datagrid(notFiltered) }}
+  {% elseif dataGrids is defined %}
+    {% for dataGrid in dataGrids %}
+      <div class="card card-primary">
+        <div class="card-heading">
+          <h3 class="card-title">{{ dataGrid.type|trans|ucfirst }}</h3>
+        </div>
+        {{ pageon_datagrid(dataGrid.dataGrid) }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
