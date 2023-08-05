@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>Extensions</name>
+  <version>2.0.0</version>
+  <requirements>
+    <minimum_version>6.0.0</minimum_version>
+    <maximum_version>7.0.0</maximum_version>
+  </requirements>
+  <authors>
+    <author>
+      <name><![CDATA[Jelmer Prins]]></name>
+      <url><![CDATA[https://pageon.be]]></url>
+    </author>
+  </authors>
+  <description>
+    <![CDATA[
+      This module handles everything related to Fork modules and themes.
+    ]]>
+  </description>
+  <events>
+    <event class="ForkCMS\Modules\Extensions\Domain\Module\Event\ModuleInstalledEvent"><![CDATA[Thrown after a module is installed.]]></event>
+    <event class="ForkCMS\Modules\Extensions\Domain\Theme\Event\ThemeInstalledEvent"><![CDATA[Thrown after a theme is installed.]]></event>
+    <event class="ForkCMS\Modules\Extensions\Domain\Theme\Event\ThemeActivatedEvent"><![CDATA[Thrown after a theme is activated.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\ThemeTemplate\Event\ThemeTemplateCreatedEvent"><![CDATA[Thrown when a theme template is created.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\ThemeTemplate\Event\ThemeTemplateChangedEvent"><![CDATA[Thrown when a theme template is changed.]]></event>
+    <event class="ForkCMS\Modules\Backend\Domain\ThemeTemplate\Event\ThemeTemplateDeletedEvent"><![CDATA[Thrown when a theme template is deleted.]]></event>
+  </events>
+</module>
