@@ -13,7 +13,10 @@ use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Backend\Backend\Actions\AuthenticationLogin;
 use ForkCMS\Modules\Backend\Backend\Actions\AuthenticationResetPassword;
-use ForkCMS\Modules\Backend\Backend\Actions\NotFound;
+use ForkCMS\Modules\Backend\Backend\Actions\Forbidden as ActionForbidden;
+use ForkCMS\Modules\Backend\Backend\Actions\NotFound as ActionNotFound;
+use ForkCMS\Modules\Backend\Backend\Ajax\Forbidden as AjaxForbidden;
+use ForkCMS\Modules\Backend\Backend\Ajax\NotFound as AjaxNotFound;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroup;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -187,12 +190,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             return [];
         }
 
-        // @TODO reenable once the actions are made
         $roles = [
             'ROLE_USER',
-            //NotFound::getActionSlug()->asModuleAction()->asRole(),
-            //AuthenticationLogin::getActionSlug()->asModuleAction()->asRole(),
-            //AuthenticationResetPassword::getActionSlug()->asModuleAction()->asRole(),
+            ActionNotFound::getActionSlug()->asModuleAction()->asRole(),
+            ActionForbidden::getActionSlug()->asModuleAction()->asRole(),
+            AjaxNotFound::getAjaxActionSlug()->asModuleAction()->asRole(),
+            AjaxForbidden::getAjaxActionSlug()->asModuleAction()->asRole(),
+            AuthenticationLogin::getActionSlug()->asModuleAction()->asRole(),
+            AuthenticationResetPassword::getActionSlug()->asModuleAction()->asRole(),
         ];
         $groupRoles = [];
 
