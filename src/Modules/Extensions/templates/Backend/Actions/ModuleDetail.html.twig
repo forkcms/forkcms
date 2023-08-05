@@ -1,0 +1,106 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block content %}
+  {% if module.messages.messages|count > 0 %}
+    <div class="fork-module-messages">
+      {% for message in module.messages.messages %}
+        <div class="content-block content-block-pb">
+          {% if message.type.name == 'lbl' or message.type.name == 'msg' %}
+            {{ macro.alert('warning', message|trans|raw) }}
+          {% elseif message.type.name == 'err' %}
+            {{ macro.alert('danger', message|trans|raw) }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-md-8">
+      {% if module.description %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Description'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body">
+            <p>{{ module.description|raw }}</p>
+          </div>
+        </div>
+      {% endif %}
+      {% if module.events|count > 0 %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Events'|trans|ucfirst }}
+            </h2>
+          </div>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>
+                <span>{{ 'lbl.Name'|trans|ucfirst }}</span>
+              </th>
+              <th>
+                <span>{{ 'lbl.Description'|trans|ucfirst }}</span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for event in module.events %}
+              <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                <td>{{ event.class|abbr_class }}</td>
+                <td>{{ event.description|raw }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-4">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
+            {{ 'lbl.Version'|trans|ucfirst }}
+          </h2>
+        </div>
+        <div class="card-body">
+          <p>{{ module.version }}</p>
+        </div>
+      </div>
+      {% if module.authors|count > 0 %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Authors'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              {% for author in module.authors %}
+                <li>
+                  {% if author.url %}
+                  <a href="{{ author.url }}" target="_blank" rel="noopener noreferrer" title="{{ author.name }}">
+                    {% endif %}
+                    {{ author.name }}
+                    {% if author.url %}
+                  </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if installForm is defined %}
+    <div class="btn-toolbar">
+      <div class="btn-group ms-auto" role="group">
+        {% include '@Extensions/Backend/Forms/ModuleInstall.html.twig' with {'moduleName': module.moduleName, 'installButtonClass': 'btn-primary'} %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

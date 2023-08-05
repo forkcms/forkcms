@@ -1,0 +1,23 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block actionbar %}
+  <div class="btn-toolbar justify-content-end">
+    <div class="btn-group" role="group">
+      {{ macro.buttonIcon( 'https://www.fork-cms.com/extensions/modules', 'eye', 'lbl.FindModules'|trans|ucfirst, '', 'target=_blank') }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">{{ 'lbl.InstalledModules'|trans|ucfirst }}</div>
+    {{ pageon_datagrid(installedModules) }}
+  </div>
+  {% if notInstalledModules is defined and notInstalledModules.paginator.totalItemCount > 0 %}
+    <div class="card mt-3">
+      <div class="card-header">{{ 'lbl.InstallableModules'|trans|ucfirst }}</div>
+      {{ pageon_datagrid(notInstalledModules) }}
+    </div>
+  {% endif %}
+{% endblock %}
