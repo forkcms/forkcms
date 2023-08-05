@@ -1,0 +1,14 @@
+#locale .translationValue {
+  word-break: break-all;
+  position: relative;
+
+  .label {
+    background: $primary;
+    border-radius: 10px;
+    color: $white;
+    margin-left: 10px;
+    padding: 2px;
+    right: 0;
+    width: 100%;
+  }
+}

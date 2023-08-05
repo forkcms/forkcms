@@ -1,0 +1,17 @@
+.dropdown-toggle-split {
+  min-width: 25px;
+  position: relative;
+
+  &:after {
+    background-image: url('../../../public/images/arrow-down.svg');
+    background-size: 8px auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 0;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

@@ -1,0 +1,100 @@
+.templateVisual {
+  margin-left: -1.5em;
+
+  td {
+    background-color: $white;
+    border: 1px solid $gray-100;
+    text-align: center;
+    vertical-align: middle;
+
+    &:empty,
+    &.empty {
+      background-size: 20px;
+      background-color: $gray-100;
+    }
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  td {
+    /* @inc .secondarycontent */
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+    font-size: 10px;
+    padding: 4px 2px;
+
+    span {
+      color: $body-color;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+/*
+    Template visual large
+*/
+#templateVisualLarge {
+  clear: both;
+  margin: 0 -2px;
+
+  table {
+    border-collapse: separate;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  td {
+    display: block;
+    vertical-align: top;
+
+    &.empty {
+      background-color: $gray-100;
+      background-size: 20px;
+      border-radius: 3px;
+      display: none;
+      padding: 10px;
+    }
+  }
+
+  .block-info {
+    opacity: 1;
+    transition: opacity 250ms ease;
+
+    .page-block-title {
+      font-size: $font-size-base * 0.9375;
+    }
+
+    .page-block-description {
+      font-size: $font-size-base * 0.875;
+    }
+  }
+
+  .block-not-visible .block-info {
+    opacity: 0.25;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  #templateVisualLarge {
+    margin: 0 -10px;
+
+    table {
+      border-spacing: 10px;
+
+      td {
+        display: table-cell;
+
+        &.empty {
+          display: table-cell;
+        }
+      }
+    }
+  }
+}

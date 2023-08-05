@@ -1,0 +1,15 @@
+.sortable-ghost {
+  background: lighten($primary, 45%);
+
+  > td {
+    background: lighten($primary, 45%);
+  }
+}
+
+.sortable-drag {
+  background: $white;
+
+  > td {
+    background: $white;
+  }
+}

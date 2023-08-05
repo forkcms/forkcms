@@ -1358,6 +1358,39 @@
       <translation locale="en"><![CDATA[Are you sure you want to perform this action?]]></translation>
       <translation locale="pt"><![CDATA[Tem a certeza que pertende efectuar esta acção?]]></translation>
     </item>
+    <item type="error" name="ActionNotAllowed">
+      <translation locale="nl"><![CDATA[Je hebt onvoldoende rechten voor deze actie.]]></translation>
+      <translation locale="en"><![CDATA[You have insufficient rights for this action.]]></translation>
+      <translation locale="hu"><![CDATA[Nincs megfelelő jogod ehhez a lépéshez.]]></translation>
+      <translation locale="it"><![CDATA[Non hai sufficienti permessi per completare quest'azione.]]></translation>
+      <translation locale="ru"><![CDATA[Недостаточно прав для совершения этого действия.]]></translation>
+      <translation locale="zh"><![CDATA[你没有足够的权限进行这个操作。]]></translation>
+      <translation locale="fr"><![CDATA[Vous ne disposez pas des droits suffisants pour effectuer cette action.]]></translation>
+      <translation locale="de"><![CDATA[Du hast unzureichende Rechte für diese Aktion.]]></translation>
+      <translation locale="es"><![CDATA[No tienes permisos para llevar a acabo esta acción.]]></translation>
+      <translation locale="lt"><![CDATA[Neturite teisių šiam veiksmui]]></translation>
+      <translation locale="sv"><![CDATA[Du har inte tillräckligt med rättigheter för denna åtgärd.]]></translation>
+      <translation locale="el"><![CDATA[Δεν έχετε επαρκή δικαιώματα γιά αυτή την ενέργεια.]]></translation>
+      <translation locale="pt"><![CDATA[Não possiu previlégios suficientes para esta acção.]]></translation>
+      <translation locale="pl"><![CDATA[Nie masz wystarczających uprawnień do tego działania.]]></translation>
+    </item>
+    <item type="label" name="Error">
+      <translation locale="nl"><![CDATA[error]]></translation>
+      <translation locale="en"><![CDATA[error]]></translation>
+      <translation locale="hu"><![CDATA[hiba]]></translation>
+      <translation locale="it"><![CDATA[errore]]></translation>
+      <translation locale="ru"><![CDATA[Ошибки]]></translation>
+      <translation locale="zh"><![CDATA[错误]]></translation>
+      <translation locale="de"><![CDATA[Fehler]]></translation>
+      <translation locale="fr"><![CDATA[erreur]]></translation>
+      <translation locale="es"><![CDATA[error]]></translation>
+      <translation locale="lt"><![CDATA[klaida]]></translation>
+      <translation locale="uk"><![CDATA[Помилки]]></translation>
+      <translation locale="sv"><![CDATA[fel]]></translation>
+      <translation locale="el"><![CDATA[σφάλμα]]></translation>
+      <translation locale="pl"><![CDATA[błąd]]></translation>
+      <translation locale="pt"><![CDATA[erro]]></translation>
+    </item>
     <Backend>
       <item type="label" name="NumberOfUsers">
         <translation locale="nl"><![CDATA[aantal gebruikers]]></translation>

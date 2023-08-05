@@ -1,0 +1,80 @@
+#fieldsHolder {
+  .btn-toolbar .btn {
+    padding: 6px 7px 7px;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .field {
+    border-bottom: 1px solid $gray-200;
+    background-color: $white;
+    padding: $spacer * 1.5 0;
+    margin: 0;
+
+    &.field-submit {
+      border: 0;
+      padding: $spacer 0 0;
+    }
+  }
+
+  .form-control[disabled] {
+    background-color: $white;
+    cursor: not-allowed;
+  }
+
+  .btn[disabled] {
+    opacity: 1;
+  }
+}
+
+#formElements {
+
+  h5 {
+    color: $gray-700;
+    margin-top: 0;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+
+  .list-group {
+    padding: 20px 25px 15px;
+    margin: 0;
+
+    .list-group-item {
+      border: 0;
+      border-top: 1px solid $gray-200;
+      color: $formbuilder-blue;
+      cursor: pointer;
+      padding: 11px 0 12px;
+      text-align: left;
+
+      &:hover,
+      &:focus {
+        color: darken($formbuilder-blue, 15%);
+        text-decoration: underline;
+        background: transparent;
+      }
+
+      .svg-inline--fa {
+        color: $gray-550;
+        margin-right: 5px;
+      }
+
+      .icon {
+        margin: 0 6px 0 3px;
+        width: 14px;
+      }
+    }
+
+    &.first {
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+}
+
+#datetimeValueAmount,
+#datetimeValueType {
+  width: 25%;
+}

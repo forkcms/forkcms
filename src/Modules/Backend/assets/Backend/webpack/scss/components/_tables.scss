@@ -1,0 +1,98 @@
+.align-middle {
+  display: table-cell;
+  vertical-align: middle !important;
+}
+
+.table-striped {
+  border: 1px solid $table-border-color;
+}
+
+.table > tbody > tr > td.dragAndDropHandle,
+.table > tbody > tr > th.dragAndDropHandle,
+.table > thead > tr > th.dragAndDropHandle,
+.table > tbody > tr > td.sortHandle,
+.table > tbody > tr > th.sortHandle,
+.table > thead > tr > th.sortHandle {
+  width: 5%;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td {
+  border: 0;
+  vertical-align: middle;
+}
+
+.table-align-top {
+
+  > tbody > tr > td,
+  > tbody > tr > th,
+  > tfoot > tr > td {
+    vertical-align: top;
+  }
+}
+
+.table {
+
+  > thead th {
+    background: $gray-100;
+    color: $gray-700;
+
+    a {
+      color: $body-color;
+
+      &.sorted {
+        color: $primary;
+      }
+    }
+  }
+
+  &,
+  label {
+    font-size: $font-size-sm;
+  }
+
+  tr {
+
+    .highlighted {
+      background: rgba($primary, .15);
+    }
+
+    td,
+    th {
+
+      &.check .form-check-input {
+        margin-left: 0;
+        margin-top: 0;
+        position: static;
+      }
+
+      &.fork-data-grid-action {
+        text-align: right;
+      }
+    }
+
+    td {
+
+      &.title a {
+        font-weight: $font-weight-medium;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    &.grayedOut td {
+      opacity: .6;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  label {
+    font-size: $font-size-sm;
+  }
+}

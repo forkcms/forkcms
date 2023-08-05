@@ -1,0 +1,113 @@
+.header {
+  align-items: center;
+  background-color: $white;
+  border-bottom: 3px solid $gray-200;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 12px 25px 12px 13px;
+  position: relative;
+  z-index: 11;
+
+  .site-text {
+    float: left;
+  }
+
+  .site-title {
+    margin-bottom: 10px;
+  }
+
+  .working-language {
+    color: $gray-700;
+    font-size: $font-size-sm;
+    font-weight: normal;
+  }
+
+  .site-url {
+    border-color: $primary;
+    color: $primary;
+    margin-left: 5px;
+
+    &:hover,
+    &:focus {
+      border-color: $link-hover-color;
+      color: $link-hover-color;
+    }
+  }
+}
+
+.site-title {
+  font-weight: $font-weight-medium;
+  margin: 0;
+  padding: 0;
+}
+
+.site-url {
+  border-bottom: 1px solid $gray-700;
+  color: $gray-700;
+  font-size: $font-size-sm;
+  margin-right: 1rem;
+  position: relative;
+
+  &:after {
+    content: "\f35d";
+    display: none;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+  }
+
+  .svg-inline--fa {
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+
+  &:hover,
+  &:focus {
+    border-color: $primary;
+    color: $primary;
+    text-decoration: none;
+  }
+}
+
+.site-icon {
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-sm;
+  float: left;
+  margin-right: 10px;
+  width: 54px;
+}
+
+.site-info {
+  float: left;
+}
+
+.site-icon-block {
+  float: left;
+  height: 53px;
+  margin-right: 10px;
+  position: relative;
+  width: 53px;
+
+  .debug-mode {
+    background-color: $danger;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    bottom: 0;
+    color: $white;
+    font-size: $font-size-xs;
+    left: 1px;
+    padding: 1px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .site-info {
+    float: left;
+  }
+}

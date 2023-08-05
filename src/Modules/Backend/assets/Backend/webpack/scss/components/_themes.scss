@@ -1,0 +1,14 @@
+.img-thumbnail {
+  border: none;
+  border-radius: 0;
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 100%;
+  padding: 0;
+}
+
+@include media-breakpoint-up(xl) {
+  .img-thumbnail {
+    margin: 0 auto;
+  }
+}

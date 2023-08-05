@@ -1,0 +1,18 @@
+#tagsForm {
+  .check {
+    width: 1%;
+  }
+
+  .tag {
+    width: 50%;
+
+    .label {
+      margin-left: 10px;
+    }
+  }
+}
+
+
+.bootstrap-tagsinput {
+  overflow: visible;
+}

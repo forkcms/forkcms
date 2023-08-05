@@ -1,0 +1,105 @@
+.nav.nav-tabs-xs > li > a {
+  padding: 3px 5px;
+}
+
+.tab-content {
+  background-color: $white;
+  border: 1px solid $gray-200;
+  border-radius: 3px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top: 0;
+  margin-bottom: 25px;
+  padding: 15px;
+
+  .tab-pane-title {
+    font-size: $btn-font-size;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 30px 25px;
+  }
+}
+
+div.active.tab-pane:focus {
+  outline: none;
+}
+
+.nav-tabs {
+
+  .has-error,
+  .active.has-error {
+    .nav-link,
+    .nav-link:hover,
+    .nav-link:focus {
+      -webkit-font-smoothing: antialiased;
+      color: $white;
+      background-color: $danger;
+    }
+  }
+
+  .nav-item {
+    margin-right: 1px;
+
+    .nav-link {
+      background-color: $gray-100;
+      border-color: $nav-tabs-border-color;
+      border-width: $nav-tabs-border-width;
+      border-radius: 3px 3px 0 0;
+      color: $gray-700;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      padding: 8px 12px 7px;
+
+      &.active {
+        background: $nav-tabs-link-active-bg;
+        border-color: $nav-tabs-link-active-border-color;
+      }
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &.danger .nav-link {
+       background-color: $danger;
+       color: $white;
+    }
+  }
+}
+
+@supports (display: flex) {
+
+  .nav-tabs-flex {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    > .nav-item {
+      float: none;
+    }
+  }
+
+  form .tab-content > .active {
+    display: flex;
+  }
+}
+
+.fork-dashboard-column .nav-tabs .nav-item {
+
+  .nav-link {
+     background-color: $gray-200;
+   }
+
+  &.active .nav-link {
+    background-color: $white;
+  }
+}
+
+.tab-pane-collection {
+  margin: -31px -26px -56px;
+
+  & > .card > .card-heading {
+    display: none;
+  }
+}

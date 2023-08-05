@@ -1,0 +1,54 @@
+.content {
+  background-color: $body-bg;
+  border-top: 1px solid $gray-200;
+  padding: 25px 0;
+
+  .content-title {
+    font-size: $font-size-lg;
+    margin-bottom: 20px;
+
+    label,
+    h2,
+    p {
+      font-size: $font-size-lg;
+      font-weight: 400;
+      color: $body-color;
+      margin: 0;
+    }
+
+    select {
+      display: inline-block;
+      width: auto;
+    }
+
+    .svg-inline--fa {
+      font-size: $font-size-base;
+    }
+  }
+
+  .content-block {
+    &.content-block-p {
+      padding: 20px 0;
+
+      &:last-of-type {
+        padding: 40px 0;
+      }
+    }
+
+    &.content-block-pt {
+      padding: 20px 0 0;
+
+      &:last-of-type {
+        padding: 40px 0 0;
+      }
+    }
+
+    &.content-block-pb {
+      padding: 0 0 20px;
+
+      &:last-of-type {
+        padding: 0 0 40px;
+      }
+    }
+  }
+}

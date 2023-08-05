@@ -1,0 +1,17 @@
+#ajaxSpinner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-sm;
+  padding: $spacer * 0.5;
+  position: fixed;
+  left: 50%;
+  top: $grid-gutter-width / 2;
+  transform: translateX(-50%);
+  width: 200px;
+  z-index: 9001;
+
+  &.light {
+    color: $white;
+  }
+}

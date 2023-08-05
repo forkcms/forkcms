@@ -1,0 +1,412 @@
+/**
+ * Media library Helper
+ *
+ * Structure:
+ *   #mediaConnectedItems
+ *    .mediaConnectedBox
+ *    .mediaConnectedItems
+ */
+
+.media-library-media-library-media-group-helper-helper .mediaGroup {
+  margin-bottom: 0;
+}
+
+.mediaGroup {
+
+  .panel-body {
+    padding: 0;
+    border: none;
+
+    .helpTxt {
+      padding: 20px 25px 25px;
+      margin-bottom: 0;
+    }
+  }
+
+  .mediaConnectedBox {
+    background-color: $white;
+  }
+
+  .media-group-type-errors {
+    padding: 0 25px 5px;
+  }
+}
+
+.panel-danger .mediaConnectedBox .mediaNoItems {
+  padding-bottom: 0;
+}
+
+#addGalleriesBox a {
+  float: right;
+}
+
+.mediaConnectedItems {
+  float: none;
+  padding: 0;
+  margin: 0;
+  @extend .list-unstyled;
+
+  .media-item {
+    background-color: transparent;
+    border: 0;
+    box-shadow: 0 1px 9px 0 rgba($black, 0.2);
+    display: inline-block;
+    margin: 10px 20px 10px 0;
+    vertical-align: top;
+
+    &.fork-data-grid-sortable .mediaHolder {
+      cursor: move;
+    }
+  }
+}
+
+.mediaEditBox {
+
+  ul {
+    padding: 10px;
+  }
+
+  li {
+    display: inline;
+    float: left;
+    padding-right: 10px;
+  }
+}
+
+.mediaSettingsGroup {
+  position: absolute;
+  right: 10px;
+}
+
+.media-library-media-group-helper {
+
+  .panel-body,
+  .mediaGroup {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .panel-body {
+
+    .panel {
+      border: none;
+      width: 100%;
+    }
+
+    .mediaSettingsGroup {
+      right: 0;
+    }
+  }
+}
+
+.mediaHolder {
+  cursor: pointer;
+  display: block;
+  float: left;
+  min-width: 186.66px;
+  position: relative;
+
+  .btn-block + .btn-block {
+    margin-top: 0;
+  }
+}
+
+.mediaHolderFile,
+.mediaHolderMovie,
+.mediaHolderAudio {
+  position: relative;
+
+  .icon {
+    color: $black;
+    font-size: 22px;
+    margin-left: -9px;
+    margin-top: -15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+
+  .url {
+    bottom: 5px;
+    font-size: 0.8em;
+    color: $black;
+    text-align: center;
+    word-wrap: break-word;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.mediaHolderAudio .icon {
+  background-position: 0 -468px;
+}
+
+.mediaHolderFile .icon {
+  background-position: 0 -443px;
+}
+
+.mediaHolderMovie {
+  width: 200px;
+
+  .icon {
+    background-position: 0 -468px;
+  }
+
+  .url,
+  .icon {
+    color: $white;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.mediaHolderImage img {
+  height: 120px;
+  width: auto;
+}
+
+.addUploadedMediaItem {
+  align-items: center;
+  border-radius: 100px;
+  background: rgba($gray-700, .9);
+  border-color: $gray-700;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  outline: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50px;
+  transform: translate(-50%, -50%);
+
+  .svg-inline--fa {
+    color: $white;
+  }
+
+  &:hover,
+  &:focus {
+    background: $gray-700;
+    border: $gray-700;
+  }
+}
+
+.deleteMediaItem {
+  border-radius: 50px;
+  padding: 5px 10px;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: auto;
+}
+
+.editMediaItem {
+  border-radius: 50px;
+  bottom: 5px;
+  padding: 5px 10px;
+  position: absolute;
+  right: 5px;
+  width: auto;
+}
+
+/**
+ * Media Dialog
+ */
+
+#addMediaDialog,
+#cropperMediaDialog {
+
+  .modal-body {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+}
+
+#addMediaDialog #tabLibrary {
+
+  .options {
+    margin-bottom: 1em;
+  }
+
+  .tab-content {
+    padding: 0;
+    border: none;
+
+    .table-striped {
+      border-top: 0;
+      padding: .5em 0 0;
+    }
+  }
+
+  .table-responsive {
+    max-height: 400px;
+    overflow: auto;
+  }
+}
+
+.mediaTable {
+
+  .check {
+    width: 30px;
+  }
+
+  .fullUrl {
+    width: 90px;
+    cursor: pointer;
+  }
+
+  .url {
+    max-width: 156px;
+  }
+
+  title {
+    max-width: 140px;
+    color: #000;
+  }
+
+  .actions {
+    max-width: 100px;
+
+    a {
+      float: right;
+    }
+  }
+}
+
+.inputList.noPadding,
+.inputList.noPadding li {
+  padding: 0;
+}
+
+#uploadMediaTypeBox label {
+  vertical-align: bottom;
+}
+
+/**
+ * Uploaded media box
+ */
+#uploadedMediaBox {
+
+  .panel-body {
+    padding: 20px;
+  }
+}
+
+/**
+ * Fine uploader
+ */
+.qq-uploader {
+  border-radius: 0 !important;
+  max-height: 560px;
+}
+
+.qq-upload-button-selector {
+  margin-bottom: 1.5em;
+}
+
+.qq-progress-bar-container-selector {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  .qq-progress-bar {
+    background: $gray-200;
+    border-radius: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+#fine-uploader-gallery .qq-upload-list {
+  box-shadow: none;
+  display: flex;
+  flex-wrap: wrap;
+
+  li {
+    align-items: center;
+    background-color: transparent;
+    border-bottom: 1px solid $border-color;
+    border-top: 0;
+    margin: 0;
+    min-height: 49px;
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+
+    .qq-upload-cancel {
+      @extend .btn-danger;
+      border-radius: 50px;
+      padding: 5px 10px;
+      margin-right: 0;
+    }
+
+    .qq-upload-file {
+      height: auto;
+      max-width: 300px;
+      width: auto;
+    }
+
+    .qq-upload-retry-selector {
+      @extend .btn-primary;
+      position: relative;
+
+      .qq-btn {
+        display: none;
+      }
+    }
+
+    .qq-file-info {
+      align-items: center;
+      display: flex;
+      font-size: $font-size-sm;
+      position: relative;
+
+      .qq-file-name {
+        float: left;
+      }
+
+      .qq-btn {
+        border: none;
+        border-radius: 50px;
+        box-shadow: none;
+        margin-right: 7px;
+        padding: 5px 9px;
+        text-shadow: none;
+
+        svg {
+          margin: 0;
+        }
+
+        &.qq-upload-delete {
+          @extend .btn-danger;
+        }
+
+        &.qq-upload-continue,
+        &.qq-upload-pause {
+          @extend .btn-primary;
+        }
+      }
+    }
+
+    &.qq-upload-fail .qq-upload-status-text {
+      color: $danger;
+    }
+
+    .qq-upload-status-text {
+      display: inline-block;
+      margin-right: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .qq-upload-spinner {
+      background: none;
+      font-size: 5px;
+      height: auto;
+      margin-right: 10px;
+      width: auto;
+    }
+  }
+}

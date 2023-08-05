@@ -1,0 +1,155 @@
+.pages-tree {
+  padding: 20px 25px;
+}
+
+#tree {
+  display: none;
+
+  h4 {
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.jstree {
+  margin-bottom: 20px;
+
+  li {
+    display: block;
+    font-size: $font-size-sm;
+    line-height: 16px;
+    min-height: 16px;
+    max-width: 100%;
+
+    a:link,
+    a:visited,
+    .jstree-anchor {
+      border-radius: 4px;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      border: none !important;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 4px;
+    }
+
+    .jstree-themeicon-custom {
+      color: $gray-550;
+      height: 16px;
+      line-height: 16px;
+      margin-right: 4px;
+      margin-top: 2px;
+      width: 16px;
+    }
+
+    // Show hidden pages as transparent.
+    &[rel="hidden"] a {
+      opacity: .5;
+    }
+
+    // Bigger home icon
+    &[rel="home"] > a > i {
+      font-size: 16px;
+    }
+
+    /* DEFAULT, HOVER, CLICKED, LOADING STATES */
+
+    .jstree-clicked,
+    .jstree-hovered,
+    .jstree-children li a:hover,
+    .jstree-children li a.active,
+    .jstree-children li a.focus {
+      background: $primary;
+      color: $white;
+      border-radius: 4px;
+
+      &:before {
+        color: $white;
+      }
+    }
+
+    // Don't show hover effects while drag and dropping.
+    .jstree-dnd-parent .jstree-hovered {
+      background: $white;
+      color: inherit;
+      border: none;
+      box-shadow: none;
+    }
+
+    // No distracting transitions
+    .jstree-anchor,
+    .jstree-wholerow {
+      transition: none;
+    }
+  }
+
+  // Make sure icon is white on hover/focus
+  li a:hover,
+  li a.active,
+  li a.focus,
+  .jstree-clicked {
+    .jstree-themeicon-custom {
+      color: $white;
+    }
+  }
+
+  li .jstree-search {
+    font-weight: $font-weight-medium;
+    font-style: normal;
+    color: $primary;
+
+    &.jstree-clicked,
+    &.jstree-hovered {
+      background: $blue-darker;
+      color: $white;
+    }
+  }
+
+  &.jstree-proton {
+    font-family: $font-family-base;
+  }
+}
+
+.jstree-hidden,
+.jstree-node.jstree-hidden {
+  display: none;
+}
+
+/* FOR DRAGGING */
+#jstree-marker {
+  padding: 0;
+  margin: 0;
+  display: block;
+  position: absolute;
+  z-index: 999;
+  width: 16px;
+  height: 16px;
+  border: none !important;
+  margin: 0 !important;
+  background-image: url('../../../public/images/jstree/arrow-right.svg');
+  background-position: center center;
+  background-size: 16px;
+
+  &.i {
+    background-image: url('../../../public/images/jstree/plus-square.svg');
+  }
+}
+
+#jstree-dnd.jstree-proton {
+
+  .jstree-er,
+  .jstree-ok {
+    background-position: center center;
+    background-size: 16px;
+  }
+
+  .jstree-er {
+    background-image: url('../../../public/images/jstree/times.svg');
+  }
+
+  .jstree-ok {
+    background-image: url('../../../public/images/jstree/check.svg');
+  }
+}

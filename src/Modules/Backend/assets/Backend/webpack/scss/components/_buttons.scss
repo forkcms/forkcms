@@ -1,0 +1,147 @@
+.btn {
+  border-radius: 3px;
+  font-size: $btn-font-size;
+  -webkit-appearance: none;
+
+  .svg-inline--fa {
+    margin: 0 map_get($spacers, 2) 0 0;
+  }
+
+  .btn-text {
+    display: block;
+    font-size: $font-size-xs;
+    margin: 0 3px;
+
+    + .svg-inline--fa {
+      margin: 0 0 0 map_get($spacers, 2);
+    }
+  }
+
+  &.btn-sm {
+    font-size: $font-size-sm;
+  }
+
+  &.btn-md {
+    font-size: $font-size-sm;
+    padding: 4px 15px 5px;
+  }
+
+  &.btn-wider {
+    padding: 4px 15px 5px;
+  }
+}
+
+.btn-icon-only {
+  font-size: $font-size-base;
+  padding: 6px 12px 6px;
+
+  .svg-inline--fa {
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &.btn-sm {
+    align-items: center;
+    align-content: center;
+    display: flex;
+    font-size: $font-size-base;
+    height: 32px;
+    justify-content: center;
+    padding: 0;
+    width: 32px;
+  }
+}
+
+.btn-group,
+.btn-toolbar .btn-group {
+  text-align: right;
+  .btn {
+    float: none;
+    margin: 1px 0;
+
+    + .btn-group,
+    + .btn {
+      margin-left: 2px;
+    }
+
+    + .btn.dropdown-toggle {
+      margin-left: -1px;
+    }
+  }
+
+  .btn:first-child:not(:last-child):not(.dropdown-toggle),
+  .btn:last-child:not(:first-child),
+  .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
+    border-radius: 3px;
+  }
+}
+
+.btn-default {
+  background: $gray-200;
+  border-color: $gray-200;
+  color: $gray-700;
+
+  &:hover,
+  &:focus {
+    background: darken($gray-200, 15%);
+    border-color: darken($gray-200, 15%);
+  }
+}
+
+.btn-secondary {
+  color: $blue-dark;
+
+  &:hover,
+  &:focus {
+    color: $primary;
+  }
+}
+
+.btn-move {
+  color: $gray-450;
+
+  &.btn-move-click {
+
+    &:hover,
+    &:focus {
+      border-color: $black;
+    }
+  }
+
+  &.btn-move-drag {
+    font-size: $font-size-lg;
+  }
+
+  &:hover,
+  &:focus {
+    color: $black;
+  }
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+@include media-breakpoint-up(sm) {
+
+  .btn .btn-text {
+    display: inline-block;
+    font-size: $btn-font-size;
+    margin: 0;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+
+  .btn-group .btn,
+  .btn-toolbar .btn-group .btn, {
+    float: none;
+    margin: 6px 0;
+
+    + .btn-group,
+    + .btn {
+      margin-left: 6px;
+    }
+  }
+}
