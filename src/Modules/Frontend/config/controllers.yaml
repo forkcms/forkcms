@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Frontend\Controller\FrontendAjaxController:
+    public: true
+    arguments:
+      - !tagged_locator { tag: forkcms.frontend.ajax_action }

@@ -1,0 +1,11 @@
+frontend_ajax:
+  path: /_ajax/{_locale}/{module}/{action}
+  controller: ForkCMS\Modules\Frontend\Controller\FrontendAjaxController
+  condition: "request.isXmlHttpRequest()"
+  defaults:
+    module: ~
+    action: ~
+  requirements:
+    module: '[a-z][a-z0-9_]*[a-z0-9]*'
+    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    slug: .+
