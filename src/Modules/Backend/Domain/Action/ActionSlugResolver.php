@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Backend\Domain\Action;
 
+use ForkCMS\Modules\Backend\Backend\Actions\Forbidden;
 use ForkCMS\Modules\Backend\Backend\Actions\NotFound;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
@@ -28,7 +29,7 @@ final class ActionSlugResolver implements ValueResolverInterface
 
         $actionSlug = ActionSlug::fromRequest($request);
         if (!$this->authorizationChecker->isGranted($actionSlug->asModuleAction()->asRole())) {
-            return [NotFound::getActionSlug()];
+            return [Forbidden::getActionSlug()];
         }
 
         return [$actionSlug];

@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Backend\Domain\AjaxAction;
 
+use ForkCMS\Modules\Backend\Backend\Ajax\Forbidden;
 use ForkCMS\Modules\Backend\Backend\Ajax\NotFound;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
@@ -28,7 +29,7 @@ final class AjaxActionSlugResolver implements ValueResolverInterface
 
         $ajaxAxtionSlug = AjaxActionSlug::fromRequest($request);
         if (!$this->authorizationChecker->isGranted($ajaxAxtionSlug->asModuleAction()->asRole())) {
-            return [NotFound::getAjaxActionSlug()];
+            return [Forbidden::getAjaxActionSlug()];
         }
 
         return [$ajaxAxtionSlug];
