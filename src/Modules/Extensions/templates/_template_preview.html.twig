@@ -1,0 +1,34 @@
+<table>
+  <tbody>
+    {% for row in table %}
+      <tr>
+        {% for position in row %}
+          <td
+            {%- if position.rowspan > 1 %} rowspan="{{ position.rowspan }}"{% endif %}
+            {%- if position.colspan > 1 %} colspan="{{ position.colspan }}"{% endif %}
+            {%- if not position.exists %}
+              class="empty">
+            {% elseif position.includeFormElements %}
+              id="templatePosition-{{ position.value }}" data-position="{{ position.value }}" class="box templatePosition">
+              <div class="card card-default card-pages-block">
+                <div class="card-heading">
+                  <div class="heading"><h3>{{ position.value|ucfirst }}</h3></div>
+                </div>
+                <div class="card-body">
+            {% else %} > {% endif %}
+
+            {% if not position.exists %}
+              &nbsp;
+            {% elseif position.includeFormElements %}
+              {% verbatim %}{{ form_row(form.children[{% endverbatim %}'blocks_{{ position.value }}'{% verbatim %}])}}{% endverbatim %}
+                </div>
+              </div>
+            {% else %}
+              <span>{{ position.title }}</span>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

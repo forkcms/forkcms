@@ -20,3 +20,15 @@ services:
 
   ForkCMS\Modules\Extensions\Console\:
     resource: '../Console/*'
+
+  ForkCMS\Modules\Extensions\Backend\Actions\:
+    resource: '../Backend/Actions/*'
+
+  ForkCMS\Modules\Extensions\Domain\ThemeTemplate\TemplatePreviewGenerator:
+    tags:
+      -
+        name: 'doctrine.orm.entity_listener'
+        event: 'preFlush'
+        entity: 'ForkCMS\Modules\Extensions\Domain\ThemeTemplate\ThemeTemplate'
+        method: 'generatePreview'
+        lazy: true

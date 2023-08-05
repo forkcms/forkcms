@@ -1,0 +1,50 @@
+{%- block _theme_template_layout_layout_row -%}
+  <div class="row">
+    <div class="col-md-6">{{ form_row(form) }}</div>
+    <div class="col-md-6"><small class="form-text text-muted">{{ 'msg.HelpPositionsLayoutText'|trans|raw }}</small>
+    </div>
+  </div>
+{%- endblock -%}
+
+{%- block _theme_template_template_widget -%}
+  <div {{ block('widget_container_attributes') }}>
+    <div class="mb-3">
+      {{ form_label(form.path) }}
+      {{ form_label(form.theme) }}
+      <div class="form-group">
+        <div class="row">
+          <div class="d-flex flex-wrap align-items-center">
+            <div>{{ form_widget(form.theme) }}</div>
+            <code class="mx-2">/Frontend/base/</code>
+            <div class="flex-grow-1">{{ form_widget(form.path) }}</div>
+          </div>
+        </div>
+        {{ form_errors(form.theme) }}
+        {{ form_errors(form.path) }}
+      </div>
+    </div>
+    {{ form_row(form.name) }}
+  </div>
+{%- endblock -%}
+
+{%- block _theme_template_status_row -%}
+{% if form.parent.children['overwrite'] is defined %}
+<div class="row">
+  <div class="col-md-6">
+    {{ form_row(form) }}
+  </div>
+{% else %}
+  {{ form_row(form) }}
+{% endif %}
+{%- endblock -%}
+
+{%- block _theme_template_overwrite_row -%}
+{% if form.parent.children['status'] is defined %}
+  <div class="col-md-6">
+    {{ form_row(form) }}
+  </div>
+</div>
+  {% else %}
+  {{ form_row(form) }}
+{% endif %}
+{%- endblock -%}

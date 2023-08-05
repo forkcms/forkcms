@@ -1,0 +1,144 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block content %}
+  {% if theme.messages|count > 0 %}
+    <div class="fork-module-messages">
+      {% for message in theme.messages %}
+        <div class="content-block content-block-pb">
+          {% if message.type.name == 'lbl' or message.type.name == 'msg' %}
+            {{ macro.alert('warning', message|trans|raw) }}
+          {% elseif message.type.name == 'err' %}
+            {{ macro.alert('danger', message|trans|raw) }}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-md-8">
+      {% if theme.description %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Description'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body">
+            <p>{{ theme.description|raw }}</p>
+          </div>
+        </div>
+      {% endif %}
+      {% if theme.templates.count > 0 %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Templates'|trans|ucfirst }}
+            </h2>
+          </div>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>
+                <span>{{ 'lbl.Name'|trans|ucfirst }}</span>
+              </th>
+              <th>
+                <span>{{ 'lbl.TemplatePath'|trans|ucfirst }}</span>
+              </th>
+              <th>
+                <span>{{ 'lbl.Positions'|trans|ucfirst }}</span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for themeTemplate in theme.templates %}
+              <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                <td>{{ themeTemplate.name }}</td>
+                <td>{{ themeTemplate.path }}</td>
+                <td>{{ themeTemplate.positions|column('name')|join(', ') }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-4">
+      {% if theme.settings.has('thumbnail') %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Preview'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body text-center">
+            <img src="{{ theme.settings.get('thumbnail')|imagine_filter('backend_card_image') }}" class="img-thumbnail" alt="{{ theme.name }}"/>
+          </div>
+        </div>
+      {% endif %}
+      {% if theme.settings.has('themeVersion') %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Version'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body">
+            <p>{{ theme.settings.get('themeVersion') }}</p>
+          </div>
+        </div>
+      {% endif %}
+      {% if theme.settings.has('authors') %}
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
+              {{ 'lbl.Authors'|trans|ucfirst }}
+            </h2>
+          </div>
+          <div class="card-body">
+            <ul>
+              {% for author in theme.settings.get('authors') %}
+                <li>
+                  {% if author.url %}
+                  <a href="{{ author.url }}" target="_blank" rel="noopener noreferrer" title="{{ author.name }}">
+                    {% endif %}
+                    {{ author.name }}
+                    {% if author.url %}
+                  </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if theme.isInstallable and is_allowed('ThemeInstall') %}
+    <div class="btn-toolbar d-flex">
+      <div class="btn-group ms-auto" role="group">
+        {{ macro.buttonIcon('', 'file', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmInstall" ~ theme.name|e('html_attr')|ucfirst }) }}
+      </div>
+    </div>
+    <div class="modal fade" id="confirmInstall{{ theme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1"
+         aria-hidden="true" aria-labelledby="confirmInstall{{ theme.name|e('html_attr')|ucfirst }}Title">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"
+                id="confirmInstall{{ theme.name|e('html_attr')|ucfirst }}Title">{{ 'lbl.Install'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" }) }}
+            {{ form_start(themeInstallForm) }}
+            {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { "type":"submit"}) }}
+            {{ form_end(themeInstallForm) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

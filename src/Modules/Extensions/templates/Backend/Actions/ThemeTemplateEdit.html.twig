@@ -1,0 +1,4 @@
+{% extends '@Backend/base/crud/edit.html.twig' %}
+{% set crudIndexAction = 'ThemeTemplateIndex' %}
+{% set crudIndexParameters = {slug: theme.name} %}
+{% set formTheme = '@Extensions/Backend/Forms/ThemeTemplate.html.twig' %}
