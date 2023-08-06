@@ -5,6 +5,7 @@ namespace ForkCMS\Core\Domain\Header\Asset;
 use DateTimeImmutable;
 use ForkCMS\Core\Domain\Application\Application;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Theme\Theme;
 use InvalidArgumentException;
 
 final class Asset
@@ -59,11 +60,19 @@ final class Asset
 
         $path = $root . 'public/' . $this->file;
         if (!file_exists($path)) {
+            $originalPath = $path;
             $path = preg_replace(
-                '/assets\/modules\/([A-Z]\w*)\/([A-Z]\w*)\/(.*)/',
-                $root . 'src/Modules/$2/assets/$1/public/$3',
+                '/public\/assets\/modules\/([A-Z]\w*)\/([A-Z]\w*)\/(.*)/',
+                'src/Modules/$2/assets/$1/public/$3',
                 $path
             );
+            if ($originalPath === $path) {
+                $path = preg_replace(
+                    '/public\/assets\/themes\/([A-Z]\w*)\/(.*)/',
+                     'src/Themes/$1/assets/public/$2',
+                    $path
+                );
+            }
         }
         $realPath = realpath($path);
         if ($realPath === false || !str_starts_with($realPath, $rootRealPath)) {
@@ -82,6 +91,19 @@ final class Asset
     ): self {
         return new self(
             'assets/modules/' . ucfirst($application->value) . '/' . $moduleName->getName() . '/' . $file,
+            $addTimestamp,
+            $priority
+        );
+    }
+
+    public static function forTheme(
+        Theme $theme,
+        string $file,
+        bool $addTimestamp = true,
+        Priority $priority = Priority::STANDARD
+    ): self {
+        return new self(
+            'assets/themes/' . $theme->getName() . '/' . $file,
             $addTimestamp,
             $priority
         );

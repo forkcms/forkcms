@@ -1,8 +1,15 @@
-fork_assets:
+fork_module_assets:
   path: assets/modules/{application}/{moduleName}/{path}
   defaults:
     _controller: \ForkCMS\Core\Controller\AssetController
   requirements:
     application: '[A-Z]\w*'
     moduleName: '[A-Z]\w*'
+    path: .+
+
+fork_theme_assets:
+  path: assets/theme/{path}
+  defaults:
+    _controller: \ForkCMS\Core\Controller\AssetController
+  requirements:
     path: .+

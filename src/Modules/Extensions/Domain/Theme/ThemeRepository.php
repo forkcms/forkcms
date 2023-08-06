@@ -88,4 +88,9 @@ final class ThemeRepository extends ServiceEntityRepository
         $theme->activate();
         $this->getEntityManager()->flush();
     }
+
+    public function getActiveTheme(): Theme
+    {
+        return $this->findOneBy(['active' => true]);
+    }
 }
