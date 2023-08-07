@@ -1,4 +1,4 @@
-import { Data } from './Data'
+import { Data } from '../../../../../../../Core/assets/js/Components/Data'
 
 export class Config {
   static isDebug () {

@@ -2,14 +2,14 @@
  * Handles the privacy consent dialog
  */
 
-import { Cookies } from './Cookies'
+import { Cookies } from '../../../../../../../Core/assets/js/Components/Cookies'
+import { Data } from '../../../../../../../Core/assets/js/Components/Data'
 
 export class ConsentDialog {
   constructor () {
-    // if there is no consentDialog we shouldn't do anything
-    if ($('*[data-role=privacy_consent_dialog]').length === 0) return
-
     const $consentDialog = $('*[data-role=privacy_consent_dialog]')
+    // if there is no consentDialog we shouldn't do anything
+    if ($consentDialog.length === 0) return
     const $consentForm = $('form[data-role=privacy_consent_dialog_form]')
 
     $consentForm.on('click', '*[data-dismiss=modal]', (e) => {
@@ -26,7 +26,7 @@ export class ConsentDialog {
         const isChecked = $(level).is(':checked')
 
         // store in jsData
-        jsData.privacyConsent.visitorChoices[name] = isChecked
+        Data.get('privacyConsent.visitorChoices')[name] = isChecked
 
         // store for Google Tag Manager
         const niceName = name.charAt(0).toUpperCase() + name.slice(1)
@@ -41,10 +41,10 @@ export class ConsentDialog {
 
         // store data in functional cookies for later usage
         Cookies.setCookie('privacy_consent_level_' + name + '_agreed', isChecked ? 1 : 0, 6 * 30)
-        Cookies.setCookie('privacy_consent_hash', jsData.privacyConsent.levelsHash, 6 * 30)
+        Cookies.setCookie('privacy_consent_hash', Data.get('privacyConsent.levelsHash'), 6 * 30)
 
         // trigger events
-        var eventName = 'privacyConsentLevel' + niceName
+        let eventName = 'privacyConsentLevel' + niceName
         if (isChecked) {
           eventName += 'Agreed'
         } else {

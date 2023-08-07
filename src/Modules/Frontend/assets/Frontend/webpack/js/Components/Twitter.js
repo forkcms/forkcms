@@ -1,4 +1,4 @@
-import {UrlUtil} from '../../../../Backend/Core/Js/Components/UrlUtil'
+import {UrlUtil} from '../../../../../../../Core/assets/js/Components/UrlUtil'
 
 export class Twitter {
   constructor () {
