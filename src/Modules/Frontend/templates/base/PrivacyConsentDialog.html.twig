@@ -14,10 +14,8 @@
       <div class="modal-content">
         <form data-role="privacy_consent_dialog_form">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h5 id="privacyConsentDialogTitle">{{ 'msg.PrivacyConsentDialogTitle'|trans|raw }}</h5>
+            <h5 id="privacyConsentDialogTitle">{{ 'lbl.PrivacyConsentDialogTitle'|trans|ucfirst }}</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}"></button>
           </div>
           <div class="modal-body">
             <div>
@@ -31,25 +29,28 @@
                        data-role="privacy-level"
                        data-value="functional"
                 >
-                {{ 'msg.PrivacyConsentLevelFunctionalTitle'|trans|raw }}
+                {{ 'lbl.PrivacyConsentLevelFunctional'|trans|ucfirst }}
               </label>
               <small id="privacyConsentLevelFunctionalHelpBlock" class="help-block">
-                {{ 'msg.PrivacyConsentLevelFunctionalText'|trans|raw }}
+                {{ 'msg.PrivacyConsentLevelFunctional'|trans|raw }}
               </small>
             </div>
             {% for level in privacyConsentDialogLevels %}
-              <div class="checkbox">
-                <label id="privacyConsentLevel{{ level|ucfirst }}Checkbox">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
                   <input name="privacyConsentLevel{{ level|ucfirst }}Checkbox"
                          id="privacyConsentLevel{{ level|ucfirst }}Checkbox" type="checkbox"
                          aria-describedby="privacyConsentLevel{{ level|ucfirst }}HelpBlock"
                          data-role="privacy-level"
                          data-value="{{ level }}"
+                         class="custom-control-input"
                   >
-                  {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst ~ 'Title')|trans|raw }}
-                </label>
-                <small id="privacyConsentLevel{{ level|ucfirst }}HelpBlock" class="help-block">
-                  {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst ~ 'Text')|trans|raw }}
+                  <label for="privacyConsentLevel{{ level|ucfirst }}Checkbox" id="privacyConsentLevel{{ level|ucfirst }}Checkbox" class="custom-control-label">
+                    {{ ('lbl.PrivacyConsentLevel' ~ level|ucfirst)|trans|ucfirst }}
+                  </label>
+                </div>
+                <small id="privacyConsentLevel{{ level|ucfirst }}HelpBlock" class="text-muted form-text">
+                  {{ ('msg.PrivacyConsentLevel' ~ level|ucfirst)|trans|raw }}
                 </small>
               </div>
             {% endfor %}
@@ -60,7 +61,7 @@
           </div>
           <div class="modal-footer">
             <button type="submit" data-role="privacy_consent_dialog_save_button" class="btn btn-sm btn-success">
-              {{ 'msg.PrivacyConsentDialogSave'|trans }}
+              {{ 'lbl.PrivacyConsentDialogSave'|trans }}
             </button>
           </div>
         </form>
