@@ -1,24 +1,23 @@
 <?php
 
-namespace Common\Doctrine\Repository;
+namespace ForkCMS\Modules\Frontend\Domain\Meta;
 
-use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Model;
-use Common\Doctrine\Entity\Meta;
-use Common\Uri;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use SpoonFilter;
+use Exception;
+use RuntimeException;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
  * @method Meta|null find($id, $lockMode = null, $lockVersion = null)
  * @method Meta|null findOneBy(array $criteria, array $orderBy = null)
- * @method Meta[]    findAll()
- * @method Meta[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Meta[] findAll()
+ * @method Meta[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Meta>
  */
 class MetaRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly ServiceLocator $metaCallbacks)
     {
         parent::__construct($registry, Meta::class);
     }
@@ -26,34 +25,28 @@ class MetaRepository extends ServiceEntityRepository
     /**
      * Generate an url, using the predefined callback.
      *
-     * @param string $url The base-url to start from.
+     * @param string $url the base-url to start from
      * @param string $class The Fully Qualified Class Name or service name
      * @param string $method The method that needs to be called
-     * @param array $parameters The parameters for the callback
+     * @param array<string, mixed> $parameters The parameters for the callback
      *
      * @throws Exception When the function does not exist
-     *
-     * @return string
      */
-    public function generateUrl(string $url, string $class, string $method, array $parameters = []): string
+    public function generateSlug(string $url, string $class, string $method, array $parameters = []): string
     {
         // check if the class is a service
-        if (Model::getContainer()->has($class)) {
-            $class = Model::getContainer()->get($class);
+        if ($this->metaCallbacks->has($class)) {
+            $class = $this->metaCallbacks->get($class);
         }
 
         // validate (check if the function exists)
         if (!is_callable([$class, $method])) {
-            throw new Exception('The callback-method doesn\'t exist.');
+            throw new RuntimeException('The callback-method doesn\'t exist.');
         }
-
-        // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
-        // so we must decode it again first!
-        $url = SpoonFilter::htmlentitiesDecode($url);
 
         $actualParameters = [];
         // build parameters for use in the callback
-        $actualParameters[] = Uri::getUrl($url);
+        $actualParameters[] = $url;
 
         // add parameters set by user
         if (!empty($parameters)) {
@@ -66,19 +59,15 @@ class MetaRepository extends ServiceEntityRepository
         return call_user_func_array([$class, $method], $actualParameters);
     }
 
-    public function add(Meta $meta): void
-    {
-        $this->getEntityManager()->persist($meta);
-    }
-
     public function save(Meta $meta): void
     {
-        $this->getEntityManager()->flush($meta);
+        $this->getEntityManager()->persist($meta);
+        $this->getEntityManager()->flush();
     }
 
     public function remove(Meta $meta): void
     {
         $this->getEntityManager()->remove($meta);
-        $this->getEntityManager()->flush($meta);
+        $this->getEntityManager()->flush();
     }
 }
