@@ -108,6 +108,7 @@ final class MakeModuleEntity extends AbstractMaker
             $this->io->ask('What is the name of the entity class', null, Validator::validateClassName(...))
         );
         $hasIdField = false;
+        $hasNameField = false;
         $fields = [];
         $io->progressStart(0);
         $io->newLine();
@@ -119,9 +120,10 @@ final class MakeModuleEntity extends AbstractMaker
                     return Validator::validateDoctrineFieldName($fieldName, $this->managerRegistry);
                 }
             );
-            $field = $this->getType($io->confirm('Is this the id field?', !$hasIdField));
+            $field = $this->getType(!$hasIdField && $io->confirm('Is this the id field?', !$hasIdField), !$hasNameField);
             $field['name'] = $fieldName;
             $hasIdField = $hasIdField || $field['is_id'];
+            $hasNameField = $hasNameField || $field['is_name'];
             if ($io->confirm(sprintf('Are you happy with the config of the field: %s ?', $fieldName), true)) {
                 $io->progressAdvance();
                 $io->newLine();
@@ -145,12 +147,105 @@ final class MakeModuleEntity extends AbstractMaker
         $this->createChangeCommand($entityClassNameDetails);
         $this->createCreateCommand($entityClassNameDetails);
         $this->createDeleteCommand($entityClassNameDetails, $fields);
+        $this->createBackendAddAction($entityClassNameDetails);
+        $this->createBackendEditAction($entityClassNameDetails, $fields);
+        $this->createBackendDeleteAction($entityClassNameDetails);
+        $this->createBackendIndexAction($entityClassNameDetails);
 
         $generator->writeChanges();
     }
 
     public function configureDependencies(DependencyBuilder $dependencies): void
     {
+    }
+
+    private function createBackendAddAction(ClassNameDetails $entityClassNameDetails): void
+    {
+        $addAction = $this->generator->createClassNameDetails(
+            $entityClassNameDetails->getShortName() . 'Add',
+            $this->moduleNamespace . 'Backend\\Actions'
+        );
+        $domainNamespace = $this->getNamespace($entityClassNameDetails);
+
+        $this->generator->generateClass(
+            $addAction->getFullName(),
+            $this->getTemplatePath('Backend/Actions/Add.tpl.php'),
+            [
+                'entity' => $entityClassNameDetails->getShortName(),
+                'useStatements' => [
+                    'use ' . $domainNamespace . '\\' . $entityClassNameDetails->getShortName() . 'Type;',
+                    'use ' . $domainNamespace . '\\Command\\Create' . $entityClassNameDetails->getShortName() . ';',
+                    'use ' . $this->getNamespace($addAction) . '\\' . $entityClassNameDetails->getShortName() . 'Index;',
+                ],
+            ]
+        );
+    }
+
+    private function createBackendEditAction(ClassNameDetails $entityClassNameDetails, array $fields): void
+    {
+        $nameFields = array_filter($fields, static fn (array $field): bool => $field['is_name']);
+
+        $editAction = $this->generator->createClassNameDetails(
+            $entityClassNameDetails->getShortName() . 'Edit',
+            $this->moduleNamespace . 'Backend\\Actions'
+        );
+        $domainNamespace = $this->getNamespace($entityClassNameDetails);
+
+        $this->generator->generateClass(
+            $editAction->getFullName(),
+            $this->getTemplatePath('Backend/Actions/Edit.tpl.php'),
+            [
+                'entity' => $entityClassNameDetails->getShortName(),
+                'useStatements' => [
+                    'use ' . $entityClassNameDetails->getFullName() . ';',
+                    'use ' . $domainNamespace . '\\' . $entityClassNameDetails->getShortName() . 'Type;',
+                    'use ' . $domainNamespace . '\\Command\\Change' . $entityClassNameDetails->getShortName() . ';',
+                    'use ' . $this->getNamespace($editAction) . '\\' . $entityClassNameDetails->getShortName() . 'Index;',
+                ],
+                'nameField' => reset($nameFields)['name'] ?? false
+            ]
+        );
+    }
+
+    private function createBackendDeleteAction(ClassNameDetails $entityClassNameDetails): void
+    {
+        $deleteAction = $this->generator->createClassNameDetails(
+            $entityClassNameDetails->getShortName() . 'Delete',
+            $this->moduleNamespace . 'Backend\\Actions'
+        );
+        $domainNamespace = $this->getNamespace($entityClassNameDetails);
+
+        $this->generator->generateClass(
+            $deleteAction->getFullName(),
+            $this->getTemplatePath('Backend/Actions/Delete.tpl.php'),
+            [
+                'entity' => $entityClassNameDetails->getShortName(),
+                'useStatements' => [
+                    'use ' . $entityClassNameDetails->getFullName() . ';',
+                    'use ' . $domainNamespace . '\\Command\\Delete' . $entityClassNameDetails->getShortName() . ';',
+                    'use ' . $this->getNamespace($deleteAction) . '\\' . $entityClassNameDetails->getShortName() . 'Index;',
+                ],
+            ]
+        );
+    }
+
+    private function createBackendIndexAction(ClassNameDetails $entityClassNameDetails): void
+    {
+        $indexAction = $this->generator->createClassNameDetails(
+            $entityClassNameDetails->getShortName() . 'Index',
+            $this->moduleNamespace . 'Backend\\Actions'
+        );
+
+        $this->generator->generateClass(
+            $indexAction->getFullName(),
+            $this->getTemplatePath('Backend/Actions/Index.tpl.php'),
+            [
+                'entity' => $entityClassNameDetails->getShortName(),
+                'useStatements' => [
+                    'use ' . $entityClassNameDetails->getFullName() . ';',
+                ],
+            ]
+        );
     }
 
     private function createEntity(ClassNameDetails $entityClass, bool $isBlameable, bool $isMeta, array $fields): void
@@ -401,7 +496,7 @@ final class MakeModuleEntity extends AbstractMaker
         $this->dbalTypes['embeded'] = Embedded::class;
     }
 
-    private function getType(bool $isId = false): array
+    private function getType(bool $isId = false, bool $askIsNameField = false): array
     {
         $dbalTypeName = $this->io->choice('What type', array_keys($this->dbalTypes), $isId ? 'integer' : 'string');
 
@@ -422,6 +517,7 @@ final class MakeModuleEntity extends AbstractMaker
         $isNullable = !$isId
             && !$selectedDbalType instanceof Embedded
             && $this->io->confirm('Is this field nullable?', false);
+        $isName = !$isId && $askIsNameField && $this->io->confirm('Do you want to use this field to textually represent this entity?', false);
 
         return [
             'is_id' => $isId,
@@ -431,6 +527,7 @@ final class MakeModuleEntity extends AbstractMaker
             'dbal_use_statement' => $dbalTypeNamespace,
             'enum_type' => $enumType,
             'is_nullable' => $isNullable,
+            'is_name' => $isName,
             'type' => ($isNullable ? '?' : '') . Str::getShortClassName($class),
             'type_use_statement' => ctype_lower($class) ? null : 'use ' . $class . ';',
         ];
