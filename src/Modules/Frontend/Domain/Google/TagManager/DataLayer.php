@@ -1,7 +1,6 @@
 <?php
 
-
-namespace ForkCMS\Google\TagManager;
+namespace ForkCMS\Modules\Frontend\Domain\Google\TagManager;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
@@ -19,7 +18,7 @@ class DataLayer extends ParameterBag
 
         return sprintf(
             implode("\n", $code),
-            !empty($this->all()) ? json_encode($this->all(), JSON_PRETTY_PRINT) : ''
+            !empty($this->all()) ? json_encode($this->all(), JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) : ''
         );
     }
 

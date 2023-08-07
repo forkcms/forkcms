@@ -1,33 +1,18 @@
 <?php
 
-namespace ForkCMS\Google\TagManager;
+namespace ForkCMS\Modules\Frontend\Domain\Google\TagManager;
 
-use Common\ModulesSettings;
-use ForkCMS\Privacy\ConsentDialog;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
+use ForkCMS\Modules\Frontend\Domain\Privacy\ConsentDialog;
 
 class TagManager
 {
-    /**
-     * @var ModulesSettings
-     */
-    private $modulesSettings;
-
-    /**
-     * @var DataLayer
-     */
-    private $dataLayer;
-
-    /**
-     * @var ConsentDialog
-     */
-    private $consentDialog;
-
-    public function __construct(ModulesSettings $modulesSettings, DataLayer $dataLayer, ConsentDialog $consentDialog)
-    {
-        $this->modulesSettings = $modulesSettings;
-        $this->dataLayer = $dataLayer;
-        $this->consentDialog = $consentDialog;
-
+    public function __construct(
+        private readonly ModuleSettings $moduleSettings,
+        private readonly DataLayer $dataLayer,
+        private readonly ConsentDialog $consentDialog
+    ) {
         $this->addDefaultDataLayerVariables();
     }
 
@@ -36,7 +21,7 @@ class TagManager
         $this->dataLayer->set('anonymizeIp', $this->shouldAnonymizeIp());
 
         // only if the consent dialog is enabled we should extra variables
-        if ($this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+        if ($this->moduleSettings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
             foreach ($this->consentDialog->getVisitorChoices() as $level => $choice) {
                 $this->dataLayer->set('privacyConsentLevel' . ucfirst($level) . 'Agreed', $choice);
             }
@@ -46,33 +31,25 @@ class TagManager
     private function shouldAnonymizeIp(): bool
     {
         // if the consent dialog is disabled we will anonymize by default
-        if (!$this->modulesSettings->get('Core', 'show_consent_dialog', false)) {
+        if (!$this->moduleSettings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
             return true;
         }
 
-        // the visitor has agreed to be tracked
-        if ($this->consentDialog->hasAgreedTo('statistics')) {
-            return false;
-        }
-
-        // fallback
-        return true;
+        return $this->consentDialog->hasAgreedTo(ConsentDialog::CONSENT_DIALOG_ANALYTICS_TECHNICAL_NAME);
     }
 
-    private function shouldAddCode(): bool
+    private function isEnabled(): bool
     {
-        $googleAnalyticsTrackingId = $this->modulesSettings->get(
-            'Core',
-            'google_tracking_google_tag_manager_container_id',
-            ''
+        return $this->moduleSettings->get(
+            ModuleName::fromString('Frontend'),
+            'google_tag_manager_enabled',
+            false
         );
-
-        return ($googleAnalyticsTrackingId !== '');
     }
 
     public function generateHeadCode(): string
     {
-        if (!$this->shouldAddCode()) {
+        if (!$this->isEnabled()) {
             return '';
         }
 
@@ -88,7 +65,10 @@ class TagManager
 
         $code = sprintf(
             implode("\n", $codeLines) . "\n",
-            $this->modulesSettings->get('Core', 'google_tracking_google_tag_manager_container_id', null)
+            $this->moduleSettings->get(
+                ModuleName::fromString('Frontend'),
+                'google_tracking_google_tag_manager_container_id'
+            )
         );
 
         if (!empty($this->dataLayer->all())) {
@@ -100,7 +80,7 @@ class TagManager
 
     public function generateStartOfBodyCode(): string
     {
-        if (!$this->shouldAddCode()) {
+        if (!$this->isEnabled()) {
             return '';
         }
 
@@ -112,7 +92,10 @@ class TagManager
 
         return sprintf(
             implode("\n", $codeLines) . "\n",
-            $this->modulesSettings->get('Core', 'google_tracking_google_tag_manager_container_id', null),
+            $this->moduleSettings->get(
+                ModuleName::fromString('Frontend'),
+                'google_tracking_google_tag_manager_container_id'
+            ),
             $this->dataLayer->generateNoScriptParameters()
         );
     }
