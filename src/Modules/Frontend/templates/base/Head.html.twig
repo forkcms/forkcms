@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="h-100">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Fork CMS" />
+{#  {{ meta|raw }}#}
+{#  {{ metaCustom|raw }}#}
+
+  <title>{{ page_title|ucfirst }} | {{ siteTitle }}</title>
+
+  {# Favicon and Apple touch icon #}
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  {# Windows tile #}
+  <meta name="application-name" content="{{ siteTitle }}" />
+  <meta name="msapplication-TileColor" content="#3380aa" />
+  <meta name="msapplication-TileImage" content="/tile.png" />
+
+  {# Stylesheets #}
+  {{ encore_entry_script_tags('Frontend/js/Frontend', null, 'FrontendConfig') }}
+  {{ encore_entry_link_tags('Frontend/css/screen', null, 'FrontendConfig') }}
+
+  {# Site wide HTML in the head tag #}
+  {{ site_html_head|raw }}
+
+  {% for cssFile in cssFiles %}
+    <link href="/{{ cssFile }}" rel="stylesheet">
+  {% endfor %}
+
+  {% if app.debug %}
+    <script src="http://localhost:35729/livereload.js"></script>
+  {% endif %}
+
+  {{ jsData|raw }}
+</head>

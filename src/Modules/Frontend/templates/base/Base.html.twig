@@ -1,0 +1,58 @@
+{% include "@Frontend/base/Head.html.twig" %}
+
+<body class="{{ app.request.locale }} d-flex flex-column h-100" itemscope itemtype="http://schema.org/WebPage">
+{# Site wide HTML just after body tag #}
+{{ site_html_start_of_body|raw }}
+{% block navigation %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url('pages__page__1.' ~ app.request.locale) }}">{{ siteTitle }}</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+        <span class="visually-hidden" data-role="label">{{ 'lbl.OpenNavigation'|trans }}</span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarHeader">
+        {{ navigation() }}
+        <div class="navbar-right">
+          {% include "@Frontend/base/Locales.html.twig" %}
+        </div>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
+
+<main class="content container flex-shrink-0 mt-5 pt-3">
+  {% block breadcrumb %}
+    {% include "@Frontend/base/Breadcrumb.html.twig" %}
+  {% endblock %}
+
+  {% block pageTitle %}
+    {% if not hideContentTitle %}
+      <header class="page-header">
+        <h1>{{ contentTitle }}</h1>
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  {# Main content #}
+  {% block main %}
+  {% endblock %}
+
+  {% block privacyConsentDialog %}
+    {% include "@Frontend/base/PrivacyConsentDialog.html.twig" %}
+  {% endblock %}
+</main>
+
+{% block footer %}
+  {% include "@Frontend/base/Footer.html.twig" %}
+{% endblock %}
+
+{# General Javascript #}
+{% for js in jsFiles %}
+  <script src="{{ js }}"></script>
+{% endfor %}
+
+{# Site wide HTML just before closing body tag #}
+{{ site_html_end_of_body|raw }}
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% if locales is defined and locales|count > 1 %}
+  <ul class="nav navbar-nav ml-auto">
+    {% for locale in locales %}
+      <li class="nav-item{% if locale.active %} active{% endif %}">
+        <a class="nav-link" href="{{ locale.url }}" title="{{ locale.locale|trans }}">{{ locale.locale.value|upper }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
