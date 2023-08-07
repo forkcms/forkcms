@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="Pages">
+      <translation locale="nl"><![CDATA[pagina's]]></translation>
+      <translation locale="en"><![CDATA[pages]]></translation>
+      <translation locale="hu"><![CDATA[oldalak]]></translation>
+      <translation locale="ru"><![CDATA[Страницы]]></translation>
+      <translation locale="it"><![CDATA[pagine]]></translation>
+      <translation locale="zh"><![CDATA[页面]]></translation>
+      <translation locale="de"><![CDATA[Seiten]]></translation>
+      <translation locale="fr"><![CDATA[pages]]></translation>
+      <translation locale="es"><![CDATA[páginas]]></translation>
+      <translation locale="lt"><![CDATA[puslapiai]]></translation>
+      <translation locale="uk"><![CDATA[Сторінки]]></translation>
+      <translation locale="sv"><![CDATA[sidor]]></translation>
+      <translation locale="el"><![CDATA[σελίδες]]></translation>
+      <translation locale="tr"><![CDATA[Sayfalar]]></translation>
+      <translation locale="pt"><![CDATA[páginas]]></translation>
+      <translation locale="pl"><![CDATA[strony]]></translation>
+    </item>
+    <Pages>
+      <item type="label" name="Navigation">
+        <translation locale="nl"><![CDATA[navigatie]]></translation>
+        <translation locale="en"><![CDATA[navigation]]></translation>
+        <translation locale="ru"><![CDATA[навигация]]></translation>
+        <translation locale="el"><![CDATA[πλοήγηση]]></translation>
+        <translation locale="hu"><![CDATA[navigáció]]></translation>
+        <translation locale="zh"><![CDATA[导航]]></translation>
+        <translation locale="de"><![CDATA[Navigation]]></translation>
+        <translation locale="pt"><![CDATA[navegação]]></translation>
+        <translation locale="pl"><![CDATA[nawigacja]]></translation>
+      </item>
+      <item type="label" name="MetaNavigation">
+        <translation locale="nl"><![CDATA[metanavigatie]]></translation>
+        <translation locale="en"><![CDATA[meta navigation]]></translation>
+        <translation locale="hu"><![CDATA[meta navigáció]]></translation>
+        <translation locale="it"><![CDATA[meta navigazione]]></translation>
+        <translation locale="ru"><![CDATA[Мета навигация]]></translation>
+        <translation locale="zh"><![CDATA[元导航]]></translation>
+        <translation locale="de"><![CDATA[Meta-Navigation]]></translation>
+        <translation locale="fr"><![CDATA[meta navigation]]></translation>
+        <translation locale="es"><![CDATA[meta navigation]]></translation>
+        <translation locale="lt"><![CDATA[meta navigacija]]></translation>
+        <translation locale="uk"><![CDATA[Мета навігація]]></translation>
+        <translation locale="sv"><![CDATA[meta navigering]]></translation>
+        <translation locale="el"><![CDATA[μετα-πλοήγηση]]></translation>
+        <translation locale="pt"><![CDATA[meta navegação]]></translation>
+        <translation locale="pl"><![CDATA[meta nawigacja]]></translation>
+      </item>
+      <item type="message" name="HelpMetaNavigation">
+        <translation locale="nl"><![CDATA[Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.]]></translation>
+        <translation locale="en"><![CDATA[Extra topnavigation (above/below the menu) on every page.]]></translation>
+        <translation locale="it"><![CDATA[Navigazione superiore extra (sopra/sotto il menu) su tutte le pagine.]]></translation>
+        <translation locale="ru"><![CDATA[Дополнительная навигация на каждой странице (до/после меню).]]></translation>
+        <translation locale="zh"><![CDATA[在每个页面使用额外的顶部导航（可以在主导航的上方或下方）。]]></translation>
+        <translation locale="de"><![CDATA[Zusätzliche Top-Navigation (über/unter dem Hauptmenü) auf jeder Seite.]]></translation>
+        <translation locale="fr"><![CDATA[Navigation en extra en haut de page (à côté, en dessous du menu) sur chaque page.]]></translation>
+        <translation locale="hu"><![CDATA[Extra topnavigation (fenti/lenti menüben) minden oldalon.]]></translation>
+        <translation locale="es"><![CDATA[Navegación superior extra (encima/debajo del menú) en cada página.]]></translation>
+        <translation locale="el"><![CDATA[Επιπλέον άνω πλοήγηση (πάνω ή κάτω από το μενού), σε κάθε σελίδα.]]></translation>
+        <translation locale="pl"><![CDATA[Dodatkowa nawigacja górna (ponad/pod menu) na każdej stronie.]]></translation>
+      </item>
+      <item type="label" name="Extensions">
+        <translation locale="nl"><![CDATA[extensions]]></translation>
+        <translation locale="en"><![CDATA[extensions]]></translation>
+        <translation locale="ru"><![CDATA[расширения]]></translation>
+        <translation locale="es"><![CDATA[extensiones]]></translation>
+        <translation locale="de"><![CDATA[Erweiterungen]]></translation>
+        <translation locale="lt"><![CDATA[plėtiniai]]></translation>
+        <translation locale="uk"><![CDATA[Розширення]]></translation>
+        <translation locale="hu"><![CDATA[kiegészítők]]></translation>
+        <translation locale="sv"><![CDATA[tillägg]]></translation>
+        <translation locale="el"><![CDATA[επεκτάσεις]]></translation>
+        <translation locale="zh"><![CDATA[扩展插件]]></translation>
+        <translation locale="pt"><![CDATA[extensões]]></translation>
+        <translation locale="pl"><![CDATA[rozszerzenia]]></translation>
+      </item>
+    </Pages>
+  </Backend>
+  <Installer>
+    <Pages>
+      <item type="label" name="Home">
+        <translation locale="nl"><![CDATA[home]]></translation>
+        <translation locale="en"><![CDATA[home]]></translation>
+        <translation locale="hu"><![CDATA[főoldal]]></translation>
+        <translation locale="it"><![CDATA[casa]]></translation>
+        <translation locale="ru"><![CDATA[Главная]]></translation>
+        <translation locale="zh"><![CDATA[首页]]></translation>
+        <translation locale="de"><![CDATA[Startseite]]></translation>
+        <translation locale="fr"><![CDATA[accueil]]></translation>
+        <translation locale="es"><![CDATA[inicio]]></translation>
+        <translation locale="lt"><![CDATA[pirmas]]></translation>
+        <translation locale="uk"><![CDATA[Головна]]></translation>
+        <translation locale="sv"><![CDATA[hem]]></translation>
+        <translation locale="el"><![CDATA[αρχική σελίδα]]></translation>
+        <translation locale="pt"><![CDATA[início]]></translation>
+        <translation locale="pl"><![CDATA[główna]]></translation>
+      </item>
+      <item type="label" name="Disclaimer">
+        <translation locale="nl"><![CDATA[disclaimer]]></translation>
+        <translation locale="en"><![CDATA[disclaimer]]></translation>
+        <translation locale="hu"><![CDATA[leírás]]></translation>
+        <translation locale="it"><![CDATA[disclaimer]]></translation>
+        <translation locale="fr"><![CDATA[mentions légales]]></translation>
+        <translation locale="ru"><![CDATA[Соглашение]]></translation>
+        <translation locale="zh"><![CDATA[免责声明]]></translation>
+        <translation locale="de"><![CDATA[Impressum]]></translation>
+        <translation locale="es"><![CDATA[disclaimer]]></translation>
+        <translation locale="uk"><![CDATA[Угода]]></translation>
+        <translation locale="lt"><![CDATA[privatumas]]></translation>
+        <translation locale="sv"><![CDATA[ansvarsfriskrivning]]></translation>
+        <translation locale="el"><![CDATA[αποποίηση]]></translation>
+        <translation locale="tr"><![CDATA[feragatname]]></translation>
+        <translation locale="pl"><![CDATA[zrzeczenie się]]></translation>
+        <translation locale="pt"><![CDATA[aviso legal]]></translation>
+      </item>
+      <item type="label" name="Sitemap">
+        <translation locale="nl"><![CDATA[sitemap]]></translation>
+        <translation locale="en"><![CDATA[sitemap]]></translation>
+        <translation locale="hu"><![CDATA[oldaltérkép]]></translation>
+        <translation locale="it"><![CDATA[mappa del sito]]></translation>
+        <translation locale="fr"><![CDATA[sitemap]]></translation>
+        <translation locale="ru"><![CDATA[Карта сайта]]></translation>
+        <translation locale="zh"><![CDATA[站点地图]]></translation>
+        <translation locale="de"><![CDATA[Sitemap]]></translation>
+        <translation locale="es"><![CDATA[sitemap]]></translation>
+        <translation locale="lt"><![CDATA[svetainės medis]]></translation>
+        <translation locale="uk"><![CDATA[Мапа сайту]]></translation>
+        <translation locale="sv"><![CDATA[webbplatskarta]]></translation>
+        <translation locale="el"><![CDATA[χάρτης ιστοχώρου]]></translation>
+        <translation locale="pl"><![CDATA[mapa strony]]></translation>
+        <translation locale="tr"><![CDATA[sitemap]]></translation>
+        <translation locale="pt"><![CDATA[mapa do site]]></translation>
+      </item>
+    </Pages>
+  </Installer>
+</translations>

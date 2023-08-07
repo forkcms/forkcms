@@ -1,0 +1,38 @@
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+<div class="sub-navigation d-none d-sm-block">
+  <div class="pages-tree">
+    {{ macro.alert('warning', 'msg.MovePagesNotPossible'|trans|ucfirst, null, null, {'class': 'd-md-none'}) }}
+    <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
+      <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+    </button>
+    <div class="form-group">
+      <label for="pagetree-search" class="visually-hidden">{{ 'lbl.search'|trans|ucfirst }}</label>
+      <div class="input-group input-group-sm">
+        <div class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></div>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text form-control-sm js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }}">
+      </div>
+    </div>
+    <div id="tree" data-tree-pages {% if overview %} data-clear-tree{% endif %}>
+      {% apply spaceless %}
+        {% for subtree in sidebarTree %}
+          <h4>{{ subtree.label|trans|ucfirst }}</h4>
+          <div class="clearfix" data-tree="{{ subtree.label.value }}">
+            {{ _self.parseTree(subtree.pages) }}
+          </div>
+        {% endfor %}
+      {% endapply %}
+    </div>
+  </div>
+</div>
+
+{% macro parseTree(tree) %}
+  <ul>
+    {% for navigationItem in tree %}
+      <li id="page-{{ navigationItem.page.id }}"{% for attr,value in navigationItem.attr %} {{ attr }}='{{ value|raw }}'{% endfor %} data-allow-children="{{ navigationItem.page.getSetting('allowChildren') ? 'true' : 'false' }}" data-allow-move="{{ navigationItem.page.getSetting('allowMove') ? 'true' : 'false' }}">
+        <a href="{{ action_url('PageEdit', null, {'slug': navigationItem.page.id}) }}"><ins>&#160;</ins>{{ navigationItem.page.activeRevision.navigationTitle }}</a>
+        {% if navigationItem.children is not empty %}{{ _self.parseTree(navigationItem.children) }}{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}

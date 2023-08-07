@@ -1,0 +1,183 @@
+{% block revision_content_row %}
+  {{ form_row(form.themeTemplate) }}
+  <div id="templateVisualLarge">
+    {{ include(template_from_string(selectedTemplate.settings.get('htmlLarge'))) }}
+  </div>
+{% endblock %}
+
+{% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_page_block_collection_row %}
+  {% apply spaceless %}
+    {% import '@Backend/base/macros.html.twig' as macro %}
+    {% if prototype is defined %}
+      {% set prototype_vars = {} %}
+      {% if style is defined %}
+        {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+      {% endif %}
+
+      {% set field = prototype %}
+      {% set attr = attr|merge({'data-prototype': block('page_block_collection_item') }) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+      <ul class="list-group list-group-pages list-unstyled js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% if form.vars.sequence_group %} data-sequence-group="{{ form.vars.sequence_group }}" data-position="{{ form.vars.name }}"{% endif %}{% endif %}>
+        {% for field in form %}
+          <li class="list-group-item">
+            {{ block('page_block_collection_item') }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% if form.vars.allow_add %}
+        <div class="d-flex justify-content-center mt-2">
+          {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-block', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
+        </div>
+      {% endif %}
+      {{ form_errors(form) }}
+    </div>
+  {% endapply %}
+{% endblock %}
+
+{% block page_block_collection_item %}
+  {% import '@Backend/base/macros.html.twig' as macro %}
+  <div data-role="page-block-wrapper" class="d-flex{% if not field.children.isVisible.vars.checked %} block-not-visible{% endif %}">
+    {% if form.vars.allow_sequence %}
+      <div class="d-flex flex-column me-2">
+        {{ macro.buttonIcon('', 'long-arrow-alt-up', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}, false, true) }}
+        <span class="btn btn-move btn-move-drag btn-icon-only btn-sm fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('grip-vertical') }}</span>
+        {{ macro.buttonIcon('', 'long-arrow-alt-down', '', 'btn-move btn-move-click btn-icon-only btn-sm', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}, false, true) }}
+      </div>
+    {% endif %}
+
+    <div>
+      <div data-role="page-block-preview" class="mb-2{% if not field.vars.data.type.isEditor %} d-none{% endif %}">
+        <p class="page-block-description mb-0 block-info">
+          {% if field.vars.data.editorContent %}
+             {{ field.vars.data.editorContent|slice(75) }}
+          {% else %}
+            {{ 'lbl.NoContentToShow'|trans|ucfirst }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="block-info mb-2{% if field.vars.data.type.isEditor %} d-none{% endif %}" data-role="page-block-title-wrapper">
+        <p class="badge bg-middle mb-2" data-role="page-block-type">{{ field.vars.data.type.label }}</p>
+        <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">
+          {% if field.vars.data.block %}
+            {{ field.vars.data.block|trans }}
+          {% endif %}
+        </p>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <div class="btn-group">
+          {{ macro.buttonIcon('', 'edit', '', 'btn-primary btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-role': 'page-block-edit', 'data-bs-target': '#editBlockModal' ~ field.vars.id, 'aria-label': 'lbl.EditBlock'|trans|ucfirst}, false, true) }}
+
+          {% if form.vars.allow_delete %}
+            {{ macro.buttonIcon('', 'trash', '', 'ms-2 btn-danger btn-sm', {'type': 'button', 'data-bs-toggle': 'modal', 'data-bs-target': '#confirmDeleteBlock' ~ field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}, false, true) }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="ms-auto">
+      {{ form_widget(field) }}
+      {{ form_errors(field) }}
+    </div>
+
+
+    {% if form.vars.allow_delete %}
+      <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="confirmDeleteBlockTitle{{ field.vars.id }}">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
+            </div>
+            <div class="modal-footer">
+              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
+              {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-bs-dismiss":"modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block revision_block_widget %}
+  {% import '@Backend/base/macros.html.twig' as macro %}
+  <div id="{{ form.vars.id }}" class="mb-1">
+    {{ form_widget(form.isVisible, {'label': 'lbl.VisibleOnSite'|trans, 'label_attr': {'class' : 'font-weight-bold custom-control-label mb-1'}}) }}
+
+    <div id="editBlockModal{{ form.vars.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editBlockModalTitle{{ form.vars.id }}" aria-hidden="true" data-role="page-content-block">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="editBlockModalTitle{{ form.vars.id }}">{{ 'lbl.EditBlock'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body" data-role="page-block-form-wrapper">
+            {{ form_row(form.blockType) }}
+            <div data-role="page-block-content-type-wrapper" data-type="block">{{ form_row(form.block) }}</div>
+            <div data-role="page-block-content-type-wrapper" data-type="editor">{{ form_rest(form) }}</div>
+          </div>
+          <div class="modal-footer d-flex">
+            <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
+            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save', 'data-bs-dismiss':'modal'}) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_page_block_collection_entry_isVisible_widget -%}
+  <div class="custom-control custom-visible-switch">
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if form.vars.checked %} checked="checked"{% endif %} data-role="page-block-visibility" />
+
+    <label for="{{ form.vars.id }}" class="btn btn-default btn-icon-only btn-sm">{% if form.vars.checked %}<i class="far fa-eye"></i>{% else %}<i class="far fa-eye-slash"></i>{% endif %} <span class="visually-hidden">{{ form.vars.label|trans }}</span></label>
+  </div>
+{%- endblock %}
+
+{% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_themeTemplate_row -%}
+  {% import '@Backend/base/macros.html.twig' as macro %}
+  <p class="current-template">{{ form_label(form, null, {'required': false}) }}:
+    <span id="tabTemplateLabel">{{ form.vars.data.name }}</span>
+    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#changeTemplate">{{ 'lbl.ChangeTemplate'|trans|ucfirst }}</button>
+  </p>
+
+  {# Dialog to select another template. Do not change the ID! #}
+  <div class="modal modal-lg fade" id="changeTemplate" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="changeTemplateTitle">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning">
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.TemplateChangeWarning'|trans|raw }}
+          </div>
+          {{ form_widget(form) }}
+        </div>
+        <div class="modal-footer">
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', { "type":"button", "data-role":"switch-template" }) }}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endblock %}
+
+{% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_themeTemplate_entry_widget -%}
+  <div class="col-md-6">
+    {{ form_widget(form) }}
+  </div>
+{%- endblock %}
+
+{% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_themeTemplate_entry_label -%}
+    {{ form_label(form) }}
+    <label class="templateVisual" for="{{ form.vars.id }}">
+      {{ form.vars.attr['data-template'].settings.get('html')|raw }}
+    </label>
+{%- endblock %}

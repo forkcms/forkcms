@@ -1,0 +1,7 @@
+{{ '{% embed template %}' }}
+{%- for position in positions|keys -%}
+  {{- '{% block ' ~ position ~ ' %}' -}}
+  {{- '{{ positions.' ~ position ~ '|join|raw }}' -}}
+  {{- '{% endblock %}' -}}
+{%- endfor -%}
+{{ '{% endembed %}' }}

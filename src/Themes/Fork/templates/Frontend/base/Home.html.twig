@@ -3,18 +3,13 @@
 {% block breadcrumb %}
 {% endblock %}
 
-{% block main %}
-
-  <div class="row">
-    {# Main positions #}
-    {% for content in positions.main %}
-      {% if content.html %}
-        <div class="col-lg-offset-2 col-lg-8">
-          <div class="section-home font-size-large">
-            {{ content.html|raw }}
-          </div>
-        </div>
-      {% endif %}
-    {% endfor %}
+{% block mainContent %}
+  <div class="section-default">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        {% block main %}
+        {% endblock %}
+      </div>
+    </div>
   </div>
 {% endblock %}
