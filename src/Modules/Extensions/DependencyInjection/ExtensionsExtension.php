@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Extensions\DependencyInjection;
 
+use ForkCMS\Core\Domain\Application\Application;
 use ForkCMS\Core\Domain\DependencyInjection\ForkModuleExtension;
 use ForkCMS\Modules\Extensions\Domain\Module\InstalledModules;
 use ForkCMS\Modules\Extensions\Domain\Theme\ThemeRepository;
@@ -24,12 +25,16 @@ class ExtensionsExtension extends ForkModuleExtension
     {
         $modulesDirectory = $container->getParameter('kernel.project_dir') . '/src/Modules/';
         $dataRoots = [];
-        foreach (InstalledModules::fromContainer($container)() as $moduleName) {
-            $dataRoots[$moduleName . 'Module'] = $modulesDirectory . $moduleName . '/assets/public';
+        foreach (Application::cases() as $application) {
+            $application = ucfirst($application->value);
+            foreach (InstalledModules::fromContainer($container)() as $moduleName) {
+                $dataRoots[$moduleName . 'Module' . $application] = $modulesDirectory . $moduleName . '/assets/' . $application . '/public';
+            }
         }
         foreach (ThemeRepository::getThemePaths() as $themeName => $path) {
             $dataRoots[$themeName . 'Theme'] = $path . '/assets/public';
         }
+
         $container->prependExtensionConfig('liip_imagine', [
             'loaders' => [
                 'default' => [

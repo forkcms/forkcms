@@ -3,7 +3,7 @@
 <div class="header">
   <div class="site-info">
     <div class="site-icon-block">
-      <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">
+      <img class="site-icon" src="/assets/theme/images/apple-touch-icon.png" alt="Fork CMS logo">
       {% if app.debug %}
         <div class="debug-mode">{{ 'lbl.DebugMode'|trans|upper }}</div>
       {% endif %}
@@ -43,7 +43,7 @@
   <ul class="nav navbar-nav navbar-right navbar-user">
     <li class="nav-item dropdown">
       <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" id="navbarProfileDropdown">
-        <img src="{{ '@BackendModule:image/no-avatar.gif'|imagine_filter('backend_avatar') }}" class="rounded-circle" alt="{{ app.user.username }}"/>
+        <img src="{{ '@BackendModuleBackend:images/no-avatar.gif'|imagine_filter('backend_avatar') }}" class="rounded-circle" alt="{{ app.user.username }}"/>
         <span class="dropdown-angle">{{ macro.icon('angle-right') }}</span>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarProfileDropdown">
