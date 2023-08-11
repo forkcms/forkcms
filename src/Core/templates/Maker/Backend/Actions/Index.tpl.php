@@ -4,6 +4,7 @@ namespace <?= $namespace ?>;
 
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 <?php foreach ($useStatements as $useStatement) echo $useStatement.PHP_EOL ?>
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * <?= $entity ?> overview
