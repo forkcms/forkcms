@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>ContentBlocks</name>
+  <version>5.0.0</version>
+  <requirements>
+    <minimum_version>6.0.0</minimum_version>
+    <maximum_version>7.0.0</maximum_version>
+  </requirements>
+  <authors>
+    <author>
+      <name><![CDATA[Davy Hellemans]]></name>
+      <url><![CDATA[http://blog.bauffman.be]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Tijs Verkoyen]]></name>
+      <url><![CDATA[https://www.sumocoders.be]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Matthias Mullie]]></name>
+      <url><![CDATA[http://www.mullie.eu]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Jelmer Prins]]></name>
+      <url><![CDATA[https://www.sumocoders.be]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Jeroen Desloovere]]></name>
+      <url><![CDATA[http://www.jeroendesloovere.be]]></url>
+    </author>
+    <author>
+      <name><![CDATA[Davy De Vuysdere]]></name>
+      <url><![CDATA[https://www.sumocoders.be]]></url>
+    </author>
+  </authors>
+  <description>
+    <![CDATA[
+      The content blocks module provides the possibility to re-use content on multiple pages, wherefore the content can be managed in 1 single point, but the changes are immediately visible on all pages it occurs.
+      Content blocks are exceptionally well-suited for recurring content like contact details or call-to-actions.
+    ]]>
+  </description>
+  <events>
+    <!-- TODO -->
+  </events>
+</module>

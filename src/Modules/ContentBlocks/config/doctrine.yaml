@@ -1,0 +1,4 @@
+doctrine:
+  dbal:
+    types:
+      content_blocks_status: ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\StatusDBALType

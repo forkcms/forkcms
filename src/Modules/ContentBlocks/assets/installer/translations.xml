@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="ContentBlocks">
+      <translation locale="nl"><![CDATA[inhoudsblokken]]></translation>
+      <translation locale="en"><![CDATA[content blocks]]></translation>
+      <translation locale="hu"><![CDATA[kapcsolat blokk]]></translation>
+      <translation locale="it"><![CDATA[blocchi di contenuto]]></translation>
+      <translation locale="ru"><![CDATA[Блоки контента]]></translation>
+      <translation locale="zh"><![CDATA[内容屏蔽]]></translation>
+      <translation locale="de"><![CDATA[Inhaltsblocks]]></translation>
+      <translation locale="fr"><![CDATA[blocs de contenu]]></translation>
+      <translation locale="es"><![CDATA[bloques de contenido]]></translation>
+      <translation locale="lt"><![CDATA[tinklaraščio turinys]]></translation>
+      <translation locale="uk"><![CDATA[Блоки контента]]></translation>
+      <translation locale="sv"><![CDATA[innehållsblock]]></translation>
+      <translation locale="el"><![CDATA[μπλοκ περιεχομένου]]></translation>
+      <translation locale="pl"><![CDATA[bloki zawartości]]></translation>
+    </item>
+    <ContentBlocks>
+      <item type="label" name="Add">
+        <translation locale="nl"><![CDATA[inhoudsblok toevoegen]]></translation>
+        <translation locale="en"><![CDATA[add content block]]></translation>
+        <translation locale="hu"><![CDATA[új tartalmi blokk]]></translation>
+        <translation locale="it"><![CDATA[aggiungi un blocco di contenuto]]></translation>
+        <translation locale="ru"><![CDATA[Добавить блок]]></translation>
+        <translation locale="zh"><![CDATA[添加内容块]]></translation>
+        <translation locale="de"><![CDATA[Inhaltsblock hinzufügen]]></translation>
+        <translation locale="fr"><![CDATA[ajouter un bloc de contenu]]></translation>
+        <translation locale="es"><![CDATA[agregar bloque de contenido]]></translation>
+        <translation locale="uk"><![CDATA[Додати блок]]></translation>
+        <translation locale="lt"><![CDATA[naujas turinio blokas]]></translation>
+        <translation locale="sv"><![CDATA[lägg till innehålls block]]></translation>
+        <translation locale="el"><![CDATA[Προσθήκη Μπλοκ Περιεχομένου]]></translation>
+        <translation locale="pt"><![CDATA[adicionar bloco de conteúdo]]></translation>
+        <translation locale="pl"><![CDATA[dodaj blok treści]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%1$s" was added.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%1$s" был добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%1$s”已添加。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Блок "%1$s" додано.]]></translation>
+        <translation locale="sv"><![CDATA[Innehålls block "%1$s" har lagts till.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" προστέθηκε.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi adicionado.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%1$s" został dodany.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation locale="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>
+        <translation locale="en"><![CDATA[Are your sure you want to delete the content block "%1$s"?]]></translation>
+        <translation locale="it"><![CDATA[Sei sicuro di voler eliminare il blocco di contenuto "%1$s"?]]></translation>
+        <translation locale="ru"><![CDATA[Вы действительно хотите удалить блок "%1$s"?]]></translation>
+        <translation locale="zh"><![CDATA[你确定要删除内容块“%1$s”吗？]]></translation>
+        <translation locale="de"><![CDATA[Soll der Inhaltsblock "%1$s" wirklich gelöscht werden?]]></translation>
+        <translation locale="fr"><![CDATA[Etes-vous sûr de vouloir effacer le bloc de contenu "%1$s"?]]></translation>
+        <translation locale="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" tartalmi blokkot?]]></translation>
+        <translation locale="es"><![CDATA[¿Estás seguro de que quieres eliminar el bloque de contenido "%1$s"?]]></translation>
+        <translation locale="sv"><![CDATA[Är du säker på att du vill till ta bort innehållsblocket "%1$s"?]]></translation>
+        <translation locale="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το μπλοκ περιεχομένου "%1$s";]]></translation>
+        <translation locale="pt"><![CDATA[Tem a certeza que deseja remover o bloco de conteúdo "%1$s"?]]></translation>
+        <translation locale="pl"><![CDATA[Jesteś pewny że chcesz usunąć blok treści "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd verwijderd.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%1$s" was deleted.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%1$s" был удален.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%1$s”已删除。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gelöscht.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk törölve.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été effacé.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue eliminado.]]></translation>
+        <translation locale="sv"><![CDATA[Innehållsblocket "%1$s" är borttaget.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" διεγράφη.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi removido.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%1$s" został usunięty.]]></translation>
+      </item>
+      <item type="label" name="Edit">
+        <translation locale="nl"><![CDATA[bewerk inhoudsblok]]></translation>
+        <translation locale="en"><![CDATA[edit content block]]></translation>
+        <translation locale="it"><![CDATA[modifica il blocco di contenuto]]></translation>
+        <translation locale="ru"><![CDATA[Редактировать]]></translation>
+        <translation locale="zh"><![CDATA[编辑内容块]]></translation>
+        <translation locale="de"><![CDATA[bearbeite Inhaltsblock]]></translation>
+        <translation locale="hu"><![CDATA[tartalmi blokk szerkesztése]]></translation>
+        <translation locale="fr"><![CDATA[éditer le bloc de contenu]]></translation>
+        <translation locale="es"><![CDATA[editar bloque de contenido]]></translation>
+        <translation locale="sv"><![CDATA[ändra innehållsblock]]></translation>
+        <translation locale="el"><![CDATA[Μεταβολή του μπλοκ περιεχομένου]]></translation>
+        <translation locale="pt"><![CDATA[editar bloco de conteúdo]]></translation>
+        <translation locale="pl"><![CDATA[edytuj blok treści]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%1$s" was saved.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato salvato.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%1$s" был обновлен.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%1$s”已保存。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gespeichert.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk elmentve.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été enregistré.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue guardado.]]></translation>
+        <translation locale="sv"><![CDATA[Innehållsblocket "%1$s" sparades.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" αποθηκεύτηκε.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi guardado.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%1$s" został zapisany.]]></translation>
+      </item>
+      <item type="message" name="NoTemplate">
+        <translation locale="nl"><![CDATA[Geen template]]></translation>
+        <translation locale="en"><![CDATA[No template]]></translation>
+        <translation locale="hu"><![CDATA[Nincs sablon]]></translation>
+        <translation locale="it"><![CDATA[Nessun template]]></translation>
+        <translation locale="ru"><![CDATA[Нет шаблона]]></translation>
+        <translation locale="zh"><![CDATA[无模板]]></translation>
+        <translation locale="de"><![CDATA[Kein Template]]></translation>
+        <translation locale="fr"><![CDATA[Pas de template]]></translation>
+        <translation locale="es"><![CDATA[Sin plantilla.]]></translation>
+        <translation locale="sv"><![CDATA[Ingen mall]]></translation>
+        <translation locale="el"><![CDATA[Κανένα πρότυπο]]></translation>
+        <translation locale="pt"><![CDATA[Sem template]]></translation>
+        <translation locale="pl"><![CDATA[Brak szablonu]]></translation>
+      </item>
+    </ContentBlocks>
+  </Backend>
+</translations>
