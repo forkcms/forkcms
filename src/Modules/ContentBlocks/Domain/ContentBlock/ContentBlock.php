@@ -3,9 +3,11 @@
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\ORM\Mapping as ORM;
+use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use DateTime;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
@@ -13,6 +15,19 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 #[ORM\Table(name: 'contentblocks__contentblock')]
 #[DataGrid('ContentBlock')]
 #[ORM\HasLifecycleCallbacks]
+#[DataGridActionColumn(
+    route: 'backend_action',
+    routeAttributes: [
+        'module' => 'content_blocks',
+        'action' => 'content_block_edit',
+    ],
+    routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+    label: 'lbl.Edit',
+    class: 'btn btn-primary btn-sm',
+    iconClass: 'fa fa-edit',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'CONTENT_BLOCKS__CONTENT_BLOCK_EDIT',
+    columnAttributes: ['class' => 'fork-data-grid-action'],
+)]
 final class ContentBlock
 {
     const DEFAULT_TEMPLATE = 'Default.html.twig';
@@ -46,6 +61,8 @@ final class ContentBlock
             'module' => 'content_blocks',
             'action' => 'content_block_edit',
         ],
+        routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+        routeRole: ModuleAction::ROLE_PREFIX . 'CONTENT_BLOCKS__CONTENT_BLOCK_EDIT',
         columnAttributes: ['class' => 'title'],
     )]
     private string $title;
@@ -186,10 +203,25 @@ final class ContentBlock
         $this->createdOn = $this->editedOn = new DateTime();
     }
 
+    public function archive(): void
+    {
+        $this->status = Status::archived();
+    }
+
     public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self
     {
-        $entity = $dataTransferObject->isNew() ? new self($dataTransferObject) : $dataTransferObject->getEntity();
+        return new self($dataTransferObject);
+    }
 
-        return $entity;
+    /**
+     * @param array{string?: string} $attributes
+     *
+     * @return array{string?: int|string}
+     */
+    public static function dataGridEditLinkCallback(self $contentBlock, array $attributes): array
+    {
+        $attributes['slug'] = $contentBlock->getRevisionId();
+
+        return $attributes;
     }
 }

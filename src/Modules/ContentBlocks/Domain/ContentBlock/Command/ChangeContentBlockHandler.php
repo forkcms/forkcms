@@ -15,6 +15,11 @@ final class ChangeContentBlockHandler implements CommandHandlerInterface
     public function __invoke(ChangeContentBlock $changeContentBlock)
     {
         $contentBlock = ContentBlock::fromDataTransferObject($changeContentBlock);
+
+        $previousContentBlock = $changeContentBlock->getEntity();
+        $previousContentBlock->archive();
+
+        $this->contentBlockRepository->save($previousContentBlock);
         $this->contentBlockRepository->save($contentBlock);
     }
 }

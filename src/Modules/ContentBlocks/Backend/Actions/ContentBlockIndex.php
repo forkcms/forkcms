@@ -6,6 +6,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Status;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +23,9 @@ final class ContentBlockIndex extends AbstractDataGridActionController
             static function (QueryBuilder $queryBuilder) use ($locale): void {
                 $queryBuilder
                     ->andWhere('ContentBlock.locale = :locale')
+                    ->andWhere('ContentBlock.status = :active')
                     ->setParameter('locale', $locale)
+                    ->setParameter('active', Status::active())
                 ;
             }
         );
