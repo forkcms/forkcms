@@ -1,0 +1,19 @@
+{% extends '@Backend/base/base.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block actionbar %}
+  {% if is_allowed('ContentBlockAdd') %}
+    <div class="btn-toolbar justify-content-end">
+      <div class="btn-group" role="group">
+        {% if is_allowed('ContentBlockAdd') %}
+          {{ macro.buttonIcon(action_path('ContentBlockAdd'), 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-success') }}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {{ pageon_datagrid(backend_data_grid) }}
+{% endblock content %}
+

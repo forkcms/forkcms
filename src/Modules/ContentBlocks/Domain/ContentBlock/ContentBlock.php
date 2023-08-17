@@ -5,9 +5,12 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use DateTime;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 
 #[ORM\Entity(repositoryClass: ContentBlockRepository::class)]
 #[ORM\Table(name: 'contentblocks__contentblock')]
+#[DataGrid('ContentBlock')]
+#[ORM\HasLifecycleCallbacks]
 final class ContentBlock
 {
     const DEFAULT_TEMPLATE = 'Default.html.twig';
@@ -50,8 +53,17 @@ final class ContentBlock
     #[ORM\Column(name: 'edited_on', type: 'datetime')]
     private DateTime $editedOn;
 
-    private function __construct()
+    private function __construct(ContentBlockDataTransferObject $dataTransferObject)
     {
+        $this->id = $dataTransferObject->id;
+        $this->userId = $dataTransferObject->userId;
+        $this->extraId = $dataTransferObject->extraId;
+        $this->template = $dataTransferObject->template;
+        $this->locale = $dataTransferObject->locale;
+        $this->title = $dataTransferObject->title;
+        $this->text = $dataTransferObject->text;
+        $this->isHidden = !$dataTransferObject->isVisible;
+        $this->status = $dataTransferObject->status;
     }
 
     /**
@@ -150,10 +162,16 @@ final class ContentBlock
         return $this->editedOn;
     }
 
-    /*public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self
+    #[ORM\PrePersist]
+    public function prePersist(): void
     {
-        $entity = $dataTransferObject->isNew() ? new self() : $dataTransferObject->getEntity();
+        $this->createdOn = $this->editedOn = new DateTime();
+    }
+
+    public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self
+    {
+        $entity = $dataTransferObject->isNew() ? new self($dataTransferObject) : $dataTransferObject->getEntity();
 
         return $entity;
-    }*/
+    }
 }

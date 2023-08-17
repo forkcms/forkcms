@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 
 /**
  * @method ContentBlock|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,5 +31,17 @@ final class ContentBlockRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->remove($contentBlock);
         $entityManager->flush();
+    }
+
+    public function getNextIdForLanguage(Locale $locale): int
+    {
+        return (int) $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('MAX(cb.id) as id')
+                ->from(ContentBlock::class, 'cb')
+                ->where('cb.locale = :locale')
+                ->setParameter('locale', $locale)
+                ->getQuery()
+                ->getSingleScalarResult() + 1;
     }
 }
