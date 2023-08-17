@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use DateTime;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ContentBlockRepository::class)]
 #[ORM\Table(name: 'contentblocks__contentblock')]
@@ -36,6 +38,16 @@ final class ContentBlock
     private Locale $locale;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[DataGridPropertyColumn(
+        sortable: true,
+        label: 'lbl.Title',
+        route: 'backend_action',
+        routeAttributes: [
+            'module' => 'content_blocks',
+            'action' => 'content_block_edit',
+        ],
+        columnAttributes: ['class' => 'title'],
+    )]
     private string $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -136,6 +148,12 @@ final class ContentBlock
     public function isHidden(): bool
     {
         return $this->isHidden;
+    }
+
+    #[DataGridMethodColumn(label: 'lbl.Visible')]
+    public function isVisible(): string
+    {
+        return $this->isHidden ? 'lbl.No' : 'lbl.Yes';
     }
 
     /**

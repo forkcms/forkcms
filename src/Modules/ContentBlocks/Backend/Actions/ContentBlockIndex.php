@@ -2,6 +2,8 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Backend\Actions;
 
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,16 @@ final class ContentBlockIndex extends AbstractDataGridActionController
 {
     protected function execute(Request $request): void
     {
-        $this->renderDataGrid(ContentBlock::class);
+        $locale = $this->translator->getLocale();
+
+        $this->renderDataGrid(
+            ContentBlock::class,
+            static function (QueryBuilder $queryBuilder) use ($locale): void {
+                $queryBuilder
+                    ->andWhere('ContentBlock.locale = :locale')
+                    ->setParameter('locale', $locale)
+                ;
+            }
+        );
     }
 }
