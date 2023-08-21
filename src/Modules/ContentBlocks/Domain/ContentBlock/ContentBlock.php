@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
+use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use DateTime;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
@@ -30,7 +31,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 )]
 final class ContentBlock
 {
-    const DEFAULT_TEMPLATE = 'Default.html.twig';
+    public const DEFAULT_TEMPLATE = 'Default.html.twig';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -43,8 +44,8 @@ final class ContentBlock
     #[ORM\Column(name: 'user_id', type: 'integer')]
     private int $userId;
 
-    #[ORM\Column(name: 'extra_id', type: 'integer')]
-    private int $extraId;
+    #[ORM\OneToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
+    private Block $widget;
 
     #[ORM\Column(type: 'string', length: 255, options: ['default' => 'Default.html.twig'])]
     private string $template;
@@ -86,7 +87,7 @@ final class ContentBlock
     {
         $this->id = $dataTransferObject->id;
         $this->userId = $dataTransferObject->userId;
-        $this->extraId = $dataTransferObject->extraId;
+        $this->widget = $dataTransferObject->widget;
         $this->template = $dataTransferObject->template;
         $this->locale = $dataTransferObject->locale;
         $this->title = $dataTransferObject->title;
@@ -119,12 +120,9 @@ final class ContentBlock
         return $this->userId;
     }
 
-    /**
-     * @return int
-     */
-    public function getExtraId(): int
+    public function getWidget(): Block
     {
-        return $this->extraId;
+        return $this->widget;
     }
 
     /**

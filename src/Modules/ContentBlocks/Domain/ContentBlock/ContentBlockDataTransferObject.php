@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
+use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,7 +12,7 @@ abstract class ContentBlockDataTransferObject
 
     public int $id;
 
-    public int $extraId;
+    public Block $widget;
 
     public int $revisionId;
 
@@ -41,7 +42,7 @@ abstract class ContentBlockDataTransferObject
         }
 
         $this->id = $this->contentBlockEntity->getId();
-        $this->extraId = $this->contentBlockEntity->getExtraId();
+        $this->widget = $this->contentBlockEntity->getWidget();
         $this->isVisible = !$this->contentBlockEntity->isHidden();
         $this->title = $this->contentBlockEntity->getTitle();
         $this->text = $this->contentBlockEntity->getText();

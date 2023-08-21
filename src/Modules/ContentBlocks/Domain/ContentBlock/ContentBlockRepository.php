@@ -33,7 +33,7 @@ final class ContentBlockRepository extends ServiceEntityRepository
         $entityManager->flush();
     }
 
-    public function getNextIdForLanguage(Locale $locale): int
+    public function getNextIdForLocale(Locale $locale): int
     {
         return (int) $this->getEntityManager()
                 ->createQueryBuilder()

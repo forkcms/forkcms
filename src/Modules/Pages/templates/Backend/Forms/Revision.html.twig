@@ -63,7 +63,12 @@
         <p class="badge bg-middle mb-2" data-role="page-block-type">{{ field.vars.data.type.label }}</p>
         <p class="page-block-title font-weight-bold mb-0" data-role="page-block-title">
           {% if field.vars.data.block %}
-            {{ field.vars.data.block|trans }}
+            {% set block = field.vars.data.block %}
+            {% if block.block.module.name == 'ContentBlocks' and block.settings.has('label')  %}
+              {{ block.block.module|trans }} > {{ block.settings.get('label') }}
+            {% else %}
+              {{ block|trans }}
+            {% endif %}
           {% endif %}
         </p>
       </div>

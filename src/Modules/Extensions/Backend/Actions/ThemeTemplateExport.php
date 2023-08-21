@@ -12,6 +12,7 @@ use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Export the template of a theme with their positions and the default blocks.
@@ -21,6 +22,7 @@ final class ThemeTemplateExport extends AbstractActionController
     public function __construct(
         ActionServices $services,
         private readonly SerializerInterface $serializer,
+        private readonly BlockRepository $blockRepository
     ) {
         parent::__construct($services);
     }
@@ -37,8 +39,6 @@ final class ThemeTemplateExport extends AbstractActionController
         $xml->preserveWhiteSpace = false;
         $templatesXml = $xml->createElement('templates');
         $xml->appendChild($templatesXml);
-        /** @var BlockRepository $blockRepository */
-        $blockRepository = $this->getRepository(Block::class);
         foreach ($theme->getTemplates() as $template) {
             $templateXml = $xml->createElement('template');
             $templateXml->setAttribute('name', $template->getName());
@@ -60,7 +60,7 @@ final class ThemeTemplateExport extends AbstractActionController
                 $positionXml = $xml->createElement('position');
                 $positionXml->setAttribute('name', $position['name']);
                 foreach ($position['blocks'] ?? [] as $blockId) {
-                    $block = $blockRepository->find($blockId);
+                    $block = $this->blockRepository->find($blockId);
                     if ($block === null) {
                         continue;
                     }
@@ -79,7 +79,7 @@ final class ThemeTemplateExport extends AbstractActionController
                     $blockXml->setAttribute('module', $block->getBlock()->getModule()->getName());
                     $blockXml->setAttribute('type', $block->getType()->value);
                     $blockXml->setAttribute('name', $block->getBlock()->getName());
-                    $blockXml->setAttribute('label', $block->getLabel()->getName());
+                    $blockXml->setAttribute('label', $this->translator->trans($block));
                     $positionXml->append($blockXml);
                 }
                 $positionsXml->appendChild($positionXml);

@@ -8,3 +8,6 @@ services:
 
   ForkCMS\Modules\ContentBlocks\Backend\:
     resource: '../Backend/*'
+
+  ForkCMS\Modules\ContentBlocks\Frontend\:
+    resource: '../Frontend/*'

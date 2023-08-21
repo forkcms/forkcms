@@ -60,7 +60,6 @@ final class RevisionBlockType extends AbstractType
                 'class' => Block::class,
                 'required' => false,
                 'group_by' => static fn (Block $block): TranslationKey => $block->getBlock()->getModule()->asLabel(),
-                'choice_label' => static fn (Block $block): TranslationKey => $block->getLabel(),
                 'choice_attr' => static fn (Block $block): array => [
                     'data-type' => $block->getType()->value,
                 ],
