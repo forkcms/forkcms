@@ -13,4 +13,6 @@ interface BlockControllerInterface
     public function getResponseOverride(): ?Response;
 
     public static function getModuleBlock(): ModuleBlock;
+
+    public function assign(string $key, mixed $value): void;
 }

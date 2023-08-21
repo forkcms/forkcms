@@ -36,20 +36,20 @@
         <translation locale="pl"><![CDATA[dodaj blok treści]]></translation>
       </item>
       <item type="message" name="Added">
-        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd toegevoegd.]]></translation>
-        <translation locale="en"><![CDATA[The content block "%1$s" was added.]]></translation>
-        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato aggiunto.]]></translation>
-        <translation locale="ru"><![CDATA[Блок "%1$s" был добавлен.]]></translation>
-        <translation locale="zh"><![CDATA[内容块“%1$s”已添加。]]></translation>
-        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde hinzugefügt.]]></translation>
-        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été ajouté.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk hozzáadva.]]></translation>
-        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue agregado.]]></translation>
-        <translation locale="uk"><![CDATA[Блок "%1$s" додано.]]></translation>
-        <translation locale="sv"><![CDATA[Innehålls block "%1$s" har lagts till.]]></translation>
-        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" προστέθηκε.]]></translation>
-        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi adicionado.]]></translation>
-        <translation locale="pl"><![CDATA[blok treści "%1$s" został dodany.]]></translation>
+        <translation locale="nl"><![CDATA[Het inhoudsblok werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The content block was added.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Блок был добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[内容块已添加。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) tartalmi blokk hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido fue agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Блок додано.]]></translation>
+        <translation locale="sv"><![CDATA[Innehålls block har lagts till.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου προστέθηκε.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo foi adicionado.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści został dodany.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation locale="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>

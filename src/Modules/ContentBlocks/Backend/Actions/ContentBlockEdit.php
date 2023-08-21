@@ -22,9 +22,11 @@ final class ContentBlockEdit extends AbstractFormActionController
         /** @var ContentBlock $contentBlock */
         $contentBlock = $this->getEntityFromRequest($request, ContentBlock::class);
 
+        $this->assign('content_block', $contentBlock);
+
         if ($this->getRepository(ContentBlock::class)->count([]) > 1) {
             $this->addDeleteForm(
-                ['id' => $contentBlock->getId()],
+                ['id' => $contentBlock->getRevisionId()],
                 ActionSlug::fromFQCN(ContentBlockDelete::class)
             );
         }

@@ -33,6 +33,48 @@ final class ContentBlockRepository extends ServiceEntityRepository
         $entityManager->flush();
     }
 
+    /** @param ContentBlock[] $contentBlocks */
+    public function removeMultiple(array $contentBlocks): void
+    {
+        $entityManager = $this->getEntityManager();
+        /** @var ContentBlock $contentBlock */
+        foreach ($contentBlocks as $contentBlock) {
+            $entityManager->remove($contentBlock);
+        }
+        $entityManager->flush();
+    }
+
+    /** @return ContentBlock[] */
+    public function getVersionsForRevisionId(int $revisionId): array
+    {
+        $contentBlock = $this->findOneby(['revisionId' => $revisionId]);
+
+        if ($contentBlock === null) {
+            return [];
+        }
+
+        return $this->findBy(['id' => $contentBlock->getId(), 'locale' => $contentBlock->getLocale()]);
+    }
+
+    public function removeByRevisionId(int $revisionId): void
+    {
+        $contentBlock = $this->findOneby(['revisionId' => $revisionId]);
+
+        if ($contentBlock === null) {
+            return;
+        }
+
+        // get all versions
+        $versions = $this->findBy(['id' => $contentBlock->getId(), 'locale' => $contentBlock->getLocale()]);
+
+        $entityManager = $this->getEntityManager();
+        foreach ($versions as $version) {
+            $entityManager->remove($version);
+        }
+
+        $entityManager->flush();
+    }
+
     public function getNextIdForLocale(Locale $locale): int
     {
         return (int) $this->getEntityManager()
@@ -43,5 +85,18 @@ final class ContentBlockRepository extends ServiceEntityRepository
                 ->setParameter('locale', $locale)
                 ->getQuery()
                 ->getSingleScalarResult() + 1;
+    }
+
+    public function findForExtraIdAndLocale(int $extraId, string $language): ?ContentBlock
+    {
+        return $this->createQueryBuilder('cb')
+            ->andWhere('cb.extraId = :extraId')
+            ->andWhere('cb.status = :active')
+            ->andWhere('cb.locale = :locale')
+            ->setParameter('extraId', $extraId)
+            ->setParameter('active', Status::active())
+            ->setParameter('locale', Locale::from($language))
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

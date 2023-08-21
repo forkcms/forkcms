@@ -4,17 +4,35 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
+use Exception;
 
 final class DeleteContentBlockHandler implements CommandHandlerInterface
 {
-    public function __construct(private readonly ContentBlockRepository $contentBlockRepository)
-    {
+    public function __construct(
+        private readonly ContentBlockRepository $contentBlockRepository,
+        private readonly BlockRepository $blockRepository
+    ) {
     }
 
     public function __invoke(DeleteContentBlock $deleteContentBlock)
     {
-        $contentBlock = $this->contentBlockRepository->find($deleteContentBlock->id) ?? throw new \InvalidArgumentException('Entity not found');
-        $this->contentBlockRepository->remove($contentBlock);
-        $deleteContentBlock->setEntity($contentBlock);
+        $versions = $this->contentBlockRepository->getVersionsForRevisionId($deleteContentBlock->id);
+
+        if (empty($versions)) {
+            return;
+        }
+
+        $this->contentBlockRepository->removeMultiple($versions);
+
+        try {
+            $extraId = $versions[0]->getExtraId();
+            $block = $this->blockRepository->findOneBy(['id' => $extraId]);
+            if ($block !== null) {
+                $this->blockRepository->remove($block);
+            }
+        } catch (Exception $e) {
+            // do nothing
+        }
     }
 }
