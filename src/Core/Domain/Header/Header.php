@@ -58,8 +58,8 @@ final class Header
         if ($translator instanceof ForkTranslator || $translator instanceof DataCollectorTranslator) {
             $translationDomain = $translator->getDefaultTranslationDomain();
             $defaults['default_translation_domain'] = $translationDomain->getDomain();
-            $defaults['default_translation_domain_fallback'] = $translationDomain->getFallback()?->getDomain(
-                ) ?? $defaults['default_translation_domain'];
+            $fallbackDomain = $translationDomain->getFallback()?->getDomain();
+            $defaults['default_translation_domain_fallback'] = $fallbackDomain ?? $defaults['default_translation_domain'];
         }
 
         $this->jsData = new JsData($defaults);
@@ -138,7 +138,9 @@ final class Header
                     priority: Priority::forModuleName($module)
                 )
             );
-        } catch (InvalidArgumentException) {}
+        } catch (InvalidArgumentException) {
+        }
+
         try {
             $this->addJs(
                 Asset::forModule(
@@ -148,7 +150,9 @@ final class Header
                     priority: Priority::forModuleName($module)
                 )
             );
-        } catch (InvalidArgumentException) {}
+        } catch (InvalidArgumentException) {
+        }
+
         try {
             $this->addCss(
                 Asset::forModule(
@@ -158,7 +162,9 @@ final class Header
                     priority: Priority::forModuleName($module)
                 )
             );
-        } catch (InvalidArgumentException) {}
+        } catch (InvalidArgumentException) {
+        }
+
         try {
             $this->addCss(
                 Asset::forModule(
@@ -168,6 +174,7 @@ final class Header
                     priority: Priority::forModuleName($module)
                 )
             );
-        } catch (InvalidArgumentException) {}
+        } catch (InvalidArgumentException) {
+        }
     }
 }

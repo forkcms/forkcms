@@ -2,7 +2,6 @@
 
 namespace ForkCMS\Modules\Extensions\Domain\Module;
 
-use ErrorException;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Extensions\Domain\InformationFile\Author;
 use ForkCMS\Modules\Extensions\Domain\InformationFile\Messages;
@@ -13,8 +12,8 @@ use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
-use PhpParser\Error;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 #[DataGrid('moduleInformation')]
 #[DataGridActionColumn(
@@ -79,9 +78,15 @@ final class ModuleInformation
     {
         try {
             $moduleConfig = simplexml_load_string(file_get_contents($xmlFilePath), 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_ERR_ERROR);
-        } catch (ErrorException $e) {
-            return new self(ModuleName::fromString(basename(dirname($xmlFilePath))), '?.?.?', '',[], [], new Messages([TranslationKey::error(
-                'InvalidXML')]));
+        } catch (Throwable) {
+            return new self(
+                ModuleName::fromString(basename(dirname($xmlFilePath))),
+                '?.?.?',
+                '',
+                [],
+                [],
+                new Messages([TranslationKey::error('InvalidXML')])
+            );
         }
         $messages = new Messages();
         Requirements::fromXML($moduleConfig->requirements, $messages);

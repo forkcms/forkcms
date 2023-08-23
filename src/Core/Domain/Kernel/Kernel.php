@@ -77,7 +77,7 @@ class Kernel extends BaseKernel
         $this->configureInstallerRoutes($routes);
     }
 
-     private function configureLiveContainer(ContainerConfigurator $containerConfigurator): void
+    private function configureLiveContainer(ContainerConfigurator $containerConfigurator): void
     {
         $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/*.yaml');
         $containerConfigurator->import(self::ROOT_DIR . 'config/{packages}/' . $this->environment . '/*.yaml');

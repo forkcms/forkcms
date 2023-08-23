@@ -69,7 +69,7 @@ final class Asset
             if ($originalPath === $path) {
                 $path = preg_replace(
                     '/public\/assets\/themes\/([A-Z]\w*)\/(.*)/',
-                     'src/Themes/$1/assets/public/$2',
+                    'src/Themes/$1/assets/public/$2',
                     $path
                 );
             }

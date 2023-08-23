@@ -19,7 +19,7 @@ final class UserGroupDataGridChoiceType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'label' => false,
-                'choice_label' => static fn(UserGroup $userGroup): string => $userGroup->getName(),
+                'choice_label' => static fn (UserGroup $userGroup): string => $userGroup->getName(),
             ]
         );
     }
@@ -39,7 +39,7 @@ final class UserGroupDataGridChoiceType extends AbstractType
         $possibleGroups = $options['choice_loader']->loadChoiceList()->getChoices();
 
         $view->vars['possibleGroups'] = array_combine(
-            array_map(static fn(UserGroup $userGroup): int => $userGroup->getId(), $possibleGroups),
+            array_map(static fn (UserGroup $userGroup): int => $userGroup->getId(), $possibleGroups),
             $possibleGroups
         );
     }

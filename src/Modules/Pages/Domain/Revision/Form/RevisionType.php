@@ -26,7 +26,9 @@ final class RevisionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TitleType::class);
-        $builder->add('tabs',  TabsType::class,
+        $builder->add(
+            'tabs',
+            TabsType::class,
             [
                 'tabs' => [
                     'lbl.Content' => static function (FormBuilderInterface $builder): void {

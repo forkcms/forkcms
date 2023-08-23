@@ -47,7 +47,6 @@ final class InstallerConnectionFactory extends ConnectionFactory
         Configuration $config = null,
         EventManager $eventManager = null
     ): Connection {
-
         return new Connection($params, new Driver(), $config, $eventManager);
     }
 }

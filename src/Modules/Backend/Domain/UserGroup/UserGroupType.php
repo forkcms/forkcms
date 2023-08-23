@@ -103,7 +103,8 @@ final class UserGroupType extends AbstractType
                     [
                         'choices' => $ajaxActions,
                         'name_label' => 'lbl.Action',
-                        'transform_callback' => static function (array $ajaxActionFQCNs) use ($ajaxActions
+                        'transform_callback' => static function (array $ajaxActionFQCNs) use (
+                            $ajaxActions
                         ): array {
                             $permissions = [];
                             foreach ($ajaxActionFQCNs as $ajaxActionFQCN) {

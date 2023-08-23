@@ -34,8 +34,8 @@ class ConsentDialog implements JsonSerializable
 
         // if the hash in the cookie is the same as the current has it means the user
         // has already stored their preferences
-        if ($this->requestStack->getCurrentRequest()->cookies->get('privacy_consent_hash', '') === $this->getLevelsHash(
-            )) {
+        $privacyConcentHash = $this->requestStack->getCurrentRequest()->cookies->get('privacy_consent_hash', '');
+        if ($privacyConcentHash === $this->getLevelsHash()) {
             return false;
         }
 

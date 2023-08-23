@@ -19,7 +19,7 @@ class Module
     #[ORM\Column(type: 'modules__extensions__module__module_name')]
     private ModuleName $name;
 
-    private function __construct(   ModuleName $name)
+    private function __construct(ModuleName $name)
     {
         $this->name = $name;
         $this->settings = new SettingsBag();

@@ -40,8 +40,8 @@ final class RevisionBlockType extends AbstractType
                 'attr' => [
                     'data-role' => 'select-block-type',
                 ],
-                'choice_value' => static fn(?Type $type): ?string => $type?->value,
-                'choice_label' => static fn(?Type $type): ?TranslationKey => $type?->getLabel(),
+                'choice_value' => static fn (?Type $type): ?string => $type?->value,
+                'choice_label' => static fn (?Type $type): ?TranslationKey => $type?->getLabel(),
                 'mapped' => false,
             ]
         );
@@ -70,9 +70,9 @@ final class RevisionBlockType extends AbstractType
                 'label' => 'lbl.Block',
                 'class' => Block::class,
                 'required' => false,
-                'group_by' => static fn(Block $block): TranslationKey => $block->getBlock()->getModule()->asLabel(),
-                'choice_label' => static fn(Block $block): TranslationKey => $block->getLabel(),
-                'choice_attr' => static fn(Block $block): array => [
+                'group_by' => static fn (Block $block): TranslationKey => $block->getBlock()->getModule()->asLabel(),
+                'choice_label' => static fn (Block $block): TranslationKey => $block->getLabel(),
+                'choice_attr' => static fn (Block $block): array => [
                     'data-type' => $block->getType()->value,
                 ],
                 'attr' => [

@@ -10,7 +10,6 @@ final class TemplatePreviewGenerator
 {
     public function __construct(private Environment $twig)
     {
-
     }
 
     public function generatePreview(ThemeTemplate $template): void
