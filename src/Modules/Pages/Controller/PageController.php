@@ -71,18 +71,19 @@ final class PageController
         foreach ($positions as $position => $revisionBlocks) {
             $revisionContext['positions'][$position] = [];
             foreach ($revisionBlocks as $revisionBlock) {
-                if ($revisionBlock->getBlock() instanceof Block) {
-                    $blockName = (string) $revisionBlock->getBlock();
+                $block = $revisionBlock->getBlock();
+                if ($block instanceof Block) {
+                    $blockName = (string) $block;
                     if ($this->frontendBlocks->has($blockName)) {
                         /** @var BlockControllerInterface $blockController */
                         $blockController = $this->frontendBlocks->get($blockName);
                         if ($hasJsonResponse) {
                             $revisionContext['positions'][$position][] = [
                                 'block' => $blockName,
-                                'content' => $blockController($request, $response),
+                                'content' => $blockController($request, $response, $block),
                             ];
                         } else {
-                            $revisionContext['positions'][$position][] = $blockController($request, $response);
+                            $revisionContext['positions'][$position][] = $blockController($request, $response, $block);
                         }
                         $responseOverride = $blockController->getResponseOverride();
                         if ($responseOverride !== null) {

@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Exception\MissingIdentifierField;
 use ForkCMS\Core\Domain\Header\Header;
+use ForkCMS\Core\Domain\Settings\SettingsBag;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ abstract class AbstractBlockController implements BlockControllerInterface
 
     protected ?Response $responseOverride = null;
     private string $templatePath;
+    private Block $block;
     /** @var array<string, mixed> */
     private array $assignedContent = [];
 
@@ -79,8 +81,10 @@ abstract class AbstractBlockController implements BlockControllerInterface
         $this->templatePath = $templatePath;
     }
 
-    public function __invoke(Request $request, Response $response): string|array
+    public function __invoke(Request $request, Response $response, Block $block): string|array
     {
+        $this->block = $block;
+
         $this->execute($request, $response);
 
         if ($request->getPreferredFormat() === 'json') {
@@ -129,5 +133,15 @@ abstract class AbstractBlockController implements BlockControllerInterface
         } catch (MissingIdentifierField) {
             throw new NotFoundHttpException('identifier field not found');
         }
+    }
+
+    final protected function hasSetting(string $name): bool
+    {
+        return $this->block->hasSetting($name);
+    }
+
+    final protected function getSetting(string $name, mixed $default = null): mixed
+    {
+        return $this->block->getSetting($name, $default);
     }
 }
