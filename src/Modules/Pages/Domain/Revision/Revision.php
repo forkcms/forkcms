@@ -134,7 +134,6 @@ class Revision
         $this->isArchived = $isArchived;
         $this->blocks = $blocks;
         $blocks->map(function (array $positionBlocks) use ($blocks): void {
-            $revisionBlocks = [];
             foreach ($positionBlocks as $block) {
                 $block->revision = $this;
                 $block->position = $blocks->key();
