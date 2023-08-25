@@ -8,23 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\KernelInterface;
 
-final class ClearContainerHandler implements CommandHandlerInterface
+final class ClearContainerCacheHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private Kernel $kernel,
-        private KernelInterface $symfonyKernel
+        private Kernel $kernel
     ) {
     }
 
     public function __invoke(ClearContainerCache $clearContainerCache): void
     {
-        $application = new Application($this->symfonyKernel);
+        $application = new Application($this->kernel);
         $application->setAutoExit(false);
-
-        $command = $application->find('cache:clear');
-        $command->run(new ArrayInput([]), new NullOutput());
 
         $command = $application->find('cache:pool:clear');
         $command->run(new ArrayInput([

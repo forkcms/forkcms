@@ -23,7 +23,7 @@
           {% set value %}
             <div class="fork-data-grid-avatar">
               {% if is_allowed('UserEdit', 'Backend') %}<a href="{{ action_url('UserEdit', 'Backend', {slug: value.id}) }}">{% endif %}
-                <img src="{{ '@BackendModule:image/no-avatar.gif'|imagine_filter('backend_avatar') }}" class="rounded-circle" alt="{{ value.displayname }}" width="24" height="24"/>
+                <img src="{{ '@BackendModuleBackend:images/no-avatar.gif'|imagine_filter('backend_avatar') }}" class="rounded-circle" alt="{{ value.displayname }}" width="24" height="24"/>
                 <span>{{  value.displayname }}</span>
               {% if is_allowed('UserEdit', 'Backend') %}</a>{% endif %}
             </div>
