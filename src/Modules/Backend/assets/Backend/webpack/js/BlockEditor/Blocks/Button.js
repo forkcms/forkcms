@@ -1,7 +1,7 @@
 import { StringUtil } from '../../../../../../../../Core/assets/js/Components/StringUtil'
 
 class Button {
-  constructor ({data}) {
+  constructor ({ data }) {
     this.data = {
       url: data.url,
       text: data.text,
@@ -11,7 +11,7 @@ class Button {
     this.settings = [
       {
         name: 'targetBlank',
-        icon: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.8 10.592v2.043h2.35v2.138H15.8v2.232h-2.25v-2.232h-2.4v-2.138h2.4v-2.28h2.25v.237h1.15-1.15zM1.9 8.455v-3.42c0-1.154.985-2.09 2.2-2.09h4.2v2.137H4.15v3.373H1.9zm0 2.137h2.25v3.325H8.3v2.138H4.1c-1.215 0-2.2-.936-2.2-2.09v-3.373zm15.05-2.137H14.7V5.082h-4.15V2.945h4.2c1.215 0 2.2.936 2.2 2.09v3.42z"/></svg>`,
+        icon: '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.8 10.592v2.043h2.35v2.138H15.8v2.232h-2.25v-2.232h-2.4v-2.138h2.4v-2.28h2.25v.237h1.15-1.15zM1.9 8.455v-3.42c0-1.154.985-2.09 2.2-2.09h4.2v2.137H4.15v3.373H1.9zm0 2.137h2.25v3.325H8.3v2.138H4.1c-1.215 0-2.2-.936-2.2-2.09v-3.373zm15.05-2.137H14.7V5.082h-4.15V2.945h4.2c1.215 0 2.2.936 2.2 2.09v3.42z"/></svg>',
         title: window.backend.locale.lbl('TargetBlank')
       }
     ]
@@ -45,7 +45,7 @@ class Button {
     const wrapper = this._make('div', this.CSS.settingsWrapper)
 
     this.settings.forEach(tune => {
-      let button = this._make('div', this.CSS.settingsButton,
+      const button = this._make('div', this.CSS.settingsButton,
         {
           innerHTML: tune.icon,
           title: tune.title

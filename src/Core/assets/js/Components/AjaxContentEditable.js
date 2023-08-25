@@ -1,7 +1,7 @@
-import {Messages} from "./Messages";
+import { Messages } from './Messages'
 
 class EditableContend {
-  constructor($editable, locale) {
+  constructor ($editable, locale) {
     const url = $editable.data('ajaxEditableUrl')
     const label = $editable.data('ajaxEditableLabel') || locale.msg('ClickToEdit')
 
@@ -23,7 +23,7 @@ class EditableContend {
       if (originalContent !== this.content.text()) {
         $.ajax(
           {
-            url: url,
+            url,
             data: {
               content: this.content.text()
             },
@@ -75,7 +75,7 @@ export class AjaxContentEditable {
     }
   }
 
-  createEditableText(editable, locale) {
+  createEditableText (editable, locale) {
     editable.forkContentEditable = editable.forkContentEditable || new EditableContend($(editable), locale)
   }
 }

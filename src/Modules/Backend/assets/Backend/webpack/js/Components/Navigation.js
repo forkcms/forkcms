@@ -1,3 +1,5 @@
+/* global bootstrap */
+
 /**
  * Navigation controls
  */
@@ -18,13 +20,13 @@ export class Navigation {
 
     $('.js-nav-prev').on('click', (e) => {
       e.preventDefault()
-      $navbarNav.animate({'left': '+=85px'})
+      $navbarNav.animate({ left: '+=85px' })
       this.setControls(85)
     })
 
     $('.js-nav-next').on('click', (e) => {
       e.preventDefault()
-      $navbarNav.animate({'left': '-=85px'})
+      $navbarNav.animate({ left: '-=85px' })
       this.setControls(-85)
     })
   }

@@ -21,5 +21,5 @@ class Pages {
 }
 
 $(function () {
-  new Pages()
+  return new Pages()
 })

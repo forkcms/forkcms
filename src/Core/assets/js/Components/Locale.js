@@ -1,7 +1,7 @@
 import Translator from 'bazinga-translator'
 
 export class Locale {
-  constructor(locale, defaultTranslationDomain, defaultFallbackDomain) {
+  constructor (locale, defaultTranslationDomain, defaultFallbackDomain) {
     this.locale = locale
     this.defaultTranslationDomain = defaultTranslationDomain
     this.defaultFallbackDomain = defaultFallbackDomain
@@ -9,7 +9,7 @@ export class Locale {
     this.init()
   }
 
-  init() {
+  init () {
     if (Locale.loadedLocale === this.locale) {
       return
     }
@@ -30,11 +30,11 @@ export class Locale {
   }
 
   // get an item from the locale
-  get(type, key, domain, parameters) {
+  get (type, key, domain, parameters) {
     return this.trans(type + '.' + key, parameters, domain)
   }
 
-  trans(id, parameters, domain, locale) {
+  trans (id, parameters, domain, locale) {
     let translation = Translator.trans(id, parameters, domain || this.defaultTranslationDomain, locale)
 
     if (translation !== id) {
@@ -52,7 +52,7 @@ export class Locale {
     return id
   }
 
-  transChoice(id, number, parameters, domain, locale) {
+  transChoice (id, number, parameters, domain, locale) {
     let translation = Translator.transChoice(id, number, parameters, domain || this.defaultTranslationDomain, locale)
 
     if (translation !== id) {
@@ -71,27 +71,27 @@ export class Locale {
   }
 
   // get an error
-  err(key, module, parameters) {
+  err (key, module, parameters) {
     return this.get('err', key, module || this.defaultTranslationDomain, parameters)
   }
 
   // get a label
-  lbl(key, module, parameters) {
+  lbl (key, module, parameters) {
     return this.get('lbl', key, module || this.defaultTranslationDomain, parameters)
   }
 
   // get localization
-  loc(key) {
+  loc (key) {
     return this.get('loc', key)
   }
 
   // get a message
-  msg(key, module, parameters) {
+  msg (key, module, parameters) {
     return this.get('msg', key, module || this.defaultTranslationDomain, parameters)
   }
 
   // get a slug
-  slg(key, module, parameters) {
+  slg (key, module, parameters) {
     return this.get('slg', key, module || this.defaultTranslationDomain, parameters)
   }
 }

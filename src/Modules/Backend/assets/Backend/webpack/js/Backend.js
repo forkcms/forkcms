@@ -1,7 +1,6 @@
 // plugins imports
 // You can specify which plugins you need
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.js'
-window.bootstrap = bootstrap
 import 'select2/dist/js/select2.full'
 import 'flatpickr'
 
@@ -28,7 +27,7 @@ import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Componen
 
 // block editor imports
 import { BlockEditor } from './BlockEditor/BlockEditor'
-
+window.bootstrap = bootstrap
 
 export class Backend {
   initBackend () {

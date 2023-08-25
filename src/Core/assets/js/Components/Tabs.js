@@ -36,7 +36,6 @@ export class Tabs {
     // Show tab if the hash is in the url
     const hash = window.location.hash
     if ($(hash).length > 0 && $(hash).hasClass('tab-pane')) {
-
       const triggerEl = document.querySelector('a[href="' + hash + '"]')
       const tab = new window.bootstrap.Tab(triggerEl)
       tab.show()

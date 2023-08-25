@@ -36,7 +36,7 @@ export class BlockEditor {
 
   static getClassFromVariableName (string) {
     let scope = window
-    let scopeSplit = string.split('.')
+    const scopeSplit = string.split('.')
     let i
 
     for (i = 0; i < scopeSplit.length - 1; i++) {
@@ -49,7 +49,7 @@ export class BlockEditor {
   }
 
   static fromJson ($element, jsonConfig) {
-    let config = JSON.parse(jsonConfig)
+    const config = JSON.parse(jsonConfig)
     for (const name of Object.keys(config)) {
       config[name].class = BlockEditor.getClassFromVariableName(config[name].class)
     }
@@ -59,7 +59,7 @@ export class BlockEditor {
 
   static create ($element, tools) {
     $element.hide()
-    let editorId = $element.attr('id') + '-block-editor'
+    const editorId = $element.attr('id') + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
 
     let data = {}
@@ -71,7 +71,7 @@ export class BlockEditor {
 
     const editor = new EditorJS({
       holder: editorId,
-      data: data,
+      data,
       onChange: () => {
         editor.save().then((outputData) => {
           $element.val(JSON.stringify(outputData))
@@ -79,13 +79,13 @@ export class BlockEditor {
           console.debug('Saving failed: ', error)
         })
       },
-      tools: tools
+      tools
     })
   }
 }
 
 if (window.BlockEditor === undefined) {
-  window.BlockEditor = {blocks: {}}
+  window.BlockEditor = { blocks: {} }
 }
 
 if (window.BlockEditor.blocks === undefined) {

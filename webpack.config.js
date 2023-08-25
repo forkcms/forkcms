@@ -1,21 +1,20 @@
 const Encore = require('@symfony/webpack-encore')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const { execSync } = require('child_process')
-const fs = require('fs');
+const fs = require('fs')
 
-const extensionConfig = JSON.parse(execSync("bin/console forkcms:extensions:webpack-config -vvv", (error, jsonConfig, stderr) => {
+const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webpack-config -vvv', (error, jsonConfig, stderr) => {
   if (error) {
     console.log(`error: ${error.message}`)
     return
   }
   if (stderr) {
     console.log(`stderr: ${stderr}`)
-    return
   }
 }).toString())
 
-const THEME_PATH = {'output':'public/assets/themes', 'public':'/assets/themes'}
-const MODULE_PATH = {'output':'public/assets/modules', 'public':'/assets/modules'}
+const THEME_PATH = { output: 'public/assets/themes', public: '/assets/themes' }
+const MODULE_PATH = { output: 'public/assets/modules', public: '/assets/modules' }
 const EXPORTS = []
 
 //

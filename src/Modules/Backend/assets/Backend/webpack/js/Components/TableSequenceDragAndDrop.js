@@ -65,7 +65,7 @@ export class TableSequenceDragAndDrop {
 
     $.ajax({
       data: $.extend({
-        fork: {module: module, action: action},
+        fork: { module, action },
         new_id_sequence: newIdSequence.join(',')
       }, extraParams),
       success: (data) => {

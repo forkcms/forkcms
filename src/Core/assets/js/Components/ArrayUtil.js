@@ -6,7 +6,7 @@ export class ArrayUtil {
    */
   static inArray (needle, array) {
     // loop values
-    for (let i in array) {
+    for (const i in array) {
       if (array[i] === needle) return true
     }
 

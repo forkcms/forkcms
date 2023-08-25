@@ -89,7 +89,7 @@ export class MultiTextBox {
             source: (request, response) => {
               $.ajax(
                 {
-                  data: $.extend(options.params, {term: request.term}),
+                  data: $.extend(options.params, { term: request.term }),
                   success: (data, textStatus) => {
                     // init var
                     const realData = []

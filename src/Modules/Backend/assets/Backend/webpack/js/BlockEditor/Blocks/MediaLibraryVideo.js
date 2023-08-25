@@ -1,5 +1,5 @@
 class MediaLibraryVideo {
-  constructor ({data}) {
+  constructor ({ data }) {
     this.data = data
   }
 
@@ -47,8 +47,8 @@ class MediaLibraryVideo {
     this.iframeWrapper = this._make('div', ['embed-responsive', 'embed-responsive-16by9'])
     this.iframe = this._make('iframe', ['embed-responsive-item'], {},
       {
-        'frameborder': '0',
-        'allow': 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        frameborder: '0',
+        allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
       }
     )
 
@@ -79,8 +79,8 @@ class MediaLibraryVideo {
 
   save (blockContent) {
     return {
-      'id': this.data.id,
-      'videoId': this.data.videoId
+      id: this.data.id,
+      videoId: this.data.videoId
     }
   }
 

@@ -35,7 +35,7 @@ export class ConsentDialog {
             const gtmData = {}
             gtmData['privacyConsentLevel' + niceName + 'Agreed'] = isChecked
             window.dataLayer.push(gtmData)
-            window.dataLayer.push({'event': 'privacyConsentLevel' + niceName + 'Agreed'})
+            window.dataLayer.push({ event: 'privacyConsentLevel' + niceName + 'Agreed' })
           }
         }
 

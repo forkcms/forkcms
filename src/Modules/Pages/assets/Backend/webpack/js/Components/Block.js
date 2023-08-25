@@ -55,7 +55,7 @@ export class Block {
   }
 
   getBlockPreview ($elements) {
-    //@TODO revisit this when the editor is implemented
+    // @TODO revisit this when the editor is implemented
     let previewText = ''
     const prefix = '<p>'
     let affix = '</p>'

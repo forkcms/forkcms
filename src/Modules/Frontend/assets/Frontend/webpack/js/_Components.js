@@ -11,7 +11,7 @@ import { ConsentDialog } from './Components/ConsentDialog'
 import * as Vue from 'vue/'
 import VEmbed from './Vue-components/VEmbed'
 import VShareButtons from './Vue-components/VShareButtons'
-import {Data} from "../../../../../../Core/assets/js/Components/Data";
+import { Data } from '../../../../../../Core/assets/js/Components/Data'
 
 export class Components {
   initComponents () {
@@ -29,14 +29,14 @@ export class Components {
     if ($('[data-v-embed]').length) {
       window.vembed = new Vue({
         el: '[data-v-embed]',
-        components: {VEmbed}
+        components: { VEmbed }
       })
     }
 
     if ($('[data-v-share-buttons]').length) {
       window.vsharebutton = new Vue({
         el: '[data-v-share-buttons]',
-        components: {VShareButtons}
+        components: { VShareButtons }
       })
     }
   }

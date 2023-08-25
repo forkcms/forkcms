@@ -1,5 +1,5 @@
 class MediaLibraryImage {
-  constructor ({data}) {
+  constructor ({ data }) {
     this.data = data
   }
 
@@ -67,8 +67,8 @@ class MediaLibraryImage {
 
   save (blockContent) {
     return {
-      'id': this.data.id,
-      'src': this.data.src
+      id: this.data.id,
+      src: this.data.src
     }
   }
 

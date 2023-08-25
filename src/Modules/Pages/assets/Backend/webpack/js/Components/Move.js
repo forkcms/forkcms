@@ -4,6 +4,7 @@ export class Move {
     this.handleChangingPageTree()
     this.handleChangingReferencePage()
   }
+
   handleChangingReferencePage () {
     $('[data-role="move-page-pages-select"]').on('change', (e) => {
       const $this = $(e.currentTarget)

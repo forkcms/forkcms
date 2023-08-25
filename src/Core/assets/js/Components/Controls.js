@@ -416,7 +416,7 @@ export class Controls {
       // any parts in the query string
       if (typeof queryChunks !== 'undefined' && queryChunks.length > 0) {
         // remove variables that could trigger an message
-        for (let i in queryChunks) {
+        for (const i in queryChunks) {
           if (queryChunks[i].substring(0, 5) !== 'token' &&
             queryChunks[i].substring(0, 5) !== 'error' &&
             queryChunks[i].substring(0, 6) === 'report' &&

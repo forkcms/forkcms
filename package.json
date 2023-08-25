@@ -58,7 +58,7 @@
     "webpack-notifier": "^1.15.0"
   },
   "scripts": {
-    "test": "standard",
+    "test": "standard 'src/**/*.js'",
     "dev:installer": "encore dev --config-name installerConfig --watch",
     "dev:backend": "encore dev --config-name backendConfig --watch",
     "dev:frontend": "encore dev --config-name frontendConfig --watch",

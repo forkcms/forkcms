@@ -7,7 +7,7 @@ export class Session {
   sessionTimeoutPopup () {
     setInterval(() => {
       window.alert(window.backend.locale.msg('SessionTimeoutWarning'))
-    //}, (jsData.Core.session_timeout - 60) * 1000)
+    // }, (jsData.Core.session_timeout - 60) * 1000)
     }, (9000 - 60) * 1000)
   }
 }

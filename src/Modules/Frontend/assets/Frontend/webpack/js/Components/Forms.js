@@ -32,7 +32,7 @@ export class Forms {
       // make sure we are uploading an image by checking the data attribute
       if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
         // get the image preview by matching the image-preview data-id to the ImageField id
-        let $imagePreviewWrapper = $('[data-fork-cms-role="image-preview-wrapper"][data-id="' + imageField.id + '"]')
+        const $imagePreviewWrapper = $('[data-fork-cms-role="image-preview-wrapper"][data-id="' + imageField.id + '"]')
 
         // use FileReader to get the url
         const reader = new window.FileReader()

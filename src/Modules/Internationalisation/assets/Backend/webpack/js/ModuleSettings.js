@@ -1,5 +1,5 @@
 class ModuleSettings {
-  constructor() {
+  constructor () {
     const $defaultForUser = $('[data-role="locale-default-for-user"]')
     const $defaultForWebsite = $('[data-role="locale-default-for-website"]')
 
@@ -28,5 +28,5 @@ class ModuleSettings {
 }
 
 $(function () {
-  new ModuleSettings()
+  return new ModuleSettings()
 })

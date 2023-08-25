@@ -86,7 +86,7 @@ export class Meta {
             data: {
               module: 'frontend',
               action: 'generate_slug',
-              slug: slug,
+              slug,
               metaId: $(options.metaIdSelector).val(),
               baseFieldName: $(options.baseFieldSelector).val(),
               custom: $(options.customSelector).val(),

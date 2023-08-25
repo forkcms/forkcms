@@ -11,7 +11,6 @@ export class Installer {
     this.forms = new Forms()
     this.layout = new Layout()
 
-
     Installer.initPasswordStrenghtMeters()
   }
 

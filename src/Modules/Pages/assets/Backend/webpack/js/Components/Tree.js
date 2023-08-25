@@ -4,7 +4,7 @@ import { Messages } from '../../../../../../../Core/assets/js/Components/Message
 
 export class Tree {
   constructor () {
-    const $pagesTree = $('[data-tree-pages] > [data-tree]');
+    const $pagesTree = $('[data-tree-pages] > [data-tree]')
     if ($pagesTree.length === 0) return
 
     // jsTree options
@@ -153,11 +153,11 @@ export class Tree {
     // move the page
     $.ajax({
       data: {
-        fork: {action: 'Move'},
+        fork: { action: 'Move' },
         id: currentPageID,
         dropped_on: droppedOnPageID,
-        type: type,
-        tree: tree
+        type,
+        tree
       },
       success: (json, textStatus) => {
         if (json.code !== 200) {

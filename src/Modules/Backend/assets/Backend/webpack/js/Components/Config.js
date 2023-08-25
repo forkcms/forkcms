@@ -11,7 +11,7 @@ export class Config {
     let module = 'Dashboard'
 
     // get url and split into chunks
-    let chunks = document.location.pathname.split('/')
+    const chunks = document.location.pathname.split('/')
 
     // set some properties
     if (typeof chunks[3] !== 'undefined') {
@@ -29,12 +29,12 @@ export class Config {
     return 'backend'
   }
 
-    static getCurrentAction () {
+  static getCurrentAction () {
     // set default
     let action = 'index'
 
     // get url and split into chunks
-    let chunks = document.location.pathname.split('/')
+    const chunks = document.location.pathname.split('/')
 
     if (typeof chunks[4] !== 'undefined') {
       action = StringUtil.ucfirst(StringUtil.camelCase(chunks[4]))
@@ -45,7 +45,7 @@ export class Config {
 
   static getCurrentLanguage () {
     // get url and split into chunks
-    let chunks = document.location.pathname.split('/')
+    const chunks = document.location.pathname.split('/')
 
     return chunks[2]
   }

@@ -192,7 +192,7 @@ export class StringUtil {
     ]
 
     // remove reserved characters
-    for (let i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ')
+    for (const i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ')
 
     // replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
     value = StringUtil.replaceAll(value, '"', ' ')
