@@ -1,9 +1,11 @@
 build:
+    environment:
+        node: 16.20.2
     nodes:
         analysis:
             environment:
                 php:
-                    version: 7.4
+                    version: 8.1
             cache:
                 disabled: false
                 directories:
@@ -16,11 +18,12 @@ build:
 
 filter:
     excluded_paths:
-        - app/*
+        - app.fork5/*
         - bin/*
-        - docs/*
-        - src/Backend/Core/Js/ckfinder/*
-        - src/Backend/Core/Js/ckeditor/*
+        - config/*
+        - node_modules/*
+        - src.fork5/*
+        - tests.fork5/*
         - var/*
         - vendor/*
 

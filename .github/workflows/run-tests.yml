@@ -63,10 +63,10 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v2
               with:
-                  node-version: 14 # current LTS
+                  node-version: 18 # current LTS
             - run: npm install
 
-            - run: webpack
+            - run: node_modules/.bin/webpack
 
             - name: Execute tests with coverage
               if: ${{ matrix.php == '8.1' }}
@@ -162,7 +162,7 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v2
               with:
-                  node-version: 14 # current LTS
+                  node-version: 18 # current LTS
             - run: npm install
             - run: npm test
 
@@ -205,10 +205,10 @@ jobs:
             - name: Install Node
               uses: actions/setup-node@v2
               with:
-                  node-version: 14 # current LTS
+                  node-version: 18 # current LTS
             - run: npm install
 
-            - run: webpack
+            - run: node_modules/.bin/webpack
 
             - name: Test
               run: |
