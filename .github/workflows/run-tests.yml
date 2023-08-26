@@ -120,7 +120,7 @@ jobs:
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
 
             - name: Install dependencies
-              run: composer install -o
+              run: composer install -o && bin/console cache:clear
               env:
                   APP_ENV: dev
 
