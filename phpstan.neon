@@ -14,7 +14,7 @@ parameters:
   excludePaths:
     - src/Core/tests/*
     - src/Themes/*
-    - src/Maker/*
+    - src/Core/templates/Maker/*
     - src/Modules/*/tests/*
   earlyTerminatingMethodCalls:
   symfony:

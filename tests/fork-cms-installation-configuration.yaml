@@ -1,0 +1,26 @@
+admin-email: test@fork-cms.com
+admin-password: test
+different-debug-email: false
+debug-email: null
+database-hostname: 127.0.0.1
+database-port: 3306
+database-name: forkcms_test
+database-username: root
+database-password: kingtriton
+multilingual: true
+locales:
+    - !fork-cms_locale en
+    - !fork-cms_locale nl
+default-locale: !fork-cms_locale en
+interface-locales:
+    - !fork-cms_locale en
+    - !fork-cms_locale nl
+default-interface-locale: !fork-cms_locale en
+modules:
+    - !fork-cms_module Core
+    - !fork-cms_module Backend
+    - !fork-cms_module Extensions
+    - !fork-cms_module Frontend
+    - !fork-cms_module Internationalisation
+    - !fork-cms_module Pages
+install-example-data: false

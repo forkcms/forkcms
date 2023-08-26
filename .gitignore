@@ -2,7 +2,7 @@
 /config/parameters.yaml
 /config/cli-install.yaml
 
-fork-cms-installation-configuration.yaml
+/fork-cms-installation-configuration.yaml
 
 # Libraries
 /vendor/*

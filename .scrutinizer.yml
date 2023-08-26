@@ -23,6 +23,7 @@ filter:
         - config/*
         - node_modules/*
         - src.fork5/*
+        - src/Core/templates/Maker/*
         - tests.fork5/*
         - var/*
         - vendor/*

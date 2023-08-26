@@ -121,12 +121,18 @@ jobs:
                   mysql -h 127.0.0.1 -uroot -pkingtriton -e 'create database forkcms_test'
 
             - name: Install dependencies
-              run: composer install -o && bin/console cache:clear
+              run: composer install -o
               env:
                   APP_ENV: dev
 
+            - name: Install Fork CMS
+              run: mv tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && bin/console cache:clear
+              env:
+                  APP_ENV: dev
+                  APP_DEBUG: 1
+
             - name: Run PHPStan
-              run: bin/phpstan analyze --error-format github src
+              run: ls -al var && ls -al var/cache && ls -al var/cache/dev && bin/phpstan analyze --error-format github src
 
     php-code-sniffer:
         name: PHP Code Sniffer
@@ -152,7 +158,7 @@ jobs:
               run: composer install -o
 
             - name: Run PHP Codesniffer
-              run: bin/phpcs --standard=PSR12 --extensions=php --warning-severity=9 --exclude=Generic.Files.LineLength --report=full "src"
+              run: bin/phpcs --standard=PSR12 --extensions=php --warning-severity=9 --exclude=Generic.Files.LineLength --report=full --ignore=*/tests/*,*/*.tpl.php "src"
 
     frontend:
         name: npm test
