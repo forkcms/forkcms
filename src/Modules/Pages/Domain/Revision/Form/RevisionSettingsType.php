@@ -5,12 +5,11 @@ namespace ForkCMS\Modules\Pages\Domain\Revision\Form;
 use ForkCMS\Core\Domain\Form\DatePickerType;
 use ForkCMS\Core\Domain\Form\FieldsetType;
 use ForkCMS\Core\Domain\Form\SwitchType;
+use ForkCMS\Modules\Backend\Domain\User\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -22,7 +21,8 @@ final class RevisionSettingsType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($this->tokenStorage->getToken()->getUser()->isSuperAdmin()) {
+        $user = $this->tokenStorage->getToken()?->getUser();
+        if ($user instanceof User && $user->isSuperAdmin()) {
             $builder->add(
                 'settings',
                 FieldsetType::class,

@@ -11,10 +11,10 @@ use Symfony\Bundle\MakerBundle\Maker\AbstractMaker as SymfonyAbstractMaker;
 
 abstract class AbstractMaker extends SymfonyAbstractMaker
 {
-    protected readonly ConsoleStyle $io;
-    protected readonly Generator $generator;
-    protected readonly ModuleName $moduleName;
-    protected readonly string $moduleNamespace;
+    protected ConsoleStyle $io;
+    protected Generator $generator;
+    protected ModuleName $moduleName;
+    protected string $moduleNamespace;
 
     public function __construct(protected readonly ModuleInstallerLocator $moduleInstallerLocator)
     {

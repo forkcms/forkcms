@@ -26,6 +26,11 @@ final class ModuleBlock implements Stringable
 
     public static function fromFQCN(string $fullyQualifiedClassName): self
     {
+        static $cache = [];
+        if (array_key_exists($fullyQualifiedClassName, $cache)) {
+            return $cache[$fullyQualifiedClassName];
+        }
+
         $matches = [];
         if (
             !preg_match(
@@ -38,10 +43,12 @@ final class ModuleBlock implements Stringable
         }
 
 
-        return new self(
+        $cache[$fullyQualifiedClassName] = new self(
             ModuleName::fromString($matches[1]),
             Type::fromDirectoryName($matches[2])->getBlockName($matches[3])
         );
+
+        return $cache[$fullyQualifiedClassName];
     }
 
     public function getFQCN(): string

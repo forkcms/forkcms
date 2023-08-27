@@ -22,7 +22,7 @@ class ConsentDialog implements JsonSerializable
 
     public function shouldDialogBeShown(): bool
     {
-        // the cookiebar is hidden within the settings, so don't show it
+        // the consent dialog is hidden within the settings, so don't show it
         if (!$this->settings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
             return false;
         }
@@ -32,16 +32,14 @@ class ConsentDialog implements JsonSerializable
             return false;
         }
 
-        // if the hash in the cookie is the same as the current has it means the user
-        // has already stored their preferences
-        $privacyConcentHash = $this->requestStack->getCurrentRequest()->cookies->get('privacy_consent_hash', '');
-        if ($privacyConcentHash === $this->getLevelsHash()) {
-            return false;
-        }
+        // if the hash in the cookie is the same as the current hash
+        // it means the user has already stored their preferences
+        $privacyConsentHash = $this->requestStack->getCurrentRequest()->cookies->get('privacy_consent_hash', '');
 
-        return true;
+        return $privacyConsentHash !== $this->getLevelsHash();
     }
 
+    /** @return string[] */
     public function getLevels(bool $includeFunctional = false): array
     {
         $levels = [];
@@ -72,6 +70,7 @@ class ConsentDialog implements JsonSerializable
         return md5(implode('|', $levels));
     }
 
+    /** @return array<string, bool> */
     public function getVisitorChoices(): array
     {
         $choices = [
@@ -99,6 +98,7 @@ class ConsentDialog implements JsonSerializable
         return $choices[$level];
     }
 
+    /** @return array{possibleLevels: string[], levelsHash: string, visitorChoices: array<string, bool>} */
     public function jsonSerialize(): array
     {
         return [

@@ -99,6 +99,7 @@ class MetaType extends AbstractType
         }
     }
 
+    /** @return array<string, mixed> */
     private function getSEOIndexChoiceTypeOptions(): array
     {
         return [
@@ -113,6 +114,7 @@ class MetaType extends AbstractType
         ];
     }
 
+    /** @return array<string, mixed> */
     private function getSEOFollowChoiceTypeOptions(): array
     {
         return [
@@ -182,6 +184,7 @@ class MetaType extends AbstractType
         };
     }
 
+    /** @return string[] */
     protected function getOverwritableFields(): array
     {
         return ['title', 'navigationTitle', 'description', 'keywords', 'slug'];
@@ -212,8 +215,8 @@ class MetaType extends AbstractType
                 'slugOverwrite' => $meta->isSlugOverwrite(),
                 'canonicalUrl' => $meta->getCanonicalUrl(),
                 'canonicalUrlOverwrite' => $meta->isCanonicalUrlOverwrite(),
-                'SEOIndex' => $meta->getSEOIndex() ?? SEOIndex::none,
-                'SEOFollow' => $meta->getSEOFollow() ?? SEOFollow::none,
+                'SEOIndex' => $meta->getSEOIndex(),
+                'SEOFollow' => $meta->getSEOFollow(),
             ];
         };
     }

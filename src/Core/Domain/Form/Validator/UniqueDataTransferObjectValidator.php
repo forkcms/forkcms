@@ -44,12 +44,6 @@ final class UniqueDataTransferObjectValidator extends ConstraintValidator
         if (!$constraint instanceof UniqueDataTransferObject) {
             throw new UnexpectedTypeException($constraint, UniqueDataTransferObject::class);
         }
-        if (!is_array($constraint->fields) && !is_string($constraint->fields)) {
-            throw new UnexpectedTypeException($constraint->fields, 'array');
-        }
-        if ($constraint->errorPath !== null && !is_string($constraint->errorPath)) {
-            throw new UnexpectedTypeException($constraint->errorPath, 'string or null');
-        }
         $fields = (array) $constraint->fields;
         if (count($fields) === 0) {
             throw new ConstraintDefinitionException('At least one field has to be specified.');

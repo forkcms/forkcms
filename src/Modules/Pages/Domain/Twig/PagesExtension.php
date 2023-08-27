@@ -32,6 +32,7 @@ final class PagesExtension extends AbstractExtension
         ];
     }
 
+    /** @param int[] $excludedIds */
     public function getNavigation(
         Environment $twig,
         MenuType|string $type = MenuType::MAIN,

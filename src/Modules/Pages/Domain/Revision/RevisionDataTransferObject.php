@@ -20,7 +20,7 @@ abstract class RevisionDataTransferObject
     public bool $isDraft = false;
     public ?ThemeTemplate $themeTemplate = null;
     public DateTimeImmutable|null $isArchived = null;
-    /** @var ArrayCollection<RevisionBlockDataTransferObject> */
+    /** @var ArrayCollection<array-key, RevisionBlockDataTransferObject[]> */
     public ArrayCollection $blocks;
     public ?Locale $locale = null;
     /** @var array<string, mixed>  */
@@ -64,7 +64,7 @@ abstract class RevisionDataTransferObject
         return $this->revisionEntity;
     }
 
-    public function addBlock(string $position, Block $block)
+    public function addBlock(string $position, Block $block): void
     {
         $revisionBlock = new RevisionBlockDataTransferObject();
         $revisionBlock->block = $block;

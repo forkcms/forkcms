@@ -138,6 +138,7 @@ abstract class AbstractFormActionController extends AbstractActionController
 
     /**
      * @param class-string<FormTypeInterface> $formType
+     * @param array<string, mixed> $defaults
      */
     final protected function handleModuleSettingsForm(
         Request $request,

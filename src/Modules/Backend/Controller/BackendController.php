@@ -22,6 +22,7 @@ use Twig\Environment;
 
 final class BackendController
 {
+    /** @param ServiceLocator<ActionControllerInterface> $actions */
     public function __construct(
         private readonly ServiceLocator $actions,
         private readonly Environment $twig,

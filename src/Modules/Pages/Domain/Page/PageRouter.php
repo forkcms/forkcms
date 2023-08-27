@@ -17,6 +17,7 @@ final class PageRouter implements BlockRouterInterface
     {
     }
 
+    /** @param array<string, mixed> $parameters */
     public function getRouteForBlock(
         ModuleBlock $moduleBlock,
         Locale $locale = null,
@@ -42,6 +43,7 @@ final class PageRouter implements BlockRouterInterface
         return $this->getRouteForPage($page, $locale, $parameters, $referenceType);
     }
 
+    /** @param array<string, mixed> $parameters */
     public function getRouteForPage(
         Page $page,
         Locale $locale = null,
@@ -56,6 +58,7 @@ final class PageRouter implements BlockRouterInterface
         );
     }
 
+    /** @param array<string, mixed> $parameters */
     public function getRouteForPageId(
         int $pageId,
         Locale $locale = null,

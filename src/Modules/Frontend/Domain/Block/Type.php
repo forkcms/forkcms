@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\Frontend\Domain\Block;
 use ForkCMS\Modules\Frontend\Domain\Action\ActionName;
 use ForkCMS\Modules\Frontend\Domain\Widget\WidgetName;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+use InvalidArgumentException;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -39,6 +40,7 @@ enum Type: string implements TranslatableInterface
         return match ($directoryName) {
             'Actions' => self::ACTION,
             'Widgets' => self::WIDGET,
+            default => throw new InvalidArgumentException('Invalid directory name, should be Widgets or Actions'),
         };
     }
 

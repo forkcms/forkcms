@@ -7,13 +7,13 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * @template T
+ * @template T of object
  */
 trait RepositoryWithMetaTrait
 {
     private static string $metaSubjectIdField = 'id';
 
-    /** @param T $subject */
+    /** @param T|null $subject */
     public function slugify(string $string, ?object $subject = null, ?Locale $locale = null): string
     {
         $locale = $locale ?? Locale::current();
@@ -34,7 +34,7 @@ trait RepositoryWithMetaTrait
         return $this->slugify($this->addOrIncreaseNumberAtEndOfString($slug), $subject, $locale);
     }
 
-    /** @param T $subject */
+    /** @param T|null $subject */
     abstract protected function slugifyIdQueryBuilder(QueryBuilder $queryBuilder, ?object $subject, Locale $locale, string $entityAlias): void;
 
     final protected function addOrIncreaseNumberAtEndOfString(string $string): string

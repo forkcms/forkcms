@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 final class MetaData
 {
-    /** @var string[] */
+    /** @var array<string, string> */
     private array $attributes;
 
     private string $uniqueKey;
@@ -96,6 +96,7 @@ final class MetaData
         return new self($content, ['name' => $name], ['name']);
     }
 
+    /** @param string[] $uniqueAttributeKeys */
     public static function forProperty(
         string $property,
         string $content,

@@ -8,6 +8,7 @@ use ForkCMS\Modules\Backend\Domain\Action\AbstractActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Extensions\Domain\Theme\Theme;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
+use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -36,6 +37,7 @@ final class ThemeTemplateExport extends AbstractActionController
         $xml->preserveWhiteSpace = false;
         $templatesXml = $xml->createElement('templates');
         $xml->appendChild($templatesXml);
+        /** @var BlockRepository $blockRepository */
         $blockRepository = $this->getRepository(Block::class);
         foreach ($theme->getTemplates() as $template) {
             $templateXml = $xml->createElement('template');
@@ -66,9 +68,9 @@ final class ThemeTemplateExport extends AbstractActionController
                     $blockDOMDocument->loadXML($this->serializer->serialize($block->getSettings()->all(), 'xml', ['xml_root_node_name' => 'block']));
                     /** @var DOMElement $blockXml */
                     $blockXml = $xml->importNode($blockDOMDocument->documentElement, true);
-                    $blockXml->setAttribute('module', $block->getModule()->getName());
+                    $blockXml->setAttribute('module', $block->getBlock()->getModule()->getName());
                     $blockXml->setAttribute('type', $block->getType()->value);
-                    $blockXml->setAttribute('name', $block->getBlockName()->getName());
+                    $blockXml->setAttribute('name', $block->getBlock()->getName());
                     $blockXml->setAttribute('label', $block->getLabel()->getName());
                     $positionXml->append($blockXml);
                 }

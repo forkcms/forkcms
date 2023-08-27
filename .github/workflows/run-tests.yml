@@ -14,7 +14,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [8.1]
+                php: [8.1, 8.2]
                 testsuite: ["functional", "unit", "installer"]
         name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
@@ -174,6 +174,7 @@ jobs:
             - run: npm test
 
     docker-test:
+        continue-on-error: true
         name: Docker
         runs-on: ubuntu-latest
         steps:

@@ -7,11 +7,12 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 
 final class ChangeModuleSettings
 {
+    /** @param array<string, mixed> $defaults */
     public function __construct(public readonly Module $module, private readonly array $defaults)
     {
     }
 
-    public function __get($key): mixed
+    public function __get(string $key): mixed
     {
         if ($this->module->getSettings()->has($key)) {
             return $this->module->getSettings()->get($key);
@@ -29,12 +30,12 @@ final class ChangeModuleSettings
         return null;
     }
 
-    public function __set($key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->module->getSettings()->set($key, $value);
     }
 
-    public function __isset($key)
+    public function __isset(string $key)
     {
         return $this->module->getSettings()->has($key);
     }

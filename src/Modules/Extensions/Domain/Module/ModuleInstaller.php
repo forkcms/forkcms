@@ -343,6 +343,7 @@ abstract class ModuleInstaller
         return $this->moduleRegistered;
     }
 
+    /** @param array<string, mixed> $parameters */
     public function trans(Locale $locale, string $id, array $parameters = [], ?ModuleName $module = null): string
     {
         $module = $module ?? self::getModuleName();

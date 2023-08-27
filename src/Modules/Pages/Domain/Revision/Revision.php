@@ -71,6 +71,7 @@ class Revision
     use Blameable;
 
     #[ORM\ManyToOne(targetEntity: Page::class, cascade: ['persist'], inversedBy: 'revisions')]
+    #[ORM\JoinColumn(nullable: false)]
     private Page $page;
 
     #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'childRevisions')]
@@ -102,16 +103,18 @@ class Revision
     private bool $isDraft;
 
     #[ORM\ManyToOne(targetEntity: ThemeTemplate::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private ThemeTemplate $themeTemplate;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private DateTimeImmutable|null $isArchived = null;
+    private DateTimeImmutable|null $isArchived;
 
+    /** @var Collection<array-key, RevisionBlock> */
     #[ORM\OneToMany(mappedBy: 'revision', targetEntity: RevisionBlock::class, cascade: ['persist'])]
     #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $blocks;
 
-    /** @param Collection<RevisionBlockDataTransferObject> $blocks */
+    /** @param Collection<array-key, RevisionBlockDataTransferObject[]> $blocks */
     private function __construct(
         Page $page,
         ?Page $parentPage,
@@ -132,7 +135,7 @@ class Revision
         $this->isDraft = $isDraft;
         $this->themeTemplate = $themeTemplate;
         $this->isArchived = $isArchived;
-        $this->blocks = $blocks;
+        /** @var Collection<array-key, RevisionBlock|RevisionBlockDataTransferObject[]> $blocks */
         $blocks->map(function (array $positionBlocks) use ($blocks): void {
             foreach ($positionBlocks as $block) {
                 $block->revision = $this;
@@ -141,6 +144,8 @@ class Revision
             }
             $blocks->remove($blocks->key());
         });
+        /** @var Collection<array-key, RevisionBlock> $blocks */
+        $this->blocks = $blocks;
         $this->meta = $meta;
         $this->locale = $locale;
         $this->settings = $settings;
@@ -263,7 +268,7 @@ class Revision
         return $this->isArchived;
     }
 
-    /** @return Collection<RevisionBlock> */
+    /** @return Collection<array-key, RevisionBlock> */
     public function getBlocks(): Collection
     {
         return $this->blocks;
@@ -290,7 +295,7 @@ class Revision
                 continue;
             }
             if ($revision->isDraft()) {
-                $connection->c($revisionClassMetadata->getTableName(), ['id' => $revision->getId()]);
+                $connection->delete($revisionClassMetadata->getTableName(), ['id' => $revision->getId()]);
                 continue;
             }
             ++$counter;

@@ -22,7 +22,7 @@ final class RevisionBlockDataTransferObject
             return;
         }
 
-        // dont map the revision since changes should result in a new revision
+        // don't map the revision since changes should result in a new revision
         $this->position = $revisionBlock->getPosition();
         $this->editorContent = $revisionBlock->getEditorContent();
         $this->isVisible = $revisionBlock->isVisible();

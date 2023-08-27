@@ -96,6 +96,7 @@ final class TemplatePreviewGenerator
         );
     }
 
+    /** @return array<int, array<int, string>> */
     private static function templateSyntaxToArray(string $syntax): array
     {
         $syntax = trim(str_replace(["\n", "\r", ' '], '', $syntax));

@@ -7,6 +7,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class TranslationDeletedEvent extends Event
 {
+    /** @var Translation[] */
     public readonly array $translations;
 
     public function __construct(Translation ...$translations)

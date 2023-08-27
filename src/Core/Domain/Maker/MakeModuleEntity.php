@@ -19,6 +19,7 @@ use ForkCMS\Modules\Backend\Domain\User\Blameable;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstallerLocator;
 use ForkCMS\Modules\Frontend\Domain\Meta\EntityWithMetaTrait;
 use ReflectionClass;
+use RuntimeException;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -76,7 +77,7 @@ final class MakeModuleEntity extends AbstractMaker
         'core__settings__settings_bag' => SettingsBag::class,
     ];
 
-    /** @var array<string, array<string, string>> */
+    /** @var array<string, string> */
     private array $dbalTypes;
 
     public function __construct(
@@ -120,16 +121,16 @@ final class MakeModuleEntity extends AbstractMaker
                     return Validator::validateDoctrineFieldName($fieldName, $this->managerRegistry);
                 }
             );
-            $field = $this->getType(!$hasIdField && $io->confirm('Is this the id field?', !$hasIdField), !$hasNameField);
+            $field = $this->getField($io->confirm('Is this the id field?', !$hasIdField), !$hasNameField);
             $field['name'] = $fieldName;
             $hasIdField = $hasIdField || $field['is_id'];
             $hasNameField = $hasNameField || $field['is_name'];
-            if ($io->confirm(sprintf('Are you happy with the config of the field: %s ?', $fieldName), true)) {
+            if ($io->confirm(sprintf('Are you happy with the config of the field: %s ?', $fieldName))) {
                 $io->progressAdvance();
                 $io->newLine();
                 $fields[$field['name']] = $field;
             }
-        } while (!$hasIdField || $io->confirm('Do you want to add another field?', true && false));
+        } while (!$hasIdField || $io->confirm('Do you want to add another field?', false));
         $io->progressFinish();
 
         $entityClassNameDetails = $this->generator->createClassNameDetails(
@@ -181,6 +182,7 @@ final class MakeModuleEntity extends AbstractMaker
         );
     }
 
+    /** @param array<string, mixed> $fields */
     private function createBackendEditAction(ClassNameDetails $entityClassNameDetails, array $fields): void
     {
         $nameFields = array_filter($fields, static fn (array $field): bool => $field['is_name']);
@@ -248,6 +250,7 @@ final class MakeModuleEntity extends AbstractMaker
         );
     }
 
+    /** @param array<string, mixed> $fields */
     private function createEntity(ClassNameDetails $entityClass, bool $isBlameable, bool $isMeta, array $fields): void
     {
         $fieldUseStatements = ['use Doctrine\ORM\Mapping as ORM;' => 'use Doctrine\ORM\Mapping as ORM;'];
@@ -276,6 +279,7 @@ final class MakeModuleEntity extends AbstractMaker
         );
     }
 
+    /** @param array<string, mixed> $fields */
     private function createDataTransferObject(ClassNameDetails $entityClass, array $fields): void
     {
         $fieldUseStatements = ['use Symfony\Component\Validator\Constraints as Assert;' => 'use Symfony\Component\Validator\Constraints as Assert;'];
@@ -428,6 +432,7 @@ final class MakeModuleEntity extends AbstractMaker
         );
     }
 
+    /** @param array<string, mixed> $fields */
     private function createDeleteCommand(ClassNameDetails $entityClassNameDetails, array $fields): void
     {
         foreach ($fields as $field) {
@@ -447,8 +452,8 @@ final class MakeModuleEntity extends AbstractMaker
                 'useStatements' => [
                     'use ' . $entityClassNameDetails->getFullName() . ';',
                 ],
-                'idField' => $idField,
-                'idFieldType' => $idFieldType,
+                'idField' => $idField ?? throw new RuntimeException('Id field is not defined'),
+                'idFieldType' => $idFieldType ?? throw new RuntimeException('Id field type is not defined'),
             ]
         );
         $this->generator->generateClass(
@@ -496,7 +501,8 @@ final class MakeModuleEntity extends AbstractMaker
         $this->dbalTypes['embeded'] = Embedded::class;
     }
 
-    private function getType(bool $isId = false, bool $askIsNameField = false): array
+    /** @return array<string, mixed> */
+    private function getField(bool $isId = false, bool $askIsNameField = false): array
     {
         $dbalTypeName = $this->io->choice('What type', array_keys($this->dbalTypes), $isId ? 'integer' : 'string');
 
@@ -515,7 +521,7 @@ final class MakeModuleEntity extends AbstractMaker
         $enumType = in_array($dbalTypeName, ['enum_int', 'enum_string'], true)
             ? Str::getShortClassName($class) : null;
         $isNullable = !$isId
-            && !$selectedDbalType instanceof Embedded
+            && $selectedDbalType !== Embedded::class
             && $this->io->confirm('Is this field nullable?', false);
         $isName = !$isId && $askIsNameField && $this->io->confirm('Do you want to use this field to textually represent this entity?', false);
 

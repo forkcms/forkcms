@@ -17,8 +17,6 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 #[UniqueDataTransferObject(['entityClass' => ThemeTemplate::class, 'fields' => ['name', 'theme']])]
 abstract class ThemeTemplateDataTransferObject implements UniqueDataTransferObjectInterface
 {
-    private const BASE_PATH = 'src/Modules/Extensions/Domain/ThemeTemplate/';
-
     #[Assert\NotBlank(message: 'err.FieldIsRequired')]
     public ?string $name = null;
 
@@ -63,7 +61,7 @@ abstract class ThemeTemplateDataTransferObject implements UniqueDataTransferObje
         $this->settings->set('layout', str_replace("\r", '', $layout));
     }
 
-    /** @return array<int, array<string, string|array<int, int>>> */
+    /** @return array<int, array<string, string|array<string, mixed>>> */
     public function getPositions(): array
     {
         return $this->settings->getOr('positions', []);

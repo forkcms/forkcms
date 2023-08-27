@@ -3,7 +3,6 @@
 namespace ForkCMS\Modules\Pages\Domain\Revision;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
@@ -18,10 +17,10 @@ use ForkCMS\Modules\Pages\Domain\Page\Page;
  * @method Revision[] findAll()
  * @method Revision[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<Revision>
- * @implements RepositoryWithMetaTrait<Revision>
  */
 final class RevisionRepository extends ServiceEntityRepository implements MetaCallbackService
 {
+    /** @phpstan-use RepositoryWithMetaTrait<Revision> */
     use RepositoryWithMetaTrait;
 
     public function __construct(
@@ -71,10 +70,10 @@ final class RevisionRepository extends ServiceEntityRepository implements MetaCa
         $queryBuilder
             ->andWhere($entityAlias . '.locale = :locale')
             ->setParameter('locale', ($subject?->getLocale() ?? $locale)->value);
-        if ($subject?->getPage()->hasId() ?? false) {
+        if ($subject?->getPage()?->hasId() ?? false) {
             $queryBuilder
                 ->andWhere($entityAlias . '.page != :page')
-                ->setParameter('page', $subject?->getPage());
+                ->setParameter('page', $subject->getPage());
         }
         if ($subject !== null) {
             if ($subject->getParentPage() === null) {

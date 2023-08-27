@@ -10,26 +10,31 @@ use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Revision\MenuType;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
-use Symfony\Contracts\Cache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
+/** @phpstan-type PageCache array{attr: array<string, string>, page: Page, children: array{attr: array<string, string>, page: Page, children: array{attr: array<string, string>, page: Page, children: array{attr: array<string, string>, page: Page, children: mixed[]|null}[]|null}[]|null}[]|null} */
 final class NavigationBuilder
 {
     public const GROUPED_PAGES_CACHE_KEY = 'pages_grouped_';
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly CacheInterface $cache,
+        private readonly CacheItemPoolInterface $cache,
         private readonly ModuleSettings $moduleSettings,
     ) {
     }
 
     public function clearNavigationCache(): void
     {
-        foreach (Locale::cases() as $locale) {
-            $this->cache->delete(self::GROUPED_PAGES_CACHE_KEY . $locale->value);
-        }
+        $this->cache->deleteItems(
+            array_map(
+                static fn(Locale $locale): string => self::GROUPED_PAGES_CACHE_KEY . $locale->value,
+                Locale::cases()
+            )
+        );
     }
 
+    /** @return array<value-of<MenuType>, array{label:MenuType, pages: PageCache[]}> */
     public function getTree(Locale $locale): array
     {
         static $cache;
@@ -86,6 +91,7 @@ final class NavigationBuilder
         return $cache[$activeId];
     }
 
+    /** @return array<int, array<int, array{page: Page, active: bool, hasChildren: bool}>> */
     public function getActiveGroupedPages(MenuType $type, Revision $revision): array
     {
         static $cache;
@@ -118,6 +124,7 @@ final class NavigationBuilder
         return $pages;
     }
 
+    /** @return array<value-of<MenuType>, array<int, array<int, Page>>> */
     private function getGroupedPages(Locale $locale): array
     {
         $cache = $this->cache->getItem(self::GROUPED_PAGES_CACHE_KEY . $locale->value);
@@ -167,6 +174,10 @@ final class NavigationBuilder
         return $groupedPages;
     }
 
+    /**
+     * @param PageCache $page
+     * @param ArrayCollection<int, Page> $pages
+     */
     private function findActivePages(array $page, int $activeId, ArrayCollection $pages): bool
     {
         if ($page['page']->getId() === $activeId) {
@@ -192,9 +203,14 @@ final class NavigationBuilder
         return false;
     }
 
+    /**
+     * @param array<value-of<MenuType>, array<int, array<int, Page>>> $groupedPages
+     *
+     * @return ?array<int, PageCache>
+     */
     private static function getSubTree(MenuType $type, array $groupedPages, Locale $locale, int $parentId = 0): ?array
     {
-        /** @var Page[] $subPages */
+        /** @var Page[]|null $subPages */
         $subPages = $groupedPages[$type->value][$parentId] ?? null;
 
         if ($subPages === null || count($subPages) === 0) {

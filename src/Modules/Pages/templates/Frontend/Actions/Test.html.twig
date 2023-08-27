@@ -1,0 +1,18 @@
+<h2>{{ 'lbl.Sitemap'|trans|ucfirst }}</h2>
+{% for category, pages in sitemap %}
+  <h3>{{ category }}</h3>
+  {{ _self.pages(pages) }}
+{% endfor %}
+
+{% macro pages (pages) %}
+  {% if pages|count > 0 %}
+    <ul>
+      {% for page in pages %}
+        <li>
+          <a href="{{ page.url }}">{{ page.title }}</a>
+          {{ _self.pages(page.children) }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

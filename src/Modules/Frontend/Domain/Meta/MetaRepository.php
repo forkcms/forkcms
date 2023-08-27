@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  */
 class MetaRepository extends ServiceEntityRepository
 {
+    /** @param ServiceLocator<MetaCallbackService> $metaCallbacks */
     public function __construct(ManagerRegistry $registry, private readonly ServiceLocator $metaCallbacks)
     {
         parent::__construct($registry, Meta::class);

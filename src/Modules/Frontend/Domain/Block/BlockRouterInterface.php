@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface BlockRouterInterface
 {
+    /** @param array<string, mixed> $parameters */
     public function getRouteForBlock(
         ModuleBlock $moduleBlock,
         Locale $locale = null,

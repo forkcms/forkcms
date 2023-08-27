@@ -10,11 +10,10 @@ use Traversable;
 
 /**
  * @implements IteratorAggregate<Breadcrumb>
- * @template T of Breadcrumb
  */
 final class BreadcrumbCollection implements IteratorAggregate
 {
-    /** @var T[]  */
+    /** @var Breadcrumb[]  */
     private array $items = [];
 
     private bool $shouldTranslate = false;
@@ -60,7 +59,7 @@ final class BreadcrumbCollection implements IteratorAggregate
         return count($this->items);
     }
 
-    /** @return T[] */
+    /** @return Breadcrumb[] */
     public function getItems(): array
     {
         if ($this->shouldTranslate) {
@@ -73,7 +72,7 @@ final class BreadcrumbCollection implements IteratorAggregate
         return $this->items;
     }
 
-    /** @implements Traversable<T> */
+    /** @implements Traversable<Breadcrumb> */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->getItems());

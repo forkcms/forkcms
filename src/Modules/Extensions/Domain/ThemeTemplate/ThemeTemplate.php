@@ -142,6 +142,7 @@ class ThemeTemplate implements JsonSerializable, Stringable
         return '@Frontend/base/' . str_replace(self::PATH_DIRECTORY, '', $this->path);
     }
 
+    /** @return array<string, mixed> */
     public function jsonSerialize(): array
     {
         $json = [

@@ -9,12 +9,15 @@ use ForkCMS\Modules\Backend\Backend\Actions\Forbidden as ActionForbidden;
 use ForkCMS\Modules\Backend\Backend\Actions\NotFound as ActionNotFound;
 use ForkCMS\Modules\Backend\Backend\Ajax\Forbidden as AjaxForbidden;
 use ForkCMS\Modules\Backend\Backend\Ajax\NotFound as AjaxNotFound;
+use ForkCMS\Modules\Backend\Domain\Action\ActionControllerInterface;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
+use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionControllerInterface;
 use ForkCMS\Modules\Backend\Domain\AjaxAction\ModuleAjaxAction;
 use ForkCMS\Modules\Backend\Domain\User\UserDataGridChoiceType;
 use ForkCMS\Modules\Backend\Domain\UserGroup\Permission\Permission;
 use ForkCMS\Modules\Backend\Domain\UserGroup\Permission\PermissionType;
 use ForkCMS\Modules\Backend\Domain\Widget\ModuleWidget;
+use ForkCMS\Modules\Backend\Domain\Widget\WidgetControllerInterface;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Form\AbstractType;
@@ -25,15 +28,15 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class UserGroupType extends AbstractType
 {
     /**
-     * @param ServiceLocator $backendActions
-     * @param ServiceLocator $backendAjaxActions
-     * @param ServiceLocator $backendDashboardWidgets
+     * @param ServiceLocator<ActionControllerInterface> $backendActions
+     * @param ServiceLocator<AjaxActionControllerInterface> $backendAjaxActions
+     * @param ServiceLocator<WidgetControllerInterface> $backendDashboardWidgets
      */
     public function __construct(
-        private ServiceLocator $backendActions,
-        private ServiceLocator $backendAjaxActions,
-        private ServiceLocator $backendDashboardWidgets,
-        private AuthorizationCheckerInterface $authorizationChecker,
+        private readonly ServiceLocator $backendActions,
+        private readonly ServiceLocator $backendAjaxActions,
+        private readonly ServiceLocator $backendDashboardWidgets,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
     }
 

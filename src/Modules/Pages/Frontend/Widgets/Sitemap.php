@@ -13,6 +13,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * This is a widget wherein the sitemap lives
+ *
+ * @phpstan-import-type PageCache from NavigationBuilder
  */
 class Sitemap extends AbstractWidgetController
 {
@@ -36,6 +38,11 @@ class Sitemap extends AbstractWidgetController
         $this->assign('sitemap', $sitemap);
     }
 
+    /**
+     * @param PageCache[] $pages
+     *
+     * @return array<int<0, max>, array{title: string, url: string, children: mixed[]}>
+     */
     private function getPageData(array $pages, Locale $locale): array
     {
         $pageData = [];

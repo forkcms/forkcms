@@ -4,15 +4,16 @@ namespace ForkCMS\Modules\Pages\Backend\Actions;
 
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
-use ForkCMS\Modules\Extensions\Domain\ThemeTemplate\ThemeTemplateRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Page\NavigationBuilder;
 use ForkCMS\Modules\Pages\Domain\Page\Page;
-use ForkCMS\Modules\Pages\Domain\Revision\Command\ChangeRevision;
 use ForkCMS\Modules\Pages\Domain\Revision\Command\CreateRevision;
 use ForkCMS\Modules\Pages\Domain\Revision\Form\RevisionType;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
+use Symfony\Component\Form\ButtonTypeInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\Form\SubmitButtonTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,9 @@ final class PageEdit extends AbstractFormActionController
             $validCallback = function (FormInterface $form): RedirectResponse {
                 /** @var CreateRevision $newRevision */
                 $newRevision = $form->getData();
-                $newRevision->isDraft = $form->get('saveAsDraft')->isClicked();
+                /** @var SubmitButton $draftButton */
+                $draftButton = $form->get('saveAsDraft');
+                $newRevision->isDraft = $draftButton->isClicked();
 
                 $this->commandBus->dispatch($newRevision);
 

@@ -5,8 +5,6 @@ namespace ForkCMS\Modules\Pages\Domain\RevisionBlock;
 use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
-use ForkCMS\Modules\Pages\Domain\ModuleExtra\ModuleExtra;
-use ForkCMS\Modules\Pages\Domain\ModuleExtra\ModuleExtraRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,18 +13,12 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class RevisionBlockType extends AbstractType
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -125,32 +117,32 @@ final class RevisionBlockType extends AbstractType
         $resolver->setDefaults(['data_class' => RevisionBlockDataTransferObject::class]);
         $resolver->setRequired('possibleExtraTypes');
     }
-
-    private static function getModuleExtraOptions(Type $type, ?ModuleExtra $moduleExtra): array
-    {
-        return [
-            'data' => $moduleExtra,
-            'label' => $type->getLabel(),
-            'class' => ModuleExtra::class,
-            'choice_label' => static function (ModuleExtra $moduleExtra): string {
-                return $moduleExtra->getTranslatedLabel();
-            },
-            'group_by' => static function (ModuleExtra $moduleExtra): string {
-                return SpoonFilter::ucfirst(Language::lbl($moduleExtra->getModule()));
-            },
-            'query_builder' => static function (ModuleExtraRepository $repository) use ($type): QueryBuilder {
-                return $repository
-                    ->createQueryBuilder('me')
-                    ->where('me.type = :type')
-                    ->setParameter('type', $type)
-                    ->andWhere('me.id IN (:allowedExtraIds)')
-                    ->setParameter('allowedExtraIds', array_keys(BackendExtensionsModel::getExtras()))
-                    ->orderBy('me.sequence');
-            },
-            'mapped' => false,
-            'attr' => [
-                'data-fork' => 'select2',
-            ],
-        ];
-    }
+//
+//    private static function getModuleExtraOptions(Type $type, ?ModuleExtra $moduleExtra): array
+//    {
+//        return [
+//            'data' => $moduleExtra,
+//            'label' => $type->getLabel(),
+//            'class' => ModuleExtra::class,
+//            'choice_label' => static function (ModuleExtra $moduleExtra): string {
+//                return $moduleExtra->getTranslatedLabel();
+//            },
+//            'group_by' => static function (ModuleExtra $moduleExtra): string {
+//                return SpoonFilter::ucfirst(Language::lbl($moduleExtra->getModule()));
+//            },
+//            'query_builder' => static function (ModuleExtraRepository $repository) use ($type): QueryBuilder {
+//                return $repository
+//                    ->createQueryBuilder('me')
+//                    ->where('me.type = :type')
+//                    ->setParameter('type', $type)
+//                    ->andWhere('me.id IN (:allowedExtraIds)')
+//                    ->setParameter('allowedExtraIds', array_keys(BackendExtensionsModel::getExtras()))
+//                    ->orderBy('me.sequence');
+//            },
+//            'mapped' => false,
+//            'attr' => [
+//                'data-fork' => 'select2',
+//            ],
+//        ];
+//    }
 }

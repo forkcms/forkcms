@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
+use ForkCMS\Modules\Frontend\Domain\Block\BlockName;
+use ForkCMS\Modules\Frontend\Domain\Block\ModuleBlock;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
 use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
@@ -33,9 +35,11 @@ class Page
     #[ORM\Column(type: 'string', length: 5, enumType: Locale::class)]
     private Locale $originalLocale;
 
+    /** @var Collection<array-key, Revision> */
     #[ORM\OneToMany(mappedBy: 'page', targetEntity: Revision::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $revisions;
 
+    /** @var Collection<array-key, Revision> */
     #[ORM\OneToMany(mappedBy: 'parentPage', targetEntity: Revision::class)]
     private Collection $childRevisions;
 
@@ -154,7 +158,7 @@ class Page
         }
         if (
             !$revision->getBlocks()->filter(
-                static fn (RevisionBlock $block) => $block->getBlock() instanceof Sitemap
+                static fn(RevisionBlock $block) => $block->getBlock()?->getBlock()->getFQCN() === Sitemap::class
             )->isEmpty()
         ) {
             return 'sitemap';

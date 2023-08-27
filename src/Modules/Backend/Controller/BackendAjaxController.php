@@ -14,9 +14,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class BackendAjaxController
 {
-    public function __construct(
-        private ServiceLocator $ajaxActions,
-    ) {
+    /** @param ServiceLocator<AjaxActionControllerInterface> $ajaxActions */
+    public function __construct(private readonly ServiceLocator $ajaxActions)
+    {
     }
 
     public function __invoke(

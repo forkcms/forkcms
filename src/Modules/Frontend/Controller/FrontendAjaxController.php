@@ -2,8 +2,8 @@
 
 namespace ForkCMS\Modules\Frontend\Controller;
 
-use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionControllerInterface;
-use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlug;
+use ForkCMS\Modules\Frontend\Domain\AjaxAction\AjaxActionControllerInterface;
+use ForkCMS\Modules\Frontend\Domain\AjaxAction\AjaxActionSlug;
 use InvalidArgumentException;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\DependencyInjection\ServiceLocator;
@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class FrontendAjaxController
 {
+    /** @param ServiceLocator<AjaxActionControllerInterface> $ajaxActions */
     public function __construct(private readonly ServiceLocator $ajaxActions)
     {
     }

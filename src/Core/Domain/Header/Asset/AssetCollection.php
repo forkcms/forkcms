@@ -24,6 +24,7 @@ final class AssetCollection implements IteratorAggregate
         $this->isOrdered = false;
     }
 
+    /** @return Asset[] */
     public function getOrdered(): array
     {
         if (!$this->isOrdered) {

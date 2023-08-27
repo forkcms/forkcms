@@ -6,6 +6,7 @@ use ForkCMS\Modules\Backend\Domain\Action\AbstractActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Backend\Domain\Dashboard\Widget;
 use ForkCMS\Modules\Backend\Domain\Widget\ModuleWidget;
+use ForkCMS\Modules\Backend\Domain\Widget\WidgetControllerInterface;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class Dashboard extends AbstractActionController
 {
+    /** @param ServiceLocator<WidgetControllerInterface> $backendDashboardWidgets */
     public function __construct(
         ActionServices $actionServices,
         private readonly ServiceLocator $backendDashboardWidgets,

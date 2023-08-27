@@ -3,7 +3,6 @@
 namespace ForkCMS\Modules\Pages\Domain\RevisionBlock;
 
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
@@ -24,7 +23,7 @@ class RevisionBlock
 
     #[Gedmo\SortableGroup]
     #[ORM\ManyToOne(targetEntity: Revision::class, inversedBy: 'blocks')]
-    #[ORM\JoinColumn(name: 'revision_id', onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(name: 'revision_id', nullable: false, onDelete: 'CASCADE')]
     private Revision $revision;
 
     #[Gedmo\SortableGroup]
@@ -42,7 +41,7 @@ class RevisionBlock
 
     #[Gedmo\SortablePosition]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $sequence;
+    private int $sequence;
 
     public function __construct(
         Revision $revision,
@@ -58,7 +57,7 @@ class RevisionBlock
         $this->block = $block;
         $this->editorContent = $editorContent;
         $this->isVisible = $isVisible;
-        $this->sequence = $sequence;
+        $this->sequence = $sequence ?? 0;
         $this->settings = $settings;
     }
 

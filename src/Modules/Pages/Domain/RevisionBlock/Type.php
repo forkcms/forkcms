@@ -21,6 +21,7 @@ enum Type: string
         return self::tryFrom($type?->value) ?? self::EDITOR;
     }
 
+    /** @return array<value-of<self>, self> */
     public static function formTypeChoices(): array
     {
         return array_combine(array_column(self::cases(), 'value'), self::cases());

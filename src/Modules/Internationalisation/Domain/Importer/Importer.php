@@ -22,6 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class Importer
 {
+    /** @param ServiceLocator<ImporterInterface> $importers */
     public function __construct(
         private readonly ServiceLocator $importers,
         private readonly string $cacheDir,

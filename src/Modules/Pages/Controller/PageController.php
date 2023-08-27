@@ -28,6 +28,7 @@ use Twig\Environment;
 
 final class PageController
 {
+    /** @param ServiceLocator<BlockControllerInterface> $frontendBlocks */
     public function __construct(
         private readonly ServiceLocator $frontendBlocks,
         private readonly SerializerInterface $serializer,
@@ -94,7 +95,7 @@ final class PageController
             }
         }
 
-        if ($hasJsonResponse) {
+        if ($response instanceof JsonResponse) {
             $twigGlobals = $this->twig->getGlobals();
             unset($twigGlobals['app']);
             $response->setJson($this->serializer->serialize($revisionContext + $twigGlobals, 'json'));

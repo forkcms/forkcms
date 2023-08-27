@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 final class Exporter
 {
+    /** @param ServiceLocator<ExporterInterface> $exporters */
     public function __construct(private readonly ServiceLocator $exporters)
     {
     }
