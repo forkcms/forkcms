@@ -19,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 #[ORM\Table(name: 'pages__page')]
 class Page
 {
+    use EntityWithSettingsTrait;
+
     public const PAGE_ID_HOME = 1;
     public const PAGE_ID_404 = 404;
     public const PAGE_ID_START = 1000;
@@ -36,8 +38,6 @@ class Page
 
     #[ORM\OneToMany(mappedBy: 'parentPage', targetEntity: Revision::class)]
     private Collection $childRevisions;
-
-    use EntityWithSettingsTrait;
 
     public function __construct(Locale $originalLocale)
     {
