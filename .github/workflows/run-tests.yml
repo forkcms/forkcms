@@ -132,7 +132,7 @@ jobs:
                   APP_DEBUG: 1
 
             - name: Run PHPStan
-              run: ls -al var && ls -al var/cache && ls -al var/cache/dev && bin/phpstan analyze --error-format github src
+              run: bin/phpstan analyze --error-format table src
 
     php-code-sniffer:
         name: PHP Code Sniffer
@@ -158,7 +158,7 @@ jobs:
               run: composer install -o
 
             - name: Run PHP Codesniffer
-              run: bin/phpcs --standard=PSR12 --extensions=php --warning-severity=9 --exclude=Generic.Files.LineLength --report=code --ignore=*/tests/*,*/*.tpl.php "src"
+              run: bin/phpcs --standard=PSR12 --extensions=php --warning-severity=9 --exclude=Generic.Files.LineLength --report=full --ignore=*/tests/*,*/*.tpl.php "src"
 
     frontend:
         name: npm test
