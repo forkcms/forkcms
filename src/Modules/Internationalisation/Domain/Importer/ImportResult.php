@@ -44,17 +44,17 @@ final class ImportResult
         $this->failed[] = $translation;
     }
 
-    public function addImported(Translation $translation): void
+    public function addImported(): void
     {
         ++$this->importedCount;
     }
 
-    public function addUpdated(Translation $translation): void
+    public function addUpdated(): void
     {
         ++$this->updatedCount;
     }
 
-    public function addSkipped(Translation $translation): void
+    public function addSkipped(): void
     {
         ++$this->skippedCount;
     }

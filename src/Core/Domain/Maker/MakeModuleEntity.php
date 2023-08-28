@@ -441,6 +441,8 @@ final class MakeModuleEntity extends AbstractMaker
                 $idFieldType = $field['type'];
             }
         }
+        $idField = $idField ?? throw new RuntimeException('Id field is not defined');
+        $idFieldType = $idFieldType ?? throw new RuntimeException('Id field type is not defined');
 
         $baseNamespace = $this->getNamespace($entityClassNameDetails);
 
@@ -452,8 +454,8 @@ final class MakeModuleEntity extends AbstractMaker
                 'useStatements' => [
                     'use ' . $entityClassNameDetails->getFullName() . ';',
                 ],
-                'idField' => $idField ?? throw new RuntimeException('Id field is not defined'),
-                'idFieldType' => $idFieldType ?? throw new RuntimeException('Id field type is not defined'),
+                'idField' => $idField,
+                'idFieldType' => $idFieldType,
             ]
         );
         $this->generator->generateClass(

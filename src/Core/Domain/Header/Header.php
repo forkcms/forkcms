@@ -31,7 +31,7 @@ use Twig\Environment;
  */
 final class Header
 {
-    private JsData $jsData;
+    private readonly JsData $jsData;
 
     private readonly AssetCollection $cssAssets;
     private readonly AssetCollection $jsAssets;
@@ -139,6 +139,7 @@ final class Header
                 )
             );
         } catch (InvalidArgumentException) {
+            // No module js file found
         }
 
         try {
@@ -151,6 +152,7 @@ final class Header
                 )
             );
         } catch (InvalidArgumentException) {
+            // No module action js file found
         }
 
         try {
@@ -163,6 +165,7 @@ final class Header
                 )
             );
         } catch (InvalidArgumentException) {
+            // No module css file found
         }
 
         try {
@@ -175,6 +178,7 @@ final class Header
                 )
             );
         } catch (InvalidArgumentException) {
+            // No module action css file found
         }
     }
 }

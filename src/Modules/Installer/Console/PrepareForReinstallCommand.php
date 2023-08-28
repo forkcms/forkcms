@@ -93,6 +93,7 @@ class PrepareForReinstallCommand extends Command
                 new BufferedOutput(),
             );
         } catch (PDOException) {
+            // if the database is not available, the cache:clear command will fail
         }
 
         $io->success('Cleared cache');

@@ -26,15 +26,19 @@ final class SettingNotFoundException extends InvalidArgumentException
     {
         $message = sprintf('You have requested a non-existent setting "%s".', $this->key);
 
-        if ($this->alternatives) {
-            if (count($this->alternatives) === 1) {
-                $message .= ' Did you mean this: "';
-            } else {
-                $message .= ' Did you mean one of these: "';
-            }
+        $alternativesCount = count($this->alternatives);
 
-            $message .= implode('", "', $this->alternatives) . '"?';
+        if ($alternativesCount === 0) {
+            return $message;
         }
+
+        if ($alternativesCount === 1) {
+            $message .= ' Did you mean this: "';
+        } else {
+            $message .= ' Did you mean one of these: "';
+        }
+
+        $message .= implode('", "', $this->alternatives) . '"?';
 
         return $message;
     }

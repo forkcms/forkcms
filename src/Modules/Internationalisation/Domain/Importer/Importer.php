@@ -67,7 +67,7 @@ final class Importer
                     )
                 )
             ) {
-                $importResult->addSkipped($translation);
+                $importResult->addSkipped();
                 continue;
             }
 
@@ -79,7 +79,7 @@ final class Importer
                 if ($overwriteConflicts) {
                     $existingTranslation->change($translation->getValue());
                     $existingTranslations[$translation->getId()] = $existingTranslation;
-                    $importResult->addUpdated($existingTranslation);
+                    $importResult->addUpdated();
 
                     continue;
                 }
@@ -89,7 +89,7 @@ final class Importer
             }
 
             $newTranslations[$translation->getId()] = $translation;
-            $importResult->addImported($translation);
+            $importResult->addImported();
         }
 
         $this->translationRepository->save(...$existingTranslations, ...$newTranslations);

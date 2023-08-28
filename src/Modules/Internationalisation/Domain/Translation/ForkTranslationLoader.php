@@ -76,6 +76,7 @@ final class ForkTranslationLoader implements LoaderInterface
                 $dayDate->add($dayInterval);
             }
         } catch (TableNotFoundException | Error) {
+            // No translations found
         }
 
         return $catalogue;

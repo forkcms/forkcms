@@ -17,10 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class RevisionBlockType extends AbstractType
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -81,7 +77,6 @@ final class RevisionBlockType extends AbstractType
                 'required' => false,
             ]
         );
-        $entityManager = $this->entityManager;
 //        $builder->addEventListener(
 //            FormEvents::PRE_SET_DATA,
 //            static function (FormEvent $event) use ($entityManager): void {

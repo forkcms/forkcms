@@ -5,7 +5,9 @@ namespace ForkCMS\Modules\Pages\Domain\Revision;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
@@ -275,9 +277,10 @@ class Revision
     }
 
     #[ORM\PrePersist]
-    public function cleanupOldRevisions(LifecycleEventArgs $args): void
+    public function cleanupOldRevisions(PrePersistEventArgs $args): void
     {
-        $entityManager = $args->getEntityManager();
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $args->getObjectManager();
         $connection = $entityManager->getConnection();
         $entityManager->getFilters()->disable('softdeleteable');
         /** @var self[] $revisions */

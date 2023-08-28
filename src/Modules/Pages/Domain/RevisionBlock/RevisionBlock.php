@@ -30,7 +30,7 @@ class RevisionBlock
     #[ORM\Column(type: Types::STRING)]
     private string $position;
 
-    #[ORM\ManyToOne(targetEntity: Block::class)]
+    #[ORM\ManyToOne(targetEntity: Block::class, fetch: 'EAGER')]
     private ?Block $block;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

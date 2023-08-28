@@ -392,7 +392,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
 
     public function onUserChanged(UserChangedEvent $event): void
     {
-        if ($event->user === $this->security->getUser()) {
+        if ($event->user->getUserIdentifier() === $this->security->getUser()?->getUserIdentifier()) {
             $session = $this->requestStack->getSession();
             $session->set('user_locale', $event->user->getSetting('locale'));
         }
