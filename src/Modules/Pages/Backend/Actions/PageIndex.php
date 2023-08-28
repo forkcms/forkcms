@@ -26,7 +26,7 @@ class PageIndex extends AbstractActionController
 
     protected function execute(Request $request): void
     {
-        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::request()));
+        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::current()));
         $this->assign(
             'lastEditedDataGrid',
             $this->dataGridFactory->forEntity(

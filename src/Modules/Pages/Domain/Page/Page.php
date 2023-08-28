@@ -86,7 +86,7 @@ class Page
 
     public function getActiveRevision(Locale|null $locale = null): Revision
     {
-        $locale ??= Locale::request();
+        $locale ??= Locale::current();
         $expressionBuilder = Criteria::expr();
 
         $revision = $this->revisions->matching(
@@ -96,7 +96,11 @@ class Page
                 ->andWhere($expressionBuilder->eq('isArchived', null))
         )->first();
 
-        return $revision ?? throw new NotFoundHttpException('Revision not found');
+        if ($revision instanceof Revision) {
+            return $revision;
+        }
+
+        throw new NotFoundHttpException('Revision not found');
     }
 
     public function isHome(): bool

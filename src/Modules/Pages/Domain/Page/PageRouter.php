@@ -26,7 +26,7 @@ final class PageRouter implements BlockRouterInterface
         if ($moduleBlock->getName()->getType() !== Type::ACTION) {
             throw new InvalidArgumentException('Only actions can be routed');
         }
-        $locale = $locale ?? Locale::request();
+        $locale = $locale ?? Locale::current();
 
         $page = $this->pageRepository->createQueryBuilder('p')
             ->innerJoin('p.revisions', 'r', Join::WITH, 'r.isDraft = :draft AND r.locale = :locale')
@@ -63,7 +63,7 @@ final class PageRouter implements BlockRouterInterface
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {
         return $this->router->generate(
-            Page::getRouteNameForIdAndLocale($pageId, $locale ?? Locale::request()),
+            Page::getRouteNameForIdAndLocale($pageId, $locale ?? Locale::current()),
             $parameters,
             $referenceType
         );

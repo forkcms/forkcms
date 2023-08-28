@@ -3,7 +3,7 @@
 namespace ForkCMS\Modules\Internationalisation\Domain\Locale;
 
 use Locale as IntlLocale;
-use Symfony\Component\HttpFoundation\Request;
+use RuntimeException;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -35,11 +35,14 @@ enum Locale: string implements TranslatableInterface
         return self::English;
     }
 
-    public static function request(): self
+    public static function current(?self $locale = null): self
     {
         static $current = null;
+        if ($locale !== null) {
+            $current = $locale;
+        }
         if ($current === null) {
-            $current = self::from(Request::createFromGlobals()->getLocale());
+            throw new RuntimeException('Locale::current() was called before Locale::current($locale) was called');
         }
 
         return $current;

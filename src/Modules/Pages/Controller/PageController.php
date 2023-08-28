@@ -129,7 +129,7 @@ final class PageController
 
     protected function parseFooterLinks(): void
     {
-        $pages = $this->navigationBuilder->getTree(Locale::request())[MenuType::FOOTER->value]['pages'] ?? [];
+        $pages = $this->navigationBuilder->getTree(Locale::current())[MenuType::FOOTER->value]['pages'] ?? [];
         $footerLinks = [];
         foreach ($pages as $menuItem) {
             /** @var Revision $revision */

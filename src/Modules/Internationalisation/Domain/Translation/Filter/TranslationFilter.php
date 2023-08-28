@@ -41,7 +41,7 @@ final class TranslationFilter
         );
 
         if (count($filter->locale) === 0) {
-            $filter->locale = [Locale::request()];
+            $filter->locale = [Locale::current()];
         }
 
         return $filter;

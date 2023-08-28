@@ -12,9 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class FrontendAjaxController
 {
-    public function __construct(
-        private ServiceLocator $ajaxActions,
-    ) {
+    public function __construct(private readonly ServiceLocator $ajaxActions)
+    {
     }
 
     public function __invoke(

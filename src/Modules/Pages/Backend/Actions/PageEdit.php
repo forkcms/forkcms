@@ -32,7 +32,7 @@ final class PageEdit extends AbstractFormActionController
             ? $this->getEntityFromRequest($request, Revision::class, 'revision')
             : $this->getEntityFromRequest($request, Page::class)->getActiveRevision();
 
-        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::request()));
+        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::current()));
 
         if ($request->request->getBoolean('switchTemplate')) {
             $validCallback = function (FormInterface $form): ?FormInterface {

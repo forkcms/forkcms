@@ -27,9 +27,9 @@ final class PageAdd extends AbstractFormActionController
 
     protected function getFormResponse(Request $request): ?Response
     {
-        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::request()));
+        $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::current()));
 
-        $page = new Page(Locale::request());
+        $page = new Page(Locale::current());
         if ($request->request->getBoolean('switchTemplate')) {
             $validCallback = function (FormInterface $form): ?FormInterface {
                 $this->assign('backend_form', $form->createView());
@@ -47,7 +47,7 @@ final class PageAdd extends AbstractFormActionController
         return $this->handleForm(
             $request,
             RevisionType::class,
-            CreateRevision::new($page, Locale::request(), $this->themeTemplateRepository->findDefaultTemplate()),
+            CreateRevision::new($page, Locale::current(), $this->themeTemplateRepository->findDefaultTemplate()),
             validCallback: $validCallback
         );
     }

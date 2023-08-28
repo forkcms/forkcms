@@ -154,7 +154,7 @@ class ThemeTemplate implements JsonSerializable, Stringable
             'has_block' => false,
         ];
 
-        $currentLocale = Locale::request();
+        $currentLocale = Locale::current();
         $json['settings']['default_extras'] = $json['settings']['default_extras'][$currentLocale] ?? [];
 
         // validate

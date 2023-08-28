@@ -88,7 +88,7 @@ final class PagesInstaller extends ModuleInstaller
 
     /**
      * @param Locale[] $locales
-     * @param callable(Locale, CreateRevision)|null $createRevision
+     * @param ?callable(Locale, CreateRevision): void $createRevision
      */
     public function createPage(
         array $locales,
@@ -96,7 +96,7 @@ final class PagesInstaller extends ModuleInstaller
         MenuType $type,
         ?Page $parentPage = null,
         ?Page $page = null,
-        ?callable $callback = null,
+        ?callable $createRevision = null,
         ThemeTemplate $themeTemplate = null
     ): Page {
         static $defaultTemplate = null;
@@ -121,8 +121,8 @@ final class PagesInstaller extends ModuleInstaller
             $revision->type = $type;
             $revision->settings['navigationTitle'] = $title;
 
-            if ($callback !== null) {
-                $callback($locale, $revision);
+            if ($createRevision !== null) {
+                $createRevision($locale, $revision);
             }
 
             $this->dispatchCommand($revision);
