@@ -39,6 +39,7 @@
         <exclude>
             <directory suffix=".php">src/Core/Test</directory>
             <directory suffix=".php">src/Modules/*/Tests</directory>
+            <directory suffix=".php">src/*/*.tpl.php</directory>
         </exclude>
     </coverage>
     <php>
