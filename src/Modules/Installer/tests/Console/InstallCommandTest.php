@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Modules\Installer\Tests\Console;
+namespace ForkCMS\Modules\Installer\tests\Console;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

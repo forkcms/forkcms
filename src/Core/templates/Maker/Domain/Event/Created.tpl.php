@@ -1,4 +1,12 @@
-<?= "<?php\n"; ?>
+<?php
+/**
+ * @global string $class_name
+ * @global string $namespace
+ * @global string $entity
+ * @global string $createCommand
+ * @global string[] $useStatements
+ */
+?><?= "<?php\n"; ?>
 
 namespace <?= $namespace ?>;
 

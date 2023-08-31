@@ -1,3 +1,11 @@
+<?php
+/**
+ * @global string $class_name
+ * @global string $namespace
+ * @global string[] $useStatements
+ * @global string $entity
+ */
+?>
 <?= "<?php\n"; ?>
 
 namespace <?= $namespace ?>;

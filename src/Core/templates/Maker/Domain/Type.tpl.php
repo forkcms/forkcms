@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @global string $class_name
+ * @global string $namespace
+ * @global string[] $useStatements
+ */
 ?>
 <?= "<?php\n"; ?>
 

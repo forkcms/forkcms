@@ -207,8 +207,8 @@ jobs:
             - name: Start docker-compose stack
               run: |
                   docker-compose up -d
-                  docker run --rm --network=forkcms_default jwilder/dockerize -wait tcp://db:3306 -timeout 300s
-                  docker-compose ps "app" | grep -q "Up"
+                  docker run --rm --network=forkcms_default jwilder/dockerize -wait tcp://db6:3306 -timeout 300s
+                  docker-compose ps "db6" | grep -q "Up"
 
             - name: Install Node
               uses: actions/setup-node@v2

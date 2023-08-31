@@ -4,9 +4,19 @@ use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use ForkCMS\Core\Domain\Maker\Util\Entity;
+use ForkCMS\Modules\Backend\Domain\User\Blameable;
+use ForkCMS\Modules\Frontend\Domain\Meta\EntityWithMetaTrait;
+use Symfony\Bundle\MakerBundle\Str;
 
+/**
+ * @global string $class_name
+ * @global string $namespace
+ * @global string[] $useStatements
+ * @global Entity $entity
+ */
 ?>
-<?= "<?php\n"; ?>
+<?= "<?php\n" ?>
 
 namespace <?= $namespace ?>;
 
@@ -14,45 +24,45 @@ namespace <?= $namespace ?>;
 
 final class <?= $class_name, PHP_EOL ?>
 {
-<?php foreach ($fields as $field) { ?>
-<?= $field['is_id'] ? '    #[ORM\Id]' . PHP_EOL : '' ?>
-<?= $field['is_generated_value'] ? '    #[ORM\GeneratedValue]' . PHP_EOL : '' ?>
-<?php if ($field['dbal_type_full'] === Embedded::class) { ?>
+<?php foreach ($entity->properties as $property) { ?>
+<?= $property->isId ? '    #[ORM\Id]' . PHP_EOL : '' ?>
+<?= $property->isGeneratedValue ? '    #[ORM\GeneratedValue]' . PHP_EOL : '' ?>
+<?php if ($property->dbalTypeFull === Embedded::class) { ?>
     <?= sprintf(
         '#[ORM\Embedded(class: %s%s)]',
-        trim($field["type"], '?') . '::class',
-        $field['is_nullable'] ? ', nullable: true' : ''
+        trim($property->type, '?') . '::class',
+        $property->isNullable ? ', nullable: true' : ''
     ), PHP_EOL ?>
-<?php } elseif ($field['dbal_type_full'] === OneToMany::class) { ?>
-<?php } elseif ($field['dbal_type_full'] === ManyToMany::class) { ?>
-<?php } elseif ($field['dbal_type_full'] === ManyToOne::class) { ?>
+<?php } elseif ($property->dbalTypeFull === OneToMany::class) { ?>
+<?php } elseif ($property->dbalTypeFull === ManyToMany::class) { ?>
+<?php } elseif ($property->dbalTypeFull === ManyToOne::class) { ?>
 <?php } else { ?>
-    <?= sprintf('#[ORM\Column(type: %s)]', $field["dbal_type"]), PHP_EOL ?>
+    <?= sprintf('#[ORM\Column(type: %s)]', $property->dbalType), PHP_EOL ?>
 <?php } ?>
-    <?= sprintf('private %s $%s;', $field["type"], $field["name"]), PHP_EOL ?>
+    <?= sprintf('private %s $%s;', $property->type, $property->name), PHP_EOL ?>
 
 <?php } ?>
-<?= $meta ? '    use ' . $meta . ';' . PHP_EOL . PHP_EOL : '' ?>
-<?= $blameable ? '    use ' . $blameable . ';'. PHP_EOL. PHP_EOL : '' ?>
+<?= $entity->hasMeta ? '    use ' . Str::getShortClassName(EntityWithMetaTrait::class) . ';' . PHP_EOL . PHP_EOL : '' ?>
+<?= $entity->isBlamable ? '    use ' . Str::getShortClassName(Blameable::class) . ';'. PHP_EOL. PHP_EOL : '' ?>
     private function __construct()
     {
     }
 
     public static function fromDataTransferObject(<?= $class_name ?>DataTransferObject $dataTransferObject): self
     {
-        $entity = $dataTransferObject->isNew() ? new self() : $dataTransferObject->getEntity();
-<?php foreach ($fields as $field) { ?>
-<?php if ($field['is_generated_value']) {continue;} ?>
-        $entity-><?= $field["name"] ?> = $dataTransferObject-><?= $field["name"] ?>;
+        $entity = $dataTransferObject->hasEntity() ? $dataTransferObject->getEntity() : new self();
+<?php foreach ($entity->properties as $property) { ?>
+<?php if ($property->isGeneratedValue) {continue;} ?>
+        $entity-><?= $property->name ?> = $dataTransferObject-><?= $property->name ?>;
 <?php } ?>
 
         return $entity;
     }
-<?php foreach ($fields as $field) { ?>
+<?php foreach ($entity->properties as $property) { ?>
 
-    public function <?php if ($field["type"] === '\'boolean\'') { echo $field['name'];} else { ?>get<?= ucfirst($field["name"]) ?><?php }?>(): <?= $field["type"], PHP_EOL ?>
+    public function <?php if ($property->type === '\'boolean\'') { echo $property->name;} else { ?>get<?= ucfirst($property->name) ?><?php }?>(): <?= $property->type, PHP_EOL ?>
     {
-        return $this-><?= $field["name"] ?>;
+        return $this-><?= $property->name ?>;
     }
 <?php } ?>
 }

@@ -1,6 +1,26 @@
 version: "2.4"
 
 services:
+    app:
+        build:
+            context: .
+            cache_from: [ghcr.io/forkcms/forkcms:latest]
+        working_dir: /var/www/html
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - db6
+        environment:
+            - FORK_DEBUG=1
+            - FORK_ENV=dev
+            - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+            - XDEBUG_CONFIG=remote_connect_back=0 remote_enable=1 idekey=${XDEBUG_IDEKEY} remote_port=${XDEBUG_PORT} remote_host=${DOCKER_HOST_IP}
+        volumes:
+            - .:/var/www/html:cached
+            - fork-cms6-var:/var/www/html/var
+            - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
+
     db6:
         image: "mysql:5.7"
         restart: always

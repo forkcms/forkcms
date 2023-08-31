@@ -33,15 +33,15 @@
         </testsuite>
     </testsuites>
 
-    <coverage cacheDirectory="var/cache/.phpunit/code-coverage" processUncoveredFiles="true">
+    <coverage cacheDirectory="var/cache/.phpunit/code-coverage" processUncoveredFiles="true" ignoreDeprecatedCodeUnits="true">
         <include>
             <directory suffix=".php">src/Modules</directory>
             <directory suffix=".php">src/Core</directory>
         </include>
         <exclude>
-            <directory suffix=".php">src/Core/Test</directory>
-            <directory suffix=".php">src/Modules/*/Tests</directory>
-            <directory suffix=".php">src/*/*.tpl.php</directory>
+            <directory suffix=".php">src/Core/test</directory>
+            <directory suffix=".php">src/Modules/*/tests</directory>
+            <directory suffix=".tpl.php">src</directory>
         </exclude>
     </coverage>
     <php>
@@ -50,5 +50,6 @@
         <server name="KERNEL_CLASS" value="ForkCMS\Core\Domain\Kernel\Kernel" />
         <env name="FORK_INSTALLATION_CONFIGURATION_PATH" value="/tests/fork-cms-installation-configuration.yaml" />
         <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
 </phpunit>
