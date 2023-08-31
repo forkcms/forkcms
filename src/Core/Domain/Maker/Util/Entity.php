@@ -58,7 +58,7 @@ final class Entity
         return (bool) count(
             array_filter(
                 $this->properties,
-                static fn(EntityProperty $property) => !$property->isNullable
+                static fn (EntityProperty $property) => !$property->isNullable
             )
         );
     }
@@ -73,7 +73,7 @@ final class Entity
             $io->ask(
                 'What is the name of the entity class',
                 null,
-                static fn(?string $className): string => Validator::validateClassName(Validator::notBlank($className))
+                static fn (?string $className): string => Validator::validateClassName(Validator::notBlank($className))
             )
         );
 

@@ -13,7 +13,7 @@ final class Edit
 {
     public static function generate(Generator $generator, Entity $entity, ModuleInfo $moduleInfo): string
     {
-        $nameFields = array_filter($entity->properties, static fn(EntityProperty $property): bool => $property->isName);
+        $nameFields = array_filter($entity->properties, static fn (EntityProperty $property): bool => $property->isName);
 
         $editAction = $generator->createClassNameDetails(
             $entity->getName() . 'Edit',

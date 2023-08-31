@@ -85,7 +85,7 @@ final class EntityProperty
         $name = $io->ask(
             'What name should the field have?',
             $hasIdField ? null : 'id',
-            static fn(?string $fieldName): string => Validator::validateDoctrineFieldName(
+            static fn (?string $fieldName): string => Validator::validateDoctrineFieldName(
                 Validator::notBlank($fieldName),
                 $managerRegistry
             )
@@ -99,7 +99,7 @@ final class EntityProperty
         $class = self::FIELD_MAPPING[$dbalTypeName] ?? $io->ask(
             'What class should be used for the property?',
             '',
-            static fn(?string $className): string => Validator::classExists(Validator::notBlank($className))
+            static fn (?string $className): string => Validator::classExists(Validator::notBlank($className))
         );
         $isGeneratedValue = $isId && $dbalTypeName === 'integer' && $io->confirm('Is generated value?');
         $dbalType = $selectedDbalType;

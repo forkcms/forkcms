@@ -48,7 +48,7 @@ final class MakeModule extends AbstractMaker
         while ($io->confirm('Do you want to add an entity?', false)) {
             $entities[] = MakeModuleEntity::generateEntity($io, $generator, $this->managerRegistry, $moduleInfo);
         }
-        usort($entities, static fn(Entity $a, Entity $b) => $a->getName() <=> $b->getName());
+        usort($entities, static fn (Entity $a, Entity $b) => $a->getName() <=> $b->getName());
 
         Installer::generate(
             $generator,

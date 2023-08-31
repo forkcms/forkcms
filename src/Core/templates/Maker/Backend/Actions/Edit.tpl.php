@@ -4,6 +4,7 @@
  * @global string $namespace
  * @global string[] $useStatements
  * @global string $entity
+ * @global string $nameField
  */
 ?>
 <?= "<?php\n"; ?>

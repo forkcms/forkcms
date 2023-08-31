@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Core\Domain\Maker\Module\Domain;
 
-use ForkCMS\Core\Domain\Maker\Util\Entity;
+use ForkCMS\Core\Domain\Maker\Util\Entity as EntityUtil;
 use ForkCMS\Core\Domain\Maker\Util\Template;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\Str;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class DataTransferObject
 {
-    public static function generate(Generator $generator, Entity $entity): string
+    public static function generate(Generator $generator, EntityUtil $entity): string
     {
         $useStatements = [];
         if ($entity->hasRequiredFields()) {

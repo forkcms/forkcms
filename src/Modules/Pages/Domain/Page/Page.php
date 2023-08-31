@@ -158,7 +158,7 @@ class Page
         }
         if (
             !$revision->getBlocks()->filter(
-                static fn(RevisionBlock $block) => $block->getBlock()?->getBlock()->getFQCN() === Sitemap::class
+                static fn (RevisionBlock $block) => $block->getBlock()?->getBlock()->getFQCN() === Sitemap::class
             )->isEmpty()
         ) {
             return 'sitemap';

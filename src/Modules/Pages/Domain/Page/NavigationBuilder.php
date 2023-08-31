@@ -28,7 +28,7 @@ final class NavigationBuilder
     {
         $this->cache->deleteItems(
             array_map(
-                static fn(Locale $locale): string => self::GROUPED_PAGES_CACHE_KEY . $locale->value,
+                static fn (Locale $locale): string => self::GROUPED_PAGES_CACHE_KEY . $locale->value,
                 Locale::cases()
             )
         );
