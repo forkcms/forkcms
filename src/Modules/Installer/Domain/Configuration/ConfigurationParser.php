@@ -139,7 +139,11 @@ APP_SECRET=%10$s',
             $this->moduleInstallerLocator,
             $this->commandBus
         );
-        $installerConfiguration->withDatabaseStep(DatabaseStepConfiguration::fromArray($configuration));
+        if (($_ENV['FORK_DATABASE_HOST'] ?? '') !== '') {
+            $installerConfiguration->withDatabaseStep(DatabaseStepConfiguration::fromEnv());
+        } else {
+            $installerConfiguration->withDatabaseStep(DatabaseStepConfiguration::fromArray($configuration));
+        }
         $installerConfiguration->withAuthenticationStep(AuthenticationStepConfiguration::fromArray($configuration));
     }
 
@@ -192,11 +196,11 @@ APP_SECRET=%10$s',
 
     private function getYamlFilename(): string
     {
-        return $this->rootDir . '/fork-cms-installation-configuration.yaml';
+        return $this->rootDir . ($_ENV['FORK_INSTALLATION_CONFIGURATION_PATH'] ?? '/fork-cms-installation-configuration.yaml');
     }
 
     private function getDotEnvFilename(): string
     {
-        return $this->rootDir . '/.env.local';
+        return $this->rootDir . ($_ENV['FORK_INSTALLATION_LOCALE_ENV_PATH'] ?? '/.env.local');
     }
 }

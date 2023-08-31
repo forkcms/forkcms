@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
-         bootstrap="src/bootstrap.php"
-         cacheResultFile="var/cache/.phpunit/test-results"
-         executionOrder="depends,defects"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
-         failOnRisky="true"
-         failOnWarning="true"
-         verbose="true"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
+    bootstrap="src/bootstrap.php"
+    cacheResultFile="var/cache/.phpunit/test-results"
+    executionOrder="depends,defects"
+    beStrictAboutOutputDuringTests="true"
+    beStrictAboutTodoAnnotatedTests="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    verbose="true"
+    defaultTestSuite="unit"
 >
     <testsuites>
         <testsuite name="installer">
-            <directory>src/Core/Tests/Installer</directory>
+            <directory>src/Modules/Installer</directory>
         </testsuite>
 
         <testsuite name="unit">
-            <directory>src/Core/Tests</directory>
-            <directory>src/Modules/*/Tests</directory>
-            <exclude>src/Core/Tests/Installer</exclude>
-            <exclude>src/Modules/*/Tests/Controller</exclude>
-            <exclude>src/Modules/*/Tests/Actions</exclude>
+            <directory>src/Core/tests</directory>
+            <directory>src/Modules/*/tests</directory>
+            <exclude>src/Modules/Installer</exclude>
+            <exclude>src/Modules/*/tests/Controller</exclude>
+            <exclude>src/Modules/*/tests/Actions</exclude>
         </testsuite>
 
         <testsuite name="functional">
-            <directory>src/Modules/*/Tests/Controller</directory>
-            <directory>src/Modules/*/Tests/Actions</directory>
-            <exclude>src/Core/Tests/Installer</exclude>
+            <directory>src/Modules/*/tests/Controller</directory>
+            <directory>src/Modules/*/tests/Actions</directory>
+            <exclude>src/Modules/Installer</exclude>
+            <exclude>src/Core/tests/Installer</exclude>
         </testsuite>
     </testsuites>
 
@@ -46,5 +48,7 @@
         <env name="APP_ENV" value="test"/>
         <env name="APP_DEBUG" value="1"/>
         <server name="KERNEL_CLASS" value="ForkCMS\Core\Domain\Kernel\Kernel" />
+        <env name="FORK_INSTALLATION_CONFIGURATION_PATH" value="/tests/fork-cms-installation-configuration.yaml" />
+        <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
     </php>
 </phpunit>

@@ -7,7 +7,6 @@ use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Event\InstalledLocaleChangedEvent;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocale;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocaleRepository;
-use ForkCMS\Modules\Internationalisation\Domain\ModuleSettings\Event\ModuleSettingsChanged;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ChangeModuleSettingsHandler implements CommandHandlerInterface

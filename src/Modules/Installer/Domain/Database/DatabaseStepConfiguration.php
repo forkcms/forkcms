@@ -83,6 +83,17 @@ final class DatabaseStepConfiguration implements InstallerStepConfiguration
         );
     }
 
+    public static function fromEnv(): self
+    {
+        return new self(
+            $_ENV['FORK_DATABASE_HOST'],
+            $_ENV['FORK_DATABASE_USER'],
+            $_ENV['FORK_DATABASE_PASSWORD'],
+            $_ENV['FORK_DATABASE_NAME'],
+            $_ENV['FORK_DATABASE_PORT'],
+        );
+    }
+
     public function canConnectToDatabase(): bool
     {
         return ForkConnection::testConnection(

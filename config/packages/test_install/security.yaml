@@ -1,0 +1,5 @@
+security:
+  firewalls:
+    backend:
+      security: false
+      custom_authenticator: '~'
