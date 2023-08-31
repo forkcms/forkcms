@@ -10,7 +10,7 @@ class TemplateTest extends TestCase
     public function testGetPath(): void
     {
         $this->assertSame(
-           'src/Core/templates/Maker/Entity.tpl.php',
+            'src/Core/templates/Maker/Entity.tpl.php',
             Template::getPath('Entity.tpl.php')
         );
     }

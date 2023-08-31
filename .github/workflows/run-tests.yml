@@ -126,7 +126,7 @@ jobs:
                   APP_ENV: dev
 
             - name: Install Fork CMS
-              run: mv tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && bin/console cache:clear
+              run: mv src/Modules/Installer/tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && bin/console cache:clear
               env:
                   APP_ENV: dev
                   APP_DEBUG: 1

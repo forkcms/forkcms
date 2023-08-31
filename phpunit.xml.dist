@@ -48,7 +48,7 @@
         <env name="APP_ENV" value="test"/>
         <env name="APP_DEBUG" value="1"/>
         <server name="KERNEL_CLASS" value="ForkCMS\Core\Domain\Kernel\Kernel" />
-        <env name="FORK_INSTALLATION_CONFIGURATION_PATH" value="/tests/fork-cms-installation-configuration.yaml" />
+        <env name="FORK_INSTALLATION_CONFIGURATION_PATH" value="/src/Modules/Installer/tests/fork-cms-installation-configuration.yaml" />
         <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
