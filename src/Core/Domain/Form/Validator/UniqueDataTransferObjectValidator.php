@@ -4,7 +4,6 @@ namespace ForkCMS\Core\Domain\Form\Validator;
 
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\Embeddable;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
@@ -20,107 +19,60 @@ use function count;
 use function get_class;
 use function is_array;
 use function is_object;
-use function is_string;
 
 /**
  * Unique Entity Validator checks if one or a set of fields contain unique values.
  */
 final class UniqueDataTransferObjectValidator extends ConstraintValidator
 {
-    public function __construct(private ManagerRegistry $registry)
+    public function __construct(private readonly ManagerRegistry $registry)
     {
     }
 
     /**
      * @template T of UniqueDataTransferObjectInterface
      *
-     * @param T|null $value
+     * @param UniqueDataTransferObjectInterface<T>|null $value
      *
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
+        if (!is_object($value)) {
+            return;
+        }
+
         if (!$constraint instanceof UniqueDataTransferObject) {
             throw new UnexpectedTypeException($constraint, UniqueDataTransferObject::class);
         }
-        $fields = (array) $constraint->fields;
-        if (count($fields) === 0) {
-            throw new ConstraintDefinitionException('At least one field has to be specified.');
-        }
-        if ($value === null) {
-            return;
-        }
-        $entityClass = $constraint->entityClass;
-        if ($entityClass === null) {
-            if (!$value->hasEntity()) {
-                throw new ConstraintDefinitionException('No entityClass or entity was specified.');
-            }
-            $entityClass = get_class($value->getEntity());
-        }
+
+        $fields = $this->getFields($constraint);
+
+        $entityClass = $this->getEntityClass($constraint, $value);
         $om = $this->getObjectManager($value, $constraint);
         $class = $om->getClassMetadata($entityClass);
-        $criteria = [];
-        $hasNullValue = false;
-        foreach ($fields as $fieldName) {
-            if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
-                throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
-            }
-            $fieldValue = $value->$fieldName;
-            if ($fieldValue === null) {
-                $hasNullValue = true;
-            }
-            if ($constraint->ignoreNull && $fieldValue === null) {
-                continue;
-            }
-            $criteria[$fieldName] = $fieldValue;
-            if ($criteria[$fieldName] !== null && $class->hasAssociation($fieldName)) {
-                /* Ensure the Proxy is initialized before using reflection to
-                 * read its identifiers. This is necessary because the wrapped
-                 * getter methods in the Proxy are being bypassed.
-                 */
-                $om->initializeObject($criteria[$fieldName]);
-            }
-        }
-        // validation doesn't fail if one of the fields is null and if null values should be ignored
-        if ($hasNullValue && $constraint->ignoreNull) {
+
+        [$criteria, $hasNullValue] = $this->validateFields(
+            $fields,
+            $class,
+            $value,
+            $constraint,
+            $om
+        );
+
+        if (($hasNullValue && $constraint->ignoreNull) || count($criteria) === 0) {
             return;
         }
-        // skip validation if there are no criteria (this can happen when the
-        // "ignoreNull" option is enabled and fields to be checked are null
-        if (empty($criteria)) {
+
+        $result = $this->findDuplicate($value, $constraint, $om, $class, $criteria);
+        if ($result === null) {
             return;
         }
-        $repository = $this->getRepository($value, $constraint, $om, $class);
-        $result = $repository->{$constraint->repositoryMethod}($criteria);
-        if ($result instanceof IteratorAggregate) {
-            $result = $result->getIterator();
-        }
-        /* If the result is a MongoCursor, it must be advanced to the first
-         * element. Rewinding should have no ill effect if $result is another
-         * iterator implementation.
-         */
-        if ($result instanceof Iterator) {
-            $result->rewind();
-        } elseif (is_array($result)) {
-            reset($result);
-        }
-        /* If no entity matched the query criteria or a single entity matched,
-         * which is the same as the entity being validated, the criteria is
-         * unique.
-         */
-        if (
-            count($result) === 0
-            || (
-                count($result) === 1
-                && $value->hasEntity()
-                && $value->getEntity() === ($result instanceof Iterator ? $result->current() : current($result))
-            )
-        ) {
-            return;
-        }
+
         $errorPath = $constraint->errorPath ?? $fields[0];
         $invalidValue = $criteria[$errorPath] ?? $criteria[$fields[0]];
+
         $this->context->buildViolation($constraint->message)
             ->atPath($errorPath)
             ->setParameter('{{ value }}', $this->formatWithIdentifiers($om, $class, $invalidValue))
@@ -130,13 +82,106 @@ final class UniqueDataTransferObjectValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, mixed $value): string
-    {
-        if (!is_object($value) || $value instanceof DateTimeInterface) {
-            return $this->formatValue($value, self::PRETTY_DATE);
+    /**
+     * @template T of UniqueDataTransferObjectInterface
+     *
+     * @param UniqueDataTransferObjectInterface<T> $dataTransferObject
+     * @param ClassMetadata<T> $class
+     *
+     * @return T[]|null
+     */
+    private function findDuplicate(
+        UniqueDataTransferObjectInterface $dataTransferObject,
+        UniqueDataTransferObject $constraint,
+        ObjectManager $om,
+        ClassMetadata $class,
+        mixed $criteria
+    ): ?array {
+        $repository = $this->getRepository($dataTransferObject, $constraint, $om, $class);
+        $result = $repository->{$constraint->repositoryMethod}($criteria);
+
+        if ($result instanceof IteratorAggregate) {
+            $result = $result->getIterator();
         }
-        $idClass = get_class($value);
-        $identifiers = $this->getIdentifiers($em, $class, $value, $idClass);
+
+        if ($result instanceof Iterator) {
+            $result->rewind();
+        } elseif (is_array($result)) {
+            reset($result);
+        }
+
+        $currentResult = $result instanceof Iterator ? $result->current() : current($result);
+
+        if (
+            count($result) === 0
+            || (
+                count($result) === 1
+                && $dataTransferObject->hasEntity()
+                && $dataTransferObject->getEntity() === $currentResult
+            )
+        ) {
+            return null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @template T of UniqueDataTransferObjectInterface
+     *
+     * @param string[] $fields
+     * @param UniqueDataTransferObjectInterface<T> $dataTransferObject
+     * @param ClassMetadata<T> $class
+     *
+     * @return array{array<string,mixed>, bool}
+     */
+    private function validateFields(
+        array $fields,
+        ClassMetadata $class,
+        UniqueDataTransferObjectInterface $dataTransferObject,
+        UniqueDataTransferObject $constraint,
+        ObjectManager $om
+    ): array {
+        $criteria = [];
+        $hasNullValue = false;
+
+        foreach ($fields as $fieldName) {
+            if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
+                throw new ConstraintDefinitionException(
+                    sprintf(
+                        'The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.',
+                        $fieldName
+                    )
+                );
+            }
+
+            $fieldValue = $dataTransferObject->$fieldName;
+
+            if ($fieldValue === null) {
+                $hasNullValue = true;
+
+                if ($constraint->ignoreNull) {
+                    continue;
+                }
+            }
+
+            $criteria[$fieldName] = $fieldValue;
+
+            if ($criteria[$fieldName] !== null && $class->hasAssociation($fieldName)) {
+                $om->initializeObject($criteria[$fieldName]);
+            }
+        }
+
+        return [$criteria, $hasNullValue];
+    }
+
+    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, mixed $invalidValue): string
+    {
+        if (!is_object($invalidValue) || $invalidValue instanceof DateTimeInterface) {
+            return $this->formatValue($invalidValue, self::PRETTY_DATE);
+        }
+        $idClass = get_class($invalidValue);
+        $identifiers = $this->getIdentifiers($em, $class, $invalidValue, $idClass);
         if (!$identifiers) {
             return sprintf('object("%s")', $idClass);
         }
@@ -156,29 +201,52 @@ final class UniqueDataTransferObjectValidator extends ConstraintValidator
     }
 
     /**
+     * @return class-string
+     */
+    private function getEntityClass(UniqueDataTransferObject $constraint, object $value): string
+    {
+        if ($constraint->entityClass === null && !$value->hasEntity()) {
+            throw new ConstraintDefinitionException('No entityClass or entity was specified.');
+        }
+
+        return $constraint->entityClass ?? get_class($value->getEntity());
+    }
+
+    /** @return string[] */
+    private function getFields(UniqueDataTransferObject $constraint): array
+    {
+        $fields = (array) $constraint->fields;
+        if (count($fields) === 0) {
+            throw new ConstraintDefinitionException('At least one field has to be specified.');
+        }
+
+        return $fields;
+    }
+
+    /**
      * @param class-string $idClass
      *
      * @return array<string,mixed>
      */
-    private function getIdentifiers(ObjectManager $om, ClassMetadata $class, mixed $value, string $idClass): array
+    private function getIdentifiers(ObjectManager $om, ClassMetadata $class, object $value, string $idClass): array
     {
         if ($class->getName() === $idClass) {
             return $class->getIdentifierValues($value);
         }
-        // non unique value might be a composite PK that consists of other entity objects
+        // non-unique value might be a composite PK that consists of other entity objects
         if ($om->getMetadataFactory()->hasMetadataFor($idClass)) {
             $metaData = $om->getClassMetadata($idClass);
             if (!empty($metaData->getIdentifierFieldNames())) {
                 return $metaData->getIdentifierValues($value);
             }
         }
-        // this case might happen if the non unique column has a custom doctrine type and its value is an object
+        // this case might happen if the non-unique column has a custom doctrine type and its value is an object
         // in which case we cannot get any identifiers for it
         return [];
     }
 
     /**
-     * @template T of object
+     * @template T of UniqueDataTransferObjectInterface
      *
      * @param UniqueDataTransferObjectInterface<T> $dataTransferObject
      * @param ClassMetadata<T> $class

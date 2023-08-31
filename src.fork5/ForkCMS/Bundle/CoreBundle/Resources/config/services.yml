@@ -6,8 +6,3 @@ services:
 
     fork.validator.url:
         class: ForkCMS\Bundle\CoreBundle\Validator\UrlValidator
-
-    ForkCMS\Bundle\CoreBundle\Validator\UniqueDataTransferObjectValidator:
-        tags:
-            - { name: validator.constraint_validator, alias: unique_data_transfer_object }
-
