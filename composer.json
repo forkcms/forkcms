@@ -68,7 +68,8 @@
         "twig/intl-extra": "^3.3",
         "symfony/expression-language": "6.*",
         "symfony/lock": "6.*",
-        "tijsverkoyen/deployer-sumo": "^2.3"
+        "tijsverkoyen/deployer-sumo": "^2.3",
+        "tijsverkoyen/convert-to-junit-xml": "^1.10"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",
@@ -82,7 +83,8 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0",
-        "symfony/browser-kit": "^6.0"
+        "symfony/browser-kit": "^6.0",
+        "friendsoftwig/twigcs": "^6.2"
     },
     "config": {
         "bin-dir": "bin",

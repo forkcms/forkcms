@@ -91,5 +91,10 @@
   },
   "volta": {
     "node": "18.17.1"
+  },
+  "dependencies": {
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-standard-scss": "^11.0.0"
   }
 }

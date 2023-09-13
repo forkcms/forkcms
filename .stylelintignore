@@ -1,0 +1,15 @@
+assets/images/
+bin/*
+config/*
+drivers/*
+migrations/*
+node_modules/*
+public/*
+tests/*
+translations/*
+var/*
+vendor/*
+*.*
+!*.css
+!*.scss
+Dockerfile

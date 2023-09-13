@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9a66b3894c7803bd8710339c6cfb838",
+    "content-hash": "ce01c6c07c73423d03798837d2ff9153",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -9727,6 +9727,53 @@
             "time": "2023-07-31T07:08:24+00:00"
         },
         {
+            "name": "tijsverkoyen/convert-to-junit-xml",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/ConvertToJUnitXML.git",
+                "reference": "d36a912758adbfe33a1da7b23e7fddc1026c3f47"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tijsverkoyen/ConvertToJUnitXML/zipball/d36a912758adbfe33a1da7b23e7fddc1026c3f47",
+                "reference": "d36a912758adbfe33a1da7b23e7fddc1026c3f47",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": "^2.0.5|^3.0|^4.0|^5.0|^6.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.2|^5.0",
+                "symfony/var-dumper": "^4.2|^5.0|^6.0"
+            },
+            "bin": [
+                "convert-to-junit-xml"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TijsVerkoyen\\ConvertToJUnitXML\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "convert_to_junit_xml@verkoyen.eu"
+                }
+            ],
+            "description": "A tool to format various inputs into JUnit XML",
+            "support": {
+                "issues": "https://github.com/tijsverkoyen/ConvertToJUnitXML/issues",
+                "source": "https://github.com/tijsverkoyen/ConvertToJUnitXML/tree/v1.10.0"
+            },
+            "time": "2022-02-01T12:49:26+00:00"
+        },
+        {
             "name": "tijsverkoyen/deployer-sumo",
             "version": "v2.3.6",
             "source": {
@@ -10200,6 +10247,61 @@
                 }
             ],
             "time": "2023-05-02T15:12:16+00:00"
+        },
+        {
+            "name": "friendsoftwig/twigcs",
+            "version": "6.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/friendsoftwig/twigcs.git",
+                "reference": "da697cc1bf6bf22feb1d8dbefcbdb1451e6a35f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/friendsoftwig/twigcs/zipball/da697cc1bf6bf22feb1d8dbefcbdb1451e6a35f6",
+                "reference": "da697cc1bf6bf22feb1d8dbefcbdb1451e6a35f6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+                "symfony/console": "^4.4 || ^5.3 || ^6.0",
+                "symfony/filesystem": "^4.4 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.4 || ^5.3 || ^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.27",
+                "symfony/phpunit-bridge": "^6.2.3"
+            },
+            "bin": [
+                "bin/twigcs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FriendsOfTwig\\Twigcs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tristan Maindron",
+                    "email": "tmaindron@gmail.com"
+                }
+            ],
+            "description": "Checkstyle automation for Twig",
+            "support": {
+                "issues": "https://github.com/friendsoftwig/twigcs/issues",
+                "source": "https://github.com/friendsoftwig/twigcs/tree/6.2.0"
+            },
+            "time": "2023-01-13T16:02:00+00:00"
         },
         {
             "name": "nikic/php-parser",

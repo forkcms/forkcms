@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.001234">
+    <testsuite name="unit" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.001234">
+      <testsuite name="ForkCMS\Core\tests\Domain\Maker\Util\TemplateTest" file="/Volumes/Development/Sites/forkcms/src/Core/tests/Domain/Maker/Util/TemplateTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.001234">
+        <testcase name="testGetPath" class="ForkCMS\Core\tests\Domain\Maker\Util\TemplateTest" classname="ForkCMS.Core.tests.Domain.Maker.Util.TemplateTest" file="/Volumes/Development/Sites/forkcms/src/Core/tests/Domain/Maker/Util/TemplateTest.php" line="10" assertions="1" time="0.001234"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

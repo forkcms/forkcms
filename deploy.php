@@ -209,6 +209,8 @@ task('sumo:files:cleanup', function () {
     run('rm -rf {{release_path}}/UPGRADE***');
     run('rm -rf {{release_path}}/var/docks');
     run('rm -rf {{release_path}}/var/docker');
+    run('rm -rf {{release_path}}/.gitlab-ci');
+    run('rm -rf {{release_path}}/.phpcs.xml.dist');
 });
 
 /**********************
