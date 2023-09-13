@@ -17,4 +17,6 @@
     <exclude-pattern>public/index.php</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>assets</exclude-pattern>
+    <exclude-pattern>app.fork5</exclude-pattern>
+    <exclude-pattern>src.fork5</exclude-pattern>
 </ruleset>
