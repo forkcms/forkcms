@@ -17,8 +17,6 @@ parameters:
     - src/Core/templates/Maker/*
     - src/Modules/*/tests/*
   earlyTerminatingMethodCalls:
-  symfony:
-    container_xml_path: var/cache/dev/ForkCMS_Core_Domain_Kernel_KernelDevDebugContainer.xml
   doctrine:
     objectManagerLoader: src/Core/tests/ObjectManager.php
   parallel:
