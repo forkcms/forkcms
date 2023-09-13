@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @global string $class_name
  * @global string $namespace
  */
+
 ?>
 <?= "<?php\n"; ?>
 

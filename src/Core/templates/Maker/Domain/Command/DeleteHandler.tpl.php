@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @global string $class_name
  * @global string $namespace
@@ -9,12 +10,15 @@
  * @global string $idField
  * @global string[] $useStatements
  */
+
 ?>
 <?= "<?php\n"; ?>
 
 namespace <?= $namespace ?>;
 
-<?php foreach ($useStatements as $useStatement) echo $useStatement.PHP_EOL ?>
+<?php foreach ($useStatements as $useStatement) {
+    echo $useStatement . PHP_EOL;
+} ?>
 use InvalidArgumentException;
 
 final class <?= $class_name ?> implements CommandHandlerInterface

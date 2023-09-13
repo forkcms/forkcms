@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @global string $class_name
  * @global string $namespace
@@ -8,12 +9,15 @@
  * @global string $changeCommand
  * @global string[] $useStatements
  */
+
 ?>
 <?= "<?php\n"; ?>
 
 namespace <?= $namespace ?>;
 
-<?php foreach ($useStatements as $useStatement) echo $useStatement.PHP_EOL ?>
+<?php foreach ($useStatements as $useStatement) {
+    echo $useStatement . PHP_EOL;
+} ?>
 
 final class <?= $class_name; ?> implements CommandHandlerInterface
 {
