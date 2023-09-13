@@ -12,6 +12,7 @@ cache: &global_cache
     - node_modules
     - public/build
     - vendor
+    - bin
   policy: pull
 
 
