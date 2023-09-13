@@ -67,7 +67,8 @@
         "scienta/doctrine-json-functions": "^5.0",
         "twig/intl-extra": "^3.3",
         "symfony/expression-language": "6.*",
-        "symfony/lock": "6.*"
+        "symfony/lock": "6.*",
+        "tijsverkoyen/deployer-sumo": "^2.3"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",
@@ -84,7 +85,10 @@
         "symfony/browser-kit": "^6.0"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",
