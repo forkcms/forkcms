@@ -15,8 +15,10 @@
 
     <exclude-pattern>config/preload.php</exclude-pattern>
     <exclude-pattern>public/index.php</exclude-pattern>
+    <exclude-pattern>config/bundles.php</exclude-pattern>
     <exclude-pattern>vendor</exclude-pattern>
     <exclude-pattern>assets</exclude-pattern>
+    <exclude-pattern>src/**/Maker</exclude-pattern>
     <exclude-pattern>app.fork5</exclude-pattern>
     <exclude-pattern>src.fork5</exclude-pattern>
 </ruleset>

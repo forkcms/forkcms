@@ -88,6 +88,7 @@ final class RequirementsChecker
         return !$this->hasErrors() && (!$this->hasWarnings() || $allowWarnings);
     }
 
+    // @codingStandardsIgnoreStart
     private function checkWebServer(): RequirementCategory
     {
         $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 8.1 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
@@ -354,6 +355,7 @@ final class RequirementsChecker
             ),
         );
     }
+    // @codingStandardsIgnoreEnd
 
     /**
      * Check if a directory and its sub-directories and its subdirectories and ... are writable.

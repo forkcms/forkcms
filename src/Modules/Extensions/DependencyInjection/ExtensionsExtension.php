@@ -28,7 +28,8 @@ class ExtensionsExtension extends ForkModuleExtension
         foreach (Application::cases() as $application) {
             $application = ucfirst($application->value);
             foreach (InstalledModules::fromContainer($container)() as $moduleName) {
-                $dataRoots[$moduleName . 'Module' . $application] = $modulesDirectory . $moduleName . '/assets/' . $application . '/public';
+                $dataRoots[$moduleName . 'Module' . $application] = $modulesDirectory . $moduleName .
+                    '/assets/' . $application . '/public';
             }
         }
         foreach (ThemeRepository::getThemePaths() as $themeName => $path) {

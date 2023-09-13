@@ -52,6 +52,7 @@ abstract class AbstractFormActionController extends AbstractActionController
 
     abstract protected function getFormResponse(Request $request): ?Response;
 
+    // @codingStandardsIgnoreStart
     /**
      * @param class-string<FormTypeInterface> $formType
      * @param array<string, mixed> $formOptions
@@ -59,6 +60,7 @@ abstract class AbstractFormActionController extends AbstractActionController
      * @param callable(FormInterface):Response|callable(FormInterface):FormInterface|callable(FormInterface):null|null $validCallback
      * @param callable(FormInterface):FlashMessage|null $flashMessageCallback
      */
+    // @codingStandardsIgnoreEnd
     final protected function handleForm(
         Request $request,
         string $formType,

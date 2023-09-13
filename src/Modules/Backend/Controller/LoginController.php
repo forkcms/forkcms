@@ -36,7 +36,8 @@ class LoginController
         $currentUser = $this->security->getUser();
         if ($currentUser instanceof User) {
             return new RedirectResponse(
-                $this->navigationItemRepository->findFirstWithSlugForUser($currentUser)->getSlug()?->generateRoute($this->urlGenerator)
+                $this->navigationItemRepository->findFirstWithSlugForUser($currentUser)
+                    ->getSlug()?->generateRoute($this->urlGenerator)
             );
         }
 

@@ -92,7 +92,14 @@ final class RevisionContentType extends AbstractType
         }
 
         if ($loadDefaultBlocks) {
-            $form->add('blocks_1', TextareaType::class, ['label' => 'lbl.Content', 'required' => false]); // TODO: remove this
+            $form->add(
+                'blocks_1',
+                TextareaType::class,
+                [
+                    'label' => 'lbl.Content',
+                    'required' => false
+                ]
+            ); // TODO: remove this
 //            foreach ($this->getDefaultExtrasForTemplate($selectedTemplate) as $block => $defaults) {
 //
 //                $revisionBlocks = new ArrayCollection();

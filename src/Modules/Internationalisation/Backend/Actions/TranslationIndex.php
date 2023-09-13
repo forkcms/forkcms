@@ -151,7 +151,12 @@ final class TranslationIndex extends AbstractFormActionController
                 $locale->asTranslatable(),
                 valueCallback: $this->translationValue(...),
                 html: true,
-                columnAttributesCallback: static function (FilteredTranslation $translation, array $attributes) use ($locale) {
+                columnAttributesCallback: static function (
+                    FilteredTranslation $translation,
+                    array $attributes
+                ) use (
+                    $locale
+                ) {
                     if ($translation->getValue($locale) === '') {
                         $attributes['class'] = 'highlighted';
                     }

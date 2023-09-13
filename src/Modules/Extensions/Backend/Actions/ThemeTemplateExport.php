@@ -65,7 +65,15 @@ final class ThemeTemplateExport extends AbstractActionController
                         continue;
                     }
                     $blockDOMDocument = new DOMDocument('1.0', 'utf-8');
-                    $blockDOMDocument->loadXML($this->serializer->serialize($block->getSettings()->all(), 'xml', ['xml_root_node_name' => 'block']));
+                    $blockDOMDocument->loadXML(
+                        $this->serializer->serialize(
+                            $block->getSettings()->all(),
+                            'xml',
+                            [
+                                'xml_root_node_name' => 'block',
+                            ]
+                        )
+                    );
                     /** @var DOMElement $blockXml */
                     $blockXml = $xml->importNode($blockDOMDocument->documentElement, true);
                     $blockXml->setAttribute('module', $block->getBlock()->getModule()->getName());

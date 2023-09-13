@@ -2,6 +2,7 @@
 
 use ForkCMS\Core\Domain\Maker\Util\Entity;
 
+// @codingStandardsIgnoreStart
 /**
  * @global string $namespace
  * @global string $class_name
@@ -9,6 +10,7 @@ use ForkCMS\Core\Domain\Maker\Util\Entity;
  * @global bool $hideFromOverview
  * @global Entity[] $entities
  */
+// @codingStandardsIgnoreEnd
 
 ?>
 <?= "<?php\n"; ?>
