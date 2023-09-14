@@ -213,6 +213,11 @@ task('sumo:files:cleanup', function () {
     run('rm -rf {{release_path}}/.gitlab-ci');
     run('rm -rf {{release_path}}/.phpcs.xml.dist');
     run('rm -rf {{release_path}}/.gitlab-ci.yml');
+    run('rm -rf {{release_path}}/.stylelintignore');
+    run('rm -rf {{release_path}}/.stylelintrc');
+    run('rm -rf {{release_path}}/.editorconfig');
+    run('rm -rf {{release_path}}/.dockerignore');
+    run('rm -rf {{release_path}}/CHANGELOG.nd');
 });
 
 /**********************
