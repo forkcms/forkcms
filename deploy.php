@@ -60,7 +60,7 @@ add('shared_files', ['.env.local']);
 add('shared_dirs', ['public/files', 'public/media']);
 
 // Writable dirs by web server
-add('writable_dirs', ['public/files', 'public/media', 'var', 'var/cache', 'var/log', 'var/sessions']);
+add('writable_dirs', ['public/files', 'public/media', 'var/cache', 'var/log', 'var/sessions']);
 
 // Disallow stats
 set('allow_anonymous_stats', false);
