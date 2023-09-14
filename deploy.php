@@ -19,7 +19,7 @@ set('production_user', '');
 set('php_version', '8.2');
 
 // Define staging
-host('dev02.sumocoders.eu')
+host('dev03.sumocoders.eu')
     ->setRemoteUser('sites')
     ->set('labels', ['stage' => 'staging'])
     ->set('deploy_path', '~/apps/{{client}}/{{project}}')
