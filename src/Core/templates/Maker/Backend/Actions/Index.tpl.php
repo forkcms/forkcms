@@ -1,17 +1,21 @@
 <?php
+
 /**
  * @global string $class_name
  * @global string $namespace
  * @global string[] $useStatements
  * @global string $entity
  */
+
 ?>
 <?= "<?php\n"; ?>
 
 namespace <?= $namespace ?>;
 
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
-<?php foreach ($useStatements as $useStatement) echo $useStatement.PHP_EOL ?>
+<?php foreach ($useStatements as $useStatement) {
+    echo $useStatement . PHP_EOL;
+} ?>
 use Symfony\Component\HttpFoundation\Request;
 
 /**
