@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce01c6c07c73423d03798837d2ff9153",
+    "content-hash": "5086297df36bf83cbfba32956ee978e7",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -4134,6 +4134,46 @@
                 "source": "https://github.com/stof/StofDoctrineExtensionsBundle/tree/v1.8.0"
             },
             "time": "2023-07-07T15:34:33+00:00"
+        },
+        {
+            "name": "sumocoders/deployer-sumo-forkcms",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumocoders/deployer-sumo-forkcms.git",
+                "reference": "ab67e827693a691bc4e01171cd26e890d67afddd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumocoders/deployer-sumo-forkcms/zipball/ab67e827693a691bc4e01171cd26e890d67afddd",
+                "reference": "ab67e827693a691bc4e01171cd26e890d67afddd",
+                "shasum": ""
+            },
+            "require": {
+                "deployer/deployer": "^7.0",
+                "symfony/dotenv": "^3.4 || ^5.3 || ^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TijsVerkoyen\\DeployerSumo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "deployer-sumo@verkoyen.eu"
+                }
+            ],
+            "description": "Deployer recipe with SumoCoders specific tasks",
+            "support": {
+                "source": "https://github.com/sumocoders/deployer-sumo-forkcms/tree/0.1"
+            },
+            "time": "2023-09-14T18:02:25+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9772,47 +9812,6 @@
                 "source": "https://github.com/tijsverkoyen/ConvertToJUnitXML/tree/v1.10.0"
             },
             "time": "2022-02-01T12:49:26+00:00"
-        },
-        {
-            "name": "tijsverkoyen/deployer-sumo",
-            "version": "v2.3.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tijsverkoyen/deployer-sumo.git",
-                "reference": "00fda43e058e417daf1381c352c97dfde89278cd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tijsverkoyen/deployer-sumo/zipball/00fda43e058e417daf1381c352c97dfde89278cd",
-                "reference": "00fda43e058e417daf1381c352c97dfde89278cd",
-                "shasum": ""
-            },
-            "require": {
-                "deployer/deployer": "^7.0",
-                "symfony/dotenv": "^3.4 || ^5.3 || ^6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TijsVerkoyen\\DeployerSumo\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tijs Verkoyen",
-                    "email": "deployer-sumo@verkoyen.eu"
-                }
-            ],
-            "description": "Deployer recipe with SumoCoders specific tasks",
-            "support": {
-                "issues": "https://github.com/tijsverkoyen/deployer-sumo/issues",
-                "source": "https://github.com/tijsverkoyen/deployer-sumo/tree/v2.3.6"
-            },
-            "time": "2023-08-08T13:19:20+00:00"
         },
         {
             "name": "twig/extra-bundle",
