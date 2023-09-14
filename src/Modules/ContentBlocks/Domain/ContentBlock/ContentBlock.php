@@ -47,13 +47,13 @@ final class ContentBlock
     #[ORM\OneToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
     private Block $widget;
 
-    #[ORM\Column(type: 'string', length: 255, options: ['default' => 'Default.html.twig'])]
+    #[ORM\Column(type: 'string', options: ['default' => self::DEFAULT_TEMPLATE])]
     private string $template;
 
     #[ORM\Column(name: 'language', type: 'string', length: 5, enumType: Locale::class)]
     private Locale $locale;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string')]
     #[DataGridPropertyColumn(
         sortable: true,
         label: 'lbl.Title',
@@ -68,13 +68,13 @@ final class ContentBlock
     )]
     private string $title;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $text;
+    #[ORM\Column(type: 'text')]
+    private string $text;
 
     #[ORM\Column(name: 'hidden', type: 'boolean', options: ['default' => false])]
     private bool $isHidden;
 
-    #[ORM\Column(type: 'content_blocks_status', options: ['default' => 'active'])]
+    #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => 'active'])]
     private Status $status;
 
     #[ORM\Column(name: 'created_on', type: 'datetime')]
@@ -150,9 +150,9 @@ final class ContentBlock
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getText(): ?string
+    public function getText(): string
     {
         return $this->text;
     }
@@ -203,7 +203,7 @@ final class ContentBlock
 
     public function archive(): void
     {
-        $this->status = Status::archived();
+        $this->status = Status::Archived;
     }
 
     public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self

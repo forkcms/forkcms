@@ -5,7 +5,7 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use ForkCMS\Modules\ContentBlocks\Frontend\Widgets\Detail;
+use ForkCMS\Modules\ContentBlocks\Frontend\Widgets\Detail as DetailWidget;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use ForkCMS\Modules\Frontend\Domain\Block\ModuleBlock;
@@ -33,7 +33,7 @@ final class CreateContentBlockHandler implements CommandHandlerInterface
     private function createWidget(string $title, Locale $locale): Block
     {
         $block = new Block(
-            ModuleBlock::fromFQCN(Detail::class),
+            ModuleBlock::fromFQCN(DetailWidget::class),
             TranslationKey::label('ContentBlock'),
             locale: $locale
         );

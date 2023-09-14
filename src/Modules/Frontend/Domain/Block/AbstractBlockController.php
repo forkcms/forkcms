@@ -32,7 +32,7 @@ abstract class AbstractBlockController implements BlockControllerInterface
     private string $templatePath;
     private Block $block;
     /** @var array<string, mixed> */
-    protected array $assignedContent = [];
+    private array $assignedContent = [];
 
     public function __construct(BlockServices $services)
     {
@@ -96,7 +96,7 @@ abstract class AbstractBlockController implements BlockControllerInterface
         return $this->twig->render($this->templatePath, $this->assignedContent);
     }
 
-    final public function assign(string $key, mixed $value): void
+    final protected function assign(string $key, mixed $value): void
     {
         $this->assignedContent[$key] = $value;
     }

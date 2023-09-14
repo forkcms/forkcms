@@ -14,7 +14,7 @@ final class CreateContentBlock extends ContentBlockDataTransferObject
         parent::__construct();
 
         $this->locale = $locale;
-        $this->status = Status::active();
+        $this->status = Status::Active;
     }
 
     public function setEntity(ContentBlock $contentBlock): void

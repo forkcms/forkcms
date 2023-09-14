@@ -4,11 +4,12 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use InvalidArgumentException;
 
-final class Status
+enum Status: string
 {
-    private const STATUS_ARCHIVED = 'archived';
-    private const STATUS_ACTIVE = 'active';
+    case Archived = 'archived';
+    case Active = 'active';
 
+    /*
     private string $status;
 
     private function __construct(string $status)
@@ -64,4 +65,5 @@ final class Status
     {
         return new self(self::STATUS_ARCHIVED);
     }
+    */
 }

@@ -25,7 +25,7 @@ final class ContentBlockIndex extends AbstractDataGridActionController
                     ->andWhere('ContentBlock.locale = :locale')
                     ->andWhere('ContentBlock.status = :active')
                     ->setParameter('locale', $locale)
-                    ->setParameter('active', Status::active())
+                    ->setParameter('active', Status::Active)
                 ;
             }
         );

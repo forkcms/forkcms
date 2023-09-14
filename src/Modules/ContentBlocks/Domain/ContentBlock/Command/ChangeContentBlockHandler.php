@@ -5,14 +5,13 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 
-final class ChangeContentBlockHandler implements CommandHandlerInterface
+final readonly class ChangeContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly ContentBlockRepository $contentBlockRepository,
-        private readonly BlockRepository $blockRepository
+        private ContentBlockRepository $contentBlockRepository,
+        private BlockRepository $blockRepository
     ) {
     }
 

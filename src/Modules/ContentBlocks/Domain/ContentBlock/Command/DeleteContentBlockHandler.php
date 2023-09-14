@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use Exception;
 
@@ -19,7 +20,7 @@ final class DeleteContentBlockHandler implements CommandHandlerInterface
     {
         $versions = $this->contentBlockRepository->getVersionsForRevisionId($deleteContentBlock->id);
 
-        if (empty($versions)) {
+        if (count($versions) === 0) {
             return;
         }
 
@@ -28,10 +29,10 @@ final class DeleteContentBlockHandler implements CommandHandlerInterface
         try {
             $extraId = $versions[0]->getExtraId();
             $block = $this->blockRepository->findOneBy(['id' => $extraId]);
-            if ($block !== null) {
+            if ($block instanceof Block) {
                 $this->blockRepository->remove($block);
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             // do nothing
         }
     }
