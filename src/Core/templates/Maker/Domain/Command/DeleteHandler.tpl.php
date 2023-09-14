@@ -29,8 +29,11 @@ final class <?= $class_name ?> implements CommandHandlerInterface
 
     public function __invoke(<?= $deleteCommand ?> $<?= lcfirst($deleteCommand) ?>)
     {
-        $<?= lcfirst($entity) ?> = $this-><?= lcfirst($repository) ?>->find($<?= lcfirst($deleteCommand) ?>-><?= $idField ?>)  ?? throw new InvalidArgumentException('Entity not found');
+        <?php // @codingStandardsIgnoreStart ?>
+        $<?= lcfirst($entity) ?> = $this-><?= lcfirst($repository) ?>
+            ->find($<?= lcfirst($deleteCommand) ?>-><?= $idField ?>) ?? throw new InvalidArgumentException('Entity not found');
         $this-><?= lcfirst($repository) ?>->remove($<?= lcfirst($entity) ?>);
         $<?= lcfirst($deleteCommand) ?>->setEntity($<?= lcfirst($entity) ?>);
+        <?php // @codingStandardsIgnoreEnd ?>
     }
 }

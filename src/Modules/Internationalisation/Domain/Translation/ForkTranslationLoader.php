@@ -40,7 +40,10 @@ final class ForkTranslationLoader implements LoaderInterface
             $dayDate = new DateTime('last monday');
             $monthInterval = new DateInterval('P1M');
             $dayInterval = new DateInterval('P1D');
-            $possibleDomains = array_filter(Application::cases(), static fn (Application $application): bool => $application->hasEditableTranslations());
+            $possibleDomains = array_filter(
+                Application::cases(),
+                static fn (Application $application): bool => $application->hasEditableTranslations()
+            );
             $possibleDomains[] = Application::INSTALLER;
 
             for ($i = 1; $i <= 12; ++$i) {

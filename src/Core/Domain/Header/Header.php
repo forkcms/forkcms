@@ -59,7 +59,8 @@ final class Header
             $translationDomain = $translator->getDefaultTranslationDomain();
             $defaults['default_translation_domain'] = $translationDomain->getDomain();
             $fallbackDomain = $translationDomain->getFallback()?->getDomain();
-            $defaults['default_translation_domain_fallback'] = $fallbackDomain ?? $defaults['default_translation_domain'];
+            $defaults['default_translation_domain_fallback'] = $fallbackDomain ??
+                $defaults['default_translation_domain'];
         }
 
         $this->jsData = new JsData($defaults);
@@ -104,7 +105,8 @@ final class Header
             );
         } catch (SessionNotFoundException $e) {
             throw new LogicException(
-                'You cannot use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".',
+                'You cannot use the addFlash method if sessions are disabled. ' .
+                'Enable them in "config/packages/framework.yaml".',
                 0,
                 $e
             );

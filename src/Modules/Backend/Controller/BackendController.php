@@ -47,7 +47,13 @@ final class BackendController
         try {
             $action = $this->actions->get($actionSlug->getFQCN());
         } catch (NotFoundExceptionInterface) {
-            throw new InvalidArgumentException(sprintf('The action class %s must be registered as a service and implement %s', $actionSlug->getFQCN(), ActionControllerInterface::class));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The action class %s must be registered as a service and implement %s',
+                    $actionSlug->getFQCN(),
+                    ActionControllerInterface::class
+                )
+            );
         }
 
         try {

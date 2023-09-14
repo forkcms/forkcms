@@ -77,7 +77,11 @@ final class ModuleInformation
     public static function fromXML(string $xmlFilePath): self
     {
         try {
-            $moduleConfig = simplexml_load_string(file_get_contents($xmlFilePath), 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_ERR_ERROR);
+            $moduleConfig = simplexml_load_string(
+                file_get_contents($xmlFilePath),
+                'SimpleXMLElement',
+                LIBXML_NOCDATA | LIBXML_ERR_ERROR
+            );
         } catch (Throwable) {
             return new self(
                 ModuleName::fromString(basename(dirname($xmlFilePath))),

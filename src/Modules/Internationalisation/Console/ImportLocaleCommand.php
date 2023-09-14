@@ -73,7 +73,8 @@ class ImportLocaleCommand extends Command
         if ($importResults->getSkippedCount() > 0) {
             $formatter->comment(
                 sprintf(
-                    'Skipped %d translations because they belong to a locale that is not installed or to a different locale than specified with the --locale option.',
+                    'Skipped %d translations because they belong to a locale that is not installed ' .
+                    'or to a different locale than specified with the --locale option.',
                     $importResults->getSkippedCount()
                 )
             );
@@ -81,7 +82,8 @@ class ImportLocaleCommand extends Command
         if ($importResults->getFailedCount() > 0) {
             $formatter->warning(
                 sprintf(
-                    'Failed to import %d translations because they already existed, add --overwrite if you want to overwrite them.',
+                    'Failed to import %d translations because they already existed, ' .
+                    'add --overwrite if you want to overwrite them.',
                     $importResults->getFailedCount()
                 )
             );

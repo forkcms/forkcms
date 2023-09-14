@@ -30,8 +30,10 @@ final class TranslationDomainType extends AbstractType implements DataTransforme
             [
                 'class' => Application::class,
                 'label' => 'lbl.Application',
-                'choice_label' => fn (Application $application): string => ucfirst($application->trans($this->translator)),
-                'choice_filter' => static fn (?Application $application): bool => $application?->hasEditableTranslations() ?? false,
+                'choice_label' => fn (Application $application): string =>
+                    ucfirst($application->trans($this->translator)),
+                'choice_filter' => static fn (?Application $application): bool =>
+                    $application?->hasEditableTranslations() ?? false,
                 'choice_translation_domain' => false,
             ]
         )->add(
@@ -40,7 +42,8 @@ final class TranslationDomainType extends AbstractType implements DataTransforme
             [
                 'class' => Module::class,
                 'choice_value' => 'name',
-                'choice_label' => fn (Module $module): string => ucfirst($this->translator->trans($module->getName()->asLabel())),
+                'choice_label' => fn (Module $module): string =>
+                    ucfirst($this->translator->trans($module->getName()->asLabel())),
                 'choice_filter' => static fn (?Module $module): bool => $module?->getName() !== ModuleName::core(),
                 'label' => 'lbl.Module',
                 'required' => false,

@@ -35,7 +35,12 @@ trait RepositoryWithMetaTrait
     }
 
     /** @param T|null $subject */
-    abstract protected function slugifyIdQueryBuilder(QueryBuilder $queryBuilder, ?object $subject, Locale $locale, string $entityAlias): void;
+    abstract protected function slugifyIdQueryBuilder(
+        QueryBuilder $queryBuilder,
+        ?object $subject,
+        Locale $locale,
+        string $entityAlias
+    ): void;
 
     final protected function addOrIncreaseNumberAtEndOfString(string $string): string
     {
