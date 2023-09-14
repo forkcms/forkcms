@@ -11,11 +11,11 @@ require 'contrib/cachetool.php';
 require __DIR__ . '/vendor/tijsverkoyen/deployer-sumo/sumo.php';
 
 // Define some variables
-set('client', 'sumocoders');
-set('project', 'forkcms');
-set('repository', 'git@git.sumocoders.be:sumocoders/forkcms-6.git');
+set('client', '');
+set('project', '');
+set('repository', '');
 set('production_url', '');
-set('production_user', 'sumocoders');
+set('production_user', '');
 set('php_version', '8.2');
 
 // Define staging
