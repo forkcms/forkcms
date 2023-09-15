@@ -115,7 +115,7 @@ final class ModuleSettingsType extends AbstractType
                             'required' => false,
                             'attr' => [
                                 'data-bs-toggle' => 'collapse',
-                                'data-bs-target' => '#module_settings_privacy_consents_consent_dialog_levels'
+                                'data-bs-target' => '#module_settings_privacy_consents_consent_dialog_levels',
                             ],
                         ]
                     )->add(
@@ -128,7 +128,7 @@ final class ModuleSettingsType extends AbstractType
                                     new Regex(
                                         pattern: '/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i',
                                         message: 'err.InvalidVariableName',
-                                    )
+                                    ),
                                 ],
                                 'help_html' => true,
                             ],
@@ -140,11 +140,11 @@ final class ModuleSettingsType extends AbstractType
                             'help' => 'msg.HelpPrivacyConsentLevels',
                             'required' => false,
                             'attr' => [
-                                'class' => 'collapse' . ($showConsentDialog ? ' show' : '')
+                                'class' => 'collapse' . ($showConsentDialog ? ' show' : ''),
                             ],
                         ]
                     );
-                }
+                },
             ]
         )->add(
             'google_tracking_options',

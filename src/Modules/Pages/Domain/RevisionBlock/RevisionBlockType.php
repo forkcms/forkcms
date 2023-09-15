@@ -5,8 +5,6 @@ namespace ForkCMS\Modules\Pages\Domain\RevisionBlock;
 use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

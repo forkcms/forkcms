@@ -7,6 +7,7 @@ use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Extensions\Domain\Module\Module;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
 use Symfony\Component\Form\FormInterface;
@@ -145,10 +146,15 @@ abstract class AbstractFormActionController extends AbstractActionController
         string $formType,
         array $defaults = []
     ): Response|FormInterface|null {
+        $moduleRepository = $this->getRepository(Module::class);
         return $this->handleSettingsForm(
             $request,
             $formType,
-            new ChangeModuleSettings($this->getRepository(Module::class)->find($this->getModuleName()), $defaults),
+            new ChangeModuleSettings(
+                $moduleRepository->find(ModuleName::core()),
+                $moduleRepository->find($this->getModuleName()),
+                $defaults
+            ),
         );
     }
 }
