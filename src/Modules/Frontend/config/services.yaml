@@ -4,6 +4,7 @@ services:
     autoconfigure: true
     bind:
       $metaCallbacks: !tagged_locator { tag: 'forkcms.frontend.meta.callback' }
+      $editorTypeImplementations: !tagged_locator { tag: 'forkcms.editor' }
 
   ForkCMS\Modules\Frontend\Domain\:
     resource: '../Domain/*'
