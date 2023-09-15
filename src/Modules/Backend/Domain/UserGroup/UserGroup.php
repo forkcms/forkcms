@@ -67,6 +67,9 @@ class UserGroup
     )]
     private string $name;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $oAuthRole;
+
     /** @var Collection<int|string, User> */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'userGroups')]
     protected Collection $users;
@@ -78,6 +81,7 @@ class UserGroup
     private function __construct(string $name)
     {
         $this->name = $name;
+        $this->oAuthRole = 'ROLE_' . str_replace(' ', '_', strtoupper($name));
         $this->users = new ArrayCollection();
         $this->settings = new SettingsBag();
         $this->roles = [];
@@ -93,6 +97,11 @@ class UserGroup
         $userGroup = $userDataTransferObject->hasEntity() ?
             $userDataTransferObject->getEntity() : new self($userDataTransferObject->name);
         $userGroup->name = $userDataTransferObject->name;
+        $userGroup->oAuthRole = $userDataTransferObject->oAuthRole;
+        if ($userGroup->oAuthRole === null) {
+            $userGroup->oAuthRole = 'ROLE_' . str_replace(' ', '_', strtoupper($userDataTransferObject->name));
+        }
+
         CollectionHelper::updateCollection(
             $userDataTransferObject->users,
             $userGroup->users,
@@ -118,6 +127,11 @@ class UserGroup
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getOAuthRole(): ?string
+    {
+        return $this->oAuthRole;
     }
 
     public function addUser(User $user): User

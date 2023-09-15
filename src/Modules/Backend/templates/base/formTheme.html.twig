@@ -559,8 +559,9 @@
   <table class="table table-hover table-striped fork-data-grid">
     <thead>
     <tr>
-      <th class="check"><input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
-                               class="dontCheckBeforeUnload"></th>
+      <th class="check">
+        <input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
+                               class="dontCheckBeforeUnload" {% if form.vars.disabled %} disabled {% endif %}></th>
       <th class="name">{{ 'lbl.Email'|trans|ucfirst }}</th>
       <th class="name">{{ 'lbl.DisplayName'|trans|ucfirst }}</th>
     </tr>
@@ -596,7 +597,10 @@
   <table class="table table-hover table-striped fork-data-grid">
     <thead>
     <tr>
-      <th class="check"><input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users" class="dontCheckBeforeUnload"></th>
+      <th class="check">
+        <input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
+               class="dontCheckBeforeUnload" {% if form.vars.disabled %} disabled {% endif %}>
+      </th>
       <th class="name">{{ 'lbl.Name'|trans|ucfirst }}</th>
     </tr>
     </thead>

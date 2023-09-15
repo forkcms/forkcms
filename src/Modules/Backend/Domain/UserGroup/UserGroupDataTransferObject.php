@@ -18,6 +18,8 @@ abstract class UserGroupDataTransferObject implements UniqueDataTransferObjectIn
 {
     public ?string $name;
 
+    public ?string $oAuthRole;
+
     /** @var ArrayCollection<int|string, User> */
     public ArrayCollection $users;
 

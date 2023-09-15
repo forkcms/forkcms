@@ -61,6 +61,11 @@ class LoginController
                     ),
                     'SITE_URL' => $_ENV['SITE_PROTOCOL'] . '://' . $_ENV['SITE_DOMAIN'],
                     'jsFiles' => [],
+                    'use_oauth' => $this->moduleSettings->get(
+                        ModuleName::fromString('OAuth'),
+                        'enabled',
+                        false,
+                    ),
                 ]
             )
         );
