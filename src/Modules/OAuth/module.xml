@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>OAuth</name>
+  <version>1.0.0</version>
+  <requirements>
+    <minimum_version>6.0.0</minimum_version>
+    <maximum_version>7.0.0</maximum_version>
+  </requirements>
+  <authors>
+    <author>
+      <name><![CDATA[Bjorn Van Acker]]></name>
+      <url>https://bjornvanacker.be</url>
+    </author>
+  </authors>
+  <description>
+    <![CDATA[
+      This module handles backand login using Azure OAuth
+    ]]>
+  </description>
+</module>

@@ -1,0 +1,25 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\OAuth\DependencyInjection\OAuthRouteLoader:
+    arguments:
+      - '@routing.loader.yml'
+
+  ForkCMS\Modules\OAuth\Domain\:
+    resource: '../Domain/*'
+
+  ForkCMS\Modules\OAuth\Backend\Actions\:
+    resource: '../Backend/Actions/*'
+
+  ForkCMS\Modules\OAuth\Domain\OAuth\AzureProviderFactory:
+    tags:
+      - { name: oauth.provider_factory }
+
+  ForkCMS\Modules\OAuth\Domain\Authentication\AzureAuthenticator:
+    tags:
+      - { name: security.authenticator }
+
+  TheNetworg\OAuth2\Client\Provider\Azure:
+    factory: ['@ForkCMS\Modules\OAuth\Domain\OAuth\AzureProviderFactory', 'create']
