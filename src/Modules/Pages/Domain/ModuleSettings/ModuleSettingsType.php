@@ -7,6 +7,7 @@ use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Pages\DependencyInjection\PagesRouteLoader;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,7 +40,7 @@ final class ModuleSettingsType extends AbstractType
                 'fields' => static function (FormBuilderInterface $builder): void {
                     $builder->add(
                         'enabled_extensions',
-                        SwitchType::class,
+                        ChoiceType::class,
                         [
                             'label' => false,
                             'required' => false,
@@ -50,6 +51,7 @@ final class ModuleSettingsType extends AbstractType
                             },
                             'expanded' => true,
                             'multiple' => true,
+                            'label_attr' => ['class' => 'checkbox-switch'],
                         ]
                     );
                 },

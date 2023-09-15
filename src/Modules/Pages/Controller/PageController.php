@@ -120,6 +120,11 @@ final class PageController
         return $response;
     }
 
+    /**
+     * @param string|array<string, mixed> $content
+     *
+     * @return string|array<string, mixed>|array{block: string, content: string|array<string, mixed>}
+     */
     private function getBlockResponse(bool $hasJsonResponse, string $blockName, array|string $content): array|string
     {
         if ($hasJsonResponse) {

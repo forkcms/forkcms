@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Core\Domain\Form;
 
+use ForkCMS\Core\Domain\Form\Editor\EditorTypeImplementationInterface;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\DependencyInjection\ServiceLocator;
@@ -13,6 +14,7 @@ class EditorType extends AbstractType
 {
     public const SETTING_NAME = 'editor';
 
+    /** @param ServiceLocator<EditorTypeImplementationInterface> $editorTypeImplementations */
     public function __construct(
         private readonly ModuleSettings $moduleSettings,
         private readonly ServiceLocator $editorTypeImplementations,
