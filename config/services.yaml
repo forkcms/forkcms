@@ -2,3 +2,19 @@ parameters:
   database.name: '%env(FORK_DATABASE_NAME)%'
   kernel.secret: '%env(APP_SECRET)%'
   fork.is_installed: true
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\OAuth\Domain\OAuth\AzureProviderFactory:
+    tags:
+      - { name: oauth.provider_factory }
+
+  ForkCMS\Modules\OAuth\Domain\Authentication\AzureAuthenticator:
+    tags:
+      - { name: security.authenticator }
+
+  TheNetworg\OAuth2\Client\Provider\Azure:
+    factory: [ '@ForkCMS\Modules\OAuth\Domain\OAuth\AzureProviderFactory', 'create' ]

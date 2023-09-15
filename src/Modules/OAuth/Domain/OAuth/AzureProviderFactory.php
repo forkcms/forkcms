@@ -18,6 +18,10 @@ class AzureProviderFactory
 
     public function create(): Azure
     {
+        if (!$this->moduleSettings->get(ModuleName::fromString('OAuth'), 'enabled', false)) {
+            return new Azure();
+        }
+
         return new Azure(
             [
                 'clientId' => $this->moduleSettings->get(ModuleName::fromString('OAuth'), 'client_id'),
