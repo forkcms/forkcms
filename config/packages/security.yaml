@@ -23,7 +23,10 @@ security:
       login_throttling:
         max_attempts: 3
         interval: '15 minutes'
-      custom_authenticator: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
+      custom_authenticators:
+        - ForkCMS\Modules\OAuth\Domain\Authentication\AzureAuthenticator
+        - ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
+      entry_point: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
       logout:
         path: backend_logout
     frontend:
@@ -33,6 +36,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/private/connect, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication_login, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication_logout, roles: PUBLIC_ACCESS }
     - { path: ^/private, roles: ROLE_USER }
