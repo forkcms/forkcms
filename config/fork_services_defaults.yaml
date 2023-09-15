@@ -13,7 +13,7 @@ services:
       tags:
         - { name: forkcms.module.installer }
 
-    ForkCMS\Core\Domain\Editor\EditorTypeImplementationInterface:
+    ForkCMS\Core\Domain\Form\Editor\EditorTypeImplementationInterface:
       tags:
         - { name: forkcms.editor }
 

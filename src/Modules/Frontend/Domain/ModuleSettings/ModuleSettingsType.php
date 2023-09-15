@@ -4,8 +4,8 @@ namespace ForkCMS\Modules\Frontend\Domain\ModuleSettings;
 
 use ForkCMS\Core\Domain\Form\CheckboxTextType;
 use ForkCMS\Core\Domain\Form\CollectionType;
+use ForkCMS\Core\Domain\Form\Editor\EditorTypeImplementationInterface;
 use ForkCMS\Core\Domain\Form\EditorType;
-use ForkCMS\Core\Domain\Form\EditorTypeImplementationInterface;
 use ForkCMS\Core\Domain\Form\FieldsetType;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TabsType;
@@ -207,13 +207,13 @@ final class ModuleSettingsType extends AbstractType
     /** @return array<string, string> */
     private function getEditorTypeChoices(): array
     {
-        $choices = [TextareaType::class => 'lbl.Text'] + array_map(
-            fn (string $editorType): string => (string) $this->editorTypeImplementations->get(
-                $editorType
-            )->getLabel(),
-            $this->editorTypeImplementations->getProvidedServices()
+        return array_flip(
+            array_map(
+                fn (string $editorType): string => (string) $this->editorTypeImplementations->get(
+                    $editorType
+                )->getLabel(),
+                $this->editorTypeImplementations->getProvidedServices()
+            )
         );
-
-        return array_flip($choices);
     }
 }

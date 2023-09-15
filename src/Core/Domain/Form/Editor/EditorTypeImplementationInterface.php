@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Core\Domain\Form;
+namespace ForkCMS\Core\Domain\Form\Editor;
 
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 
