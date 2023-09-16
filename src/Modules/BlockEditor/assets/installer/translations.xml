@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <Frontend>
+      <item type="label" name="BlockEditor">
+        <translation locale="nl"><![CDATA[block editor]]></translation>
+        <translation locale="en"><![CDATA[block editor]]></translation>
+      </item>
+    </Frontend>
+  </Backend>
+</translations>

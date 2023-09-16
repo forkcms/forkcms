@@ -1,4 +1,4 @@
-import { StringUtil } from '../../../../../../../../Core/assets/js/Components/StringUtil'
+import { StringUtil } from '../../../../../../../Core/assets/js/Components/StringUtil'
 
 class Quote {
   constructor ({ data }) {

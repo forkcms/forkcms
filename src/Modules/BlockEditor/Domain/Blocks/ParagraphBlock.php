@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
-use Common\Language;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 
 final class ParagraphBlock extends AbstractBlock
 {
@@ -11,7 +11,7 @@ final class ParagraphBlock extends AbstractBlock
         return [
             'class' => 'BlockEditor.blocks.Paragraph',
             'config' => [
-                'placeholder' => Language::lbl('ClickHereToAddContent')
+                'placeholder' => TranslationKey::label('ClickHereToAddContent')
             ]
         ];
     }
@@ -28,11 +28,6 @@ final class ParagraphBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/ParagraphBlock.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/ParagraphBlock.html.twig', $data);
     }
 }

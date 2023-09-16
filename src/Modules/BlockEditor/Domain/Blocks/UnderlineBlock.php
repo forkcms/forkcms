@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
 final class UnderlineBlock extends AbstractBlock
 {
@@ -22,11 +22,6 @@ final class UnderlineBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return null;
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return '<u>' . $data['text'] . '</u>';
     }
 }

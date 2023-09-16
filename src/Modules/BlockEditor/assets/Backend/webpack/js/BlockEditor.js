@@ -4,15 +4,13 @@ import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import Paragraph from '@editorjs/paragraph'
 import Underline from '@editorjs/underline'
-import MediaLibraryImage from './Blocks/MediaLibraryImage'
-import MediaLibraryVideo from './Blocks/MediaLibraryVideo'
 import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
 
 export class BlockEditor {
   constructor () {
-    this.initEditors($('textarea.inputBlockEditor'))
+    this.initEditors($('textarea[data-fork-block-editor-config]'))
     this.loadEditorsInCollections()
   }
 
@@ -25,12 +23,12 @@ export class BlockEditor {
   }
 
   createEditor ($element) {
-    BlockEditor.fromJson($element, $element.attr('fork-block-editor-config'))
+    BlockEditor.fromJson($element, $element.attr('data-fork-block-editor-config'))
   }
 
   loadEditorsInCollections () {
     $('[data-addfield="collection"]').on('collection-field-added', (event, formCollectionItem) => {
-      this.initEditors($(formCollectionItem).find('textarea.inputBlockEditor'))
+      this.initEditors($(formCollectionItem).find('textarea[data-fork-block-editor-config]'))
     })
   }
 
@@ -84,22 +82,24 @@ export class BlockEditor {
   }
 }
 
-if (window.BlockEditor === undefined) {
-  window.BlockEditor = { blocks: {} }
-}
+$(window).on('load', () => {
+  if (window.BlockEditor === undefined) {
+    window.BlockEditor = { blocks: {} }
+  }
 
-if (window.BlockEditor.blocks === undefined) {
-  window.BlockEditor.blocks = {}
-}
+  if (window.BlockEditor.blocks === undefined) {
+    window.BlockEditor.blocks = {}
+  }
 
-window.BlockEditor.editor = BlockEditor
-window.BlockEditor.blocks.Header = Header
-window.BlockEditor.blocks.Embed = Embed
-window.BlockEditor.blocks.List = List
-window.BlockEditor.blocks.Paragraph = Paragraph
-window.BlockEditor.blocks.Underline = Underline
-window.BlockEditor.blocks.MediaLibraryImage = MediaLibraryImage
-window.BlockEditor.blocks.MediaLibraryVideo = MediaLibraryVideo
-window.BlockEditor.blocks.Button = Button
-window.BlockEditor.blocks.Quote = Quote
-window.BlockEditor.blocks.Raw = Raw
+  window.BlockEditor.editor = BlockEditor
+  window.BlockEditor.blocks.Header = Header
+  window.BlockEditor.blocks.Embed = Embed
+  window.BlockEditor.blocks.List = List
+  window.BlockEditor.blocks.Paragraph = Paragraph
+  window.BlockEditor.blocks.Underline = Underline
+  window.BlockEditor.blocks.Button = Button
+  window.BlockEditor.blocks.Quote = Quote
+  window.BlockEditor.blocks.Raw = Raw
+
+  window.backend.blockEditor = new BlockEditor()
+})

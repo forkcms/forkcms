@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
 final class RawBlock extends AbstractBlock
 {
@@ -23,11 +23,6 @@ final class RawBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/RawBlock.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/RawBlock.html.twig', $data);
     }
 }

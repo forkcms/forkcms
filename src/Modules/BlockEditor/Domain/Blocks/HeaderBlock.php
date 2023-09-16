@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
 final class HeaderBlock extends AbstractBlock
 {
@@ -29,11 +29,6 @@ final class HeaderBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/HeaderBlock.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/HeaderBlock.html.twig', $data);
     }
 }

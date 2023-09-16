@@ -56,3 +56,6 @@ services:
     ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService:
       tags:
         - { name: forkcms.frontend.meta.callback }
+
+    ForkCMS\Modules\BlockEditor\Domain\Blocks\AbstractBlock:
+      tags: [ 'fork.block_editor.block' ]

@@ -1,18 +1,14 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
-use Frontend\Core\Engine\TwigTemplate;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use ForkCMS\Core\Domain\Header\Asset\Asset;
+use Twig\Environment;
 
 abstract class AbstractBlock
 {
-    /** @var ContainerInterface */
-    private $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private readonly Environment $twig)
     {
-        $this->container = $container;
     }
 
     final public function getName(): string
@@ -27,25 +23,29 @@ abstract class AbstractBlock
     }
 
     /**
-     * @return array The config must contain the key "class" with the JS class for the editor
+     * @return array<string, string> The config must contain the key "class" with the JS class for the editor
      */
     abstract public function getConfig(): array;
 
     /**
      * @see https://github.com/editor-js/editorjs-php#configuration-file
+     *
+     * @return array<string, mixed>
      */
     abstract public function getValidation(): array;
 
     /** The url to the JS file with the config needed to make this block work in the editor */
-    abstract public function getJavaScriptUrl(): ?string;
+    public function getJavascript(): ?Asset
+    {
+        return null;
+    }
 
+    /** @param array<array-key, mixed> $data */
     abstract public function parse(array $data): string;
 
+    /** @param array<array-key, mixed> $data */
     final protected function parseWithTwig(string $template, array $data): string
     {
-        /** @var TwigTemplate $templating */
-        $templating = $this->container->get('templating');
-
-        return $templating->render($template, ['editorBlock' => $data]);
+        return $this->twig->render($template, ['editorBlock' => $data]);
     }
 }

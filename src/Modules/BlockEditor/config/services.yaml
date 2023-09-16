@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      $isDebug: '%kernel.debug%'
+
+  ForkCMS\Modules\BlockEditor\Domain\:
+    resource: '../Domain/*'

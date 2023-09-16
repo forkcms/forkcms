@@ -1,6 +1,8 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
+
+use ForkCMS\Core\Domain\Header\Asset\Asset;
 
 final class ListBlock extends AbstractBlock
 {
@@ -32,11 +34,6 @@ final class ListBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/ListBlock.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/ListBlock.html.twig', $data);
     }
 }

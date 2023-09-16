@@ -1,7 +1,7 @@
-import { StringUtil } from '../../Components/StringUtil'
+import { StringUtil } from '../../../../../../../Core/assets/js/Components/StringUtil'
 
 class Raw {
-  constructor ({data}) {
+  constructor ({ data }) {
     this.data = {
       html: data.html || ''
     }

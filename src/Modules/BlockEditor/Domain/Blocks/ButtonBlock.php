@@ -1,6 +1,8 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
+
+use ForkCMS\Core\Domain\Maker\Util\Template;
 
 final class ButtonBlock extends AbstractBlock
 {
@@ -35,11 +37,6 @@ final class ButtonBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/Button.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/Button.html.twig', $data);
     }
 }

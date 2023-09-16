@@ -24,7 +24,15 @@ final class FormExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('parseEditor', [$this->editorType, 'parseContent'], ['is_safe' => ['html']]),
+            new TwigFilter(
+                'parseEditor',
+                [$this->editorType, 'parseContent'],
+                [
+                    'needs_environment' => false,
+                    'needs_context' => false,
+                    'is_safe' => ['all'],
+                ]
+            ),
         ];
     }
 

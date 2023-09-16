@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\BlockEditor\Blocks;
+namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
 final class QuoteBlock extends AbstractBlock
 {
@@ -33,11 +33,6 @@ final class QuoteBlock extends AbstractBlock
 
     public function parse(array $data): string
     {
-        return $this->parseWithTwig('Core/Layout/Templates/EditorBlocks/QuoteBlock.html.twig', $data);
-    }
-
-    public function getJavaScriptUrl(): ?string
-    {
-        return null;
+        return $this->parseWithTwig('@BlockEditor/Blocks/QuoteBlock.html.twig', $data);
     }
 }
