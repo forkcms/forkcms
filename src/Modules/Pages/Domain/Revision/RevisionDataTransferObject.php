@@ -20,7 +20,7 @@ abstract class RevisionDataTransferObject
     public bool $isDraft = false;
     public ?ThemeTemplate $themeTemplate = null;
     public DateTimeImmutable|null $isArchived = null;
-    /** @var ArrayCollection<array-key, RevisionBlockDataTransferObject[]> */
+    /** @var ArrayCollection<string, non-empty-array<int, RevisionBlockDataTransferObject>> */
     public ArrayCollection $blocks;
     public ?Locale $locale = null;
     /** @var array<string, mixed>  */
@@ -31,9 +31,10 @@ abstract class RevisionDataTransferObject
     public function __construct(?Revision $revisionEntity = null)
     {
         $this->revisionEntity = $revisionEntity;
-        $this->blocks = new ArrayCollection();
 
         if ($this->revisionEntity === null) {
+            $this->blocks = new ArrayCollection();
+
             return;
         }
 
@@ -44,11 +45,15 @@ abstract class RevisionDataTransferObject
         $this->isDraft = $this->revisionEntity->isDraft();
         $this->themeTemplate = $this->revisionEntity->getThemeTemplate();
         $this->isArchived = $this->revisionEntity->getArchivedDate();
+        $blocks = [];
         foreach ($this->revisionEntity->getBlocks() as $block) {
-            $this->blocks->containsKey($block->getPosition())
-                ? $this->blocks->get($block->getPosition())[] = new RevisionBlockDataTransferObject($block)
-                : $this->blocks->set($block->getPosition(), [new RevisionBlockDataTransferObject($block)]);
+            $position = $block->getPosition();
+            if (!array_key_exists($position, $blocks)) {
+                $blocks[$position] = [];
+            }
+            $blocks[$position][] = new RevisionBlockDataTransferObject($block);
         }
+        $this->blocks = new ArrayCollection($blocks);
         $this->locale = $this->revisionEntity->getLocale();
         $this->settings = $this->revisionEntity->getSettings()->all();
         $this->meta = clone $this->revisionEntity->getMeta();
