@@ -51,7 +51,8 @@ class Block implements TranslatableInterface
         ?TranslationKey $label = null,
         ?SettingsBag $settings = null,
         bool $hidden = false,
-        ?int $position = null
+        ?int $position = null,
+        ?Locale $locale = null,
     ) {
         $this->block = $block;
         $this->type = $block->getName()->getType();
@@ -59,6 +60,7 @@ class Block implements TranslatableInterface
         $this->label = $label ?? TranslationKey::label($block->getName()->getName());
         $this->hidden = $hidden;
         $this->position = $position;
+        $this->locale = $locale;
     }
 
     public function getId(): int

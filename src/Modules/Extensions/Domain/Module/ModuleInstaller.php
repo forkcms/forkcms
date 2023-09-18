@@ -212,6 +212,7 @@ abstract class ModuleInstaller
         bool $hidden = false,
         ?int $position = null,
         ModuleName $module = null,
+        Locale $locale = null
     ): Block {
         $module = $module ?? static::getModuleName();
         $moduleBlock = new ModuleBlock($module, $name);
@@ -223,7 +224,7 @@ abstract class ModuleInstaller
             return $block;
         }
 
-        $block = new Block($moduleBlock, $label, $settings, $hidden, $position);
+        $block = new Block($moduleBlock, $label, $settings, $hidden, $position, $locale);
         $blockRepository->save($block);
 
         return $block;
