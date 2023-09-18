@@ -82,9 +82,14 @@ class Block implements TranslatableInterface
         return $this->locale;
     }
 
-    public function getLabel(): TranslationKey
+    // TODO
+    public function getLabel(): string
     {
-        return $this->label;
+        if ($this->hasSetting('extra_label')) {
+            return $this->getSetting('extra_label');
+        }
+
+        return (string) $this->label;
     }
 
     public function isHidden(): bool

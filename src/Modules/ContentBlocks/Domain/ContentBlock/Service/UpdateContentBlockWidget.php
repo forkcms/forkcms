@@ -26,8 +26,6 @@ class UpdateContentBlockWidget
             locale: $createcontentBlock->locale
         );
 
-        // TODO set locale for frontend block
-
         $this->blockRepository->save($block);
 
         return $block->getId();
@@ -38,12 +36,8 @@ class UpdateContentBlockWidget
         /** @var Block $block */
         $block = $this->blockRepository->findOneById($contentBlock->getExtraId());
 
-        /* if ($block->getSettings()->has('label')) {
-            $block->getSettings()->remove('label');
-        } */
-
         $block->getSettings()->add([
-            'label' => $contentBlock->getTitle(),
+            'extra_label' => $contentBlock->getTitle(),
             'id' => $contentBlock->getId(),
             'language' => $contentBlock->getLocale(),
         ]);
