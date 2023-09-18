@@ -119,18 +119,22 @@ class Block implements TranslatableInterface
     public function trans(TranslatorInterface $translator, string $locale = null): string
     {
         $module = $this->block->getModule()->asLabel()->trans($translator) . ' › ';
-        if (!$this->settings->has('extra_label')) {
+        $hasOverwrite = $this->settings->has('extra_label');
+        $hasLocaleSpecificOverwrite = $this->settings->has('extra_label_' . $locale);
+        if (!$hasOverwrite && !$hasLocaleSpecificOverwrite) {
             return $module . $this->label->trans($translator);
         }
 
-        if ($this->settings->has('extra_label_parameters')) {
+        $overwriteSettingName = $hasLocaleSpecificOverwrite ? 'extra_label_' . $locale : 'extra_label';
+
+        if ($this->settings->has($overwriteSettingName . '_parameters')) {
             return $module . vsprintf(
-                $this->settings->get('extra_label'),
-                $this->settings->get('extra_label_parameters')
+                $this->settings->get($overwriteSettingName),
+                $this->settings->get($overwriteSettingName . '_parameters')
             );
         }
 
-        return $module . $this->settings->get('extra_label');
+        return $module . $this->settings->get($overwriteSettingName);
     }
 
     public function __toString(): string
