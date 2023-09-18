@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Service;
 
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Frontend\Widgets\Detail as DetailWidget;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
@@ -17,11 +18,12 @@ class UpdateContentBlockWidget
     ) {
     }
 
-    public function getNewExtraId(string $title, ?Locale $locale = null): int
+    public function getNewExtraId(CreatecontentBlock $createcontentBlock): int
     {
         $block = new Block(
             ModuleBlock::fromFQCN(DetailWidget::class),
-            TranslationKey::label('ContentBlocks')
+            TranslationKey::label('ContentBlocks'),
+            locale: $createcontentBlock->locale
         );
 
         // TODO set locale for frontend block

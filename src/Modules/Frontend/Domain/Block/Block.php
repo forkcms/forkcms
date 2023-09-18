@@ -84,16 +84,6 @@ class Block implements TranslatableInterface
 
     public function getLabel(): TranslationKey
     {
-        $localeLabelKey = 'label_' . Locale::current()->value;
-
-        if ($this->getSettings()->has($localeLabelKey)) {
-            return $this->getSettings()->get($localeLabelKey);
-        }
-
-        if ($this->getSettings()->has('label')) {
-            return $this->getSettings()->get('label');
-        }
-
         return $this->label;
     }
 
