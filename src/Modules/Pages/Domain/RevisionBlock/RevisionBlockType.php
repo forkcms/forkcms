@@ -59,7 +59,7 @@ final class RevisionBlockType extends AbstractType
         );
         $builder->add(
             'block',
-            EntityType::class,
+            EntityType::class,  // TODO should probably only fetch blocks for this locale?
             [
                 'label' => 'lbl.Block',
                 'class' => Block::class,
