@@ -87,14 +87,14 @@ final class ContentBlockRepository extends ServiceEntityRepository
                 ->getSingleScalarResult() + 1;
     }
 
-    public function findForExtraIdAndLocale(int $extraId, string $language): ?ContentBlock
+    public function findForIdAndLocale(int $id, string $language): ?ContentBlock
     {
         return $this->createQueryBuilder('cb')
-            ->andWhere('cb.extraId = :extraId')
+            ->andWhere('cb.id = :id')
             ->andWhere('cb.status = :active')
             ->andWhere('cb.locale = :locale')
-            ->setParameter('extraId', $extraId)
-            ->setParameter('active', Status::active())
+            ->setParameter('id', $id)
+            ->setParameter('active', Status::Active)
             ->setParameter('locale', Locale::from($language))
             ->getQuery()
             ->getOneOrNullResult();

@@ -17,14 +17,14 @@ class Detail extends AbstractWidgetController
         parent::__construct($blockServices);
     }
 
-    protected function execute(Request $request, Response $response): void
+    protected function execute(Request $request, Response $respons): void
     {
-        if (!array_key_exists('extra_id', $this->assignedContent)) {
+        if (!$this->hasSetting('id')) {
             return;
         }
 
-        $contentBlock = $this->contentBlockRepository->findForExtraIdAndLocale(
-            $this->assignedContent['extra_id'],
+        $contentBlock = $this->contentBlockRepository->findForIdAndLocale(
+            $this->getSetting('id'),
             $this->translator->getLocale()
         );
 
