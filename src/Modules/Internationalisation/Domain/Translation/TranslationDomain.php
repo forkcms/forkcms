@@ -35,7 +35,7 @@ class TranslationDomain
 
     public function getDomain(): string
     {
-        return Container::underscore($this->application->name . $this->moduleName);
+        return Container::underscore($this->application->value . $this->moduleName);
     }
 
     public function __toString(): string

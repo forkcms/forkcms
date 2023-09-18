@@ -16,6 +16,7 @@ final class OAuthInstaller extends ModuleInstaller
 
     public function install(): void
     {
+        $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
         $this->getOrCreateBackendNavigationItem(
             TranslationKey::label('OAuth'),
             ModuleSettings::getActionSlug(),

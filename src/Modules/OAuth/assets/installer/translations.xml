@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translations>
+  <Backend>
+    <item type="label" name="OAuth">
+      <translation locale="nl"><![CDATA[OAuth]]></translation>
+      <translation locale="en"><![CDATA[OAuth]]></translation>
+    </item>
+    <OAuth>
+      <item type="label" name="ClientId">
+        <translation locale="nl"><![CDATA[Client id]]></translation>
+        <translation locale="en"><![CDATA[Client id]]></translation>
+      </item>
+      <item type="label" name="ClientSecret">
+        <translation locale="nl"><![CDATA[Client secret]]></translation>
+        <translation locale="en"><![CDATA[Client secret]]></translation>
+      </item>
+      <item type="label" name="Tenant">
+        <translation locale="nl"><![CDATA[Tenant]]></translation>
+        <translation locale="en"><![CDATA[Tenant]]></translation>
+      </item>
+      <item type="label" name="Enabled">
+        <translation locale="nl"><![CDATA[Activeer]]></translation>
+        <translation locale="en"><![CDATA[Enabled]]></translation>
+      </item>
+    </OAuth>
+  </Backend>
+</translations>
