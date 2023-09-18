@@ -15,9 +15,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RevisionBlockType extends AbstractType
 {
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -60,6 +65,9 @@ final class RevisionBlockType extends AbstractType
                 'class' => Block::class,
                 'required' => false,
                 'group_by' => static fn (Block $block): TranslationKey => $block->getBlock()->getModule()->asLabel(),
+                'choice_label' => function (Block $block): string {
+                    return $block->trans($this->translator);
+                },
                 'choice_attr' => static fn (Block $block): array => [
                     'data-type' => $block->getType()->value,
                 ],
