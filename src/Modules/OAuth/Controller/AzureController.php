@@ -30,12 +30,8 @@ class AzureController
     public function connectAction(): RedirectResponse {
         if (!$this->moduleSettings->get(ModuleName::fromString('OAuth'), 'enabled', false)) {
             return new RedirectResponse(
-                str_replace(
-                    'http://',
-                    'https://',
-                    $this->router->generate(
-                        'backend_login',
-                    )
+                $this->router->generate(
+                    'backend_login',
                 )
             );
         }
@@ -56,7 +52,7 @@ class AzureController
             );
     }
 
-    #[Route('/private/connect/azure/check', name: 'connect_azure_check')]
+    #[Route('/private/connect/azure/check', name: 'connect_azure_check', schemes: ['https'])]
     public function connectCheckAction(AzureAuthenticator $authenticator, Request $request)
     {
     }
