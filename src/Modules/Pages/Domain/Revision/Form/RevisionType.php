@@ -78,7 +78,8 @@ final class RevisionType extends AbstractType
                     'generate_slug_callback_method' => 'generateSlug',
                     'generate_slug_callback_parameters' => [
                         $revisionDataTransferObject->locale,
-                        $revisionDataTransferObject->hasEntity() ? $revisionDataTransferObject->getEntity()->getId() : null,
+                        $revisionDataTransferObject->hasEntity() ?
+                            $revisionDataTransferObject->getEntity()->getId() : null,
                     ],
                 ]);
                 if ($revisionDataTransferObject->hasEntity()) {

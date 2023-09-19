@@ -41,7 +41,8 @@ final class TranslationFilterType extends AbstractType
                 'choice_label' => fn (Application $application): string => ucfirst(
                     $application->trans($this->translator)
                 ),
-                'choice_filter' => fn (?Application $application): bool => (bool) $application?->hasEditableTranslations(),
+                'choice_filter' => fn (?Application $application): bool =>
+                    (bool) $application?->hasEditableTranslations(),
                 'choice_translation_domain' => false,
                 'required' => false,
                 'placeholder' => 'msg.NotFiltered',

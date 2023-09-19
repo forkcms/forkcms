@@ -71,20 +71,24 @@ class ImportLocaleCommand extends Command
             $formatter->comment('Updated ' . $importResults->getUpdatedCount() . ' translations succesfully!');
         }
         if ($importResults->getSkippedCount() > 0) {
+            // @codingStandardsIgnoreStart
             $formatter->comment(
                 sprintf(
                     'Skipped %d translations because they belong to a locale that is not installed or to a different locale than specified with the --locale option.',
                     $importResults->getSkippedCount()
                 )
             );
+            // @codingStandardsIgnoreEnd
         }
         if ($importResults->getFailedCount() > 0) {
+            // @codingStandardsIgnoreStart
             $formatter->warning(
                 sprintf(
                     'Failed to import %d translations because they already existed, add --overwrite if you want to overwrite them.',
                     $importResults->getFailedCount()
                 )
             );
+            // @codingStandardsIgnoreEnd
         }
 
         return $importResults->getFailedCount() > 0 ? self::FAILURE : self::SUCCESS;

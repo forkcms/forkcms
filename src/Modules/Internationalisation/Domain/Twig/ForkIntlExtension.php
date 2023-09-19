@@ -27,6 +27,7 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
+ * @codingStandardsIgnoreStart
  * @method string getCountryName(?string $country, string $locale = null)
  * @method string getCurrencyName(?string $currency, string $locale = null)
  * @method string getCurrencySymbol(?string $currency, string $locale = null)
@@ -46,6 +47,7 @@ use Twig\TwigFunction;
  * @method string formatUserDateTime(Environment $env, mixed $date, ?string $dateFormat = 'medium', ?string $timeFormat = 'medium', string $pattern = '', mixed $timezone = null, string $calendar = 'gregorian', string $locale = null)
  * @method string formatUserDate(Environment $env, mixed $date, ?string $dateFormat = 'medium', string $pattern = '', mixed $timezone = null, string $calendar = 'gregorian', string $locale = null)
  * @method string formatUserTime(Environment $env, ?string $timeFormat = 'medium', string $pattern = '', $timezone = null, string $calendar = 'gregorian', string $locale = null)
+ * @codingStandardsIgnoreEnd
  */
 final class ForkIntlExtension extends AbstractExtension implements EventSubscriberInterface
 {
@@ -193,7 +195,11 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             $numberFormat = $user->getSetting('number_format', $numberFormat);
         }
 
-        $numberFormatter = new NumberFormatter($locale->getLocale()->value, NumberFormatter::DECIMAL, '#,##0.####################');
+        $numberFormatter = new NumberFormatter(
+            $locale->getLocale()->value,
+            NumberFormatter::DECIMAL,
+            '#,##0.####################',
+        );
         $separatorSymbols = array_map(
             static fn (string $separator): string => str_replace(
                 ['comma', 'dot', 'space', 'nothing'],
@@ -246,8 +252,10 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     }
 
     /**
+     * @codingStandardsIgnoreStart
      * @param DateTimeInterface|string|null $date A date or null to use the current time
      * @param DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
+     * @codingStandardsIgnoreEnd
      */
     public function formatLongDateTime(
         Environment $env,
@@ -275,8 +283,10 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     }
 
     /**
+     * @codingStandardsIgnoreStart
      * @param DateTimeInterface|string|null $date A date or null to use the current time
      * @param DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
+     * @codingStandardsIgnoreEnd
      */
     public function formatLongDate(
         Environment $env,
@@ -302,8 +312,10 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     }
 
     /**
+     * @codingStandardsIgnoreStart
      * @param DateTimeInterface|string|null $date A date or null to use the current time
      * @param DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
+     * @codingStandardsIgnoreEnd
      */
     public function formatUserLongDateTime(
         Environment $env,
@@ -331,8 +343,10 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     }
 
     /**
+     * @codingStandardsIgnoreStart
      * @param DateTimeInterface|string|null $date A date or null to use the current time
      * @param DateTimeZone|string|false|null $timezone The target timezone, null to use the default, false to leave unchanged
+     * @codingStandardsIgnoreEnd
      */
     public function formatUserLongDate(
         Environment $env,

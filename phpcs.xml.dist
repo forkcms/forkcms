@@ -21,4 +21,5 @@
     <exclude-pattern>src/**/Maker</exclude-pattern>
     <exclude-pattern>app.fork5</exclude-pattern>
     <exclude-pattern>src.fork5</exclude-pattern>
+    <exclude-pattern>src/Modules/Installer/Domain/Requirement/RequirementsChecker.php</exclude-pattern>
 </ruleset>

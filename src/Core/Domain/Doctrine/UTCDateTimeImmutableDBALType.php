@@ -40,7 +40,11 @@ class UTCDateTimeImmutableDBALType extends DateTimeImmutableType
             return $dateTimeString;
         }
 
-        $dateTime = DateTimeImmutable::createFromFormat($platform->getDateTimeFormatString(), $dateTimeString, self::getUtc());
+        $dateTime = DateTimeImmutable::createFromFormat(
+            $platform->getDateTimeFormatString(),
+            $dateTimeString,
+            self::getUtc()
+        );
 
         if (!$dateTime) {
             throw ConversionException::conversionFailedFormat(

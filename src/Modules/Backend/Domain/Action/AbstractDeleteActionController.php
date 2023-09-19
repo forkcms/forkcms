@@ -36,7 +36,10 @@ abstract class AbstractDeleteActionController extends AbstractFormActionControll
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));
             },
-            validCallback: function (FormInterface $form) use ($deleteCommandFullyQualifiedClassName, $redirectActionSlug): RedirectResponse {
+            validCallback: function (FormInterface $form) use (
+                $deleteCommandFullyQualifiedClassName,
+                $redirectActionSlug
+            ): RedirectResponse {
                 $this->commandBus->dispatch(new $deleteCommandFullyQualifiedClassName($form->getData()['id']));
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));

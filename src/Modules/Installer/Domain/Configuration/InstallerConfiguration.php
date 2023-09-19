@@ -161,7 +161,9 @@ final class InstallerConfiguration
     public function withDatabaseStep(DatabaseStepConfiguration $databaseStepConfiguration): self
     {
         if (!$databaseStepConfiguration->canConnectToDatabase()) {
-            throw new LogicException('Invalid database credentials for database: ' . $databaseStepConfiguration->databaseName);
+            throw new LogicException(
+                'Invalid database credentials for database: ' . $databaseStepConfiguration->databaseName
+            );
         }
 
         $this->databaseHostname = (string) $databaseStepConfiguration->databaseHostname;

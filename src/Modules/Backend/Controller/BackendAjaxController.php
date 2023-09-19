@@ -26,7 +26,13 @@ final class BackendAjaxController
         try {
             $action = $this->ajaxActions->get($actionSlug->getFQCN());
         } catch (NotFoundExceptionInterface) {
-            throw new InvalidArgumentException(sprintf('The ajax action class %s must be registered as a service and implement %s', $actionSlug->getFQCN(), AjaxActionControllerInterface::class));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The ajax action class %s must be registered as a service and implement %s',
+                    $actionSlug->getFQCN(),
+                    AjaxActionControllerInterface::class
+                )
+            );
         }
 
         try {

@@ -58,8 +58,11 @@ abstract class AbstractBlockController implements BlockControllerInterface
      *
      * @return string|null always returns null but you can't typehint on that yet
      */
-    final public function redirect(string $url, int $status = Response::HTTP_TEMPORARY_REDIRECT, array $headers = []): ?string
-    {
+    final public function redirect(
+        string $url,
+        int $status = Response::HTTP_TEMPORARY_REDIRECT,
+        array $headers = []
+    ): ?string {
         $this->responseOverride = new RedirectResponse($url, $status, $headers);
 
         return null;

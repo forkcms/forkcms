@@ -20,7 +20,11 @@ final class InstallableThemeTemplate extends ThemeTemplateDataTransferObject
 
         $themeTemplate = new self();
         $themeTemplate->name = SafeString::fromXML($template->attributes()->name);
-        $themeTemplate->path = str_replace(ThemeTemplate::PATH_DIRECTORY, '', SafeString::fromXML($template->attributes()->path));
+        $themeTemplate->path = str_replace(
+            ThemeTemplate::PATH_DIRECTORY,
+            '',
+            SafeString::fromXML($template->attributes()->path)
+        );
         $themeTemplate->active = true;
         $layout = str_replace(' ', '', trim(SafeString::fromXML($template->layout)));
         $themeTemplate->settings->set('layout', $layout);
