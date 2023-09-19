@@ -30,8 +30,12 @@ class AzureController
     public function connectAction(): RedirectResponse {
         if (!$this->moduleSettings->get(ModuleName::fromString('OAuth'), 'enabled', false)) {
             return new RedirectResponse(
-                $this->router->generate(
-                    'backend_login',
+                str_replace(
+                    'http://',
+                    'https://',
+                    $this->router->generate(
+                        'backend_login',
+                    )
                 )
             );
         }
