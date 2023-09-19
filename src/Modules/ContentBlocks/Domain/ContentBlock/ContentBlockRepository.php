@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 
 /**
@@ -14,8 +15,10 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
  */
 final class ContentBlockRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly BlockRepository $blockRepository
+    ) {
         parent::__construct($managerRegistry, ContentBlock::class);
     }
 
@@ -24,6 +27,10 @@ final class ContentBlockRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->persist($contentBlock);
         $entityManager->flush();
+
+        if ($contentBlock->getStatus() !== Status::Archived) {
+            $this->updateWidget($contentBlock);
+        }
     }
 
     public function remove(ContentBlock $contentBlock): void
@@ -98,5 +105,12 @@ final class ContentBlockRepository extends ServiceEntityRepository
             ->setParameter('locale', Locale::from($language))
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    private function updateWidget(ContentBlock $contentBlock): void
+    {
+        $block = $contentBlock->getWidget();
+        $block->getSettings()->set('label', $contentBlock->getTitle());
+        $this->blockRepository->save($block);
     }
 }

@@ -11,5 +11,3 @@ services:
 
   ForkCMS\Modules\ContentBlocks\Frontend\:
     resource: '../Frontend/*'
-
-  ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Service\UpdateContentBlockWidget:

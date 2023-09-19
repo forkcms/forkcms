@@ -5,13 +5,11 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 
 final readonly class ChangeContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private ContentBlockRepository $contentBlockRepository,
-        private BlockRepository $blockRepository
+        private ContentBlockRepository $contentBlockRepository
     ) {
     }
 
@@ -24,13 +22,5 @@ final readonly class ChangeContentBlockHandler implements CommandHandlerInterfac
 
         $this->contentBlockRepository->save($previousContentBlock);
         $this->contentBlockRepository->save($contentBlock);
-        $this->updateFrontendBlock($contentBlock);
-    }
-
-    private function updateFrontendBlock(ContentBlock $contentBlock): void
-    {
-        $widget = $contentBlock->getWidget();
-        $widget->getSettings()->set('label', $contentBlock->getTitle());
-        $this->blockRepository->save($widget);
     }
 }
