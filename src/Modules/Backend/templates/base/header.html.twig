@@ -15,7 +15,7 @@
         </a>
       </p>
       {% if SITE_MULTILINGUAL %}
-        {% set websiteLocales = LOCALES|filter(l => l.isEnabledForWebsite)%}
+        {% set websiteLocales = LOCALES|filter(l => l.isEnabledForWebsite) %}
         <div class="nav navbar-nav navbar-languages">
           <span class="working-language d-none d-sm-block me-sm-1">{{ 'lbl.NowEditing'|trans|ucfirst }}</span>
           {% if websiteLocales|count > 1 %}
@@ -26,7 +26,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarLanguagesDropdown">
                 {% for workingLocale in LOCALES|filter(l => l.isEnabledForWebsite) %}
-                  <a class="dropdown-item{% if workingLocale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug:app.request.get('slug')}, false, workingLocale.locale.value) }}">
+                  <a class="dropdown-item{% if workingLocale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug: app.request.get('slug')}, false, workingLocale.locale.value) }}">
                     {{ workingLocale.locale.asTranslatable|trans|ucfirst }}
                   </a>
                 {% endfor %}

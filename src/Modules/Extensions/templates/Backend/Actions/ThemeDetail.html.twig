@@ -117,7 +117,7 @@
   {% if theme.isInstallable and is_allowed('ThemeInstall') %}
     <div class="btn-toolbar d-flex">
       <div class="btn-group ms-auto" role="group">
-        {{ macro.buttonIcon('', 'file', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmInstall" ~ theme.name|e('html_attr')|ucfirst }) }}
+        {{ macro.buttonIcon('', 'file', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmInstall" ~ theme.name|e('html_attr')|ucfirst}) }}
       </div>
     </div>
     <div class="modal fade" id="confirmInstall{{ theme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1"
@@ -132,9 +132,9 @@
             <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" }) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
             {{ form_start(themeInstallForm) }}
-            {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { "type":"submit"}) }}
+            {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
             {{ form_end(themeInstallForm) }}
           </div>
         </div>

@@ -11,7 +11,7 @@
 
 {% block content %}
   {% if formTheme is defined %}
-    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig',formTheme] %}
+    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig', formTheme] %}
   {% endif %}
   {{ form_start(backend_form) }}
   {{ form_widget(backend_form) }}
@@ -21,7 +21,7 @@
   <div class="btn-toolbar d-flex">
     <div class="btn-group" role="group">
       {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
-        {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete"}) }}
+        {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type": "button", "data-bs-toggle": "modal", "data-bs-target": "#confirmDelete"}) }}
       {% endif %}
       {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
         <div class="btn-group" role="group">
@@ -51,8 +51,8 @@
             <p>{{ confirmDeleteMessage|default('msg.ConfirmDelete'|trans|format(crudDeleteName|e)) }}</p>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', confirmDeleteCancelIcon|default('times'), confirmDeleteCancelLabel|default('lbl.Cancel'|trans|ucfirst), confirmDeleteCancelClass|default('btn-default'), {"type":"button", "data-bs-dismiss":"modal"}) }}
-            {{ macro.buttonIcon('', confirmDeleteSubmitIcon|default('trash'), confirmDeleteSubmitLabel|default('lbl.Delete'|trans|ucfirst), confirmDeleteSubmitClass|default('btn-danger'), {"type":"submit"}) }}
+            {{ macro.buttonIcon('', confirmDeleteCancelIcon|default('times'), confirmDeleteCancelLabel|default('lbl.Cancel'|trans|ucfirst), confirmDeleteCancelClass|default('btn-default'), {"type": "button", "data-bs-dismiss": "modal"}) }}
+            {{ macro.buttonIcon('', confirmDeleteSubmitIcon|default('trash'), confirmDeleteSubmitLabel|default('lbl.Delete'|trans|ucfirst), confirmDeleteSubmitClass|default('btn-danger'), {"type": "submit"}) }}
           </div>
         </div>
       </div>

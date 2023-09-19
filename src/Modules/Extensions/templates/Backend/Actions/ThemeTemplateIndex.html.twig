@@ -2,14 +2,14 @@
 {% import '@Backend/base/macros.html.twig' as macro %}
 
 {% set dataGridEmptyAction = 'ThemeTemplateAdd' %}
-{% set dataGridEmptyParameters = {slug:selectedTheme.name} %}
+{% set dataGridEmptyParameters = {slug: selectedTheme.name} %}
 {% set dataGridEmptyLabel = 'lbl.ThemeTemplateAdd'|trans|ucfirst %}
 
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if is_allowed('ThemeTemplateExport') %}
-        {{ macro.buttonIcon(action_url('ThemeTemplateExport', null, {slug:selectedTheme.name}), 'download', 'lbl.Export'|trans|ucfirst) }}
+        {{ macro.buttonIcon(action_url('ThemeTemplateExport', null, {slug: selectedTheme.name}), 'download', 'lbl.Export'|trans|ucfirst) }}
       {% endif %}
       {% if is_allowed('ThemeTemplateAdd') %}
         {{ macro.buttonIcon(action_url(dataGridEmptyAction, null, dataGridEmptyParameters), 'plus-square', dataGridEmptyLabel, 'btn-success') }}
@@ -31,7 +31,7 @@
               {% for theme in themes %}
                 {% if theme.name != selectedTheme.name %}
                   <li>
-                    <a class="dropdown-item" href="{{ action_url('ThemeTemplateIndex', null, {slug:theme.name}) }}">{{ theme.name }}</a>
+                    <a class="dropdown-item" href="{{ action_url('ThemeTemplateIndex', null, {slug: theme.name}) }}">{{ theme.name }}</a>
                   </li>
                 {% endif %}
               {% endfor %}

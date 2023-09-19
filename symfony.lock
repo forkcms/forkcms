@@ -676,6 +676,15 @@
     "twig/twig": {
         "version": "v3.3.7"
     },
+    "vincentlanglet/twig-cs-fixer": {
+        "version": "1.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.6",
+            "ref": "e4da12a48e8138479bd24a675321bcfd84950266"
+        }
+    },
     "webmozart/assert": {
         "version": "1.10.0"
     }

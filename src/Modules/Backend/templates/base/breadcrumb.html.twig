@@ -1,7 +1,7 @@
 <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList" aria-label="breadcrumb">
   {% for breadcrumb in breadcrumbs %}
-    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" {{ breadcrumbs.count == loop.index ? ' aria-current="page"': '' }}>
-      {% if not loop.first%}
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" {{ breadcrumbs.count == loop.index ? ' aria-current="page"' : '' }}>
+      {% if not loop.first %}
         <i class="fas fa-chevron-right fa-xs"></i>
       {% endif %}
       {% if breadcrumb.url is null or breadcrumbs.count == loop.index %}
@@ -12,5 +12,5 @@
         </a>
       {% endif %}
     </li>
-  {% endfor%}
+  {% endfor %}
 </ol>

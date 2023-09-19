@@ -11,7 +11,7 @@
     </a>
   {% else %}
     {% if extra['data-bs-toggle'] is defined and extra['type'] is not defined %}
-      {% set extra = extra|merge({'type' : 'button'}) %}
+      {% set extra = extra|merge({'type': 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
     {% apply spaceless %}
@@ -50,7 +50,7 @@
 {% macro alert(type, message, dismissable = false, id, extraAttributes = [], active = true, showIcon = true) %}
   {% import _self as macro %}
 
-  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
+  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default(''))}) %}
 
   {% if active %}
     {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
