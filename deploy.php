@@ -11,9 +11,9 @@ require 'contrib/cachetool.php';
 require __DIR__ . '/vendor/sumocoders/deployer-sumo-forkcms/sumo.php';
 
 // Define some variables
-set('client', 'sumocoders');
-set('project', 'forkcms');
-set('repository', 'git@git.sumocoders.be:sumocoders/forkcms-6.git');
+set('client', '');
+set('project', '');
+set('repository', '');
 set('production_url', '');
 set('production_user', '');
 set('php_version', '8.2');
