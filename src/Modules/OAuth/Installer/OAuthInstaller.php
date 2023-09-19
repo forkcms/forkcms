@@ -8,12 +8,6 @@ use ForkCMS\Modules\OAuth\Backend\Actions\ModuleSettings;
 
 final class OAuthInstaller extends ModuleInstaller
 {
-    public function preInstall(): void
-    {
-        $this->createTableForEntities(
-        );
-    }
-
     public function install(): void
     {
         $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
