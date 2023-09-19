@@ -5,7 +5,17 @@
       <translation locale="nl"><![CDATA[OAuth]]></translation>
       <translation locale="en"><![CDATA[OAuth]]></translation>
     </item>
+    <Backend>
+      <item type="label" name="LoginWithMicrosoftAzure">
+        <translation locale="nl"><![CDATA[Login met Microsoft Azure]]></translation>
+        <translation locale="en"><![CDATA[Login with Microsoft Azure]]></translation>
+      </item>
+    </Backend>
     <OAuth>
+      <item type="message" name="OAuthSettingsUpdated">
+        <translation locale="nl"><![CDATA[OAuth settings zijn aangepast]]></translation>
+        <translation locale="en"><![CDATA[OAuth settings are updated]]></translation>
+      </item>
       <item type="label" name="ClientId">
         <translation locale="nl"><![CDATA[Client id]]></translation>
         <translation locale="en"><![CDATA[Client id]]></translation>
