@@ -96,25 +96,16 @@ final class ContentBlock
         $this->status = $dataTransferObject->status;
     }
 
-    /**
-     * @return int
-     */
     public function getRevisionId(): int
     {
         return $this->revisionId;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
@@ -125,41 +116,26 @@ final class ContentBlock
         return $this->widget;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @return Locale
-     */
     public function getLocale(): Locale
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @return bool
-     */
     public function isHidden(): bool
     {
         return $this->isHidden;
@@ -171,25 +147,16 @@ final class ContentBlock
         return $this->isHidden ? 'lbl.No' : 'lbl.Yes';
     }
 
-    /**
-     * @return Status
-     */
     public function getStatus(): Status
     {
         return $this->status;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
