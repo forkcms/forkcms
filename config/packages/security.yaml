@@ -36,7 +36,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/private/connect, roles: PUBLIC_ACCESS }
+    - { path: ^/private/oauth/connect, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication_login, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication_logout, roles: PUBLIC_ACCESS }
     - { path: ^/private, roles: ROLE_USER }
