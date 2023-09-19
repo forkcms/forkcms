@@ -19,6 +19,41 @@
       <translation locale="pl"><![CDATA[frontend]]></translation>
     </item>
     <Frontend>
+      <item type="label" name="Editor">
+        <translation locale="nl"><![CDATA[editor]]></translation>
+        <translation locale="en"><![CDATA[editor]]></translation>
+        <translation locale="hu"><![CDATA[szerkesztő]]></translation>
+        <translation locale="it"><![CDATA[editor]]></translation>
+        <translation locale="ru"><![CDATA[Изменил]]></translation>
+        <translation locale="zh"><![CDATA[编辑人]]></translation>
+        <translation locale="de"><![CDATA[Editor]]></translation>
+        <translation locale="fr"><![CDATA[éditeur]]></translation>
+        <translation locale="es"><![CDATA[editor]]></translation>
+        <translation locale="lt"><![CDATA[redagavo:]]></translation>
+        <translation locale="uk"><![CDATA[Змінив]]></translation>
+        <translation locale="sv"><![CDATA[redaktör]]></translation>
+        <translation locale="el"><![CDATA[επεξεργαστής κειμένου]]></translation>
+        <translation locale="pl"><![CDATA[edytor]]></translation>
+        <translation locale="pt"><![CDATA[editor]]></translation>
+      </item>
+      <item type="label" name="Text">
+        <translation locale="nl"><![CDATA[tekst]]></translation>
+        <translation locale="en"><![CDATA[text]]></translation>
+        <translation locale="hu"><![CDATA[szöveg]]></translation>
+        <translation locale="it"><![CDATA[testo]]></translation>
+        <translation locale="ru"><![CDATA[Текст]]></translation>
+        <translation locale="zh"><![CDATA[文本]]></translation>
+        <translation locale="de"><![CDATA[Text]]></translation>
+        <translation locale="fr"><![CDATA[texte]]></translation>
+        <translation locale="es"><![CDATA[texto]]></translation>
+        <translation locale="lt"><![CDATA[tesktas]]></translation>
+        <translation locale="uk"><![CDATA[Текст]]></translation>
+        <translation locale="sv"><![CDATA[text]]></translation>
+        <translation locale="el"><![CDATA[κείμενο]]></translation>
+        <translation locale="tr"><![CDATA[Metin]]></translation>
+        <translation locale="pt"><![CDATA[texto]]></translation>
+        <translation locale="pl"><![CDATA[tekst]]></translation>
+      </item>
       <item type="message" name="HelpSiteHtmlEndOfBody">
         <translation locale="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
         <translation locale="en"><![CDATA[Paste code that needs to be loaded at the end of the <code><body></code> tag here.]]></translation>

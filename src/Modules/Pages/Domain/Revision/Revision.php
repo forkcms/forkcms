@@ -113,10 +113,10 @@ class Revision
 
     /** @var Collection<array-key, RevisionBlock> */
     #[ORM\OneToMany(mappedBy: 'revision', targetEntity: RevisionBlock::class, cascade: ['persist'])]
-    #[ORM\OrderBy(['position' => 'ASC'])]
+    #[ORM\OrderBy(['sequence' => 'ASC'])]
     private Collection $blocks;
 
-    /** @param Collection<array-key, RevisionBlockDataTransferObject[]> $blocks */
+    /** @param Collection<string, non-empty-array<int, RevisionBlockDataTransferObject>> $blocks */
     private function __construct(
         Page $page,
         ?Page $parentPage,

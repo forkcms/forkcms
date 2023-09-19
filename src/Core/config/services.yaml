@@ -4,6 +4,8 @@ services:
     autoconfigure: true
     bind:
       $twigBridgeRoutingExcension: '@twig.extension.routing'
+      $editorTypeImplementations: !tagged_locator { tag: 'forkcms.editor' }
+
   _instanceof:
     Symfony\Component\Console\Command\Command:
       bind:

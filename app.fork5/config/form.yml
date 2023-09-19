@@ -1,20 +1,11 @@
 parameters:
     fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
-    fork.form.default_preferred_editor: 'block-editor'
-    fork.form.available_editors:
-        ck-editor: 'CK Editor'
-        html: 'HTML'
-        block-editor: 'Block Editor'
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
         public: true
-
-    Common\BlockEditor\Blocks\:
-        resource: '../../src/Common/BlockEditor/Blocks'
-        tags: ['fork.block_editor.block']
 
     Common\Form\DatePickerType:
         tags:

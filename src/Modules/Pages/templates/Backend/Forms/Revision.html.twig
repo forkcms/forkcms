@@ -53,7 +53,7 @@
       <div data-role="page-block-preview" class="mb-2{% if not field.vars.data.type.isEditor %} d-none{% endif %}">
         <p class="page-block-description mb-0 block-info">
           {% if field.vars.data.editorContent %}
-             {{ field.vars.data.editorContent|slice(75) }}
+             {{ field.vars.data.editorContent|parseEditor|striptags|slice(0, 75) }}
           {% else %}
             {{ 'lbl.NoContentToShow'|trans|ucfirst }}
           {% endif %}

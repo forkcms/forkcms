@@ -25,10 +25,6 @@ framework:
                 adapter: cache.app
                 public: true
                 default_lifetime: 3600
-            cache.block_editor:
-                adapter: cache.app
-                public: true
-                default_lifetime: 31622400 # one year
 
 webpack_encore:
     output_path: '%kernel.project_dir%/src/Backend/Core/build'
@@ -271,12 +267,6 @@ services:
 
     Common\Core\Twig\Extensions\IncludeOnceExtension:
         public: false
-        tags:
-            - { name: twig.extension }
-
-    Common\BlockEditor\Twig\ParseBlocksExtension:
-        public: true
-        autowire: true
         tags:
             - { name: twig.extension }
 

@@ -1,8 +1,2 @@
-framework:
-  cache:
-    pools:
-      cache.block_editor:
-        adapter: cache.adapter.array
-
 parameters:
   container.dumper.inline_factories: true

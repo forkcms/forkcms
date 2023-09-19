@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Pages\Controller;
 
+use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\Header;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
@@ -39,6 +40,7 @@ final class PageController
         private readonly InstalledLocaleRepository $installedLocaleRepository,
         private readonly FrontendGlobals $frontendGlobals,
         private readonly Header $header,
+        private readonly EditorType $editorType,
     ) {
     }
 
@@ -78,19 +80,24 @@ final class PageController
                     if ($this->frontendBlocks->has($blockName)) {
                         /** @var BlockControllerInterface $blockController */
                         $blockController = $this->frontendBlocks->get($blockName);
-                        if ($hasJsonResponse) {
-                            $revisionContext['positions'][$position][] = [
-                                'block' => $blockName,
-                                'content' => $blockController($request, $response, $block),
-                            ];
-                        } else {
-                            $revisionContext['positions'][$position][] = $blockController($request, $response, $block);
-                        }
+                        $revisionContext['positions'][$position][] = $this->getBlockResponse(
+                            $hasJsonResponse,
+                            $blockName,
+                            $blockController($request, $response, $block)
+                        );
                         $responseOverride = $blockController->getResponseOverride();
                         if ($responseOverride !== null) {
                             return $responseOverride;
                         }
                     }
+                }
+                $editorContent = $revisionBlock->getEditorContent();
+                if ($editorContent !== null) {
+                    $revisionContext['positions'][$position][] = $this->getBlockResponse(
+                        $hasJsonResponse,
+                        'editor',
+                        $this->editorType->parseContent($editorContent)
+                    );
                 }
             }
         }
@@ -111,6 +118,23 @@ final class PageController
         );
 
         return $response;
+    }
+
+    /**
+     * @param string|array<string, mixed> $content
+     *
+     * @return string|array<string, mixed>|array{block: string, content: string|array<string, mixed>}
+     */
+    private function getBlockResponse(bool $hasJsonResponse, string $blockName, array|string $content): array|string
+    {
+        if ($hasJsonResponse) {
+            return [
+                'block' => $blockName,
+                'content' => $content,
+            ];
+        }
+
+        return $content;
     }
 
     private function parseRevision(Request $request, Revision $revision): void

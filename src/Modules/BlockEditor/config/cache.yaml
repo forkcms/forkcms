@@ -1,0 +1,7 @@
+framework:
+  cache:
+    pools:
+      cache.block_editor:
+        adapter: cache.app
+        public: true
+        default_lifetime: 31622300 # one year

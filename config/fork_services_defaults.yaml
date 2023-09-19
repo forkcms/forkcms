@@ -13,6 +13,10 @@ services:
       tags:
         - { name: forkcms.module.installer }
 
+    ForkCMS\Core\Domain\Form\Editor\EditorTypeImplementationInterface:
+      tags:
+        - { name: forkcms.editor }
+
     ForkCMS\Core\Domain\Router\ModuleRouteProviderInterface:
       tags:
         - { name: forkcms.routing.loader }
@@ -52,3 +56,6 @@ services:
     ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService:
       tags:
         - { name: forkcms.frontend.meta.callback }
+
+    ForkCMS\Modules\BlockEditor\Domain\Blocks\AbstractBlock:
+      tags: [ 'fork.block_editor.block' ]

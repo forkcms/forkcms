@@ -7,8 +7,10 @@ use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Extensions\Domain\Module\Module;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
+use RuntimeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -147,10 +149,17 @@ abstract class AbstractFormActionController extends AbstractActionController
         string $formType,
         array $defaults = []
     ): Response|FormInterface|null {
+        $moduleRepository = $this->getRepository(Module::class);
+        $moduleName = $this->getModuleName();
+
         return $this->handleSettingsForm(
             $request,
             $formType,
-            new ChangeModuleSettings($this->getRepository(Module::class)->find($this->getModuleName()), $defaults),
+            new ChangeModuleSettings(
+                $moduleRepository->find(ModuleName::core()) ?? throw new RuntimeException('Core module not found'),
+                $moduleRepository->find($moduleName) ?? throw new RuntimeException($moduleName . ' module not found'),
+                $defaults
+            ),
         );
     }
 }

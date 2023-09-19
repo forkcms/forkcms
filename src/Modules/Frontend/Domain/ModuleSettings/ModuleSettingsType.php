@@ -4,6 +4,8 @@ namespace ForkCMS\Modules\Frontend\Domain\ModuleSettings;
 
 use ForkCMS\Core\Domain\Form\CheckboxTextType;
 use ForkCMS\Core\Domain\Form\CollectionType;
+use ForkCMS\Core\Domain\Form\Editor\EditorTypeImplementationInterface;
+use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Core\Domain\Form\FieldsetType;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TabsType;
@@ -13,7 +15,9 @@ use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocale;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocaleRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,9 +26,11 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 final class ModuleSettingsType extends AbstractType
 {
+    /** @param ServiceLocator<EditorTypeImplementationInterface> $editorTypeImplementations */
     public function __construct(
         private readonly InstalledLocaleRepository $installedLocaleRepository,
         private readonly ModuleSettings $moduleSettings,
+        private readonly ServiceLocator $editorTypeImplementations,
     ) {
     }
 
@@ -91,7 +97,7 @@ final class ModuleSettingsType extends AbstractType
                             'required' => false,
                         ]
                     );
-                }
+                },
             ]
         )->add(
             'privacy_consents',
@@ -115,7 +121,7 @@ final class ModuleSettingsType extends AbstractType
                             'required' => false,
                             'attr' => [
                                 'data-bs-toggle' => 'collapse',
-                                'data-bs-target' => '#module_settings_privacy_consents_consent_dialog_levels'
+                                'data-bs-target' => '#module_settings_privacy_consents_consent_dialog_levels',
                             ],
                         ]
                     )->add(
@@ -128,7 +134,7 @@ final class ModuleSettingsType extends AbstractType
                                     new Regex(
                                         pattern: '/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i',
                                         message: 'err.InvalidVariableName',
-                                    )
+                                    ),
                                 ],
                                 'help_html' => true,
                             ],
@@ -140,11 +146,11 @@ final class ModuleSettingsType extends AbstractType
                             'help' => 'msg.HelpPrivacyConsentLevels',
                             'required' => false,
                             'attr' => [
-                                'class' => 'collapse' . ($showConsentDialog ? ' show' : '')
+                                'class' => 'collapse' . ($showConsentDialog ? ' show' : ''),
                             ],
                         ]
                     );
-                }
+                },
             ]
         )->add(
             'google_tracking_options',
@@ -173,6 +179,22 @@ final class ModuleSettingsType extends AbstractType
                 },
                 'help' => 'msg.HelpGoogleTrackingOptions',
             ]
+        )->add(
+            'editor',
+            FieldsetType::class,
+            [
+                'label' => 'lbl.Editor',
+                'fields' => function (FormBuilderInterface $builder): void {
+                    $builder->add(
+                        'core:' . EditorType::SETTING_NAME,
+                        ChoiceType::class,
+                        [
+                            'label' => 'lbl.Default',
+                            'choices' => $this->getEditorTypeChoices(),
+                        ]
+                    );
+                }
+            ]
         );
     }
 
@@ -180,5 +202,18 @@ final class ModuleSettingsType extends AbstractType
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('data_class', ChangeModuleSettings::class);
+    }
+
+    /** @return array<string, string> */
+    private function getEditorTypeChoices(): array
+    {
+        return array_flip(
+            array_map(
+                fn (string $editorType): string => (string) $this->editorTypeImplementations->get(
+                    $editorType
+                )->getLabel(),
+                $this->editorTypeImplementations->getProvidedServices()
+            )
+        );
     }
 }

@@ -5,10 +5,6 @@ framework:
     profiler: { only_exceptions: false }
     router:
         resource: "%kernel.project_dir%/app/config/routing_dev.yml"
-    cache:
-        pools:
-            cache.block_editor:
-                adapter: cache.array.adapter
 
 web_profiler:
     toolbar: true

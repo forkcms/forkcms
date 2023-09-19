@@ -2,11 +2,12 @@
 
 namespace ForkCMS\Modules\Pages\Domain\RevisionBlock;
 
+use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
+use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
+use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -63,6 +64,12 @@ final class RevisionBlockType extends AbstractType
                 'choice_attr' => static fn (Block $block): array => [
                     'data-type' => $block->getType()->value,
                 ],
+                'query_builder' => static function (BlockRepository $repository): QueryBuilder {
+                    return $repository->createQueryBuilder('b')
+                        ->where('b.locale IS NULL OR b.locale = :locale')
+                        ->setParameter('locale', Locale::current())
+                        ->orderBy('b.position');
+                },
                 'attr' => [
                     'data-role' => 'select-block',
                 ],

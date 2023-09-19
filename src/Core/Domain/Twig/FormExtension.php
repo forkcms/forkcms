@@ -2,23 +2,36 @@
 
 namespace ForkCMS\Core\Domain\Twig;
 
-use ForkCMS\Modules\Backend\Domain\Action\ActionName;
-use ForkCMS\Modules\Backend\Domain\Action\ActionSlug;
-use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
-use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
+use ForkCMS\Core\Domain\Form\EditorType;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 final class FormExtension extends AbstractExtension
 {
+    public function __construct(private readonly EditorType $editorType)
+    {
+    }
+
     public function getFunctions(): array
     {
         return [
-            new TwigFunction(
-                'locateFormView',
-                [$this, 'locateFormView'],
+            new TwigFunction('locateFormView', [$this, 'locateFormView']),
+        ];
+    }
+
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter(
+                'parseEditor',
+                [$this->editorType, 'parseContent'],
+                [
+                    'needs_environment' => false,
+                    'needs_context' => false,
+                    'is_safe' => ['all'],
+                ]
             ),
         ];
     }

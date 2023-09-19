@@ -7,6 +7,9 @@ use ForkCMS\Core\Domain\Application\Application;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Theme\Theme;
 use InvalidArgumentException;
+use RuntimeException;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 final class Asset
 {
@@ -49,6 +52,29 @@ final class Asset
         return $this->file . $separator . 'm=' . filemtime($this->filePath);
     }
 
+    private function getFileFromManifest(): string
+    {
+        static $manifestMap = [];
+        if (count($manifestMap) === 0) {
+            $finder = new Finder();
+            try {
+                $manifestFiles = $finder
+                    ->path('manifest.json')
+                    ->in(__DIR__ . '/../../../../../public/assets/*/*/')
+                    ->files();
+            } catch (DirectoryNotFoundException $e) {
+                throw new RuntimeException('Did you run webpack already?', $e->getCode(), $e);
+            }
+            foreach ($manifestFiles as $manifestFile) {
+                $manifestMap[] = json_decode($manifestFile->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            }
+
+            $manifestMap = array_merge(...$manifestMap);
+        }
+
+        return $manifestMap[$this->file] ?? $this->file;
+    }
+
     private function getFilePath(): string
     {
         static $root = null;
@@ -58,7 +84,7 @@ final class Asset
             $rootRealPath = realpath($root);
         }
 
-        $path = $root . 'public/' . $this->file;
+        $path = $root . 'public/' . $this->getFileFromManifest();
         if (!file_exists($path)) {
             $originalPath = $path;
             $path = preg_replace(
@@ -76,7 +102,9 @@ final class Asset
         }
         $realPath = realpath($path);
         if ($realPath === false || !str_starts_with($realPath, $rootRealPath)) {
-            throw new InvalidArgumentException('File does not exist or is in a location that is not allowed: ' . $path);
+            throw new InvalidArgumentException(
+                'Did you run webpack already? Otherwise the file does not exist or is in a location that is not allowed: ' . $path
+            );
         }
 
         return $realPath;
