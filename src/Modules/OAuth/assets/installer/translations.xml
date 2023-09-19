@@ -12,6 +12,15 @@
       </item>
     </Backend>
     <OAuth>
+      <item type="message" name="OAuthInfo">
+        <translation locale="nl"><![CDATA[OAuth settings zijn aangepast]]></translation>
+        <translation locale="en"><![CDATA[
+          To use OAuth a Microsoft Azure application has to be created <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade">here</a>. <br/>
+          The redirect url should be <em>https://[yourdomain]/private/oauth/connect/azure/check</em>.<br/>
+          Then add a Certificate &amp; secrets and copy the client id and client secret to the fields below.<br/>
+          The tenant Id can found in your <a href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Properties">Azure Active Directory properties</a>.
+        ]]></translation>
+      </item>
       <item type="message" name="OAuthSettingsUpdated">
         <translation locale="nl"><![CDATA[OAuth settings zijn aangepast]]></translation>
         <translation locale="en"><![CDATA[OAuth settings are updated]]></translation>
