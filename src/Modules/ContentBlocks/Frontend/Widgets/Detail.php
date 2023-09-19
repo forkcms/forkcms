@@ -17,7 +17,7 @@ class Detail extends AbstractWidgetController
         parent::__construct($blockServices);
     }
 
-    protected function execute(Request $request, Response $respons): void
+    protected function execute(Request $request, Response $response): void
     {
         if (!$this->hasSetting('id')) {
             return;
