@@ -4,7 +4,6 @@
   <version>1.0.0</version>
   <requirements>
     <minimum_version>6.0.0</minimum_version>
-    <maximum_version>7.0.0</maximum_version>
   </requirements>
   <authors>
     <author>
@@ -14,7 +13,7 @@
   </authors>
   <description>
     <![CDATA[
-      This module handles backand login using Azure OAuth
+      This module allows you to authenticate through Microsoft Azure OAuth. So you can log in with your M365 user.
     ]]>
   </description>
 </module>
