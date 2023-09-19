@@ -16,7 +16,7 @@ final class DeleteContentBlockHandler implements CommandHandlerInterface
     ) {
     }
 
-    public function __invoke(DeleteContentBlock $deleteContentBlock)
+    public function __invoke(DeleteContentBlock $deleteContentBlock): void
     {
         $versions = $this->contentBlockRepository->getVersionsForRevisionId($deleteContentBlock->id);
 

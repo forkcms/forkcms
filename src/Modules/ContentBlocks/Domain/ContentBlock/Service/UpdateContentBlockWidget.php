@@ -34,7 +34,7 @@ class UpdateContentBlockWidget
     public function updateWidget(ContentBlock $contentBlock): void
     {
         /** @var Block $block */
-        $block = $this->blockRepository->findOneById($contentBlock->getExtraId());
+        $block = $this->blockRepository->findOneBy(['id' => $contentBlock->getExtraId()]);
 
         $block->getSettings()->add([
             'extra_label' => $contentBlock->getTitle(),
