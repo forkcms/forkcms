@@ -1,1 +1,30 @@
 {% extends '@Backend/base/crud/settings.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+
+{% block content %}
+  {% if formTheme is defined %}
+    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig',formTheme] %}
+  {% endif %}
+  {{ form_start(backend_form) }}
+  {{ form_row(backend_form.clientId) }}
+  {{ form_label(backend_form.clientSecret) }}
+  <div class="col-12 col-md-6 mb-3">
+    <div class="input-group">
+      {{ form_widget(backend_form.clientSecret, {'attr': {'data-role': 'secret-input'}, 'type': 'password'}) }}
+      <button class="btn btn-outline-primary" type="button" data-role="toggle-visibility" data-target="{{ backend_form.clientSecret.vars.id }}">{{ macro.icon('eye') }}</button>
+    </div>
+  </div>
+
+  {{ form_row(backend_form.tenant) }}
+  {{ form_row(backend_form.enabled) }}
+  {{ form_errors(backend_form) }}
+  {{ form_rest(backend_form) }}
+
+  <div class="btn-toolbar">
+    <div class="btn-group ms-auto" role="group">
+      {{ macro.buttonIcon('', submitIcon|default('save'), submitLabel|default('lbl.Save'|trans|ucfirst), submitClass|default('btn-primary')) }}
+    </div>
+  </div>
+  {{ form_end(backend_form) }}
+{% endblock %}
+

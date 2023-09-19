@@ -6,7 +6,6 @@ use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
-use ForkCMS\Modules\Backend\Domain\User\Command\ChangeUser;
 use ForkCMS\Modules\OAuth\Domain\Settings\Command\UpdateModuleSettings;
 use ForkCMS\Modules\OAuth\Domain\Settings\SettingsType;
 use Symfony\Component\Form\FormInterface;
