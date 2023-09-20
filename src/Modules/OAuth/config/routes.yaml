@@ -1,0 +1,3 @@
+o_auth:
+  resource: ForkCMS\Modules\OAuth\Controller\AzureController
+  type: attribute

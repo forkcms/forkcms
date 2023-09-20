@@ -74,7 +74,7 @@
   <ul class="list-unstyled">
     {%- for error in errors -%}
       <li
-        {% if form.parent %}class="invalid-feedback"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ help_html is same as(false) ? error.message : error.message|raw }}</li>
+              {% if form.parent %}class="invalid-feedback"{% endif %}>{{ macro.icon('exclamation-triangle') }} {{ help_html is same as(false) ? error.message : error.message|raw }}</li>
     {%- endfor -%}
   </ul>
 {% endblock %}
@@ -100,23 +100,23 @@
   {% set methodId = form.vars.id ~ '_method' %}
   {% set parametersId = form.vars.id ~ '_parameters' %}
   <div
-    class="js-do-meta-automatically"
-    data-base-field-selector="{{ base_field_selector }}"
-    data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
-    data-page-title-selector="{{ '#' ~ form.title.vars.id }}"
-    data-page-title-overwrite-selector="{{ '#' ~ form.titleOverwrite.vars.id }}"
-    data-meta-description-selector="{{ '#' ~ form.description.vars.id }}"
-    data-meta-description-overwrite-selector="{{ '#' ~ form.descriptionOverwrite.vars.id }}"
-    data-meta-keywords-selector="{{ '#' ~ form.keywords.vars.id }}"
-    data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
-    data-slug-selector="{{ '#' ~ form.slug.vars.id }}"
-    data-slug-overwrite-selector="{{ '#' ~ form.slugOverwrite.vars.id }}"
-    data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
-    data-generated-slug-selector="{{ form.vars.generated_slug_selector }}"
-    data-custom-selector="{{ '#' ~ customId }}"
-    data-class-name-selector="{{ '#' ~ classId }}"
-    data-method-name-selector="{{ '#' ~ methodId }}"
-    data-parameters-selector="{{ '#' ~ parametersId }}"
+          class="js-do-meta-automatically"
+          data-base-field-selector="{{ base_field_selector }}"
+          data-meta-id-selector="{{ '#' ~ form.id.vars.id }}"
+          data-page-title-selector="{{ '#' ~ form.title.vars.id }}"
+          data-page-title-overwrite-selector="{{ '#' ~ form.titleOverwrite.vars.id }}"
+          data-meta-description-selector="{{ '#' ~ form.description.vars.id }}"
+          data-meta-description-overwrite-selector="{{ '#' ~ form.descriptionOverwrite.vars.id }}"
+          data-meta-keywords-selector="{{ '#' ~ form.keywords.vars.id }}"
+          data-meta-keywords-overwrite-selector="{{ '#' ~ form.keywordsOverwrite.vars.id }}"
+          data-slug-selector="{{ '#' ~ form.slug.vars.id }}"
+          data-slug-overwrite-selector="{{ '#' ~ form.slugOverwrite.vars.id }}"
+          data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
+          data-generated-slug-selector="{{ form.vars.generated_slug_selector }}"
+          data-custom-selector="{{ '#' ~ customId }}"
+          data-class-name-selector="{{ '#' ~ classId }}"
+          data-method-name-selector="{{ '#' ~ methodId }}"
+          data-parameters-selector="{{ '#' ~ parametersId }}"
   >
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
@@ -311,14 +311,14 @@
           {{ form_label(form) }}
         </div>
         <ul
-          class="list-group js-collection"{% if form.vars.allow_sequence %} data-role="collection-sequence"{% if form.vars.sequence_group %} data-sequence-group="{{ form.vars.sequence_group }}"{% endif %}{% endif %}>
+                class="list-group js-collection"{% if form.vars.allow_sequence %} data-role="collection-sequence"{% if form.vars.sequence_group %} data-sequence-group="{{ form.vars.sequence_group }}"{% endif %}{% endif %}>
           {% for field in form %}
             <li class="list-group-item">
               {{ form_widget(field) }}
               {{ form_errors(field) }}
               {% if form.vars.allow_delete or form.vars.allow_sequence %}
                 <div
-                  class="btn-toolbar {{ form.vars.allow_delete and not form.vars.allow_sequence ? 'justify-content-end' : 'justify-content-between' }}">
+                        class="btn-toolbar {{ form.vars.allow_delete and not form.vars.allow_sequence ? 'justify-content-end' : 'justify-content-between' }}">
                   {% if form.vars.allow_sequence %}
                     <div class="btn-group">
                       <span class="btn btn-default btn-icon-only btn-sm fork-data-grid-sortable"
@@ -376,7 +376,7 @@
 
 {% block editor_row %}
   <div
-    class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} card-danger{% endif %}">
+          class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} card-danger{% endif %}">
     <div class="card-heading">
       {{- form_label(form) -}}
     </div>
@@ -432,7 +432,7 @@
   <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-select">
     {%- if placeholder is not none -%}
       <option
-        value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+              value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
     {%- endif -%}
     {%- if preferred_choices|length > 0 -%}
       {% set options = preferred_choices %}
@@ -455,9 +455,9 @@
   <fieldset {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
     {{ form_label(form) }}
     {% if form.vars.help is not empty %}
-    <div class="card-body">
-      {{ form_help(form) }}
-    </div>
+      <div class="card-body">
+        {{ form_help(form) }}
+      </div>
     {% endif %}
     {{ form_widget(form) }}
   </fieldset>
@@ -537,7 +537,7 @@
                 {% set checkboxLabelAttr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
                 {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional') }) %}
                 <td
-                  class="check">{{ form_widget(form.children[index], {'label':false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
+                        class="check">{{ form_widget(form.children[index], {'label':false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
                 <td class="name">
                   <label{% for attrname,attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
                   {{ checkboxLabel }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
@@ -559,8 +559,9 @@
   <table class="table table-hover table-striped fork-data-grid">
     <thead>
     <tr>
-      <th class="check"><input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
-                               class="dontCheckBeforeUnload"></th>
+      <th class="check">
+        <input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
+               class="dontCheckBeforeUnload" {% if form.vars.disabled %} disabled {% endif %}></th>
       <th class="name">{{ 'lbl.Email'|trans|ucfirst }}</th>
       <th class="name">{{ 'lbl.DisplayName'|trans|ucfirst }}</th>
     </tr>
@@ -570,7 +571,7 @@
       {% set user = possibleUsers[userCheckbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
         <td
-          class="check">{{ form_widget(userCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
+                class="check">{{ form_widget(userCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
         <td>
           {% set checkboxLabelAttr = userCheckbox.vars.label_attr|merge({'for': userCheckbox.vars.id}) %}
           {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userCheckbox.vars.label_attr.class|default('') ~ (userCheckbox.vars.required ? ' required' : ' optional') }) %}
@@ -596,7 +597,10 @@
   <table class="table table-hover table-striped fork-data-grid">
     <thead>
     <tr>
-      <th class="check"><input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users" class="dontCheckBeforeUnload"></th>
+      <th class="check">
+        <input type="checkbox" data-role="select-all" data-target="{{ form.vars.id }}-users"
+               class="dontCheckBeforeUnload" {% if form.vars.disabled %} disabled {% endif %}>
+      </th>
       <th class="name">{{ 'lbl.Name'|trans|ucfirst }}</th>
     </tr>
     </thead>
@@ -605,7 +609,7 @@
       {% set userGroup = possibleGroups[userGroupCheckbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
         <td
-          class="check">{{ form_widget(userGroupCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
+                class="check">{{ form_widget(userGroupCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
         <td>
           {% set checkboxLabelAttr = userGroupCheckbox.vars.label_attr|merge({'for': userGroupCheckbox.vars.id}) %}
           {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userGroupCheckbox.vars.label_attr.class|default('') ~ (userGroupCheckbox.vars.required ? ' required' : ' optional') }) %}

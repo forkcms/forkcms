@@ -67,7 +67,9 @@
         "scienta/doctrine-json-functions": "^5.0",
         "twig/intl-extra": "^3.3",
         "symfony/expression-language": "6.*",
-        "symfony/lock": "6.*"
+        "symfony/lock": "6.*",
+        "knpuniversity/oauth2-client-bundle": "^2.15",
+        "thenetworg/oauth2-azure": "^2.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",
@@ -84,7 +86,10 @@
         "symfony/browser-kit": "^6.0"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",

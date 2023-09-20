@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\OAuth\Controller\AzureController:
+    public: true
+    tags:
+      - 'controller.service_arguments'

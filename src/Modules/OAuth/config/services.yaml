@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\OAuth\DependencyInjection\OAuthRouteLoader:
+    arguments:
+      - '@routing.loader.yml'
+
+  ForkCMS\Modules\OAuth\Domain\:
+    resource: '../Domain/*'
+
+  ForkCMS\Modules\OAuth\Backend\Actions\:
+    resource: '../Backend/Actions/*'

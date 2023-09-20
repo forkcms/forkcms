@@ -18,6 +18,8 @@ use ForkCMS\Modules\Backend\Domain\UserGroup\Permission\Permission;
 use ForkCMS\Modules\Backend\Domain\UserGroup\Permission\PermissionType;
 use ForkCMS\Modules\Backend\Domain\Widget\ModuleWidget;
 use ForkCMS\Modules\Backend\Domain\Widget\WidgetControllerInterface;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Form\AbstractType;
@@ -37,6 +39,7 @@ final class UserGroupType extends AbstractType
         private readonly ServiceLocator $backendAjaxActions,
         private readonly ServiceLocator $backendDashboardWidgets,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly ModuleSettings $moduleSettings,
     ) {
     }
 
@@ -45,9 +48,10 @@ final class UserGroupType extends AbstractType
         $actions = $this->getAvailableActions();
         $ajaxActions = $this->getAvailableAjaxActions();
         $widgets = $this->getAvailableWidgets();
+        $oAuthEnabled = $this->moduleSettings->get(ModuleName::fromString('OAuth'), 'enabled', false);
 
         $tabs = [
-            'lbl.Name' => static function (FormBuilderInterface $builder): void {
+            'lbl.Name' => static function (FormBuilderInterface $builder) use ($oAuthEnabled): void {
                 $builder->add(
                     'name',
                     TextType::class,
@@ -56,6 +60,17 @@ final class UserGroupType extends AbstractType
                         'required' => true,
                     ]
                 );
+
+                if ($oAuthEnabled) {
+                    $builder->add(
+                        'oAuthRole',
+                        TextType::class,
+                        [
+                            'label' => 'lbl.OAuthRole',
+                            'required' => false,
+                        ]
+                    );
+                }
             },
         ];
         if (count($widgets) > 0) {
@@ -120,12 +135,13 @@ final class UserGroupType extends AbstractType
                 );
             };
         }
-        $tabs['lbl.Users'] = static function (FormBuilderInterface $builder): void {
+        $tabs['lbl.Users'] = static function (FormBuilderInterface $builder) use ($oAuthEnabled): void {
             $builder->add(
                 'users',
                 UserDataGridChoiceType::class,
                 [
                     'required' => false,
+                    'disabled' => $oAuthEnabled,
                 ]
             );
         };

@@ -7,6 +7,8 @@ use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Backend\Domain\User\Event\BuildUserSettingsFormEvent;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroupDataGridChoiceType;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -23,11 +25,14 @@ final class UserType extends AbstractType
     public function __construct(
         private TokenStorageInterface $tokenStorage,
         private EventDispatcherInterface $eventDispatcher,
+        private readonly ModuleSettings $moduleSettings,
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $oAuthEnabled = $this->moduleSettings->get(ModuleName::fromString('OAuth'), 'enabled', false);
+
         $builder->add(
             'user',
             TabsType::class,
@@ -91,12 +96,13 @@ final class UserType extends AbstractType
                             );
                         }
                     },
-                    'lbl.Groups' => static function (FormBuilderInterface $builder): void {
+                    'lbl.Groups' => static function (FormBuilderInterface $builder) use ($oAuthEnabled): void {
                         $builder->add(
                             'userGroups',
                             UserGroupDataGridChoiceType::class,
                             [
                                 'required' => false,
+                                'disabled' => $oAuthEnabled,
                             ]
                         );
                     },
