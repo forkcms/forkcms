@@ -1,4 +1,4 @@
-{%- if backend_form is defined %}{% form_theme backend_form '@Backend/base/formTheme.html.twig' %}{% endif -%}
+{%- if backend_form is defined %}{% form_theme backend_form '@Backend/base/form_theme.html.twig' %}{% endif -%}
 <!DOCTYPE html>
 <html lang="{{ app.user is not null ? app.user.setting('locale') : app.request.locale }}">
 
@@ -8,12 +8,12 @@
 <body id="{{ bodyID }}" class="{{ bodyClass }}">
 
 {% include "@Backend/base/header.html.twig" %}
-<div class="main-wrapper{% if hideActionbar is defined and hideActionbar %} main-wrapper-without-subnavigation{% endif %}{% if sidebarTree is defined %} main-wrapper-tree{% endif %}">
+<div class="main-wrapper{% if hide_actionbar is defined and hide_actionbar %} main-wrapper-without-subnavigation{% endif %}{% if sidebarTree is defined %} main-wrapper-tree{% endif %}">
   <div class="sidebar">
     {% include "@Backend/base/navigation.html.twig" %}
 
     {% block sidebarSubNavigation %}
-      {% if hideActionbar is not defined or not hideActionbar %}
+      {% if hide_actionbar is not defined or not hide_actionbar %}
         <div class="sub-navigation">
           <nav id="content-subnavigation" class="fork-nav-sidebar" {% if activeParent is defined and activeParent %}aria-label="{{ activeParent }}{% endif %}">
             {% include "@Backend/base/subnavigation.html.twig" with {'navigation': navigation} %}
@@ -25,8 +25,8 @@
   {% include "@Backend/base/messaging.html.twig" %}
   <div id="root">
     <main id="content" class="content-wrapper">
-      <div class="content-main{% if hideActionbar is not defined or not hideActionbar %} content-main-without-subnavigation{% endif %}">
-        {% if hideActionbar is not defined or not hideActionbar %}
+      <div class="content-main{% if hide_actionbar is not defined or not hide_actionbar %} content-main-without-subnavigation{% endif %}">
+        {% if hide_actionbar is not defined or not hide_actionbar %}
           <div class="content-action-bar">
             <div class="container-fluid">
               <div class="row align-items-center fork-module-heading">

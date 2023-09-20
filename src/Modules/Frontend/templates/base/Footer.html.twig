@@ -1,9 +1,9 @@
 <footer class="pt-3 mt-4 mt-auto">
   <ul class="nav justify-content-center border-top border-bottom py-3 my-3 bg-black">
-    {% for footerLink in footerLinks %}
+    {% for footer_link in footer_links %}
       <li class="nav-item">
-        <a class="nav-link px-2 text-muted" href="{{ footerLink.url }}" title="{{ footerLink.navigation_title }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
-          {{ footerLink.navigation_title }}
+        <a class="nav-link px-2 text-muted" href="{{ footer_link.url }}" title="{{ footer_link.navigation_title }}"{% if footer_link.rel %} rel="{{ footer_link.rel }}"{% endif %}>
+          {{ footer_link.navigation_title }}
         </a>
       </li>
     {% endfor %}

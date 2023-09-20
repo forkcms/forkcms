@@ -1,15 +1,15 @@
 {% extends '@Backend/base/base.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudActionModule = null %}
-{% set crudActionParameters = [] %}
-{% set crudActionRelative = false %}
-{% set crudActionLocale = null %}
+{% set crud_action_module = null %}
+{% set crud_action_parameters = [] %}
+{% set crud_action_relative = false %}
+{% set crud_action_locale = null %}
 
 {% block actionbar %}
-  {% if is_allowed(crudActionName, crudActionModule) %}
+  {% if is_allowed(crud_action_name, crud_action_module) %}
     <div class="btn-toolbar justify-content-end">
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon(action_path(crudActionName, crudActionModule, crudActionParameters, crudActionRelative, crudActionLocale), crudActionIcon|default('plus-square'), crustActionLabel|default('lbl.Add'|trans|ucfirst), 'btn-success') }}
+        {{ macro.buttonIcon(action_path(crud_action_name, crud_action_module, crud_action_parameters, crud_action_relative, crud_action_locale), crudActionIcon|default('plus-square'), crustActionLabel|default('lbl.Add'|trans|ucfirst), 'btn-success') }}
       </div>
     </div>
   {% endif %}

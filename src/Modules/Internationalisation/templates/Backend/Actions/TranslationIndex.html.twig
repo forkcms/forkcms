@@ -58,12 +58,12 @@
   {% if notFiltered is defined %}
     {{ pageon_datagrid(notFiltered) }}
   {% elseif dataGrids is defined %}
-    {% for dataGrid in dataGrids %}
+    {% for data_grid in dataGrids %}
       <div class="card card-primary">
         <div class="card-heading">
-          <h3 class="card-title">{{ dataGrid.type|trans|ucfirst }}</h3>
+          <h3 class="card-title">{{ data_grid.type|trans|ucfirst }}</h3>
         </div>
-        {{ pageon_datagrid(dataGrid.dataGrid) }}
+        {{ pageon_datagrid(data_grid.dataGrid) }}
       </div>
     {% endfor %}
   {% endif %}

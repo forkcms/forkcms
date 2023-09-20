@@ -187,8 +187,8 @@
 {% endblock %}
 
 {% block help %}
-  {% for attributeName, attributeValue in attr %}
-    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
+  {% for attribute_name, attribute_value in attr %}
+    {% if attribute_name == 'help' %}<small class="form-text text-muted">{{ attribute_value|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 
@@ -278,8 +278,8 @@
 {% endblock %}
 
 {% block tab_row %}
-  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
-  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tabClass)|trim}}) }}
+  {%- set tab_class = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
+  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tab_class)|trim}}) }}
 {% endblock %}
 
 {% block entity_row %}

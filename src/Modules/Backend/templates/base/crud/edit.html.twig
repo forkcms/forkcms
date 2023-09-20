@@ -1,17 +1,17 @@
 {% extends '@Backend/base/base.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudDeleteModule = null %}
-{% set crudIndexModule = null %}
-{% set crudIndexParameters = [] %}
-{% set crudIndexRelative = false %}
-{% set crudIndexLocale = null %}
-{% if crudDeleteName is not defined %}
-  {% set crudDeleteName = breadcrumbs|last.label %}
+{% set crud_delete_module = null %}
+{% set crud_index_module = null %}
+{% set crud_index_parameters = [] %}
+{% set crud_index_relative = false %}
+{% set crud_index_locale = null %}
+{% if crud_delete_name is not defined %}
+  {% set crud_delete_name = breadcrumbs|last.label %}
 {% endif %}
 
 {% block content %}
-  {% if formTheme is defined %}
-    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig', formTheme] %}
+  {% if form_theme is defined %}
+    {% form_theme backend_form with ['@Backend/base/form_theme.html.twig', form_theme] %}
   {% endif %}
   {{ form_start(backend_form) }}
   {{ form_widget(backend_form) }}
@@ -20,12 +20,12 @@
 
   <div class="btn-toolbar d-flex">
     <div class="btn-group" role="group">
-      {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
+      {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crud_delete_module) %}
         {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type": "button", "data-bs-toggle": "modal", "data-bs-target": "#confirmDelete"}) }}
       {% endif %}
-      {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
+      {% if crud_index_action is defined and is_allowed(crud_index_action, crud_index_module) %}
         <div class="btn-group" role="group">
-          {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crudIndexLocale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
+          {{ macro.buttonIcon(action_path(crud_index_action, crud_index_module, crud_index_parameters, crud_index_relative, crud_index_locale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
         </div>
       {% endif %}
       {% block leftToolbar %}{% endblock %}
@@ -37,7 +37,7 @@
   </div>
   {{ form_end(backend_form) }}
 
-  {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
+  {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crud_delete_module) %}
     {{ form_start(backend_delete_form) }}
     {{ form_row(backend_delete_form._token) }}
     {{ form_row(backend_delete_form.id) }}
@@ -48,7 +48,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ confirmDeleteTitle|default('lbl.Delete'|trans|ucfirst) }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ confirmDeleteMessage|default('msg.ConfirmDelete'|trans|format(crudDeleteName|e)) }}</p>
+            <p>{{ confirmDeleteMessage|default('msg.ConfirmDelete'|trans|format(crud_delete_name|e)) }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', confirmDeleteCancelIcon|default('times'), confirmDeleteCancelLabel|default('lbl.Cancel'|trans|ucfirst), confirmDeleteCancelClass|default('btn-default'), {"type": "button", "data-bs-dismiss": "modal"}) }}

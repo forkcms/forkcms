@@ -12,7 +12,7 @@ return Twigcs\Config\Config::create()
         Twigcs\Finder\TemplateFinder::create()->in(__DIR__ . '/templates')
     )
     ->setName('my-config')
-    ->setSeverity('warning')
-    ->setReporter('json')
+    ->setSeverity('error')
+    ->setReporter('console')
     ->setRuleSet(Twigcs\Ruleset\Official::class)
-    ;
+    ->setDisplay('blocking');

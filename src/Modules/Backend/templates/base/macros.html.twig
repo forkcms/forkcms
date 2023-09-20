@@ -1,4 +1,4 @@
-{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false, iconOnly = false) %}
+{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight=false, iconOnly=false) %}
   {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
@@ -27,41 +27,41 @@
   <abbr data-bs-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {%- endmacro -%}
 
-{% macro icon(icon, iconType = 'fas') %}
+{% macro icon(icon, iconType='fas') %}
   <i class="{{ iconType }} fa-{{ icon }}"></i>
 {% endmacro %}
 
-{% macro infoTooltip(title, icon = 'info-circle', iconType = 'fas') %}
+{% macro infoTooltip(title, icon='info-circle', iconType='fas') %}
   {% import _self as macro %}
   <abbr tabindex="0" data-bs-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon(icon, iconType) }}</abbr>
 {% endmacro %}
 
-{% macro dataGrid(dataGrid, addItemLink, addItemText, noItemsText) %}
+{% macro dataGrid(dataGrid, addItemLink, add_item_text, no_items_text) %}
   {% import _self as macro %}
   {% if dataGrid %}
     <div class="table-responsive">
       {{ dataGrid|raw }}
     </div>
   {% else %}
-    {{ macro.emptyState(addItemLink, addItemText, noItemsText) }}
+    {{ macro.emptyState(addItemLink, add_item_text, no_items_text) }}
   {% endif %}
 {% endmacro %}
 
-{% macro alert(type, message, dismissable = false, id, extraAttributes = [], active = true, showIcon = true) %}
+{% macro alert(type, message, dismissable=false, id, extra_attributes=[], active=true, showIcon=true) %}
   {% import _self as macro %}
 
-  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default(''))}) %}
+  {% set extra_attributes = extra_attributes|merge({'class': 'toast toast-' ~ type ~ (extra_attributes.class is defined and extra_attributes.class|length > 0 ? ' ' ~ extra_attributes.class|default(''))}) %}
 
   {% if active %}
-    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
+    {% set extra_attributes = extra_attributes|merge({'class': extra_attributes.class|default('') ~ ' show'}) %}
   {% else %}
-    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' hide'}) %}
+    {% set extra_attributes = extra_attributes|merge({'class': extra_attributes.class|default('') ~ ' hide'}) %}
   {% endif %}
 
   {% set role = 'status' %}
   {% set live = 'polite' %}
   {% set autohide = false %}
-  {% set dismissableClass = ' d-none' %}
+  {% set dismissable_class = ' d-none' %}
 
   {% if type == 'success' or type == 'info' %}
     {% set autohide = true %}
@@ -73,17 +73,17 @@
   {% endif %}
 
   {% if type == 'danger' %}
-    {% set dismissableClass = '' %}
+    {% set dismissable_class = '' %}
   {% endif %}
 
   {% if dismissable == true %}
-    {% set dismissableClass = '' %}
+    {% set dismissable_class = '' %}
   {% endif %}
 
-  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="{{ autohide }}" data-delay="5000">
+  <div{% for attrname, attrvalue in extra_attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="{{ autohide }}" data-delay="5000">
     <div class="toast-body">
       {% if dismissable == true %}
-        <button type="button" class="btn-close{{ dismissableClass }}" data-dismiss="toast" aria-label="{{ 'lbl.Close'|trans }}"></button>
+        <button type="button" class="btn-close{{ dismissable_class }}" data-dismiss="toast" aria-label="{{ 'lbl.Close'|trans }}"></button>
       {% endif %}
       {% if message %}
         {% if showIcon == true and type == 'danger' %}
@@ -107,16 +107,16 @@
   </div>
 {% endmacro %}
 
-{% macro emptyState(addItemLink, addItemText, noItemsText, addItemLinkExtraAttributes) %}
-  {% set addItemText = addItemText|default('msg.AddItem'|trans|raw) %}
-  {% set noItemsText = noItemsText|default('msg.NoItems'|trans|raw) %}
+{% macro emptyState(addItemLink, add_item_text, no_items_text, addItemLinkExtraAttributes) %}
+  {% set add_item_text = add_item_text|default('msg.AddItem'|trans|raw) %}
+  {% set no_items_text = no_items_text|default('msg.NoItems'|trans|raw) %}
 
   <div class="empty-state">
     <img class="empty-state-illustration mb-4" src="{{ BACKEND_CORE_URL }}/Layout/images/empty-state.svg" alt="">
-    <p class="text-black mb-2"><strong>{{ noItemsText|raw }}</strong></p>
+    <p class="text-black mb-2"><strong>{{ no_items_text|raw }}</strong></p>
     {% if not addItemLink is null %}
       <a class="empty-state-add" href="{{ addItemLink }}"{% for attrname, attrvalue in addItemLinkExtraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-        {{ addItemText|trans|ucfirst }}
+        {{ add_item_text|trans|ucfirst }}
       </a>
     {% endif %}
   </div>

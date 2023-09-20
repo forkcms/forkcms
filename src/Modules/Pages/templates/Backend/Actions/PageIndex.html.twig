@@ -1,6 +1,5 @@
-  {% extends '@Backend/base/crud/index.html.twig' %}
-{% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudActionName = 'PageAdd' %}
+{% extends '@Backend/base/crud/index.html.twig' %}
+{% set crud_action_name = 'PageAdd' %}
 
 {% block sidebarSubNavigation %}
   {% include '@Pages/Backend/NavigationTree.html.twig' with {'overview': true} %}
