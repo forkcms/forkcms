@@ -16,13 +16,13 @@
         <translation locale="nl"><![CDATA[
           Om OAuth te gebruiken moet er een Microsoft Azure applicatie worden aangemaakt <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade">hier</a>. <br/>
           De redirect url moet <em>https://[jouwdomein]/private/oauth/connect/azure/check</em> zijn.<br/>
-          Voeg dan een Certificate &amp; secrets toe en kopieer de client id en client secret naar de velden hieronder.<br/>
+          Ga dan naar Certificate &amp; secrets, maak een nieuw certificaat aan en kopieer de client id en client secret naar de velden hieronder.<br/>
           De tenant Id kan gevonden worden in je <a href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Properties">Azure Active Directory properties</a>.
         ]]></translation>
         <translation locale="en"><![CDATA[
           To use OAuth a Microsoft Azure application has to be created <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade">here</a>. <br/>
           The redirect url should be <em>https://[yourdomain]/private/oauth/connect/azure/check</em>.<br/>
-          Then add a Certificate &amp; secrets and copy the client id and client secret to the fields below.<br/>
+          Then go to Certificate &amp; secrets, create a new certificate and copy the client id and client secret to the fields below.<br/>
           The tenant Id can found in your <a href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Properties">Azure Active Directory properties</a>.
         ]]></translation>
       </item>
