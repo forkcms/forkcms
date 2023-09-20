@@ -22,11 +22,6 @@ class ModuleSettings extends AbstractFormActionController
 
     protected function getFormResponse(Request $request): ?Response
     {
-        $this->header->breadcrumbs->removeLastBreadcrumb();
-        $this->header->breadcrumbs->add(
-            new Breadcrumb('Settings')
-        );
-
         return $this->handleForm(
             request: $request,
             formType: SettingsType::class,

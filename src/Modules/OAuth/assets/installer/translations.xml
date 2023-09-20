@@ -46,6 +46,10 @@
         <translation locale="nl"><![CDATA[Activeer]]></translation>
         <translation locale="en"><![CDATA[Enabled]]></translation>
       </item>
+      <item type="label" name="ModuleSettings">
+        <translation locale="nl"><![CDATA[Settings]]></translation>
+        <translation locale="en"><![CDATA[Settings]]></translation>
+      </item>
     </OAuth>
   </Backend>
 </translations>

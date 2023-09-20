@@ -15,8 +15,7 @@ framework:
   php_errors:
     log: true
 
-  trusted_proxies:
-    - '127.0.0.1'
+  trusted_proxies: '127.0.0.1'
 
   router:
 #    resource: "%kernel.project_dir%/config/routing.yml"
