@@ -283,9 +283,9 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="fas fa-bars" aria-hidden="true"></span>');
+        $this->addColumn('drag-and-drop-handle', null, '<span class="fas fa-bars" aria-hidden="true"></span>');
         $this->addColumn(
-            'sortHandle',
+            'sort-handle',
             \SpoonFilter::ucfirst(BackendLanguage::lbl('Move')),
             '<div class="btn-group"><button data-role="order-move" data-direction="up" class="btn btn-default btn-icon-only btn-sm" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
                      <span class="fas fa-arrow-up" aria-hidden="true"></span>
@@ -296,17 +296,17 @@ class DataGrid extends \SpoonDataGrid
         );
 
         // make sure the column with the handler is the first one
-        $this->setColumnsSequence(['dragAndDropHandle', 'sortHandle']);
+        $this->setColumnsSequence(['drag-and-drop-handle', 'sort-handle']);
 
         // add a class on the handler column, so JS knows this is just a handler
         $this->setColumnAttributes(
-            'dragAndDropHandle',
+            'drag-and-drop-handle',
             [
-                'class' => 'dragAndDropHandle fork-data-grid-sortable',
+                'class' => 'drag-and-drop-handle fork-data-grid-sortable',
                 'data-role' => 'drag-and-drop-handle'
             ]
         );
-        $this->setColumnAttributes('sortHandle', ['class' => 'sortHandle']);
+        $this->setColumnAttributes('sort-handle', ['class' => 'sort-handle']);
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(['data-id' => '[id]']);

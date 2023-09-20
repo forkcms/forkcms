@@ -83,7 +83,7 @@
 <div data-role="uploadMediaStep1">
   {# Choose type #}
   <div class="row">
-    <div class="col-md-6 d-flex {% if mediaType is defined %} d-none{% endif %}" id="uploadMediaTypeBox">
+    <div class="col-md-6 d-flex {% if mediaType is defined %} d-none{% endif %}" id="upload-media-type-box">
       <div class="card card-default w-100">
         <div class="card-heading">
           <h2 class="card-title">{{ 'lbl.MediaUploadThisType'|trans|ucfirst }}</h2>
@@ -200,7 +200,7 @@
   </div>
 
   {# Uploaded media #}
-  <div id="uploadedMediaBox">
+  <div id="uploaded-media-box">
     <div class="card card-default">
       <div class="card-heading">
         <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>

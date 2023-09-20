@@ -31,19 +31,19 @@ export class MultiTextBox {
       // bind submit
       $(el.form).submit(() => {
         // hide before..
-        $('#errorMessage-' + id).remove()
+        $('#error-message-' + id).remove()
 
         if (blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '') {
           // show warning
-          $('#addValue-' + id).parents('.form-group').append('<span id="errorMessage-' + id + '" class="invalid-feedback d-none">' + options.errorMessage + '</span>')
+          $('#addValue-' + id).parents('.form-group').append('<span id="error-message-' + id + '" class="invalid-feedback d-none">' + options.errorMessage + '</span>')
 
           // clear other timers
           clearTimeout(timer)
 
           // we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
-          timer = setTimeout(() => { $('#errorMessage-' + id).removeClass('d-none') }, 200)
+          timer = setTimeout(() => { $('#error-message-' + id).removeClass('d-none') }, 200)
           $('html, body').animate({
-            scrollTop: ($('#errorMessage-' + id).parent().offset().top - 100)
+            scrollTop: ($('#error-message-' + id).parent().offset().top - 100)
           }, 500)
         }
 
@@ -205,7 +205,7 @@ export class MultiTextBox {
         }
 
         // remove error message
-        $('#errorMessage-' + id).remove()
+        $('#error-message-' + id).remove()
 
         const values = value.split(options.splitChar)
         for (const e in values) {

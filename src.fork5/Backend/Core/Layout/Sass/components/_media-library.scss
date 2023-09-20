@@ -273,19 +273,19 @@
   }
 }
 
-.inputList.noPadding,
-.inputList.noPadding li {
+.input-list.no-padding,
+.input-list.no-padding li {
   padding: 0;
 }
 
-#uploadMediaTypeBox label {
+#upload-media-type-box label {
   vertical-align: bottom;
 }
 
 /**
  * Uploaded media box
  */
-#uploadedMediaBox {
+#uploaded-media-box {
 
   .panel-body {
     padding: 20px;

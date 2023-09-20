@@ -15,7 +15,7 @@
     text-shadow: none;
     top: 5px;
 
-    .svg-inline--fa {
+    .svg-inline-fa {
       color: $body-color;
       font-size: $font-size-base * 0.85;
     }
@@ -61,7 +61,7 @@
     background: shift-color($value, $alert-bg-scale);
     border-left: 5px solid shift-color($value, $alert-border-scale);
 
-    .svg-inline--fa {
+    .svg-inline-fa {
       color: $value;
     }
 

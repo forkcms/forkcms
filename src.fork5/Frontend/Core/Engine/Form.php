@@ -106,7 +106,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                               '</p>' . "\n";
                     $value .= "\t\t" . '{$chk' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
-                    $value .= "\t\t" . '<ul class="inputList">' . "\n";
+                    $value .= "\t\t" . '<ul class="input-list">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
                               $object->getName() . '.chk' . SpoonFilter::toCamelCase($object->getName()) .
@@ -162,7 +162,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                         '</p>' . "\n";
                     $value .= "\t\t" . '{$rbt' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
-                    $value .= "\t\t" . '<ul class="inputList">' . "\n";
+                    $value .= "\t\t" . '<ul class="input-list">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
                         $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) .

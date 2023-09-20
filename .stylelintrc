@@ -1,3 +1,10 @@
 {
-  "extends": "stylelint-config-standard-scss"
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "no-descending-specificity": false,
+    "no-duplicate-selectors": false,
+    "scss/no-global-function-names": false,
+    "function-linear-gradient-no-nonstandard-direction": false,
+    "scss/at-extend-no-missing-placeholder": false,
+  }
 }

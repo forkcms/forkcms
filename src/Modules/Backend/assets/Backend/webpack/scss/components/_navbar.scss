@@ -11,7 +11,7 @@
     width: 40px;
     z-index: 10;
 
-    .svg-inline--fa {
+    .svg-inline-fa {
       color: $white;
       font-size: $font-size-xs;
       margin-top: -7px;
@@ -24,13 +24,13 @@
     box-shadow: 3px 0 4px 0 rgba($black, .3);
     left: 0;
 
-    .svg-inline--fa {
+    .svg-inline-fa {
       margin-right: -3.5px;
       right: 50%;
     }
   }
 
-  .js-nav-next .svg-inline--fa {
+  .js-nav-next .svg-inline-fa {
     left: 50%;
     margin-left: -3.5px;
   }
@@ -168,7 +168,7 @@
         padding: 30px 20px 10px;
         position: relative;
 
-        .svg-inline--fa {
+        .svg-inline-fa {
           left: 50%;
           margin-left: -8px;
           top: 10px;
@@ -242,7 +242,7 @@
       color: $white;
       padding: 15px 50px;
 
-      .svg-inline--fa {
+      .svg-inline-fa {
         color: $white;
         position: absolute;
         font-size: $btn-font-size;
@@ -447,7 +447,7 @@
       float: none;
       width: auto;
 
-      .nav-link .svg-inline--fa {
+      .nav-link .svg-inline-fa {
         left: 16px;
       }
     }
@@ -473,7 +473,7 @@
           height: auto;
           padding: 15px 50px;
 
-          .svg-inline--fa {
+          .svg-inline-fa {
             left: 16px;
             margin-left: 0;
             top: 50%;

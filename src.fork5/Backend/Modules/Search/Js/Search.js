@@ -17,7 +17,7 @@ export class Search {
     }
 
     // settings enable/disable
-    $('#searchModules').find('input[type=checkbox]').on('change', (event) => {
+    $('#search-modules').find('input[type=checkbox]').on('change', (event) => {
       const $this = $(event.currentTarget)
       const $weightElement = $('#' + $this.attr('id') + 'Weight')
 

@@ -260,12 +260,12 @@
     float: right;
   }
 
-.inputList.noPadding,
-.inputList.noPadding li {
+.input-list.no-padding,
+.input-list.no-padding li {
   padding:  0;
 }
 
-#uploadMediaTypeBox label {
+#upload-media-type-box label {
   vertical-align: bottom;
 }
 
@@ -273,11 +273,11 @@
 /**
  * Uploaded media box
  */
-#uploadedMediaBox .panel-body {
+#uploaded-media-box .panel-body {
   padding: 20px;
 }
 
-#uploadedMediaBox .mediaConnectedItems {
+#uploaded-media-box .mediaConnectedItems {
   float: none;
   padding: 0;
   margin: 0;

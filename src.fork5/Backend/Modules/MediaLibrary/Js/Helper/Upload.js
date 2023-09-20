@@ -15,7 +15,7 @@ export class Upload {
 
   preInit () {
     // bind change to upload_type
-    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
+    $('#upload-media-type-box').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
 
     // bind click to add movie
     $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
@@ -278,7 +278,7 @@ export class Upload {
    */
   toggleUploadBoxes () {
     // init variables
-    const $uploadingType = $('#uploadMediaTypeBox input[name=uploading_type]')
+    const $uploadingType = $('#upload-media-type-box input[name=uploading_type]')
     const folderSelected = ($('#uploadMediaFolderId').val() !== 0)
     let showMediaTypeBox = false // step 2
     let showMediaBox = false // step 2
@@ -318,7 +318,7 @@ export class Upload {
     }
 
     // update show upload type choise
-    $('#uploadMediaTypeBox').toggle(showMediaTypeBox)
+    $('#upload-media-type-box').toggle(showMediaTypeBox)
 
     // toggle upload media box
     $('#uploadMediaBox').toggle(showMediaBox)
@@ -327,7 +327,7 @@ export class Upload {
     $('#addMovieBox').toggle(showMovieBox)
 
     // toggle uploaded box
-    $('#uploadedMediaBox').toggle(showUploadedBox)
+    $('#uploaded-media-box').toggle(showUploadedBox)
     $('#mediaWillBeConnectedToMediaGroup').toggle((this.config.currentMediaGroupId !== 0))
 
     if (this.uploadedCount === 0) {

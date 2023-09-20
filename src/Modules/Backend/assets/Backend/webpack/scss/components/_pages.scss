@@ -1,4 +1,4 @@
-.templateVisual {
+.template-visual {
   margin-left: -1.5em;
 
   td {
@@ -40,7 +40,7 @@
 /*
     Template visual large
 */
-#templateVisualLarge {
+#template-visual-large {
   clear: both;
   margin: 0 -2px;
 
@@ -82,7 +82,7 @@
 }
 
 @include media-breakpoint-up(xl) {
-  #templateVisualLarge {
+  #template-visual-large {
     margin: 0 -10px;
 
     table {
