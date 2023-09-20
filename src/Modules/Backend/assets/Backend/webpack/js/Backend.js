@@ -24,6 +24,7 @@ import { Session } from './Components/Session'
 import { Config } from './Components/Config'
 import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
+import ToggleSecret from '../../../../../OAuth/assets/Backend/webpack/js/Components/ToggleSecret'
 
 window.bootstrap = bootstrap
 
@@ -52,6 +53,7 @@ export class Backend {
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
+    Backend.initToggleSecrets()
 
     // do not move, should be run as the last item.
     if (!Config.isDebug()) this.forms.unloadWarning()
@@ -66,6 +68,12 @@ export class Backend {
   static initPasswordStrenghtMeters () {
     $('[data-role="password-strength-meter"]').each((index, element) => {
       element.passwordStrengthMeter = new PasswordStrenghtMeter($(element))
+    })
+  }
+
+  static initToggleSecrets () {
+    $('[data-role="toggle-visibility"]').each((index, element) => {
+      element.toggleSecret = new ToggleSecret(element)
     })
   }
 }
