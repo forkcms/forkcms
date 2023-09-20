@@ -12,7 +12,6 @@
 }
 
 .mediaGroup {
-
   .panel-body {
     padding: 0;
     border: none;
@@ -44,6 +43,7 @@
   float: none;
   padding: 0;
   margin: 0;
+
   @extend .list-unstyled;
 
   .media-item {
@@ -61,7 +61,6 @@
 }
 
 .mediaEditBox {
-
   ul {
     padding: 10px;
   }
@@ -79,7 +78,6 @@
 }
 
 .media-library-media-group-helper {
-
   .panel-body,
   .mediaGroup {
     padding: 0 !important;
@@ -87,7 +85,6 @@
   }
 
   .panel-body {
-
     .panel {
       border: none;
       width: 100%;
@@ -214,7 +211,6 @@
 
 #addMediaDialog,
 #cropperMediaDialog {
-
   .modal-body {
     padding: 0;
     background: none;
@@ -223,7 +219,6 @@
 }
 
 #addMediaDialog #tabLibrary {
-
   .options {
     margin-bottom: 1em;
   }
@@ -245,7 +240,6 @@
 }
 
 .mediaTable {
-
   .check {
     width: 30px;
   }
@@ -286,7 +280,6 @@
  * Uploaded media box
  */
 #uploadedMediaBox {
-
   .panel-body {
     padding: 20px;
   }
@@ -306,10 +299,7 @@
 
 .qq-progress-bar-container-selector {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0;
 
   .qq-progress-bar {
     background: $gray-200;
@@ -337,6 +327,7 @@
 
     .qq-upload-cancel {
       @extend .btn-danger;
+
       border-radius: 50px;
       padding: 5px 10px;
       margin-right: 0;
@@ -350,6 +341,7 @@
 
     .qq-upload-retry-selector {
       @extend .btn-primary;
+
       position: relative;
 
       .qq-btn {

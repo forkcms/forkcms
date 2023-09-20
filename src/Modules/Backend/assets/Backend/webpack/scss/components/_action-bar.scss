@@ -28,6 +28,7 @@
     }
   }
 }
+
 @include media-breakpoint-down(lg) {
   .content-action-bar .btn-toolbar .btn .svg-inline--fa {
     margin: 0;
@@ -35,7 +36,6 @@
 }
 
 @include media-breakpoint-up(xl) {
-
   .content-action-bar .btn-toolbar .btn {
     display: inline-block;
   }

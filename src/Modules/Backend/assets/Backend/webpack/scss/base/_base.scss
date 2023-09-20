@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  -webkit-transform: none;
+  transform: none;
 }
 
 img {
@@ -30,17 +30,12 @@ img {
 }
 
 @include media-breakpoint-up(lg) {
-
   .main-wrapper {
     min-height: 100%;
     margin-top: -82px;
     padding-left: 430px;
     padding-top: 82px;
     position: relative;
-    -webkit-transition: padding 250ms;
-    -moz-transition: padding 250ms;
-    -ms-transition: padding 250ms;
-    -o-transition: padding 250ms;
     transition: padding 250ms;
 
     &.navigation-collapsed {
@@ -110,10 +105,6 @@ img {
       top: 82px;
       width: 430px;
       z-index: 2;
-      -webkit-transition: width 250ms;
-      -moz-transition: width 250ms;
-      -ms-transition: width 250ms;
-      -o-transition: width 250ms;
       transition: width 250ms;
 
       .main-navigation {
@@ -136,10 +127,6 @@ img {
         overflow-y: auto;
         top: 0;
         width: 190px;
-        -webkit-transition: width,left 250ms;
-        -moz-transition: width,left 250ms;
-        -ms-transition: width,left 250ms;
-        -o-transition: width,left 250ms;
         transition: width,left 250ms;
       }
     }

@@ -1,7 +1,7 @@
 .btn {
   border-radius: 3px;
   font-size: $btn-font-size;
-  -webkit-appearance: none;
+  appearance: none;
 
   .svg-inline--fa {
     margin: 0 map_get($spacers, 2) 0 0;
@@ -33,7 +33,7 @@
 
 .btn-icon-only {
   font-size: $font-size-base;
-  padding: 6px 12px 6px;
+  padding: 6px 12px;
 
   .svg-inline--fa {
     padding-right: 0;
@@ -56,6 +56,7 @@
 .btn-group,
 .btn-toolbar .btn-group {
   text-align: right;
+
   .btn {
     float: none;
     margin: 1px 0;
@@ -70,9 +71,9 @@
     }
   }
 
-  .btn:first-child:not(:last-child):not(.dropdown-toggle),
+  .btn:first-child:not(:last-child, .dropdown-toggle),
   .btn:last-child:not(:first-child),
-  .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
+  .btn:not(:first-child, :last-child, .dropdown-toggle){
     border-radius: 3px;
   }
 }
@@ -102,7 +103,6 @@
   color: $gray-450;
 
   &.btn-move-click {
-
     &:hover,
     &:focus {
       border-color: $black;
@@ -124,7 +124,6 @@ a.btn {
 }
 
 @include media-breakpoint-up(sm) {
-
   .btn .btn-text {
     display: inline-block;
     font-size: $btn-font-size;
@@ -133,7 +132,6 @@ a.btn {
 }
 
 @include media-breakpoint-up(lg) {
-
   .btn-group .btn,
   .btn-toolbar .btn-group .btn, {
     float: none;

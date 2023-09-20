@@ -43,6 +43,7 @@
 .ce-input {
   @extend .form-control;
   @extend .form-control-sm;
+
   margin-bottom: 0.25rem;
 }
 
@@ -50,6 +51,7 @@
 .codex-editor--narrow .ce-toolbar__actions {
   right: 5px;
 }
+
 .ce-toolbar__plus,
 .codex-editor--narrow .ce-toolbar__plus {
   left: 0;

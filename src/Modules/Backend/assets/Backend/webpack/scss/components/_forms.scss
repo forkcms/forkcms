@@ -47,7 +47,6 @@ label,
 }
 
 .form-inline {
-
   .radio {
     label {
       padding-left: 20px;
@@ -87,8 +86,6 @@ select.form-control[size],
 select.form-control,
 select[size="1"] {
   appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
   background-image: url('../../../public/images/arrow.svg');
   background-position: center right 5px;
   background-repeat: no-repeat;
@@ -120,7 +117,6 @@ select[size="1"] {
 }
 
 .input-group {
-
   .bootstrap-tagsinput {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -183,6 +179,7 @@ fieldset {
     margin-right: -25px;
   }
 }
+
 .select2-container--bootstrap {
   .select2-results__options--nested {
     margin: 0 1rem;
@@ -207,7 +204,7 @@ fieldset {
     padding: 0 0 5px 5px;
     position: relative;
 
-    &:before {
+    &::before {
 
     }
   }

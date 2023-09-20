@@ -32,7 +32,6 @@
 
   p,
   ul {
-
     &:last-child {
       margin-bottom: 0;
     }
@@ -84,7 +83,6 @@
 
 
 @include media-breakpoint-up(md) {
-
   .toast-messaging-wrapper {
     position: fixed;
     top: 0;
@@ -94,7 +92,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   .toast-messaging-wrapper {
     width: calc(#{$toast-max-width} - #{$grid-gutter-width});
   }

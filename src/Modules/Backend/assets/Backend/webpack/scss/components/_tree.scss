@@ -65,7 +65,7 @@
       color: $white;
       border-radius: 4px;
 
-      &:before {
+      &::before {
         color: $white;
       }
     }
@@ -120,7 +120,6 @@
 /* FOR DRAGGING */
 #jstree-marker {
   padding: 0;
-  margin: 0;
   display: block;
   position: absolute;
   z-index: 999;
@@ -138,7 +137,6 @@
 }
 
 #jstree-dnd.jstree-proton {
-
   .jstree-er,
   .jstree-ok {
     background-position: center center;
