@@ -1,3 +1,4 @@
+/* stylelint-disable */
 .flatpickr-weekdays,
 .flatpickr-months {
   background: $primary;
@@ -50,3 +51,4 @@ span.flatpickr-day.nextMonthDay:nth-child(n+8) {
     border-bottom-color: $primary;
   }
 }
+/* stylelint-enable */

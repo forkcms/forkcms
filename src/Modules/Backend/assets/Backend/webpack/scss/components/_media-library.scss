@@ -2,27 +2,27 @@
  * Media library Helper
  *
  * Structure:
- *   #mediaConnectedItems
- *    .mediaConnectedBox
- *    .mediaConnectedItems
+ *   #media-connected-items
+ *    .media-connected-box
+ *    .media-connected-items
  */
 
-.media-library-media-library-media-group-helper-helper .mediaGroup {
+.media-library-media-library-media-group-helper-helper .media-group {
   margin-bottom: 0;
 }
 
-.mediaGroup {
+.media-group {
   .panel-body {
     padding: 0;
     border: none;
 
-    .helpTxt {
+    .help-txt {
       padding: 20px 25px 25px;
       margin-bottom: 0;
     }
   }
 
-  .mediaConnectedBox {
+  .media-connected-box {
     background-color: $white;
   }
 
@@ -31,15 +31,15 @@
   }
 }
 
-.panel-danger .mediaConnectedBox .mediaNoItems {
+.panel-danger .media-connected-box .media-no-items {
   padding-bottom: 0;
 }
 
-#addGalleriesBox a {
+#add-galleries-box a {
   float: right;
 }
 
-.mediaConnectedItems {
+.media-connected-items {
   float: none;
   padding: 0;
   margin: 0;
@@ -54,13 +54,13 @@
     margin: 10px 20px 10px 0;
     vertical-align: top;
 
-    &.fork-data-grid-sortable .mediaHolder {
+    &.fork-data-grid-sortable .media-holder {
       cursor: move;
     }
   }
 }
 
-.mediaEditBox {
+.media-edit-box {
   ul {
     padding: 10px;
   }
@@ -72,14 +72,14 @@
   }
 }
 
-.mediaSettingsGroup {
+.media-settings-group {
   position: absolute;
   right: 10px;
 }
 
 .media-library-media-group-helper {
   .panel-body,
-  .mediaGroup {
+  .media-group {
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -90,13 +90,13 @@
       width: 100%;
     }
 
-    .mediaSettingsGroup {
+    .media-settings-group {
       right: 0;
     }
   }
 }
 
-.mediaHolder {
+.media-holder {
   cursor: pointer;
   display: block;
   float: left;
@@ -108,9 +108,9 @@
   }
 }
 
-.mediaHolderFile,
-.mediaHolderMovie,
-.mediaHolderAudio {
+.media-holder-file,
+.media-holder-movie,
+.media-holder-audio {
   position: relative;
 
   .icon {
@@ -134,15 +134,15 @@
   }
 }
 
-.mediaHolderAudio .icon {
+.media-holder-audio .icon {
   background-position: 0 -468px;
 }
 
-.mediaHolderFile .icon {
+.media-holder-file .icon {
   background-position: 0 -443px;
 }
 
-.mediaHolderMovie {
+.media-holder-movie {
   width: 200px;
 
   .icon {
@@ -156,12 +156,12 @@
   }
 }
 
-.mediaHolderImage img {
+.media-holder-image img {
   height: 120px;
   width: auto;
 }
 
-.addUploadedMediaItem {
+.add-uploaded-media-item {
   align-items: center;
   border-radius: 100px;
   background: rgba($gray-700, .9);
@@ -187,7 +187,7 @@
   }
 }
 
-.deleteMediaItem {
+.delete-media-item {
   border-radius: 50px;
   padding: 5px 10px;
   position: absolute;
@@ -196,7 +196,7 @@
   width: auto;
 }
 
-.editMediaItem {
+.edit-media-item {
   border-radius: 50px;
   bottom: 5px;
   padding: 5px 10px;
@@ -209,8 +209,8 @@
  * Media Dialog
  */
 
-#addMediaDialog,
-#cropperMediaDialog {
+#add-media-dialog,
+#cropper-media-dialog {
   .modal-body {
     padding: 0;
     background: none;
@@ -218,7 +218,7 @@
   }
 }
 
-#addMediaDialog #tabLibrary {
+#add-media-dialog #tab-library {
   .options {
     margin-bottom: 1em;
   }
@@ -239,7 +239,7 @@
   }
 }
 
-.mediaTable {
+.media-table {
   .check {
     width: 30px;
   }

@@ -220,43 +220,43 @@
   background: none;
   border: none;
 }
-#addMediaDialog #tabLibrary .options,
+#addMediaDialog #tab-library .options,
 #addMediaDialog #tabUploadMedia .options {
   margin-bottom: 1em;
 }
-#addMediaDialog #tabLibrary .tab-content {
+#addMediaDialog #tab-library .tab-content {
   padding: 0;
   border: none;
 }
-#addMediaDialog #tabLibrary .tab-content .table-striped {
+#addMediaDialog #tab-library .tab-content .table-striped {
   border-top: 0;
   padding: .5em 0 0;
 }
-#addMediaDialog #tabLibrary .table-responsive {
+#addMediaDialog #tab-library .table-responsive {
   max-height: 400px;
   overflow: auto;
 }
-.mediaTable {
+.media-table {
   overflow-wrap: break-word;
 }
-  .mediaTable .check {
+  .media-table .check {
     width: 30px;
   }
-  .mediaTable .fullUrl {
+  .media-table .fullUrl {
     width: 90px;
     cursor: pointer;
   }
-  .mediaTable .url {
+  .media-table .url {
     max-width: 156px;
   }
-  .mediaTable .title {
+  .media-table .title {
     max-width: 140px;
     color: #000;
   }
-  .mediaTable .actions {
+  .media-table .actions {
     max-width: 100px;
   }
-  .mediaTable .actions a {
+  .media-table .actions a {
     float: right;
   }
 

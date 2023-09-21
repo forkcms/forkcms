@@ -523,7 +523,7 @@ class DataGrid extends \SpoonDataGrid
     ): void {
         // build label and value
         $label = '<input type="checkbox" name="toggleChecks" value="toggleChecks" />';
-        $value = '<input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" />';
+        $value = '<input type="checkbox" name="id[]" value="' . $value . '" class="input-checkbox" />';
 
         // add the column
         $this->addColumn($column, $label, $value);

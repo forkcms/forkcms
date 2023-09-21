@@ -711,7 +711,7 @@ export class Group {
     window.backend.controls.bindMassCheckbox()
 
     // init $tabs
-    const $tabs = $('#tabLibrary').find('.nav-tabs')
+    const $tabs = $('#tab-library').find('.nav-tabs')
 
     // remove selected
     $tabs.find('.active').removeClass('active')
@@ -724,7 +724,7 @@ export class Group {
     // Enable all because we can switch between different groups on the same page
     $tabs.children('.nav-link').removeClass('disabled, active')
 
-    const tabsElement = document.querySelectorAll('#tabLibrary .nav-tabs')[0]
+    const tabsElement = document.querySelectorAll('#tab-library .nav-tabs')[0]
 
     // we have an image group
     if (this.config.mediaGroups[this.config.currentMediaGroupId].type === 'image') {
@@ -758,7 +758,7 @@ export class Group {
     navLink.show()
 
     // get table
-    const $tables = $('.mediaTable')
+    const $tables = $('.media-table')
 
     // bind change when connecting/disconnecting media
     $tables.find('.toggleConnectedCheckbox').on('change', (e) => {

@@ -32,7 +32,7 @@ class FormImage extends SpoonFormImage
     }
 
     /**
-     * Should the helpTxt span be hidden when parsing the field?
+     * Should the help-txt span be hidden when parsing the field?
      *
      * @var bool
      */

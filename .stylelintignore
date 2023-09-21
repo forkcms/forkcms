@@ -11,5 +11,6 @@ tests.fork5/**
 var/**
 vendor/**
 *.*
+Dockerfile
 !*.css
 !*.scss

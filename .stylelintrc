@@ -1,10 +1,15 @@
 {
   "extends": "stylelint-config-standard-scss",
   "rules": {
-    "no-descending-specificity": false,
-    "no-duplicate-selectors": false,
-    "scss/no-global-function-names": false,
-    "function-linear-gradient-no-nonstandard-direction": false,
-    "scss/at-extend-no-missing-placeholder": false,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "scss/no-global-function-names": null,
+    "function-linear-gradient-no-nonstandard-direction": null,
+    "scss/at-extend-no-missing-placeholder": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "no-empty-source": null,
+    "scss/comment-no-empty": null,
+    "value-keyword-case": null,
+    "scss/dollar-variable-pattern": null,
   }
 }

@@ -143,7 +143,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' .
+                        '} <span class="help-txt">{$msgHelpImageField}</span> {$file' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormFile) {
@@ -177,7 +177,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="helpTxt">{$msgHelpDateField}</span> {$txt' .
+                        '} <span class="help-txt">{$msgHelpDateField}</span> {$txt' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormTime) {
@@ -187,7 +187,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="helpTxt">{$msgHelpTimeField}</span> {$txt' .
+                        '} <span class="help-txt">{$msgHelpTimeField}</span> {$txt' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif (($object instanceof SpoonFormPassword) ||

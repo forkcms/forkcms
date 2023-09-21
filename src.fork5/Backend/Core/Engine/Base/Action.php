@@ -187,18 +187,18 @@ class Action extends KernelLoader
         $this->header->addJsData(
             'MediaLibrary',
             'browseAction',
-            BackendModel::createUrlForAction('MediaBrowser', 'MediaLibrary') . '#tabLibrary'
+            BackendModel::createUrlForAction('MediaBrowser', 'MediaLibrary') . '#tab-library'
         );
         $this->header->addJsData(
             'MediaLibrary',
             'browseActionImages',
-            BackendModel::createUrlForAction('MediaBrowserImages', 'MediaLibrary') . '#tabLibrary'
+            BackendModel::createUrlForAction('MediaBrowserImages', 'MediaLibrary') . '#tab-library'
         );
 
         $this->header->addJsData(
             'MediaLibrary',
             'browseActionVideos',
-            BackendModel::createUrlForAction('MediaBrowserVideos', 'MediaLibrary') . '#tabLibrary'
+            BackendModel::createUrlForAction('MediaBrowserVideos', 'MediaLibrary') . '#tab-library'
         );
 
         $this->header->addJsData('Core', 'preferred_editor', BackendModel::getPreferredEditor());

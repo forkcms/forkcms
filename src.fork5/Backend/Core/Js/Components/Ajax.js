@@ -5,7 +5,7 @@ import { Messages } from './Messages'
 export class Ajax {
   constructor () {
     // variables
-    const $ajaxSpinner = $('#ajaxSpinner')
+    const $ajaxSpinner = $('#ajax-spinner')
 
     // set defaults for AJAX
     $.ajaxSetup(

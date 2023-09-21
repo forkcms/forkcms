@@ -314,7 +314,7 @@ abstract class WebTestCase extends BaseWebTestCase
             $client,
             $form,
             [
-                'form' => 'authenticationIndex',
+                'form' => 'authentication-index',
                 'backend_email' => 'noreply@fork-cms.com',
                 'backend_password' => 'fork',
                 'form_token' => $form['form_token']->getValue(),

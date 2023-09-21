@@ -107,12 +107,12 @@ select[size="1"] {
   padding: 8px 12px 9px;
 }
 
-.inlineEditing input {
+.inline-editing input {
   min-width: 100%;
   width: 100%;
 }
 
-.editorWarning {
+.editor-warning {
   color: $warning;
 }
 
@@ -180,11 +180,13 @@ fieldset {
   }
 }
 
+/* stylelint-disable */
 .select2-container--bootstrap {
   .select2-results__options--nested {
     margin: 0 1rem;
   }
 }
+/* stylelint-enable */
 
 .custom-visible-switch {
   padding-left: 0;
@@ -203,10 +205,6 @@ fieldset {
     margin: 0;
     padding: 0 0 5px 5px;
     position: relative;
-
-    &::before {
-
-    }
   }
 }
 

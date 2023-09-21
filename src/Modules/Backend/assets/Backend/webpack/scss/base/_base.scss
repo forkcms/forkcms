@@ -23,7 +23,7 @@ img {
   height: 100%;
 }
 
-.hiddenInModalMode {
+.hidden-in-modal-mode {
   & > .header, & > .main-wrapper > .sidebar {
     display: none;
   }
@@ -136,7 +136,7 @@ img {
     width: 100%;
   }
 
-  .hiddenInModalMode > .main-wrapper {
+  .hidden-in-modal-mode > .main-wrapper {
     padding-left: 0;
   }
 }
