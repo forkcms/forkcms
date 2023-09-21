@@ -1091,7 +1091,7 @@ filter: gray;
   background: transparent;
 }
 
-@media (width <= 768px) {
+@media (max-width: 768px) {
   #jstree-dnd.jstree-dnd-responsive {
     line-height: 30px;
     font-weight: bold;
@@ -1125,7 +1125,7 @@ filter: gray;
   }
 }
 
-@media (width <= 768px) {
+@media (max-width: 768px) {
   .jstree-proton-responsive {
     /*
 	.jstree-open > .jstree-ocl,
@@ -1246,8 +1246,8 @@ filter: gray;
   }
 
   .jstree-proton-responsive .jstree-wholerow {
-    border-top: 1px solid rgb(0 0 0 / 5%);
-    background: rgb(0 0 0 / 2%);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
     height: 30px;
   }
 
