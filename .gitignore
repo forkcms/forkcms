@@ -76,7 +76,3 @@ yarn-error.log
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-
-###> vincentlanglet/twig-cs-fixer ###
-/.twig-cs-fixer.cache
-###< vincentlanglet/twig-cs-fixer ###
