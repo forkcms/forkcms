@@ -3,7 +3,7 @@
   font-size: $btn-font-size;
   appearance: none;
 
-  .svg-inline-fa {
+  .svg-inline--fa {
     margin: 0 map_get($spacers, 2) 0 0;
   }
 
@@ -12,7 +12,7 @@
     font-size: $font-size-xs;
     margin: 0 3px;
 
-    + .svg-inline-fa {
+    + .svg-inline--fa {
       margin: 0 0 0 map_get($spacers, 2);
     }
   }
@@ -35,7 +35,7 @@
   font-size: $font-size-base;
   padding: 6px 12px;
 
-  .svg-inline-fa {
+  .svg-inline--fa {
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;

@@ -30,7 +30,7 @@
 }
 
 @include media-breakpoint-down(lg) {
-  .content-action-bar .btn-toolbar .btn .svg-inline-fa {
+  .content-action-bar .btn-toolbar .btn .svg-inline--fa {
     margin: 0;
   }
 }
