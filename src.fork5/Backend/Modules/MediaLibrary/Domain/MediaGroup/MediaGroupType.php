@@ -47,7 +47,7 @@ class MediaGroupType extends AbstractType
                 'id',
                 HiddenType::class,
                 [
-                    'attr' => ['class' => 'media-group-id'],
+                    'attr' => ['class' => 'mediaGroupId'],
                 ]
             )
             ->add(

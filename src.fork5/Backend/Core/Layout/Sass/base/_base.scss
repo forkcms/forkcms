@@ -30,7 +30,7 @@ img {
   }
 }
 
-.hidden-in-modal-mode {
+.hiddenInModalMode {
   & > .header, & > .main-wrapper > .sidebar {
     display: none;
   }
@@ -156,7 +156,7 @@ img {
     width: 100%;
   }
 
-  .hidden-in-modal-mode > .main-wrapper {
+  .hiddenInModalMode > .main-wrapper {
     padding-left: 0;
   }
 }

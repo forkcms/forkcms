@@ -275,7 +275,7 @@
       {{ form_row(form.templateId) }}
     </div>
   </div>
-  <div id="template-visual-large">
+  <div id="templateVisualLarge">
     {{ include(template_from_string(selectedTemplate.htmlLarge|replace({'&quot;': '"'}), 'page template: ' ~ selectedTemplate.label), {'form': form}) }}
   </div>
 {% endblock %}

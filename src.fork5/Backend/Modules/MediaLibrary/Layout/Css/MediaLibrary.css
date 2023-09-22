@@ -220,52 +220,52 @@
   background: none;
   border: none;
 }
-#addMediaDialog #tab-library .options,
+#addMediaDialog #tabLibrary .options,
 #addMediaDialog #tabUploadMedia .options {
   margin-bottom: 1em;
 }
-#addMediaDialog #tab-library .tab-content {
+#addMediaDialog #tabLibrary .tab-content {
   padding: 0;
   border: none;
 }
-#addMediaDialog #tab-library .tab-content .table-striped {
+#addMediaDialog #tabLibrary .tab-content .table-striped {
   border-top: 0;
   padding: .5em 0 0;
 }
-#addMediaDialog #tab-library .table-responsive {
+#addMediaDialog #tabLibrary .table-responsive {
   max-height: 400px;
   overflow: auto;
 }
-.media-table {
+.mediaTable {
   overflow-wrap: break-word;
 }
-  .media-table .check {
+  .mediaTable .check {
     width: 30px;
   }
-  .media-table .fullUrl {
+  .mediaTable .fullUrl {
     width: 90px;
     cursor: pointer;
   }
-  .media-table .url {
+  .mediaTable .url {
     max-width: 156px;
   }
-  .media-table .title {
+  .mediaTable .title {
     max-width: 140px;
     color: #000;
   }
-  .media-table .actions {
+  .mediaTable .actions {
     max-width: 100px;
   }
-  .media-table .actions a {
+  .mediaTable .actions a {
     float: right;
   }
 
-.input-list.no-padding,
-.input-list.no-padding li {
+.inputList.noPadding,
+.inputList.noPadding li {
   padding:  0;
 }
 
-#upload-media-type-box label {
+#uploadMediaTypeBox label {
   vertical-align: bottom;
 }
 
@@ -273,11 +273,11 @@
 /**
  * Uploaded media box
  */
-#uploaded-media-box .panel-body {
+#uploadedMediaBox .panel-body {
   padding: 20px;
 }
 
-#uploaded-media-box .mediaConnectedItems {
+#uploadedMediaBox .mediaConnectedItems {
   float: none;
   padding: 0;
   margin: 0;

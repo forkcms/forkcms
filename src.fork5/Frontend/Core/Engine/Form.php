@@ -106,7 +106,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                               '</p>' . "\n";
                     $value .= "\t\t" . '{$chk' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
-                    $value .= "\t\t" . '<ul class="input-list">' . "\n";
+                    $value .= "\t\t" . '<ul class="inputList">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
                               $object->getName() . '.chk' . SpoonFilter::toCamelCase($object->getName()) .
@@ -143,7 +143,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="help-txt">{$msgHelpImageField}</span> {$file' .
+                        '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormFile) {
@@ -162,7 +162,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                         '</p>' . "\n";
                     $value .= "\t\t" . '{$rbt' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
-                    $value .= "\t\t" . '<ul class="input-list">' . "\n";
+                    $value .= "\t\t" . '<ul class="inputList">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
                         $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) .
@@ -177,7 +177,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="help-txt">{$msgHelpDateField}</span> {$txt' .
+                        '} <span class="helpTxt">{$msgHelpDateField}</span> {$txt' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof SpoonFormTime) {
@@ -187,7 +187,7 @@ class Form extends \Common\Core\Form
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                         SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
                     $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
-                        '} <span class="help-txt">{$msgHelpTimeField}</span> {$txt' .
+                        '} <span class="helpTxt">{$msgHelpTimeField}</span> {$txt' .
                         SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif (($object instanceof SpoonFormPassword) ||

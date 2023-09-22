@@ -73,7 +73,7 @@ export class Templates {
       html += '<div class="icon"></div>'
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
-    html += '<button type="button" class="delete-media-item btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
     html += '<span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '<i class="fas fa-times"></i>'
@@ -153,7 +153,7 @@ export class Templates {
       html += '<div class="url">' + mediaItem.url + '</div>'
     }
 
-    html += '<button type="button" class="delete-media-item btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger btn-sm btn-icon-only" data-fork="disconnect" '
     html += 'title="' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '">'
     html += '<i class="fas fa-times"></i>'
     html += '<span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('MediaDisconnect')) + '</span>'

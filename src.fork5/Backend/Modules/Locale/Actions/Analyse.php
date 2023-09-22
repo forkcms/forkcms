@@ -92,7 +92,7 @@ class Analyse extends BackendBaseActionIndex
             $this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
             // add a class for the inline edit
-            $this->dgFrontend->setColumnAttributes('translation', ['class' => 'translation-value']);
+            $this->dgFrontend->setColumnAttributes('translation', ['class' => 'translationValue']);
 
             // add attributes, so the inline editing has all the needed data
             $this->dgFrontend->setColumnAttributes('translation', ['data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}']);
@@ -129,7 +129,7 @@ class Analyse extends BackendBaseActionIndex
             $this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
             // add a class for the inline edit
-            $this->dgBackend->setColumnAttributes('translation', ['class' => 'translation-value']);
+            $this->dgBackend->setColumnAttributes('translation', ['class' => 'translationValue']);
 
             // add attributes, so the inline editing has all the needed data
             $this->dgBackend->setColumnAttributes('translation', ['data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}']);

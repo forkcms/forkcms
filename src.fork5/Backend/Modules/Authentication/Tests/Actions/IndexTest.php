@@ -88,7 +88,7 @@ class IndexTest extends BackendWebTestCase
             $client,
             $form,
             [
-                'form' => 'authentication-index',
+                'form' => 'authenticationIndex',
                 'backend_email' => $email,
                 'backend_password' => $password,
                 'form_token' => $form['form_token']->getValue(),

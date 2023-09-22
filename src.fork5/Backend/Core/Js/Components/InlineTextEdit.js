@@ -40,7 +40,7 @@ export class InlineTextEdit {
 
       $this.hover(
         () => {
-          if (element.hasClass('inline-editing')) {
+          if (element.hasClass('inlineEditing')) {
             $this.removeClass('inlineEditHover')
             tooltip.hide()
           } else {
@@ -75,7 +75,7 @@ export class InlineTextEdit {
         }
 
         // add class
-        element.addClass('inline-editing')
+        element.addClass('inlineEditing')
 
         // hide label
         $this.removeClass('inlineEditHover')
@@ -128,7 +128,7 @@ export class InlineTextEdit {
         parent.html(newValue).bind('click focus', createElement)
 
         // add class
-        parent.removeClass('inline-editing')
+        parent.removeClass('inlineEditing')
 
         // restore
         editing = false

@@ -15,7 +15,7 @@ export class Upload {
 
   preInit () {
     // bind change to upload_type
-    $('#upload-media-type-box').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
+    $('#uploadMediaTypeBox').on('change', 'input[name=uploading_type]', $.proxy(this.toggleUploadBoxes, this))
 
     // bind click to add movie
     $('#addMediaMovie').on('click', $.proxy(this.insertMovie, this))
@@ -103,7 +103,7 @@ export class Upload {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            const $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only add-uploaded-media-item" data-direct-url="' +
+            const $link = $('<a href="#" class="btn btn-success btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' +
               responseJSON.direct_url + '"><span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></a>')
 
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
@@ -262,7 +262,7 @@ export class Upload {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only add-uploaded-media-item" data-direct-url="' + json.data.direct_url + '"><span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
+            const $link = $('<a href="#" class="btn btn-success  btn-sm btn-icon-only addUploadedMediaItem" data-direct-url="' + json.data.direct_url + '"><span class="visually-hidden">' + StringUtil.ucfirst(window.backend.locale.lbl('Select')) + '</span><i class="fas fa-check fa-fw" aria-hidden="true"></i></i></a>')
             $link.on('click', window.backend.mediaLibrary.helper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
@@ -278,7 +278,7 @@ export class Upload {
    */
   toggleUploadBoxes () {
     // init variables
-    const $uploadingType = $('#upload-media-type-box input[name=uploading_type]')
+    const $uploadingType = $('#uploadMediaTypeBox input[name=uploading_type]')
     const folderSelected = ($('#uploadMediaFolderId').val() !== 0)
     let showMediaTypeBox = false // step 2
     let showMediaBox = false // step 2
@@ -318,7 +318,7 @@ export class Upload {
     }
 
     // update show upload type choise
-    $('#upload-media-type-box').toggle(showMediaTypeBox)
+    $('#uploadMediaTypeBox').toggle(showMediaTypeBox)
 
     // toggle upload media box
     $('#uploadMediaBox').toggle(showMediaBox)
@@ -327,7 +327,7 @@ export class Upload {
     $('#addMovieBox').toggle(showMovieBox)
 
     // toggle uploaded box
-    $('#uploaded-media-box').toggle(showUploadedBox)
+    $('#uploadedMediaBox').toggle(showUploadedBox)
     $('#mediaWillBeConnectedToMediaGroup').toggle((this.config.currentMediaGroupId !== 0))
 
     if (this.uploadedCount === 0) {

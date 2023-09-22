@@ -198,7 +198,7 @@ export class Fields {
               }
             }).trigger('change')
 
-            $('#datetime-value-type').change((event) => {
+            $('#datetimeValueType').change((event) => {
               if ($(event.currentTarget).val() === 'today') {
                 $('#datetimeValueAmount').prop('disabled', true).val('')
               } else {
@@ -437,7 +437,7 @@ export class Fields {
                 $('#datetimeId').val(data.data.field.id)
                 $('#datetimeLabel').val(StringUtil.htmlDecode(data.data.field.settings.label))
                 $('#datetimeValueAmount').val(StringUtil.htmlDecode(data.data.field.settings.value_amount))
-                $('#datetime-value-type').val(StringUtil.htmlDecode(data.data.field.settings.value_type))
+                $('#datetimeValueType').val(StringUtil.htmlDecode(data.data.field.settings.value_type))
                 $('#datetimeType').val(StringUtil.htmlDecode(data.data.field.settings.input_type))
                 $('#datetimeClassname').val(StringUtil.htmlDecode(data.data.field.settings.classname))
                 $('#datetimeAutocomplete').val(StringUtil.htmlDecode(data.data.field.settings.autocomplete))
@@ -807,7 +807,7 @@ export class Fields {
     const type = 'datetime'
     const label = $('#datetimeLabel').val()
     const valueAmount = $('#datetimeValueAmount').val()
-    const valueType = $('#datetime-value-type').val()
+    const valueType = $('#datetimeValueType').val()
     const inputType = $('#datetimeType').val()
     const required = $('#datetimeRequired').is(':checked')
     const requiredErrorMessage = $('#datetimeRequiredErrorMessage').val()
