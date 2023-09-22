@@ -4,8 +4,8 @@
 import { StringUtil } from './StringUtil'
 
 export class Messages {
-  // add a new message into the que
-  static add (type, content, optionalClass = '', dismissable = false) {
+  // add a new message into the queue
+  static add (type, content, optionalClass = '', dismissable = true) {
     const uniqueId = 'e' + new Date().getTime().toString()
 
     // switch icon type
@@ -41,14 +41,15 @@ export class Messages {
       dismissableClass = ''
     }
 
-    const html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-autohide="' + autohide + '" data-delay="5000">' +
+    const html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-bs-autohide="' + autohide + '" data-bs-delay="5000">' +
       '<div class="toast-body">' +
-      '<button type="button" class="close' + dismissableClass + '" data-dismiss="toast" aria-label="' + StringUtil.ucfirst(window.backend.locale.lbl('Close')) + '">' +
+      '<button type="button" class="btn-close' + dismissableClass + '" data-bs-dismiss="toast" aria-label="' + StringUtil.ucfirst(window.backend.locale.lbl('Close')) + '">' +
       '<i class="fas fa-times"></i>' +
       '</button>' +
       '<i class="toast-icon ' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +
       '</div>' +
+      '<div class="toast-progress"><div class="toast-progress--inner"></div></div>' +
       '</div>'
 
     // prepend
