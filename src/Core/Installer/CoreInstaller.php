@@ -14,9 +14,8 @@ final class CoreInstaller extends ModuleInstaller
         $this->setSetting(
             'date_formats_short',
             [
-                // @codingStandardsIgnoreStart
+                // @codingStandardsIgnoreLine
                 // php format  => IntlDateFormatter format (https://unicode-org.github.io/icu/userguide/format_parse/datetime/index#datetimepatterngenerator)
-                // @codingStandardsIgnoreEnd
                 'j/n/Y' => 'd/M/yyyy',
                 'j-n-Y' => 'd-M-yyyy',
                 'j.n.Y' => 'd.M.yyyy',
@@ -49,9 +48,8 @@ final class CoreInstaller extends ModuleInstaller
         $this->setSetting(
             'date_formats_long',
             [
-                // @codingStandardsIgnoreStart
+                // @codingStandardsIgnoreLine
                 // php format  => IntlDateFormatter format (https://unicode-org.github.io/icu/userguide/format_parse/datetime/index#datetimepatterngenerator)
-                // @codingStandardsIgnoreEnd
                 'j F Y' => 'd MMMM yyyy',
                 'D j F Y' => 'EEE d MMMM yyyy',
                 'l j F Y' => 'EEEE d MMMM yyyy',
@@ -71,9 +69,8 @@ final class CoreInstaller extends ModuleInstaller
         $this->setSetting(
             'time_formats',
             [
-                // @codingStandardsIgnoreStart
+                // @codingStandardsIgnoreLine
                 // php format  => IntlDateFormatter format (https://unicode-org.github.io/icu/userguide/format_parse/datetime/index#datetimepatterngenerator)
-                // @codingStandardsIgnoreEnd
                 'H:i' => 'kk:mm',
                 'g:i a' => 'h:mm a',
                 'H:i:s' => 'kk:mm:ss',
