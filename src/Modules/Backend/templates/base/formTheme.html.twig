@@ -358,7 +358,7 @@
   {%- if help is not empty -%}
     {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
   {%- endif -%}
-  {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
+  {%- set row_class = row_class|default(row_attr.class|default('col-12 col-lg-6 mb-3')|trim) -%}
   <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
     {%- if 'form-floating' in row_class -%}
       {{- form_widget(form, widget_attr) -}}
