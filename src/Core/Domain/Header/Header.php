@@ -59,8 +59,8 @@ final class Header
             $translationDomain = $translator->getDefaultTranslationDomain();
             $defaults['default_translation_domain'] = $translationDomain->getDomain();
             $fallbackDomain = $translationDomain->getFallback()?->getDomain();
-            $defaults['default_translation_domain_fallback'] = $fallbackDomain ??
-                $defaults['default_translation_domain'];
+            $defaults['default_translation_domain_fallback'] = $fallbackDomain
+                ?? $defaults['default_translation_domain'];
         }
 
         $this->jsData = new JsData($defaults);

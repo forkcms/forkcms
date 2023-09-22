@@ -198,8 +198,8 @@ APP_SECRET=%10$s',
 
     private function getYamlFilename(): string
     {
-        return $this->rootDir . ($_ENV['FORK_INSTALLATION_CONFIGURATION_PATH'] ??
-                '/fork-cms-installation-configuration.yaml');
+        return $this->rootDir . ($_ENV['FORK_INSTALLATION_CONFIGURATION_PATH']
+                ?? '/fork-cms-installation-configuration.yaml');
     }
 
     private function getDotEnvFilename(): string
