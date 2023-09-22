@@ -5,7 +5,7 @@ export class InitBsToasts {
 
   // init toasts present on page load
   initToasts () {
-    const messageNodes = document.querySelector('[data-messaging-wrapper]').querySelectorAll('.toast')
+    const messageNodes = document.querySelector('[data-messaging-wrapper]').querySelectorAll('[data-role="toast"]')
     const messageNodesList = Array.from(messageNodes)
     messageNodesList.forEach(message => {
       const toast = window.bootstrap.Toast.getOrCreateInstance(message)
