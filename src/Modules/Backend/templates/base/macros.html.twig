@@ -47,13 +47,13 @@
   {% endif %}
 {% endmacro %}
 
-{% macro alert(type, message, dismissable = false, id, extraAttributes = [], active = true, showIcon = true) %}
+{% macro alert(type, message, dismissable = true, id, extraAttributes = [], active = true, showIcon = true) %}
   {% import _self as macro %}
 
   {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
 
   {% if active %}
-    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' show'}) %}
+    {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' to-show'}) %}
   {% else %}
     {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' hide'}) %}
   {% endif %}
@@ -80,10 +80,14 @@
     {% set dismissableClass = '' %}
   {% endif %}
 
-  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-autohide="{{ autohide }}" data-delay="5000">
+  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-bs-autohide="{{ autohide ? 'true' : 'false' }}" data-bs-delay="5000">
     <div class="toast-body">
       {% if dismissable == true %}
-        <button type="button" class="btn-close{{ dismissableClass }}" data-dismiss="toast" aria-label="{{ 'lbl.Close'|trans }}"></button>
+        <div class="row justify-content-end">
+          <div class="col-auto">
+            <button type="button" class="btn-close {{ dismissableClass }}" data-bs-dismiss="toast" aria-label="{{ 'lbl.Close'|trans }}"></button>
+          </div>
+        </div>
       {% endif %}
       {% if message %}
         {% if showIcon == true and type == 'danger' %}
@@ -104,6 +108,9 @@
         {% endif %}
       {% endif %}
     </div>
+  {% if autohide %}
+    <div class="toast-progress"><div class="toast-progress--inner"></div></div>
+  {% endif %}
   </div>
 {% endmacro %}
 
