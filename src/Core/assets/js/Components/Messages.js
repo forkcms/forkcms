@@ -41,7 +41,7 @@ export class Messages {
       dismissableClass = ''
     }
 
-    const html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-bs-autohide="' + autohide + '" data-bs-delay="5000">' +
+    const html = '<div role="' + role + '" aria-live="' + live + '" id="' + uniqueId + '" class="toast toast-' + type + ' ' + optionalClass + '" data-bs-autohide="' + autohide + '" data-bs-delay="5000" data-role="toast">' +
       '<div class="toast-body">' +
       '<button type="button" class="btn-close' + dismissableClass + '" data-bs-dismiss="toast" aria-label="' + StringUtil.ucfirst(window.backend.locale.lbl('Close')) + '">' +
       '<i class="fas fa-times"></i>' +

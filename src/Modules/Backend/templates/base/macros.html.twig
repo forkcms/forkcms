@@ -80,7 +80,7 @@
     {% set dismissableClass = '' %}
   {% endif %}
 
-  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-bs-autohide="{{ autohide ? 'true' : 'false' }}" data-bs-delay="5000">
+  <div{% for attrname, attrvalue in extraAttributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %} role="{{ role }}" data-role="toast" aria-live="{{ live }}" aria-atomic="true"{% if id %} id="{{ id }}"{% endif %} data-bs-autohide="{{ autohide ? 'true' : 'false' }}" data-bs-delay="5000">
     <div class="toast-body">
       {% if dismissable == true %}
         <div class="row justify-content-end">
