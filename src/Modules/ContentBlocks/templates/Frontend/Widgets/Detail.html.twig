@@ -1,4 +1,4 @@
-{% if content_block.text %}
+{% if content_block is defined and content_block.text %}
   <div class="module-content-blocks widget-content-blocks-default contentBlock{{ content_block.id }}">
     {{ content_block.text|parseEditor }}
   </div>

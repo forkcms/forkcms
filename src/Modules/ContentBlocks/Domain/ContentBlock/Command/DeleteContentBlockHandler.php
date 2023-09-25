@@ -26,14 +26,9 @@ final class DeleteContentBlockHandler implements CommandHandlerInterface
 
         $this->contentBlockRepository->removeMultiple($versions);
 
-        try {
-            $extraId = $versions[0]->getExtraId();
-            $block = $this->blockRepository->findOneBy(['id' => $extraId]);
-            if ($block instanceof Block) {
-                $this->blockRepository->remove($block);
-            }
-        } catch (Exception) {
-            // do nothing
-        }
+        $extraId = $versions[0]->getExtraId();
+        $block = $this->blockRepository->findOneBy(['id' => $extraId]);
+        $block->hide();
+        $this->blockRepository->save($block);
     }
 }

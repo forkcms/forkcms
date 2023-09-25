@@ -74,7 +74,9 @@ final class RevisionBlockType extends AbstractType
                 'query_builder' => static function (BlockRepository $repository): QueryBuilder {
                     return $repository->createQueryBuilder('b')
                         ->where('b.locale IS NULL OR b.locale = :locale')
+                        ->andWhere('b.hidden = :false')
                         ->setParameter('locale', Locale::current())
+                        ->setParameter('false', false)
                         ->orderBy('b.position');
                 },
                 'attr' => [

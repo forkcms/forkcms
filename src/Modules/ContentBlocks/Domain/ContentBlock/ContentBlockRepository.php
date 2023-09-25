@@ -100,9 +100,11 @@ final class ContentBlockRepository extends ServiceEntityRepository
             ->andWhere('cb.id = :id')
             ->andWhere('cb.status = :active')
             ->andWhere('cb.locale = :locale')
+            ->andWhere('cb.isHidden = :false')
             ->setParameter('id', $id)
             ->setParameter('active', Status::Active)
             ->setParameter('locale', Locale::from($language))
+            ->setParameter('false', false)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -111,6 +113,13 @@ final class ContentBlockRepository extends ServiceEntityRepository
     {
         $block = $contentBlock->getWidget();
         $block->getSettings()->set('label', $contentBlock->getTitle());
+
+        if ($contentBlock->isHidden()) {
+            $block->hide();
+        } else {
+            $block->show();
+        }
+
         $this->blockRepository->save($block);
     }
 }
