@@ -5,8 +5,11 @@ namespace ForkCMS\Modules\Blog\Domain\Category;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
-use ForkCMS\Modules\Blog\Domain\BlogPost\BlogPost;
+use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Blog\Domain\Category\Command\CategoryDataTransferObject;
+use ForkCMS\Modules\Frontend\Domain\Meta\EntityWithMetaTrait;
+use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
+use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
@@ -32,13 +35,13 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 )]
 class Category
 {
+    use EntityWithMetaTrait;
+    use EntityWithLocaleTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
-
-    #[ORM\Column(name: 'language', type: 'string', length: 5, enumType: Locale::class)]
-    private Locale $locale;
 
     #[ORM\Column(type: 'string')]
     #[DataGridPropertyColumn(
@@ -55,22 +58,20 @@ class Category
     )]
     private string $title;
 
-    // TODO meta
-
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: BlogPost::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Article::class)]
     private Collection $posts;
 
     private function __construct(CategoryDataTransferObject $categoryDataTransferObject)
     {
         $this->locale = $categoryDataTransferObject->locale;
         $this->title = $categoryDataTransferObject->title;
-        // TODO meta
+        $this->meta = $categoryDataTransferObject->meta;
     }
 
     public function update(CategoryDataTransferObject $categoryDataTransferObject): void
     {
         $this->title = $categoryDataTransferObject->title;
-        // TODO meta
+        $this->meta = $categoryDataTransferObject->meta;
     }
 
     public static function fromDataTransferObject(CategoryDataTransferObject $categoryDataTransferObject): self
@@ -94,7 +95,7 @@ class Category
     }
 
     /**
-     * @return Collection<BlogPost>
+     * @return Collection<Article>
      */
     public function getPosts(): Collection
     {

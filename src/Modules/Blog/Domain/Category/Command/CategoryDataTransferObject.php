@@ -3,6 +3,7 @@
 namespace ForkCMS\Modules\Blog\Domain\Category\Command;
 
 use ForkCMS\Modules\Blog\Domain\Category\Category;
+use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -13,6 +14,8 @@ class CategoryDataTransferObject
     public int $id;
 
     public Locale $locale;
+
+    public ?Meta $meta = null;
 
     #[Assert\NotBlank()]
     public string $title;
@@ -28,6 +31,7 @@ class CategoryDataTransferObject
         $this->id = $categoryEntity->getId();
         $this->locale = $categoryEntity->getLocale();
         $this->title = $categoryEntity->getTitle();
+        $this->meta = clone $categoryEntity->getMeta();
     }
 
     public function getEntity(): ?Category
