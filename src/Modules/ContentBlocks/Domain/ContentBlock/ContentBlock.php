@@ -155,6 +155,11 @@ class ContentBlock
         $this->status = Status::Archived;
     }
 
+    public function activate(): void
+    {
+        $this->status = Status::Active;
+    }
+
     public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self
     {
         return new self($dataTransferObject);

@@ -122,4 +122,21 @@ final class ContentBlockRepository extends ServiceEntityRepository
 
         $this->blockRepository->save($block);
     }
+
+    /**
+     * @return array<ContentBlock>
+     */
+    public function getRevisionsForContentBlock(ContentBlock $contentBlock): array
+    {
+        return $this->createQueryBuilder('cb')
+            ->andWhere('cb.id = :id')
+            ->andWhere('cb.locale = :locale')
+            ->andWhere('cb.status = :archived')
+            ->addOrderBy('cb.updatedOn', 'ASC')
+            ->setParameter('id', $contentBlock->getId())
+            ->setParameter('locale', $contentBlock->getLocale())
+            ->setParameter('archived', Status::Archived)
+            ->getQuery()
+            ->getResult();
+    }
 }

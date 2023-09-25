@@ -5,6 +5,8 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Service\UpdateContentBlockWidget;
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Status;
 
 final readonly class ChangeContentBlockHandler implements CommandHandlerInterface
 {
@@ -16,9 +18,15 @@ final readonly class ChangeContentBlockHandler implements CommandHandlerInterfac
     public function __invoke(ChangeContentBlock $changeContentBlock): void
     {
         $contentBlock = ContentBlock::fromDataTransferObject($changeContentBlock);
+        $contentBlock->activate();
 
-        $previousContentBlock = $changeContentBlock->getEntity();
-        $previousContentBlock->archive();
+        $previousActiveContentBlocks = $this->contentBlockRepository->findBy([
+            'id' => $contentBlock->getId(),
+            'status' => Status::Active
+        ]);
+        foreach ($previousActiveContentBlocks as $previousActiveContentBlock) {
+            $previousActiveContentBlock->archive();
+        }
 
         $this->contentBlockRepository->save($contentBlock);
     }
