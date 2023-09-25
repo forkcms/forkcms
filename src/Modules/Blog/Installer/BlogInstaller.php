@@ -7,7 +7,7 @@ use ForkCMS\Modules\Blog\Backend\Actions\BlogPostAdd;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryAdd;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryEdit;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryIndex;
-use ForkCMS\Modules\Blog\Domain\BlogPost\BlogPost;
+use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
 use ForkCMS\Modules\Blog\Domain\Comment\Comment;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
@@ -18,7 +18,7 @@ final class BlogInstaller extends ModuleInstaller
     public function preInstall(): void
     {
         $this->createTableForEntities(
-            BlogPost::class,
+            Article::class,
             Category::class,
             Comment::class
         );

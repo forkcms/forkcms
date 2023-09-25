@@ -4,7 +4,7 @@ namespace ForkCMS\Modules\Blog\Domain\Comment;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
-use ForkCMS\Modules\Blog\Domain\BlogPost\BlogPost;
+use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]

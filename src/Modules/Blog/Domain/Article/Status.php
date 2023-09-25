@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Modules\Blog\Domain\BlogPost;
+namespace ForkCMS\Modules\Blog\Domain\Article;
 
 enum Status: string
 {
