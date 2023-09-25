@@ -25,9 +25,12 @@ final class ContentBlocksInstaller extends ModuleInstaller
 
     private function createBackendPages(): void
     {
+        $modulesNavigationItem = $this->getModulesNavigationItem();
+
         $this->getOrCreateBackendNavigationItem(
             label: TranslationKey::label('ContentBlocks'),
             slug: ContentBlockIndex::getActionSlug(),
+            parent: $modulesNavigationItem,
             selectedFor: [
                 ContentBlockAdd::getActionSlug(),
                 ContentBlockEdit::getActionSlug(),
