@@ -20,7 +20,6 @@ final readonly class ChangeContentBlockHandler implements CommandHandlerInterfac
         $previousContentBlock = $changeContentBlock->getEntity();
         $previousContentBlock->archive();
 
-        $this->contentBlockRepository->save($previousContentBlock);
         $this->contentBlockRepository->save($contentBlock);
     }
 }
