@@ -29,7 +29,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
     requiredRole: ModuleAction::ROLE_PREFIX . 'CONTENT_BLOCKS__CONTENT_BLOCK_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
-final class ContentBlock
+class ContentBlock
 {
     public const DEFAULT_TEMPLATE = 'Default.html.twig';
 

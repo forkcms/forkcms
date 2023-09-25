@@ -53,7 +53,7 @@ abstract class ContentBlockDataTransferObject
         $this->revisionId = $this->contentBlockEntity->getRevisionId();
     }
 
-    public function getEntity(): ContentBlock
+    public function getEntity(): ?ContentBlock
     {
         return $this->contentBlockEntity;
     }
