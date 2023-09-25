@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
+use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,15 +30,17 @@ abstract class ContentBlockDataTransferObject
 
     public Locale $locale;
 
-    public int $userId;
-
     public Status $status;
+
+    public SettingsBag $settings;
 
     public function __construct(?ContentBlock $contentBlockEntity = null)
     {
         $this->contentBlockEntity = $contentBlockEntity;
 
         if (!$contentBlockEntity instanceof ContentBlock) {
+            $this->settings = new SettingsBag();
+
             return;
         }
 
@@ -47,7 +50,6 @@ abstract class ContentBlockDataTransferObject
         $this->title = $this->contentBlockEntity->getTitle();
         $this->text = $this->contentBlockEntity->getText();
         $this->template = $this->contentBlockEntity->getTemplate();
-        $this->userId = $this->contentBlockEntity->getUserId();
         $this->locale = $this->contentBlockEntity->getLocale();
         $this->status = $this->contentBlockEntity->getStatus();
         $this->revisionId = $this->contentBlockEntity->getRevisionId();

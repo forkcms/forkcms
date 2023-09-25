@@ -2,11 +2,14 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 use Doctrine\ORM\Mapping as ORM;
+use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
+use ForkCMS\Modules\Backend\Domain\User\Blameable;
+use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
+use DateTimeImmutable;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
-use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
-use DateTime;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
@@ -31,6 +34,10 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 )]
 class ContentBlock
 {
+    use Blameable;
+    use EntityWithLocaleTrait;
+    use EntityWithSettingsTrait;
+
     public const DEFAULT_TEMPLATE = 'Default.html.twig';
 
     #[ORM\Id]
@@ -41,17 +48,11 @@ class ContentBlock
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(name: 'user_id', type: 'integer')]
-    private int $userId;
-
     #[ORM\OneToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
     private Block $widget;
 
     #[ORM\Column(type: 'string', options: ['default' => self::DEFAULT_TEMPLATE])]
     private string $template;
-
-    #[ORM\Column(name: 'language', type: 'string', length: 5, enumType: Locale::class)]
-    private Locale $locale;
 
     #[ORM\Column(type: 'string')]
     #[DataGridPropertyColumn(
@@ -77,16 +78,9 @@ class ContentBlock
     #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => 'active'])]
     private Status $status;
 
-    #[ORM\Column(name: 'created_on', type: 'datetime')]
-    private DateTime $createdOn;
-
-    #[ORM\Column(name: 'edited_on', type: 'datetime')]
-    private DateTime $editedOn;
-
     private function __construct(ContentBlockDataTransferObject $dataTransferObject)
     {
         $this->id = $dataTransferObject->id;
-        $this->userId = $dataTransferObject->userId;
         $this->widget = $dataTransferObject->widget;
         $this->template = $dataTransferObject->template;
         $this->locale = $dataTransferObject->locale;
@@ -94,6 +88,9 @@ class ContentBlock
         $this->text = $dataTransferObject->text;
         $this->isHidden = !$dataTransferObject->isVisible;
         $this->status = $dataTransferObject->status;
+        $this->createdBy = $dataTransferObject->createdBy;
+        $this->updatedBy  = $dataTransferObject->updatedBy;
+        $this->settings = $dataTransferObject->settings;
     }
 
     public function getRevisionId(): int
@@ -119,11 +116,6 @@ class ContentBlock
     public function getTemplate(): string
     {
         return $this->template;
-    }
-
-    public function getLocale(): Locale
-    {
-        return $this->locale;
     }
 
     public function getTitle(): string
@@ -152,20 +144,10 @@ class ContentBlock
         return $this->status;
     }
 
-    public function getCreatedOn(): DateTime
-    {
-        return $this->createdOn;
-    }
-
-    public function getEditedOn(): DateTime
-    {
-        return $this->editedOn;
-    }
-
     #[ORM\PrePersist]
     public function prePersist(): void
     {
-        $this->createdOn = $this->editedOn = new DateTime();
+        $this->createdOn = $this->updatedOn = new DateTimeImmutable();
     }
 
     public function archive(): void

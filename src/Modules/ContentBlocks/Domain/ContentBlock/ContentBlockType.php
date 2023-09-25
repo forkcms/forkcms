@@ -27,8 +27,10 @@ class ContentBlockType extends AbstractType
 
         /** @var User $user */
         $user = $this->security->getUser();
-
-        $data->userId = $user->getId();
+        if ($data->createdBy === null) {
+            $data->createdBy = $user;
+        }
+        $data->updatedBy = $user;
 
         $builder->add(
             'title',
