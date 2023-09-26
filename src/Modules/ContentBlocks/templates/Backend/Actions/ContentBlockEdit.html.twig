@@ -73,7 +73,11 @@
   <div class="btn-toolbar d-flex">
     <div class="btn-group" role="group">
       {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
-        {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete"}) }}
+        {% set options = {"type":"button", "data-bs-toggle":"modal", "data-bs-target":"#confirmDelete"} %}
+        {% if content_block_in_use %}
+          {% set options = options|merge({"disabled":"disabled"}) %}
+        {% endif %}
+        {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), options) }}
       {% endif %}
       {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
         <div class="btn-group" role="group">

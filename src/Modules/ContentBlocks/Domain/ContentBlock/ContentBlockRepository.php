@@ -3,9 +3,12 @@
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
+use ForkCMS\Modules\Pages\Domain\Revision\Revision;
+use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
 
 /**
  * @method ContentBlock|null find($id, $lockMode = null, $lockVersion = null)
@@ -139,5 +142,22 @@ final class ContentBlockRepository extends ServiceEntityRepository
             ->setParameter('archived', Status::Archived)
             ->getQuery()
             ->getResult();
+    }
+
+    public function isContentBlockInUse(ContentBlock $contentBlock): bool
+    {
+        $result = $this->getEntityManager()->createQueryBuilder()
+            ->from(ContentBlock::class, 'cb')
+            ->select('COUNT(cb.id)')
+            ->innerJoin(Block::class, 'b', Join::WITH, 'b.id = cb.extraId')
+            ->innerJoin(RevisionBlock::class, 'rb', Join::WITH, 'rb.block = b.id')
+            ->innerJoin(Revision::class, 'r', Join::WITH, 'r.id = rb.revision')
+            ->andWhere('cb.revisionId = :revisionId')
+            ->andWhere('r.isArchived IS NULL')
+            ->setParameter('revisionId', $contentBlock->getRevisionId())
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $result !== 0;
     }
 }

@@ -37,6 +37,7 @@ final class ContentBlockEdit extends AbstractFormActionController
             ActionSlug::fromFQCN(ContentBlockDelete::class)
         );
 
+        $this->assign('content_block_in_use', $this->contentBlockRepository->isContentBlockInUse($contentBlock));
         $this->assign('revisions', $this->contentBlockRepository->getRevisionsForContentBlock($contentBlock));
 
         return $this->handleForm(
