@@ -14,7 +14,6 @@ use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[ORM\Entity(repositoryClass: BlockRepository::class)]
-#[ORM\Table(name: 'frontend__block')]
 class Block implements TranslatableInterface
 {
     use EntityWithSettingsTrait;

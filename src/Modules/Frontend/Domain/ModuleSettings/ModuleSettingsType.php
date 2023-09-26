@@ -201,6 +201,7 @@ final class ModuleSettingsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+        // @TODO refactor this to a custom form type since we need the smae things here over and over again
         $resolver->setDefault('data_class', ChangeModuleSettings::class);
     }
 

@@ -26,6 +26,7 @@ doctrine:
     entity_managers:
       default:
         connection: default
+        naming_strategy: ForkCMS\Core\Domain\Doctrine\ForkNamingStrategy
         auto_mapping: true
         filters:
           softdeleteable:

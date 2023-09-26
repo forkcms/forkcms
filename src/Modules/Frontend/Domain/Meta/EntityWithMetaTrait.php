@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait EntityWithMetaTrait
 {
     #[ORM\OneToOne(targetEntity: Meta::class, cascade: ["persist", "remove"])]
-    #[ORM\JoinColumn(name: "meta_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private Meta $meta;
 
     public function getMeta(): Meta

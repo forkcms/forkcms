@@ -11,7 +11,6 @@ use InvalidArgumentException;
 use Symfony\Component\Translation\TranslatableMessage;
 
 #[ORM\Entity(repositoryClass: TranslationRepository::class)]
-#[ORM\Table(name: 'internationalisation__translation')]
 class Translation
 {
     use Blameable;

@@ -11,7 +11,6 @@ use Gedmo\Sluggable\Util\Urlizer;
 use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: MetaRepository::class)]
-#[ORM\Table(name: 'frontend__meta')]
 #[ORM\Index(columns: ['slug'], name: 'idx_slug')]
 #[ORM\HasLifecycleCallbacks]
 class Meta implements JsonSerializable

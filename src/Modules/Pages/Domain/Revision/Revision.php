@@ -36,7 +36,6 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
  * @Gedmo\SoftDeleteable(fieldName="isArchived", timeAware=true)
  */
 #[ORM\Entity(repositoryClass: RevisionRepository::class)]
-#[ORM\Table(name: 'pages__revision')]
 #[ORM\HasLifecycleCallbacks]
 #[DataGrid('Revision')]
 #[DataGridActionColumn(

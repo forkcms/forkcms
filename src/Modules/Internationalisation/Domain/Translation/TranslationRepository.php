@@ -68,7 +68,7 @@ final class TranslationRepository extends ServiceEntityRepository
                 'domain.moduleName' => $fields['domain']->getModuleName(),
                 'key.name' => $fields['key']->getName(),
                 'key.type' => $fields['key']->getType()->value,
-                'locale' => $fields['locale']->value
+                'locale' => $fields['locale']->value,
             ]
         );
     }

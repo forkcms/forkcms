@@ -22,7 +22,6 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserGroupRepository::class)]
-#[ORM\Table(name: 'backend__user_group')]
 #[UniqueEntity(fields: ['name'])]
 #[DataGrid('UserGroup')]
 #[DataGridActionColumn(
