@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
+use ForkCMS\Modules\Pages\Domain\Revision\RevisionRepository;
 use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
 
 /**
@@ -15,12 +16,14 @@ use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
  * @method ContentBlock|null findOneBy(array $criteria, array $orderBy = null)
  * @method ContentBlock[]    findAll()
  * @method ContentBlock[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ContentBlock>
  */
 final class ContentBlockRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $managerRegistry,
-        private readonly BlockRepository $blockRepository
+        private readonly BlockRepository $blockRepository,
+        private readonly RevisionRepository $revisionRepository
     ) {
         parent::__construct($managerRegistry, ContentBlock::class);
     }
@@ -46,10 +49,15 @@ final class ContentBlockRepository extends ServiceEntityRepository
     /** @param ContentBlock[] $contentBlocks */
     public function removeMultiple(array $contentBlocks): void
     {
+        $block = $this->blockRepository->findOneBy(['id' => $contentBlocks[0]->getExtraId()]);
+        $this->revisionRepository->removeFrontendBlockFromRevision($block);
+        $this->blockRepository->remove($block);
+
         $entityManager = $this->getEntityManager();
         foreach ($contentBlocks as $contentBlock) {
             $entityManager->remove($contentBlock);
         }
+
         $entityManager->flush();
     }
 

@@ -5,11 +5,13 @@ namespace ForkCMS\Modules\Pages\Domain\Revision;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Page\NavigationBuilder;
 use ForkCMS\Modules\Pages\Domain\Page\Page;
+use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
 
 /**
  * @method Revision|null find($id, $lockMode = null, $lockVersion = null)
@@ -85,5 +87,34 @@ final class RevisionRepository extends ServiceEntityRepository implements MetaCa
                     ->setParameter('parentPage', $subject->getParentPage());
             }
         }
+    }
+
+    public function removeFrontendBlockFromRevision(Block $block): void
+    {
+        $this->getEntityManager()->getFilters()->disable('softdeleteable');
+
+        $revisions = $this->getEntityManager()->createQueryBuilder()
+            ->from(Revision::class, 'r')
+            ->select('r')
+            ->innerJoin('r.blocks', 'rb')
+            ->innerJoin('rb.block', 'b')
+            ->andWhere('r.isArchived IS NOT NULL')
+            ->andWhere('b.id = :blockId')
+            ->setParameter('blockId', $block->getId())
+            ->getQuery()
+            ->getResult();
+
+        /** @var Revision $revision */
+        foreach ($revisions as $revision) {
+            /** @var RevisionBlock $revisionBlock */
+            foreach ($revision->getBlocks() as $revisionBlock) {
+                if ($revisionBlock->getBlock()->getId() === $block->getId()) {
+                    $revision->removeBlock($revisionBlock);
+                }
+            }
+        }
+
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->getFilters()->enable('softdeleteable');
     }
 }
