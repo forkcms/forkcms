@@ -7,6 +7,8 @@ use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Backend\Domain\User\Event\BuildUserSettingsFormEvent;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroupDataGridChoiceType;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -23,17 +25,34 @@ final class UserType extends AbstractType
     public function __construct(
         private TokenStorageInterface $tokenStorage,
         private EventDispatcherInterface $eventDispatcher,
+        private readonly ModuleSettings $moduleSettings,
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $twoFactorAuthenticationEnabled = $this->moduleSettings->get(
+            ModuleName::fromString('Backend'),
+            '2fa_enabled',
+            false
+        );
+
+        $twoFactorAuthenticationRequired = $this->moduleSettings->get(
+            ModuleName::fromString('Backend'),
+            '2fa_required',
+            false
+        );
+
         $builder->add(
             'user',
             TabsType::class,
             [
                 'tabs' => [
-                    'lbl.Authentication' => function (FormBuilderInterface $builder) use ($options): void {
+                    'lbl.Authentication' => function (FormBuilderInterface $builder) use (
+                        $options,
+                        $twoFactorAuthenticationEnabled,
+                        $twoFactorAuthenticationRequired
+                    ): void {
                         $builder
                             ->add(
                                 'displayName',
@@ -69,24 +88,28 @@ final class UserType extends AbstractType
                                     ],
                                     'required' => in_array('create', $options['validation_groups'] ?? [], true),
                                 ]
-                            )
-                            ->add(
+                            );
+
+                        if ($twoFactorAuthenticationEnabled) {
+                            $builder->add(
                                 'enableTwoFactorAuthentication',
                                 SwitchType::class,
                                 [
                                     'label' => 'lbl.EnableTwoFactorAuthentication',
-                                    'required' => false,
+                                    'required' => $twoFactorAuthenticationRequired,
                                     'block_prefix' => 'two_factor_authentication',
                                 ]
-                            )
-                            ->add(
-                                'accessToBackend',
-                                SwitchType::class,
-                                [
-                                    'label' => 'lbl.AccessToBackend',
-                                    'required' => false,
-                                ]
                             );
+                        }
+
+                        $builder->add(
+                            'accessToBackend',
+                            SwitchType::class,
+                            [
+                                'label' => 'lbl.AccessToBackend',
+                                'required' => false,
+                            ]
+                        );
                         /** @var User|null $user */
                         $user = $this->tokenStorage->getToken()?->getUser();
                         if ($user?->isSuperAdmin() ?? false) {

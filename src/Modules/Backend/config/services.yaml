@@ -31,3 +31,6 @@ services:
 
   ForkCMS\Modules\Backend\DataFixtures\:
     resource: '../DataFixtures/*'
+
+  ForkCMS\Modules\Backend\Domain\Authentication\TwoFactorAuthenticationFactory:
+    public: true

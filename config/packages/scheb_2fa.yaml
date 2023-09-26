@@ -4,11 +4,10 @@ scheb_two_factor:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
     google:
-        enabled: true
+        enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").enabled()'
         template: '@Backend\Backend\2fa.html.twig'
 
-
     trusted_device:
-        enabled: true
+        enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").trustedDevices()'
         extend_lifetime: true
-        key: cc21ed8d4b2a28a1f14028428fd3b5e5scheb
+        key: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").secret()'
