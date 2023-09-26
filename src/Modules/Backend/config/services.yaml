@@ -28,3 +28,6 @@ services:
 
   ForkCMS\Modules\Backend\Console\:
     resource: '../Console/*'
+
+  ForkCMS\Modules\Backend\Domain\Authentication\TwoFactorAuthenticationFactory:
+    public: true

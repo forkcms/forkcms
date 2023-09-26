@@ -63,6 +63,11 @@ class TwoFactorAuthenticationController extends FormController
                 'jsFiles' => [],
                 'cssFiles' => [],
                 'jsData' => '',
+                'displayTrustedOption' => $templateVars['displayTrustedOption'] && $this->moduleSettings->get(
+                    ModuleName::fromString('Backend'),
+                    'trusted_devices_enabled',
+                    false
+                ),
             ]
         );
     }
