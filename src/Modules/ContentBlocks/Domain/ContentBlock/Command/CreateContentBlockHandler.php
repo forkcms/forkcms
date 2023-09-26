@@ -7,14 +7,12 @@ use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use ForkCMS\Modules\ContentBlocks\Frontend\Widgets\Detail as DetailWidget;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
-use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
 use ForkCMS\Modules\Frontend\Domain\Block\ModuleBlock;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 
 final class CreateContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly BlockRepository $blockRepository,
         private readonly ContentBlockRepository $contentBlockRepository
     ) {
     }

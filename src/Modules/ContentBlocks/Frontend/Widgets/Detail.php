@@ -19,12 +19,12 @@ class Detail extends AbstractWidgetController
 
     protected function execute(Request $request, Response $response): void
     {
-        if (!$this->hasSetting('id')) {
+        if (!$this->hasSetting('content_block_id')) {
             return;
         }
 
         $contentBlock = $this->contentBlockRepository->findForIdAndLocale(
-            $this->getSetting('id'),
+            $this->getSetting('content_block_id'),
             $this->translator->getLocale()
         );
 

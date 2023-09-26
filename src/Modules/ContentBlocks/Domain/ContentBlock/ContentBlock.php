@@ -43,6 +43,7 @@ class ContentBlock
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'revision_id', type: 'integer')]
+    /** @phpstan-ignore-next-line */
     private int $revisionId;
 
     #[ORM\Column(type: 'integer')]
@@ -101,11 +102,6 @@ class ContentBlock
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getWidget(): Block

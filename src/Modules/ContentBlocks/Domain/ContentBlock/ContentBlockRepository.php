@@ -44,7 +44,6 @@ final class ContentBlockRepository extends ServiceEntityRepository
     public function removeMultiple(array $contentBlocks): void
     {
         $entityManager = $this->getEntityManager();
-        /** @var ContentBlock $contentBlock */
         foreach ($contentBlocks as $contentBlock) {
             $entityManager->remove($contentBlock);
         }
@@ -112,8 +111,10 @@ final class ContentBlockRepository extends ServiceEntityRepository
     private function updateWidget(ContentBlock $contentBlock): void
     {
         $block = $contentBlock->getWidget();
-        $block->getSettings()->set('label', $contentBlock->getTitle());
-
+        $block->getSettings()->add([
+            'label' => $contentBlock->getTitle(),
+            'content_block_id' => $contentBlock->getId(),
+        ]);
         if ($contentBlock->isHidden()) {
             $block->hide();
         } else {
