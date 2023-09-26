@@ -12,8 +12,7 @@ use Exception;
 final class DeleteContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly ContentBlockRepository $contentBlockRepository,
-        private readonly BlockRepository $blockRepository
+        private readonly ContentBlockRepository $contentBlockRepository
     ) {
     }
 
