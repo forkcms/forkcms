@@ -32,7 +32,7 @@ final class ActionSlug implements Stringable
         if (
             !preg_match(
                 '#(^[a-z][a-z0-9_]*[a-z0-9]*)/([a-z][a-z0-9_]*[a-z0-9]*$)#',
-                $slug,
+                str_replace('-', '_', $slug),
                 $matches
             )
         ) {
@@ -98,12 +98,16 @@ final class ActionSlug implements Stringable
 
     public function getSlug(): string
     {
-        return implode(
-            '/',
-            [
-                Container::underscore($this->moduleName->getName()),
-                Container::underscore($this->actionName->getName()),
-            ]
+        return str_replace(
+            '_',
+            '-',
+            implode(
+                '/',
+                [
+                    Container::underscore($this->moduleName->getName()),
+                    Container::underscore($this->actionName->getName()),
+                ]
+            )
         );
     }
 
@@ -152,8 +156,8 @@ final class ActionSlug implements Stringable
     public function getRouteParameters(): array
     {
         return [
-            'action' => Container::underscore($this->actionName->getName()),
-            'module' => Container::underscore($this->moduleName->getName()),
+            'action' => str_replace('_', '-', Container::underscore($this->actionName->getName())),
+            'module' => str_replace('_', '-', Container::underscore($this->moduleName->getName())),
         ];
     }
 
