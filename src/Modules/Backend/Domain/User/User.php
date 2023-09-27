@@ -366,4 +366,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     {
         $this->backupCodes = $backupCodes;
     }
+
+    public function is2faEnabled(): bool
+    {
+        return $this->googleAuthenticatorSecret !== null;
+    }
 }

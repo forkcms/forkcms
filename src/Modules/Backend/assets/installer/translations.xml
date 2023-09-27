@@ -1150,6 +1150,10 @@
       <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
       <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>
     </item>
+    <item type="message" name="2FAIsRequired">
+      <translation locale="nl"><![CDATA[Two factor authentication is verplicht]]></translation>
+      <translation locale="en"><![CDATA[Two factor authentication is required]]></translation>
+    </item>
     <item type="label" name="RequiredField">
       <translation locale="nl"><![CDATA[verplicht veld]]></translation>
       <translation locale="en"><![CDATA[required field]]></translation>
