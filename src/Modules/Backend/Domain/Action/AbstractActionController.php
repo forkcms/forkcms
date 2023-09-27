@@ -105,8 +105,11 @@ abstract class AbstractActionController implements ActionControllerInterface
 
     private function needsRedirectToProfilePage(Request $request): bool
     {
-        /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
+
+        if ($user instanceof User === false) {
+            return false;
+        }
 
         $currentUrl = $request->getPathInfo();
         $redirectUrl = UserEdit::getActionSlug()->generateRoute($this->router) . '/' . $user->getId();
@@ -124,7 +127,7 @@ abstract class AbstractActionController implements ActionControllerInterface
         );
 
 
-        if ($required && $enabled && $user && !$user->is2faEnabled() && $currentUrl !== $redirectUrl) {
+        if ($required && $enabled && !$user->is2faEnabled() && $currentUrl !== $redirectUrl) {
             return true;
         }
 
