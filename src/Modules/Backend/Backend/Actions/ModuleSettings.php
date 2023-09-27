@@ -36,7 +36,7 @@ final class ModuleSettings extends AbstractFormActionController
                 []
             ),
             flashMessage: FlashMessage::success('SettingsSaved'),
-            validCallback: function (FormInterface $form): ?Response {
+            validCallback: function (FormInterface $form): Response {
                 $this->commandBus->dispatch($form->getData());
                 $this->commandBus->dispatch(new ClearContainerCache());
 

@@ -25,7 +25,7 @@ final class UserAdd extends AbstractFormActionController
             formOptions: [
                 'validation_groups' => ['Default', 'create'],
             ],
-            validCallback: function (FormInterface $form) use ($request): ?Response {
+            validCallback: function (FormInterface $form) use ($request): Response {
                 $redirectResponse = new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
                 $this->commandBus->dispatch($form->getData());
 

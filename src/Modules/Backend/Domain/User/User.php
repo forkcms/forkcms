@@ -105,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: Types::INTEGER)]
     private int $trustedVersion = 0;
 
+    /** @var array<string> */
     #[ORM\Column(type: 'json')]
     private array $backupCodes = [];
 
@@ -344,6 +345,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this->trustedVersion;
     }
 
+    /**
+     * @return string[]
+     */
     public function getBackupCodes(): array
     {
         return $this->backupCodes;
@@ -362,6 +366,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         }
     }
 
+    /**
+     * @param string[] $backupCodes
+     */
     public function setBackupCodes(array $backupCodes = []): void
     {
         $this->backupCodes = $backupCodes;
