@@ -6,7 +6,7 @@ use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
@@ -86,13 +86,13 @@ final class UserEdit extends AbstractFormActionController
         }
 
         return Builder::create()
-            ->writer(new PngWriter())
+            ->writer(new SvgWriter())
             ->data($this->googleAuthenticator->getQRContent($user))
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(0)
+            ->margin(-4)
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->writerOptions([SvgWriter::WRITER_OPTION_EXCLUDE_SVG_WIDTH_AND_HEIGHT => true])
             ->build()
             ->getDataUri();
     }
