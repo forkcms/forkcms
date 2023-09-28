@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\Backend\Domain\User;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
+use ForkCMS\Modules\Backend\Domain\User\Command\CreateUser;
 use ForkCMS\Modules\Backend\Domain\User\Event\BuildUserSettingsFormEvent;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroupDataGridChoiceType;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
@@ -90,7 +91,7 @@ final class UserType extends AbstractType
                                 ]
                             );
 
-                        if ($twoFactorAuthenticationEnabled) {
+                        if ($twoFactorAuthenticationEnabled && !$options['data'] instanceof CreateUser) {
                             $builder->add(
                                 'enableTwoFactorAuthentication',
                                 SwitchType::class,
