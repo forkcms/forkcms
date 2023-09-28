@@ -99,7 +99,7 @@ abstract class AbstractActionController implements ActionControllerInterface
         $user = $this->tokenStorage->getToken()->getUser();
 
         return new RedirectResponse(
-            UserEdit::getActionSlug()->generateRoute($this->router) . '/' . $user->getId()
+            UserEdit::getActionSlug()->generateRoute($this->router, ['slug' => $user->getId()])
         );
     }
 
@@ -112,7 +112,7 @@ abstract class AbstractActionController implements ActionControllerInterface
         }
 
         $currentUrl = $request->getPathInfo();
-        $redirectUrl = UserEdit::getActionSlug()->generateRoute($this->router) . '/' . $user->getId();
+        $redirectUrl = UserEdit::getActionSlug()->generateRoute($this->router, ['slug' => $user->getId()]);
 
         $required = $this->moduleSettings->get(
             ModuleName::fromString('Backend'),
