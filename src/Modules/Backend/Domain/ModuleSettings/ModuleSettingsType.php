@@ -32,6 +32,14 @@ final class ModuleSettingsType extends AbstractType
                 [
                     'label' => 'lbl.TwoFactorAuthenticationKey',
                     'required' => false,
+                    'constraints' => [
+                        new Expression(
+                            [
+                                'expression' => '!this.getParent().get("2fa_enabled").getData() || (value !== "" && value !== null)',
+                                'message' => 'err.TwoFactorAuthenticationKeyRequired',
+                            ]
+                        ),
+                    ],
                 ]
             )
             ->add(
