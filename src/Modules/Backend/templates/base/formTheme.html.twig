@@ -648,7 +648,7 @@
   {% if form.parent.vars.value.qrCode %}
     <div class="row">
       <div class="col-3">
-        <img src="{{ form.parent.vars.value.qrCode }}" class="img-fluid" alt="QR Code">
+        <img src="{{ form.parent.vars.value.qrCode }}" class="img-fluid" alt="{{ 'label.UseQRToConfigure2FA'|trans }}">
       </div>
     </div>
   {% endif %}
