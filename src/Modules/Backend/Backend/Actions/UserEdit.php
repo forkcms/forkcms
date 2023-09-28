@@ -90,7 +90,6 @@ final class UserEdit extends AbstractFormActionController
             ->data($this->googleAuthenticator->getQRContent($user))
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->margin(-4)
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
             ->writerOptions([SvgWriter::WRITER_OPTION_EXCLUDE_SVG_WIDTH_AND_HEIGHT => true])
             ->build()
