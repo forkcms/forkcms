@@ -53,9 +53,10 @@
       {{ 'msg.BackupCodes'|trans|raw }}
       <ul>
         {% for code in backupCodes %}
-          <li>{{ code }}</li>
+          <li><code>{{ code }}</code></li>
         {% endfor %}
       </ul>
+      {{ 'msg.BackupCodesHelp'|trans|raw }}
     </div>
   {% endif %}
 

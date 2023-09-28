@@ -41,6 +41,7 @@ final class ModuleSettingsType extends AbstractType
                     'required' => false,
                     'label' => 'lbl.RequireTwoFactorAuthentication',
                     'label_attr' => ['class' => 'checkbox-switch'],
+                    'help' => 'msg.RequireTwoFactorAuthenticationHelp',
                 ]
             )
             ->add(
@@ -50,6 +51,7 @@ final class ModuleSettingsType extends AbstractType
                     'required' => false,
                     'label' => 'lbl.EnableTrustedDevices',
                     'label_attr' => ['class' => 'checkbox-switch'],
+                    'help' => 'msg.EnableTrustedDevicesHelp',
                 ]
             );
     }
