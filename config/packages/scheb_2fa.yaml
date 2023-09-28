@@ -12,6 +12,7 @@ scheb_two_factor:
     trusted_device:
         enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").trustedDevices()'
         extend_lifetime: true
+        lifetime: 2592000 # 30 days in seconds
         key: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").secret()'
 
     backup_codes:

@@ -1142,17 +1142,33 @@
       <translation locale="nl"><![CDATA[Maak two factor authentication verplicht]]></translation>
       <translation locale="en"><![CDATA[Require two factor authentication]]></translation>
     </item>
+    <item type="message" name="RequireTwoFactorAuthenticationHelp">
+      <translation locale="nl"><![CDATA[Indien nodig moeten alle gebruikers 2FA configureren bij de volgende login.]]></translation>
+      <translation locale="en"><![CDATA[If required all users will need to configure 2FA on next login.]]></translation>
+    </item>
     <item type="label" name="EnableTrustedDevices">
       <translation locale="nl"><![CDATA[Activeer vertrouwde apparaten]]></translation>
       <translation locale="en"><![CDATA[Enable trusted devices]]></translation>
+    </item>
+    <item type="message" name="EnableTrustedDevicesHelp">
+      <translation locale="nl"><![CDATA[Indien ingeschakeld, mogen gebruikers een apparaat gedurende 30 dagen vertrouwen. Op een vertrouwd apparaat wordt niet om de verificatiecode gevraagd.]]></translation>
+      <translation locale="en"><![CDATA[When enabled users will be allowed to trust a device for 30 days. On a trusted device the verification code will not be asked.]]></translation>
     </item>
     <item type="message" name="BackupCodes">
       <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
       <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>
     </item>
+    <item type="message" name="BackupCodesHelp">
+      <translation locale="nl"><![CDATA[Deze codes worden maar eenmalig getoond]]></translation>
+      <translation locale="en"><![CDATA[These codes are only shown once]]></translation>
+    </item>
     <item type="message" name="2FAIsRequired">
       <translation locale="nl"><![CDATA[Two factor authentication is verplicht]]></translation>
       <translation locale="en"><![CDATA[Two factor authentication is required]]></translation>
+    </item>
+    <item type="label" name="UseQRToConfigure2FA">
+      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
+      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
     </item>
     <item type="label" name="RequiredField">
       <translation locale="nl"><![CDATA[verplicht veld]]></translation>
