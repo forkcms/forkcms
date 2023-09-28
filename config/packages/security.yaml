@@ -11,7 +11,7 @@ security:
         property: email
   firewalls:
     backend:
-      pattern: ^/private|/2fa
+      pattern: ^/private
       lazy: true
       provider: backend_user_provider
       two_factor:
@@ -38,7 +38,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+    - { path: ^/private/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
     - { path: ^/private/\w\w/backend/authentication-login, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication-logout, roles: PUBLIC_ACCESS }
     - { path: ^/private, roles: ROLE_USER }
