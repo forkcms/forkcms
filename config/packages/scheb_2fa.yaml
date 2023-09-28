@@ -6,8 +6,8 @@ scheb_two_factor:
     google:
         enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").enabled()'
         template: '@Backend\Backend\2fa.html.twig'
-        server_name: '%env(SITE_DOMAIN)'
-        issuer: '%env(SITE_DEFAULT_TITLE)'
+        server_name: '%env(SITE_DOMAIN)%'
+        issuer: '%env(SITE_DEFAULT_TITLE)%'
 
     trusted_device:
         enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").trustedDevices()'
