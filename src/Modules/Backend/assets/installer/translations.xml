@@ -1073,6 +1073,10 @@
       <translation locale="nl"><![CDATA[Gekopieerd naar clipboard]]></translation>
       <translation locale="en"><![CDATA[Copied to clipboard]]></translation>
     </item>
+    <item type="error" name="TwoFactorAuthenticationKeyRequired">
+      <translation locale="nl"><![CDATA[Authorization key is verplicht]]></translation>
+      <translation locale="en"><![CDATA[Authorization key is required]]></translation>
+    </item>
     <item type="label" name="RequiredField">
       <translation locale="nl"><![CDATA[verplicht veld]]></translation>
       <translation locale="en"><![CDATA[required field]]></translation>
