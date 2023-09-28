@@ -77,8 +77,15 @@ abstract class AbstractActionController implements ActionControllerInterface
 
     public function __invoke(Request $request): Response
     {
-        if ($this->needsRedirectToProfilePage($request)) {
-            return $this->redirectToProfilePage($request);
+        if ($this->shouldUserConfigure2FA($request)) {
+            $this->header->addFlashMessage(
+                new FlashMessage(
+                    'msg.2FAIsRequired',
+                    FlashMessageType::WARNING
+                )
+            );
+
+            return $this->redirectToUserPage($request);
         }
 
         $this->execute($request);
@@ -86,24 +93,17 @@ abstract class AbstractActionController implements ActionControllerInterface
         return $this->getResponse($request);
     }
 
-    private function redirectToProfilePage(Request $request): Response
+    private function redirectToUserPage(Request $request): Response
     {
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
-
-        $this->header->addFlashMessage(
-            new FlashMessage(
-                'msg.2FAIsRequired',
-                FlashMessageType::WARNING
-            )
-        );
 
         return new RedirectResponse(
             UserEdit::getActionSlug()->generateRoute($this->router) . '/' . $user->getId()
         );
     }
 
-    private function needsRedirectToProfilePage(Request $request): bool
+    private function shouldUserConfigure2FA(Request $request): bool
     {
         $user = $this->tokenStorage->getToken()->getUser();
 
