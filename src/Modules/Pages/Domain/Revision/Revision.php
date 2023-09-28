@@ -42,7 +42,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'pages',
-        'action' => 'page_add',
+        'action' => 'page-add',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Copy',
@@ -55,7 +55,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'pages',
-        'action' => 'page_edit',
+        'action' => 'page-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -92,7 +92,7 @@ class Revision
         route: 'backend_action',
         routeAttributes: [
             'module' => 'pages',
-            'action' => 'page_edit',
+            'action' => 'page-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'PAGES__PAGE_EDIT',

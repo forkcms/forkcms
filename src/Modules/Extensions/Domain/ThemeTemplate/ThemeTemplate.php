@@ -23,7 +23,7 @@ use Stringable;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'extensions',
-        'action' => 'theme_template_edit',
+        'action' => 'theme-template-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',

@@ -28,7 +28,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'backend',
-        'action' => 'user_group_edit',
+        'action' => 'user-group-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -58,7 +58,7 @@ class UserGroup
         route: 'backend_action',
         routeAttributes: [
             'module' => 'backend',
-            'action' => 'user_group_edit',
+            'action' => 'user-group-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_GROUP_EDIT',
