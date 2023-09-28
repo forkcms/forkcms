@@ -52,4 +52,7 @@
         <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
 </phpunit>
