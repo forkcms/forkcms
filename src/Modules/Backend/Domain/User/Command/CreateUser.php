@@ -7,10 +7,6 @@ use ForkCMS\Modules\Backend\Domain\User\UserDataTransferObject;
 
 final class CreateUser extends UserDataTransferObject
 {
-    public bool $enableTwoFactorAuthentication = false;
-
-    public ?string $qrCode = null;
-
     public function __construct()
     {
         parent::__construct();

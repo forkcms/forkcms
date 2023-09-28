@@ -15,38 +15,15 @@ final class CreateUserHandler implements CommandHandlerInterface
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly GoogleAuthenticatorInterface $googleAuthenticator,
     ) {
     }
 
     public function __invoke(CreateUser $createUser): void
     {
         $user = User::fromDataTransferObject($createUser);
-        if (!$createUser->enableTwoFactorAuthentication) {
-            $user->setGoogleAuthenticatorSecret(null);
-            $user->setBackupCodes();
-        } elseif ($user->getGoogleAuthenticatorSecret() === null) {
-            $user->setGoogleAuthenticatorSecret(
-                $this->generateGoogleAuthenticatorSecret()
-            );
-
-            $backupCodes = [];
-            for ($i = 0; $i < 10; ++$i) {
-                $backupCodes[] = $this->generateGoogleAuthenticatorSecret();
-            }
-
-            $user->setBackupCodes($backupCodes);
-        }
-
-
         $user->hashPassword($this->passwordHasher);
         $this->userRepository->save($user);
         $createUser->setEntity($user);
         $this->eventDispatcher->dispatch($user);
-    }
-
-    private function generateGoogleAuthenticatorSecret(): string
-    {
-        return $this->googleAuthenticator->generateSecret();
     }
 }
