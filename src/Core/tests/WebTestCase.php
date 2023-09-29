@@ -45,12 +45,16 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
      */
     final protected static function assertPageLoadedCorrectly(
         string $url,
+        ?string $pageTitle = null,
         array $expectedContent = [],
         int $httpStatusCode = Response::HTTP_OK,
         string $requestMethod = Request::METHOD_GET,
         array $requestParameters = []
     ): void {
         static::assertHttpStatusCode($url, $httpStatusCode, $requestMethod, $requestParameters);
+        if ($pageTitle !== null) {
+            self::assertPageTitleSame($pageTitle, 'Page title is not "' . $pageTitle . '".');
+        }
         static::assertPageHasContent(...$expectedContent);
     }
 
@@ -85,6 +89,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
     ): void {
         static::assertPageLoadedCorrectly(
             static::getClient()->getCrawler()->selectLink($linkText)->link()->getUri(),
+            null,
             $expectedContent,
             $httpStatusCode,
             $requestMethod,
