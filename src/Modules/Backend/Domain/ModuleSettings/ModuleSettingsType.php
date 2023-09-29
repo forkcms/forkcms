@@ -3,6 +3,7 @@
 namespace ForkCMS\Modules\Backend\Domain\ModuleSettings;
 
 use ForkCMS\Core\Domain\Form\SwitchType;
+use ForkCMS\Core\Domain\Form\TogglePasswordInputType;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -28,7 +29,7 @@ final class ModuleSettingsType extends AbstractType
             )
             ->add(
                 '2fa_key',
-                TextType::class,
+                TogglePasswordInputType::class,
                 [
                     'label' => 'lbl.TwoFactorAuthenticationKey',
                     'required' => false,
