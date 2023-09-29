@@ -102,7 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $googleAuthenticatorSecret = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $trustedVersion = 0;
 
     /** @var array<string> */

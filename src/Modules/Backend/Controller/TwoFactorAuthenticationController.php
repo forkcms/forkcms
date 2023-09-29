@@ -53,7 +53,7 @@ class TwoFactorAuthenticationController extends FormController
             $templateVars,
             [
                 'error' => null,
-                'page_title' => $this->translator->trans(TranslationKey::label('TwoFactorAuthentication')),
+                'page_title' => $this->translator->trans(TranslationKey::label('2FA')),
                 'SITE_TITLE' => $this->moduleSettings->get(
                     ModuleName::fromString('Frontend'),
                     'site_title_' . $request->getLocale(),
