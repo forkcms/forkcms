@@ -6,7 +6,7 @@ import 'flatpickr'
 
 // component imports
 import { Data } from '../../../../../../Core/assets/js/Components/Data'
-import { ClipBoard} from "../../../../../../Core/assets/js/Components/ClipBoard"
+import { ClipBoard } from '../../../../../../Core/assets/js/Components/ClipBoard'
 import { Ajax } from '../../../../../../Core/assets/js/Components/Ajax'
 import { Controls } from '../../../../../../Core/assets/js/Components/Controls'
 import { Effects } from '../../../../../../Core/assets/js/Components/Effects'
@@ -26,6 +26,7 @@ import { Config } from './Components/Config'
 import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
 import { InitBsToasts } from './Components/InitToasts'
+import { TogglePasswordInputType } from '../../../../../../Core/assets/js/Components/TogglePasswordInputType'
 
 window.bootstrap = bootstrap
 
@@ -52,6 +53,7 @@ export class Backend {
     this.session = new Session()
     this.ajaxContentEditable = new AjaxContentEditable(this.locale)
     this.initToasts = new InitBsToasts()
+    this.togglePaswordInputType = new TogglePasswordInputType()
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
