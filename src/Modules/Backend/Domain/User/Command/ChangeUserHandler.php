@@ -16,7 +16,6 @@ final class ChangeUserHandler implements CommandHandlerInterface
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly GoogleAuthenticatorInterface $googleAuthenticator,
     ) {
     }
 
@@ -25,28 +24,7 @@ final class ChangeUserHandler implements CommandHandlerInterface
         $user = User::fromDataTransferObject($changeUser);
         $user->hashPassword($this->passwordHasher);
 
-        if (!$changeUser->enableTwoFactorAuthentication) {
-            $user->setGoogleAuthenticatorSecret(null);
-            $user->setBackupCodes([]);
-        } elseif ($user->getGoogleAuthenticatorSecret() === null) {
-            $user->setGoogleAuthenticatorSecret(
-                $this->generateGoogleAuthenticatorSecret()
-            );
-
-            $backupCodes = [];
-            for ($i = 0; $i < 10; ++$i) {
-                $backupCodes[] = $this->generateGoogleAuthenticatorSecret();
-            }
-
-            $user->setBackupCodes($backupCodes);
-        }
-
         $this->userRepository->save($user);
         $this->eventDispatcher->dispatch(new UserChangedEvent($user));
-    }
-
-    private function generateGoogleAuthenticatorSecret(): string
-    {
-        return $this->googleAuthenticator->generateSecret();
     }
 }
