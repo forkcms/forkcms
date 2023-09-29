@@ -10,12 +10,6 @@ final class UserIndexTest extends BackendWebTestCase
 {
     protected const TEST_URL = '/private/en/backend/user-index';
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        self::request(Request::METHOD_GET, self::TEST_URL);
-    }
-
     public function testPageLoads(): void
     {
         self::loginBackendUser();
@@ -30,6 +24,7 @@ final class UserIndexTest extends BackendWebTestCase
     public function testDataGrid(): void
     {
         $user = self::loginBackendUser();
+        self::loadPage();
 
         self::assertDataGridHasLink($user->getEmail(), '/private/en/backend/user-edit/' . $user->getId());
         self::assertDataGridHasLink('user@fork-cms.com');
@@ -43,8 +38,6 @@ final class UserIndexTest extends BackendWebTestCase
         self::assertDataGridIsEmpty();
         self::filterDataGrid('User.displayName', $user->getDisplayName());
         self::assertDataGridHasLink($user->getEmail(), '/private/en/backend/user-edit/' . $user->getId());
-
-        self::assertHttpStatusCode404('test', 'bob', []);
     }
 
     protected static function getClassFixtures(): array

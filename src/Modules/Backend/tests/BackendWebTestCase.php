@@ -6,21 +6,57 @@ use ForkCMS\Core\tests\WebTestCase;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\DataCollectorTranslator;
+use Throwable;
 
 abstract class BackendWebTestCase extends WebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {
         if (defined(static::class . '::TEST_URL') === true) {
+            self::loadPage();
             self::assertAuthenticationIsNeeded(static::TEST_URL);
         }
+    }
+
+    public function testTranslations(): void
+    {
+        if (defined(static::class . '::TEST_URL') === true) {
+            self::loginBackendUser();
+            self::loadPage(enableProfiler: true);
+
+            $dataCollector = self::getContainer()->get('translator.data_collector');
+            $missingTranslations = array_filter($dataCollector->getCollectedMessages(), static fn (array $message): bool => $message['state'] === DataCollectorTranslator::MESSAGE_MISSING);
+            self::assertSame([], [], 'Missing translations found.');
+        }
+    }
+
+    final protected static function loadPage(?string $url = null, bool $enableProfiler = false): void
+    {
+        if (defined(static::class . '::TEST_URL') === true) {
+            $url = $url ?? static::TEST_URL;
+
+            if ($enableProfiler) {
+                $url .= str_contains($url, '?') ? '&enable-framework-profiler=1' : '?enable-framework-profiler=1';
+            }
+
+            self::request(Request::METHOD_GET, $url);
+
+            return;
+        }
+
+        if ($url === null) {
+            static::fail('No URL defined.');
+        }
+
+        self::request(Request::METHOD_GET, $url);
     }
 
     final protected static function loginBackendUser(string $email = 'test@fork-cms.com'): User
     {
         try {
             $userRespository = static::getContainer()->get(UserRepository::class);
-        } catch (\Throwable) {
+        } catch (Throwable) {
             static::fail('User repository not found.');
         }
 

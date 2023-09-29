@@ -3934,23 +3934,6 @@
         <translation language="zh"><![CDATA[你的问题被标记为垃圾内容。]]></translation>
         <translation language="pt"><![CDATA[A sua pergunta foi marcada como SPAM.]]></translation>
       </item>
-      <item type="error" name="PasswordIsRequired">
-        <translation language="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Password is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez entrer votre mot de passe.]]></translation>
-        <translation language="hu"><![CDATA[A jelszó mező kötelező.]]></translation>
-        <translation language="it"><![CDATA[Password è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Пароль - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[密码必填。]]></translation>
-        <translation language="de"><![CDATA[Du musst ein Passwort angeben.]]></translation>
-        <translation language="es"><![CDATA[Contraseña es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Slaptažodis - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Пароль - обов'язкове поле]]></translation>
-        <translation language="sv"><![CDATA[Lösenord är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Ο Κωδικός είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[A senha é um campo obrigatório.]]></translation>
-      </item>
       <item type="error" name="ProfileIsActive">
         <translation language="en"><![CDATA[This profile is already activated.]]></translation>
         <translation language="nl"><![CDATA[Dit profiel is reeds geactiveerd.]]></translation>

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <translations>
   <Backend>
+    <item type="error" name="PasswordIsRequired">
+      <translation locale="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
+      <translation locale="en"><![CDATA[Password is a required field.]]></translation>
+      <translation locale="fr"><![CDATA[Veuillez entrer votre mot de passe.]]></translation>
+      <translation locale="hu"><![CDATA[A jelszó mező kötelező.]]></translation>
+      <translation locale="it"><![CDATA[Password è un campo obbligatorio.]]></translation>
+      <translation locale="ru"><![CDATA[Пароль - обязательное поле.]]></translation>
+      <translation locale="zh"><![CDATA[密码必填。]]></translation>
+      <translation locale="de"><![CDATA[Du musst ein Passwort angeben.]]></translation>
+      <translation locale="es"><![CDATA[Contraseña es un campo requerido.]]></translation>
+      <translation locale="lt"><![CDATA[Slaptažodis - būtinas laukas.]]></translation>
+      <translation locale="uk"><![CDATA[Пароль - обов'язкове поле]]></translation>
+      <translation locale="sv"><![CDATA[Lösenord är ett obligatoriskt fält.]]></translation>
+      <translation locale="el"><![CDATA[Ο Κωδικός είναι υποχρεωτικό πεδίο.]]></translation>
+      <translation locale="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
+      <translation locale="pt"><![CDATA[A senha é um campo obrigatório.]]></translation>
+    </item>
     <item type="label" name="Import">
       <translation locale="nl"><![CDATA[importeer]]></translation>
       <translation locale="en"><![CDATA[import]]></translation>
