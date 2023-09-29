@@ -19,7 +19,7 @@ services:
         volumes:
             - .:/var/www/html:cached
             - fork-cms6-var:/var/www/html/var
-            - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
+            - ./public:/var/www/html/public:cached
 
     db6:
         image: "mysql:5.7"
