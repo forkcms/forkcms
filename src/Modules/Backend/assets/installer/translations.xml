@@ -1154,6 +1154,18 @@
       <translation locale="nl"><![CDATA[Indien ingeschakeld, mogen gebruikers een apparaat gedurende 30 dagen vertrouwen. Op een vertrouwd apparaat wordt niet om de verificatiecode gevraagd.]]></translation>
       <translation locale="en"><![CDATA[When enabled users will be allowed to trust a device for 30 days. On a trusted device the verification code will not be asked.]]></translation>
     </item>
+    <item type="label" name="LoginSecurity">
+      <translation locale="nl"><![CDATA[Login security]]></translation>
+      <translation locale="en"><![CDATA[Login security]]></translation>
+    </item>
+    <item type="message" name="TrustedDevices">
+      <translation locale="nl"><![CDATA[Vertrouw dit apparaat. Gedurende 30 dagen hoeft u geen verificatiecode meer in te voeren.]]></translation>
+      <translation locale="en"><![CDATA[Trust this device. You will not need to give a verification code again for 30 days.]]></translation>
+    </item>
+    <item type="label" name="VerificationCode">
+      <translation locale="nl"><![CDATA[Verificatie Code]]></translation>
+      <translation locale="en"><![CDATA[Verification Code]]></translation>
+    </item>
     <item type="message" name="BackupCodes">
       <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
       <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>

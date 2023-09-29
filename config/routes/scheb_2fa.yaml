@@ -1,8 +1,8 @@
-2fa_login:
+backend_2fa_login:
     path: /private/2fa
     defaults:
         _controller: ForkCMS\Modules\Backend\Controller\TwoFactorAuthenticationController::form
         _method: "form"
 
-2fa_login_check:
+backend_2fa_login_check:
     path: /private/2fa/check

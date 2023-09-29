@@ -75,10 +75,19 @@ final class BackendInstaller extends ModuleInstaller
             ],
         );
 
+        $navigationItem = $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('LoginSecurity'),
+            null,
+            $this->getSettingsNavigationItem(),
+            [
+                ModuleSettings::getActionSlug(),
+            ],
+        );
+
         $this->getOrCreateBackendNavigationItem(
             TranslationKey::label('2FA'),
             ModuleSettings::getActionSlug(),
-            $this->getSettingsNavigationItem()
+            $navigationItem,
         );
     }
 
