@@ -97,7 +97,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         $response = static::getResponse();
 
         foreach ($content as $expectedContent) {
-            static::assertStringContainsString($expectedContent, $response->getContent());
+            static::assertStringContainsString($expectedContent, $response->getContent(), 'Page does not contain "' . $expectedContent . '".');
         }
     }
 

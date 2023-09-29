@@ -67,11 +67,9 @@ abstract class BackendWebTestCase extends WebTestCase
 
     final protected static function assertDataGridIsEmpty(): void
     {
-        static::assertSame(
-            'No results found',
-            static::getCrawler()
-                ->filter('#content .fork-data-grid + .empty-state')
-                ->text(),
+        static::assertCount(
+            1,
+            static::getCrawler()->filter('#content .fork-data-grid + .empty-state'),
             'Data grid is not empty.'
         );
     }
