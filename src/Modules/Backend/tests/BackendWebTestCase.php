@@ -9,6 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class BackendWebTestCase extends WebTestCase
 {
+    public function testAuthenticationIsNeeded(): void
+    {
+        if (defined(static::class . '::TEST_URL') === true) {
+            self::assertAuthenticationIsNeeded(static::TEST_URL);
+        }
+    }
+
     final protected static function loginBackendUser(string $email = 'test@fork-cms.com'): User
     {
         try {
