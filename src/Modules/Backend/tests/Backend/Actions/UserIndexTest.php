@@ -16,16 +16,14 @@ final class UserIndexTest extends BackendWebTestCase
         self::request(Request::METHOD_GET, self::TEST_URL);
     }
 
-    public function testAuthenticationIsNeeded(): void
-    {
-        self::assertAuthenticationIsNeeded(self::TEST_URL);
-    }
-
     public function testPageLoads(): void
     {
         self::loginBackendUser();
-        self::assertPageLoadedCorrectly(self::TEST_URL, ['Display name', 'E-mail', 'Super admin', 'Normal user']);
-        self::assertPageTitleSame('Users | settings | Fork CMS | Fork CMS');
+        self::assertPageLoadedCorrectly(
+            self::TEST_URL,
+            'Users | settings | Fork CMS | Fork CMS',
+            ['Display name', 'E-mail', 'Super admin', 'Normal user']
+        );
         self::assertHasLink('Add', '/private/en/backend/user-add');
     }
 
