@@ -3,6 +3,8 @@
 namespace ForkCMS\Core\tests;
 
 use Countable;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +19,24 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
     {
         parent::setUp();
         static::createClient();
+        static::loadFixture(...static::getClassFixtures());
+    }
+
+    /** @return FixtureInterface[] */
+    protected static function getClassFixtures(): array
+    {
+        return [];
+    }
+
+    final protected static function loadFixture(FixtureInterface ...$fixture): void
+    {
+        static $executor;
+
+        if ($executor === null) {
+            $executor = new ORMExecutor(self::getContainer()->get('doctrine.orm.entity_manager'));
+        }
+
+        $executor->execute($fixture, true);
     }
 
     /**
