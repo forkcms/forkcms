@@ -10,7 +10,7 @@ framework:
   # Remove or comment this section to explicitly disable session support.
   session:
     storage_factory_id: session.storage.factory.mock_file
-    save_path: ''
+    save_path: null
 
   #esi: true
   #fragments: true

@@ -10,7 +10,7 @@ use Symfony\Component\Dotenv\Dotenv;
 $loader = require __DIR__ . '/../../../vendor/autoload.php';
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
-(new Dotenv())->loadEnv(__DIR__ . '/../../../.env', null, 'test', []);
+(new Dotenv())->loadEnv(__DIR__ . '/../../../.env', null, 'test', ['test_install', 'test']);
 
 function installTest()
 {
@@ -23,30 +23,25 @@ function installTest()
     $application->run(
         new ArrayInput([
             'command' => 'cache:clear',
-            '--no-warmup' => '1',
-            '--env' => 'test_install',
-        ])
-    );
-    $application->run(
-        new ArrayInput([
-            'command' => 'cache:clear',
-            '--no-warmup' => '1',
-            '--env' => 'test',
+            '--no-warmup' => true,
         ])
     );
 
     fwrite(STDERR, print_r('Create test database', true));
-    $application->run(
-        new ArrayInput([
-            'command' => 'doctrine:database:drop',
-            '--if-exists' => '1',
-            '--force' => '1',
-        ])
-    );
 
     $application->run(
         new ArrayInput([
             'command' => 'doctrine:database:create',
+            '--if-not-exists' => true,
+        ])
+    );
+
+    fwrite(STDERR, print_r('Clear test database', true));
+    $application->run(
+        new ArrayInput([
+            'command' => 'doctrine:schema:drop',
+            '--full-database' => true,
+            '--force' => true,
         ])
     );
 
@@ -59,7 +54,12 @@ function installTest()
     $kernel->shutdown();
 }
 
-if ((($_ENV['TEST_DATABASE'] ?? 'cached') === 'fresh') || ForkConnection::get('test_instal')->exec('select 1') === false) {
+try {
+    $freshInstall = (($_ENV['TEST_DATABASE'] ?? 'cached') === 'fresh') || ForkConnection::get('test_instal')->exec('select 1 from backend__user') === false;
+} catch (Throwable $throwable) {
+    $freshInstall = true;
+}
+if ($freshInstall) {
     installTest();
 }
 
