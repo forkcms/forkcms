@@ -26,24 +26,11 @@ final class UserType extends AbstractType
     public function __construct(
         private TokenStorageInterface $tokenStorage,
         private EventDispatcherInterface $eventDispatcher,
-        private readonly ModuleSettings $moduleSettings,
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $twoFactorAuthenticationEnabled = $this->moduleSettings->get(
-            ModuleName::fromString('Backend'),
-            '2fa_enabled',
-            false
-        );
-
-        $twoFactorAuthenticationRequired = $this->moduleSettings->get(
-            ModuleName::fromString('Backend'),
-            '2fa_required',
-            false
-        );
-
         $builder->add(
             'user',
             TabsType::class,
@@ -51,8 +38,6 @@ final class UserType extends AbstractType
                 'tabs' => [
                     'lbl.Authentication' => function (FormBuilderInterface $builder) use (
                         $options,
-                        $twoFactorAuthenticationEnabled,
-                        $twoFactorAuthenticationRequired
                     ): void {
                         $builder
                             ->add(
@@ -89,28 +74,16 @@ final class UserType extends AbstractType
                                     ],
                                     'required' => in_array('create', $options['validation_groups'] ?? [], true),
                                 ]
-                            );
-
-                        if ($twoFactorAuthenticationEnabled && !$options['data'] instanceof CreateUser) {
-                            $builder->add(
-                                'enableTwoFactorAuthentication',
+                            )
+                            ->add(
+                                'accessToBackend',
                                 SwitchType::class,
                                 [
-                                    'label' => 'lbl.EnableTwoFactorAuthentication',
-                                    'required' => $twoFactorAuthenticationRequired,
-                                    'block_prefix' => 'two_factor_authentication',
+                                    'label' => 'lbl.AccessToBackend',
+                                    'required' => false,
                                 ]
                             );
-                        }
 
-                        $builder->add(
-                            'accessToBackend',
-                            SwitchType::class,
-                            [
-                                'label' => 'lbl.AccessToBackend',
-                                'required' => false,
-                            ]
-                        );
                         /** @var User|null $user */
                         $user = $this->tokenStorage->getToken()?->getUser();
                         if ($user?->isSuperAdmin() ?? false) {

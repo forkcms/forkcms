@@ -14,6 +14,7 @@ use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Backend\Domain\User\Command\ChangeUser;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserType;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -51,6 +52,10 @@ final class UserEdit extends AbstractFormActionController
         $user = $this->getEntityFromRequest($request, User::class);
 
         $this->assign('user', $user);
+        $this->assign('twoFAEnabled', $this->moduleSettings->get($this->getModuleName(), '2fa_enabled', false));
+        $this->assign('twoFARequired', $this->moduleSettings->get($this->getModuleName(), '2fa_required', false));
+        $this->assign('userHas2FAEnabled', $user->getGoogleAuthenticatorSecret() !== null);
+
         $this->header->addBreadcrumb(new Breadcrumb($user->getDisplayName()));
 
         if ($this->getRepository(User::class)->count([]) > 1) {
