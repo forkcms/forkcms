@@ -20,6 +20,10 @@ export class ClipBoard {
 
     if (target.attr('data-clipboard-target')) {
       contentToCopy = $(target.attr('data-clipboard-target')).text()
+
+      const lines = contentToCopy.split('\n')
+      // Remove leading and trailing spaces on each line
+      contentToCopy = lines.map(line => line.trim()).join('\n')
     }
 
     if (contentToCopy === undefined || contentToCopy === '') {
