@@ -11,11 +11,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserFixture extends ForkFixture implements DependentFixtureInterface
 {
-    public const PASSWORD = 'password';
+    public const PLAIN_TEXT_PASSWORD = 'test';
+    private const PASSWORD = '$2y$13$YJGHIjorExsQSD9VCzMgBuwi5QS3Zr2tVBisWS4vrcKDin/9BdBQq';
     public const SUPER_ADMIN_REFERENCE = 'user-super-admin';
     public const USER_REFERENCE = 'user-super-admin';
 
-    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
+    public function __construct()
     {
     }
 
@@ -25,10 +26,10 @@ final class UserFixture extends ForkFixture implements DependentFixtureInterface
         $createSuperAdmin->email = 'super-admin@fork-cms.com';
         $createSuperAdmin->displayName = 'Super admin';
         $createSuperAdmin->superAdmin = true;
-        $createSuperAdmin->plainTextPassword = self::PASSWORD;
+        $createSuperAdmin->plainTextPassword = self::PLAIN_TEXT_PASSWORD;
         $createSuperAdmin->userGroups->add($this->getReference(UserGroupFixture::ONLY_DASHBOARD_REFERENCE));
         $superAdmin = User::fromDataTransferObject($createSuperAdmin);
-        $superAdmin->hashPassword($this->passwordHasher);
+        $superAdmin->setPassword(self::PASSWORD);
         $manager->persist($superAdmin);
         $this->setReference(self::SUPER_ADMIN_REFERENCE, $superAdmin);
 
@@ -36,10 +37,10 @@ final class UserFixture extends ForkFixture implements DependentFixtureInterface
         $createUser->email = 'user@fork-cms.com';
         $createUser->displayName = 'Normal user';
         $createUser->superAdmin = false;
-        $createUser->plainTextPassword = self::PASSWORD;
+        $createUser->plainTextPassword = self::PLAIN_TEXT_PASSWORD;
         $createUser->userGroups->add($this->getReference(UserGroupFixture::ONLY_DASHBOARD_REFERENCE));
         $user = User::fromDataTransferObject($createUser);
-        $user->hashPassword($this->passwordHasher);
+        $user->setPassword(self::PASSWORD);
         $manager->persist($user);
         $this->setReference(self::USER_REFERENCE, $user);
 
