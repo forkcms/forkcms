@@ -86,7 +86,10 @@
         "symfony/css-selector": "6.*"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",
