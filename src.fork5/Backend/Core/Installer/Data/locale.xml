@@ -1654,24 +1654,6 @@
         <translation language="tr"><![CDATA[Tekrar ara]]></translation>
         <translation language="pt"><![CDATA[pesquisar de novo]]></translation>
       </item>
-      <item type="label" name="SearchTerm">
-        <translation language="nl"><![CDATA[zoekterm]]></translation>
-        <translation language="en"><![CDATA[searchterm]]></translation>
-        <translation language="hu"><![CDATA[keresési feltételek]]></translation>
-        <translation language="it"><![CDATA[termine di ricerca]]></translation>
-        <translation language="fr"><![CDATA[chercher le terme]]></translation>
-        <translation language="ru"><![CDATA[Ключевые слова]]></translation>
-        <translation language="zh"><![CDATA[搜索词]]></translation>
-        <translation language="de"><![CDATA[Suchbegriff]]></translation>
-        <translation language="es"><![CDATA[buscar el término]]></translation>
-        <translation language="lt"><![CDATA[raktažodžiai]]></translation>
-        <translation language="uk"><![CDATA[Ключові слова]]></translation>
-        <translation language="sv"><![CDATA[sökterm]]></translation>
-        <translation language="el"><![CDATA[όρος αναζήτησης]]></translation>
-        <translation language="pl"><![CDATA[Szukaj frazy]]></translation>
-        <translation language="tr"><![CDATA[arama terimi]]></translation>
-        <translation language="pt"><![CDATA[termo de pesquisa]]></translation>
-      </item>
       <item type="label" name="Send">
         <translation language="nl"><![CDATA[verstuur]]></translation>
         <translation language="en"><![CDATA[send]]></translation>

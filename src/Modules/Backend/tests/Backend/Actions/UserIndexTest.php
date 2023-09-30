@@ -3,7 +3,6 @@
 use ForkCMS\Modules\Backend\DataFixtures\UserFixture;
 use ForkCMS\Modules\Backend\DataFixtures\UserGroupFixture;
 use ForkCMS\Modules\Backend\tests\BackendWebTestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserIndexTest extends BackendWebTestCase
