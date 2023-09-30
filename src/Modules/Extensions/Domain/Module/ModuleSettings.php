@@ -9,6 +9,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ModuleSettings implements EventSubscriberInterface
 {
+    /** @var array<string, Module> */
+    private array $modules = [];
+
     public function __construct(
         private readonly ModuleRepository $moduleRepository,
         private readonly CacheItemPoolInterface $cache
@@ -123,14 +126,13 @@ final class ModuleSettings implements EventSubscriberInterface
 
     public function getModule(ModuleName $moduleName): Module
     {
-        static $modules = [];
         $name = $moduleName->getName();
 
-        $modules[$name] = $modules[$name]
+        $this->modules[$name] = $this->modules[$name]
             ?? $this->moduleRepository->find($moduleName)
             ?? throw new InvalidArgumentException('Module name not found: ' . $name);
 
-        return $modules[$name];
+        return $this->modules[$name];
     }
 
     /**

@@ -30,13 +30,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
 
     final protected static function loadFixture(FixtureInterface ...$fixture): void
     {
-        static $executor;
-
-        if ($executor === null) {
-            $executor = new ORMExecutor(self::getContainer()->get('doctrine.orm.entity_manager'));
-        }
-
-        $executor->execute($fixture, true);
+        (new ORMExecutor(self::getContainer()->get('doctrine.orm.entity_manager')))->execute($fixture, true);
     }
 
     /**
