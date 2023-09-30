@@ -18,6 +18,74 @@
       <translation locale="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
       <translation locale="pt"><![CDATA[A senha é um campo obrigatório.]]></translation>
     </item>
+    <item type="error" name="EmailExists">
+      <translation locale="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
+      <translation locale="en"><![CDATA[This e-mailaddress is in use.]]></translation>
+      <translation locale="fr"><![CDATA[Cette adresse e-mail existe déjà.]]></translation>
+      <translation locale="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
+      <translation locale="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
+      <translation locale="ru"><![CDATA[Этот E-mail уже используется.]]></translation>
+      <translation locale="zh"><![CDATA[这个Email地址已在使用了。]]></translation>
+      <translation locale="de"><![CDATA[Diese E-Mail-Adresse wird bereits verwendet.]]></translation>
+      <translation locale="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
+      <translation locale="lt"><![CDATA[Toks el.paštas jau yra.]]></translation>
+      <translation locale="uk"><![CDATA[Цей e-mail вже використовується]]></translation>
+      <translation locale="sv"><![CDATA[Denna e-postadress används redan.]]></translation>
+      <translation locale="el"><![CDATA[Αυτή η διεύθυνση email είναι ήδη σε χρήση.]]></translation>
+      <translation locale="pl"><![CDATA[Ten adres e-mail jest już zajęty]]></translation>
+      <translation locale="pt"><![CDATA[Este endereço de email já se encontra em uso.]]></translation>
+    </item>
+    <item type="error" name="DisplayNameExists">
+      <translation locale="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
+      <translation locale="en"><![CDATA[This display name is in use.]]></translation>
+      <translation locale="fr"><![CDATA[Cette nom d'affichage existe déjà.]]></translation>
+      <translation locale="hu"><![CDATA[A megjelenítési név foglalt.]]></translation>
+      <translation locale="it"><![CDATA[Il nome è già in uso.]]></translation>
+      <translation locale="ru"><![CDATA[Такое имя уже используется.]]></translation>
+      <translation locale="zh"><![CDATA[这个显示名称已经被使用了。]]></translation>
+      <translation locale="de"><![CDATA[Dieser Nickname ist ist leider schon vergeben.]]></translation>
+      <translation locale="es"><![CDATA[Este nombre a mostrar está en uso.]]></translation>
+      <translation locale="lt"><![CDATA[Toks vardas jau yra.]]></translation>
+      <translation locale="uk"><![CDATA[Таке ім'я вже використовуюється]]></translation>
+      <translation locale="sv"><![CDATA[Detta visningsnamn används redan.]]></translation>
+      <translation locale="el"><![CDATA[Αυτό το όνομα οθόνης είναι ήδη σε χρήση.]]></translation>
+      <translation locale="pl"><![CDATA[Ta nazwa jest już zajęta.]]></translation>
+      <translation locale="pt"><![CDATA[Este nome de ecrã já se encontra em uso.]]></translation>
+    </item>
+    <item type="error" name="DisplayNameIsRequired">
+      <translation locale="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
+      <translation locale="en"><![CDATA[Display name is a required field.]]></translation>
+      <translation locale="fr"><![CDATA[Nom d'affichage est un champ obligatoire.]]></translation>
+      <translation locale="hu"><![CDATA[Megjelenítési név kötelező.]]></translation>
+      <translation locale="it"><![CDATA[Nome è un campo obbligatorio.]]></translation>
+      <translation locale="ru"><![CDATA[Имя - обязательное поле.]]></translation>
+      <translation locale="zh"><![CDATA[显示名称必填。]]></translation>
+      <translation locale="de"><![CDATA[Nickname ist eine Pflichtangabe.]]></translation>
+      <translation locale="es"><![CDATA[Nombre a msotrar es un campo requerido.]]></translation>
+      <translation locale="lt"><![CDATA[Vardas - būtinas laukas.]]></translation>
+      <translation locale="uk"><![CDATA[Ім'я - обовязкове поле]]></translation>
+      <translation locale="sv"><![CDATA[Visningsnamn är ett obligatoriskt fält.]]></translation>
+      <translation locale="el"><![CDATA[Το όνομα οθόνης που θα εμφανίζεται είναι υποχρεωτικό πεδίο.]]></translation>
+      <translation locale="pl"><![CDATA[Pole Wyświetlane imię jest wymagane.]]></translation>
+      <translation locale="pt"><![CDATA[Nome de ecrã é um campo obrigatório.]]></translation>
+    </item>
+    <item type="error" name="EmailIsInvalid">
+      <translation locale="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
+      <translation locale="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
+      <translation locale="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
+      <translation locale="it"><![CDATA[Devi fornire una email valida.]]></translation>
+      <translation locale="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
+      <translation locale="ru"><![CDATA[Введите правильный E-mail.]]></translation>
+      <translation locale="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
+      <translation locale="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
+      <translation locale="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
+      <translation locale="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
+      <translation locale="uk"><![CDATA[Введіт правильний e-mail]]></translation>
+      <translation locale="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
+      <translation locale="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
+      <translation locale="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
+      <translation locale="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
+    </item>
     <item type="label" name="Import">
       <translation locale="nl"><![CDATA[importeer]]></translation>
       <translation locale="en"><![CDATA[import]]></translation>
@@ -1605,6 +1673,10 @@
       <item type="error" name="PasswordIsTooShort">
         <translation locale="nl"><![CDATA[Het ingegeven wachtwoord is te kort.]]></translation>
         <translation locale="en"><![CDATA[The password is too short.]]></translation>
+      </item>
+      <item type="error" name="EmailIsTooLong">
+        <translation locale="nl"><![CDATA[Het ingegeven e-mailaddres is te lang.]]></translation>
+        <translation locale="en"><![CDATA[The provided e-mailaddress is too long]]></translation>
       </item>
       <item type="message" name="UserAdded">
         <translation locale="nl"><![CDATA[De gebruiker "%user%" werd toegevoegd.]]></translation>
