@@ -55,7 +55,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         if ($pageTitle !== null) {
             self::assertPageTitleSame($pageTitle, 'Page title is not "' . $pageTitle . '".');
         }
-        static::assertPageHasContent(...$expectedContent);
+        static::assertResponseHasContent(...$expectedContent);
     }
 
     final protected static function assertHasLink(string $text, string $url): void
@@ -97,7 +97,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         );
     }
 
-    final protected static function assertPageHasContent(string ...$content): void
+    final protected static function assertResponseHasContent(string ...$content): void
     {
         $response = static::getResponse();
 
