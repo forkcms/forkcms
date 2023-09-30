@@ -3574,74 +3574,6 @@
         <translation language="tr"><![CDATA[Geçersiz tarih.]]></translation>
         <translation language="pt"><![CDATA[Data inválida.]]></translation>
       </item>
-      <item type="error" name="DisplayNameExists">
-        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This display name is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette nom d'affichage existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[A megjelenítési név foglalt.]]></translation>
-        <translation language="it"><![CDATA[Il nome è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Такое имя уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个显示名称已经被使用了。]]></translation>
-        <translation language="de"><![CDATA[Dieser Nickname ist ist leider schon vergeben.]]></translation>
-        <translation language="es"><![CDATA[Este nombre a mostrar está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks vardas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Таке ім'я вже використовуюється]]></translation>
-        <translation language="sv"><![CDATA[Detta visningsnamn används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ta nazwa jest już zajęta.]]></translation>
-        <translation language="pt"><![CDATA[Este nome de ecrã já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="DisplayNameIsRequired">
-        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Nom d'affichage est un champ obligatoire.]]></translation>
-        <translation language="hu"><![CDATA[Megjelenítési név kötelező.]]></translation>
-        <translation language="it"><![CDATA[Nome è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Имя - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[显示名称必填。]]></translation>
-        <translation language="de"><![CDATA[Nickname ist eine Pflichtangabe.]]></translation>
-        <translation language="es"><![CDATA[Nombre a msotrar es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Vardas - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Ім'я - обовязкове поле]]></translation>
-        <translation language="sv"><![CDATA[Visningsnamn är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Το όνομα οθόνης που θα εμφανίζεται είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole Wyświetlane imię jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[Nome de ecrã é um campo obrigatório.]]></translation>
-      </item>
-      <item type="error" name="EmailExists">
-        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette adresse e-mail existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
-        <translation language="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-mail уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个Email地址已在使用了。]]></translation>
-        <translation language="de"><![CDATA[Diese E-Mail-Adresse wird bereits verwendet.]]></translation>
-        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks el.paštas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Цей e-mail вже використовується]]></translation>
-        <translation language="sv"><![CDATA[Denna e-postadress används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ten adres e-mail jest już zajęty]]></translation>
-        <translation language="pt"><![CDATA[Este endereço de email já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
-        <translation language="it"><![CDATA[Devi fornire una email valida.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="ru"><![CDATA[Введите правильный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
-        <translation language="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
-        <translation language="uk"><![CDATA[Введіт правильний e-mail]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-      </item>
       <item type="error" name="EmailIsRequired">
         <translation language="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[E-mail is a required field.]]></translation>
@@ -12735,38 +12667,6 @@
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email υπάρχει ήδη.]]></translation>
         <translation language="pt"><![CDATA[Este endereço de email já se encontra em utilização.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail jest już w użyciu.]]></translation>
-      </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Fornisci un indirizzo email.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas galiojantis el.paštas]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać poprawny adres e-mail.]]></translation>
-      </item>
-      <item type="error" name="EmailIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een e-mailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Per favore fornisci un indirizzo email valido.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный email.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas el.pašto adresas (galiojantis)]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Endereço de email é um campo obrigatório.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać adres e-mail.]]></translation>
       </item>
       <item type="error" name="EmailIsUnknown">
         <translation language="nl"><![CDATA[Dit e-mailadres zit niet in onze database.]]></translation>
