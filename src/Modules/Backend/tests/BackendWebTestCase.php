@@ -14,7 +14,7 @@ abstract class BackendWebTestCase extends WebTestCase
     public function testAuthenticationIsNeeded(): void
     {
         if (defined(static::class . '::TEST_URL') === true) {
-            self::loadPage();
+            self::loadPage(loginBackendUser: false);
             self::assertAuthenticationIsNeeded(static::TEST_URL);
         }
     }
@@ -22,17 +22,20 @@ abstract class BackendWebTestCase extends WebTestCase
     public function testTranslations(): void
     {
         if (defined(static::class . '::TEST_URL') === true) {
-            self::loginBackendUser();
             self::loadPage(enableProfiler: true);
 
             $dataCollector = self::getContainer()->get('translator.data_collector');
             $missingTranslations = array_filter($dataCollector->getCollectedMessages(), static fn (array $message): bool => $message['state'] === DataCollectorTranslator::MESSAGE_MISSING);
-            self::assertSame([], [], 'Missing translations found.');
+            self::assertSame([], $missingTranslations, 'Missing translations found.');
         }
     }
 
-    final protected static function loadPage(?string $url = null, bool $enableProfiler = false): void
+    final protected static function loadPage(?string $url = null, bool $enableProfiler = false, bool $loginBackendUser = true): void
     {
+        if ($loginBackendUser) {
+            self::loginBackendUser();
+        }
+
         if (defined(static::class . '::TEST_URL') === true) {
             $url = $url ?? static::TEST_URL;
 
