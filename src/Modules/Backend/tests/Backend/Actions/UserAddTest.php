@@ -8,11 +8,6 @@ final class UserAddTest extends BackendWebTestCase
 {
     protected const TEST_URL = '/private/en/backend/user-add';
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testPageLoads(): void
     {
         self::loginBackendUser();
