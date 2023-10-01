@@ -28,31 +28,24 @@ final class UserAddTest extends BackendWebTestCase
     public function testEmptyFormShowsValidationErrors(): void
     {
         self::loadPage();
-
-        $form = self::getCrawler()->selectButton('Add')->form();
-        self::getClient()->submit($form);
-        self::assertMinCount(
-            3,
-            self::getCrawler()->filter('#content form[name="user"] .form-control.is-invalid'),
-            'Not all required fields are marked as invalid.'
-        );
+        self::assertEmptyFormSubmission('user', 3);
     }
 
     public function testValidData(): void
     {
         self::loadPage();
 
-        $form = self::getCrawler()->selectButton('Add')->form();
-        self::getClient()->submit(
-            $form,
+        self::submitForm(
+            'Add',
             [
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => 'Jelmer Prins',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'I<3ForkCMS',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'I<3ForkCMS',
-            ]
+            ],
+            'The password is too short.',
+            'Please provide a valid e-mail address.',
         );
-        self::assertResponseHasContent('The password is too short.', 'Please provide a valid e-mail address.');
     }
 
     public function testUniqueness(): void
@@ -60,32 +53,31 @@ final class UserAddTest extends BackendWebTestCase
         $user = self::loginBackendUser();
         self::loadPage(loginBackendUser: false);
 
-        $form = self::getCrawler()->selectButton('Add')->form();
-        self::getClient()->submit(
-            $form,
+        self::submitForm(
+            'Add',
             [
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => $user->getDisplayName(),
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' =>  $user->getEmail(),
+                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => $user->getEmail(),
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
-            ]
+            ],
+            'This e-mailaddress is in use.',
+            'This display name is in use.',
         );
-        self::assertResponseHasContent('This e-mailaddress is in use.', 'This display name is in use.');
     }
 
     public function testSubmittedFormRedirectsToIndex(): void
     {
         self::loadPage();
 
-        $form = self::getCrawler()->selectButton('Add')->form();
-        self::getClient()->submit(
-            $form,
+        self::submitForm(
+            'Add',
             [
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => 'Jelmer Prins',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins@fork-cms.com',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
-            ]
+            ],
         );
         self::getClient()->followRedirect();
         self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
