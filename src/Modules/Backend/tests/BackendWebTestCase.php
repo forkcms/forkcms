@@ -128,4 +128,14 @@ abstract class BackendWebTestCase extends WebTestCase
             'Data grid is empty'
         );
     }
+
+    protected static function assertEmptyFormSubmission(string $formName, int $expectedErrorCount, string $submitButtonLabel = 'Add'): void
+    {
+        self::submitForm($submitButtonLabel, []);
+        self::assertMinCount(
+            $expectedErrorCount,
+            self::getCrawler()->filter('#content form[name="' . $formName . '"] .form-control.is-invalid'),
+            'Not all required fields are marked as invalid.'
+        );
+    }
 }
