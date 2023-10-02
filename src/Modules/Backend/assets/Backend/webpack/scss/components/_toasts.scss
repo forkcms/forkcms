@@ -20,6 +20,12 @@
       font-size: $font-size-base * 0.85;
     }
   }
+
+  &[data-bs-autohide="false"] {
+    .toast-progress {
+      display: none;
+    }
+  }
 }
 
 .toast-body {
@@ -49,6 +55,22 @@
   }
 }
 
+.toast-progress {
+  height: 5px;
+  background-color: $gray-300;
+  width: 100%;
+
+  &--inner {
+    width: 0;
+    background-color: $gray-600;
+    animation-name: progress;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s;
+    animation-duration: 5s;
+    height: 5px;
+  }
+}
+
 .toast-xs .toast-body {
   padding: 0.3rem 0.5rem 0.3rem 2.2rem;
 
@@ -68,6 +90,10 @@
 
     a {
       color: shift-color($value, $alert-color-scale);
+    }
+
+    .toast-progress--inner {
+      background-color: shift-color($value, $alert-border-scale);
     }
   }
 }
@@ -97,5 +123,15 @@
 
   .toast-messaging-wrapper {
     width: calc(#{$toast-max-width} - #{$grid-gutter-width});
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
   }
 }

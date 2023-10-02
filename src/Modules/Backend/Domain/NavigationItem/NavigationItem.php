@@ -15,7 +15,6 @@ use RuntimeException;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: NavigationItemRepository::class)]
-#[ORM\Table(name: 'backend__navigation_item')]
 #[UniqueEntity(fields: ['label', 'slug', 'parent'])]
 class NavigationItem
 {

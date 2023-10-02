@@ -8,7 +8,6 @@ use ForkCMS\Core\Domain\Settings\SettingsBag;
 use ForkCMS\Modules\Backend\Domain\User\Blameable;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
-#[ORM\Table(name: 'extensions__module')]
 class Module
 {
     use Blameable;

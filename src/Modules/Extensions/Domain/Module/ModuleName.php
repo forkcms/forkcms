@@ -28,7 +28,7 @@ final class ModuleName implements Stringable, JsonSerializable
                 return self::core();
             }
 
-            throw new InvalidArgumentException('Can ony be created from a module classes');
+            throw new InvalidArgumentException('Can ony be created from a module classes: ' . $fullyQualifiedClassName);
         }
 
         return self::fromString($matches[1]);

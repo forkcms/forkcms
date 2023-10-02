@@ -14,7 +14,6 @@ use ForkCMS\Modules\Extensions\Domain\ThemeTemplate\ThemeTemplateDataTransferObj
 use RuntimeException;
 
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
-#[ORM\Table(name: 'extensions__theme')]
 class Theme
 {
     use EntityWithSettingsTrait;
