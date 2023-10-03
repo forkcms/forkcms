@@ -31,7 +31,7 @@ final class UserAddTest extends BackendWebTestCase
         self::assertEmptyFormSubmission('user', 3);
     }
 
-    public function testValidData(): void
+    public function testWithInvalidData(): void
     {
         self::loadPage();
 
@@ -74,14 +74,14 @@ final class UserAddTest extends BackendWebTestCase
             'Add',
             [
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => 'Jelmer Prins',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins@fork-cms.com',
+                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins@example.com',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
                 'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
             ],
         );
         self::getClient()->followRedirect();
         self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
-        self::assertDataGridHasLink('jelmer.prins@fork-cms.com');
+        self::assertDataGridHasLink('jelmer.prins@example.com');
         self::assertResponseHasContent('The user "Jelmer Prins" was added.');
     }
 }

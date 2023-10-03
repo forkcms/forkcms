@@ -55,7 +55,7 @@ abstract class BackendWebTestCase extends WebTestCase
         self::request(Request::METHOD_GET, $url);
     }
 
-    final protected static function loginBackendUser(string $email = 'test@fork-cms.com'): User
+    final protected static function loginBackendUser(string $email = 'test@example.com'): User
     {
         try {
             $userRespository = static::getContainer()->get(UserRepository::class);
