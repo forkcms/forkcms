@@ -25,11 +25,11 @@ final class UserIndexTest extends BackendWebTestCase
         self::loadPage(loginBackendUser: false);
 
         self::assertDataGridHasLink($user->getEmail(), '/private/en/backend/user-edit/' . $user->getId());
-        self::assertDataGridHasLink('user@fork-cms.com');
-        self::assertDataGridNotHasLink('demo@fork-cms.com');
-        self::filterDataGrid('User.email', 'user@fork-cms.com');
-        self::assertDataGridHasLink('user@fork-cms.com');
-        self::assertDataGridNotHasLink('demo@fork-cms.com');
+        self::assertDataGridHasLink('user@example.com');
+        self::assertDataGridNotHasLink('demo@example.com');
+        self::filterDataGrid('User.email', 'user@example.com');
+        self::assertDataGridHasLink('user@example.com');
+        self::assertDataGridNotHasLink('demo@example.com');
         self::assertDataGridNotHasLink($user->getEmail());
         self::filterDataGrid('User.email', $user->getEmail());
         self::filterDataGrid('User.displayName', 'demo');

@@ -23,7 +23,7 @@ final class UserFixture extends ForkFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $createSuperAdmin = new CreateUser();
-        $createSuperAdmin->email = 'super-admin@fork-cms.com';
+        $createSuperAdmin->email = 'super-admin@example.com';
         $createSuperAdmin->displayName = 'Super admin';
         $createSuperAdmin->superAdmin = true;
         $createSuperAdmin->plainTextPassword = self::PLAIN_TEXT_PASSWORD;
@@ -34,7 +34,7 @@ final class UserFixture extends ForkFixture implements DependentFixtureInterface
         $this->setReference(self::SUPER_ADMIN_REFERENCE, $superAdmin);
 
         $createUser = new CreateUser();
-        $createUser->email = 'user@fork-cms.com';
+        $createUser->email = 'user@example.com';
         $createUser->displayName = 'Normal user';
         $createUser->superAdmin = false;
         $createUser->plainTextPassword = self::PLAIN_TEXT_PASSWORD;
