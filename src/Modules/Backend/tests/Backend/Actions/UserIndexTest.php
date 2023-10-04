@@ -13,7 +13,7 @@ final class UserIndexTest extends BackendWebTestCase
         self::loginBackendUser();
         self::assertPageLoadedCorrectly(
             self::TEST_URL,
-            'Users | settings | Fork CMS | Fork CMS',
+            'Users | Settings | Fork CMS | Fork CMS',
             ['Display name', 'E-mail', 'Super admin', 'Normal user']
         );
         self::assertHasLink('Add', '/private/en/backend/user-add');
