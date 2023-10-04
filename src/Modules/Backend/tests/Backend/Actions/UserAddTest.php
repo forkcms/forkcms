@@ -28,7 +28,7 @@ final class UserAddTest extends BackendWebTestCase
     public function testEmptyFormShowsValidationErrors(): void
     {
         self::loadPage();
-        self::assertEmptyFormSubmission('user', 3);
+        self::assertEmptyFormSubmission('user', 3, 'Add');
     }
 
     public function testWithInvalidData(): void
@@ -50,8 +50,7 @@ final class UserAddTest extends BackendWebTestCase
 
     public function testUniqueness(): void
     {
-        $user = self::loginBackendUser();
-        self::loadPage(loginBackendUser: false);
+        $user = self::loadPage();
 
         self::submitForm(
             'Add',

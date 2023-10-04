@@ -21,8 +21,7 @@ final class UserIndexTest extends BackendWebTestCase
 
     public function testDataGrid(): void
     {
-        $user = self::loginBackendUser();
-        self::loadPage(loginBackendUser: false);
+        $user = self::loadPage(loginBackendUser: false);
 
         self::assertDataGridHasLink($user->getEmail(), '/private/en/backend/user-edit/' . $user->getId());
         self::assertDataGridHasLink('user@example.com');

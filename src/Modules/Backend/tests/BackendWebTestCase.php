@@ -30,10 +30,13 @@ abstract class BackendWebTestCase extends WebTestCase
         }
     }
 
-    final protected static function loadPage(?string $url = null, bool $enableProfiler = false, bool $loginBackendUser = true): void
+
+    /** @return ($loginBackendUser is true ? User : null) */
+    final protected static function loadPage(?string $url = null, bool $enableProfiler = false, bool $loginBackendUser = true): ?User
     {
+        $user = null;
         if ($loginBackendUser) {
-            self::loginBackendUser();
+            $user = self::loginBackendUser();
         }
 
         if (defined(static::class . '::TEST_URL') === true) {
@@ -45,7 +48,7 @@ abstract class BackendWebTestCase extends WebTestCase
 
             self::request(Request::METHOD_GET, $url);
 
-            return;
+            return $user;
         }
 
         if ($url === null) {
@@ -53,6 +56,8 @@ abstract class BackendWebTestCase extends WebTestCase
         }
 
         self::request(Request::METHOD_GET, $url);
+
+        return $user;
     }
 
     final protected static function loginBackendUser(string $email = 'test@example.com'): User
@@ -129,7 +134,7 @@ abstract class BackendWebTestCase extends WebTestCase
         );
     }
 
-    protected static function assertEmptyFormSubmission(string $formName, int $expectedErrorCount, string $submitButtonLabel = 'Add'): void
+    protected static function assertEmptyFormSubmission(string $formName, int $expectedErrorCount, string $submitButtonLabel): void
     {
         self::submitForm($submitButtonLabel, []);
         self::assertMinCount(
