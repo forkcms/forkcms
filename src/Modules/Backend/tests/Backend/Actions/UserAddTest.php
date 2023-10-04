@@ -13,7 +13,7 @@ final class UserAddTest extends BackendWebTestCase
         self::loginBackendUser();
         self::assertPageLoadedCorrectly(
             self::TEST_URL,
-            'Add | users | settings | Fork CMS | Fork CMS',
+            'Add | Users | Settings | Fork CMS | Fork CMS',
             [
                 'Display name',
                 'E-mail',
@@ -82,6 +82,6 @@ final class UserAddTest extends BackendWebTestCase
         self::getClient()->followRedirect();
         self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
         self::assertDataGridHasLink('jelmer.prins@example.com');
-        self::assertResponseHasContent('The user "Jelmer Prins" was added.');
+        self::assertResponseContains('The user "Jelmer Prins" was added.');
     }
 }

@@ -82,6 +82,6 @@ final class BreadcrumbCollection implements IteratorAggregate
     {
         $items = $this->getItems();
 
-        return implode(' | ', array_reverse($items));
+        return implode(' | ', array_reverse(array_map('ucfirst', $items)));
     }
 }

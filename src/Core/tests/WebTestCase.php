@@ -47,9 +47,13 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
     ): void {
         static::assertHttpStatusCode($url, $httpStatusCode, $requestMethod, $requestParameters);
         if ($pageTitle !== null) {
-            self::assertPageTitleSame($pageTitle, 'Page title is not "' . $pageTitle . '".');
+            self::assertPageTitleSame(
+                $pageTitle,
+                'Page title is not "' . $pageTitle . '" but "'
+                . self::getCrawler()->filter('head title')->text() . '.'
+            );
         }
-        static::assertResponseHasContent(...$expectedContent);
+        static::assertResponseContains(...$expectedContent);
     }
 
     final protected static function assertHasLink(string $text, string $url): void
@@ -91,7 +95,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         );
     }
 
-    final protected static function assertResponseHasContent(string ...$content): void
+    final protected static function assertResponseContains(string ...$content): void
     {
         $response = static::getResponse();
 
@@ -252,7 +256,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
     protected static function submitForm(string $submitButtonLabel, array $formData, string ...$expectedContent): void
     {
         self::getClient()->submit(self::getCrawler()->selectButton($submitButtonLabel)->form(), $formData);
-        self::assertResponseHasContent(...$expectedContent);
+        self::assertResponseContains(...$expectedContent);
     }
 
     final protected static function getRequest(): Request
