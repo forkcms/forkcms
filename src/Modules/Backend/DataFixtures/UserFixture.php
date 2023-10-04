@@ -7,7 +7,6 @@ use Doctrine\Persistence\ObjectManager;
 use ForkCMS\Modules\Backend\Domain\User\Command\CreateUser;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\tests\ForkFixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserFixture extends ForkFixture implements DependentFixtureInterface
 {

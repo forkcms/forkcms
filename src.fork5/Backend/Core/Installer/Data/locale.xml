@@ -8051,17 +8051,6 @@
         <translation language="pt"><![CDATA[nenhum]]></translation>
         <translation language="pl"><![CDATA[żaden]]></translation>
       </item>
-      <item type="label" name="NoPreviousLogin">
-        <translation language="nl"><![CDATA[geen eerdere aanmelding]]></translation>
-        <translation language="en"><![CDATA[no previous login]]></translation>
-        <translation language="ru"><![CDATA[нет предыдущих авторизаций]]></translation>
-        <translation language="el"><![CDATA[δεν υπάρχει προηγούμενη σύνδεση]]></translation>
-        <translation language="hu"><![CDATA[nincs korábbi belépés]]></translation>
-        <translation language="zh"><![CDATA[不存在上一次登录]]></translation>
-        <translation language="de"><![CDATA[kein früherer Login]]></translation>
-        <translation language="pt"><![CDATA[sem logins anteriores]]></translation>
-        <translation language="pl"><![CDATA[brak poprzedniego logowania]]></translation>
-      </item>
       <item type="label" name="NoTheme">
         <translation language="nl"><![CDATA[geen thema]]></translation>
         <translation language="en"><![CDATA[no theme]]></translation>

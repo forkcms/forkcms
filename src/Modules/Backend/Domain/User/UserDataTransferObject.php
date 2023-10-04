@@ -24,7 +24,7 @@ abstract class UserDataTransferObject implements UniqueDataTransferObjectInterfa
 
     /**
      * @Assert\NotBlank(message="err.PasswordIsRequired", groups={"create"})
-     * @Assert\Length(minMessage="err.PasswordIsTooShort", min=12, groups={"create"})
+     * @Assert\Length(minMessage="err.PasswordIsTooShort", min=12)
      * @Assert\NotCompromisedPassword(skipOnError="true")
      */
     public ?string $plainTextPassword = null;

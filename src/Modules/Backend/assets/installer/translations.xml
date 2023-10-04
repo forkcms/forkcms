@@ -1779,6 +1779,17 @@
         <translation locale="pt"><![CDATA[nunca]]></translation>
         <translation locale="pl"><![CDATA[nigdy]]></translation>
       </item>
+      <item type="label" name="NoPreviousLogin">
+        <translation locale="nl"><![CDATA[geen eerdere aanmelding]]></translation>
+        <translation locale="en"><![CDATA[no previous login]]></translation>
+        <translation locale="ru"><![CDATA[нет предыдущих авторизаций]]></translation>
+        <translation locale="el"><![CDATA[δεν υπάρχει προηγούμενη σύνδεση]]></translation>
+        <translation locale="hu"><![CDATA[nincs korábbi belépés]]></translation>
+        <translation locale="zh"><![CDATA[不存在上一次登录]]></translation>
+        <translation locale="de"><![CDATA[kein früherer Login]]></translation>
+        <translation locale="pt"><![CDATA[sem logins anteriores]]></translation>
+        <translation locale="pl"><![CDATA[brak poprzedniego logowania]]></translation>
+      </item>
     </Backend>
   </Backend>
 </translations>
