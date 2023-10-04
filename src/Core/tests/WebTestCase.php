@@ -28,7 +28,10 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         return [];
     }
 
-    final protected static function loadFixture(FixtureInterface ...$fixture): void
+    /**
+     * This can only be executed before tests start because they are wrapped in a transaction
+     */
+    private static function loadFixture(FixtureInterface ...$fixture): void
     {
         (new ORMExecutor(self::getContainer()->get('doctrine.orm.entity_manager')))->execute($fixture, true);
     }
