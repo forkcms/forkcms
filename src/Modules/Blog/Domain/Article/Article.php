@@ -3,6 +3,7 @@
 namespace ForkCMS\Modules\Blog\Domain\Article;
 
 use Doctrine\ORM\Mapping as ORM;
+use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\Blameable;
 use ForkCMS\Modules\Blog\Domain\Article\Command\ArticleDataTransferObject;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
@@ -11,11 +12,26 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use DateTime;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\Table(name: 'blog__articles')]
 #[DataGrid('Article')]
 #[ORM\HasLifecycleCallbacks]
+#[DataGridActionColumn(
+    route: 'backend_action',
+    routeAttributes: [
+        'module' => 'blog',
+        'action' => 'blog_post_edit',
+    ],
+    routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+    label: 'lbl.Edit',
+    class: 'btn btn-primary btn-sm',
+    iconClass: 'fa fa-edit',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'BLOG__BLOG_POST_EDIT',
+    columnAttributes: ['class' => 'fork-data-grid-action'],
+)]
 final class Article
 {
     use Blameable;
@@ -34,6 +50,18 @@ final class Article
     private Category $category;
 
     #[ORM\Column(type: 'string')]
+    #[DataGridPropertyColumn(
+        sortable: true,
+        label: 'lbl.Title',
+        route: 'backend_action',
+        routeAttributes: [
+            'module' => 'blog',
+            'action' => 'blog_post_edit',
+        ],
+        routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+        routeRole: ModuleAction::ROLE_PREFIX . 'BLOG__BLOG_POST_EDIT',
+        columnAttributes: ['class' => 'title'],
+    )]
     private string $title;
 
     #[ORM\Column(type: 'text')]
@@ -139,5 +167,17 @@ final class Article
     public function getPublishOn(): DateTime
     {
         return $this->publishOn;
+    }
+
+    /**
+     * @param array{string?: string} $attributes
+     *
+     * @return array{string?: int|string}
+     */
+    public static function dataGridEditLinkCallback(self $article, array $attributes): array
+    {
+        $attributes['slug'] = $article->getId();
+
+        return $attributes;
     }
 }
