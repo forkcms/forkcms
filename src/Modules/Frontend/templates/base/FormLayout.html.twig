@@ -305,3 +305,12 @@
     {{ form_widget(form.children|last) }}
   </div>
 {% endblock %}
+
+{% block toggle_password_widget %}
+  <div class="input-group mb-3">
+    {{ form_widget(form) }}
+    <button class="btn btn-default" type="button" data-role="toggle-visibility" data-target="{{ form.vars.id }}">
+      <i class="fas fa-eye-slash ms-2"></i>
+    </button>
+  </div>
+{% endblock %}

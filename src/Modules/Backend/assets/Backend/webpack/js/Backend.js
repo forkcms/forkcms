@@ -25,7 +25,7 @@ import { Config } from './Components/Config'
 import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
 import { InitBsToasts } from './Components/InitToasts'
-import TogglePasswordInputType from './Components/TogglePasswordInputType'
+import { TogglePasswordInputType } from '../../../../../../Core/assets/js/Components/TogglePasswordInputType'
 
 window.bootstrap = bootstrap
 
@@ -55,7 +55,7 @@ export class Backend {
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
-    Backend.initToggleSecrets()
+    Backend.initTogglePasswordInputType()
 
     // do not move, should be run as the last item.
     if (!Config.isDebug()) this.forms.unloadWarning()
@@ -73,7 +73,7 @@ export class Backend {
     })
   }
 
-  static initToggleSecrets () {
+  static initTogglePasswordInputType () {
     $('[data-role="toggle-visibility"]').each((index, element) => {
       element.toggleSecret = new TogglePasswordInputType(element)
     })
