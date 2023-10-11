@@ -644,9 +644,9 @@
 {% endblock %}
 
 {% block toggle_password_widget %}
-  <div class="input-group mb-3">
+  <div class="input-group mb-3" data-role="toggle-password-visibility">
     {{ form_widget(form) }}
-    <button class="btn btn-default" type="button" data-role="toggle-password-visibility" data-target="{{ form.vars.id }}">
+    <button class="btn btn-default" type="button">
       <i class="fas fa-eye-slash ms-2"></i>
     </button>
   </div>

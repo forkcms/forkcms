@@ -1,25 +1,24 @@
 export class TogglePasswordInputType {
   constructor (element) {
-    this._element = element
+    this._button = element.querySelector('button')
+    this._input = element.querySelector('input')
 
     this.init()
   }
 
   init () {
-    $(this._element).on('click', () => {
+    this._button.addEventListener('click', () => {
       this.toggle()
     })
   }
 
   toggle () {
-    const target = $('#' + $(this._element).data('target'))
-
-    if (target.attr('type') === 'password') {
-      target.attr('type', 'text')
-      $(this._element).html('<i class="fa fa-eye ms-2"></i>')
+    if (this._input.type === 'password') {
+      this._input.type = 'text'
+      this._button.innerHTML = '<i class="fa fa-eye ms-2"></i>'
     } else {
-      target.attr('type', 'password')
-      $(this._element).html('<i class="fa fa-eye-slash ms-2"></i>')
+      this._input.type = 'password'
+      this._button.innerHTML = '<i class="fa fa-eye-slash ms-2"></i>'
     }
   }
 }
