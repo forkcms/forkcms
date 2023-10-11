@@ -74,8 +74,8 @@ export class Backend {
   }
 
   static initTogglePasswordInputType () {
-    $('[data-role="toggle-visibility"]').each((index, element) => {
-      element.toggleSecret = new TogglePasswordInputType(element)
+    document.querySelectorAll('[data-role="toggle-password-visibility"]').forEach((element) => {
+      element.togglePassword = new TogglePasswordInputType(element)
     })
   }
 }
