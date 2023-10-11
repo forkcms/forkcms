@@ -16,8 +16,10 @@ export default class ToggleSecret {
 
     if (target.attr('type') === 'password') {
       target.attr('type', 'text')
+      $(this._element).html('<i class="fa fa-eye ms-2"></i>')
     } else {
       target.attr('type', 'password')
+      $(this._element).html('<i class="fa fa-eye-slash ms-2"></i>')
     }
   }
 }
