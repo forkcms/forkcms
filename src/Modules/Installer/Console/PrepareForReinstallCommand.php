@@ -88,10 +88,13 @@ class PrepareForReinstallCommand extends Command
     {
         $command = $this->getApplication()?->find('cache:clear');
         try {
-            $command->run(
-                new ArrayInput(['--no-warmup' => true]),
-                new BufferedOutput(),
-            );
+            $environments = ['prod', 'dev', 'install', 'test', 'test_install'];
+            foreach ($environments as $environment) {
+                $command->run(
+                    new ArrayInput(['--no-warmup' => true, '--env' => $environment]),
+                    new BufferedOutput(),
+                );
+            }
         } catch (PDOException) {
             // if the database is not available, the cache:clear command will fail
         }

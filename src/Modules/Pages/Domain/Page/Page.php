@@ -18,7 +18,6 @@ use ForkCMS\Modules\Pages\Frontend\Widgets\Sitemap;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
-#[ORM\Table(name: 'pages__page')]
 class Page
 {
     use EntityWithSettingsTrait;

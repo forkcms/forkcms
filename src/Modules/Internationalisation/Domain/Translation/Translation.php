@@ -11,7 +11,6 @@ use InvalidArgumentException;
 use Symfony\Component\Translation\TranslatableMessage;
 
 #[ORM\Entity(repositoryClass: TranslationRepository::class)]
-#[ORM\Table(name: 'internationalisation__translation')]
 class Translation
 {
     use Blameable;
@@ -21,7 +20,7 @@ class Translation
     private string $id;
 
     #[ORM\Column(type: Types::STRING, length: 32, options: ['comment' => 'Translation id across locale'])]
-    private string $groupId;
+    private string $crossLocaleId;
 
     #[ORM\Embedded(class: TranslationDomain::class)]
     private TranslationDomain $domain;
@@ -50,7 +49,7 @@ class Translation
         }
 
         $this->id = md5(implode('$', [$domain, $locale->value, $key]));
-        $this->groupId = md5(implode('$', [$domain, $key]));
+        $this->crossLocaleId = md5(implode('$', [$domain, $key]));
         $this->domain = $domain;
         $this->key = $key;
         $this->locale = $locale;
@@ -63,9 +62,9 @@ class Translation
         return $this->id;
     }
 
-    public function getGroupId(): string
+    public function getCrossLocaleId(): string
     {
-        return $this->groupId;
+        return $this->crossLocaleId;
     }
 
     public function getDomain(): TranslationDomain

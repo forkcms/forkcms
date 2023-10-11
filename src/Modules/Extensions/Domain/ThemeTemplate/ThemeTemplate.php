@@ -18,13 +18,12 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 use Stringable;
 
 #[ORM\Entity(repositoryClass: ThemeTemplateRepository::class)]
-#[ORM\Table(name: 'extensions__theme_template')]
 #[DataGrid('ThemeTemplate')]
 #[DataGridActionColumn(
     route: 'backend_action',
     routeAttributes: [
         'module' => 'extensions',
-        'action' => 'theme_template_edit',
+        'action' => 'theme-template-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',

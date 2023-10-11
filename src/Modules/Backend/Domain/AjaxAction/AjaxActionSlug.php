@@ -28,7 +28,7 @@ final class AjaxActionSlug implements Stringable
         if (
             !preg_match(
                 '#(^[a-z][a-z0-9_]*[a-z0-9]*)/([a-z][a-z0-9_]*[a-z0-9]*$)#',
-                $slug,
+                str_replace('-', '_', $slug),
                 $matches
             )
         ) {
@@ -94,12 +94,16 @@ final class AjaxActionSlug implements Stringable
 
     public function getSlug(): string
     {
-        return implode(
-            '/',
-            [
-                Container::underscore($this->moduleName->getName()),
-                Container::underscore($this->actionName->getName()),
-            ]
+        return str_replace(
+            '_',
+            '-',
+            implode(
+                '/',
+                [
+                    Container::underscore($this->moduleName->getName()),
+                    Container::underscore($this->actionName->getName()),
+                ]
+            )
         );
     }
 
@@ -130,18 +134,13 @@ final class AjaxActionSlug implements Stringable
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH,
         ?Locale $locale = null
     ): string {
-        $parameters['action'] = Container::underscore($this->actionName->getName());
-        $parameters['module'] = Container::underscore($this->moduleName->getName());
+        $parameters['action'] = str_replace('_', '-', Container::underscore($this->actionName->getName()));
+        $parameters['module'] = str_replace('_', '-', Container::underscore($this->moduleName->getName()));
 
         if ($locale instanceof Locale) {
             $parameters['_locale'] = $locale->value;
         }
 
         return $router->generate('backend_ajax', $parameters, $referenceType);
-    }
-
-    public function getAjaxActionNameSlug(): string
-    {
-        return Container::underscore($this->actionName->getName());
     }
 }

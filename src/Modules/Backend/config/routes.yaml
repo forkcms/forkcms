@@ -6,15 +6,15 @@ backend_ajax:
     module: ~
     action: ~
   requirements:
-    module: '[a-z][a-z0-9_]*[a-z0-9]*'
-    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    module: '[a-z][a-z0-9\-]*[a-z0-9]*'
+    action: '[a-z][a-z0-9\-]*[a-z0-9]*'
     slug: .+
 
 backend_logout:
-  path: /private/{_locale}/backend/authentication_logout
+  path: /private/{_locale}/backend/authentication-logout
 
 backend_login:
-  path: /private/{_locale}/backend/authentication_login
+  path: /private/{_locale}/backend/authentication-login
   controller: ForkCMS\Modules\Backend\Controller\LoginController
 
 backend_action:
@@ -24,6 +24,6 @@ backend_action:
     module: ~
     action: ~
   requirements:
-    module: '[a-z][a-z0-9_]*[a-z0-9]*'
-    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    module: '[a-z][a-z0-9\-]*[a-z0-9]*'
+    action: '[a-z][a-z0-9\-]*[a-z0-9]*'
     slug: .+
