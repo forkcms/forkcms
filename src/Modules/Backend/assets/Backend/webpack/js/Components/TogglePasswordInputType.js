@@ -1,4 +1,4 @@
-export default class ToggleSecret {
+export default class TogglePasswordInputType {
   constructor (element) {
     this._element = element
 
