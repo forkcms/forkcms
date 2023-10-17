@@ -8,7 +8,6 @@ use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-#[ORM\Table(name: 'blog__comments')]
 #[ORM\HasLifecycleCallbacks]
 class Comment
 {

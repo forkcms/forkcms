@@ -16,7 +16,6 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-#[ORM\Table(name: 'blog__articles')]
 #[DataGrid('Article')]
 #[ORM\HasLifecycleCallbacks]
 #[DataGridActionColumn(
@@ -72,7 +71,7 @@ final class Article
 
     // TODO image
 
-    #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => 'draft'])]
+    #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => 'DRAFT'])]
     private Status $status;
 
     #[ORM\Column(type: 'boolean')]
@@ -176,8 +175,13 @@ final class Article
      */
     public static function dataGridEditLinkCallback(self $article, array $attributes): array
     {
-        $attributes['slug'] = $article->getId();
+        $attributes['slug'] = $article->getRevisionId();
 
         return $attributes;
+    }
+
+    public function archive(): void
+    {
+        $this->status = Status::ARCHIVED;
     }
 }

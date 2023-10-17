@@ -8,7 +8,6 @@ use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Blog\Domain\Category\Command\CategoryDataTransferObject;
 use ForkCMS\Modules\Frontend\Domain\Meta\EntityWithMetaTrait;
-use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
@@ -17,7 +16,6 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: 'blog__categories')]
 #[ORM\HasLifecycleCallbacks]
 #[DataGrid('Category')]
 #[DataGridActionColumn(

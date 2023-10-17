@@ -4,7 +4,7 @@ namespace ForkCMS\Modules\Blog\Domain\Article;
 
 enum Status: string
 {
-    case Draft = 'draft';
-    case Active = 'active';
-    case Archived = 'archived';
+    case DRAFT = 'draft';
+    case ACTIVE = 'active';
+    case ARCHIVED = 'archived';
 }
