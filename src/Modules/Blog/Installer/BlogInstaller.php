@@ -4,9 +4,11 @@ namespace ForkCMS\Modules\Blog\Installer;
 
 use ForkCMS\Modules\Blog\Backend\Actions\BlogIndex;
 use ForkCMS\Modules\Blog\Backend\Actions\BlogPostAdd;
+use ForkCMS\Modules\Blog\Backend\Actions\BlogPostEdit;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryAdd;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryEdit;
 use ForkCMS\Modules\Blog\Backend\Actions\CategoryIndex;
+use ForkCMS\Modules\Blog\Backend\Actions\ModuleSettings;
 use ForkCMS\Modules\Blog\Domain\Article\Article;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
 use ForkCMS\Modules\Blog\Domain\Comment\Comment;
@@ -27,6 +29,7 @@ final class BlogInstaller extends ModuleInstaller
     public function install(): void
     {
         $this->createBackendPages();
+        $this->createSettings();
     }
 
     private function createBackendPages(): void
@@ -43,6 +46,7 @@ final class BlogInstaller extends ModuleInstaller
             parent: $blogNavigationitem,
             selectedFor: [
                 BlogPostAdd::getActionSlug(),
+                BlogPostEdit::getActionSlug(),
             ],
             sequence: 1,
         );
@@ -56,6 +60,18 @@ final class BlogInstaller extends ModuleInstaller
                 CategoryEdit::getActionSlug(),
             ],
             sequence: 2,
+        );
+    }
+
+    private function createSettings(): void
+    {
+        $moduleSettings = $this->getModuleSettingsNavigationItem();
+        $this->getOrCreateBackendNavigationItem(
+            label: TranslationKey::label('Blog'),
+            slug: ModuleSettings::getActionSlug(),
+            parent: $moduleSettings,
+            selectedFor: [ModuleSettings::getActionSlug()],
+            sequence: 5,
         );
     }
 }
