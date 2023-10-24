@@ -11,7 +11,7 @@ class CreateArticle extends ArticleDataTransferObject
     {
         parent::__construct();
 
-        $this->status = Status::Draft;
+        $this->status = Status::DRAFT;
     }
 
     public function setEntity(Article $blogPost): void

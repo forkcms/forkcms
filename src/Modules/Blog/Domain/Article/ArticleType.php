@@ -90,6 +90,18 @@ class ArticleType extends AbstractType
                         ]
                     )
                     ->add(
+                        'status',
+                        ChoiceType::class,
+                        [
+                            'label' => 'lbl.Status',
+                            'expanded' => true,
+                            'choices' => [
+                                'lbl.Draft' => Status::DRAFT,
+                                'lbl.Active' => Status::ACTIVE,
+                            ]
+                        ]
+                    )
+                    ->add(
                         'hidden',
                         ChoiceType::class,
                         [
@@ -158,42 +170,6 @@ class ArticleType extends AbstractType
                 ]);
             }
         );
-
-/*
-            ->add(
-                'introduction',
-                EditorType::class,
-                [
-                    'label' => 'lbl.Summary',
-                ]
-            )
-            ->add(
-                'text',
-                EditorType::class,
-                [
-                    'label' => 'lbl.MainContent',
-                ]
-            )
-            ->add(
-                'publishOn',
-                DateTimeType::class,
-                [
-                    'label' => 'lbl.PublishOn',
-                    'date_widget' => 'single_text',
-                    'time_widget' => 'single_text'
-                ]
-            )
-            ->add(
-                'category',
-                EntityType::class,
-                [
-                    'label' => 'lbl.Category',
-                    'class' => Category::class,
-                    'choice_label' => 'title',
-                    'placeholder' => 'lbl.ChooseACategory',
-                ]
-            )
-        ;*/
 
         // TODO image
         // status

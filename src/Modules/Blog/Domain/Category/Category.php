@@ -22,7 +22,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'blog',
-        'action' => 'category_edit',
+        'action' => 'category-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -48,7 +48,7 @@ class Category
         route: 'backend_action',
         routeAttributes: [
             'module' => 'blog',
-            'action' => 'category_edit',
+            'action' => 'category-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'BLOG__CATEGORY_EDIT',

@@ -13,6 +13,7 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use DateTime;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
+use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
@@ -22,7 +23,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'blog',
-        'action' => 'blog_post_edit',
+        'action' => 'blog-post-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -55,7 +56,7 @@ final class Article
         route: 'backend_action',
         routeAttributes: [
             'module' => 'blog',
-            'action' => 'blog_post_edit',
+            'action' => 'blog-post-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'BLOG__BLOG_POST_EDIT',
@@ -178,6 +179,12 @@ final class Article
         $attributes['slug'] = $article->getRevisionId();
 
         return $attributes;
+    }
+
+    #[DataGridMethodColumn(label: 'lbl.Status', columnAttributes: ['class' => 'status'])]
+    public function isDraft(): string
+    {
+        return 'lbl.' . ucfirst($this->status->value);
     }
 
     public function archive(): void
