@@ -9,5 +9,5 @@ services:
   ForkCMS\Modules\Blog\Backend\:
     resource: '../Backend/*'
 
-  #ForkCMS\Modules\Blog\Frontend\:
-  #  resource: '../Frontend/*'
+  ForkCMS\Modules\Blog\Frontend\:
+    resource: '../Frontend/*'
