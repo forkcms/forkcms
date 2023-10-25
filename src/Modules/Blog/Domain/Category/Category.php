@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Blog\Domain\Article\Article;
+use ForkCMS\Modules\Blog\Domain\Article\Status;
 use ForkCMS\Modules\Blog\Domain\Category\Command\CategoryDataTransferObject;
 use ForkCMS\Modules\Frontend\Domain\Meta\EntityWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
@@ -107,7 +108,11 @@ class Category
     )]
     public function getNumberOfPosts(): int
     {
-        return $this->posts->count();
+        return count(
+            $this->posts->filter(function (Article $article) {
+                return $article->getStatus() !== Status::ARCHIVED;
+            })
+        );
     }
 
     /**

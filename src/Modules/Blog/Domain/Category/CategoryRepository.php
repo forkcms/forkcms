@@ -22,6 +22,7 @@ class CategoryRepository extends ServiceEntityRepository implements MetaCallback
     public function save(Category $category): void
     {
         $entityManager = $this->getEntityManager();
+        $category->getMeta()->setSlug($this->slugify($category->getTitle(), $category, $category->getLocale()));
         $entityManager->persist($category);
         $entityManager->flush();
     }
@@ -33,10 +34,13 @@ class CategoryRepository extends ServiceEntityRepository implements MetaCallback
         $entityManager->flush();
     }
 
-    public function generateSlug(): string
+    public function generateSlug(string $slug, Locale $locale, ?int $id): string
     {
-        return 'TODO';
-        // return $this->slugify();
+        if ($id === null) {
+            return $this->slugify($slug, null, $locale);
+        }
+
+        return $this->slugify($slug, $this->findOneBy(['id' => $id, 'locale' => $locale->value]), $locale);
     }
 
     protected function slugifyIdQueryBuilder(QueryBuilder $queryBuilder, ?object $subject, Locale $locale, string $entityAlias): void

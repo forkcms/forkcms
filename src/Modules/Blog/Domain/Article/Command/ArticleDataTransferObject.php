@@ -76,6 +76,11 @@ class ArticleDataTransferObject
         $this->publishOn = $blogPostEntity->getPublishOn();
     }
 
+    public function hasEntity(): bool
+    {
+        return $this->blogPostEntity !== null;
+    }
+
     public function getEntity(): ?Article
     {
         return $this->blogPostEntity;

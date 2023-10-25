@@ -34,6 +34,11 @@ class CategoryDataTransferObject
         $this->meta = clone $categoryEntity->getMeta();
     }
 
+    public function hasEntity(): bool
+    {
+        return $this->categoryEntity !== null;
+    }
+
     public function getEntity(): ?Category
     {
         return $this->categoryEntity;

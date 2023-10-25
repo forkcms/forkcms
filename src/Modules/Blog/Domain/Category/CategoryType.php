@@ -42,6 +42,7 @@ class CategoryType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event): void {
+                /** @var CategoryDataTransferObject $categoryData */
                 $categoryData = $event->getData();
                 $tabs = $event->getForm()->get('tabs');
                 $tabs->get(md5('lbl.Content'))->add(
@@ -63,38 +64,12 @@ class CategoryType extends AbstractType
                     'generate_slug_callback_class' => CategoryRepository::class,
                     'generate_slug_callback_method' => 'generateSlug',
                     'generate_slug_callback_parameters' => [
+                        $categoryData->locale,
+                        $categoryData->hasEntity() ? $categoryData->getEntity()->getId() : null,
                     ],
                 ]);
-                /*if ($revisionDataTransferObject->hasEntity()) {
-                    $event->getForm()->add(
-                        'saveAsDraft',
-                        SubmitType::class,
-                        [
-                            'label' => 'lbl.SaveDraft',
-                            'attr' => [
-                                'class' => 'btn-default',
-                            ],
-                        ]
-                    );
-                }*/
             }
         );
-        /*
-        $builder->add(
-            'title',
-            TextType::class,
-            [
-                'label' => 'lbl.Title',
-            ]
-        )
-        ->add(
-            'meta',
-            MetaType::class,
-            [
-                'label' => 'lbl.Meta',
-            ]
-        );
-        */
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -23,6 +23,7 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
     public function save(Article $article): void
     {
         $entityManager = $this->getEntityManager();
+        $article->getMeta()->setSlug($this->slugify($article->getTitle(), $article, $article->getLocale()));
         $entityManager->persist($article);
         $entityManager->flush();
     }
@@ -46,10 +47,13 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
                 ->getSingleScalarResult() + 1;
     }
 
-    public function generateSlug(): string
+    public function generateSlug(string $slug, Locale $locale, ?int $revisionId): string
     {
-        return 'TODO';
-        // return $this->slugify();
+        if ($revisionId === null) {
+            return $this->slugify($slug, null, $locale);
+        }
+
+        return $this->slugify($slug, $this->findOneBy(['revisionId' => $revisionId, 'locale' => $locale->value]), $locale);
     }
 
     protected function slugifyIdQueryBuilder(QueryBuilder $queryBuilder, ?object $subject, Locale $locale, string $entityAlias): void

@@ -8,7 +8,9 @@ use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Blog\Domain\Article\Command\ArticleDataTransferObject;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
 use ForkCMS\Modules\Blog\Domain\Category\CategoryRepository;
+use ForkCMS\Modules\Blog\Frontend\Actions\Index;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaType;
+use ForkCMS\Modules\Pages\Domain\Page\PageRouter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ArticleType extends AbstractType
 {
     public function __construct(
-        private readonly Security $security
+        private readonly Security $security,
+        private readonly PageRouter $pageRouter
     ) {
     }
 
@@ -70,7 +73,7 @@ class ArticleType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event): void {
+            function (FormEvent $event) use ($data): void {
                 $categoryData = $event->getData();
                 $tabs = $event->getForm()->get('tabs');
 
@@ -157,15 +160,15 @@ class ArticleType extends AbstractType
                 $tabs->get(md5('lbl.SEO'))->add('meta', MetaType::class, [
                     'disable_slug_overwrite' => false,
                     'base_field_name' => 'title',
-                    'base_url' => '',   // TODO: get route for category
-                    /*'base_url' => $this->pageRouter->getRouteForPageId(
-                        $revisionDataTransferObject->parentPage !== null
-                            ? $revisionDataTransferObject->parentPage->getId()
-                            : Page::PAGE_ID_HOME
-                    ),*/
+                    'base_url' => $this->pageRouter->getRouteForBlock(
+                        Index::getModuleBlock(),
+                        $data->locale
+                    ),
                     'generate_slug_callback_class' => ArticleRepository::class,
                     'generate_slug_callback_method' => 'generateSlug',
                     'generate_slug_callback_parameters' => [
+                        $data->locale,
+                        $data->hasEntity() ? $data->getEntity()->getRevisionId() : null,
                     ],
                 ]);
             }
