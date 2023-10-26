@@ -1,6 +1,6 @@
 <section class="module-blog block-blog-index">
   <article itemscope itemtype="http://schema.org/Blog" role="main">
-    <meta itemprop="interactionCount" content="UserComments:commentsCount">
+    <meta itemprop="interactionCount" content="UserComments:{{ article.numberOfComments }}">
     <meta itemprop="author" content="{{ article.createdBy.displayName }}">
 
     {% block block_heading %}
@@ -20,7 +20,10 @@
         <div class="row">
           <div class="col-md-6">
             {{ 'lbl.Category'|trans|ucfirst }}
-            <a itemprop="genre" href="{# TODO #}">{{ article.category.title }}</a>
+            {# TODO href #}
+            <a itemprop="genre" href="{{ get_url_for_block('Blog', 'Category', 'action', {'slug':article.category.meta.slug}) }}">
+              {{ article.category.title }}
+            </a>
             .
           </div>
 

@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\Blog\Domain\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Blog\Domain\Category\Category;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
@@ -64,9 +65,10 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
     private function getBaseQuery(Locale $locale): QueryBuilder
     {
         return $this->createQueryBuilder('a')
-            ->select('a, c, m')
+            ->select('a, c, m, cm')
             ->innerJoin('a.category', 'c')
             ->innerJoin('a.meta', 'm')
+            ->innerJoin('c.meta', 'cm')
             ->innerJoin('a.createdBy', 'cb')
             ->andWhere('a.locale = :locale')
             ->andWhere('a.status = :status')
@@ -82,6 +84,18 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
     public function getAllPaginated(string $language): array
     {
         return $this->getBaseQuery(Locale::from($language))
+            ->addOrderBy('a.publishOn', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    // TODO make actually paginated
+    public function getPaginatedForCategory(Category $category, Locale $locale): array
+    {
+        return $this->getBaseQuery($locale)
+            ->andWhere('a.category = :category')
+            ->setParameter('category', $category)
+            ->addOrderBy('a.publishOn', 'DESC')
             ->getQuery()
             ->getResult();
     }

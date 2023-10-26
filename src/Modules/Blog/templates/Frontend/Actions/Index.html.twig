@@ -54,11 +54,11 @@
               <div class="row">
                 <div class="col-md-6">
                   {{ 'lbl.Category'|trans|ucfirst }}
-                  <a itemprop="genre" href="{# item.category_full_url #}">{{ item.category.title }}</a>
+                  {# TODO temporarily give slug parameter since adding it to url makes Action not found #}
+                  <a itemprop="genre" href="{{ get_url_for_block('Blog', 'Category', 'action', {'slug':item.category.meta.slug}) }}">{{ item.category.title }}</a>
                 </div>
               </div>
             </header>
-
 
             <div class="block-article-body" itemprop="articleBody">
               {# TODO

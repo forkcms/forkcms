@@ -47,4 +47,17 @@ class CategoryRepository extends ServiceEntityRepository implements MetaCallback
     {
         // TODO: Implement slugifyIdQueryBuilder() method.
     }
+
+    public function getCategoryBySlug(string $slug, Locale $locale): ?Category
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c, m')
+            ->innerJoin('c.meta', 'm')
+            ->andWhere('m.slug = :slug')
+            ->andWhere('c.locale = :locale')
+            ->setParameter('slug', $slug)
+            ->setParameter('locale', $locale)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
