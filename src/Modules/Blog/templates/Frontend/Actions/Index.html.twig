@@ -15,7 +15,9 @@
 
             <header class="block-article-heading page-header" role="banner">
               <h2 itemprop="name">
-                <a href="{# item.full_url #}">
+                {# TODO temporarily give slug parameter since adding it to url makes Action not found #}
+                {# should be something like {{ get_url_for_block('Blog', 'Detail') ~ '/' ~ item.meta.slug) }} #}
+                <a href="{{ get_url_for_block('Blog', 'Detail', 'action', {'slug':item.meta.slug}) }}">
                   {{ item.title }}
                 </a>
               </h2>

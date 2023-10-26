@@ -61,8 +61,7 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
         // TODO: Implement slugifyIdQueryBuilder() method.
     }
 
-    // TODO make actually paginated
-    public function getAllPaginated(string $language): array
+    private function getBaseQuery(Locale $locale): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->select('a, c, m')
@@ -73,11 +72,35 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
             ->andWhere('a.status = :status')
             ->andWhere('a.hidden = :false')
             ->andWhere('a.publishOn <= :now')
-            ->setParameter('locale', Locale::from($language))
+            ->setParameter('locale', $locale)
             ->setParameter('status', Status::ACTIVE)
             ->setParameter('false', false)
-            ->setParameter('now', new DateTime())
+            ->setParameter('now', new DateTime());
+    }
+
+    // TODO make actually paginated
+    public function getAllPaginated(string $language): array
+    {
+        return $this->getBaseQuery(Locale::from($language))
             ->getQuery()
             ->getResult();
+    }
+
+    public function getFullBlogPostBySlug(string $slug, Locale $locale): ?Article
+    {
+        return $this->getBaseQuery($locale)
+            ->andWhere('m.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getFullBlogPostByRevisionId(int $revisionId, Locale $locale): ?Article
+    {
+        return $this->getBaseQuery($locale)
+            ->andWhere('a.revisionId = :revisionId')
+            ->setParameter('revisionId', $revisionId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace ForkCMS\Modules\Blog\Domain\Article;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Modules\Backend\Domain\User\User;
@@ -73,7 +75,6 @@ class ArticleType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($data): void {
-                $categoryData = $event->getData();
                 $tabs = $event->getForm()->get('tabs');
 
                 $tabs->get(md5('lbl.Content'))
@@ -132,6 +133,12 @@ class ArticleType extends AbstractType
                             'class' => Category::class,
                             'choice_label' => 'title',
                             'placeholder' => 'lbl.ChooseACategory',
+                            'query_builder' => function (EntityRepository $er) use ($data): QueryBuilder {
+                                return $er->createQueryBuilder('c')
+                                    ->andWhere('c.locale = :locale')
+                                    ->orderBy('c.title', 'ASC')
+                                    ->setParameter('locale', $data->locale);
+                            },
                         ]
                     )
                     ->add(
