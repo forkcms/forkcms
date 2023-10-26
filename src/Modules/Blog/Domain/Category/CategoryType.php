@@ -4,14 +4,11 @@ namespace ForkCMS\Modules\Blog\Domain\Category;
 
 use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Modules\Blog\Domain\Category\Command\CategoryDataTransferObject;
+use ForkCMS\Modules\Blog\Frontend\Actions\Category as CategoryAction;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaType;
-use ForkCMS\Modules\Pages\Domain\Page\Page;
-use ForkCMS\Modules\Pages\Domain\Revision\Form\RevisionContentType;
-use ForkCMS\Modules\Pages\Domain\Revision\Form\RevisionSettingsType;
-use ForkCMS\Modules\Pages\Domain\Revision\RevisionRepository;
+use ForkCMS\Modules\Pages\Domain\Page\PageRouter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -20,6 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryType extends AbstractType
 {
+    public function __construct(private readonly PageRouter $pageRouter)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', HiddenType::class);
@@ -55,12 +56,10 @@ class CategoryType extends AbstractType
                 $tabs->get(md5('lbl.SEO'))->add('meta', MetaType::class, [
                     'disable_slug_overwrite' => false,
                     'base_field_name' => 'title',
-                    'base_url' => '',   // TODO: get route for category
-                    /*'base_url' => $this->pageRouter->getRouteForPageId(
-                        $revisionDataTransferObject->parentPage !== null
-                            ? $revisionDataTransferObject->parentPage->getId()
-                            : Page::PAGE_ID_HOME
-                    ),*/
+                    'base_url' => $this->pageRouter->getRouteForBlock(
+                        CategoryAction::getModuleBlock(),
+                        $categoryData->locale
+                    ),
                     'generate_slug_callback_class' => CategoryRepository::class,
                     'generate_slug_callback_method' => 'generateSlug',
                     'generate_slug_callback_parameters' => [

@@ -7,8 +7,7 @@ use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Blog\Domain\Article\Command\ArticleDataTransferObject;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
-use ForkCMS\Modules\Blog\Domain\Category\CategoryRepository;
-use ForkCMS\Modules\Blog\Frontend\Actions\Index;
+use ForkCMS\Modules\Blog\Frontend\Actions\Detail;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaType;
 use ForkCMS\Modules\Pages\Domain\Page\PageRouter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -161,7 +160,7 @@ class ArticleType extends AbstractType
                     'disable_slug_overwrite' => false,
                     'base_field_name' => 'title',
                     'base_url' => $this->pageRouter->getRouteForBlock(
-                        Index::getModuleBlock(),
+                        Detail::getModuleBlock(),
                         $data->locale
                     ),
                     'generate_slug_callback_class' => ArticleRepository::class,
