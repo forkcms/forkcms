@@ -27,6 +27,7 @@ import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
 import { InitBsToasts } from './Components/InitToasts'
 import { TogglePasswordInputType } from '../../../../../../Core/assets/js/Components/TogglePasswordInputType'
+import { TwoFactorAuthorization } from "./Components/TwoFactorAuthorization"
 
 window.bootstrap = bootstrap
 
@@ -54,6 +55,7 @@ export class Backend {
     this.ajaxContentEditable = new AjaxContentEditable(this.locale)
     this.initToasts = new InitBsToasts()
     this.togglePaswordInputType = new TogglePasswordInputType()
+    this.twoFactorAuthorization = new TwoFactorAuthorization()
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()

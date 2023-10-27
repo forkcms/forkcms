@@ -378,4 +378,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     {
         return $this->googleAuthenticatorSecret !== null;
     }
+
+    public function disableTwoFactorAuthentication(): void
+    {
+        $this->googleAuthenticatorSecret = null;
+        $this->backupCodes = [];
+    }
 }

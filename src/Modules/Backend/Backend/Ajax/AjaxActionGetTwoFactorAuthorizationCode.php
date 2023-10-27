@@ -13,43 +13,43 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticator
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class EnableTwoFactorAuthentication extends AbstractAjaxActionController
+class AjaxActionGetTwoFactorAuthorizationCode extends AbstractAjaxActionController
 {
     public function __construct(
-        private readonly TokenStorageInterface $tokenStorage,
         private readonly GoogleAuthenticatorInterface $googleAuthenticator,
+        private readonly TokenStorageInterface $tokenStorage
     ) {
     }
 
-    protected function execute(Request $request): void
+    public function execute(Request $request): void
     {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser()->getId();
-        $secret = $this->googleAuthenticator->generateSecret();
+        $user = $this->tokenStorage->getToken()->getUser();
 
-        $this->assign('user', $this->tokenStorage->getToken()->getUser()->getId());
-        $this->assign('secret', $secret);
-        // Set the secret in the user to generate a valid QR code
-        $user->setGoogleAuthenticatorSecret($secret);
-        $this->assign('qrCode', $this->displayQrCode($user));
-        // Clear the secret after generating the QR code
-        $user->setGoogleAuthenticatorSecret(null);
-    }
+        if (!$user instanceof User) {
+            $this->assign('error', 'User not found');
 
-    private function displayQrCode(User $user): ?string
-    {
-        if ($user->getGoogleAuthenticatorSecret() === null) {
-            return null;
+            return;
         }
 
-        return Builder::create()
+        $secret = $this->googleAuthenticator->generateSecret();
+        $user->setGoogleAuthenticatorSecret($secret);
+        $code = $this->googleAuthenticator->getQRContent($user);
+        $this->assign('secret', $secret);
+        $this->assign('code', $code);
+
+        $qrCode = Builder::create()
             ->writer(new SvgWriter())
-            ->data($this->googleAuthenticator->getQRContent($user))
+            ->data($code)
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
             ->writerOptions([SvgWriter::WRITER_OPTION_EXCLUDE_SVG_WIDTH_AND_HEIGHT => true])
             ->build()
             ->getDataUri();
+
+        $this->assign('qrCode', $qrCode);
+
+        // Reset the secret to prevent false updates
+        $user->setGoogleAuthenticatorSecret(null);
     }
 }

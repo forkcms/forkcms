@@ -1134,6 +1134,14 @@
       <translation locale="nl"><![CDATA[Activeer two factor authentication]]></translation>
       <translation locale="en"><![CDATA[Enable two factor authentication]]></translation>
     </item>
+    <item type="message" name="2FAIsDisabled">
+      <translation locale="nl"><![CDATA[Two factor authentication is gedeactiveerd]]></translation>
+      <translation locale="en"><![CDATA[Two factor authentication is disabled]]></translation>
+    </item>
+    <item type="label" name="DisableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Deactiveer two factor authentication]]></translation>
+      <translation locale="en"><![CDATA[Disable two factor authentication]]></translation>
+    </item>
     <item type="label" name="TwoFactorAuthenticationKey">
       <translation locale="nl"><![CDATA[Autorisatie sleutel]]></translation>
       <translation locale="en"><![CDATA[Authorization key]]></translation>

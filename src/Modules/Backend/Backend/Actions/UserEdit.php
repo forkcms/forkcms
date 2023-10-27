@@ -65,7 +65,7 @@ final class UserEdit extends AbstractFormActionController
         return $this->handleForm(
             request: $request,
             formType: UserType::class,
-            formData: new ChangeUser($user, $this->displayQrCode($user)),
+            formData: new ChangeUser($user),
             validCallback: function (FormInterface $form) use ($request): Response {
                 $redirectResponse = new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
                 $this->commandBus->dispatch($form->getData());
@@ -82,22 +82,5 @@ final class UserEdit extends AbstractFormActionController
                 return FlashMessage::success('UserEdited', ['%user%' => $form->getData()->displayName]);
             }
         );
-    }
-
-    private function displayQrCode(User $user): ?string
-    {
-        if ($user->getGoogleAuthenticatorSecret() === null) {
-            return null;
-        }
-
-        return Builder::create()
-            ->writer(new SvgWriter())
-            ->data($this->googleAuthenticator->getQRContent($user))
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->writerOptions([SvgWriter::WRITER_OPTION_EXCLUDE_SVG_WIDTH_AND_HEIGHT => true])
-            ->build()
-            ->getDataUri();
     }
 }
