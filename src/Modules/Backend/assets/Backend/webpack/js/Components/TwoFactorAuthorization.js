@@ -49,7 +49,7 @@ export class TwoFactorAuthorization {
             return
           }
 
-          const modal = new bootstrap.Modal('#two-factor-authorization-modal')
+          const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('two-factor-authorization-modal'))
           modal.hide()
 
           // Put the backupcodes in the [data-role="backup-codes"] element
