@@ -558,6 +558,7 @@ $table-border-factor: .1;
 $table-border-width: $border-width;
 $table-border-color: $border-color;
 $table-striped-order: odd;
+/* stylelint-disable-next-line value-keyword-case */
 $table-group-separator-color: currentColor;
 $table-caption-color: $text-muted;
 $table-bg-scale: -80%;

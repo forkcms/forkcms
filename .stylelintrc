@@ -8,8 +8,7 @@
     "scss/at-extend-no-missing-placeholder": null,
     "font-family-no-missing-generic-family-keyword": null,
     "no-empty-source": null,
-    "scss/comment-no-empty": null,
-    "value-keyword-case": null
+    "scss/comment-no-empty": null
   },
   "ignoreFiles": [
     "src/**/scss/plugins/*.scss"
