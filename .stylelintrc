@@ -1,8 +1,7 @@
 {
   "extends": "stylelint-config-standard-scss",
   "rules": {
-    "no-descending-specificity": null,
-    "scss/no-global-function-names": null
+    "no-descending-specificity": null
   },
   "ignoreFiles": [
     "src/**/scss/plugins/*.scss",

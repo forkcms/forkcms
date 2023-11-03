@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 #fields-holder {
   .btn-toolbar .btn {
     padding: 6px 7px 7px;
@@ -51,7 +53,7 @@
 
       &:hover,
       &:focus {
-        color: darken($formbuilder-blue, 15%);
+        color: color.adjust($formbuilder-blue, $lightness: -15%);
         text-decoration: underline;
         background: transparent;
       }

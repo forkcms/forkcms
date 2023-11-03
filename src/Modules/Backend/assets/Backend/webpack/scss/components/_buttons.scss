@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .btn {
   border-radius: 3px;
   font-size: $btn-font-size;
@@ -88,8 +90,8 @@
 
   &:hover,
   &:focus {
-    background: darken($gray-200, 15%);
-    border-color: darken($gray-200, 15%);
+    background: color.adjust($gray-200, $lightness: -15%);
+    border-color: color.adjust($gray-200, $lightness: -15%);
   }
 }
 
