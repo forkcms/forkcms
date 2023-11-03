@@ -44,7 +44,9 @@
   padding: 0;
   margin: 0;
 
+  /* stylelint-disable */
   @extend .list-unstyled;
+  /* stylelint-enable */
 
   .media-item {
     background-color: transparent;
@@ -327,7 +329,9 @@
     width: 100%;
 
     .qq-upload-cancel {
+      /* stylelint-disable */
       @extend .btn-danger;
+      /* stylelint-enable */
 
       border-radius: 50px;
       padding: 5px 10px;
@@ -341,7 +345,9 @@
     }
 
     .qq-upload-retry-selector {
+      /* stylelint-disable */
       @extend .btn-primary;
+      /* stylelint-enable */
 
       position: relative;
 
@@ -373,12 +379,16 @@
         }
 
         &.qq-upload-delete {
+          /* stylelint-disable */
           @extend .btn-danger;
+          /* stylelint-enable */
         }
 
         &.qq-upload-continue,
         &.qq-upload-pause {
+          /* stylelint-disable */
           @extend .btn-primary;
+          /* stylelint-enable */
         }
       }
     }
