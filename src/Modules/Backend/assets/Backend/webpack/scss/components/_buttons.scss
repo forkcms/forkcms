@@ -3,6 +3,7 @@
   font-size: $btn-font-size;
   appearance: none;
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .svg-inline--fa {
     margin: 0 map_get($spacers, 2) 0 0;
   }
@@ -12,6 +13,7 @@
     font-size: $font-size-xs;
     margin: 0 3px;
 
+    /* stylelint-disable-next-line selector-class-pattern */
     + .svg-inline--fa {
       margin: 0 0 0 map_get($spacers, 2);
     }
@@ -35,6 +37,7 @@
   font-size: $font-size-base;
   padding: 6px 12px;
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .svg-inline--fa {
     padding-right: 0;
     margin-left: 0;

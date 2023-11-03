@@ -12,7 +12,9 @@
     "value-keyword-case": null,
     "scss/dollar-variable-pattern": null,
     "alpha-value-notation": null,
-    "color-function-notation": null,
-    "media-feature-range-notation": null
-  }
+    "color-function-notation": null
+  },
+  "ignoreFiles": [
+    "src/**/scss/plugins/*.scss"
+  ]
 }

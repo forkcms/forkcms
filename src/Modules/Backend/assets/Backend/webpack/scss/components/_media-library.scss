@@ -176,6 +176,7 @@
   width: 50px;
   transform: translate(-50%, -50%);
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .svg-inline--fa {
     color: $white;
   }
