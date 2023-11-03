@@ -5,8 +5,7 @@
     "no-duplicate-selectors": null,
     "scss/no-global-function-names": null,
     "function-linear-gradient-no-nonstandard-direction": null,
-    "scss/at-extend-no-missing-placeholder": null,
-    "font-family-no-missing-generic-family-keyword": null
+    "scss/at-extend-no-missing-placeholder": null
   },
   "ignoreFiles": [
     "src/**/scss/plugins/*.scss",
