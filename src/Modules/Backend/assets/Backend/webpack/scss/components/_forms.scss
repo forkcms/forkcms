@@ -61,6 +61,11 @@ label,
 
   .form-group {
     margin-bottom: 20px;
+    width: 100%;
+
+    select.form-control {
+      width: 25%;
+    }
   }
 
   .btn {
@@ -124,14 +129,6 @@ select[size="1"] {
 
   .btn .btn-icon-only {
     font-size: $btn-font-size;
-  }
-}
-
-.form-inline .form-group {
-  width: 100%;
-
-  select.form-control {
-    width: 25%;
   }
 }
 

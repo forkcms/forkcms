@@ -2,7 +2,6 @@
   "extends": "stylelint-config-standard-scss",
   "rules": {
     "no-descending-specificity": null,
-    "no-duplicate-selectors": null,
     "scss/no-global-function-names": null
   },
   "ignoreFiles": [
