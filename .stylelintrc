@@ -9,8 +9,7 @@
     "font-family-no-missing-generic-family-keyword": null,
     "no-empty-source": null,
     "scss/comment-no-empty": null,
-    "value-keyword-case": null,
-    "scss/dollar-variable-pattern": null
+    "value-keyword-case": null
   },
   "ignoreFiles": [
     "src/**/scss/plugins/*.scss"
