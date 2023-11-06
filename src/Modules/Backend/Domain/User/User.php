@@ -25,6 +25,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -49,7 +50,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, TrustedDeviceInterface
 {
     use Blameable;
 
@@ -99,6 +100,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $googleAuthenticatorSecret = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $trustedVersion;
 
     /** @param Collection<int|string, UserGroup>|null $userGroups */
     public function __construct(
@@ -329,5 +333,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
+
+    public function getTrustedTokenVersion(): int
+    {
+        return $this->trustedVersion;
     }
 }

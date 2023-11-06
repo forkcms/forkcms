@@ -1,18 +1,11 @@
 {% extends '@Backend/base/empty.html.twig' %}
 
-{% set page_title = '2FA' %}
-{% set SITE_TITLE = 'DEMO' %}
-{% set jsFiles = [] %}
-{% set cssFiles = [] %}
-{% set jsData = '' %}
-
 {% block bodyAttributes %}
   id="login"
   class="backend_login"
 {% endblock %}
 
 {% block content %}
-
 
 <div class="login-block">
   <div class="container">
@@ -44,26 +37,23 @@
               autocomplete="one-time-code"
               autofocus
               class="form-control"
-              {#
-              https://www.twilio.com/blog/html-attributes-two-factor-authentication-autocomplete
-              If your 2fa methods are using numeric codes only, add these attributes for better user experience:
-              inputmode="numeric"
-              pattern="[0-9]*"
-              #}
             />
           </p>
 
           {% if displayTrustedOption %}
-            <p class="widget"><label for="_trusted"><input id="_trusted" type="checkbox" name="{{ trustedParameterName }}" /> {{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}</label></p>
+            <div class="form-check form-switch mb-2">
+              <input class="form-check-input" type="checkbox" role="switch" id="_trusted" name="{{ trustedParameterName }}">
+              <label class="form-check-label" for="{{ trustedParameterName }}">{{ "trusted"|trans({}, 'SchebTwoFactorBundle') }}</label>
+            </div>
           {% endif %}
+
           {% if isCsrfProtectionEnabled %}
             <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
           {% endif %}
-          <p class="submit"><input type="submit" value="{{ "login"|trans({}, 'SchebTwoFactorBundle') }}" /></p>
-        </form>
 
-        {# The logout link gives the user a way out if they can't complete two-factor authentication #}
-        <p class="cancel"><a href="{{ logoutPath }}">{{ "cancel"|trans({}, 'SchebTwoFactorBundle') }}</a></p>
+          <input class="btn btn-primary" type="submit" value="{{ "login"|trans({}, 'SchebTwoFactorBundle') }}" />
+          <a class="btn btn-link" href="{{ logoutPath }}">{{ "cancel"|trans({}, 'SchebTwoFactorBundle') }}</a>
+        </form>
       </div>
     </div>
   </div>
