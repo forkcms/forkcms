@@ -24,6 +24,7 @@ use InvalidArgumentException;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -48,7 +49,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     use Blameable;
 
@@ -95,6 +96,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private DateTimeImmutable|null $deletedAt = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $googleAuthenticatorSecret = null;
 
     /** @param Collection<int|string, UserGroup>|null $userGroups */
     public function __construct(
@@ -305,5 +309,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function registerAuthenticationSuccess(): void
     {
         $this->settings->set('last_authentication_success', time());
+    }
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return null !== $this->googleAuthenticatorSecret;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->displayName;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 }

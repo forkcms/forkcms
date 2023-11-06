@@ -67,7 +67,10 @@
         "scienta/doctrine-json-functions": "^5.0",
         "twig/intl-extra": "^3.3",
         "symfony/expression-language": "6.*",
-        "symfony/lock": "6.*"
+        "symfony/lock": "6.*",
+        "scheb/2fa-google-authenticator": "^6.9",
+        "endroid/qr-code": "^4.8",
+        "scheb/2fa-bundle": "^6.9"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",

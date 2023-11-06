@@ -642,3 +642,10 @@
     {{ form_widget(form.children|last) }}
   </div>
 {% endblock %}
+
+{% block two_factor_authentication_widget %}
+  {{ form_widget(form) }}
+  {% if form.parent.vars.value.qrCode %}
+    <img src="{{ form.parent.vars.value.qrCode }}" class="img-fluid" alt="QR Code">
+  {% endif %}
+{% endblock %}

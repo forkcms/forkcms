@@ -7,8 +7,14 @@ use ForkCMS\Modules\Backend\Domain\User\UserDataTransferObject;
 
 final class ChangeUser extends UserDataTransferObject
 {
-    public function __construct(User $user)
+    public bool $enableTwoFactorAuthentication = false;
+
+    public ?string $qrCode = null;
+
+    public function __construct(User $user, $qrCode = null)
     {
         parent::__construct($user);
+        $this->enableTwoFactorAuthentication = $user->getGoogleAuthenticatorSecret() !== null;
+        $this->qrCode = $qrCode;
     }
 }

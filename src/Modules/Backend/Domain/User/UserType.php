@@ -71,6 +71,15 @@ final class UserType extends AbstractType
                                 ]
                             )
                             ->add(
+                                'enableTwoFactorAuthentication',
+                                SwitchType::class,
+                                [
+                                    'label' => 'lbl.EnableTwoFactorAuthentication',
+                                    'required' => false,
+                                    'block_prefix' => 'two_factor_authentication',
+                                ]
+                            )
+                            ->add(
                                 'accessToBackend',
                                 SwitchType::class,
                                 [
