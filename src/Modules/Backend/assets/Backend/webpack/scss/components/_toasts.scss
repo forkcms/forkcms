@@ -93,6 +93,7 @@
       color: shift-color($value, $alert-color-scale);
     }
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .toast-progress--inner {
       background-color: shift-color($value, $alert-border-scale);
     }
