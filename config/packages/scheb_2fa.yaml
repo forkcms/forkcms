@@ -6,3 +6,9 @@ scheb_two_factor:
     google:
         enabled: true
         template: '@Backend\Backend\2fa.html.twig'
+
+
+    trusted_device:
+        enabled: true
+        extend_lifetime: true
+        key: cc21ed8d4b2a28a1f14028428fd3b5e5scheb
