@@ -6,6 +6,7 @@ import 'flatpickr'
 
 // component imports
 import { Data } from '../../../../../../Core/assets/js/Components/Data'
+import { ClipBoard} from "../../../../../../Core/assets/js/Components/ClipBoard"
 import { Ajax } from '../../../../../../Core/assets/js/Components/Ajax'
 import { Controls } from '../../../../../../Core/assets/js/Components/Controls'
 import { Effects } from '../../../../../../Core/assets/js/Components/Effects'
@@ -56,6 +57,7 @@ export class Backend {
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
     Backend.initTogglePasswordInputType()
+    this.initClipBoards()
 
     // do not move, should be run as the last item.
     if (!Config.isDebug()) this.forms.unloadWarning()
@@ -76,6 +78,12 @@ export class Backend {
   static initTogglePasswordInputType () {
     document.querySelectorAll('[data-role="toggle-password-visibility"]').forEach((element) => {
       element.togglePassword = new TogglePasswordInputType(element)
+    })
+  }
+
+  initClipBoards () {
+    $('[data-role="clipboard"]').each((index, element) => {
+      element.clipboard = new ClipBoard($(element), this.locale.msg('CopiedToClipboard'))
     })
   }
 }
