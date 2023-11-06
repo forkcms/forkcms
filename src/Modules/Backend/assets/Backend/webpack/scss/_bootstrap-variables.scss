@@ -1183,8 +1183,8 @@ $toast-border-radius: $border-radius;
 $toast-box-shadow: $box-shadow;
 $toast-spacing: $container-padding-x;
 $toast-header-color: $gray-600;
-$toast-header-background-color: rgba($white / 85%);
-$toast-header-border-color: rgba(0 0 0 / 5%);
+$toast-header-background-color: rgba($white, .85);
+$toast-header-border-color: rgba($black, .85);
 
 // scss-docs-end toast-variables
 
