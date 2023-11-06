@@ -1,4 +1,5 @@
 {% extends '@Backend/base/crud/edit.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
 {% set crud_index_action = 'UserIndex' %}
 
 {% block content %}
@@ -50,8 +51,11 @@
 
   {% if backupCodes %}
     <div class="alert alert-warning">
-      {{ 'msg.BackupCodes'|trans|raw }}
-      <ul>
+      <p>
+        {{ macro.buttonIcon('#', 'clipboard', 'lbl.Copy'|trans, 'btn-warning', {'data-role': 'clipboard', 'data-clipboard-target': '#backup-codes'}, false, true) }}
+        {{ 'msg.BackupCodes'|trans|raw }}
+      </p>
+      <ul id="backup-codes">
         {% for code in backupCodes %}
           <li><code>{{ code }}</code></li>
         {% endfor %}
