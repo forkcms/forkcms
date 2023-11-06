@@ -48,5 +48,16 @@
     </div>
   </div>
 
+  {% if backupCodes %}
+    <div class="alert alert-warning">
+      {{ 'msg.BackupCodes'|trans|raw }}
+      <ul>
+        {% for code in backupCodes %}
+          <li>{{ code }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
   {{ parent() }}
 {% endblock %}
