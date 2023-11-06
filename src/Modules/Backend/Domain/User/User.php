@@ -33,14 +33,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @Gedmo\SoftDeleteable(timeAware=true)
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: 'backend__user')]
 #[UniqueEntity(fields: ['email'])]
 #[DataGrid('User')]
 #[DataGridActionColumn(
     route: 'backend_action',
     routeAttributes: [
         'module' => 'backend',
-        'action' => 'user_edit',
+        'action' => 'user-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -68,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         route: 'backend_action',
         routeAttributes: [
             'module' => 'backend',
-            'action' => 'user_edit',
+            'action' => 'user-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_EDIT',
@@ -91,7 +90,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /** @var Collection<int|string, UserGroup> */
     #[ORM\ManyToMany(targetEntity: UserGroup::class, inversedBy: 'users')]
-    #[ORM\JoinTable(name: 'backend__user_has_user_group')]
     #[ORM\InverseJoinColumn(referencedColumnName: 'id')]
     private Collection $userGroups;
 

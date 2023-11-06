@@ -68,7 +68,7 @@ final class TranslationRepository extends ServiceEntityRepository
                 'domain.moduleName' => $fields['domain']->getModuleName(),
                 'key.name' => $fields['key']->getName(),
                 'key.type' => $fields['key']->getType()->value,
-                'locale' => $fields['locale']->value
+                'locale' => $fields['locale']->value,
             ]
         );
     }
@@ -131,13 +131,15 @@ final class TranslationRepository extends ServiceEntityRepository
         }
         if ($filter->value !== null) {
             $valueQueryBuilder = clone $queryBuilder;
-            $matchingGroupIds = $valueQueryBuilder
-                ->select('DISTINCT t.groupId')
+            $matchingCrossLocaleIds = $valueQueryBuilder
+                ->select('DISTINCT t.crossLocaleId')
                 ->andWhere('t.value LIKE :value')
                 ->setParameter('value', '%' . $filter->value . '%')
                 ->getQuery()
                 ->getSingleColumnResult();
-            $queryBuilder->andWhere('t.groupId IN (:groupIds)')->setParameter('groupIds', $matchingGroupIds);
+            $queryBuilder
+                ->andWhere('t.crossLocaleId IN (:crossLocaleIds)')
+                ->setParameter('crossLocaleIds', $matchingCrossLocaleIds);
         }
 
         return $queryBuilder;

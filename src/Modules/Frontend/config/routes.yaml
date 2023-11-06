@@ -6,6 +6,6 @@ frontend_ajax:
     module: ~
     action: ~
   requirements:
-    module: '[a-z][a-z0-9_]*[a-z0-9]*'
-    action: '[a-z][a-z0-9_]*[a-z0-9]*'
+    module: '[a-z][a-z0-9\-]*[a-z0-9]*'
+    action: '[a-z][a-z0-9\-]*[a-z0-9]*'
     slug: .+

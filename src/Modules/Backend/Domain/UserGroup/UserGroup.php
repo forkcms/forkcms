@@ -22,14 +22,13 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserGroupRepository::class)]
-#[ORM\Table(name: 'backend__user_group')]
 #[UniqueEntity(fields: ['name'])]
 #[DataGrid('UserGroup')]
 #[DataGridActionColumn(
     route: 'backend_action',
     routeAttributes: [
         'module' => 'backend',
-        'action' => 'user_group_edit',
+        'action' => 'user-group-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
@@ -59,7 +58,7 @@ class UserGroup
         route: 'backend_action',
         routeAttributes: [
             'module' => 'backend',
-            'action' => 'user_group_edit',
+            'action' => 'user-group-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_GROUP_EDIT',
