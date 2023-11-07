@@ -129,14 +129,16 @@ abstract class AbstractFormActionController extends AbstractActionController
     final protected function handleSettingsForm(
         Request $request,
         string $formType,
-        object $formData
+        object $formData,
+        ?callable $validCallback = null,
     ): Response|FormInterface|null {
         return $this->handleForm(
-            $request,
-            $formType,
-            $formData,
-            FlashMessage::success('SettingsSaved'),
-            new RedirectResponse(self::getActionSlug()->generateRoute($this->router))
+            request: $request,
+            formType: $formType,
+            formData: $formData,
+            flashMessage: FlashMessage::success('SettingsSaved'),
+            redirectResponse: new RedirectResponse(self::getActionSlug()->generateRoute($this->router)),
+            validCallback: $validCallback,
         );
     }
 
