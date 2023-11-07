@@ -6,6 +6,7 @@ use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Core\Domain\Kernel\Command\ClearContainerCache;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Backend\Domain\ModuleSettings\ModuleSettingsType;
+use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Extensions\Domain\Module\Module;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
@@ -39,6 +40,18 @@ final class ModuleSettings extends AbstractFormActionController
             validCallback: function (FormInterface $form): Response {
                 $this->commandBus->dispatch($form->getData());
                 $this->commandBus->dispatch(new ClearContainerCache());
+
+                if (!$this->moduleSettings->get(ModuleName::fromString('Backend'), '2fa_enabled', false))
+                {
+                    $userRepository = $this->getRepository(User::class);
+                    $users = $userRepository->findAll();
+
+                    /** @var User $user */
+                    foreach ($users as $user) {
+                        $user->disableTwoFactorAuthentication();
+                        $userRepository->save($user);
+                    }
+                }
 
                 return new RedirectResponse(self::getActionSlug()->generateRoute($this->router));
             }
