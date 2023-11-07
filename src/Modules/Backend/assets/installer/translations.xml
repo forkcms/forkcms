@@ -1082,12 +1082,12 @@
       <translation locale="en"><![CDATA[These codes are only shown once]]></translation>
     </item>
     <item type="message" name="2FAIsRequired">
-      <translation locale="nl"><![CDATA[Two factor authentication is verplicht]]></translation>
-      <translation locale="en"><![CDATA[Two factor authentication is required]]></translation>
+      <translation locale="nl"><![CDATA[Uw admin heeft twee-factor authenticatie (2FA) verplicht. U moet dit inschakelen voordat u verder kunt gaan.]]></translation>
+      <translation locale="en"><![CDATA[Your administrator has required Two-Factor authentication (2FA). You will need to enable this before you can proceed.]]></translation>
     </item>
     <item type="label" name="UseQRToConfigure2FA">
-      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
-      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
+      <translation locale="nl"><![CDATA[Scan deze QR-code met uw authenticator-app om 2FA te configureren. Vergeet daarna niet op te slaan.]]></translation>
+      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA. Don't forget to save afterwards.]]></translation>
     </item>
     <item type="message" name="CopiedToClipboard">
       <translation locale="nl"><![CDATA[Gekopieerd naar clipboard]]></translation>
