@@ -55,7 +55,7 @@ export class Backend {
     this.ajaxContentEditable = new AjaxContentEditable(this.locale)
     this.initToasts = new InitBsToasts()
     this.togglePaswordInputType = new TogglePasswordInputType()
-    this.twoFactorAuthorization = new TwoFactorAuthorization()
+    this.twoFactorAuthorization = new TwoFactorAuthorization(this.ajax)
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()

@@ -1037,6 +1037,10 @@
       <translation locale="nl"><![CDATA[2 stappen authenticatie is gedeactiveerd]]></translation>
       <translation locale="en"><![CDATA[Two-factor authentication is disabled]]></translation>
     </item>
+    <item type="message" name="2FAEnabled">
+      <translation locale="nl"><![CDATA[2 stappen authenticatie is geactiveerd]]></translation>
+      <translation locale="en"><![CDATA[Two-factor authentication is enabled]]></translation>
+    </item>
     <item type="label" name="DisableTwoFactorAuthentication">
       <translation locale="nl"><![CDATA[Deactiveer 2 stappen authenticatie]]></translation>
       <translation locale="en"><![CDATA[Disable two-factor authentication]]></translation>

@@ -37,6 +37,10 @@ final class UserEdit extends AbstractFormActionController
     {
         parent::execute($request);
 
+        if ($request->query->has('2fa-enabled')) {
+            $this->header->addFlashMessage(FlashMessage::success('2FAEnabled'));
+        }
+
         $backupCodes = null;
         if ($request->getSession()->has('showBackupCodes')) {
             $request->getSession()->remove('showBackupCodes');
