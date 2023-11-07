@@ -11,7 +11,8 @@ import TestBlock from './Blocks/TestBlock'
 import { createApp } from 'vue'
 import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
 const AlignmentTuneTool = require('editorjs-text-alignment-blocktune')
-const ColorPlugin = require('editorjs-text-color-plugin');
+const ColorPlugin = require('editorjs-text-color-plugin')
+import Table from '@editorjs/table'
 
 export class BlockEditor {
   constructor () {
@@ -135,6 +136,7 @@ $(window).on('load', () => {
   window.BlockEditor.blocks.Quote = Quote
   window.BlockEditor.blocks.Raw = Raw
   window.BlockEditor.blocks.TestBlock = TestBlock
+  window.BlockEditor.blocks.Table = Table
 
   window.backend.blockEditor = new BlockEditor()
 })

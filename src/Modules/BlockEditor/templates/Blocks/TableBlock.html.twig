@@ -1,0 +1,17 @@
+<table class="table">
+  {% for row in editorBlock.content %}
+    {% set header = false %}
+    {% if loop.first and editorBlock.withHeadings %}
+      {% set header = true %}
+    {% endif %}
+    <tr>
+      {% for cell in row %}
+        {% if header %}
+          <th>{{ cell }}</th>
+        {% else %}
+          <td>{{ cell }}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
