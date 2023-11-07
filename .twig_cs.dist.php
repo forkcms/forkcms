@@ -11,7 +11,7 @@ return Twigcs\Config\Config::create()
     ->addFinder(
         Twigcs\Finder\TemplateFinder::create()->in(__DIR__ . '/templates')
     )
-    ->setName('my-config')
+    ->setName('Fork CMS config')
     ->setSeverity('error')
     ->setReporter('console')
     ->setRuleSet(Twigcs\Ruleset\Official::class)
