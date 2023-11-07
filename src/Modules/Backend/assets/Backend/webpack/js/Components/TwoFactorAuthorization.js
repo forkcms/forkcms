@@ -14,6 +14,14 @@ export class TwoFactorAuthorization {
       })
     })
 
+    document.querySelectorAll('[data-role="next"]').forEach((element) => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault()
+
+        this.showForm()
+      })
+    })
+
     document.querySelectorAll('[data-role="two-factor-authorization-code"]').forEach((element) => {
       element.addEventListener('input', (e) => {
         e.preventDefault()
@@ -27,6 +35,14 @@ export class TwoFactorAuthorization {
 
       this.confirm2fa()
     })
+  }
+
+  showForm () {
+    const form = document.querySelector('#two-factor-authorization-modal form')
+    form.classList.remove('d-none')
+    document.querySelector('[data-role="enable-two-factor-authorization-button"]').classList.remove('d-none')
+    document.querySelector('[data-role="two-factor-authorization-code"]').focus()
+    document.querySelector('[data-role="next"]').classList.add('d-none')
   }
 
   confirm2fa () {
@@ -52,8 +68,13 @@ export class TwoFactorAuthorization {
           const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('two-factor-authorization-modal'))
           modal.hide()
 
+          const codes = []
+          data.backupCodes.forEach((code) => {
+            codes.push(`<code>${code}</code>`)
+          })
+
           // Put the backupcodes in the [data-role="backup-codes"] element
-          document.querySelector('[data-role="backup-codes"]').innerHTML = data.backupCodes.join('<br>')
+          document.querySelector('[data-role="backup-codes"]').innerHTML = codes.join('\n')
 
           // Show the backup codes modal
           const backupCodesModal = new bootstrap.Modal('#two-factor-authorization-backup-codes-modal')

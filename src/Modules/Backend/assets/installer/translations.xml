@@ -1127,28 +1127,28 @@
       <translation locale="pl"><![CDATA[użytkownicy]]></translation>
     </item>
     <item type="label" name="2FA">
-      <translation locale="nl"><![CDATA[Two factor authentication]]></translation>
-      <translation locale="en"><![CDATA[Two factor authentication]]></translation>
+      <translation locale="nl"><![CDATA[2 stappen authenticatie (2FA)]]></translation>
+      <translation locale="en"><![CDATA[Two-Factor authentication (2FA)]]></translation>
     </item>
     <item type="label" name="EnableTwoFactorAuthentication">
-      <translation locale="nl"><![CDATA[Activeer two factor authentication]]></translation>
-      <translation locale="en"><![CDATA[Enable two factor authentication]]></translation>
+      <translation locale="nl"><![CDATA[Activeer 2 stappen authenticatie]]></translation>
+      <translation locale="en"><![CDATA[Enable two-factor authentication]]></translation>
     </item>
     <item type="message" name="2FAIsDisabled">
-      <translation locale="nl"><![CDATA[Two factor authentication is gedeactiveerd]]></translation>
-      <translation locale="en"><![CDATA[Two factor authentication is disabled]]></translation>
+      <translation locale="nl"><![CDATA[2 stappen authenticatie is gedeactiveerd]]></translation>
+      <translation locale="en"><![CDATA[Two-factor authentication is disabled]]></translation>
     </item>
     <item type="label" name="DisableTwoFactorAuthentication">
-      <translation locale="nl"><![CDATA[Deactiveer two factor authentication]]></translation>
-      <translation locale="en"><![CDATA[Disable two factor authentication]]></translation>
+      <translation locale="nl"><![CDATA[Deactiveer 2 stappen authenticatie]]></translation>
+      <translation locale="en"><![CDATA[Disable two-factor authentication]]></translation>
     </item>
     <item type="label" name="TwoFactorAuthenticationKey">
       <translation locale="nl"><![CDATA[Autorisatie sleutel]]></translation>
       <translation locale="en"><![CDATA[Authorization key]]></translation>
     </item>
     <item type="label" name="RequireTwoFactorAuthentication">
-      <translation locale="nl"><![CDATA[Maak two factor authentication verplicht]]></translation>
-      <translation locale="en"><![CDATA[Require two factor authentication]]></translation>
+      <translation locale="nl"><![CDATA[Maak 2 stappen authenticatie verplicht]]></translation>
+      <translation locale="en"><![CDATA[Require two-factor authentication]]></translation>
     </item>
     <item type="message" name="RequireTwoFactorAuthenticationHelp">
       <translation locale="nl"><![CDATA[Indien nodig moeten alle gebruikers 2FA configureren bij de volgende login.]]></translation>
@@ -1187,8 +1187,20 @@
       <translation locale="en"><![CDATA[Your administrator has required Two-Factor authentication (2FA). You will need to enable this before you can proceed.]]></translation>
     </item>
     <item type="label" name="UseQRToConfigure2FA">
-      <translation locale="nl"><![CDATA[Scan deze QR-code met uw authenticator-app om 2FA te configureren. Vergeet daarna niet op te slaan.]]></translation>
-      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA. Don't forget to save afterwards.]]></translation>
+      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
+      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
+    </item>
+    <item type="label" name="UseQRToConfigure2FAHelp">
+      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
+      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
+    </item>
+    <item type="label" name="ConfirmBackupCodesSaved">
+      <translation locale="nl"><![CDATA[Ik heb de backup codes opgeslagen.]]></translation>
+      <translation locale="en"><![CDATA[I have saved the backupcodes.]]></translation>
+    </item>
+    <item type="label" name="CopyBackupCodes">
+      <translation locale="nl"><![CDATA[Kopieer backupcodes]]></translation>
+      <translation locale="en"><![CDATA[Copy backupcodes]]></translation>
     </item>
     <item type="message" name="CopiedToClipboard">
       <translation locale="nl"><![CDATA[Gekopieerd naar clipboard]]></translation>
