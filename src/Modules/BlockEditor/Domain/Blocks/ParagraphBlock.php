@@ -13,7 +13,7 @@ final class ParagraphBlock extends AbstractBlock
             'config' => [
                 'placeholder' => TranslationKey::label('ClickHereToAddContent')
             ],
-            'tunes' => ['AlignmentBlockTune'],
+            'tunes' => ['alignmentBlockTune'],
         ];
     }
 

@@ -11,6 +11,7 @@ import TestBlock from './Blocks/TestBlock'
 import { createApp } from 'vue'
 import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
 const AlignmentTuneTool = require('editorjs-text-alignment-blocktune')
+const ColorPlugin = require('editorjs-text-color-plugin');
 
 export class BlockEditor {
   constructor () {
@@ -65,12 +66,22 @@ export class BlockEditor {
     $element.hide()
     const editorId = $element.attr('id') + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
-    tools.AlignmentBlockTune = {
+    tools.alignmentBlockTune = {
       class: AlignmentTuneTool,
       config: {
         default: 'left'
       }
     }
+    // Uncomment following block to enable text color plugin. This is an inline menu tool and can be disabled for select blocks by defining the inline menu in the block config (in PHP file)
+    // tools.textColor = {
+    //   class: ColorPlugin,
+    //   config: {
+    //     colorCollections: ['#EC7878', '#9C27B0', '#673AB7', '#3F51B5', '#0070FF', '#03A9F4', '#00BCD4', '#4CAF50', '#8BC34A', '#CDDC39', '#FFF'],
+    //     defaultColor: '#000',
+    //     type: 'text',
+    //     customPicker: true // add a button to allow selecting any colour
+    //   }
+    // }
 
     let data = {}
     try {
