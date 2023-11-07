@@ -85,9 +85,9 @@
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('#', 'clipboard', 'lbl.CopyBackupCodes'|trans, 'btn-warning', {'data-role': 'clipboard', 'data-clipboard-target': '[data-role="backup-codes"]'}, false, false) }}
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+            <a href="{{ action_path('UserEdit', 'Backend') }}/{{ user.id }}?2fa-enabled" class="btn btn-success">
               {{ 'lbl.ConfirmBackupCodesSaved'|trans|ucfirst }}
-            </button>
+            </a>
           </div>
         </div>
       </div>
