@@ -71,16 +71,20 @@ final class UserEdit extends AbstractFormActionController
             formType: UserType::class,
             formData: new ChangeUser($user),
             validCallback: function (FormInterface $form) use ($request): Response {
-                $redirectResponse = new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
                 $this->commandBus->dispatch($form->getData());
 
                 if ($form->getData()->enableTwoFactorAuthentication) {
                     $request->getSession()->set('showBackupCodes', true);
 
-                    return new RedirectResponse(self::getActionSlug()->generateRoute($this->router) . '/' . $form->getData()->getEntity()->getId());
+                    return new RedirectResponse(
+                        self::getActionSlug()->generateRoute(
+                            $this->router,
+                            ['slug' => $form->getData()->getEntity()->getId()]
+                        )
+                    );
                 }
 
-                return $redirectResponse;
+                return new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
             },
             flashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserEdited', ['%user%' => $form->getData()->displayName]);

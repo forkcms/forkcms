@@ -13,6 +13,7 @@ use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlug;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Pageon\DoctrineDataGridBundle\DataGrid\DataGridFactory;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -80,7 +81,7 @@ abstract class AbstractActionController implements ActionControllerInterface
         if ($this->shouldUserConfigure2FA($request)) {
             $this->header->addFlashMessage(
                 new FlashMessage(
-                    'msg.2FAIsRequired',
+                    TranslationKey::message('2FAIsRequired'),
                     FlashMessageType::WARNING
                 )
             );

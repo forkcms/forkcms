@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\Backend\Domain\ModuleSettings;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TogglePasswordInputType;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,7 +24,7 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'lbl.EnableTwoFactorAuthentication',
+                    'label' => TranslationKey::label('EnableTwoFactorAuthentication'),
                     'label_attr' => ['class' => 'checkbox-switch'],
                 ]
             )
@@ -31,13 +32,13 @@ final class ModuleSettingsType extends AbstractType
                 '2fa_key',
                 TogglePasswordInputType::class,
                 [
-                    'label' => 'lbl.TwoFactorAuthenticationKey',
+                    'label' => TranslationKey::label('TwoFactorAuthenticationKey'),
                     'required' => false,
                     'constraints' => [
                         new Expression(
                             [
                                 'expression' => '!this.getParent().get("2fa_enabled").getData() || (value !== "" && value !== null)',
-                                'message' => 'err.TwoFactorAuthenticationKeyRequired',
+                                'message' => TranslationKey::error('TwoFactorAuthenticationKeyRequired'),
                             ]
                         ),
                     ],
@@ -48,9 +49,9 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'lbl.RequireTwoFactorAuthentication',
+                    'label' => TranslationKey::label('RequireTwoFactorAuthentication'),
                     'label_attr' => ['class' => 'checkbox-switch'],
-                    'help' => 'msg.RequireTwoFactorAuthenticationHelp',
+                    'help' => TranslationKey::message('RequireTwoFactorAuthenticationHelp'),
                 ]
             )
             ->add(
@@ -58,9 +59,9 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
-                    'label' => 'lbl.EnableTrustedDevices',
+                    'label' => TranslationKey::label('EnableTrustedDevices'),
                     'label_attr' => ['class' => 'checkbox-switch'],
-                    'help' => 'msg.EnableTrustedDevicesHelp',
+                    'help' => TranslationKey::message('EnableTrustedDevicesHelp'),
                 ]
             );
     }
