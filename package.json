@@ -26,6 +26,7 @@
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.0",
     "editorjs-table": "^1.4.10",
+    "editorjs-text-alignment-blocktune": "^1.0.3",
     "file-loader": "^6.2.0",
     "fine-uploader": "^5.14.1",
     "flatpickr": "^4.6.13",

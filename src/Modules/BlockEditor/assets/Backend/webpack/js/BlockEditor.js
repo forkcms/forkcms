@@ -10,6 +10,7 @@ import Raw from './Blocks/Raw'
 import TestBlock from './Blocks/TestBlock'
 import { createApp } from 'vue'
 import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
+const AlignmentTuneTool = require('editorjs-text-alignment-blocktune')
 
 export class BlockEditor {
   constructor () {
@@ -51,7 +52,9 @@ export class BlockEditor {
 
   static fromJson ($element, jsonConfig) {
     const config = JSON.parse(jsonConfig)
+    console.log(config)
     for (const name of Object.keys(config)) {
+      console.log(config[name])
       config[name].class = BlockEditor.getClassFromVariableName(config[name].class)
     }
 
@@ -62,6 +65,12 @@ export class BlockEditor {
     $element.hide()
     const editorId = $element.attr('id') + '-block-editor'
     $element.after('<div id="' + editorId + '"></div>')
+    tools.AlignmentBlockTune = {
+      class: AlignmentTuneTool,
+      config: {
+        default: 'left'
+      }
+    }
 
     let data = {}
     try {

@@ -9,6 +9,7 @@ final class HeaderBlock extends AbstractBlock
         return [
             'shortcut' => 'CMD+SHIFT+H',
             'class' => 'BlockEditor.blocks.Header',
+            'tunes' => ['AlignmentBlockTune'],
         ];
     }
 

@@ -8,6 +8,7 @@ final class TestBlock extends AbstractBlock
     {
         return [
             'class' => 'BlockEditor.blocks.TestBlock',
+            'inlineToolbar' => true
         ];
     }
 

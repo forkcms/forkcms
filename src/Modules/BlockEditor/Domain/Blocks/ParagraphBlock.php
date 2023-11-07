@@ -12,7 +12,8 @@ final class ParagraphBlock extends AbstractBlock
             'class' => 'BlockEditor.blocks.Paragraph',
             'config' => [
                 'placeholder' => TranslationKey::label('ClickHereToAddContent')
-            ]
+            ],
+            'tunes' => ['AlignmentBlockTune'],
         ];
     }
 
