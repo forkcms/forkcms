@@ -34,7 +34,7 @@ final class UserAdd extends AbstractFormActionController
                     return new RedirectResponse(
                         UserEdit::getActionSlug()->generateRoute(
                             $this->router,
-                            ['slug', $form->getData()->getEntity()->getId()]
+                            ['slug' => $form->getData()->getEntity()->getId()]
                         )
                     );
                 }

@@ -26,13 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class UserEdit extends AbstractFormActionController
 {
-    public function __construct(
-        ActionServices $services,
-        private readonly GoogleAuthenticatorInterface $googleAuthenticator,
-    ) {
-        parent::__construct($services);
-    }
-
     public function execute(Request $request): void
     {
         parent::execute($request);

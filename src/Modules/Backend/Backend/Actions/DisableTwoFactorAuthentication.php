@@ -23,7 +23,6 @@ class DisableTwoFactorAuthentication extends AbstractActionController
 
     protected function execute(Request $request): void
     {
-        /** @var User $user */
         $this->user = $this->getEntityFromRequest($request, User::class);
         $this->commandBus->dispatch(
             new DisableTwoFactorAuthenticationCommand($this->user)
