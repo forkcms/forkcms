@@ -50,7 +50,7 @@ export class TwoFactorAuthorization {
     const form = document.querySelector('#two-factor-authorization-modal form')
     // eslint-disable-next-line no-undef
     const formEntries = new FormData(form).entries()
-    const json = Object.assign(...Array.from(formEntries, ([x,y]) => ({[x]:y})))
+    const json = Object.assign(...Array.from(formEntries, ([x, y]) => ({ [x]: y })))
 
     this._ajax.makeRequest(
       {
