@@ -23,7 +23,7 @@ final class ModuleSettings extends AbstractFormActionController
         $moduleRepository = $this->getRepository(Module::class);
         $moduleName = $this->getModuleName();
 
-        return $this->handleForm(
+        return $this->handleSettingsForm(
             request: $request,
             formType: ModuleSettingsType::class,
             formData: new ChangeModuleSettings(
@@ -31,7 +31,6 @@ final class ModuleSettings extends AbstractFormActionController
                 $moduleRepository->find($moduleName) ?? throw new RuntimeException($moduleName . ' module not found'),
                 []
             ),
-            flashMessage: FlashMessage::success('SettingsSaved'),
             validCallback: function (FormInterface $form): Response {
                 $this->commandBus->dispatch($form->getData());
                 $this->commandBus->dispatch(new ClearContainerCache());
