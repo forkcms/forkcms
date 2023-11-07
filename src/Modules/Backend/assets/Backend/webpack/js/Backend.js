@@ -27,7 +27,7 @@ import { PasswordGenerator } from './Components/PasswordGenerator'
 import { PasswordStrenghtMeter } from '../../../../../../Core/assets/js/Components/PasswordStrenghtMeter'
 import { InitBsToasts } from './Components/InitToasts'
 import { TogglePasswordInputType } from '../../../../../../Core/assets/js/Components/TogglePasswordInputType'
-import { TwoFactorAuthorization } from "./Components/TwoFactorAuthorization"
+import { TwoFactorAuthorization } from './Components/TwoFactorAuthorization'
 
 window.bootstrap = bootstrap
 

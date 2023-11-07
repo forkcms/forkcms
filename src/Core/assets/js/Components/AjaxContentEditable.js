@@ -1,5 +1,5 @@
 import { Messages } from './Messages'
-import {Data} from "./Data";
+import { Data } from './Data'
 
 class EditableContend {
   constructor ($editable, locale) {
