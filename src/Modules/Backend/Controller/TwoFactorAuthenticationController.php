@@ -39,7 +39,7 @@ class TwoFactorAuthenticationController extends FormController
         );
     }
 
-    #[Route('/2fa', name: '2fa_login')]
+    #[Route('/2fa', name: 'backend_2fa_login')]
     public function form(Request $request): Response
     {
         return parent::form($request);

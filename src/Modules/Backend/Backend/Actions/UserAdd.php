@@ -26,16 +26,20 @@ final class UserAdd extends AbstractFormActionController
                 'validation_groups' => ['Default', 'create'],
             ],
             validCallback: function (FormInterface $form) use ($request): Response {
-                $redirectResponse = new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
                 $this->commandBus->dispatch($form->getData());
 
                 if ($form->getData()->enableTwoFactorAuthentication) {
                     $request->getSession()->set('showBackupCodes', true);
 
-                    return new RedirectResponse(UserEdit::getActionSlug()->generateRoute($this->router) . '/' . $form->getData()->getEntity()->getId());
+                    return new RedirectResponse(
+                        UserEdit::getActionSlug()->generateRoute(
+                            $this->router,
+                            ['slug', $form->getData()->getEntity()->getId()]
+                        )
+                    );
                 }
 
-                return $redirectResponse;
+                return new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
             },
             flashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserAdded', ['%user%' => $form->getData()->displayName]);

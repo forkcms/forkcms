@@ -37,6 +37,7 @@ class AjaxActionGetTwoFactorAuthorizationCode extends AbstractAjaxActionControll
         $this->assign('secret', $secret);
         $this->assign('code', $code);
 
+        // @TODO: Make more generic
         $qrCode = Builder::create()
             ->writer(new SvgWriter())
             ->data($code)
