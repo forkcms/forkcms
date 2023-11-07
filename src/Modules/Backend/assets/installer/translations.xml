@@ -1091,11 +1091,11 @@
     </item>
     <item type="label" name="UseQRToConfigure2FA">
       <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
-      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
+      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA.]]></translation>
     </item>
     <item type="label" name="UseQRToConfigure2FAHelp">
       <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
-      <translation locale="en"><![CDATA[Use the QR code to configure your authenticator app]]></translation>
+      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA.]]></translation>
     </item>
     <item type="label" name="ConfirmBackupCodesSaved">
       <translation locale="nl"><![CDATA[Ik heb de backup codes opgeslagen.]]></translation>
