@@ -7,6 +7,9 @@ import Underline from '@editorjs/underline'
 import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
+import TestBlock from './Blocks/TestBlock'
+import { createApp } from 'vue'
+import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
 
 export class BlockEditor {
   constructor () {
@@ -69,7 +72,18 @@ export class BlockEditor {
 
     const editor = new EditorJS({
       holder: editorId,
+      inlineToolbar: true,
       data,
+      onReady: () => {
+        // initialize vue app to enable media library image selector in editor js
+        const vueApp = document.querySelector('[data-role="vue-app"]')
+        if (vueApp) {
+          const app = createApp()
+          // global component
+          app.component('TestComponent', TestComponent)
+          app.mount('.vue-app')
+        }
+      },
       onChange: () => {
         editor.save().then((outputData) => {
           $element.val(JSON.stringify(outputData))
@@ -100,6 +114,7 @@ $(window).on('load', () => {
   window.BlockEditor.blocks.Button = Button
   window.BlockEditor.blocks.Quote = Quote
   window.BlockEditor.blocks.Raw = Raw
+  window.BlockEditor.blocks.TestBlock = TestBlock
 
   window.backend.blockEditor = new BlockEditor()
 })

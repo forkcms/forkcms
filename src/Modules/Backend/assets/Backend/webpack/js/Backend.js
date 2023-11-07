@@ -3,6 +3,8 @@
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.js'
 import 'select2/dist/js/select2.full'
 import 'flatpickr'
+import { createApp } from 'vue'
+import TestComponent from './Components/TestComponent.vue'
 
 // component imports
 import { Data } from '../../../../../../Core/assets/js/Components/Data'
@@ -50,7 +52,15 @@ export class Backend {
     this.tableSequenceDragAndDrop = new TableSequenceDragAndDrop()
     this.session = new Session()
     this.ajaxContentEditable = new AjaxContentEditable(this.locale)
-    this.initToasts = new InitBsToasts()
+
+    // init media selector vue component
+    const vueApp = document.querySelector('[data-role="vue-app"]')
+    if (vueApp) {
+      const app = createApp()
+      // global component
+      app.component('TestComponent', TestComponent)
+      app.mount('.vue-app')
+    }
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()

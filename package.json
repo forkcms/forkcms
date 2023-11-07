@@ -25,6 +25,7 @@
     "cropper": "^4.0.0",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.0",
+    "editorjs-table": "^1.4.10",
     "file-loader": "^6.2.0",
     "fine-uploader": "^5.14.1",
     "flatpickr": "^4.6.13",
@@ -36,11 +37,11 @@
     "jstree": "^3.3.12",
     "jstree-bootstrap-theme": "^1.0.1",
     "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^8.0.0",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.3",
     "requestanimationframe": "0.0.23",
+    "sass": "^1.69.5",
     "sass-loader": "^13.2.0",
     "select2": "^4.0.12",
     "select2-bootstrap-5-theme": "^1.2.0",
@@ -88,5 +89,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "volta": {
+    "node": "20.9.0"
   }
 }
