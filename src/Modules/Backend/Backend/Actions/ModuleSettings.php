@@ -36,8 +36,7 @@ final class ModuleSettings extends AbstractFormActionController
                 $this->commandBus->dispatch($form->getData());
                 $this->commandBus->dispatch(new ClearContainerCache());
 
-                if (!$this->moduleSettings->get(ModuleName::fromString('Backend'), '2fa_enabled', false))
-                {
+                if (!$this->moduleSettings->get(ModuleName::fromString('Backend'), '2fa_enabled', false)) {
                     /** @var UserRepository $userRepository */
                     $userRepository = $this->getRepository(User::class);
                     $users = $userRepository->findAll();
