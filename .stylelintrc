@@ -4,7 +4,6 @@
     "no-descending-specificity": null
   },
   "ignoreFiles": [
-    "src/**/scss/plugins/*.scss",
-    "src/Themes/Fork/assets/webpack/scss/components/_buttons.scss"
+    "src/**/scss/plugins/*.scss"
   ]
 }
