@@ -1178,6 +1178,10 @@
       <translation locale="nl"><![CDATA[Verificatie Code]]></translation>
       <translation locale="en"><![CDATA[Verification Code]]></translation>
     </item>
+    <item type="message" name="FailedToEnableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[We konden de twee-factor authenticatie niet activeren. De verificatie code was incorrect.]]></translation>
+      <translation locale="en"><![CDATA[We could not activate two-factor authentication. The verification code was incorrect.]]></translation>
+    </item>
     <item type="message" name="BackupCodes">
       <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
       <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>
