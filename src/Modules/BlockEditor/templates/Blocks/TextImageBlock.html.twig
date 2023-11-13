@@ -1,6 +1,6 @@
 {% set alignment = tunes.alignmentBlockTune.alignment %}
 
-<div class="row {% if alignment == 'center' %} text-center{% elseif alignment == 'right' %} text-end{% endif %}">
+<div class="row g-3 {% if alignment == 'center' %} text-center{% elseif alignment == 'right' %} text-end{% endif %}">
   <div class="col-lg-6{% if editorBlock.imagePosition == 'right' %} order-lg-2{% endif %}">
     <img src="https://via.placeholder.com/400x400" alt="">
   </div>

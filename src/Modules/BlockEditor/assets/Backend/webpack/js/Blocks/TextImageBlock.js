@@ -73,6 +73,7 @@ class TextImageBlock {
       wrapper: 'ce-wrapper',
       wrapperLabel: 'ce-wrapper-label',
       input: 'ce-input',
+      inputText: 'ce-input-text',
       label: 'ce-label',
       settingsWrapper: 'cdx-test-settings',
       settingsButton: 'ce-settings__button',
@@ -148,7 +149,7 @@ class TextImageBlock {
       }
     )
 
-    const inputText = this._make('div', this.CSS.input,
+    const inputText = this._make('div', [this.CSS.input, this.CSS.inputText],
       {
       },
       {
