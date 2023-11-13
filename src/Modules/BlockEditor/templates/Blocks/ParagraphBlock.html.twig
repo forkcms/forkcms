@@ -1,1 +1,3 @@
-<p>{{ editorBlock.text|raw }}</p>
+{% set alignment = tunes.alignmentBlockTune.alignment %}
+
+<p class="{% if alignment == 'center' %} text-center{% elseif alignment == 'right' %} text-end{% endif %}">{{ editorBlock.text|raw }}</p>

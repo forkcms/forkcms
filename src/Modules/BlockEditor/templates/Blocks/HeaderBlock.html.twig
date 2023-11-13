@@ -1,2 +1,4 @@
 {% set listElement = 'h' ~ editorBlock.level %}
-<{{ listElement }}>{{ editorBlock.text }}</{{ listElement }}>
+{% set alignment = tunes.alignmentBlockTune.alignment %}
+
+<{{ listElement }} class="{% if alignment == 'center' %} text-center{% elseif alignment == 'right' %} text-end{% endif %}">{{ editorBlock.text }}</{{ listElement }}>
