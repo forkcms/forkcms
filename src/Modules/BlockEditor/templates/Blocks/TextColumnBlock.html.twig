@@ -1,0 +1,16 @@
+{% set alignment = tunes.alignmentBlockTune.alignment %}
+
+<div class="row g-3 {% if alignment == 'center' %} text-center{% elseif alignment == 'right' %} text-end{% endif %}">
+  <div class="col-lg-6">
+    {% if editorBlock.title1 %}
+      <h2>{{ editorBlock.title1|nl2br }}</h2>
+    {% endif %}
+    <p>{{ editorBlock.text1|nl2br }}</p>
+  </div>
+  <div class="col-lg-6">
+    {% if editorBlock.title2 %}
+      <h2>{{ editorBlock.title2|nl2br }}</h2>
+    {% endif %}
+    <p>{{ editorBlock.text2|nl2br }}</p>
+  </div>
+</div>

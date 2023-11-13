@@ -8,6 +8,7 @@ import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
 import TextImageBlock from './Blocks/TextImageBlock'
+import TextColumnBlock from './Blocks/TextColumnBlock'
 import { createApp } from 'vue'
 import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
 import Table from '@editorjs/table'
@@ -135,6 +136,7 @@ $(window).on('load', () => {
   window.BlockEditor.blocks.Quote = Quote
   window.BlockEditor.blocks.Raw = Raw
   window.BlockEditor.blocks.TextImageBlock = TextImageBlock
+  window.BlockEditor.blocks.TextColumnBlock = TextColumnBlock
   window.BlockEditor.blocks.Table = Table
 
   window.backend.blockEditor = new BlockEditor()
