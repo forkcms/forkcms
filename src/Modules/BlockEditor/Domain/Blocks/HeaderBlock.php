@@ -9,7 +9,7 @@ final class HeaderBlock extends AbstractBlock
         return [
             'shortcut' => 'CMD+SHIFT+H',
             'class' => 'BlockEditor.blocks.Header',
-            'tunes' => ['AlignmentBlockTune'],
+            'tunes' => ['alignmentBlockTune'],
         ];
     }
 
@@ -28,8 +28,8 @@ final class HeaderBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/HeaderBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/HeaderBlock.html.twig', $data, $tunes);
     }
 }

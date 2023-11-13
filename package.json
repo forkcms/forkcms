@@ -15,6 +15,7 @@
     "@editorjs/table": "^2.2.2",
     "@editorjs/underline": "^1.0.0",
     "@popperjs/core": "^2.11.5",
+    "@sotaproject/strikethrough": "^1.0.1",
     "@symfony/webpack-encore": "^4.1.1",
     "bazinga-translator": "^5.0.0",
     "bootstrap": "^5.1.3",

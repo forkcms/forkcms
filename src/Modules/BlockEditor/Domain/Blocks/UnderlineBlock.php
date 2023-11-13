@@ -20,7 +20,7 @@ final class UnderlineBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
         return '<u>' . $data['text'] . '</u>';
     }

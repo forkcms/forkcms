@@ -24,8 +24,8 @@ final class TableBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/TableBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/TableBlock.html.twig', $data, $tunes);
     }
 }

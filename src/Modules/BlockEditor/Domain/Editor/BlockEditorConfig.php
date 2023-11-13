@@ -124,7 +124,7 @@ final class BlockEditorConfig
                 continue;
             }
 
-            $data['content'] .= $blockParser->parse($block['data']) . PHP_EOL;
+            $data['content'] .= $blockParser->parse($block['data'], $block['tunes']) . PHP_EOL;
         }
 
         $cachedBlock->set($data);

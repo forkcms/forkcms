@@ -21,8 +21,8 @@ final class RawBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/RawBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/RawBlock.html.twig', $data, $tunes);
     }
 }

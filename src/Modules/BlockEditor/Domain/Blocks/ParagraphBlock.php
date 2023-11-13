@@ -27,8 +27,8 @@ final class ParagraphBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/ParagraphBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/ParagraphBlock.html.twig', $data, $tunes);
     }
 }

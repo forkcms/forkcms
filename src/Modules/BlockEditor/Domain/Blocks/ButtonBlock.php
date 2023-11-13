@@ -35,8 +35,8 @@ final class ButtonBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/Button.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/Button.html.twig', $data, $tunes);
     }
 }

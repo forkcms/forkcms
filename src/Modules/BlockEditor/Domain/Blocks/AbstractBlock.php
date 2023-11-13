@@ -41,11 +41,11 @@ abstract class AbstractBlock
     }
 
     /** @param array<array-key, mixed> $data */
-    abstract public function parse(array $data): string;
+    abstract public function parse(array $data, array $tunes = []): string;
 
     /** @param array<array-key, mixed> $data */
-    final protected function parseWithTwig(string $template, array $data): string
+    final protected function parseWithTwig(string $template, array $data, array $tunes = []): string
     {
-        return $this->twig->render($template, ['editorBlock' => $data]);
+        return $this->twig->render($template, ['editorBlock' => $data, 'tunes' => $tunes]);
     }
 }

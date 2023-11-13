@@ -31,8 +31,8 @@ final class QuoteBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/QuoteBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/QuoteBlock.html.twig', $data, $tunes);
     }
 }

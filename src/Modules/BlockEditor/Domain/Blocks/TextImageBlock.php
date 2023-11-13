@@ -2,13 +2,14 @@
 
 namespace ForkCMS\Modules\BlockEditor\Domain\Blocks;
 
-final class TestBlock extends AbstractBlock
+final class TextImageBlock extends AbstractBlock
 {
     public function getConfig(): array
     {
         return [
-            'class' => 'BlockEditor.blocks.TestBlock',
-            'inlineToolbar' => true
+            'class' => 'BlockEditor.blocks.TextImageBlock',
+            'inlineToolbar' => true,
+            'tunes' => ['alignmentBlockTune']
         ];
     }
 
@@ -20,14 +21,9 @@ final class TestBlock extends AbstractBlock
                 'required' => true,
                 'allowedTags' => 'b,i,a[href]',
             ],
-            'author' => [
-                'type' => 'string',
-                'required' => true,
-                'allowedTags' => 'b,i,a[href]',
-            ],
             'alignment' => [
                 'type' => 'string',
-                'canBeOnly' => ['left', 'center'],
+                'canBeOnly' => ['left', 'center', 'right'],
             ],
             'imagePosition' => [
                 'type' => 'string',
@@ -36,8 +32,8 @@ final class TestBlock extends AbstractBlock
         ];
     }
 
-    public function parse(array $data): string
+    public function parse(array $data, array $tunes = []): string
     {
-        return $this->parseWithTwig('@BlockEditor/Blocks/TestBlock.html.twig', $data);
+        return $this->parseWithTwig('@BlockEditor/Blocks/TextImageBlock.html.twig', $data, $tunes);
     }
 }
