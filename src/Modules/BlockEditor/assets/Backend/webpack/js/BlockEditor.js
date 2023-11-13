@@ -7,12 +7,12 @@ import Underline from '@editorjs/underline'
 import Button from './Blocks/Button'
 import Quote from './Blocks/Quote'
 import Raw from './Blocks/Raw'
-import TestBlock from './Blocks/TestBlock'
+import TextImageBlock from './Blocks/TextImageBlock'
 import { createApp } from 'vue'
 import TestComponent from '../../../../../Backend/assets/Backend/webpack/js/Components/TestComponent.vue'
+import Table from '@editorjs/table'
 const AlignmentTuneTool = require('editorjs-text-alignment-blocktune')
 const ColorPlugin = require('editorjs-text-color-plugin')
-import Table from '@editorjs/table'
 
 export class BlockEditor {
   constructor () {
@@ -54,9 +54,7 @@ export class BlockEditor {
 
   static fromJson ($element, jsonConfig) {
     const config = JSON.parse(jsonConfig)
-    console.log(config)
     for (const name of Object.keys(config)) {
-      console.log(config[name])
       config[name].class = BlockEditor.getClassFromVariableName(config[name].class)
     }
 
@@ -107,6 +105,7 @@ export class BlockEditor {
       },
       onChange: () => {
         editor.save().then((outputData) => {
+          console.log('outputData: ', outputData)
           $element.val(JSON.stringify(outputData))
         }).catch((error) => {
           console.debug('Saving failed: ', error)
@@ -135,7 +134,7 @@ $(window).on('load', () => {
   window.BlockEditor.blocks.Button = Button
   window.BlockEditor.blocks.Quote = Quote
   window.BlockEditor.blocks.Raw = Raw
-  window.BlockEditor.blocks.TestBlock = TestBlock
+  window.BlockEditor.blocks.TextImageBlock = TextImageBlock
   window.BlockEditor.blocks.Table = Table
 
   window.backend.blockEditor = new BlockEditor()

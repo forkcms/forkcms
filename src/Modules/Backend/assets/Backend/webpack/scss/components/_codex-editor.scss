@@ -31,6 +31,7 @@
 .ce-wrapper-label {
   color: $gray-700;
   margin-bottom: 0;
+  padding-right: 1rem;
 }
 
 .ce-label {
@@ -38,12 +39,14 @@
   font-size: $font-size-sm;
   font-weight: $font-weight-normal;
   margin-bottom: 0;
+  padding-right: 1rem;
 }
 
 .ce-input {
   @extend .form-control;
   @extend .form-control-sm;
   margin-bottom: 0.25rem;
+  font-size: 1rem;
 }
 
 .ce-toolbar__actions,
@@ -95,5 +98,25 @@
     cursor: pointer;
     position: absolute;
     right: 10px;
+  }
+}
+
+[contenteditable="true"] {
+  white-space: pre-wrap;
+}
+
+.ce-tune-alignment--center, .ce-tune-alignment--right {
+  text-align: left !important;
+}
+
+.ce-tune-alignment--center {
+  .ce-input {
+    text-align: center;
+  }
+}
+
+.ce-tune-alignment--right {
+  .ce-input {
+    text-align: right;
   }
 }

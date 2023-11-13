@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
- <div @click="emitSelectedFolder" class="image-selector" ref="image-selector">Emit test</div>
+ <div @click="emitSelectedFolder" class="image-selector" ref="image-selector">Placeholder</div>
 </template>
 
 <style scoped>
