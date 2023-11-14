@@ -5,10 +5,12 @@ namespace ForkCMS\Modules\Blog\Domain\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Blog\Domain\Article\Status;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
+use DateTime;
 
 class CategoryRepository extends ServiceEntityRepository implements MetaCallbackService
 {
@@ -59,5 +61,24 @@ class CategoryRepository extends ServiceEntityRepository implements MetaCallback
             ->setParameter('locale', $locale)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getAllCategories(string $locale): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c, m, p, pm')
+            ->innerJoin('c.posts', 'p')
+            ->innerJoin('c.meta', 'm')
+            ->innerJoin('p.meta', 'pm')
+            ->andWhere('c.locale = :locale')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.hidden = :false')
+            ->andWhere('p.publishOn <= :now')
+            ->setParameter('locale', $locale)
+            ->setParameter('status', Status::ACTIVE)
+            ->setParameter('false', false)
+            ->setParameter('now', new DateTime())
+            ->getQuery()
+            ->getResult();
     }
 }
