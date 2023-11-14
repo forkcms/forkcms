@@ -9,12 +9,11 @@ use ForkCMS\Modules\Blog\Domain\Article\Status;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
-use ForkCMS\Modules\Pages\Domain\Revision\Revision;
 use DateTime;
 
 class CategoryRepository extends ServiceEntityRepository implements MetaCallbackService
 {
-    /** @phpstan-use RepositoryWithMetaTrait<Revision> */
+    /** @phpstan-use RepositoryWithMetaTrait<Category> */
     use RepositoryWithMetaTrait;
 
     public function __construct(ManagerRegistry $managerRegistry) {
@@ -63,6 +62,9 @@ class CategoryRepository extends ServiceEntityRepository implements MetaCallback
             ->getOneOrNullResult();
     }
 
+    /**
+     * @return array<Category>
+     */
     public function getAllCategories(string $locale): array
     {
         return $this->createQueryBuilder('c')

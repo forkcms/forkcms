@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Blog\Domain\Category;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
@@ -40,6 +41,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    /** @phpstan-ignore-next-line */
     private int $id;
 
     #[ORM\Column(type: 'string')]
@@ -57,11 +59,15 @@ class Category
     )]
     private string $title;
 
+    /**
+     * @var Collection<Article>
+     */
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Article::class)]
     private Collection $posts;
 
     private function __construct(CategoryDataTransferObject $categoryDataTransferObject)
     {
+        $this->posts = new ArrayCollection();
         $this->locale = $categoryDataTransferObject->locale;
         $this->title = $categoryDataTransferObject->title;
         $this->meta = $categoryDataTransferObject->meta;

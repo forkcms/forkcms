@@ -12,12 +12,11 @@ use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
-use ForkCMS\Modules\Pages\Domain\Revision\Revision;
 use DateTime;
 
 class ArticleRepository extends ServiceEntityRepository implements MetaCallbackService
 {
-    /** @phpstan-use RepositoryWithMetaTrait<Revision> */
+    /** @phpstan-use RepositoryWithMetaTrait<Article> */
     use RepositoryWithMetaTrait;
 
     public function __construct(

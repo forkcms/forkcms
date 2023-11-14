@@ -41,6 +41,7 @@ final class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'revision_id', type: 'integer')]
+    /** @phpstan-ignore-next-line */
     private int $revisionId;
 
     #[ORM\Column(type: 'integer')]

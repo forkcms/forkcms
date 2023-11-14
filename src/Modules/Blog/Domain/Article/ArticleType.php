@@ -40,7 +40,7 @@ class ArticleType extends AbstractType
         /** @var User $user */
         $user = $this->security->getUser();
         if ($data->createdBy === null) {
-            $data->cretedBy = $user;
+            $data->createdBy = $user;
         }
         $data->updatedBy = $user;
 

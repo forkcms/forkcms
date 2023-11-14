@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Core\Domain\Twig;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use ForkCMS\Modules\Backend\Domain\Action\ActionName;
 use ForkCMS\Modules\Backend\Domain\Action\ActionSlug;
@@ -100,6 +101,10 @@ final class RoutingExtension extends AbstractExtension
         );
     }
 
+    /**
+     * @param array<string,mixed> $parameters
+     * @throws NonUniqueResultException
+     */
     public function getUrlForBlock(
         string $moduleName,
         string $actionName,
