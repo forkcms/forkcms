@@ -95,6 +95,20 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
         );
     }
 
+    public function getAll(string $locale, int $limit, int $offset = 0): Paginator
+    {
+        $query = $this->getBaseQuery(Locale::from($locale))
+            ->addOrderBy('a.publishOn', 'DESC')
+            ->getQuery();
+
+        $paginator = new Paginator($query);
+        $paginator->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $paginator;
+    }
+
     public function getAllPaginated(string $language, int $page = 1): Paginator
     {
         $query = $this->getBaseQuery(Locale::from($language))
