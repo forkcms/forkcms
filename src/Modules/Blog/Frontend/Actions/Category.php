@@ -23,9 +23,6 @@ class Category extends AbstractActionController
 
     protected function execute(Request $request, Response $response): void
     {
-        dump($this->categoryRepository->getAllCategories($this->translator->getLocale()));
-        die;
-
         if ($request->get('slug') === null) {
             throw new NotFoundHttpException();
         }
