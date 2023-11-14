@@ -20,8 +20,14 @@ class Index extends AbstractActionController
 
     protected function execute(Request $request, Response $response): void
     {
-        $articles = $this->articleRepository->getAllPaginated($this->translator->getLocale());
+        $requestedPage = $request->get('page') ?? 1;
+        if (!is_numeric($requestedPage) || $requestedPage < 1) {
+            $requestedPage = 1;
+        }
+
+        $articles = $this->articleRepository->getAllPaginated($this->translator->getLocale(), $requestedPage);
 
         $this->assign('items', $articles);
+        $this->assign('url', $request->getRequestUri());
     }
 }

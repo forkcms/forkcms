@@ -79,7 +79,8 @@
 
     {% block block_pagination %}
       <div class="block-footer">
-        {# include "Core/Layout/Templates/Pagination.html.twig" #}
+        {# TODO should be a template in core? #}
+        {% include 'pagination.html.twig' %}
       </div>
     {% endblock %}
 

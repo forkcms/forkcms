@@ -4,8 +4,11 @@ namespace ForkCMS\Modules\Blog\Domain\Article;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use ForkCMS\Modules\Blog\Domain\Category\Category;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
@@ -17,7 +20,10 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
     /** @phpstan-use RepositoryWithMetaTrait<Revision> */
     use RepositoryWithMetaTrait;
 
-    public function __construct(ManagerRegistry $managerRegistry) {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly ModuleSettings $moduleSettings
+    ) {
         parent::__construct($managerRegistry, Article::class);
     }
 
@@ -80,24 +86,43 @@ class ArticleRepository extends ServiceEntityRepository implements MetaCallbackS
             ->setParameter('now', new DateTime());
     }
 
-    // TODO make actually paginated
-    public function getAllPaginated(string $language): array
+    private function getMaxResults(): int
     {
-        return $this->getBaseQuery(Locale::from($language))
-            ->addOrderBy('a.publishOn', 'DESC')
-            ->getQuery()
-            ->getResult();
+        return $this->moduleSettings->get(
+            ModuleName::fromString('Blog'),
+            'overview_num_items',
+            10
+        );
     }
 
-    // TODO make actually paginated
-    public function getPaginatedForCategory(Category $category, Locale $locale): array
+    public function getAllPaginated(string $language, int $page = 1): Paginator
     {
-        return $this->getBaseQuery($locale)
+        $query = $this->getBaseQuery(Locale::from($language))
+            ->addOrderBy('a.publishOn', 'DESC')
+            ->getQuery();
+
+        $paginator = new Paginator($query);
+        $paginator->getQuery()
+            ->setFirstResult($this->getMaxResults() * ($page - 1))
+            ->setMaxResults($this->getMaxResults());
+
+        return $paginator;
+    }
+
+    public function getPaginatedForCategory(Category $category, Locale $locale, int $page = 1): Paginator
+    {
+        $query = $this->getBaseQuery($locale)
             ->andWhere('a.category = :category')
             ->setParameter('category', $category)
             ->addOrderBy('a.publishOn', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+
+        $paginator = new Paginator($query);
+        $paginator->getQuery()
+            ->setFirstResult($this->getMaxResults() * ($page - 1))
+            ->setMaxResults($this->getMaxResults());
+
+        return $paginator;
     }
 
     public function getFullBlogPostBySlug(string $slug, Locale $locale): ?Article

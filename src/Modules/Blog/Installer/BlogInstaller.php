@@ -15,6 +15,7 @@ use ForkCMS\Modules\Blog\Domain\Comment\Comment;
 use ForkCMS\Modules\Blog\Frontend\Actions\Detail;
 use ForkCMS\Modules\Blog\Frontend\Actions\Index;
 use ForkCMS\Modules\Blog\Frontend\Actions\Category as CategoryAction;
+use ForkCMS\Modules\Blog\Frontend\Widgets\Categories;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 
@@ -41,6 +42,8 @@ final class BlogInstaller extends ModuleInstaller
         $this->getOrCreateFrontendBlock(Index::getModuleBlock()->getName());
         $this->getOrCreateFrontendBlock(Detail::getModuleBlock()->getName());
         $this->getOrCreateFrontendBlock(CategoryAction::getModuleBlock()->getName());
+
+        $this->getOrCreateFrontendBlock(Categories::getModuleBlock()->getName());
     }
 
     private function createBackendPages(): void
