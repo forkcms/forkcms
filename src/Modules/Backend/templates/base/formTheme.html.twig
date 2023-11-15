@@ -602,7 +602,7 @@
     </thead>
     <tbody>
     {% for userGroupCheckbox in form.children %}
-      {% set user_group = possibleGroups[userGroupCheckbox.vars.value] %}
+      {% set userGroup = possibleGroups[userGroupCheckbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
         <td
           class="check">{{ form_widget(userGroupCheckbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
@@ -610,7 +610,7 @@
           {% set checkboxLabelAttr = userGroupCheckbox.vars.label_attr|merge({'for': userGroupCheckbox.vars.id}) %}
           {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userGroupCheckbox.vars.label_attr.class|default('') ~ (userGroupCheckbox.vars.required ? ' required' : ' optional')}) %}
           <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-          {{ user_group.name }}
+          {{ userGroup.name }}
           </label>
         </td>
       </tr>
