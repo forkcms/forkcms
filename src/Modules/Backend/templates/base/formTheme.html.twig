@@ -98,7 +98,7 @@
   {% set customId = form.vars.id ~ '_custom' %}
   {% set classId = form.vars.id ~ '_class' %}
   {% set methodId = form.vars.id ~ '_method' %}
-  {% set parameters_id = form.vars.id ~ '_parameters' %}
+  {% set parametersId = form.vars.id ~ '_parameters' %}
   <div
     class="js-do-meta-automatically"
     data-base-field-selector="{{ base_field_selector }}"
@@ -116,7 +116,7 @@
     data-custom-selector="{{ '#' ~ customId }}"
     data-class-name-selector="{{ '#' ~ classId }}"
     data-method-name-selector="{{ '#' ~ methodId }}"
-    data-parameters-selector="{{ '#' ~ parameters_id }}"
+    data-parameters-selector="{{ '#' ~ parametersId }}"
   >
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
@@ -225,7 +225,7 @@
   <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
   <input type="hidden" id="{{ classId }}" value="{{ generate_slug_callback_class }}">
   <input type="hidden" id="{{ methodId }}" value="{{ generate_slug_callback_method }}">
-  <input type="hidden" id="{{ parameters_id }}" value="{{ generate_slug_callback_parameters }}">
+  <input type="hidden" id="{{ parametersId }}" value="{{ generate_slug_callback_parameters }}">
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
