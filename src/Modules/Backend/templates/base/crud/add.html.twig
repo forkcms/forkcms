@@ -3,7 +3,7 @@
 {% set crudIndexModule = null %}
 {% set crudIndexParameters = [] %}
 {% set crudIndexRelative = false %}
-{% set crud_index_locale = null %}
+{% set crudIndexLocale = null %}
 
 {% block content %}
   {% if form_theme is defined %}
@@ -17,7 +17,7 @@
   <div class="btn-toolbar">
     {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crud_index_locale), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+        {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crudIndexLocale), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
       </div>
     {% endif %}
     <div class="btn-group ms-auto" role="group">

@@ -4,7 +4,7 @@
 {% set crudIndexModule = null %}
 {% set crudIndexParameters = [] %}
 {% set crudIndexRelative = false %}
-{% set crud_index_locale = null %}
+{% set crudIndexLocale = null %}
 {% if crud_delete_name is not defined %}
   {% set crud_delete_name = breadcrumbs|last.label %}
 {% endif %}
@@ -25,7 +25,7 @@
       {% endif %}
       {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
         <div class="btn-group" role="group">
-          {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crud_index_locale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
+          {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crudIndexLocale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
         </div>
       {% endif %}
       {% block leftToolbar %}{% endblock %}
