@@ -14,5 +14,5 @@ return Twigcs\Config\Config::create()
     ->setName('Fork CMS config')
     ->setSeverity('error')
     ->setReporter('console')
-    ->setRuleSet(Twigcs\Ruleset\Official::class)
+    ->setRuleSet(ForkCMS\Core\Ruleset\TwigcsForkRuleset::class)
     ->setDisplay('blocking');
