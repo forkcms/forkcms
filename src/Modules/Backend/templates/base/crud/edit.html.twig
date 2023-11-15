@@ -5,8 +5,8 @@
 {% set crudIndexParameters = [] %}
 {% set crudIndexRelative = false %}
 {% set crudIndexLocale = null %}
-{% if crud_delete_name is not defined %}
-  {% set crud_delete_name = breadcrumbs|last.label %}
+{% if crudDeleteName is not defined %}
+  {% set crudDeleteName = breadcrumbs|last.label %}
 {% endif %}
 
 {% block content %}
@@ -48,7 +48,7 @@
             <h4 class="modal-title" id="confirmDeleteTitle">{{ confirmDeleteTitle|default('lbl.Delete'|trans|ucfirst) }}</h4>
           </div>
           <div class="modal-body">
-            <p>{{ confirmDeleteMessage|default('msg.ConfirmDelete'|trans|format(crud_delete_name|e)) }}</p>
+            <p>{{ confirmDeleteMessage|default('msg.ConfirmDelete'|trans|format(crudDeleteName|e)) }}</p>
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', confirmDeleteCancelIcon|default('times'), confirmDeleteCancelLabel|default('lbl.Cancel'|trans|ucfirst), confirmDeleteCancelClass|default('btn-default'), {"type": "button", "data-bs-dismiss": "modal"}) }}
