@@ -500,8 +500,8 @@
 {% endblock %}
 
 {% block tab_row %}
-  {%- set tab_class = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
-  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tab_class)|trim}}) }}
+  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
+  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tabClass)|trim}}) }}
 {% endblock %}
 
 {% block user_group_permission_row %}
