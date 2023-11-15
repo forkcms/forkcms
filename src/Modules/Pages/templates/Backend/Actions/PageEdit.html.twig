@@ -2,8 +2,8 @@
 {% set formTheme = '@Pages/Backend/Forms/Revision.html.twig' %}
 {% form_theme backend_form with ['@Backend/base/formTheme.html.twig', formTheme] %}
 {% set crudIndexAction = 'PageIndex' %}
-{% set save_as_draft %}{{ form_widget(backend_form.saveAsDraft) }}{% endset %}
-{% block rightToolbar %}{{ save_as_draft }}{% endblock %}
+{% set saveAsDraft %}{{ form_widget(backend_form.saveAsDraft) }}{% endset %}
+{% block rightToolbar %}{{ saveAsDraft }}{% endblock %}
 {% block sidebarSubNavigation %}
   {% include '@Pages/Backend/NavigationTree.html.twig' with {'overview': true} %}
 {% endblock %}

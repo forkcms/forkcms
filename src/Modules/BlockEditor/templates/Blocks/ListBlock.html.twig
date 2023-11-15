@@ -1,10 +1,10 @@
 {% if editorBlock.style == 'ordered' %}
-  {% set list_element = 'ol' %}
+  {% set listElement = 'ol' %}
 {% else %}
-  {% set list_element = 'ul' %}
+  {% set listElement = 'ul' %}
 {% endif %}
-<{{ list_element }}>
+<{{ listElement }}>
 {% for item in editorBlock.items %}
   <li>{{ item|raw }}</li>
 {% endfor %}
-</{{ list_element }}>
+</{{ listElement }}>

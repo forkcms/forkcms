@@ -20,45 +20,45 @@
       </div>
       <div class="card-body">
         <div id="installedThemes" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 g-4">
-          {% for installed_theme_data in installedThemes %}
-            {% set installable_theme = installed_theme_data.theme %}
-            {% set activate_form = installed_theme_data.activateForm %}
+          {% for installedThemeData in installedThemes %}
+            {% set installableTheme = installedThemeData.theme %}
+            {% set activateForm = installedThemeData.activateForm %}
             <div class="col">
-              <div class="card {{ installable_theme.active ? 'card-primary' : 'card-default' }}">
+              <div class="card {{ installableTheme.active ? 'card-primary' : 'card-default' }}">
                 <div class="card-heading border-bottom-0">
-                  <h3 class="card-title">{{ installable_theme.name }}</h3>
+                  <h3 class="card-title">{{ installableTheme.name }}</h3>
                 </div>
-                <img src="{{ installable_theme.settings.has('thumbnail') ? installable_theme.settings.get('thumbnail')|imagine_filter('backend_card_image') : installable_theme.fallbackThumbnail }}" class="card-img-bottom" alt="{{ installable_theme.name|ucfirst }}" />
+                <img src="{{ installableTheme.settings.has('thumbnail') ? installableTheme.settings.get('thumbnail')|imagine_filter('backend_card_image') : installableTheme.fallbackThumbnail }}" class="card-img-bottom" alt="{{ installableTheme.name|ucfirst }}" />
                 <div class="card-footer">
-                  {% if is_allowed('ThemeDetail') or (is_allowed('ThemeActivate') and not installable_theme.active) %}
+                  {% if is_allowed('ThemeDetail') or (is_allowed('ThemeActivate') and not installableTheme.active) %}
                     <div class="btn-toolbar justify-content-center">
                       <div class="btn-group" role="group">
-                        {% if is_allowed('ThemeActivate') and not installable_theme.active %}
-                          {{ macro.buttonIcon('', 'paint-brush', 'lbl.UseThisTheme'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmActivation" ~ installable_theme.name|e('html_attr')|ucfirst}) }}
+                        {% if is_allowed('ThemeActivate') and not installableTheme.active %}
+                          {{ macro.buttonIcon('', 'paint-brush', 'lbl.UseThisTheme'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmActivation" ~ installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
-                        {% if installable_theme.active %}
+                        {% if installableTheme.active %}
                           {{ macro.buttonIcon('', 'palette', 'lbl.SelectedTheme'|trans|ucfirst, 'btn-primary', {"disabled": "disabled"}) }}
                         {% endif %}
                         {% if is_allowed('ThemeDetail') %}
-                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installable_theme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installable_theme.name|e('html_attr')|ucfirst}) }}
+                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                       </div>
                     </div>
-                    {% if is_allowed('ThemeActivate') and not installable_theme.active %}
-                      <div class="modal fade" id="confirmActivation{{ installable_theme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmActivation{{ installable_theme.name|e('html_attr')|ucfirst }}Title">
+                    {% if is_allowed('ThemeActivate') and not installableTheme.active %}
+                      <div class="modal fade" id="confirmActivation{{ installableTheme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmActivation{{ installableTheme.name|e('html_attr')|ucfirst }}Title">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title" id="confirmActivation{{ installable_theme.name|e('html_attr')|ucfirst }}Title">{{ 'lbl.UseThisTheme'|trans|ucfirst }}</h4>
+                              <h4 class="modal-title" id="confirmActivation{{ installableTheme.name|e('html_attr')|ucfirst }}Title">{{ 'lbl.UseThisTheme'|trans|ucfirst }}</h4>
                             </div>
                             <div class="modal-body">
                               <p>{{ 'msg.ConfirmThemeActivation'|trans }}</p>
                             </div>
                             <div class="modal-footer">
                               {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
-                              {{ form_start(activate_form) }}
+                              {{ form_start(activateForm) }}
                               {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
-                              {{ form_end(activate_form) }}
+                              {{ form_end(activateForm) }}
                             </div>
                           </div>
                         </div>
@@ -82,33 +82,33 @@
       </div>
       <div class="card-body">
         <div id="installableThemes" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 g-4">
-          {% for installable_theme_data in installableThemes %}
-            {% set installable_theme = installable_theme_data.theme %}
-            {% set theme_install_form = installable_theme_data.installForm %}
+          {% for installableThemeData in installableThemes %}
+            {% set installableTheme = installableThemeData.theme %}
+            {% set themeInstallForm = installableThemeData.installForm %}
             <div class="col">
               <div class="card card-default">
                 <div class="card-heading border-bottom-0">
-                  <h3 class="card-title">{{ installable_theme.name }}</h3>
+                  <h3 class="card-title">{{ installableTheme.name }}</h3>
                 </div>
-                <img src="{{ installable_theme.settings.has('thumbnail') ? installable_theme.settings.get('thumbnail')|imagine_filter('backend_card_image') : installable_theme.fallbackThumbnail }}" class="card-img-bottom" alt="{{ installable_theme.name|ucfirst }}" />
+                <img src="{{ installableTheme.settings.has('thumbnail') ? installableTheme.settings.get('thumbnail')|imagine_filter('backend_card_image') : installableTheme.fallbackThumbnail }}" class="card-img-bottom" alt="{{ installableTheme.name|ucfirst }}" />
                 <div class="card-footer">
                   {% if is_allowed('ThemeDetail') or is_allowed('ThemeInstall') %}
                     <div class="btn-toolbar justify-content-center">
                       <div class="btn-group" role="group">
                         {% if is_allowed('ThemeInstall') %}
-                          {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmInstall" ~ installable_theme.name|e('html_attr')|ucfirst}) }}
+                          {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmInstall" ~ installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                         {% if is_allowed('ThemeDetail') %}
-                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installable_theme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installable_theme.name|e('html_attr')|ucfirst}) }}
+                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                       </div>
                     </div>
                     {% if is_allowed('ThemeInstall') %}
-                      <div class="modal fade" id="confirmInstall{{ installable_theme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstall{{ installable_theme.name|e('html_attr')|ucfirst }}Title">
+                      <div class="modal fade" id="confirmInstall{{ installableTheme.name|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstall{{ installableTheme.name|e('html_attr')|ucfirst }}Title">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title" id="confirmInstall{{ installable_theme.name|e('html_attr')|ucfirst }}Title">{{ 'lbl.Install'|trans|ucfirst }}</h4>
+                              <h4 class="modal-title" id="confirmInstall{{ installableTheme.name|e('html_attr')|ucfirst }}Title">{{ 'lbl.Install'|trans|ucfirst }}</h4>
                             </div>
                             <div class="modal-body">
                               <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>

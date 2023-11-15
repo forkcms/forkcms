@@ -24,14 +24,14 @@
     <div class="fork-module-content">
       <input type="hidden" name="step" value="2" />
       <div id="requirementsInformation">
-        {% for requirement_category in checker.requirementCategories %}
+        {% for requirementCategory in checker.requirementCategories %}
           <div class="card card-default mb-3">
             <div class="card-heading">
-              <h3 class="card-title">{{ requirement_category.name }}</h3>
+              <h3 class="card-title">{{ requirementCategory.name }}</h3>
             </div>
             <div class="card-body">
               <div class="list-group list-group-flush">
-                {% for requirement in requirement_category.requirements %}
+                {% for requirement in requirementCategory.requirements %}
                   <div class="alert alert-{{ requirement.status.name }}">
                     <h3 class="list-group-item-heading">{{ requirement.name }}</h3>
                     <p class="list-group-item-text">{{ requirement.message|raw }}</p>

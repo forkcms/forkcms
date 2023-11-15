@@ -51,11 +51,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for theme_template in theme.templates %}
+            {% for themeTemplate in theme.templates %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                <td>{{ theme_template.name }}</td>
-                <td>{{ theme_template.path }}</td>
-                <td>{{ theme_template.positions|column('name')|join(', ') }}</td>
+                <td>{{ themeTemplate.name }}</td>
+                <td>{{ themeTemplate.path }}</td>
+                <td>{{ themeTemplate.positions|column('name')|join(', ') }}</td>
               </tr>
             {% endfor %}
             </tbody>
