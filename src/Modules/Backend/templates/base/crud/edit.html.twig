@@ -1,6 +1,6 @@
 {% extends '@Backend/base/base.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crud_delete_module = null %}
+{% set crudDeleteModule = null %}
 {% set crudIndexModule = null %}
 {% set crudIndexParameters = [] %}
 {% set crudIndexRelative = false %}
@@ -20,7 +20,7 @@
 
   <div class="btn-toolbar d-flex">
     <div class="btn-group" role="group">
-      {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crud_delete_module) %}
+      {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
         {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type": "button", "data-bs-toggle": "modal", "data-bs-target": "#confirmDelete"}) }}
       {% endif %}
       {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
@@ -37,7 +37,7 @@
   </div>
   {{ form_end(backend_form) }}
 
-  {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crud_delete_module) %}
+  {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crudDeleteModule) %}
     {{ form_start(backend_delete_form) }}
     {{ form_row(backend_delete_form._token) }}
     {{ form_row(backend_delete_form.id) }}
