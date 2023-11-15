@@ -96,7 +96,7 @@
 
 {%- block meta_widget -%}
   {% set customId = form.vars.id ~ '_custom' %}
-  {% set class_id = form.vars.id ~ '_class' %}
+  {% set classId = form.vars.id ~ '_class' %}
   {% set method_id = form.vars.id ~ '_method' %}
   {% set parameters_id = form.vars.id ~ '_parameters' %}
   <div
@@ -114,7 +114,7 @@
     data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
     data-generated-slug-selector="{{ form.vars.generated_slug_selector }}"
     data-custom-selector="{{ '#' ~ customId }}"
-    data-class-name-selector="{{ '#' ~ class_id }}"
+    data-class-name-selector="{{ '#' ~ classId }}"
     data-method-name-selector="{{ '#' ~ method_id }}"
     data-parameters-selector="{{ '#' ~ parameters_id }}"
   >
@@ -223,7 +223,7 @@
     </fieldset>
   </div>
   <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
-  <input type="hidden" id="{{ class_id }}" value="{{ generate_slug_callback_class }}">
+  <input type="hidden" id="{{ classId }}" value="{{ generate_slug_callback_class }}">
   <input type="hidden" id="{{ method_id }}" value="{{ generate_slug_callback_method }}">
   <input type="hidden" id="{{ parameters_id }}" value="{{ generate_slug_callback_parameters }}">
   {{ form_rest(form) }}
