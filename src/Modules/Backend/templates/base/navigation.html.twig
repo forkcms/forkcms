@@ -3,27 +3,27 @@
   <nav class="navbar navbar-dark">
     <ul class="nav navbar-nav">
       {% for item in navigation %}
-        {% set icon_key = item.label.name|lower %}
+        {% set iconKey = item.label.name|lower %}
         {% set icon = 'file' %}
-        {% set icon_type = 'fas' %}
-        {% if icon_key == 'dashboard' %}
+        {% set iconType = 'fas' %}
+        {% if iconKey == 'dashboard' %}
           {% set icon = 'tachometer-alt' %}
-        {% elseif icon_key == 'pages' %}
-          {% set icon_type = 'far ' %}
-        {% elseif icon_key == 'medialibrary' %}
+        {% elseif iconKey == 'pages' %}
+          {% set iconType = 'far ' %}
+        {% elseif iconKey == 'medialibrary' %}
           {% set icon = 'images' %}
-        {% elseif icon_key == 'modules' %}
+        {% elseif iconKey == 'modules' %}
           {% set icon = 'cube' %}
-        {% elseif icon_key == 'marketing' %}
+        {% elseif iconKey == 'marketing' %}
           {% set icon = 'chart-area' %}
-        {% elseif icon_key == 'settings' %}
+        {% elseif iconKey == 'settings' %}
           {% set icon = 'cog' %}
         {% endif %}
 
         <li class="nav-item nav-item-{{ item.label.name|lower }}{% if item.active is defined and item.active %} active{% endif %}">
           <a class="nav-link" href="{{ path('backend_action', item.slug.routeParameters) }}" data-toggle="tooltip-nav"
              title="{{ item.label|trans|ucfirst }}" data-container="body" data-placement="right">
-            {{ macro.icon(icon ~ ' fa-fw', icon_type) }}
+            {{ macro.icon(icon ~ ' fa-fw', iconType) }}
             <span class="nav-item-text">{{ item.label|trans|ucfirst }}</span>
             {% if item.active is defined and item.active %}<span class="visually-hidden">({{ 'lbl.Current'|trans }})</span>{% endif %}
           </a>
