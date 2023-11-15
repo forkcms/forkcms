@@ -23,7 +23,7 @@ class TwigcsForkRuleset implements RulesetInterface, TemplateResolverAwareInterf
         $this->resolver = new NullResolver();
     }
 
-    public function getRules()
+    public function getRules(): array
     {
         $configurator = new RulesetConfigurator();
         $configurator->setTwigMajorVersion($this->twigMajorVersion);
@@ -37,7 +37,7 @@ class TwigcsForkRuleset implements RulesetInterface, TemplateResolverAwareInterf
         ];
     }
 
-    public function setTemplateResolver(TemplateResolverInterface $resolver)
+    public function setTemplateResolver(TemplateResolverInterface $resolver): void
     {
         $this->resolver = $resolver;
     }
