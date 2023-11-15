@@ -392,8 +392,8 @@
 {% endblock %}
 
 {% block help %}
-  {% for attributeName, attribute_value in attr %}
-    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attribute_value|trans }}</small>{% endif %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 
