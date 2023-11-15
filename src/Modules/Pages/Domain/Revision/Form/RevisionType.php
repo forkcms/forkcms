@@ -67,7 +67,8 @@ final class RevisionType extends AbstractType
                     ]
                 );
 
-                $entity = $revisionDataTransferObject->hasEntity();
+                $hasEntity = $revisionDataTransferObject->hasEntity();
+                $entity = $revisionDataTransferObject->getEntity();
                 $tabs->get(md5('lbl.SEO'))->add('meta', MetaType::class, [
                     'disable_slug_overwrite' => $revisionDataTransferObject->page->isHome(),
                     'base_field_name' => 'title',
@@ -80,7 +81,7 @@ final class RevisionType extends AbstractType
                     'generate_slug_callback_method' => 'generateSlug',
                     'generate_slug_callback_parameters' => [
                         $revisionDataTransferObject->locale,
-                        $entity ? $entity->getId() : null,
+                        $hasEntity ? $entity->getId() : null,
                     ],
                 ]);
                 if ($revisionDataTransferObject->hasEntity()) {
