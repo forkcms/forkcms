@@ -52,7 +52,9 @@
   &::after {
     content: "\f35d";
     display: none;
-    font-family: "Font Awesome 5 Free", serif;
+
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: "Font Awesome 5 Free";
     font-weight: 900;
   }
 
