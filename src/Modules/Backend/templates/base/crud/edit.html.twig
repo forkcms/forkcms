@@ -23,9 +23,9 @@
       {% if crudDeleteAction is defined and is_allowed(crudDeleteAction, crud_delete_module) %}
         {{ macro.buttonIcon('', deleteIcon|default('trash'), deleteLabel|default('lbl.Delete'|trans|ucfirst), deleteClass|default('btn-danger'), {"type": "button", "data-bs-toggle": "modal", "data-bs-target": "#confirmDelete"}) }}
       {% endif %}
-      {% if crud_index_action is defined and is_allowed(crud_index_action, crud_index_module) %}
+      {% if crudIndexAction is defined and is_allowed(crudIndexAction, crud_index_module) %}
         <div class="btn-group" role="group">
-          {{ macro.buttonIcon(action_path(crud_index_action, crud_index_module, crud_index_parameters, crud_index_relative, crud_index_locale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
+          {{ macro.buttonIcon(action_path(crudIndexAction, crud_index_module, crud_index_parameters, crud_index_relative, crud_index_locale), crudIndexIcon|default('times'), crudIndexLabel|default('lbl.Cancel'|trans|ucfirst), crudIndexClass|default('btn-default')) }}
         </div>
       {% endif %}
       {% block leftToolbar %}{% endblock %}
