@@ -131,16 +131,16 @@
           <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
         </div>
       </div>
-      {% set navigation_title = locateFormView(form, 'navigationTitle') %}
-      {% if navigation_title is not null %}
+      {% set navigationTitle = locateFormView(form, 'navigationTitle') %}
+      {% if navigationTitle is not null %}
         <div class="checkboxTextFieldCombo">
           <div class="form-group">
             {{ form_widget(locateFormView(form, 'navigationTitleOverwrite')) }}
           </div>
           <div class="form-group">
-            {{ form_label(navigation_title) }}
-            {{ form_widget(navigation_title) }}
-            {{ form_errors(navigation_title) }}
+            {{ form_label(navigationTitle) }}
+            {{ form_widget(navigationTitle) }}
+            {{ form_errors(navigationTitle) }}
             <small class="form-text text-muted">{{ 'msg.HelpNavigationTitle'|trans|raw }}</small>
           </div>
         </div>
