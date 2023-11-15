@@ -533,14 +533,14 @@
             <tbody>
             {% for index, permission in permissions %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                {% set checkbox_label = form.children[index].vars.label %}
-                {% set checkbox_label_attr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
-                {% set checkbox_label_attr = checkbox_label_attr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional')}) %}
+                {% set checkboxLabel = form.children[index].vars.label %}
+                {% set checkboxLabelAttr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
+                {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional')}) %}
                 <td
                   class="check">{{ form_widget(form.children[index], {'label': false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
                 <td class="name">
-                  <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                  {{ checkbox_label }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
+                  <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                  {{ checkboxLabel }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
                   </label>
                 </td>
                 <td class="description">{{ permission.description }}</td>
@@ -572,16 +572,16 @@
         <td
           class="check">{{ form_widget(user_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
         <td>
-          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
-          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkboxLabelAttr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ user.email }}
           </label>
         </td>
         <td>
-          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
-          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkboxLabelAttr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ user.displayName }}
           </label>
         </td>
@@ -607,9 +607,9 @@
         <td
           class="check">{{ form_widget(user_group_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
         <td>
-          {% set checkbox_label_attr = user_group_checkbox.vars.label_attr|merge({'for': user_group_checkbox.vars.id}) %}
-          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_group_checkbox.vars.label_attr.class|default('') ~ (user_group_checkbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkboxLabelAttr = user_group_checkbox.vars.label_attr|merge({'for': user_group_checkbox.vars.id}) %}
+          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': user_group_checkbox.vars.label_attr.class|default('') ~ (user_group_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ user_group.name }}
           </label>
         </td>
