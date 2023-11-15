@@ -1,6 +1,6 @@
 {% extends '@Backend/base/crud/edit.html.twig' %}
-{% set form_theme = '@Pages/Backend/Forms/Revision.html.twig' %}
-{% form_theme backend_form with ['@Backend/base/formTheme.html.twig', form_theme] %}
+{% set formTheme = '@Pages/Backend/Forms/Revision.html.twig' %}
+{% formTheme backend_form with ['@Backend/base/formTheme.html.twig', formTheme] %}
 {% set crudIndexAction = 'PageIndex' %}
 {% set save_as_draft %}{{ form_widget(backend_form.saveAsDraft) }}{% endset %}
 {% block rightToolbar %}{{ save_as_draft }}{% endblock %}

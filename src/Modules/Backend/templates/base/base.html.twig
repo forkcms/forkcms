@@ -1,4 +1,4 @@
-{%- if backend_form is defined %}{% form_theme backend_form '@Backend/base/formTheme.html.twig' %}{% endif -%}
+{%- if backend_form is defined %}{% formTheme backend_form '@Backend/base/formTheme.html.twig' %}{% endif -%}
 <!DOCTYPE html>
 <html lang="{{ app.user is not null ? app.user.setting('locale') : app.request.locale }}">
 
