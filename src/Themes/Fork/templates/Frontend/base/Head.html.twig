@@ -31,8 +31,8 @@
   {# Google Fonts #}
   <link href="https://fonts.googleapis.com/css?family=Courgette|Roboto:300,400,500,700,900" rel="stylesheet">
 
-  {% for css_file in cssFiles %}
-    <link href="/{{ css_file }}" rel="stylesheet">
+  {% for cssFile in cssFiles %}
+    <link href="/{{ cssFile }}" rel="stylesheet">
   {% endfor %}
 
   {% if app.debug %}
