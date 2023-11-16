@@ -1,6 +1,6 @@
 {% block revision_content_row %}
   {{ form_row(form.themeTemplate) }}
-  <div id="templateVisualLarge">
+  <div id="template-visual-large">
     {{ include(template_from_string(selectedTemplate.settings.get('htmlLarge'))) }}
   </div>
 {% endblock %}
@@ -176,7 +176,7 @@
 
 {% block _revision_tabs_ed602faf0161cbd95d2121e57af350d3_content_themeTemplate_entry_label -%}
     {{ form_label(form) }}
-    <label class="templateVisual" for="{{ form.vars.id }}">
+    <label class="template-visual" for="{{ form.vars.id }}">
       {{ form.vars.attr['data-template'].settings.get('html')|raw }}
     </label>
 {%- endblock %}

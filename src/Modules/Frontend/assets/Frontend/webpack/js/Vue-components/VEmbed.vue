@@ -39,7 +39,7 @@
     },
     methods: {
       showConsentDialog() {
-        $('#privacyConsentDialog').modal('show')
+        $('#privacy-consent-dialog').modal('show')
       }
     },
     computed: {

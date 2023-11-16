@@ -18,7 +18,7 @@
   }
 
   &.code {
-    font-family: "Source Code Pro";
+    font-family: "Source Code Pro", serif;
   }
 
   &.disabled {
@@ -47,7 +47,6 @@ label,
 }
 
 .form-inline {
-
   .radio {
     label {
       padding-left: 20px;
@@ -62,6 +61,11 @@ label,
 
   .form-group {
     margin-bottom: 20px;
+    width: 100%;
+
+    select.form-control {
+      width: 25%;
+    }
   }
 
   .btn {
@@ -87,8 +91,6 @@ select.form-control[size],
 select.form-control,
 select[size="1"] {
   appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
   background-image: url('../../../public/images/arrow.svg');
   background-position: center right 5px;
   background-repeat: no-repeat;
@@ -110,17 +112,16 @@ select[size="1"] {
   padding: 8px 12px 9px;
 }
 
-.inlineEditing input {
+.inline-editing input {
   min-width: 100%;
   width: 100%;
 }
 
-.editorWarning {
+.editor-warning {
   color: $warning;
 }
 
 .input-group {
-
   .bootstrap-tagsinput {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -128,14 +129,6 @@ select[size="1"] {
 
   .btn .btn-icon-only {
     font-size: $btn-font-size;
-  }
-}
-
-.form-inline .form-group {
-  width: 100%;
-
-  select.form-control {
-    width: 25%;
   }
 }
 
@@ -183,11 +176,14 @@ fieldset {
     margin-right: -25px;
   }
 }
+
+/* stylelint-disable */
 .select2-container--bootstrap {
   .select2-results__options--nested {
     margin: 0 1rem;
   }
 }
+/* stylelint-enable */
 
 .custom-visible-switch {
   padding-left: 0;
@@ -206,10 +202,6 @@ fieldset {
     margin: 0;
     padding: 0 0 5px 5px;
     position: relative;
-
-    &:before {
-
-    }
   }
 }
 

@@ -360,14 +360,14 @@ export class Controls {
   // bind checkboxes in a row
   bindTableCheckbox () {
     // set classes
-    $('tr td.checkbox input.inputCheckbox:checked').each((index, element) => {
+    $('tr td.checkbox input.input-checkbox:checked').each((index, element) => {
       if (!$(element).parents('table').hasClass('noSelectedState')) {
         $(element).parents().filter('tr').eq(0).addClass('selected')
       }
     })
 
     // bind change-events
-    $(document).on('change', 'tr td.checkbox input.inputCheckbox:checkbox', (e) => {
+    $(document).on('change', 'tr td.checkbox input.input-checkbox:checkbox', (e) => {
       const $element = $(e.currentTarget)
       if (!$element.parents('table').hasClass('noSelectedState')) {
         if ($element.is(':checked')) {

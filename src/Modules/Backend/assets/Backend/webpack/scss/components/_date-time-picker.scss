@@ -45,9 +45,8 @@ span.flatpickr-day.nextMonthDay:nth-child(n+8) {
 }
 
 .flatpickr-calendar.arrowTop {
-
-  &:after,
-  &:before {
+  &::after,
+  &::before {
     border-bottom-color: $primary;
   }
 }

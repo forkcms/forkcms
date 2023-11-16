@@ -1,4 +1,6 @@
-#fieldsHolder {
+@use 'sass:color';
+
+#fields-holder {
   .btn-toolbar .btn {
     padding: 6px 7px 7px;
     margin-bottom: 0;
@@ -27,8 +29,7 @@
   }
 }
 
-#formElements {
-
+#form-elements {
   h5 {
     color: $gray-700;
     margin-top: 0;
@@ -52,11 +53,12 @@
 
       &:hover,
       &:focus {
-        color: darken($formbuilder-blue, 15%);
+        color: color.adjust($formbuilder-blue, $lightness: -15%);
         text-decoration: underline;
         background: transparent;
       }
 
+      /* stylelint-disable-next-line selector-class-pattern */
       .svg-inline--fa {
         color: $gray-550;
         margin-right: 5px;
@@ -74,7 +76,7 @@
   }
 }
 
-#datetimeValueAmount,
-#datetimeValueType {
+#datetime-value-amount,
+#datetime-value-type {
   width: 25%;
 }

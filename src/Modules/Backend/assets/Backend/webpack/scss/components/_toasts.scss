@@ -15,6 +15,7 @@
     text-shadow: none;
     top: 5px;
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .svg-inline--fa {
       color: $body-color;
       font-size: $font-size-base * 0.85;
@@ -38,7 +39,6 @@
 
   p,
   ul {
-
     &:last-child {
       margin-bottom: 0;
     }
@@ -84,6 +84,7 @@
     background: shift-color($value, $alert-bg-scale);
     border-left: 5px solid shift-color($value, $alert-border-scale);
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .svg-inline--fa {
       color: $value;
     }
@@ -92,6 +93,7 @@
       color: shift-color($value, $alert-color-scale);
     }
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .toast-progress--inner {
       background-color: shift-color($value, $alert-border-scale);
     }
@@ -110,7 +112,6 @@
 
 
 @include media-breakpoint-up(md) {
-
   .toast-messaging-wrapper {
     position: fixed;
     top: 0;
@@ -120,7 +121,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   .toast-messaging-wrapper {
     width: calc(#{$toast-max-width} - #{$grid-gutter-width});
   }

@@ -1,7 +1,7 @@
 .list-group-pages .list-group-item {
   border-radius: $list-group-border-radius;
   border-width: $list-group-border-width;
-  padding: $list-group-item-padding-y $list-group-item-padding-y $list-group-item-padding-y $list-group-item-padding-y/2;
+  padding: $list-group-item-padding-y $list-group-item-padding-y $list-group-item-padding-y $list-group-item-padding-y / 2;
 
   + .list-group-item {
     margin-top: $spacer * 0.625;
@@ -10,6 +10,6 @@
 
 @include media-breakpoint-up(xl) {
   .list-group-pages .list-group-item {
-    padding: $list-group-item-padding-y $list-group-item-padding-x $list-group-item-padding-y $list-group-item-padding-x/2;
+    padding: $list-group-item-padding-y $list-group-item-padding-x $list-group-item-padding-y $list-group-item-padding-x / 2;
   }
 }
