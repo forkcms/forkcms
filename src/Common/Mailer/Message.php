@@ -172,10 +172,10 @@ class Message extends \Swift_Message
     private function cssToInlineStyles(string $html): string
     {
         $cssToInlineStyles = new CssToInlineStyles();
-        $cssToInlineStyles->setHTML($html);
-        $cssToInlineStyles->setUseInlineStylesBlock(true);
 
-        return (string) $cssToInlineStyles->convert();
+        return (string) $cssToInlineStyles->convert(
+            $html
+        );
     }
 
     /**
