@@ -4,6 +4,7 @@
     "no-descending-specificity": null
   },
   "ignoreFiles": [
-    "src/**/scss/plugins/*.scss"
+    "src/**/scss/plugins/*.scss",
+    "src.fork5"
   ]
 }
