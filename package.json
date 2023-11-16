@@ -88,7 +88,8 @@
       "/js/",
       "src/Backend/Core/Layout/EditorTemplates/templates.js",
       "src/Frontend/Cache/",
-      "src/Frontend/Core/Js/jquery/jquery.js"
+      "src/Frontend/Core/Js/jquery/jquery.js",
+      "src.fork5"
     ]
   },
   "volta": {
