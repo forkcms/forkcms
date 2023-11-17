@@ -3931,23 +3931,6 @@
         <translation language="zh"><![CDATA[请填写一个问题。]]></translation>
         <translation language="pt"><![CDATA[Por favor preencha uma pergunta.]]></translation>
       </item>
-      <item type="error" name="SomethingWentWrong">
-        <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
-        <translation language="en"><![CDATA[Something went wrong.]]></translation>
-        <translation language="hu"><![CDATA[Valami elromlott.]]></translation>
-        <translation language="it"><![CDATA[Qualcosa è andato storto.]]></translation>
-        <translation language="fr"><![CDATA[Un erreur est survenue.]]></translation>
-        <translation language="ru"><![CDATA[Ошибка.]]></translation>
-        <translation language="zh"><![CDATA[出错了。]]></translation>
-        <translation language="de"><![CDATA[Etwas ist schief gelaufen.]]></translation>
-        <translation language="es"><![CDATA[Algo salió mal.]]></translation>
-        <translation language="lt"><![CDATA[Klaida.]]></translation>
-        <translation language="uk"><![CDATA[Помилка]]></translation>
-        <translation language="sv"><![CDATA[Någonting gick fel.]]></translation>
-        <translation language="el"><![CDATA[Συνέβη κάποιο σφάλμα.]]></translation>
-        <translation language="pl"><![CDATA[Coś poszło nie tak.]]></translation>
-        <translation language="pt"><![CDATA[Ocorreu um erro.]]></translation>
-      </item>
       <item type="error" name="SubscribeFailed">
         <translation language="en"><![CDATA[Subscribing failed]]></translation>
         <translation language="nl"><![CDATA[Het inschrijven is niet gelukt]]></translation>
@@ -13030,22 +13013,6 @@
         <translation language="el"><![CDATA[Δεν μπορώ να δημιουργήσω διεύθυνση URL. Δημιουργήστε μία σελίδα που είναι συνδεδεμένη με αυτή τη λειτουργική μονάδα.]]></translation>
         <translation language="pt"><![CDATA[É impossível gerar o URL. Certifique-se que este módulo está ligado a uma página.]]></translation>
         <translation language="pl"><![CDATA[Nie można wygenerować adresu URL. Upewnij się, że ten moduł jest powiązany ze stroną.]]></translation>
-      </item>
-      <item type="error" name="NonExisting">
-        <translation language="nl"><![CDATA[Dit item bestaat niet.]]></translation>
-        <translation language="en"><![CDATA[This item doesn't exist.]]></translation>
-        <translation language="hu"><![CDATA[Ez az elem nem létezik.]]></translation>
-        <translation language="it"><![CDATA[Questo elemento non esiste.]]></translation>
-        <translation language="ru"><![CDATA[Запись не существует.]]></translation>
-        <translation language="zh"><![CDATA[该项目已不存在。]]></translation>
-        <translation language="fr"><![CDATA[L'élément n'existe pas.]]></translation>
-        <translation language="de"><![CDATA[Dieser Eintrag existiert nicht.]]></translation>
-        <translation language="es"><![CDATA[Este objeto no existe.]]></translation>
-        <translation language="lt"><![CDATA[Įrašų nėra.]]></translation>
-        <translation language="sv"><![CDATA[Detta objekt finns inte.]]></translation>
-        <translation language="el"><![CDATA[Το αντικείμενο δεν υπάρχει.]]></translation>
-        <translation language="pl"><![CDATA[Ta pozycja nie istnieje]]></translation>
-        <translation language="pt"><![CDATA[Este item não existe.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>

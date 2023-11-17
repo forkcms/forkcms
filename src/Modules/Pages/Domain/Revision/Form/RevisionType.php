@@ -67,7 +67,8 @@ final class RevisionType extends AbstractType
                 );
                 $tabs->get(TabsType::getTabNameForLabel('lbl.SEO'))->add(
                     'meta',
-                    MetaType::class, [
+                    MetaType::class,
+                    [
                         'disable_slug_overwrite' => $revisionDTO->page->isHome(),
                         'base_field_name' => 'title',
                         'base_url' => $this->pageRouter->getRouteForPageId(

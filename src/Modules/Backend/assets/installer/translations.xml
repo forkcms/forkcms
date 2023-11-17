@@ -728,6 +728,22 @@
       <translation locale="pl"><![CDATA[Coś poszło nie tak.]]></translation>
       <translation locale="pt"><![CDATA[Ocorreu um erro.]]></translation>
     </item>
+    <item type="error" name="NonExisting">
+      <translation locale="nl"><![CDATA[Dit item bestaat niet.]]></translation>
+      <translation locale="en"><![CDATA[This item doesn't exist.]]></translation>
+      <translation locale="hu"><![CDATA[Ez az elem nem létezik.]]></translation>
+      <translation locale="it"><![CDATA[Questo elemento non esiste.]]></translation>
+      <translation locale="ru"><![CDATA[Запись не существует.]]></translation>
+      <translation locale="zh"><![CDATA[该项目已不存在。]]></translation>
+      <translation locale="fr"><![CDATA[L'élément n'existe pas.]]></translation>
+      <translation locale="de"><![CDATA[Dieser Eintrag existiert nicht.]]></translation>
+      <translation locale="es"><![CDATA[Este objeto no existe.]]></translation>
+      <translation locale="lt"><![CDATA[Įrašų nėra.]]></translation>
+      <translation locale="sv"><![CDATA[Detta objekt finns inte.]]></translation>
+      <translation locale="el"><![CDATA[Το αντικείμενο δεν υπάρχει.]]></translation>
+      <translation locale="pl"><![CDATA[Ta pozycja nie istnieje]]></translation>
+      <translation locale="pt"><![CDATA[Este item não existe.]]></translation>
+    </item>
     <item type="error" name="NumericCharactersOnly">
       <translation locale="nl"><![CDATA[Enkel numerieke karakters zijn toegestaan.]]></translation>
       <translation locale="en"><![CDATA[Only numeric characters are allowed.]]></translation>
@@ -1789,6 +1805,32 @@
         <translation locale="de"><![CDATA[kein früherer Login]]></translation>
         <translation locale="pt"><![CDATA[sem logins anteriores]]></translation>
         <translation locale="pl"><![CDATA[brak poprzedniego logowania]]></translation>
+      </item>
+      <item type="error" name="NonExistingUser">
+        <translation locale="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
+        <translation locale="en"><![CDATA[This user doesn't exist.]]></translation>
+        <translation locale="it"><![CDATA[Questo utente non esiste.]]></translation>
+        <translation locale="ru"><![CDATA[Такой пользователь не существует.]]></translation>
+        <translation locale="zh"><![CDATA[这个用户不存在。]]></translation>
+        <translation locale="fr"><![CDATA[Cet utilisateur n'existe pas.]]></translation>
+        <translation locale="de"><![CDATA[Dieser Benutzer existiert nicht.]]></translation>
+        <translation locale="hu"><![CDATA[Ez a felhasználó nem létezik.]]></translation>
+        <translation locale="es"><![CDATA[Este usuario no existe.]]></translation>
+        <translation locale="el"><![CDATA[Ο χρήστης δεν υπάρχει.]]></translation>
+        <translation locale="pl"><![CDATA[Ten użytkownik nie istnieje.]]></translation>
+      </item>
+      <item type="message" name="UserDeleted">
+        <translation locale="nl"><![CDATA[De gebruiker "%user%" werd verwijderd.]]></translation>
+        <translation locale="en"><![CDATA[The user "%user%" was deleted.]]></translation>
+        <translation locale="it"><![CDATA[L'utente "%user%" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA[Пользователь "%user%" удален.]]></translation>
+        <translation locale="zh"><![CDATA[用户“%1$s”已删除。]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%user%" felhasználó törölve.]]></translation>
+        <translation locale="de"><![CDATA[Der Benutzer "%user%" wurde gelöscht.]]></translation>
+        <translation locale="fr"><![CDATA[L'utilisateur "%user%" a été effacé.]]></translation>
+        <translation locale="es"><![CDATA[El usuario "%user%" fue eliminado.]]></translation>
+        <translation locale="el"><![CDATA[Ο χρήστης "%user%" διεγράφη.]]></translation>
+        <translation locale="pl"><![CDATA[Użytkownik "%user%" został usunięty.]]></translation>
       </item>
     </Backend>
   </Backend>
