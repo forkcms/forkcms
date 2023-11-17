@@ -80,8 +80,9 @@ final class BreadcrumbCollection implements IteratorAggregate
 
     public function asPageTitle(): string
     {
+        /** @var string[] $items the breadcrumbs are stringable but phpstan doesn't understand it */
         $items = $this->getItems();
 
-        return implode(' | ', array_reverse(array_map('ucfirst', $items)));
+        return implode(' | ', array_reverse(array_map(ucfirst(...), $items)));
     }
 }
