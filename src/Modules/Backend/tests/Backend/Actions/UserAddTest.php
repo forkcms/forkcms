@@ -38,10 +38,10 @@ final class UserAddTest extends BackendWebTestCase
         self::submitForm(
             'Add',
             [
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => 'Jelmer Prins',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'I<3ForkCMS',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'I<3ForkCMS',
+                'user[user][tab_Authentication][displayName]' => 'Jelmer Prins',
+                'user[user][tab_Authentication][email]' => 'jelmer.prins',
+                'user[user][tab_Authentication][plainTextPassword][first]' => 'I<3ForkCMS',
+                'user[user][tab_Authentication][plainTextPassword][second]' => 'I<3ForkCMS',
             ],
             'The password is too short.',
             'Please provide a valid e-mail address.',
@@ -55,10 +55,10 @@ final class UserAddTest extends BackendWebTestCase
         self::submitForm(
             'Add',
             [
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => $user->getDisplayName(),
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => $user->getEmail(),
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
+                'user[user][tab_Authentication][displayName]' => $user->getDisplayName(),
+                'user[user][tab_Authentication][email]' => $user->getEmail(),
+                'user[user][tab_Authentication][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
+                'user[user][tab_Authentication][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
             ],
             'This e-mailaddress is in use.',
             'This display name is in use.',
@@ -72,10 +72,10 @@ final class UserAddTest extends BackendWebTestCase
         self::submitForm(
             'Add',
             [
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][displayName]' => 'Jelmer Prins',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][email]' => 'jelmer.prins@example.com',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
-                'user[user][ec05aaca240e74a0604d93f9e5a7caef][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
+                'user[user][tab_Authentication][displayName]' => 'Jelmer Prins',
+                'user[user][tab_Authentication][email]' => 'jelmer.prins@example.com',
+                'user[user][tab_Authentication][plainTextPassword][first]' => 'IAbsolutely<3ForkCMS',
+                'user[user][tab_Authentication][plainTextPassword][second]' => 'IAbsolutely<3ForkCMS',
             ],
         );
         self::getClient()->followRedirect();

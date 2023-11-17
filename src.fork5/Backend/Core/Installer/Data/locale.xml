@@ -380,24 +380,6 @@
         <translation language="tr"><![CDATA[iletişim]]></translation>
         <translation language="pt"><![CDATA[contacto]]></translation>
       </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[content]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="es"><![CDATA[Contenido]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
-      </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
         <translation language="en"><![CDATA[country]]></translation>
@@ -5514,24 +5496,6 @@
         <translation language="tr"><![CDATA[iletişim formu]]></translation>
         <translation language="pl"><![CDATA[formularz kontaktowy]]></translation>
         <translation language="pt"><![CDATA[formulário de contacto]]></translation>
-      </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[inhoud]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="es"><![CDATA[contenido]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
       </item>
       <item type="label" name="ContentBlocks">
         <translation language="nl"><![CDATA[inhoudsblokken]]></translation>

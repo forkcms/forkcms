@@ -256,7 +256,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
     }
 
     /** @param array<string, mixed> $formData */
-    protected static function submitForm(string $submitButtonLabel, array $formData, string ...$expectedContent): void
+    protected static function submitForm(string $submitButtonLabel, array $formData = [], string ...$expectedContent): void
     {
         self::getClient()->submit(self::getCrawler()->selectButton($submitButtonLabel)->form(), $formData);
         self::assertResponseContains(...$expectedContent);
