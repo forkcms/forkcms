@@ -7,5 +7,5 @@ enum FlashMessageType: string
     case INFO = 'info';
     case SUCCESS = 'success';
     case WARNING = 'warning';
-    case ERROR = 'danger';
+    case ERROR = 'error';
 }
