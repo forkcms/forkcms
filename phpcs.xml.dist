@@ -21,6 +21,8 @@
     <exclude-pattern>src/**/Maker</exclude-pattern>
     <exclude-pattern>app.fork5</exclude-pattern>
     <exclude-pattern>src.fork5</exclude-pattern>
-    <exclude-pattern>src/Modules/Internationalisation/Domain/Twig/ForkIntlExtension.php</exclude-pattern>
-    <exclude-pattern>src/Modules/Installer/Domain/Requirement/RequirementsChecker.php</exclude-pattern>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>src/Modules/Internationalisation/Domain/Twig/ForkIntlExtension.php</exclude-pattern>
+        <exclude-pattern>src/Modules/Installer/Domain/Requirement/RequirementsChecker.php</exclude-pattern>
+    </rule>
 </ruleset>

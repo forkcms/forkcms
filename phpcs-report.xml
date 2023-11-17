@@ -1,0 +1,1240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="PHP_CodeSniffer 3.8.0" errors="0" tests="412" failures="0">
+<testsuite name="src/Core/Domain/Header/FlashMessage/FlashMessageType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/FlashMessage/FlashMessageType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/FlashMessage/FlashMessage.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/FlashMessage/FlashMessage.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/PageTitle.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/PageTitle.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Meta/MetaData.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Meta/MetaData.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Meta/MetaCollection.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Meta/MetaCollection.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Meta/MetaLink.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Meta/MetaLink.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Asset/Asset.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Asset/Asset.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Asset/AssetCollection.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Asset/AssetCollection.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Asset/Priority.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Asset/Priority.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/JsData.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/JsData.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Breadcrumb/Breadcrumb.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Breadcrumb/Breadcrumb.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Breadcrumb/BreadcrumbCollection.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Breadcrumb/BreadcrumbCollection.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Header/Header.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Header/Header.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Router/ModuleRouteProviderInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Router/ModuleRouteProviderInterface.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Router/ModuleRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Router/ModuleRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Application/ApplicationResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Application/ApplicationResolver.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Application/Application.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Application/Application.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Kernel/Event/ClearCacheEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Kernel/Event/ClearCacheEvent.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Kernel/Kernel.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Kernel/Kernel.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Kernel/Command/ClearContainerCache.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Kernel/Command/ClearContainerCache.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Kernel/Command/ClearContainerCacheHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Kernel/Command/ClearContainerCacheHandler.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Kernel/KernelSubscriber.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Kernel/KernelSubscriber.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/EditorType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/EditorType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Editor/PlainTextType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Editor/PlainTextType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Editor/EditorTypeImplementationInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Editor/EditorTypeImplementationInterface.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/TabsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/TabsType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/DatePickerType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/DatePickerType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/FieldsetType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/FieldsetType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/ActionType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/ActionType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/TabType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/TabType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/SwitchType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/SwitchType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/TitleType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/TitleType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/CheckboxTextType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/CheckboxTextType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Validator/UniqueDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Validator/UniqueDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Validator/UniqueDataTransferObjectInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Validator/UniqueDataTransferObjectInterface.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Validator/UniqueDataTransferObjectValidator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Validator/UniqueDataTransferObjectValidator.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/Extension/TooltipExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/Extension/TooltipExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Form/CollectionType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Form/CollectionType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Settings/SettingNotFoundException.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Settings/SettingNotFoundException.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Settings/EntityWithSettingsTrait.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Settings/EntityWithSettingsTrait.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Settings/SettingsListener.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Settings/SettingsListener.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Settings/SettingsBag.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Settings/SettingsBag.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Settings/SettingsBagDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Settings/SettingsBagDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/PDO/ForkConnection.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/PDO/ForkConnection.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Identifier/NamedIdentifier.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Identifier/NamedIdentifier.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Twig/IncludeOnceExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Twig/IncludeOnceExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Twig/SecurityExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Twig/SecurityExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Twig/FormExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Twig/FormExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Twig/RoutingExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Twig/RoutingExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Twig/PhpExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Twig/PhpExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/UTCDateTimeMutableDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/UTCDateTimeMutableDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/UTCTimeMutableDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/UTCTimeMutableDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/UTCDateTimeImmutableDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/UTCDateTimeImmutableDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/CollectionHelper.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/CollectionHelper.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/UTCDBALTrait.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/UTCDBALTrait.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/UTCTimeImmutableDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/UTCTimeImmutableDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/ForkNamingStrategy.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/ForkNamingStrategy.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/ForkDBALTypeName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/ForkDBALTypeName.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/ValueObjectDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/ValueObjectDBALType.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/Doctrine/CreateSchema.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/Doctrine/CreateSchema.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/MessageHandler/CommandHandlerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/MessageHandler/CommandHandlerInterface.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/DependencyInjection/ForkYamlFileLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/DependencyInjection/ForkYamlFileLoader.php"/>
+</testsuite>
+<testsuite name="src/Core/Domain/DependencyInjection/ForkModuleExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Domain/DependencyInjection/ForkModuleExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/Installer/CoreInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Installer/CoreInstaller.php"/>
+</testsuite>
+<testsuite name="src/Core/Ruleset/TwigcsForkRuleset.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Ruleset/TwigcsForkRuleset.php"/>
+</testsuite>
+<testsuite name="src/Core/tests/ObjectManager.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/tests/ObjectManager.php"/>
+</testsuite>
+<testsuite name="src/Core/Controller/AssetController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/Controller/AssetController.php"/>
+</testsuite>
+<testsuite name="src/Core/DependencyInjection/CoreExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/DependencyInjection/CoreExtension.php"/>
+</testsuite>
+<testsuite name="src/Core/DependencyInjection/CoreRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Core/DependencyInjection/CoreRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/bootstrap.php" errors="0" tests="1" failures="0">
+ <testcase name="src/bootstrap.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translator/DataCollectorTranslator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translator/DataCollectorTranslator.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translator/ForkTranslator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translator/ForkTranslator.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Importer/XmlImporter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Importer/XmlImporter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Importer/Importer.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Importer/Importer.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Importer/ImportResult.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Importer/ImportResult.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Importer/ImportType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Importer/ImportType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Importer/ImporterInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Importer/ImporterInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Exporter/ExporterInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Exporter/ExporterInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Exporter/XmlExporter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Exporter/XmlExporter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Exporter/Exporter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Exporter/Exporter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/EntityWithLocaleTrait.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/EntityWithLocaleTrait.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/RequestEventSubscriber.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/RequestEventSubscriber.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/Locale.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/Locale.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/InstalledLocale.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/InstalledLocale.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/Event/InstalledLocaleChangedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/Event/InstalledLocaleChangedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/LocaleType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/LocaleType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Locale/InstalledLocaleType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/ModuleSettings/ModuleSettingsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/ModuleSettings/ModuleSettingsType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/ModuleSettings/Command/ChangeModuleSettingsHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/ModuleSettings/Command/ChangeModuleSettingsHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/ModuleSettings/Command/ChangeModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/ModuleSettings/Command/ChangeModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationKeyType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationKeyType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationDomainType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationDomainType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationKey.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationKey.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Filter/FilteredTranslation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Filter/FilteredTranslation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Filter/TranslationFilterType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Filter/TranslationFilterType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Filter/TranslationFilter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Filter/TranslationFilter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Type.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Type.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationDomain.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationDomain.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/ForkTranslationLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/ForkTranslationLoader.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationDeletedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationDeletedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationCreatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationCreatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationChangedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Event/TranslationChangedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/ChangeTranslationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/ChangeTranslationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/CreateTranslation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/CreateTranslation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/CreateTranslationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/CreateTranslationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/ChangeTranslation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/ChangeTranslation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/DeleteTranslationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/DeleteTranslationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Command/DeleteTranslation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Command/DeleteTranslation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/TranslationType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/TranslationType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Translation/Translation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Translation/Translation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Twig/FormatSettingsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Twig/FormatSettingsType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Twig/ForkIntlExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Twig/ForkIntlExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Domain/Twig/InternationalisationExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Domain/Twig/InternationalisationExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Installer/InternationalisationInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Installer/InternationalisationInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationAdd.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationAdd.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationExport.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationExport.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/ModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/ModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationImport.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationImport.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Actions/TranslationDelete.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Actions/TranslationDelete.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Backend/Ajax/TranslationEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Backend/Ajax/TranslationEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Controller/JsTranslationsController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Controller/JsTranslationsController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/Console/ImportLocaleCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/Console/ImportLocaleCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/DependencyInjection/InternationalisationExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/DependencyInjection/InternationalisationExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/DependencyInjection/InternationalisationRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/DependencyInjection/InternationalisationRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/Modules/Internationalisation/DependencyInjection/CompilerPass/TranslatorPass.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Internationalisation/DependencyInjection/CompilerPass/TranslatorPass.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Installer/InstallerStep.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Installer/InstallerStep.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Installer/InstallerStepConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Installer/InstallerStepConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Installer/InstallForkCMSHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Installer/InstallForkCMSHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Installer/InstallerConnectionFactory.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Installer/InstallerConnectionFactory.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Installer/InstallForkCMS.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Installer/InstallForkCMS.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Authentication/InstallerPasswordType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Authentication/InstallerPasswordType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Authentication/AuthenticationStepConfigurationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Authentication/AuthenticationStepConfigurationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Authentication/AuthenticationStepConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Authentication/AuthenticationStepConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Authentication/AuthenticationType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Authentication/AuthenticationType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Requirement/Requirement.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Requirement/Requirement.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Requirement/RequirementsChecker.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Requirement/RequirementsChecker.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Requirement/RequirementCategory.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Requirement/RequirementCategory.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Requirement/RequirementStatus.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Requirement/RequirementStatus.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Database/DatabaseType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Database/DatabaseType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Database/DatabaseStepConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Database/DatabaseStepConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Database/DatabaseStepConfigurationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Database/DatabaseStepConfigurationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Configuration/InstallerConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Configuration/InstallerConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Configuration/ConfigurationParser.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Configuration/ConfigurationParser.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Module/ModulesType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Module/ModulesType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Module/ModulesStepConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Module/ModulesStepConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Module/ModulesStepConfigurationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Module/ModulesStepConfigurationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Locale/LocalesStepConfiguration.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Locale/LocalesStepConfiguration.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Locale/LocalesStepConfigurationHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Locale/LocalesStepConfigurationHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Domain/Locale/LocalesType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Domain/Locale/LocalesType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/tests/Console/InstallCommandTest.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/tests/Console/InstallCommandTest.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/ModulesController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/ModulesController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/DatabaseController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/DatabaseController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/LocalesController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/LocalesController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/AuthenticationController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/AuthenticationController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/RequirementCheckerController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/RequirementCheckerController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/InstallController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/InstallController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Controller/AbstractStepController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Controller/AbstractStepController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Console/InstallCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Console/InstallCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Console/PrepareForReinstallCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Console/PrepareForReinstallCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/Console/CheckRequirementsCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/Console/CheckRequirementsCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Installer/DependencyInjection/InstallerExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Installer/DependencyInjection/InstallerExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Privacy/ConsentDialog.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Privacy/ConsentDialog.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlugDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlugDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionControllerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionControllerInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AbstractAjaxActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AbstractAjaxActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/ModuleAjaxAction.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/ModuleAjaxAction.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlug.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlug.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlugResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/AjaxAction/AjaxActionSlugResolver.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/Meta.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/Meta.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/SEOFollow.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/SEOFollow.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/SEOIndexDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/SEOIndexDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/MetaRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/MetaRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/EntityWithMetaTrait.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/EntityWithMetaTrait.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/RepositoryWithMetaTrait.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/RepositoryWithMetaTrait.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/SEOFollowDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/SEOFollowDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/MetaType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/MetaType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/SEOIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/SEOIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Meta/MetaCallbackService.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Meta/MetaCallbackService.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Action/AbstractActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Action/AbstractActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Action/ActionName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Action/ActionName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Google/Analytics/GoogleAnalytics.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Google/Analytics/GoogleAnalytics.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Google/TagManager/DataLayer.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Google/TagManager/DataLayer.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Google/TagManager/TagManager.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Google/TagManager/TagManager.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockControllerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockControllerInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockMetaResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockMetaResolver.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/AbstractBlockController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/AbstractBlockController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/Type.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/Type.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockRouterInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockRouterInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/Block.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/Block.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/ModuleBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/ModuleBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockServices.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockServices.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Block/BlockName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Block/BlockName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Widget/AbstractWidgetController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Widget/AbstractWidgetController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Widget/WidgetName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Widget/WidgetName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/ModuleSettings/ModuleSettingsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/ModuleSettings/ModuleSettingsType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Domain/Twig/FrontendGlobals.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Domain/Twig/FrontendGlobals.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Installer/FrontendInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Installer/FrontendInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Frontend/Ajax/NotFound.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Frontend/Ajax/NotFound.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Backend/Actions/ModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Backend/Actions/ModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Backend/Ajax/GenerateSlug.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Backend/Ajax/GenerateSlug.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/Controller/FrontendAjaxController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/Controller/FrontendAjaxController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/DependencyInjection/FrontendRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/DependencyInjection/FrontendRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/Modules/Frontend/DependencyInjection/FrontendExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Frontend/DependencyInjection/FrontendExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Navigation/Navigation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Navigation/Navigation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Navigation/NavigationCache.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Navigation/NavigationCache.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlugDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlugDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionControllerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionControllerInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AbstractAjaxActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AbstractAjaxActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/ModuleAjaxAction.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/ModuleAjaxAction.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlug.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlug.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlugResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/AjaxAction/AjaxActionSlugResolver.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Authentication/BackendAuthenticator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Authentication/BackendAuthenticator.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/UserEventSubscriber.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/UserEventSubscriber.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/User.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/User.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/UserDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/UserDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/UserType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/UserType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/UserRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/UserRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/SuperAdminVoter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/SuperAdminVoter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Event/UserDeletedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Event/UserDeletedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Event/BuildUserSettingsFormEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Event/BuildUserSettingsFormEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Event/UserChangedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Event/UserChangedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Event/UserCreatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Event/UserCreatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Blameable.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Blameable.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/ChangeUserHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/ChangeUserHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/ChangeUser.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/ChangeUser.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/CreateUser.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/CreateUser.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/CreateUserHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/CreateUserHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/DeleteUserHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/DeleteUserHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/Command/DeleteUser.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/Command/DeleteUser.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/User/UserDataGridChoiceType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/User/UserDataGridChoiceType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Dashboard/Widget.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Dashboard/Widget.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/AbstractDeleteActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/AbstractDeleteActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionSlugResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionSlugResolver.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionControllerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionControllerInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/AbstractDataGridActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/AbstractDataGridActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionServices.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionServices.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/AbstractActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/AbstractActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionSlug.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionSlug.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionSlugDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionSlugDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ModuleAction.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ModuleAction.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/AbstractFormActionController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/AbstractFormActionController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Action/ActionNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Action/ActionNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/UserGroupRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/UserGroupRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/UserGroupType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/UserGroupType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/UserGroupDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/UserGroupDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Permission/Permission.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Permission/Permission.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Permission/PermissionType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Permission/PermissionType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/UserGroup.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/UserGroup.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupChangedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupChangedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupCreatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupCreatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupDeletedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Event/UserGroupDeletedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/CreateUserGroup.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/CreateUserGroup.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/ChangeUserGroup.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/ChangeUserGroup.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/CreateUserGroupHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/CreateUserGroupHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/DeleteUserGroup.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/DeleteUserGroup.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/DeleteUserGroupHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/DeleteUserGroupHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/Command/ChangeUserGroupHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/Command/ChangeUserGroupHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/UserGroup/UserGroupDataGridChoiceType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/UserGroup/UserGroupDataGridChoiceType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/NavigationItem/NavigationItemRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/NavigationItem/NavigationItemRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/NavigationItem/NavigationItem.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/NavigationItem/NavigationItem.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Widget/WidgetControllerInterface.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Widget/WidgetControllerInterface.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Widget/ModuleWidget.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Widget/ModuleWidget.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Widget/WidgetNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Widget/WidgetNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Domain/Widget/WidgetName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Domain/Widget/WidgetName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Installer/BackendInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Installer/BackendInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/Forbidden.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/Forbidden.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserDelete.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserDelete.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserGroupAdd.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserGroupAdd.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserGroupIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserGroupIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/NotFound.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/NotFound.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/AuthenticationLogin.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/AuthenticationLogin.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserGroupDelete.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserGroupDelete.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserGroupEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserGroupEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserAdd.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserAdd.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/UserIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/UserIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/Dashboard.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/Dashboard.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Actions/AuthenticationResetPassword.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Actions/AuthenticationResetPassword.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Ajax/Forbidden.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Ajax/Forbidden.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Ajax/NotFound.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Ajax/NotFound.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Backend/Widgets/UserStatistics.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Backend/Widgets/UserStatistics.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Controller/LoginController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Controller/LoginController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Controller/BackendAjaxController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Controller/BackendAjaxController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Controller/BackendController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Controller/BackendController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/Console/ResetUserPasswordCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/Console/ResetUserPasswordCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/DependencyInjection/BackendExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/DependencyInjection/BackendExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Backend/DependencyInjection/BackendRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Backend/DependencyInjection/BackendRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Page/NavigationBuilder.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Page/NavigationBuilder.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Page/PageRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Page/PageRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Page/PageRouter.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Page/PageRouter.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Page/Page.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Page/Page.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlockDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlockDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/RevisionBlock/Type.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/RevisionBlock/Type.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlockType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/RevisionBlock/RevisionBlockType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/RevisionRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/RevisionRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/MenuType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/MenuType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Form/RevisionContentType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Form/RevisionContentType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Form/ThemeTemplateType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Form/ThemeTemplateType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Form/RevisionType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Form/RevisionType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Form/RevisionSettingsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Form/RevisionSettingsType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/RevisionDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/RevisionDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Revision.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Revision.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Event/RevisionCreatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Event/RevisionCreatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Command/CreateRevisionHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Command/CreateRevisionHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Revision/Command/CreateRevision.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Revision/Command/CreateRevision.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/ModuleSettings/ModuleSettingsType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/ModuleSettings/ModuleSettingsType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Domain/Twig/PagesExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Domain/Twig/PagesExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Installer/PagesInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Installer/PagesInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Frontend/Widgets/Sitemap.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Frontend/Widgets/Sitemap.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/PageCopyToOtherLocale.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/PageCopyToOtherLocale.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/PageIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/PageIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/ModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/ModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/PageDelete.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/PageDelete.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/PageEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/PageEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Actions/PageAdd.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Actions/PageAdd.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Backend/Ajax/PageMove.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Backend/Ajax/PageMove.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Controller/LocaleRedirectController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Controller/LocaleRedirectController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/Controller/PageController.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/Controller/PageController.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/DependencyInjection/PagesRouteLoader.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/DependencyInjection/PagesRouteLoader.php"/>
+</testsuite>
+<testsuite name="src/Modules/Pages/DependencyInjection/PagesExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Pages/DependencyInjection/PagesExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleNameResolver.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleNameResolver.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleName.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleName.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleTwigExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleTwigExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleInstallerServices.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleInstallerServices.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleInformation.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleInformation.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Event/ModuleInstalledEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Event/ModuleInstalledEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Module.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Module.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Command/ChangeModuleSettingsHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Command/ChangeModuleSettingsHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Command/InstallModules.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Command/InstallModules.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Command/InstallModulesHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Command/InstallModulesHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/Command/ChangeModuleSettings.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/Command/ChangeModuleSettings.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleInstallerLocator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleInstallerLocator.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/InstalledModules.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/InstalledModules.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Module/ModuleNameDBALType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Module/ModuleNameDBALType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/ThemeRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/ThemeRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/ThemeDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/ThemeDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Theme.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Theme.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Event/ThemeInstalledEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Event/ThemeInstalledEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Event/ThemeActivatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Event/ThemeActivatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/InstallableTheme.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/InstallableTheme.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Command/InstallThemeHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Command/InstallThemeHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Command/InstallTheme.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Command/InstallTheme.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Command/ActivateThemeHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Command/ActivateThemeHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/Theme/Command/ActivateTheme.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/Theme/Command/ActivateTheme.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateRepository.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateRepository.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/InstallableThemeTemplate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/InstallableThemeTemplate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplatePositionType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplatePositionType.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/TemplatePreviewGenerator.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/TemplatePreviewGenerator.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateDataTransferObject.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/ThemeTemplateDataTransferObject.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateDeletedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateDeletedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateChangedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateChangedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateCreatedEvent.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Event/ThemeTemplateCreatedEvent.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/CreateThemeTemplateHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/CreateThemeTemplateHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/DeleteThemeTemplate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/DeleteThemeTemplate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/CreateThemeTemplate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/CreateThemeTemplate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/ChangeThemeTemplateHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/ChangeThemeTemplateHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/ChangeThemeTemplate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/ChangeThemeTemplate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/ThemeTemplate/Command/DeleteThemeTemplateHandler.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/ThemeTemplate/Command/DeleteThemeTemplateHandler.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/InformationFile/Requirements.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/InformationFile/Requirements.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/InformationFile/SafeHtml.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/InformationFile/SafeHtml.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/InformationFile/Author.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/InformationFile/Author.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/InformationFile/Messages.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/InformationFile/Messages.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Domain/InformationFile/SafeString.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Domain/InformationFile/SafeString.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Installer/ExtensionsInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Installer/ExtensionsInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeDetail.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeDetail.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ModuleUpload.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ModuleUpload.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeTemplateExport.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeTemplateExport.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ModuleInstall.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ModuleInstall.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeUpload.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeUpload.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ModuleDetail.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ModuleDetail.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ModuleIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ModuleIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeTemplateIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeTemplateIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeInstall.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeInstall.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeTemplateEdit.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeTemplateEdit.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeIndex.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeIndex.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeTemplateDelete.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeTemplateDelete.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeTemplateAdd.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeTemplateAdd.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Backend/Actions/ThemeActivate.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Backend/Actions/ThemeActivate.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/Console/WebpackConfigCommand.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/Console/WebpackConfigCommand.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/DependencyInjection/ExtensionsExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/DependencyInjection/ExtensionsExtension.php"/>
+</testsuite>
+<testsuite name="src/Modules/Extensions/DependencyInjection/CompilerPass/TwigExtensionPass.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/Extensions/DependencyInjection/CompilerPass/TwigExtensionPass.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Editor/BlockEditorType.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Editor/BlockEditorType.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Editor/BlockEditorConfig.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Editor/BlockEditorConfig.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/QuoteBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/QuoteBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/HeaderBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/HeaderBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/AbstractBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/AbstractBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/ParagraphBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/ParagraphBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/ListBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/ListBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/UnderlineBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/UnderlineBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/ButtonBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/ButtonBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Domain/Blocks/RawBlock.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Domain/Blocks/RawBlock.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/Installer/BlockEditorInstaller.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/Installer/BlockEditorInstaller.php"/>
+</testsuite>
+<testsuite name="src/Modules/BlockEditor/DependencyInjection/BlockEditorExtension.php" errors="0" tests="1" failures="0">
+ <testcase name="src/Modules/BlockEditor/DependencyInjection/BlockEditorExtension.php"/>
+</testsuite>
+</testsuites>
+
