@@ -18,6 +18,7 @@ abstract class UserDataTransferObject implements UniqueDataTransferObjectInterfa
     /**
      * @Assert\Email(message="err.EmailIsInvalid")
      * @Assert\NotBlank (message="err.EmailIsRequired")
+     * We have to limit the length because of the email because of unique index
      * @Assert\Length(max=180, maxMessage="err.EmailIsTooLong")
      */
     public ?string $email = null;
