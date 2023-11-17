@@ -36,19 +36,20 @@ abstract class BackendWebTestCase extends WebTestCase
     {
         $user = null;
         if ($loginBackendUser) {
-            $user = self::loginBackendUser();
+            $user = self::loginBackendUser(url: $url);
         }
 
         if (defined(static::class . '::TEST_URL') === true) {
             $url = $url ?? static::TEST_URL;
 
-            if ($enableProfiler) {
+            if ($enableProfiler && $url !== null) {
                 $url .= str_contains($url, '?') ? '&enable-framework-profiler=1' : '?enable-framework-profiler=1';
             }
 
-            self::request(Request::METHOD_GET, $url);
-
-            return $user;
+            if ($loginBackendUser) {
+                // we are already on the page
+                return $user;
+            }
         }
 
         if ($url === null) {
@@ -60,7 +61,7 @@ abstract class BackendWebTestCase extends WebTestCase
         return $user;
     }
 
-    final protected static function loginBackendUser(string $email = 'test@example.com'): User
+    final protected static function loginBackendUser(string $email = 'test@example.com', ?string $url = null): User
     {
         try {
             $userRespository = static::getContainer()->get(UserRepository::class);
@@ -71,7 +72,9 @@ abstract class BackendWebTestCase extends WebTestCase
         $user = $userRespository->findOneBy(['email' => $email]);
         static::assertNotNull($user, 'User with email "' . $email . '" not found.');
         static::getClient()->loginUser($user, 'backend');
-        static::request(Request::METHOD_GET, static::TEST_URL);
+        if (defined(static::class . '::TEST_URL') === true || $url !== null) {
+            static::request(Request::METHOD_GET, $url ?? static::TEST_URL);
+        }
 
         return $user;
     }

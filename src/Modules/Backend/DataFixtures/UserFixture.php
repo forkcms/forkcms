@@ -13,7 +13,9 @@ final class UserFixture extends ForkFixture implements DependentFixtureInterface
     public const PLAIN_TEXT_PASSWORD = 'test';
     private const PASSWORD = '$2y$13$YJGHIjorExsQSD9VCzMgBuwi5QS3Zr2tVBisWS4vrcKDin/9BdBQq';
     public const SUPER_ADMIN_REFERENCE = 'user-super-admin';
+    public const SUPER_ADMIN_EMAIL = 'super-admin@example.com';
     public const USER_REFERENCE = 'user-super-admin';
+    public const USER_EMAIL = 'user@example.com';
 
     public function __construct()
     {
