@@ -380,24 +380,6 @@
         <translation language="tr"><![CDATA[iletişim]]></translation>
         <translation language="pt"><![CDATA[contacto]]></translation>
       </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[content]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="es"><![CDATA[Contenido]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
-      </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
         <translation language="en"><![CDATA[country]]></translation>
@@ -1653,24 +1635,6 @@
         <translation language="pl"><![CDATA[szukaj ponownie]]></translation>
         <translation language="tr"><![CDATA[Tekrar ara]]></translation>
         <translation language="pt"><![CDATA[pesquisar de novo]]></translation>
-      </item>
-      <item type="label" name="SearchTerm">
-        <translation language="nl"><![CDATA[zoekterm]]></translation>
-        <translation language="en"><![CDATA[searchterm]]></translation>
-        <translation language="hu"><![CDATA[keresési feltételek]]></translation>
-        <translation language="it"><![CDATA[termine di ricerca]]></translation>
-        <translation language="fr"><![CDATA[chercher le terme]]></translation>
-        <translation language="ru"><![CDATA[Ключевые слова]]></translation>
-        <translation language="zh"><![CDATA[搜索词]]></translation>
-        <translation language="de"><![CDATA[Suchbegriff]]></translation>
-        <translation language="es"><![CDATA[buscar el término]]></translation>
-        <translation language="lt"><![CDATA[raktažodžiai]]></translation>
-        <translation language="uk"><![CDATA[Ключові слова]]></translation>
-        <translation language="sv"><![CDATA[sökterm]]></translation>
-        <translation language="el"><![CDATA[όρος αναζήτησης]]></translation>
-        <translation language="pl"><![CDATA[Szukaj frazy]]></translation>
-        <translation language="tr"><![CDATA[arama terimi]]></translation>
-        <translation language="pt"><![CDATA[termo de pesquisa]]></translation>
       </item>
       <item type="label" name="Send">
         <translation language="nl"><![CDATA[verstuur]]></translation>
@@ -3574,74 +3538,6 @@
         <translation language="tr"><![CDATA[Geçersiz tarih.]]></translation>
         <translation language="pt"><![CDATA[Data inválida.]]></translation>
       </item>
-      <item type="error" name="DisplayNameExists">
-        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This display name is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette nom d'affichage existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[A megjelenítési név foglalt.]]></translation>
-        <translation language="it"><![CDATA[Il nome è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Такое имя уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个显示名称已经被使用了。]]></translation>
-        <translation language="de"><![CDATA[Dieser Nickname ist ist leider schon vergeben.]]></translation>
-        <translation language="es"><![CDATA[Este nombre a mostrar está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks vardas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Таке ім'я вже використовуюється]]></translation>
-        <translation language="sv"><![CDATA[Detta visningsnamn används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ta nazwa jest już zajęta.]]></translation>
-        <translation language="pt"><![CDATA[Este nome de ecrã já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="DisplayNameIsRequired">
-        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Nom d'affichage est un champ obligatoire.]]></translation>
-        <translation language="hu"><![CDATA[Megjelenítési név kötelező.]]></translation>
-        <translation language="it"><![CDATA[Nome è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Имя - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[显示名称必填。]]></translation>
-        <translation language="de"><![CDATA[Nickname ist eine Pflichtangabe.]]></translation>
-        <translation language="es"><![CDATA[Nombre a msotrar es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Vardas - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Ім'я - обовязкове поле]]></translation>
-        <translation language="sv"><![CDATA[Visningsnamn är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Το όνομα οθόνης που θα εμφανίζεται είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole Wyświetlane imię jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[Nome de ecrã é um campo obrigatório.]]></translation>
-      </item>
-      <item type="error" name="EmailExists">
-        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette adresse e-mail existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
-        <translation language="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-mail уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个Email地址已在使用了。]]></translation>
-        <translation language="de"><![CDATA[Diese E-Mail-Adresse wird bereits verwendet.]]></translation>
-        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks el.paštas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Цей e-mail вже використовується]]></translation>
-        <translation language="sv"><![CDATA[Denna e-postadress används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ten adres e-mail jest już zajęty]]></translation>
-        <translation language="pt"><![CDATA[Este endereço de email já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
-        <translation language="it"><![CDATA[Devi fornire una email valida.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="ru"><![CDATA[Введите правильный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
-        <translation language="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
-        <translation language="uk"><![CDATA[Введіт правильний e-mail]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-      </item>
       <item type="error" name="EmailIsRequired">
         <translation language="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[E-mail is a required field.]]></translation>
@@ -3934,23 +3830,6 @@
         <translation language="zh"><![CDATA[你的问题被标记为垃圾内容。]]></translation>
         <translation language="pt"><![CDATA[A sua pergunta foi marcada como SPAM.]]></translation>
       </item>
-      <item type="error" name="PasswordIsRequired">
-        <translation language="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Password is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez entrer votre mot de passe.]]></translation>
-        <translation language="hu"><![CDATA[A jelszó mező kötelező.]]></translation>
-        <translation language="it"><![CDATA[Password è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Пароль - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[密码必填。]]></translation>
-        <translation language="de"><![CDATA[Du musst ein Passwort angeben.]]></translation>
-        <translation language="es"><![CDATA[Contraseña es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Slaptažodis - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Пароль - обов'язкове поле]]></translation>
-        <translation language="sv"><![CDATA[Lösenord är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Ο Κωδικός είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[A senha é um campo obrigatório.]]></translation>
-      </item>
       <item type="error" name="ProfileIsActive">
         <translation language="en"><![CDATA[This profile is already activated.]]></translation>
         <translation language="nl"><![CDATA[Dit profiel is reeds geactiveerd.]]></translation>
@@ -4051,23 +3930,6 @@
         <translation language="el"><![CDATA[Παρακαλώ κάντε μία ερώτηση]]></translation>
         <translation language="zh"><![CDATA[请填写一个问题。]]></translation>
         <translation language="pt"><![CDATA[Por favor preencha uma pergunta.]]></translation>
-      </item>
-      <item type="error" name="SomethingWentWrong">
-        <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
-        <translation language="en"><![CDATA[Something went wrong.]]></translation>
-        <translation language="hu"><![CDATA[Valami elromlott.]]></translation>
-        <translation language="it"><![CDATA[Qualcosa è andato storto.]]></translation>
-        <translation language="fr"><![CDATA[Un erreur est survenue.]]></translation>
-        <translation language="ru"><![CDATA[Ошибка.]]></translation>
-        <translation language="zh"><![CDATA[出错了。]]></translation>
-        <translation language="de"><![CDATA[Etwas ist schief gelaufen.]]></translation>
-        <translation language="es"><![CDATA[Algo salió mal.]]></translation>
-        <translation language="lt"><![CDATA[Klaida.]]></translation>
-        <translation language="uk"><![CDATA[Помилка]]></translation>
-        <translation language="sv"><![CDATA[Någonting gick fel.]]></translation>
-        <translation language="el"><![CDATA[Συνέβη κάποιο σφάλμα.]]></translation>
-        <translation language="pl"><![CDATA[Coś poszło nie tak.]]></translation>
-        <translation language="pt"><![CDATA[Ocorreu um erro.]]></translation>
       </item>
       <item type="error" name="SubscribeFailed">
         <translation language="en"><![CDATA[Subscribing failed]]></translation>
@@ -5617,24 +5479,6 @@
         <translation language="tr"><![CDATA[iletişim formu]]></translation>
         <translation language="pl"><![CDATA[formularz kontaktowy]]></translation>
         <translation language="pt"><![CDATA[formulário de contacto]]></translation>
-      </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[inhoud]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="es"><![CDATA[contenido]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
       </item>
       <item type="label" name="ContentBlocks">
         <translation language="nl"><![CDATA[inhoudsblokken]]></translation>
@@ -8153,17 +7997,6 @@
         <translation language="el"><![CDATA[κανένα]]></translation>
         <translation language="pt"><![CDATA[nenhum]]></translation>
         <translation language="pl"><![CDATA[żaden]]></translation>
-      </item>
-      <item type="label" name="NoPreviousLogin">
-        <translation language="nl"><![CDATA[geen eerdere aanmelding]]></translation>
-        <translation language="en"><![CDATA[no previous login]]></translation>
-        <translation language="ru"><![CDATA[нет предыдущих авторизаций]]></translation>
-        <translation language="el"><![CDATA[δεν υπάρχει προηγούμενη σύνδεση]]></translation>
-        <translation language="hu"><![CDATA[nincs korábbi belépés]]></translation>
-        <translation language="zh"><![CDATA[不存在上一次登录]]></translation>
-        <translation language="de"><![CDATA[kein früherer Login]]></translation>
-        <translation language="pt"><![CDATA[sem logins anteriores]]></translation>
-        <translation language="pl"><![CDATA[brak poprzedniego logowania]]></translation>
       </item>
       <item type="label" name="NoTheme">
         <translation language="nl"><![CDATA[geen thema]]></translation>
@@ -12753,38 +12586,6 @@
         <translation language="pt"><![CDATA[Este endereço de email já se encontra em utilização.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail jest już w użyciu.]]></translation>
       </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Fornisci un indirizzo email.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas galiojantis el.paštas]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać poprawny adres e-mail.]]></translation>
-      </item>
-      <item type="error" name="EmailIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een e-mailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Per favore fornisci un indirizzo email valido.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный email.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas el.pašto adresas (galiojantis)]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Endereço de email é um campo obrigatório.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać adres e-mail.]]></translation>
-      </item>
       <item type="error" name="EmailIsUnknown">
         <translation language="nl"><![CDATA[Dit e-mailadres zit niet in onze database.]]></translation>
         <translation language="en"><![CDATA[This e-mailaddress is not in our database.]]></translation>
@@ -13212,22 +13013,6 @@
         <translation language="el"><![CDATA[Δεν μπορώ να δημιουργήσω διεύθυνση URL. Δημιουργήστε μία σελίδα που είναι συνδεδεμένη με αυτή τη λειτουργική μονάδα.]]></translation>
         <translation language="pt"><![CDATA[É impossível gerar o URL. Certifique-se que este módulo está ligado a uma página.]]></translation>
         <translation language="pl"><![CDATA[Nie można wygenerować adresu URL. Upewnij się, że ten moduł jest powiązany ze stroną.]]></translation>
-      </item>
-      <item type="error" name="NonExisting">
-        <translation language="nl"><![CDATA[Dit item bestaat niet.]]></translation>
-        <translation language="en"><![CDATA[This item doesn't exist.]]></translation>
-        <translation language="hu"><![CDATA[Ez az elem nem létezik.]]></translation>
-        <translation language="it"><![CDATA[Questo elemento non esiste.]]></translation>
-        <translation language="ru"><![CDATA[Запись не существует.]]></translation>
-        <translation language="zh"><![CDATA[该项目已不存在。]]></translation>
-        <translation language="fr"><![CDATA[L'élément n'existe pas.]]></translation>
-        <translation language="de"><![CDATA[Dieser Eintrag existiert nicht.]]></translation>
-        <translation language="es"><![CDATA[Este objeto no existe.]]></translation>
-        <translation language="lt"><![CDATA[Įrašų nėra.]]></translation>
-        <translation language="sv"><![CDATA[Detta objekt finns inte.]]></translation>
-        <translation language="el"><![CDATA[Το αντικείμενο δεν υπάρχει.]]></translation>
-        <translation language="pl"><![CDATA[Ta pozycja nie istnieje]]></translation>
-        <translation language="pt"><![CDATA[Este item não existe.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>

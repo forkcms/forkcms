@@ -14,11 +14,6 @@ final class PageTitle implements Stringable
 
     public function __toString(): string
     {
-        static $pageTitle;
-        if ($pageTitle === null) {
-            $pageTitle = $this->breadcrumbs->asPageTitle();
-        }
-
-        return $pageTitle;
+        return $this->breadcrumbs->asPageTitle();
     }
 }

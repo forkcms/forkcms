@@ -2,7 +2,7 @@
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
-    bootstrap="src/bootstrap.php"
+    bootstrap="src/Core/tests/bootstrap.php"
     cacheResultFile="var/cache/.phpunit/test-results"
     executionOrder="depends,defects"
     beStrictAboutOutputDuringTests="true"
@@ -22,12 +22,16 @@
             <directory>src/Modules/*/tests</directory>
             <exclude>src/Modules/Installer</exclude>
             <exclude>src/Modules/*/tests/Controller</exclude>
-            <exclude>src/Modules/*/tests/Actions</exclude>
+            <exclude>src/Modules/*/tests/Backend</exclude>
+            <exclude>src/Modules/*/tests/Frontend</exclude>
+            <exclude>src/Modules/*/tests/Console</exclude>
         </testsuite>
 
         <testsuite name="functional">
             <directory>src/Modules/*/tests/Controller</directory>
-            <directory>src/Modules/*/tests/Actions</directory>
+            <directory>src/Modules/*/tests/Backend</directory>
+            <directory>src/Modules/*/tests/Frontend</directory>
+            <directory>src/Modules/*/tests/Console</directory>
             <exclude>src/Modules/Installer</exclude>
             <exclude>src/Core/tests/Installer</exclude>
         </testsuite>
@@ -52,4 +56,7 @@
         <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
 </phpunit>

@@ -81,10 +81,15 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0",
-        "symfony/browser-kit": "^6.0"
+        "symfony/browser-kit": "^6.0",
+        "dama/doctrine-test-bundle": "^7.2",
+        "symfony/css-selector": "6.*"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",
@@ -110,11 +115,6 @@
             "**/tests/",
             "**/Test/"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ForkCMS\\Tests\\": "tests/"
-        }
     },
     "conflict": {
         "symfony/symfony": "*"

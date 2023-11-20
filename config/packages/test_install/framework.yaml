@@ -9,7 +9,8 @@ framework:
   # Enables session support. Note that the session will ONLY be started if you read or write from it.
   # Remove or comment this section to explicitly disable session support.
   session:
-    storage_factory_id: ForkCMS\Core\Tests\MockArraySessionStorageFactory
+    storage_factory_id: session.storage.factory.mock_file
+    save_path: null
 
   #esi: true
   #fragments: true

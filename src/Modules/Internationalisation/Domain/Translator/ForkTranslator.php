@@ -7,6 +7,7 @@ use ForkCMS\Core\Domain\Application\Application;
 use ForkCMS\Modules\Backend\Domain\Action\ActionSlug;
 use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlug;
 use ForkCMS\Modules\Backend\Domain\User\User;
+use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationDomain;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
@@ -24,6 +25,8 @@ final class ForkTranslator extends Translator
 
     /** @var ?string used for debug reasons */
     private ?string $lastUsedDomain;
+
+    private ?string $fallbackLocale = null;
 
     /**
      * @param array<string, array<int, string>>$loaderIds
@@ -51,12 +54,11 @@ final class ForkTranslator extends Translator
             $domain = null;
         }
 
-        static $fallbackLocale = null;
-        if ($fallbackLocale === null) {
+        if ($this->fallbackLocale === null) {
             $user = $this->security?->getUser();
-            $fallbackLocale = ($user instanceof User ? $user->getSetting('locale') : null) ?? $this->getLocale();
+            $this->fallbackLocale = ($user instanceof User ? $user->getSetting('locale') : null) ?? $this->getLocale();
         }
-        $locale = $locale ?? $fallbackLocale;
+        $locale = $locale ?? $this->fallbackLocale;
 
         if (!$this->requestStack instanceof RequestStack) {
             return $this->getTranslationAndStoreDomain($id, $parameters, $domain, $locale);

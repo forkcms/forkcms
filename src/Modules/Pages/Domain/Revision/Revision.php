@@ -182,11 +182,6 @@ class Revision
 
     public function getRel(): string
     {
-        static $rel = null;
-        if ($rel !== null) {
-            return $rel;
-        }
-
         $relParts = [];
         $follow = $this->meta->getSEOFollow();
         if ($follow === SEOFollow::noFollow) {
@@ -197,9 +192,7 @@ class Revision
             $relParts[] = $index->value;
         }
 
-        $rel = implode(' ', $relParts);
-
-        return $rel;
+        return implode(' ', $relParts);
     }
 
     public function getTitle(): string

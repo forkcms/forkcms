@@ -890,45 +890,6 @@
         <translation language="en"><![CDATA[Profile settings were saved.]]></translation>
         <translation language="pl"><![CDATA[Ustawienia profilu zostały zapisane.]]></translation>
       </item>
-      <item type="error" name="DisplayNameExists">
-        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This display name is in use.]]></translation>
-        <translation language="it"><![CDATA[Il nome da mostrare è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Такое отображаемое имя уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个显示名称已在使用中。]]></translation>
-        <translation language="fr"><![CDATA[Ce nom d'affichage est utilisé.]]></translation>
-        <translation language="de"><![CDATA[Dieser Nickname wird leider bereits verwendet.]]></translation>
-        <translation language="hu"><![CDATA[Ez a becenév már használatban van.]]></translation>
-        <translation language="es"><![CDATA[Este nombre para mostrar está en uso.]]></translation>
-        <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ta nazwa jest już wykorzystana.]]></translation>
-      </item>
-      <item type="error" name="DisplayNameIsRequired">
-        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
-        <translation language="it"><![CDATA[Il nome da mostrare è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Отображаемое имя - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[显示名称是必填字段。]]></translation>
-        <translation language="fr"><![CDATA[Nom d'affichage est un champ requis.]]></translation>
-        <translation language="de"><![CDATA[Ein Nickname muss angegeben werden.]]></translation>
-        <translation language="hu"><![CDATA[A becenév mező kötelező.]]></translation>
-        <translation language="es"><![CDATA[Nombre para mostrar es un campo requerido.]]></translation>
-        <translation language="el"><![CDATA[Το όνομα οθόνης είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Nazwa jest polem wymaganym.]]></translation>
-      </item>
-      <item type="error" name="EmailExists">
-        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
-        <translation language="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-Mail уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个电子邮箱地址已在使用中。]]></translation>
-        <translation language="de"><![CDATA[Diese E-Mail-Adresse wird verwendet.]]></translation>
-        <translation language="fr"><![CDATA[Cette adresse e-mail est déjà utilisée.]]></translation>
-        <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
-        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
-        <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ten adres email jest już wykorzystany.]]></translation>
-      </item>
       <item type="error" name="GroupIsRequired">
         <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[Group is a required field.]]></translation>
