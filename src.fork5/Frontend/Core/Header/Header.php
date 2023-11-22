@@ -316,16 +316,6 @@ class Header extends KernelLoader
         }
     }
 
-    public function getMetaCustom(): string
-    {
-        return (string) $this->metaCustom;
-    }
-
-    public function getPageTitle(): string
-    {
-        return (string) $this->pageTitle;
-    }
-
     /**
      * Parse the header into the template
      */
