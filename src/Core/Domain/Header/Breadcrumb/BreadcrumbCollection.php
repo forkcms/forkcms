@@ -82,7 +82,18 @@ final class BreadcrumbCollection implements IteratorAggregate
     {
         /** @var string[] $items the breadcrumbs are stringable but phpstan doesn't understand it */
         $items = $this->getItems();
+        if (count($items) > 1) {
+            array_shift($items);
+        }
 
         return implode(' | ', array_reverse(array_map(ucfirst(...), $items)));
+    }
+
+    public function asContentTitle(): string
+    {
+        /** @var string[] $items the breadcrumbs are stringable but phpstan doesn't understand it */
+        $items = $this->getItems();
+
+        return ucfirst(end($items));
     }
 }

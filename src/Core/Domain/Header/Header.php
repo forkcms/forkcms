@@ -39,6 +39,8 @@ final class Header
     public function __construct(
         public readonly BreadcrumbCollection $breadcrumbs,
         private readonly RequestStack $requestStack,
+        private readonly PageTitle $pageTitle,
+        private readonly ContentTitle $contentTitle,
         KernelInterface $kernel,
         Security $security,
         TranslatorInterface $translator,
