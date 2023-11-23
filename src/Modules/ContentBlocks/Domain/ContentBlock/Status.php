@@ -6,6 +6,6 @@ use InvalidArgumentException;
 
 enum Status: string
 {
-    case Archived = 'archived';
-    case Active = 'active';
+    case Archived = 'ARCHIVED';
+    case Active = 'ACTIVE';
 }
