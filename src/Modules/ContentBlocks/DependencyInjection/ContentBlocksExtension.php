@@ -11,9 +11,4 @@ final class ContentBlocksExtension extends ForkModuleExtension
     {
         $this->getLoader($container)->load('services.yaml');
     }
-
-    public function prepend(ContainerBuilder $container): void
-    {
-        $this->getLoader($container)->load('doctrine.yaml');
-    }
 }
