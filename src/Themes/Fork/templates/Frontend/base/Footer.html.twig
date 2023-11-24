@@ -2,10 +2,10 @@
   <div class="container">
     <ul class="nav nav-pills justify-content-center">
       <li class="nav-item"><a class="nav-link" href="{{ url('pages__page__1.' ~ app.request.locale) }}">© <span itemprop="copyrightYear">{{ date().format('Y') }}</span> {{ siteTitle }}</a></li>
-      {% for footerLink in footerLinks %}
+      {% for footer_link in footerLinks %}
         <li class="nav-item">
-          <a class="nav-link{% if footerLink.linkClass %} {{ footerLink.linkClass }}{% endif %}" href="{{ footerLink.url }}" title="{{ footerLink.navigationTitle }}"{% if footerLink.rel %} rel="{{ footerLink.rel }}"{% endif %}>
-            {{ footerLink.navigationTitle }}
+          <a class="nav-link{% if footer_link.linkClass %} {{ footer_link.linkClass }}{% endif %}" href="{{ footer_link.url }}" title="{{ footer_link.navigationTitle }}"{% if footer_link.rel %} rel="{{ footer_link.rel }}"{% endif %}>
+            {{ footer_link.navigationTitle }}
           </a>
         </li>
       {% endfor %}

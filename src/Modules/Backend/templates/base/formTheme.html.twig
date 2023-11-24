@@ -95,10 +95,10 @@
 {%- endblock form_errors %}
 
 {%- block meta_widget -%}
-  {% set customId = form.vars.id ~ '_custom' %}
-  {% set classId = form.vars.id ~ '_class' %}
-  {% set methodId = form.vars.id ~ '_method' %}
-  {% set parametersId = form.vars.id ~ '_parameters' %}
+  {% set custom_id = form.vars.id ~ '_custom' %}
+  {% set class_id = form.vars.id ~ '_class' %}
+  {% set method_id = form.vars.id ~ '_method' %}
+  {% set parameters_id = form.vars.id ~ '_parameters' %}
   <div
     class="js-do-meta-automatically"
     data-base-field-selector="{{ base_field_selector }}"
@@ -113,10 +113,10 @@
     data-slug-overwrite-selector="{{ '#' ~ form.slugOverwrite.vars.id }}"
     data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
     data-generated-slug-selector="{{ form.vars.generated_slug_selector }}"
-    data-custom-selector="{{ '#' ~ customId }}"
-    data-class-name-selector="{{ '#' ~ classId }}"
-    data-method-name-selector="{{ '#' ~ methodId }}"
-    data-parameters-selector="{{ '#' ~ parametersId }}"
+    data-custom-selector="{{ '#' ~ custom_id }}"
+    data-class-name-selector="{{ '#' ~ class_id }}"
+    data-method-name-selector="{{ '#' ~ method_id }}"
+    data-parameters-selector="{{ '#' ~ parameters_id }}"
   >
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
@@ -131,16 +131,16 @@
           <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
         </div>
       </div>
-      {% set navigationTitle = locateFormView(form, 'navigationTitle') %}
-      {% if navigationTitle is not null %}
+      {% set navigation_title = locateFormView(form, 'navigationTitle') %}
+      {% if navigation_title is not null %}
         <div class="checkboxTextFieldCombo">
           <div class="form-group">
             {{ form_widget(locateFormView(form, 'navigationTitleOverwrite')) }}
           </div>
           <div class="form-group">
-            {{ form_label(navigationTitle) }}
-            {{ form_widget(navigationTitle) }}
-            {{ form_errors(navigationTitle) }}
+            {{ form_label(navigation_title) }}
+            {{ form_widget(navigation_title) }}
+            {{ form_errors(navigation_title) }}
             <small class="form-text text-muted">{{ 'msg.HelpNavigationTitle'|trans|raw }}</small>
           </div>
         </div>
@@ -222,10 +222,10 @@
       </div>
     </fieldset>
   </div>
-  <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
-  <input type="hidden" id="{{ classId }}" value="{{ generate_slug_callback_class }}">
-  <input type="hidden" id="{{ methodId }}" value="{{ generate_slug_callback_method }}">
-  <input type="hidden" id="{{ parametersId }}" value="{{ generate_slug_callback_parameters }}">
+  <input type="hidden" id="{{ custom_id }}" value="{{ custom_meta_tags ? '1' : '0' }}">
+  <input type="hidden" id="{{ class_id }}" value="{{ generate_slug_callback_class }}">
+  <input type="hidden" id="{{ method_id }}" value="{{ generate_slug_callback_method }}">
+  <input type="hidden" id="{{ parameters_id }}" value="{{ generate_slug_callback_parameters }}">
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
@@ -392,8 +392,8 @@
 {% endblock %}
 
 {% block help %}
-  {% for attributeName, attributeValue in attr %}
-    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
+  {% for attribute_name, attribute_value in attr %}
+    {% if attribute_name == 'help' %}<small class="form-text text-muted">{{ attribute_value|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 
@@ -500,8 +500,8 @@
 {% endblock %}
 
 {% block tab_row %}
-  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
-  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id, class: (form.vars.attr.class|default('') ~ tabClass)|trim}}) }}
+  {%- set tab_class = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
+  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id, class: (form.vars.attr.class|default('') ~ tab_class)|trim}}) }}
 {% endblock %}
 
 {% block user_group_permission_row %}
@@ -533,13 +533,13 @@
             <tbody>
             {% for index, permission in permissions %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                {% set checkboxLabel = form.children[index].vars.label %}
-                {% set checkboxLabelAttr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
-                {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional')}) %}
+                {% set checkbox_label = form.children[index].vars.label %}
+                {% set checkbox_label_attr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
+                {% set checkbox_label_attr = checkbox_label_attr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional')}) %}
                 <td class="check">{{ form_widget(form.children[index], {'label': false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
                 <td class="name">
-                  <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                  {{ checkboxLabel }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
+                  <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                  {{ checkbox_label }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
                   </label>
                 </td>
                 <td class="description">{{ permission.description }}</td>
@@ -565,21 +565,21 @@
     </tr>
     </thead>
     <tbody>
-    {% for userCheckbox in form.children %}
-      {% set user = possibleUsers[userCheckbox.vars.value] %}
+    {% for user_checkbox in form.children %}
+      {% set user = possibleUsers[user_checkbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-        <td class="check">{{ form_widget(userCheckbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
+        <td class="check">{{ form_widget(user_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
         <td>
-          {% set checkboxLabelAttr = userCheckbox.vars.label_attr|merge({'for': userCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userCheckbox.vars.label_attr.class|default('') ~ (userCheckbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             {{ user.email }}
           </label>
         </td>
         <td>
-          {% set checkboxLabelAttr = userCheckbox.vars.label_attr|merge({'for': userCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userCheckbox.vars.label_attr.class|default('') ~ (userCheckbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ user.displayName }}
           </label>
         </td>
@@ -599,15 +599,15 @@
     </tr>
     </thead>
     <tbody>
-    {% for userGroupCheckbox in form.children %}
-      {% set userGroup = possibleGroups[userGroupCheckbox.vars.value] %}
+    {% for user_group_checkbox in form.children %}
+      {% set user_group = possibleGroups[user_group_checkbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-        <td class="check">{{ form_widget(userGroupCheckbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
+        <td class="check">{{ form_widget(user_group_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
         <td>
-          {% set checkboxLabelAttr = userGroupCheckbox.vars.label_attr|merge({'for': userGroupCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userGroupCheckbox.vars.label_attr.class|default('') ~ (userGroupCheckbox.vars.required ? ' required' : ' optional')}) %}
-          <label{% for attrname, attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-          {{ userGroup.name }}
+          {% set checkbox_label_attr = user_group_checkbox.vars.label_attr|merge({'for': user_group_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_group_checkbox.vars.label_attr.class|default('') ~ (user_group_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {{ user_group.name }}
           </label>
         </td>
       </tr>

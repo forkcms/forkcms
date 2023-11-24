@@ -51,11 +51,11 @@
             </tr>
             </thead>
             <tbody>
-            {% for themeTemplate in theme.templates %}
+            {% for theme_template in theme.templates %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                <td>{{ themeTemplate.name }}</td>
-                <td>{{ themeTemplate.path }}</td>
-                <td>{{ themeTemplate.positions|column('name')|join(', ') }}</td>
+                <td>{{ theme_template.name }}</td>
+                <td>{{ theme_template.path }}</td>
+                <td>{{ theme_template.positions|column('name')|join(', ') }}</td>
               </tr>
             {% endfor %}
             </tbody>
@@ -133,9 +133,9 @@
           </div>
           <div class="modal-footer">
             {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
-            {{ form_start(themeInstallForm) }}
+            {{ form_start(theme_install_form) }}
             {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
-            {{ form_end(themeInstallForm) }}
+            {{ form_end(theme_install_form) }}
           </div>
         </div>
       </div>

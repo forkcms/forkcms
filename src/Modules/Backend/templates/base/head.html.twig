@@ -13,11 +13,11 @@
 
   {{ encore_entry_script_tags('Backend/js/Backend', null, 'BackendConfig') }}
   {{ encore_entry_link_tags('Backend/css/screen', null, 'BackendConfig') }}
-  {% for jsFile in jsFiles %}
-    <script src="/{{ jsFile }}"></script>
+  {% for js_file in jsFiles %}
+    <script src="/{{ js_file }}"></script>
   {% endfor %}
-  {% for cssFile in cssFiles %}
-    <link href="/{{ cssFile }}" rel="stylesheet">
+  {% for css_file in cssFiles %}
+    <link href="/{{ css_file }}" rel="stylesheet">
   {% endfor %}
 
   {% if app.debug %}

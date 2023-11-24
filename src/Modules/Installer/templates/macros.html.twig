@@ -23,8 +23,8 @@
   <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|capitalize }}" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
 {%- endmacro -%}
 
-{% macro icon(icon, iconType='fas') %}
-  <i class="{{ iconType }} fa-{{ icon }}"></i>
+{% macro icon(icon, icon_type='fas') %}
+  <i class="{{ icon_type }} fa-{{ icon }}"></i>
 {% endmacro %}
 
 {% macro infoTooltip(title) %}
