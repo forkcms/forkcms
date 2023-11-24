@@ -1,6 +1,5 @@
 framework:
   messenger:
-    reset_on_message: true
     default_bus: 'command.bus'
     buses:
       command.bus:
