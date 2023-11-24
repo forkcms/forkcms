@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "no-descending-specificity": null
+  },
+  "ignoreFiles": [
+    "src/**/scss/plugins/*.scss"
+  ]
+}

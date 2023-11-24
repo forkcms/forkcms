@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <rule ref="PSR12"/>
+
+    <file>config/</file>
+    <file>public/</file>
+    <file>src/</file>
+
+    <exclude-pattern>config/preload.php</exclude-pattern>
+    <exclude-pattern>public/index.php</exclude-pattern>
+    <exclude-pattern>config/bundles.php</exclude-pattern>
+    <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>assets</exclude-pattern>
+    <exclude-pattern>src/**/Maker</exclude-pattern>
+    <exclude-pattern>app.fork5</exclude-pattern>
+    <exclude-pattern>src.fork5</exclude-pattern>
+    <exclude-pattern>src/Modules/Internationalisation/Domain/Twig/ForkIntlExtension.php</exclude-pattern>
+    <exclude-pattern>src/Modules/Installer/Domain/Requirement/RequirementsChecker.php</exclude-pattern>
+</ruleset>

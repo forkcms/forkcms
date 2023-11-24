@@ -43,6 +43,12 @@ docker-compose.override.yml
 # PHPUnit
 /.phpunit.result.cache
 
+# PHP-CS
+/.phpcs-report.xml
+
+# Twigcs
+/.twigcs-report.xml
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/assets/installer

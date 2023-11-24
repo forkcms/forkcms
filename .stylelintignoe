@@ -1,0 +1,16 @@
+app.fork5/**
+bin/**
+config/**
+migrations/**
+node_modules/**
+public/**
+src.fork5/**
+templates
+tests/**
+tests.fork5/**
+var/**
+vendor/**
+*.*
+Dockerfile
+!*.css
+!*.scss
