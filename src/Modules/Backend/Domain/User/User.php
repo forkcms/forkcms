@@ -24,6 +24,7 @@ use InvalidArgumentException;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
+use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -50,7 +51,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, TrustedDeviceInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, TrustedDeviceInterface, BackupCodeInterface
 {
     use Blameable;
 
@@ -103,6 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(type: Types::INTEGER)]
     private int $trustedVersion;
+
+    #[ORM\Column(type: 'json')]
+    private array $backupCodes = [];
 
     /** @param Collection<int|string, UserGroup>|null $userGroups */
     public function __construct(
@@ -338,5 +342,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function getTrustedTokenVersion(): int
     {
         return $this->trustedVersion;
+    }
+
+    public function isBackupCode(string $code): bool
+    {
+        return in_array($code, $this->backupCodes);
+    }
+
+    public function invalidateBackupCode(string $code): void
+    {
+        $key = array_search($code, $this->backupCodes);
+        if ($key !== false){
+            unset($this->backupCodes[$key]);
+        }
+    }
+
+    public function setBackupCodes(array $backupCodes = []): void
+    {
+        $this->backupCodes = $backupCodes;
     }
 }

@@ -27,10 +27,18 @@ final class ChangeUserHandler implements CommandHandlerInterface
 
         if (!$changeUser->enableTwoFactorAuthentication) {
             $user->setGoogleAuthenticatorSecret(null);
+            $user->setBackupCodes();
         } elseif ($user->getGoogleAuthenticatorSecret() === null) {
             $user->setGoogleAuthenticatorSecret(
                 $this->generateGoogleAuthenticatorSecret()
             );
+
+            $backupCodes = [];
+            for ($i = 0; $i < 10; ++$i) {
+                $backupCodes[] = $this->generateGoogleAuthenticatorSecret();
+            }
+
+            $user->setBackupCodes($backupCodes);
         }
 
         $this->userRepository->save($user);
