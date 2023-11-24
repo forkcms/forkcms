@@ -15,8 +15,8 @@
       {% endif %}
 
       {% set field = prototype %}
-      {% set attr = attr|merge({'data-prototype': block('page_block_collection_item') }) %}
-      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+      {% set attr = attr|merge({'data-prototype': block('page_block_collection_item')}) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name}) %}
 
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
@@ -30,7 +30,7 @@
 
       {% if form.vars.allow_add %}
         <div class="d-flex justify-content-center mt-2">
-          {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-block', { 'type':'button', 'data-addfield':'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name }) }}
+          {{ macro.buttonIcon('', 'plus-square', form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-secondary btn-block', {'type': 'button', 'data-addfield': 'collection', 'data-collection': form.vars.id, 'data-prototype-name': prototype_name}) }}
         </div>
       {% endif %}
       {{ form_errors(form) }}
@@ -84,7 +84,6 @@
       {{ form_errors(field) }}
     </div>
 
-
     {% if form.vars.allow_delete %}
       <div class="modal" id="confirmDeleteBlock{{ field.vars.id }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle{{ field.vars.id }}">
         <div class="modal-dialog">
@@ -96,8 +95,8 @@
               <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
             </div>
             <div class="modal-footer">
-              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
-              {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-bs-dismiss":"modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
+              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"type": "button", "data-bs-dismiss": "modal"}) }}
+              {{ macro.buttonIcon('', 'trash', form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw, 'btn-danger', {'type': 'button', 'data-removefield': 'collection', "data-bs-dismiss": "modal", 'data-field': field.vars.id, 'aria-label': form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw}) }}
             </div>
           </div>
         </div>
@@ -109,7 +108,7 @@
 {% block revision_block_widget %}
   {% import '@Backend/base/macros.html.twig' as macro %}
   <div id="{{ form.vars.id }}" class="mb-1">
-    {{ form_widget(form.isVisible, {'label': 'lbl.VisibleOnSite'|trans, 'label_attr': {'class' : 'font-weight-bold custom-control-label mb-1'}}) }}
+    {{ form_widget(form.isVisible, {'label': 'lbl.VisibleOnSite'|trans, 'label_attr': {'class': 'font-weight-bold custom-control-label mb-1'}}) }}
 
     <div id="editBlockModal{{ form.vars.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editBlockModalTitle{{ form.vars.id }}" aria-hidden="true" data-role="page-content-block">
       <div class="modal-dialog modal-xl" role="document">
@@ -124,7 +123,7 @@
           </div>
           <div class="modal-footer d-flex">
             <div class="me-auto">{{ macro.alert('warning', 'msg.ContentSaveWarning'|trans|ucfirst) }}</div>
-            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role':'page-block-save', 'data-bs-dismiss':'modal'}) }}
+            {{ macro.buttonIcon('', 'save', 'lbl.Save'|trans|ucfirst, 'btn-default', {'type': 'button', 'data-role': 'page-block-save', 'data-bs-dismiss': 'modal'}) }}
           </div>
         </div>
       </div>
@@ -161,8 +160,8 @@
           {{ form_widget(form) }}
         </div>
         <div class="modal-footer">
-          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-bs-dismiss":"modal" }) }}
-          {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', { "type":"button", "data-role":"switch-template" }) }}
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"type": "button", "data-bs-dismiss": "modal"}) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', {"type": "button", "data-role": "switch-template"}) }}
         </div>
       </div>
     </div>

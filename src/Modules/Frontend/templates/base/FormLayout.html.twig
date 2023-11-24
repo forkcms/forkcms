@@ -16,8 +16,8 @@
       {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
-      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
-      <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional')}) %}
+      <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label_html ? label|raw : label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       {% if form.vars.label_tooltip is defined and form.vars.label_tooltip is not empty %}
         {% if not form.vars.label_tooltip_translation_domain and form.vars.label_tooltip_translation_domain is not null %}
@@ -114,8 +114,8 @@
         {% set prototype_html = prototype_html ~ '</div>' %}
       {% endif %}
 
-      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
-      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+      {% set attr = attr|merge({'data-prototype': prototype_html}) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name}) %}
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
       <div class="card card-default">
@@ -168,7 +168,7 @@
 {% block form_row %}
   {%- set widget_attr = {} -%}
   {%- if help is not empty -%}
-    {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- set widget_attr = {attr: {'aria-describedby': id ~ "_help"}} -%}
   {%- endif -%}
   {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
   <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
@@ -249,8 +249,8 @@
       {% set label = label|trans({}, translation_domain)|ucfirst %}
     {% endif %}
 
-    {% set legend_attr = label_attr|merge({'class': label_attr.class|default('') }) %}
-    <legend{% for attrname,attrvalue in legend_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label }}</legend>
+    {% set legend_attr = label_attr|merge({'class': label_attr.class|default('')}) %}
+    <legend{% for attrname, attrvalue in legend_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label }}</legend>
   {% endif %}
 {% endblock %}
 
@@ -278,8 +278,8 @@
 {% endblock %}
 
 {% block tab_row %}
-  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children | keys | first == form.vars.name ? ' show active' : '') -%}
-  {{ form_widget(form, {attr: {role:'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tabClass)|trim} }) }}
+  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
+  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tabClass)|trim}}) }}
 {% endblock %}
 
 {% block entity_row %}

@@ -8,7 +8,7 @@
 <body id="{{ bodyID }}" class="{{ bodyClass }}">
 
 {% include "@Backend/base/header.html.twig" %}
-<div class="main-wrapper{% if hideActionbar is defined and hideActionbar %} main-wrapper-without-subnavigation{% endif %}{% if sidebarTree is defined %} main-wrapper-tree{% endif%}">
+<div class="main-wrapper{% if hideActionbar is defined and hideActionbar %} main-wrapper-without-subnavigation{% endif %}{% if sidebarTree is defined %} main-wrapper-tree{% endif %}">
   <div class="sidebar">
     {% include "@Backend/base/navigation.html.twig" %}
 
@@ -16,7 +16,7 @@
       {% if hideActionbar is not defined or not hideActionbar %}
         <div class="sub-navigation">
           <nav id="content-subnavigation" class="fork-nav-sidebar" {% if activeParent is defined and activeParent %}aria-label="{{ activeParent }}{% endif %}">
-            {% include "@Backend/base/subnavigation.html.twig" with { 'navigation': navigation } %}
+            {% include "@Backend/base/subnavigation.html.twig" with {'navigation': navigation} %}
           </nav>
         </div>
       {% endif %}
@@ -33,7 +33,7 @@
                 {% set _block = block('actionbar')|trim %}
                 {% if _block is not empty %}
                   <div class="col-sm-6">
-                    {% include "@Backend/base/breadcrumb.html.twig" with { 'navigation': navigation } %}
+                    {% include "@Backend/base/breadcrumb.html.twig" with {'navigation': navigation} %}
                   </div>
                   <div class="col-sm-6">
                     {% block actionbar %}{% endblock %}
@@ -41,7 +41,7 @@
                 {% endif %}
                 {% if _block is empty %}
                   <div class="col-12">
-                    {% include "@Backend/base/breadcrumb.html.twig" with { 'navigation': navigation } %}
+                    {% include "@Backend/base/breadcrumb.html.twig" with {'navigation': navigation} %}
                   </div>
                 {% endif %}
               </div>
@@ -58,9 +58,9 @@
     </main>
     <div id="root-footer"></div>
   </div>
-  {% if sidebarTree is defined %}<div class="footer-pages">{% endif%}
+  {% if sidebarTree is defined %}<div class="footer-pages">{% endif %}
   {% include "@Backend/base/footer.html.twig" %}
-  {% if sidebarTree is defined %}</div>{% endif%}
+  {% if sidebarTree is defined %}</div>{% endif %}
   <div class="modal fade" data-fork-role="confirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="forkDefaultConfirmTitle">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -71,8 +71,8 @@
           <p data-fork-role="confirmation-message"></p>
         </div>
         <div class="modal-footer">
-          {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { 'data-bs-dismiss':'modal', 'type':'button' }) }}
-          {{ macro.buttonIcon('#', 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { 'data-fork-role': 'confirmation-submit'}) }}
+          {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', {'data-bs-dismiss': 'modal', 'type': 'button'}) }}
+          {{ macro.buttonIcon('#', 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {'data-fork-role': 'confirmation-submit'}) }}
         </div>
       </div>
     </div>

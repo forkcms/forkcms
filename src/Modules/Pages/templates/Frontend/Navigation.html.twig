@@ -1,13 +1,13 @@
 {% if pages|count > 0 %}
-  <ul class="{{ isSubNavigation ? 'dropdown-menu' : 'navbar-nav me-auto mb-2 mb-lg-0'}}">
+  <ul class="{{ isSubNavigation ? 'dropdown-menu' : 'navbar-nav me-auto mb-2 mb-lg-0' }}">
     {% for nav in pages %}
       {% set revision = nav.page.activeRevision %}
       {% if nextDepth < 1 or not nav.hasChildren or isSubNavigation %}
-        <li class="{{ isSubNavigation ? '' : 'nav-item'}}{% if nav.active and not isSubNavigation %} active{% endif %}">
-          <a class="{{ isSubNavigation ? 'dropdown-item' : 'nav-link'}}{% if nav.active and isSubNavigation %} active{% endif %}{% if revision.hasSetting('link_class') %} {{ revision.setting('link_class') }}{% endif %}" href="{{ url(revision.routeName) }}" title="{{ revision.navigationTitle|e }}"{% if revision.rel %} rel="{{ revision.rel }}"{% endif %}>{{ revision.navigationTitle|e }}</a>
+        <li class="{{ isSubNavigation ? '' : 'nav-item' }}{% if nav.active and not isSubNavigation %} active {% endif %}">
+          <a class="{{ isSubNavigation ? 'dropdown-item' : 'nav-link' }}{% if nav.active and isSubNavigation %} active {% endif %}{% if revision.hasSetting('link_class') %} {{ revision.setting('link_class') }}{% endif %}" href="{{ url(revision.routeName) }}" title="{{ revision.navigationTitle|e }}"{% if revision.rel %} rel="{{ revision.rel }}"{% endif %}>{{ revision.navigationTitle|e }}</a>
         </li>
       {% else %}
-        <li class="{{ isSubNavigation ? '' : 'nav-item'}} dropdown btn-group{% if nav.active %} active{% endif %}">
+        <li class="{{ isSubNavigation ? '' : 'nav-item' }} dropdown btn-group{% if nav.active %} active {% endif %}">
           <button type="button" class="order-1 btn nav-link dropdown-toggle dropdown-toggle-split px-1 border-0" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="visually-hidden">Toggle Dropdown</span>
           </button>

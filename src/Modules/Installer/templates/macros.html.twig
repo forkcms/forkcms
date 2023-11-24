@@ -1,4 +1,4 @@
-{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false) %}
+{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight=false) %}
   {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
@@ -9,7 +9,7 @@
     </a>
   {% else %}
     {% if extra['data-toggle'] is defined and extra['type'] is not defined %}
-      {% set extra = extra|merge({'type' : 'button'}) %}
+      {% set extra = extra|merge({'type': 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
       {% if not iconRight %}{{ macro.icon(icon) }}{% endif %}
@@ -23,7 +23,7 @@
   <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|capitalize }}" title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
 {%- endmacro -%}
 
-{% macro icon(icon, iconType = 'fas') %}
+{% macro icon(icon, iconType='fas') %}
   <i class="{{ iconType }} fa-{{ icon }}"></i>
 {% endmacro %}
 

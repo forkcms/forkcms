@@ -4,7 +4,7 @@
 {% block actionbar %}
   <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
-      {{ macro.buttonIcon( 'https://www.fork-cms.com/extensions/themes', 'eye', 'lbl.FindThemes'|trans|ucfirst, '', 'target=_blank') }}
+      {{ macro.buttonIcon('https://www.fork-cms.com/extensions/themes', 'eye', 'lbl.FindThemes'|trans|ucfirst, '', 'target=_blank') }}
     </div>
   </div>
 {% endblock %}
@@ -34,13 +34,13 @@
                     <div class="btn-toolbar justify-content-center">
                       <div class="btn-group" role="group">
                         {% if is_allowed('ThemeActivate') and not installableTheme.active %}
-                          {{ macro.buttonIcon('', 'paint-brush', 'lbl.UseThisTheme'|trans|ucfirst, 'btn-primary', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmActivation" ~ installableTheme.name|e('html_attr')|ucfirst }) }}
+                          {{ macro.buttonIcon('', 'paint-brush', 'lbl.UseThisTheme'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmActivation" ~ installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                         {% if installableTheme.active %}
-                          {{ macro.buttonIcon('', 'palette', 'lbl.SelectedTheme'|trans|ucfirst, 'btn-primary', { "disabled":"disabled" }) }}
+                          {{ macro.buttonIcon('', 'palette', 'lbl.SelectedTheme'|trans|ucfirst, 'btn-primary', {"disabled": "disabled"}) }}
                         {% endif %}
                         {% if is_allowed('ThemeDetail') %}
-                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', { "title": installableTheme.name|e('html_attr')|ucfirst }) }}
+                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                       </div>
                     </div>
@@ -55,9 +55,9 @@
                               <p>{{ 'msg.ConfirmThemeActivation'|trans }}</p>
                             </div>
                             <div class="modal-footer">
-                              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" }) }}
+                              {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
                               {{ form_start(activateForm) }}
-                              {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { "type":"submit"}) }}
+                              {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
                               {{ form_end(activateForm) }}
                             </div>
                           </div>
@@ -96,10 +96,10 @@
                     <div class="btn-toolbar justify-content-center">
                       <div class="btn-group" role="group">
                         {% if is_allowed('ThemeInstall') %}
-                          {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmInstall" ~ installableTheme.name|e('html_attr')|ucfirst }) }}
+                          {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmInstall" ~ installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                         {% if is_allowed('ThemeDetail') %}
-                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', { "title": installableTheme.name|e('html_attr')|ucfirst }) }}
+                          {{ macro.buttonIcon(action_path('ThemeDetail', null, {'slug': installableTheme.name|e('url')}), 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default stretched-link', {"title": installableTheme.name|e('html_attr')|ucfirst}) }}
                         {% endif %}
                       </div>
                     </div>
@@ -114,9 +114,9 @@
                               <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
                             </div>
                             <div class="modal-footer">
-                              {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" }) }}
+                              {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
                               {{ form_start(themeInstallForm) }}
-                              {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { "type":"submit"}) }}
+                              {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
                               {{ form_end(themeInstallForm) }}
                             </div>
                           </div>

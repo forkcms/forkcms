@@ -8,7 +8,7 @@
     </a>
   {% else %}
     {% if extra['data-toggle'] is defined and extra['type'] is not defined %}
-      {% set extra = extra|merge({'type' : 'button'}) %}
+      {% set extra = extra|merge({'type': 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
       {{ macro.icon(icon) }}

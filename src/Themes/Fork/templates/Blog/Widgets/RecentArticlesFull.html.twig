@@ -5,7 +5,7 @@
     {% for post in widgetBlogRecentArticlesFull %}
       <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
         <meta itemprop="interactionCount" content="UserComments:{{ post.comments_count }}">
-        <meta itemprop="author" content="{{ post.user_id|usersetting('nickname' ) }}">
+        <meta itemprop="author" content="{{ post.user_id|usersetting('nickname') }}">
 
         <header class="block-article-heading" role="banner">
           <h3 itemprop="name">
@@ -19,7 +19,7 @@
               {{ 'msg.WrittenBy'|trans|ucfirst|format(post.user_id|usersetting('nickname')) }}
               {{ 'lbl.On'|trans }}
               <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\\TH:i:s') }}">
-                {{ post.publish_on|spoondate(dateFormatLong, LANGUAGE ) }}
+                {{ post.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
               </time>
             </div>
             <div class="col-md-4">
@@ -27,12 +27,12 @@
                 <div class="pull-right">
                   {% if not post.comments %}
                     <a href="{{ post.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
-                      {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                      {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count) }}
                     </a>
                   {% else %}
                     <a href="{{ post.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
                       {% if post.comments_multiple %}
-                        {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                        {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count) }}
                       {% else %}
                         {{ 'msg.BlogOneComment'|trans }}
                       {% endif %}

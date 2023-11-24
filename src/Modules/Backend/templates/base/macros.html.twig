@@ -1,4 +1,4 @@
-{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight = false, iconOnly = false) %}
+{% macro buttonIcon(url, icon, label, buttonType, extra, iconRight=false, iconOnly=false) %}
   {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
@@ -11,7 +11,7 @@
     </a>
   {% else %}
     {% if extra['data-bs-toggle'] is defined and extra['type'] is not defined %}
-      {% set extra = extra|merge({'type' : 'button'}) %}
+      {% set extra = extra|merge({'type': 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}{% if iconOnly %} btn-icon-only{% endif %}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
     {% apply spaceless %}
@@ -27,11 +27,11 @@
   <abbr data-bs-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {%- endmacro -%}
 
-{% macro icon(icon, iconType = 'fas') %}
+{% macro icon(icon, iconType='fas') %}
   <i class="{{ iconType }} fa-{{ icon }}"></i>
 {% endmacro %}
 
-{% macro infoTooltip(title, icon = 'info-circle', iconType = 'fas') %}
+{% macro infoTooltip(title, icon='info-circle', iconType='fas') %}
   {% import _self as macro %}
   <abbr tabindex="0" data-bs-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon(icon, iconType) }}</abbr>
 {% endmacro %}
@@ -47,10 +47,10 @@
   {% endif %}
 {% endmacro %}
 
-{% macro alert(type, message, dismissable = true, id, extraAttributes = [], active = true, showIcon = true) %}
+{% macro alert(type, message, dismissable=true, id, extraAttributes=[], active=true, showIcon=true) %}
   {% import _self as macro %}
 
-  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default('')) }) %}
+  {% set extraAttributes = extraAttributes|merge({'class': 'toast toast-' ~ type ~ (extraAttributes.class is defined and extraAttributes.class|length > 0 ? ' ' ~ extraAttributes.class|default(''))}) %}
 
   {% if active %}
     {% set extraAttributes = extraAttributes|merge({'class': extraAttributes.class|default('') ~ ' to-show'}) %}
