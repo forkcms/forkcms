@@ -50,7 +50,10 @@ abstract class ThemeTemplateDataTransferObject implements UniqueDataTransferObje
         $this->default = $themeTemplateEntity->isDefault();
     }
 
-    #[Assert\Regex('/^\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\](,\r?\n?\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\])*$/i', 'err.InvalidTemplateSyntax')]
+    #[Assert\Regex(
+        '/^\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\](,\r?\n?\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\])*$/i',
+        'err.InvalidTemplateSyntax'
+    )]
     public function getLayout(): string
     {
         return $this->settings->getOr('layout', '');

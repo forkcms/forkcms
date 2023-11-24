@@ -89,7 +89,8 @@ class UserGroup
 
     public static function fromDataTransferObject(UserGroupDataTransferObject $userDataTransferObject): self
     {
-        $userGroup = $userDataTransferObject->hasEntity() ? $userDataTransferObject->getEntity() : new self($userDataTransferObject->name);
+        $userGroup = $userDataTransferObject->hasEntity()
+            ? $userDataTransferObject->getEntity() : new self($userDataTransferObject->name);
         $userGroup->name = $userDataTransferObject->name;
         CollectionHelper::updateCollection(
             $userDataTransferObject->users,
