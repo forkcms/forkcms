@@ -74,6 +74,7 @@ yarn-error.log
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
 /phpcs.xml
+/phpcs-report.xml
 ###< squizlabs/php_codesniffer ###
 ###> symfony/phpunit-bridge ###
 .phpunit
