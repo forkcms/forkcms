@@ -22,6 +22,7 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
+                    'label' => 'lbl.EnableTwoFactorAuthentication',
                     'label_attr' => ['class' => 'checkbox-switch'],
                 ]
             )
@@ -29,6 +30,7 @@ final class ModuleSettingsType extends AbstractType
                 '2fa_key',
                 TextType::class,
                 [
+                    'label' => 'lbl.TwoFactorAuthenticationKey',
                     'required' => false,
                 ]
             )
@@ -37,6 +39,7 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
+                    'label' => 'lbl.RequireTwoFactorAuthentication',
                     'label_attr' => ['class' => 'checkbox-switch'],
                 ]
             )
@@ -45,6 +48,7 @@ final class ModuleSettingsType extends AbstractType
                 CheckboxType::class,
                 [
                     'required' => false,
+                    'label' => 'lbl.EnableTrustedDevices',
                     'label_attr' => ['class' => 'checkbox-switch'],
                 ]
             );

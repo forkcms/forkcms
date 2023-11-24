@@ -1126,6 +1126,30 @@
       <translation locale="pt"><![CDATA[utilizadores]]></translation>
       <translation locale="pl"><![CDATA[użytkownicy]]></translation>
     </item>
+    <item type="label" name="2FA">
+      <translation locale="nl"><![CDATA[Two factor authentication]]></translation>
+      <translation locale="en"><![CDATA[Two factor authentication]]></translation>
+    </item>
+    <item type="label" name="EnableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Activeer two factor authentication]]></translation>
+      <translation locale="en"><![CDATA[Enable two factor authentication]]></translation>
+    </item>
+    <item type="label" name="TwoFactorAuthenticationKey">
+      <translation locale="nl"><![CDATA[Autorisatie sleutel]]></translation>
+      <translation locale="en"><![CDATA[Authorization key]]></translation>
+    </item>
+    <item type="label" name="RequireTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Maak two factor authentication verplicht]]></translation>
+      <translation locale="en"><![CDATA[Require two factor authentication]]></translation>
+    </item>
+    <item type="label" name="EnableTrustedDevices">
+      <translation locale="nl"><![CDATA[Activeer vertrouwde apparaten]]></translation>
+      <translation locale="en"><![CDATA[Enable trusted devices]]></translation>
+    </item>
+    <item type="message" name="BackupCodes">
+      <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
+      <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>
+    </item>
     <item type="label" name="RequiredField">
       <translation locale="nl"><![CDATA[verplicht veld]]></translation>
       <translation locale="en"><![CDATA[required field]]></translation>

@@ -103,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private ?string $googleAuthenticatorSecret = null;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $trustedVersion;
+    private int $trustedVersion = 0;
 
     #[ORM\Column(type: 'json')]
     private array $backupCodes = [];
@@ -342,6 +342,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function getTrustedTokenVersion(): int
     {
         return $this->trustedVersion;
+    }
+
+    public function getBackupCodes(): array
+    {
+        return $this->backupCodes;
     }
 
     public function isBackupCode(string $code): bool

@@ -32,6 +32,20 @@ final class UserEdit extends AbstractFormActionController
         parent::__construct($services);
     }
 
+    public function execute(Request $request): void
+    {
+        parent::execute($request);
+
+        $backupCodes = null;
+        if ($request->getSession()->has('showBackupCodes')) {
+            $request->getSession()->remove('showBackupCodes');
+            $user = $this->getEntityFromRequest($request, User::class);
+            $backupCodes = $user->getBackupCodes();
+        }
+
+        $this->assign('backupCodes', $backupCodes);
+    }
+
     protected function getFormResponse(Request $request): ?Response
     {
         $user = $this->getEntityFromRequest($request, User::class);
@@ -47,7 +61,18 @@ final class UserEdit extends AbstractFormActionController
             request: $request,
             formType: UserType::class,
             formData: new ChangeUser($user, $this->displayQrCode($user)),
-            redirectResponse: new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router)),
+            validCallback: function (FormInterface $form) use ($request): ?Response {
+                $redirectResponse = new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
+                $this->commandBus->dispatch($form->getData());
+
+                if ($form->getData()->enableTwoFactorAuthentication) {
+                    $request->getSession()->set('showBackupCodes', true);
+
+                    return new RedirectResponse(self::getActionSlug()->generateRoute($this->router) . '/' . $form->getData()->getEntity()->getId());
+                }
+
+                return $redirectResponse;
+            },
             flashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserEdited', ['%user%' => $form->getData()->displayName]);
             }
