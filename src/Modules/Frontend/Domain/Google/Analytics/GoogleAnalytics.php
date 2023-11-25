@@ -17,7 +17,7 @@ final class GoogleAnalytics
     private function isEnabled(): bool
     {
         return $this->moduleSettings->get(
-            ModuleName:: frontend(),
+            ModuleName::frontend(),
             'google_analytics_enabled',
             false
         );
@@ -26,7 +26,7 @@ final class GoogleAnalytics
     private function shouldAnonymize(): bool
     {
         // if the consent dialog is disabled we will anonymize by default
-        if (!$this->moduleSettings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
+        if (!$this->moduleSettings->get(ModuleName::frontend(), 'consent_dialog_enabled', false)) {
             return true;
         }
 
@@ -59,7 +59,7 @@ final class GoogleAnalytics
         return sprintf(
             implode("\n", $code) . "\n",
             $this->moduleSettings->get(
-                ModuleName::fromString('Frontend'),
+                ModuleName::frontend(),
                 'google_tracking_google_analytics_tracking_id'
             )
         );

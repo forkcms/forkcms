@@ -48,7 +48,7 @@ final class FrontendExtension extends AbstractExtension implements GlobalsInterf
         $globals['SITE_HTML_HEAD'] = $this->getSiteHtmlHead();
         $globals['SITE_HTML_START_OF_BODY'] = $this->getSiteHtmlStartOfBody();
         $globals['SITE_HTML_END_OF_BODY'] = trim(
-            $this->moduleSettings->get(ModuleName:: frontend(), 'site_html_end_of_body')
+            $this->moduleSettings->get(ModuleName::frontend(), 'site_html_end_of_body')
         );
 
         return $globals;
@@ -60,7 +60,7 @@ final class FrontendExtension extends AbstractExtension implements GlobalsInterf
             implode(
                 PHP_EOL,
                 [
-                    $this->moduleSettings->get(ModuleName:: frontend(), 'site_html_head'),
+                    $this->moduleSettings->get(ModuleName::frontend(), 'site_html_head'),
                     $this->tagManager->generateHeadCode(),
                     $this->googleAnalytics->generateHeadCode(),
                 ]
@@ -74,7 +74,7 @@ final class FrontendExtension extends AbstractExtension implements GlobalsInterf
             implode(
                 PHP_EOL,
                 [
-                    $this->moduleSettings->get(ModuleName:: frontend(), 'site_html_start_of_body'),
+                    $this->moduleSettings->get(ModuleName::frontend(), 'site_html_start_of_body'),
                     $this->tagManager->generateStartOfBodyCode(),
                 ]
             )

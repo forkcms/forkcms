@@ -17,13 +17,13 @@ class ConsentDialog implements JsonSerializable
 
     public function isDialogEnabled(): bool
     {
-        return $this->settings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false);
+        return $this->settings->get(ModuleName::frontend(), 'consent_dialog_enabled', false);
     }
 
     public function shouldDialogBeShown(): bool
     {
         // the consent dialog is hidden within the settings, so don't show it
-        if (!$this->settings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
+        if (!$this->settings->get(ModuleName::frontend(), 'consent_dialog_enabled', false)) {
             return false;
         }
 
@@ -47,7 +47,7 @@ class ConsentDialog implements JsonSerializable
             $levels[] = 'functional';
         }
 
-        $frontendModuleName = ModuleName::fromString('Frontend');
+        $frontendModuleName = ModuleName::frontend();
         $customLevels = $this->settings->get($frontendModuleName, 'consent_dialog_levels', []);
         if (
             $this->settings->get($frontendModuleName, 'google_analytics_enabled', false)

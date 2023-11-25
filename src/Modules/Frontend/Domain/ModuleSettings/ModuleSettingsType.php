@@ -107,7 +107,7 @@ final class ModuleSettingsType extends AbstractType
                 'fields' => function (FormBuilderInterface $builder): void {
                     $submittedShow = $_POST['module_settings']['privacy_consents']['consent_dialog_enabled'] ?? null;
                     $showConsentDialog = $this->moduleSettings->get(
-                        ModuleName::fromString('Frontend'),
+                        ModuleName::frontend(),
                         'consent_dialog_enabled'
                     );
                     $showConsentDialog = (bool) ($submittedShow ?? $showConsentDialog);
