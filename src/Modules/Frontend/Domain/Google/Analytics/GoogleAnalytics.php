@@ -17,7 +17,7 @@ final class GoogleAnalytics
     private function isEnabled(): bool
     {
         return $this->moduleSettings->get(
-            ModuleName::fromString('Frontend'),
+            ModuleName:: frontend(),
             'google_analytics_enabled',
             false
         );
