@@ -270,7 +270,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatLongDateTime',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDateTime(
             $env,
             $date,

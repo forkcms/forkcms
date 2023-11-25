@@ -63,22 +63,9 @@ final class BackendController
         $this->navigation->parse($this->twig);
         $this->navigation->buildBreadcrumbs($this->header->breadcrumbs);
         $this->header->addAssetsForAction($actionSlug->asModuleAction());
-        $this->header->parse($this->twig);
-        $this->twig->addGlobal(
-            'SITE_TITLE',
-            $this->moduleSettings->get(
-                ModuleName::fromString('Frontend'),
-                'site_title_' . $request->getLocale(),
-                $_ENV['SITE_DEFAULT_TITLE']
-            )
-        );
-        $this->twig->addGlobal('SITE_URL', $_ENV['SITE_PROTOCOL'] . '://' . $_ENV['SITE_DOMAIN']);
-        $this->twig->addGlobal('SITE_MULTILINGUAL', $_ENV['SITE_MULTILINGUAL'] === 'true');
         $this->twig->addGlobal('bodyID', Container::underscore($actionSlug->getModuleName()));
         $this->twig->addGlobal('bodyClass', str_replace('/', '_', $actionSlug->getSlug()));
         $this->twig->addGlobal('LOCALES', $locales);
         $this->twig->addGlobal('MODULE_ACTION', $actionSlug->asModuleAction());
-        $this->twig->addGlobal('CRLF', "\n");
-        $this->twig->addGlobal('TAB', "\t");
     }
 }

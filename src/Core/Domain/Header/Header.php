@@ -9,6 +9,7 @@ use ForkCMS\Core\Domain\Header\Asset\Priority;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\Breadcrumb\BreadcrumbCollection;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
+use ForkCMS\Core\Domain\Header\Meta\MetaCollection;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
@@ -17,13 +18,12 @@ use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslat
 use ForkCMS\Modules\Internationalisation\Domain\Translator\ForkTranslator;
 use InvalidArgumentException;
 use LogicException;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -31,21 +31,33 @@ use Twig\Environment;
  */
 final class Header
 {
-    private readonly JsData $jsData;
+    public readonly JsData $jsData;
 
-    private readonly AssetCollection $cssAssets;
-    private readonly AssetCollection $jsAssets;
+    public readonly AssetCollection $cssAssets;
+    public readonly AssetCollection $jsAssets;
+
+    public readonly MetaCollection $metaCollection;
 
     public function __construct(
         public readonly BreadcrumbCollection $breadcrumbs,
         private readonly RequestStack $requestStack,
-        private readonly PageTitle $pageTitle,
-        private readonly ContentTitle $contentTitle,
         KernelInterface $kernel,
         Security $security,
         TranslatorInterface $translator,
         ConsentDialog $consentDialog,
     ) {
+        $this->jsData = $this->initJsData($kernel, $security, $translator, $consentDialog);
+        $this->jsAssets = new AssetCollection();
+        $this->cssAssets = new AssetCollection();
+        $this->metaCollection = new MetaCollection();
+    }
+
+    private function initJsData(
+        KernelInterface $kernel,
+        Security $security,
+        TranslatorInterface $translator,
+        ConsentDialog $consentDialog
+    ): JsData {
         $defaults = [
             'default_locale' => $kernel->getContainer()->getParameter('kernel.default_locale'),
             'debug' => $kernel->isDebug(),
@@ -64,23 +76,12 @@ final class Header
             $defaults['default_translation_domain_fallback'] = $fallbackDomain ?? $defaults['default_translation_domain'];
         }
 
-        $this->jsData = new JsData($defaults);
-        $this->jsAssets = new AssetCollection();
-        $this->cssAssets = new AssetCollection();
+        return new JsData($defaults);
     }
 
     public function addJsData(ModuleName $module, string $key, mixed $value): void
     {
         $this->jsData->add($module, $key, $value);
-    }
-
-    public function parse(Environment $twig): void
-    {
-        $twig->addGlobal('jsData', $this->jsData);
-        $twig->addGlobal('jsFiles', $this->jsAssets);
-        $twig->addGlobal('cssFiles', $this->cssAssets);
-        $twig->addGlobal('breadcrumbs', $this->breadcrumbs);
-        $twig->addGlobal('page_title', new PageTitle($this->breadcrumbs));
     }
 
     private function getFirstPossibleSessionTimeout(): int

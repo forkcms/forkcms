@@ -1,4 +1,4 @@
-{% if privacyConsentEnabled %}
+{% if PRIVACY_CONSENT_ENABLED %}
   <div
     id="privacyConsentDialog"
     tabindex="-1"
@@ -6,7 +6,7 @@
     aria-labelledby="privacyConsentDialogTitle"
     data-role="privacy_consent_dialog"
     data-backdrop="false"
-    {% if privacyConsentDialogHide %}
+    {% if PRIVACY_CONSENT_DIALOG_HIDE %}
       style="display: none"
     {% endif %}
   >
@@ -39,7 +39,7 @@
               </small>
             </div>
 
-            {% for level in privacyConsentDialogLevels %}
+            {% for level in PRIVACY_CONSENT_DIALOG_LEVELS %}
               <div class="form-group mt-1">
                 <div class="form-check form-switch">
                   <input name="privacyConsentLevel{{ level|ucfirst }}Checkbox"

@@ -9,7 +9,6 @@ use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockControllerInterface;
-use ForkCMS\Modules\Frontend\Domain\Twig\FrontendGlobals;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\InstalledLocaleRepository;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Page\NavigationBuilder;
@@ -38,7 +37,6 @@ final class PageController
         private readonly NavigationBuilder $navigationBuilder,
         private readonly RouterInterface $router,
         private readonly InstalledLocaleRepository $installedLocaleRepository,
-        private readonly FrontendGlobals $frontendGlobals,
         private readonly Header $header,
         private readonly EditorType $editorType,
     ) {
@@ -53,11 +51,9 @@ final class PageController
         if (!in_array($format, $allowedFormats, true)) {
             throw new NotFoundHttpException('Page not found');
         }
-        $this->parseRevision($request, $revision);
         $this->parseFooterLinks();
         $this->parseLocales($request);
         $this->buildBreadcrumbs($revision);
-        $this->frontendGlobals->addGlobals();
 
         $revisionContext = [
             'positions' => [],
@@ -137,22 +133,7 @@ final class PageController
         return $content;
     }
 
-    private function parseRevision(Request $request, Revision $revision): void
-    {
-        $frontendModuleName = ModuleName::fromString('Frontend');
-        $this->twig->addGlobal(
-            'siteTitle',
-            $this->moduleSettings->get(
-                $frontendModuleName,
-                'site_title_' . $request->getLocale(),
-                $_ENV['SITE_DEFAULT_TITLE']
-            )
-        );
-        $this->twig->addGlobal('contentTitle', $revision->getTitle()); // @todo make it overwritable
-        $this->twig->addGlobal('hideContentTitle', false);
-    }
-
-    protected function parseFooterLinks(): void
+    private function parseFooterLinks(): void
     {
         $pages = $this->navigationBuilder->getTree(Locale::current())[MenuType::FOOTER->value]['pages'] ?? [];
         $footerLinks = [];
@@ -167,10 +148,10 @@ final class PageController
             ];
         }
 
-        $this->twig->addGlobal('footerLinks', $footerLinks);
+        $this->twig->addGlobal('FOOTER_LINKS', $footerLinks);
     }
 
-    protected function parseLocales(Request $request): void
+    private function parseLocales(Request $request): void
     {
         $locales = [];
         $websiteLocales = $this->installedLocaleRepository->findForWebsite();
@@ -192,7 +173,8 @@ final class PageController
                 'active' => $locale === $request->getLocale(),
             ];
         }
-        $this->twig->addGlobal('locales', $locales);
+
+        $this->twig->addGlobal('LOCALES', $locales);
     }
 
     private function buildBreadcrumbs(Revision $revision): void
@@ -208,9 +190,8 @@ final class PageController
                     $homeRoute
                 )
             );
-        } elseif (count($pages) === 1) {
-            return;
         }
+
         foreach ($pages as $page) {
             $revision = $page->getActiveRevision();
             $this->header->breadcrumbs->add(
