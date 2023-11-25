@@ -21,7 +21,7 @@ class TagManager
         $this->dataLayer->set('anonymizeIp', $this->shouldAnonymizeIp());
 
         // only if the consent dialog is enabled we should extra variables
-        if ($this->moduleSettings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
+        if ($this->moduleSettings->get(ModuleName::frontend(), 'consent_dialog_enabled', false)) {
             foreach ($this->consentDialog->getVisitorChoices() as $level => $choice) {
                 $this->dataLayer->set('privacyConsentLevel' . ucfirst($level) . 'Agreed', $choice);
             }
@@ -31,7 +31,7 @@ class TagManager
     private function shouldAnonymizeIp(): bool
     {
         // if the consent dialog is disabled we will anonymize by default
-        if (!$this->moduleSettings->get(ModuleName::fromString('Frontend'), 'consent_dialog_enabled', false)) {
+        if (!$this->moduleSettings->get(ModuleName::frontend(), 'consent_dialog_enabled', false)) {
             return true;
         }
 
@@ -41,7 +41,7 @@ class TagManager
     private function isEnabled(): bool
     {
         return $this->moduleSettings->get(
-            ModuleName::fromString('Frontend'),
+            ModuleName::frontend(),
             'google_tag_manager_enabled',
             false
         );
@@ -66,7 +66,7 @@ class TagManager
         $code = sprintf(
             implode("\n", $codeLines) . "\n",
             $this->moduleSettings->get(
-                ModuleName::fromString('Frontend'),
+                ModuleName::frontend(),
                 'google_tracking_google_tag_manager_container_id'
             )
         );
@@ -93,7 +93,7 @@ class TagManager
         return sprintf(
             implode("\n", $codeLines) . "\n",
             $this->moduleSettings->get(
-                ModuleName::fromString('Frontend'),
+                ModuleName::frontend(),
                 'google_tracking_google_tag_manager_container_id'
             ),
             $this->dataLayer->generateNoScriptParameters()
