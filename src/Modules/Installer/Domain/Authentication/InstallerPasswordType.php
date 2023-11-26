@@ -2,8 +2,8 @@
 
 namespace ForkCMS\Modules\Installer\Domain\Authentication;
 
+use ForkCMS\Core\Domain\Form\TogglePasswordType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +28,6 @@ final class InstallerPasswordType extends AbstractType
 
     public function getParent(): string
     {
-        return PasswordType::class;
+        return TogglePasswordType::class;
     }
 }
