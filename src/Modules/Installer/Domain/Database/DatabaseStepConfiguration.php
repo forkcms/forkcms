@@ -108,6 +108,6 @@ final class DatabaseStepConfiguration implements InstallerStepConfiguration
 
     public static function getStep(): InstallerStep
     {
-        return InstallerStep::database;
+        return InstallerStep::DATABASE;
     }
 }

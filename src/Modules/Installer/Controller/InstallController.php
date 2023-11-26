@@ -23,7 +23,7 @@ final class InstallController
 
     public function __invoke(Request $request): Response
     {
-        $step = InstallerStep::install;
+        $step = InstallerStep::INSTALL;
         $installerConfiguration = InstallerConfiguration::fromCache();
 
         if (!$installerConfiguration->isValidForStep($step)) {

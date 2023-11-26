@@ -77,7 +77,7 @@ final class InstallerConfiguration
 
     public function withRequirementsStep(): void
     {
-        $this->addStep(InstallerStep::requirements);
+        $this->addStep(InstallerStep::REQUIREMENTS);
     }
 
     public function withLocaleStep(LocalesStepConfiguration $localesStepConfiguration): self

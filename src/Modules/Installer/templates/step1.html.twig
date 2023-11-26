@@ -32,7 +32,7 @@
             <div class="card-body">
               <div class="list-group list-group-flush">
                 {% for requirement in requirementCategory.requirements %}
-                  <div class="alert alert-{{ requirement.status.name }}">
+                  <div class="alert alert-{{ requirement.status.value }}">
                     <h3 class="list-group-item-heading">{{ requirement.name }}</h3>
                     <p class="list-group-item-text">{{ requirement.message|raw }}</p>
                   </div>

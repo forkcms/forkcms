@@ -184,11 +184,11 @@ class Revision
     {
         $relParts = [];
         $follow = $this->meta->getSEOFollow();
-        if ($follow === SEOFollow::noFollow) {
+        if ($follow === SEOFollow::NO_FOLLOW) {
             $relParts[] = $follow->value;
         }
         $index = $this->meta->getSEOIndex();
-        if ($index === SEOIndex::noIndex) {
+        if ($index === SEOIndex::NO_INDEX) {
             $relParts[] = $index->value;
         }
 

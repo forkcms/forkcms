@@ -33,7 +33,7 @@ final class ModulesStepConfiguration implements InstallerStepConfiguration
 
     public static function getStep(): InstallerStep
     {
-        return InstallerStep::modules;
+        return InstallerStep::MODULES;
     }
 
     public static function fromArray(array $configuration): static
