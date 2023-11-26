@@ -10,9 +10,14 @@ use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\Breadcrumb\BreadcrumbCollection;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Core\Domain\Header\Meta\MetaCollection;
+use ForkCMS\Core\Domain\Header\Meta\MetaData;
+use ForkCMS\Core\Domain\Header\Meta\MetaLink;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
+use ForkCMS\Modules\Frontend\Domain\Meta\SEOFollow;
+use ForkCMS\Modules\Frontend\Domain\Meta\SEOIndex;
 use ForkCMS\Modules\Frontend\Domain\Privacy\ConsentDialog;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\ForkTranslator;
@@ -33,13 +38,15 @@ final class Header
 {
     public readonly JsData $jsData;
 
-    public readonly AssetCollection $cssAssets;
-    public readonly AssetCollection $jsAssets;
+    public readonly AssetCollection $cssFiles;
+    public readonly AssetCollection $jsFiles;
 
-    public readonly MetaCollection $metaCollection;
+    public readonly MetaCollection $meta;
 
     public function __construct(
         public readonly BreadcrumbCollection $breadcrumbs,
+        public readonly PageTitle $pageTitle,
+        public readonly ContentTitle $contentTitle,
         private readonly RequestStack $requestStack,
         KernelInterface $kernel,
         Security $security,
@@ -47,9 +54,22 @@ final class Header
         ConsentDialog $consentDialog,
     ) {
         $this->jsData = $this->initJsData($kernel, $security, $translator, $consentDialog);
-        $this->jsAssets = new AssetCollection();
-        $this->cssAssets = new AssetCollection();
-        $this->metaCollection = new MetaCollection();
+        $this->jsFiles = new AssetCollection();
+        $this->cssFiles = new AssetCollection();
+        $this->meta = new MetaCollection();
+    }
+
+    public function appendMeta(Meta $meta): void
+    {
+        $this->contentTitle->overwriteContentTitle($meta->getTitle());
+        $this->meta->addDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
+        $this->meta->addKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+        $this->meta->setSEOFollow($meta->getSEOFollow());
+        $this->meta->setSEOIndex($meta->getSEOIndex());
+
+        if ($meta->isCanonicalUrlOverwrite() && $meta->getCanonicalUrl() !== null && $meta->getCanonicalUrl() !== '') {
+            $this->meta->addMetaLink(MetaLink::canonical($meta->getCanonicalUrl()));
+        }
     }
 
     private function initJsData(
@@ -116,12 +136,12 @@ final class Header
 
     public function addJs(Asset $assets): void
     {
-        $this->jsAssets->add($assets);
+        $this->jsFiles->add($assets);
     }
 
     public function addCss(Asset $assets): void
     {
-        $this->cssAssets->add($assets);
+        $this->cssFiles->add($assets);
     }
 
     public function addBreadcrumb(Breadcrumb $breadcrumb): void

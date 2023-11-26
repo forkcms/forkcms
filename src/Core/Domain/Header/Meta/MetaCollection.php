@@ -2,6 +2,9 @@
 
 namespace ForkCMS\Core\Domain\Header\Meta;
 
+use ForkCMS\Modules\Frontend\Domain\Meta\SEOFollow;
+use ForkCMS\Modules\Frontend\Domain\Meta\SEOIndex;
+
 final class MetaCollection
 {
     /** @var MetaData[] */
@@ -12,6 +15,10 @@ final class MetaCollection
 
     /** @var MetaCustom[] */
     private array $metaCustoms = [];
+
+    private SEOFollow $SEOFollow = SEOFollow::NONE;
+
+    private SEOIndex $SEOIndex = SEOIndex::NONE;
 
     public function addMetaData(MetaData $metaData, bool $overwrite = false): void
     {
@@ -88,8 +95,38 @@ final class MetaCollection
         }
     }
 
+    public function setSEOFollow(SEOFollow $SEOFollow): void
+    {
+        if ($SEOFollow === SEOFollow::NONE) {
+            return;
+        }
+
+        $this->SEOFollow = $SEOFollow;
+    }
+
+    public function setSEOIndex(SEOIndex $SEOIndex): void
+    {
+        if ($SEOIndex === SEOIndex::NONE) {
+            return;
+        }
+
+        $this->SEOIndex = $SEOIndex;
+    }
+
     public function __toString(): string
     {
+        $SEO = [];
+        if ($this->SEOFollow !== SEOFollow::NONE) {
+            $SEO[] = $this->SEOFollow->value;
+        }
+        if ($this->SEOIndex !== SEOIndex::NONE) {
+            $SEO[] = $this->SEOIndex->value;
+        }
+
+        if (count($SEO) > 0) {
+            $this->addMetaData(MetaData::forName('robots', implode(', ', $SEO)), true);
+        }
+
         return implode(
             "\n",
             [
