@@ -118,6 +118,6 @@ final class LocalesStepConfiguration implements InstallerStepConfiguration
 
     public static function getStep(): InstallerStep
     {
-        return InstallerStep::locales;
+        return InstallerStep::LOCALES;
     }
 }

@@ -36,22 +36,22 @@ class TranslationKey implements TranslatableInterface
 
     public static function label(string $name): self
     {
-        return new self(Type::lbl, $name);
+        return new self(Type::LABEL, $name);
     }
 
     public static function message(string $name): self
     {
-        return new self(Type::msg, $name);
+        return new self(Type::MESSAGE, $name);
     }
 
     public static function error(string $name): self
     {
-        return new self(Type::err, $name);
+        return new self(Type::ERROR, $name);
     }
 
     public static function slug(string $name): self
     {
-        return new self(Type::slg, $name);
+        return new self(Type::SLUG, $name);
     }
 
     public function getType(): Type
@@ -66,7 +66,7 @@ class TranslationKey implements TranslatableInterface
 
     public function __toString(): string
     {
-        return $this->type->name . '.' . $this->name;
+        return $this->type->getAbbreviation() . '.' . $this->name;
     }
 
     public function trans(TranslatorInterface $translator, string $locale = null): string

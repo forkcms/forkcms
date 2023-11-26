@@ -108,8 +108,8 @@ class Meta implements JsonSerializable
         $this->slug = $slug;
         $this->slugOverwrite = $slugOverwrite;
         $this->custom = $custom;
-        $this->seoFollow = $seoFollow ?? SEOFollow::none;
-        $this->seoIndex = $seoIndex ?? SEOIndex::none;
+        $this->seoFollow = $seoFollow ?? SEOFollow::NONE;
+        $this->seoIndex = $seoIndex ?? SEOIndex::NONE;
         $this->canonicalUrl = $canonicalUrl;
         $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->settings = $settings ?? $this->settings;

@@ -2,9 +2,19 @@
 
 namespace ForkCMS\Modules\Frontend\Domain\Meta;
 
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+
 enum SEOIndex: string
 {
-    case none = 'none';
-    case index = 'index';
-    case noIndex = 'noindex';
+    case NONE = 'none';
+    case INDEX = 'index';
+    case NO_INDEX = 'noindex';
+    public function getLabel(): TranslationKey
+    {
+        return match ($this) {
+            self::NONE => TranslationKey::label('None'),
+            self::INDEX => TranslationKey::label('Index'),
+            self::NO_INDEX => TranslationKey::label('NoIndex'),
+        };
+    }
 }
