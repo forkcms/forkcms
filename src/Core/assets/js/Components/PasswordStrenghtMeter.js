@@ -1,4 +1,4 @@
-const passwordStrength = require('check-password-strength')
+const { passwordStrength } = require('check-password-strength')
 
 export class PasswordStrenghtMeter {
   constructor (element) {
