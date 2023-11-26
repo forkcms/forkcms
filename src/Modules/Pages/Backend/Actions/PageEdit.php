@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\Pages\Backend\Actions;
 
+use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
@@ -10,10 +11,8 @@ use ForkCMS\Modules\Pages\Domain\Page\Page;
 use ForkCMS\Modules\Pages\Domain\Revision\Command\CreateRevision;
 use ForkCMS\Modules\Pages\Domain\Revision\Form\RevisionType;
 use ForkCMS\Modules\Pages\Domain\Revision\Revision;
-use Symfony\Component\Form\ButtonTypeInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
-use Symfony\Component\Form\SubmitButtonTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +31,8 @@ final class PageEdit extends AbstractFormActionController
         $revision = $request->query->has('revision')
             ? $this->getEntityFromRequest($request, Revision::class, 'revision')
             : $this->getEntityFromRequest($request, Page::class)->getActiveRevision();
+
+        $this->header->addBreadcrumb(new Breadcrumb($revision->getNavigationTitle()));
 
         $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::current()));
 
