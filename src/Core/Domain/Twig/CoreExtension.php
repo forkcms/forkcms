@@ -33,9 +33,9 @@ final class CoreExtension extends AbstractExtension implements GlobalsInterface
             'CONTENT_TITLE' => $this->contentTitle,
             'BREADCRUMBS' => $this->breadcrumbs,
             'JS_DATA' => $this->header->jsData,
-            'JS_FILES' => $this->header->jsAssets,
-            'CSS_FILES' => $this->header->cssAssets,
-            'META' => $this->header->metaCollection,
+            'JS_FILES' => $this->header->jsFiles,
+            'CSS_FILES' => $this->header->cssFiles,
+            'META' => $this->header->meta,
         ];
     }
 }

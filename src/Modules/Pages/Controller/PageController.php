@@ -54,7 +54,7 @@ final class PageController
         $this->parseFooterLinks();
         $this->parseLocales($request);
         $this->buildBreadcrumbs($revision);
-
+        $this->header->appendMeta($revision->getMeta());
         $revisionContext = [
             'positions' => [],
             'template' => $revision->getThemeTemplate()->getTemplatePath(),

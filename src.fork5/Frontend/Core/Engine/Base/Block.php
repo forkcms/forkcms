@@ -514,31 +514,6 @@ class Block extends KernelLoader
         $this->templatePath = $path;
     }
 
-    protected function setMeta(Meta $meta): void
-    {
-        $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
-        $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
-        $this->header->addMetaKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
-
-        if ($meta->isCanonicalUrlOverwrite() && !empty($meta->getCanonicalUrl())) {
-            $this->header->setCanonicalUrl($meta->getCanonicalUrl());
-        }
-
-        $SEO = [];
-        if ($meta->hasSEOFollow()) {
-            $SEO[] = $meta->getSEOFollow();
-        }
-        if ($meta->hasSEOIndex()) {
-            $SEO[] = $meta->getSEOIndex();
-        }
-        if (!empty($SEO)) {
-            $this->header->addMetaData(
-                ['name' => 'robots', 'content' => implode(', ', $SEO)],
-                true
-            );
-        }
-    }
-
     /**
      * Creates and returns a Form instance from the type of the form.
      *
