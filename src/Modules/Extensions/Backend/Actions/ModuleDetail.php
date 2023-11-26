@@ -3,6 +3,7 @@
 namespace ForkCMS\Modules\Extensions\Backend\Actions;
 
 use ForkCMS\Core\Domain\Form\ActionType;
+use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInformation;
@@ -25,6 +26,7 @@ final class ModuleDetail extends AbstractActionController
     {
         $module = ModuleInformation::fromModule(ModuleName::fromString($request->attributes->get('slug')));
         $this->assign('module', $module);
+        $this->header->addBreadcrumb(new Breadcrumb($module->getModuleName()));
 
         if (!array_key_exists($module->getModuleName(), $this->moduleRepository->findAllIndexed())) {
             $module->messages->addMessage(TranslationKey::message('InformationModuleIsNotInstalled'));
