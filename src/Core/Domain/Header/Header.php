@@ -10,14 +10,11 @@ use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\Breadcrumb\BreadcrumbCollection;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Core\Domain\Header\Meta\MetaCollection;
-use ForkCMS\Core\Domain\Header\Meta\MetaData;
 use ForkCMS\Core\Domain\Header\Meta\MetaLink;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
-use ForkCMS\Modules\Frontend\Domain\Meta\SEOFollow;
-use ForkCMS\Modules\Frontend\Domain\Meta\SEOIndex;
 use ForkCMS\Modules\Frontend\Domain\Privacy\ConsentDialog;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\ForkTranslator;
@@ -41,12 +38,11 @@ final class Header
     public readonly AssetCollection $cssFiles;
     public readonly AssetCollection $jsFiles;
 
-    public readonly MetaCollection $meta;
-
     public function __construct(
         public readonly BreadcrumbCollection $breadcrumbs,
         public readonly PageTitle $pageTitle,
         public readonly ContentTitle $contentTitle,
+        public readonly MetaCollection $meta,
         private readonly RequestStack $requestStack,
         KernelInterface $kernel,
         Security $security,
@@ -56,7 +52,6 @@ final class Header
         $this->jsData = $this->initJsData($kernel, $security, $translator, $consentDialog);
         $this->jsFiles = new AssetCollection();
         $this->cssFiles = new AssetCollection();
-        $this->meta = new MetaCollection();
     }
 
     public function appendMeta(Meta $meta): void

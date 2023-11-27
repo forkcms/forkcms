@@ -4,6 +4,7 @@ namespace ForkCMS\Core\Domain\Header\Meta;
 
 use ForkCMS\Modules\Frontend\Domain\Meta\SEOFollow;
 use ForkCMS\Modules\Frontend\Domain\Meta\SEOIndex;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 final class MetaCollection
 {
@@ -19,6 +20,12 @@ final class MetaCollection
     private SEOFollow $SEOFollow = SEOFollow::NONE;
 
     private SEOIndex $SEOIndex = SEOIndex::NONE;
+
+    public function __construct(
+        #[Autowire('%kernel.debug')]
+        private readonly bool $isDebug = false
+    ) {
+    }
 
     public function addMetaData(MetaData $metaData, bool $overwrite = false): void
     {
@@ -115,6 +122,25 @@ final class MetaCollection
 
     public function __toString(): string
     {
+        $this->addRobotMeta();
+
+        return implode(
+            "\n",
+            [
+                implode("\n", $this->metaData),
+                implode("\n", $this->metaLinks),
+                implode("\n", $this->metaCustoms),
+            ]
+        );
+    }
+
+    private function addRobotMeta(): void
+    {
+        if ($this->isDebug) {
+            $this->SEOIndex = SEOIndex::NO_INDEX;
+            $this->SEOFollow = SEOFollow::NO_FOLLOW;
+        }
+
         $SEO = [];
         if ($this->SEOFollow !== SEOFollow::NONE) {
             $SEO[] = $this->SEOFollow->value;
@@ -126,14 +152,5 @@ final class MetaCollection
         if (count($SEO) > 0) {
             $this->addMetaData(MetaData::forName('robots', implode(', ', $SEO)), true);
         }
-
-        return implode(
-            "\n",
-            [
-                implode("\n", $this->metaData),
-                implode("\n", $this->metaLinks),
-                implode("\n", $this->metaCustoms),
-            ]
-        );
     }
 }
