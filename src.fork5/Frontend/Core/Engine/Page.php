@@ -205,8 +205,6 @@ class Page extends KernelLoader
                 $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
             }
 
-            $this->header->parse();
-            $this->breadcrumb->parse();
             $this->parseLanguages();
             $this->footer->parse();
 

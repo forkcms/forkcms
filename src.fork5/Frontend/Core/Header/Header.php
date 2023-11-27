@@ -88,44 +88,6 @@ class Header extends KernelLoader
         }
     }
 
-    /**
-     * Parse the header into the template
-     */
-    public function parse(): void
-    {
-        // @deprecated remove this in Fork 6, check if this still should be used.
-        $facebook = new Facebook($this->get('fork.settings'));
-        $facebook->addOpenGraphMeta($this);
-        $this->parseSeo();
-
-        // in debug mode we don't want our pages to be indexed.
-        if ($this->getContainer()->getParameter('kernel.debug')) {
-            $this->meta->addMetaData(MetaData::forName('robots', 'noindex, nofollow'), true);
-        }
-
-        $siteHTMLHead = '';
-        $siteHTMLStartOfBody = '';
-
-        // Add Google Tag Manager code if needed
-        $googleTagManagerContainerId = $this->get('fork.settings')->get('Core', 'google_tracking_google_tag_manager_container_id', '');
-        if ($googleTagManagerContainerId !== '') {
-            $googleTagManager = $this->get(TagManager::class);
-            $siteHTMLHead .= $googleTagManager->generateHeadCode() . "\n";
-
-            $siteHTMLStartOfBody .= $googleTagManager->generateStartOfBodyCode() . "\n";
-        }
-
-        // Add Google Analytics code if needed
-        $googleAnalyticsTrackingId = $this->get('fork.settings')->get('Core', 'google_tracking_google_analytics_tracking_id', '');
-        if ($googleAnalyticsTrackingId !== '') {
-            $siteHTMLHead .= new GoogleAnalytics(
-                $this->get('fork.settings'),
-                $this->get(ConsentDialog::class),
-                $this->get('fork.cookie')
-            ) . "\n";
-        }
-    }
-
     private function getCanonical(): string
     {
         $queryString = trim($this->url->getQueryString(), '/');
@@ -161,68 +123,5 @@ class Header extends KernelLoader
         }
 
         return $url . '?page=' . Model::getRequest()->query->get('page');
-    }
-
-    /**
-     * Parse SEO specific data
-     */
-    private function parseSeo(): void
-    {
-        if ($this->get('fork.settings')->get('Core', 'seo_noodp', false)) {
-            $this->meta->addMetaData(MetaData::forName('robots', 'noodp'));
-        }
-
-        if ($this->get('fork.settings')->get('Core', 'seo_noydir', false)) {
-            $this->meta->addMetaData(MetaData::forName('robots', 'noydir'));
-        }
-
-        $charset = $this->getContainer()->getParameter('kernel.charset');
-        if ($charset === 'utf-8') {
-            $this->meta->addMetaLink(MetaLink::canonical(\SpoonFilter::htmlspecialchars($this->getCanonical())));
-
-            return;
-        }
-
-        $this->meta->addMetaLink(MetaLink::canonical(\SpoonFilter::htmlentities($this->getCanonical())));
-    }
-
-    public function setCanonicalUrl(string $canonicalUrl): void
-    {
-        if (strpos($canonicalUrl, '/') === 0) {
-            $canonicalUrl = SITE_URL . $canonicalUrl;
-        }
-
-        $this->canonical = $canonicalUrl;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setPageTitle(string $value, bool $overwrite = false): void
-    {
-        $this->setContentTitle($value);
-
-        $value = trim($value);
-
-        if ($overwrite) {
-            $this->pageTitle = $value;
-
-            return;
-        }
-
-        if (empty($value)) {
-            $this->pageTitle = $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
-
-            return;
-        }
-
-        if ($this->pageTitle === null || $this->pageTitle === '') {
-            $this->pageTitle = $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
-            $this->pageTitle = $value . ' -  ' . $this->pageTitle;
-
-            return;
-        }
-
-        $this->pageTitle = $value . ' - ' . $this->pageTitle;
     }
 }
