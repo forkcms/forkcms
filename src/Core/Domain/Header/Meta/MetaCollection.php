@@ -22,8 +22,8 @@ final class MetaCollection
     private SEOIndex $SEOIndex = SEOIndex::NONE;
 
     public function __construct(
-        #[Autowire('%kernel.debug')]
-        private readonly bool $isDebug = false
+        #[Autowire('%kernel.debug%')]
+        private readonly bool $isDebug,
     ) {
     }
 
@@ -120,17 +120,78 @@ final class MetaCollection
         $this->SEOIndex = $SEOIndex;
     }
 
+    /**
+     * @param string $property The key (without og:).
+     * @param string $openGraphData The value.
+     * @param bool $overwrite Should we overwrite the previous value?
+     */
+    public function addOpenGraphData(string $property, string $openGraphData, bool $overwrite = false): void
+    {
+        $this->addMetaData(MetaData::forProperty('og:' . $property, $openGraphData), $overwrite);
+    }
+
+    public function addOpenGraphImage(string $image, bool $overwrite = false, int $width = 0, int $height = 0): void
+    {
+        $imageParts = parse_url($image);
+        $isRelative = !array_key_exists('host', $imageParts);
+        if ($isRelative) {
+            $image = $_ENV['SITE_PROTOCOL'] . '://' . $_ENV['SITE_DOMAIN'] . $image;
+        }
+
+        $this->addMetaData(MetaData::forProperty('og:image', $image, ['property', 'content']), $overwrite);
+        if (($isRelative && $_ENV['SITE_PROTOCOL'] === 'https') || ($imageParts['scheme'] ?? '') === 'https') {
+            $this->addMetaData(
+                MetaData::forProperty('og:image:secure_url', $image, ['property', 'content']),
+                $overwrite
+            );
+        }
+
+        if ($width !== 0) {
+            $this->addMetaData(
+                MetaData::forProperty('og:image:width', (string) $width, ['property', 'content']),
+                $overwrite
+            );
+        }
+
+        if ($height !== 0) {
+            $this->addMetaData(
+                MetaData::forProperty('og:image:height', (string) $height, ['property', 'content']),
+                $overwrite
+            );
+        }
+    }
+
+    /**
+     * Extract images from content that can be added add Open Graph image
+     *
+     * @param string $content The content (where from to extract the images).
+     */
+    public function extractOpenGraphImages(string $content): void
+    {
+        $images = [];
+
+        // check if any img-tags are present in the content
+        if (preg_match_all('/<img.*?src="(.*?)".*?\/>/i', $content, $images)) {
+            // loop all found images and add to Open Graph metadata
+            foreach ($images[1] as $image) {
+                $this->addOpenGraphImage($image);
+            }
+        }
+    }
+
     public function __toString(): string
     {
         $this->addRobotMeta();
 
-        return implode(
-            "\n",
-            [
-                implode("\n", $this->metaData),
-                implode("\n", $this->metaLinks),
-                implode("\n", $this->metaCustoms),
-            ]
+        return trim(
+            implode(
+                "\n",
+                [
+                    implode("\n", $this->metaData),
+                    implode("\n", $this->metaLinks),
+                    implode("\n", $this->metaCustoms),
+                ]
+            )
         );
     }
 

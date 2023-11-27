@@ -29,7 +29,6 @@ final class BackendController
         private readonly Navigation $navigation,
         private readonly Header $header,
         private readonly InstalledLocaleRepository $localeRepository,
-        private readonly ModuleSettings $moduleSettings,
     ) {
     }
 

@@ -10,7 +10,7 @@ final class MetaCustom
 
     public function getUniqueKey(): string
     {
-        return hash(MHASH_XXH128, $this->metaData);
+        return hash('xxh128', $this->metaData);
     }
 
     public function __toString(): string
