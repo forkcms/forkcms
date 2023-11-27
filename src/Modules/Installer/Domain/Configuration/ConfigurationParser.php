@@ -37,7 +37,7 @@ final class ConfigurationParser
             ? $installerConfiguration->getDebugEmail() : $installerConfiguration->getAdminEmail();
 
         $isOnHttps = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-            || ((int) ($_SERVER['SERVER_PORT'] ?? 80)) === 443;
+            || ((int) ($_SERVER['SERVER_PORT'] ?? 80)) === 443 || $_ENV['SITE_PROTOCOL'] === 'https';
 
         return sprintf(
             'FORK_DATABASE_HOST=%1$s
@@ -57,7 +57,7 @@ APP_SECRET=%10$s',
             $installerConfiguration->getDatabasePassword(),
             $debugEmail,
             $isOnHttps ? 'https' : 'http',
-            $_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? '127.0.0.1',
+            $_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? $_ENV['SITE_DOMAIN'] ?? '127.0.0.1',
             $installerConfiguration->isMultilingual() ? 'true' : 'false',
             bin2hex(random_bytes(10))
         );
