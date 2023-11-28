@@ -60,7 +60,7 @@ class LoginController
                         $_ENV['SITE_DEFAULT_TITLE']
                     ),
                     'SITE_URL' => $_ENV['SITE_PROTOCOL'] . '://' . $_ENV['SITE_DOMAIN'],
-                    'jsFiles' => [],
+                    'js_files' => [],
                 ]
             )
         );

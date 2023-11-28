@@ -13,7 +13,7 @@
 
   {{ encore_entry_script_tags('Backend/js/Backend', null, 'BackendConfig') }}
   {{ encore_entry_link_tags('Backend/css/screen', null, 'BackendConfig') }}
-  {% for js_file in jsFiles %}
+  {% for js_file in js_files %}
     <script src="/{{ js_file }}"></script>
   {% endfor %}
   {% for css_file in css_files %}

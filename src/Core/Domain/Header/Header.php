@@ -76,7 +76,7 @@ final class Header
     public function parse(Environment $twig): void
     {
         $twig->addGlobal('jsData', $this->jsData);
-        $twig->addGlobal('jsFiles', $this->jsAssets);
+        $twig->addGlobal('js_files', $this->jsAssets);
         $twig->addGlobal('css_files', $this->cssAssets);
         $twig->addGlobal('breadcrumbs', $this->breadcrumbs);
         $twig->addGlobal('page_title', new PageTitle($this->breadcrumbs));
