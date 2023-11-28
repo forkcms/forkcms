@@ -114,7 +114,7 @@
   </div>
 {% endmacro %}
 
-{% macro emptyState(addItemLink, add_item_text, no_items_text, addItemLinkextra_attributes) %}
+{% macro emptyState(addItemLink, add_item_text, no_items_text, add_item_link_extra_attributes) %}
   {% set add_item_text = add_item_text|default('msg.AddItem'|trans|raw) %}
   {% set no_items_text = no_items_text|default('msg.NoItems'|trans|raw) %}
 
@@ -122,7 +122,7 @@
     <img class="empty-state-illustration mb-4" src="{{ BACKEND_CORE_URL }}/Layout/images/empty-state.svg" alt="">
     <p class="text-black mb-2"><strong>{{ no_items_text|raw }}</strong></p>
     {% if not addItemLink is null %}
-      <a class="empty-state-add" href="{{ addItemLink }}"{% for attrname, attrvalue in addItemLinkextra_attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      <a class="empty-state-add" href="{{ addItemLink }}"{% for attrname, attrvalue in add_item_link_extra_attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
         {{ add_item_text|trans|ucfirst }}
       </a>
     {% endif %}
