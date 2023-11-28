@@ -25,9 +25,9 @@
                 <span class="dropdown-angle">{{ macro.icon('angle-right') }}</span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarLanguagesDropdown">
-                {% for website_locale in LOCALES|filter(l => l.isEnabledForWebsite) %}
-                  <a class="dropdown-item{% if website_locale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug: app.request.get('slug')}, false, website_locale.locale.value) }}">
-                    {{ website_locale.locale.asTranslatable|trans|ucfirst }}
+                {% for working_locale in LOCALES|filter(l => l.isEnabledForWebsite) %}
+                  <a class="dropdown-item{% if working_locale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug: app.request.get('slug')}, false, working_locale.locale.value) }}">
+                    {{ working_locale.locale.asTranslatable|trans|ucfirst }}
                   </a>
                 {% endfor %}
               </ul>
