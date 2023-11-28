@@ -24,7 +24,7 @@
   {# Site wide HTML in the head tag #}
   {{ site_html_head|raw }}
 
-  {% for css_file in cssFiles %}
+  {% for css_file in css_files %}
     <link href="/{{ css_file }}" rel="stylesheet">
   {% endfor %}
 

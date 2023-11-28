@@ -77,7 +77,7 @@ final class Header
     {
         $twig->addGlobal('jsData', $this->jsData);
         $twig->addGlobal('jsFiles', $this->jsAssets);
-        $twig->addGlobal('cssFiles', $this->cssAssets);
+        $twig->addGlobal('css_files', $this->cssAssets);
         $twig->addGlobal('breadcrumbs', $this->breadcrumbs);
         $twig->addGlobal('page_title', new PageTitle($this->breadcrumbs));
     }
