@@ -5,7 +5,6 @@
   },
   "ignoreFiles": [
     "src/**/scss/plugins/*.scss",
-    "src/Modules/Backend/assets/Backend/webpack/scss/components/_editor.scss",
     "src/Modules/Backend/assets/Backend/webpack/scss/components/_date-time-picker.scss",
     "src/Modules/Backend/assets/Backend/webpack/scss/components/_codex-editor.scss",
     "src.fork5"
