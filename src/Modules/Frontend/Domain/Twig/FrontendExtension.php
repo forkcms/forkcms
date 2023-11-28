@@ -26,7 +26,7 @@ final class FrontendExtension extends AbstractExtension implements GlobalsInterf
     public function getGlobals(): array
     {
         $mainRequest = $this->requestStack->getMainRequest();
-        if ($mainRequest === null) {
+        if ($mainRequest === null || str_starts_with($mainRequest->attributes->get('_route'), 'install_')) {
             return [];
         }
 

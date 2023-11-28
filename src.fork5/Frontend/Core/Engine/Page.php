@@ -310,7 +310,6 @@ class Page extends KernelLoader
         if (!$this->getContainer()->getParameter('site.multilanguage') || count(Language::getActiveLanguages()) === 1) {
             return;
         }
-
     }
 
     protected function parsePositions(): void
