@@ -102,7 +102,7 @@ final class TranslationIndex extends AbstractFormActionController
                 ),
             ];
         }
-        $this->assign('dataGrids', $filteredTranslations);
+        $this->assign('data_grids', $filteredTranslations);
 
         return null;
     }

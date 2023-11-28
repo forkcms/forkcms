@@ -57,8 +57,8 @@
   {{ form_end(backend_form) }}
   {% if notFiltered is defined %}
     {{ pageon_datagrid(notFiltered) }}
-  {% elseif dataGrids is defined %}
-    {% for data_grid in dataGrids %}
+  {% elseif data_grids is defined %}
+    {% for data_grid in data_grids %}
       <div class="card card-primary">
         <div class="card-heading">
           <h3 class="card-title">{{ data_grid.type|trans|ucfirst }}</h3>
