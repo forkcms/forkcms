@@ -67,7 +67,7 @@ final class RevisionType extends AbstractType
                 );
                 $hasEntity = $revisionDTO->hasEntity();
                 $entity = $revisionDTO->getEntity();
-                $tabs->get(md5('lbl.SEO'))->add('meta', MetaType::class, [
+                $tabs->get(TabsType::getTabNameForLabel('lbl.SEO'))->add('meta', MetaType::class, [
                     'disable_slug_overwrite' => $revisionDTO->page->isHome(),
                     'base_field_name' => 'title',
                     'base_url' => $this->pageRouter->getRouteForPageId(
