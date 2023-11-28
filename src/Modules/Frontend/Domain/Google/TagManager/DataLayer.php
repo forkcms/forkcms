@@ -4,7 +4,7 @@ namespace ForkCMS\Modules\Frontend\Domain\Google\TagManager;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
-class DataLayer extends ParameterBag
+final class DataLayer extends ParameterBag
 {
     public function generateHeadCode(): string
     {

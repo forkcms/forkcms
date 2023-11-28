@@ -6,14 +6,13 @@ use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use ForkCMS\Modules\Frontend\Domain\Privacy\ConsentDialog;
 
-class TagManager
+final class TagManager
 {
     public function __construct(
         private readonly ModuleSettings $moduleSettings,
         private readonly DataLayer $dataLayer,
         private readonly ConsentDialog $consentDialog
     ) {
-        $this->addDefaultDataLayerVariables();
     }
 
     private function addDefaultDataLayerVariables(): void
@@ -71,6 +70,7 @@ class TagManager
             )
         );
 
+        $this->addDefaultDataLayerVariables();
         if (!empty($this->dataLayer->all())) {
             $code = $this->dataLayer->generateHeadCode() . "\n" . $code;
         }

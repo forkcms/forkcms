@@ -1,5 +1,8 @@
 security:
+  providers:
+    install_provider: { memory: null }
   firewalls:
     backend:
       security: false
       custom_authenticator: '~'
+      provider: install_provider
