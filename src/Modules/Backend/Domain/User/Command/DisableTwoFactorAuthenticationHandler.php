@@ -13,7 +13,7 @@ class DisableTwoFactorAuthenticationHandler implements CommandHandlerInterface
 
     public function __invoke(DisableTwoFactorAuthentication $disableTwoFactorAuthentication): void
     {
-        $disableTwoFactorAuthentication->getEntity()->disableTwoFactorAuthentication();
-        $this->userRepository->save($disableTwoFactorAuthentication->getEntity());
+        $disableTwoFactorAuthentication->user->disableTwoFactorAuthentication();
+        $this->userRepository->save($disableTwoFactorAuthentication->user);
     }
 }
