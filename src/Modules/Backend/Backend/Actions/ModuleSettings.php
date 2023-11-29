@@ -34,7 +34,6 @@ final class ModuleSettings extends AbstractFormActionController
             ),
             validCallback: function (FormInterface $form): Response {
                 $this->commandBus->dispatch($form->getData());
-                $this->commandBus->dispatch(new ClearContainerCache());
 
                 if (!$this->moduleSettings->get(ModuleName::fromString('Backend'), '2fa_enabled', false)) {
                     /** @var UserRepository $userRepository */
