@@ -17,6 +17,10 @@ const THEME_PATH = { output: 'public/assets/themes', public: '/assets/themes' }
 const MODULE_PATH = { output: 'public/assets/modules', public: '/assets/modules' }
 const EXPORTS = []
 
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+}
+
 //
 // THEMES SETUP
 //
@@ -33,7 +37,6 @@ for (const THEME_CONFIG of extensionConfig.themes) {
     .setPublicPath(`${THEME_PATH.public}/`)
     .configureImageRule()
     .configureFontRule()
-    // enables @babel/preset-env polyfills
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
@@ -56,10 +59,9 @@ for (const THEME_CONFIG of extensionConfig.themes) {
       moment: 'moment'
     })
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {
-    }, {
-      useBuiltIns: 'usage',
-      corejs: 3
+    .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = '3.23';
     })
     .enableSassLoader((options) => {
     }, {
@@ -148,10 +150,9 @@ for (const APPLICATION of ['Installer', 'Frontend', 'Backend']) {
       moment: 'moment'
     })
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {
-    }, {
-      useBuiltIns: 'usage',
-      corejs: 3
+    .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = '3.23';
     })
     .enableSassLoader((options) => {
     }, {

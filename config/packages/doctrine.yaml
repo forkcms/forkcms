@@ -1,30 +1,29 @@
+parameters:
+  env(FORK_DATABASE_VERSION): '5.7'
 doctrine:
   dbal:
     default_connection: default
     connections:
       default:
+        profiling_collect_backtrace: '%kernel.debug%'
         driver: "pdo_%env(FORK_DATABASE_DRIVER)%"
         host: "%env(FORK_DATABASE_HOST)%"
         port: "%env(FORK_DATABASE_PORT)%"
         dbname: "%env(FORK_DATABASE_NAME)%"
+        server_version: "%env(FORK_DATABASE_VERSION)%"
         user: "%env(FORK_DATABASE_USER)%"
         password: "%env(FORK_DATABASE_PASSWORD)%"
         charset: utf8mb4
         default_table_options:
           charset: utf8mb4
           collate: utf8mb4_unicode_ci
-#    types:
-#      seo_follow: Common\Doctrine\Type\SEOFollowType
-#      seo_index: Common\Doctrine\Type\SEOIndexType
-#      locale: Common\Doctrine\Type\LocaleType
-#      datetime: Common\Doctrine\Type\UTCDateTimeType
-#      datetimetz: Common\Doctrine\Type\UTCDateTimeType
-#      time: Common\Doctrine\Type\UTCTimeType
-#
   orm:
-    auto_generate_proxy_classes: "%kernel.debug%"
+    auto_generate_proxy_classes: true
+    enable_lazy_ghost_objects: true
     entity_managers:
       default:
+        report_fields_where_declared: true
+        validate_xml_mapping: true
         connection: default
         naming_strategy: ForkCMS\Core\Domain\Doctrine\ForkNamingStrategy
         auto_mapping: true
@@ -64,3 +63,23 @@ doctrine:
             JSON_TYPE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonType
             JSON_UNQUOTE: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonUnquote
             JSON_VALID: Scienta\DoctrineJsonFunctions\Query\AST\Functions\Mysql\JsonValid
+
+when@prod:
+  doctrine:
+    orm:
+      auto_generate_proxy_classes: false
+      proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+      query_cache_driver:
+        type: pool
+        pool: doctrine.system_cache_pool
+      result_cache_driver:
+        type: pool
+        pool: doctrine.result_cache_pool
+
+  framework:
+    cache:
+      pools:
+        doctrine.result_cache_pool:
+          adapter: cache.app
+        doctrine.system_cache_pool:
+          adapter: cache.system
