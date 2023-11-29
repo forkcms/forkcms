@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\Backend\Domain\ModuleSettings;
 
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TogglePasswordInputType;
+use ForkCMS\Core\Domain\Form\TogglePasswordType;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Symfony\Component\Form\AbstractType;
@@ -21,16 +22,15 @@ final class ModuleSettingsType extends AbstractType
         $builder
             ->add(
                 '2fa_enabled',
-                CheckboxType::class,
+                SwitchType::class,
                 [
                     'required' => false,
                     'label' => TranslationKey::label('EnableTwoFactorAuthentication'),
-                    'label_attr' => ['class' => 'checkbox-switch'],
                 ]
             )
             ->add(
                 '2fa_key',
-                TogglePasswordInputType::class,
+                TogglePasswordType::class,
                 [
                     'label' => TranslationKey::label('TwoFactorAuthenticationKey'),
                     'required' => false,
@@ -46,21 +46,19 @@ final class ModuleSettingsType extends AbstractType
             )
             ->add(
                 '2fa_required',
-                CheckboxType::class,
+                SwitchType::class,
                 [
                     'required' => false,
                     'label' => TranslationKey::label('RequireTwoFactorAuthentication'),
-                    'label_attr' => ['class' => 'checkbox-switch'],
                     'help' => TranslationKey::message('RequireTwoFactorAuthenticationHelp'),
                 ]
             )
             ->add(
                 'trusted_devices_enabled',
-                CheckboxType::class,
+                SwitchType::class,
                 [
                     'required' => false,
                     'label' => TranslationKey::label('EnableTrustedDevices'),
-                    'label_attr' => ['class' => 'checkbox-switch'],
                     'help' => TranslationKey::message('EnableTrustedDevicesHelp'),
                 ]
             );
