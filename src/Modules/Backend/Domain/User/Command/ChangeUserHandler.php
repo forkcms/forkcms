@@ -6,7 +6,6 @@ use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\Backend\Domain\User\Event\UserChangedEvent;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserRepository;
-use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
