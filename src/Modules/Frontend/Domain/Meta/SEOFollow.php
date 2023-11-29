@@ -13,9 +13,9 @@ enum SEOFollow: string
     public function getLabel(): TranslationKey
     {
         return match ($this) {
-            self::NONE => TranslationKey::label('None'),
+            self::NONE => TranslationKey::label('NotSpecified'),
             self::FOLLOW => TranslationKey::label('Follow'),
-            self::NO_FOLLOW => TranslationKey::label('NoFollow'),
+            self::NO_FOLLOW => TranslationKey::label('DoNotFollow'),
         };
     }
 }

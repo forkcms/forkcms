@@ -12,9 +12,9 @@ enum SEOIndex: string
     public function getLabel(): TranslationKey
     {
         return match ($this) {
-            self::NONE => TranslationKey::label('None'),
+            self::NONE => TranslationKey::label('NotSpecified'),
             self::INDEX => TranslationKey::label('Index'),
-            self::NO_INDEX => TranslationKey::label('NoIndex'),
+            self::NO_INDEX => TranslationKey::label('DoNotIndex'),
         };
     }
 }
