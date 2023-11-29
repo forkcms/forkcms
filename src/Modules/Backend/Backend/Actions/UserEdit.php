@@ -41,7 +41,7 @@ final class UserEdit extends AbstractFormActionController
             $backupCodes = $user->getBackupCodes();
         }
 
-        $this->assign('backupCodes', $backupCodes);
+        $this->assign('backup_codes', $backupCodes);
     }
 
     protected function getFormResponse(Request $request): ?Response
@@ -49,9 +49,9 @@ final class UserEdit extends AbstractFormActionController
         $user = $this->getEntityFromRequest($request, User::class);
 
         $this->assign('user', $user);
-        $this->assign('twoFAEnabled', $this->moduleSettings->get($this->getModuleName(), '2fa_enabled', false));
-        $this->assign('twoFARequired', $this->moduleSettings->get($this->getModuleName(), '2fa_required', false));
-        $this->assign('userHas2FAEnabled', $user->getGoogleAuthenticatorSecret() !== null);
+        $this->assign('two_factor_authentication_enabled', $this->moduleSettings->get($this->getModuleName(), '2fa_enabled', false));
+        $this->assign('two_factor_authentication_required', $this->moduleSettings->get($this->getModuleName(), '2fa_required', false));
+        $this->assign('user_has_2_factor_authentication_enabled', $user->getGoogleAuthenticatorSecret() !== null);
 
         $this->header->addBreadcrumb(new Breadcrumb($user->getDisplayName()));
 
