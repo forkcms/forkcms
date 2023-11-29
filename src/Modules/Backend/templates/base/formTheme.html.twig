@@ -662,16 +662,3 @@
     </button>
   </div>
 {% endblock %}
-
-{% block toggle_password_input_widget %}
-  {% import '@Backend/base/macros.html.twig' as macro %}
-  {%- set type = type|default('password') -%}
-  <div class="input-group">
-    {{ block('form_widget_simple') }}
-    <div class="input-group-append">
-      <button type="button" class="btn btn-primary" data-role="toggle-password-input-type" data-target="{{ form.vars.id }}">
-        {{ macro.icon('eye') }}
-      </button>
-    </div>
-  </div>
-{% endblock %}
