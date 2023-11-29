@@ -57,10 +57,10 @@ class Meta implements JsonSerializable
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private string|null $custom;
 
-    #[ORM\Column(type: SEOFollowDBALType::NAME)]
+    #[ORM\Column(type: Types::STRING, enumType: SEOFollow::class)]
     private SEOFollow $seoFollow;
 
-    #[ORM\Column(type: SEOIndexDBALType::NAME)]
+    #[ORM\Column(type: Types::STRING, enumType: SEOIndex::class)]
     private SEOIndex $seoIndex;
 
     public function __construct(
