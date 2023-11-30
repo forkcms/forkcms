@@ -11,7 +11,7 @@
 
 {% block content %}
 
-  {% if installedThemes|count > 0 %}
+  {% if installed_themes|count > 0 %}
     <div class="card card-default">
       <div class="card-heading">
         <h2 class="card-title">
@@ -20,7 +20,7 @@
       </div>
       <div class="card-body">
         <div id="installedThemes" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 g-4">
-          {% for installed_theme_data in installedThemes %}
+          {% for installed_theme_data in installed_themes %}
             {% set installable_theme = installed_theme_data.theme %}
             {% set activate_form = installed_theme_data.activateForm %}
             <div class="col">

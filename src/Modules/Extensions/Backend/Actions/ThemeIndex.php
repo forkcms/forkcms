@@ -44,7 +44,7 @@ final class ThemeIndex extends AbstractActionController
             )
         );
         $this->assign(
-            'installedThemes',
+            'installed_themes',
             array_map(
                 function (Theme $theme): array {
                     return [
