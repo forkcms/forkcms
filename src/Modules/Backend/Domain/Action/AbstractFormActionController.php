@@ -112,7 +112,7 @@ abstract class AbstractFormActionController extends AbstractActionController
         string $formType = ActionType::class,
         array $options = []
     ): void {
-        $this->assign('crudDeleteAction', $deleteActionSlug->getActionName());
+        $this->assign('crud_delete_action', $deleteActionSlug->getActionName());
         $this->assign(
             'backend_delete_form',
             $this->formFactory->create(
