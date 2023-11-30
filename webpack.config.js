@@ -18,7 +18,7 @@ const MODULE_PATH = { output: 'public/assets/modules', public: '/assets/modules'
 const EXPORTS = []
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'prod');
 }
 
 //
