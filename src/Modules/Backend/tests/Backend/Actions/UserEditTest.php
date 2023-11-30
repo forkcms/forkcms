@@ -26,6 +26,7 @@ final class UserEditTest extends BackendWebTestCase
                 $user->getEmail(),
             ]
         );
+
         self::assertHasLink('Users', '/private/en/backend/user-index');
     }
 
