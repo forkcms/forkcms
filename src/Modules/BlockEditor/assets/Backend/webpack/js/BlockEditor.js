@@ -101,5 +101,5 @@ $(window).on('load', () => {
   window.BlockEditor.blocks.Quote = Quote
   window.BlockEditor.blocks.Raw = Raw
 
-  window.backend.blockEditor = new BlockEditor()
+  setTimeout(() => { window.backend.blockEditor = new BlockEditor() }, 100)
 })
