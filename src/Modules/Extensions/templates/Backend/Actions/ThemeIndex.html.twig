@@ -73,7 +73,7 @@
       </div>
     </div>
   {% endif %}
-  {% if installableThemes|count > 0 %}
+  {% if installable_themes|count > 0 %}
     <div class="card card-default">
       <div class="card-heading">
         <h2 class="card-title">
@@ -82,7 +82,7 @@
       </div>
       <div class="card-body">
         <div id="installableThemes" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 g-4">
-          {% for installable_theme_data in installableThemes %}
+          {% for installable_theme_data in installable_themes %}
             {% set installable_theme = installable_theme_data.theme %}
             {% set theme_install_form = installable_theme_data.installForm %}
             <div class="col">

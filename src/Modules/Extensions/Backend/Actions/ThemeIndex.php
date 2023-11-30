@@ -23,7 +23,7 @@ final class ThemeIndex extends AbstractActionController
     protected function execute(Request $request): void
     {
         $this->assign(
-            'installableThemes',
+            'installable_themes',
             array_map(
                 function (InstallableTheme $theme): array {
                     return [
