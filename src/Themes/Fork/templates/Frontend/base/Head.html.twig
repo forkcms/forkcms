@@ -4,17 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Fork CMS" />
-{#  {{ meta|raw }}#}
-{#  {{ metaCustom|raw }}#}
+  {{ META|raw }}
 
-  <title>{{ page_title|ucfirst }} | {{ siteTitle }}</title>
+  <title>{{ PAGE_TITLE|ucfirst }} | {{ SITE_TITLE }}</title>
 
   {# Favicon and Apple touch icon #}
   <link rel="shortcut icon" href="/assets/themes/Fork/images/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/themes/Fork/images/apple-touch-icon.png" />
 
   {# Windows tile #}
-  <meta name="application-name" content="{{ siteTitle }}" />
+  <meta name="application-name" content="{{ SITE_TITLE }}" />
   <meta name="msapplication-TileColor" content="#3380aa" />
   <meta name="msapplication-TileImage" content="/assets/themes/Fork/images/tile.png" />
 
@@ -26,12 +25,12 @@
   {{ encore_entry_link_tags('Fork/css/screen', null, 'ThemeConfig') }}
 
   {# Site wide HTML in the head tag #}
-  {{ site_html_head|raw }}
+  {{ SITE_HTML_HEAD|raw }}
 
   {# Google Fonts #}
   <link href="https://fonts.googleapis.com/css?family=Courgette|Roboto:300,400,500,700,900" rel="stylesheet">
 
-  {% for css_file in css_files %}
+  {% for css_file in CSS_FILES %}
     <link href="/{{ css_file }}" rel="stylesheet">
   {% endfor %}
 
@@ -39,5 +38,5 @@
     <script src="http://localhost:35729/livereload.js"></script>
   {% endif %}
 
-  {{ jsData|raw }}
+  {{ JS_DATA|raw }}
 </head>

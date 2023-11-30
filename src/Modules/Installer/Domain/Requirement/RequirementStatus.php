@@ -2,19 +2,19 @@
 
 namespace ForkCMS\Modules\Installer\Domain\Requirement;
 
-enum RequirementStatus
+enum RequirementStatus: string
 {
-    case success;
-    case warning;
-    case error;
+    case SUCCESS = 'success';
+    case WARNING = 'warning';
+    case ERROR = 'error';
 
     public function isWarning(): bool
     {
-        return $this === self::warning;
+        return $this === self::WARNING;
     }
 
     public function isError(): bool
     {
-        return $this === self::error;
+        return $this === self::ERROR;
     }
 }

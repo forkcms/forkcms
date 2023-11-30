@@ -6,7 +6,7 @@
 {% set crud_index_relative = false %}
 {% set crud_index_locale = null %}
 {% if crud_delete_name is not defined %}
-  {% set crud_delete_name = breadcrumbs|last.label %}
+  {% set crud_delete_name = BREADCRUMBS|last.label %}
 {% endif %}
 
 {% block content %}

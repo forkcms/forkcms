@@ -18,6 +18,272 @@
       <translation locale="pt"><![CDATA[frontend]]></translation>
       <translation locale="pl"><![CDATA[frontend]]></translation>
     </item>
+    <item type="label" name="SEO">
+      <translation locale="nl"><![CDATA[SEO]]></translation>
+      <translation locale="en"><![CDATA[SEO]]></translation>
+      <translation locale="hu"><![CDATA[SEO]]></translation>
+      <translation locale="ru"><![CDATA[SEO]]></translation>
+      <translation locale="it"><![CDATA[SEO]]></translation>
+      <translation locale="zh"><![CDATA[搜索引擎优化]]></translation>
+      <translation locale="de"><![CDATA[SEO]]></translation>
+      <translation locale="fr"><![CDATA[SEO]]></translation>
+      <translation locale="es"><![CDATA[SEO]]></translation>
+      <translation locale="lt"><![CDATA[SEO]]></translation>
+      <translation locale="uk"><![CDATA[SEO]]></translation>
+      <translation locale="sv"><![CDATA[SEO]]></translation>
+      <translation locale="el"><![CDATA[SEO]]></translation>
+      <translation locale="tr"><![CDATA[SEO]]></translation>
+      <translation locale="pt"><![CDATA[SEO]]></translation>
+      <translation locale="pl"><![CDATA[SEO]]></translation>
+    </item>
+    <item type="label" name="Titles">
+      <translation locale="nl"><![CDATA[titels]]></translation>
+      <translation locale="en"><![CDATA[titles]]></translation>
+      <translation locale="hu"><![CDATA[címek]]></translation>
+      <translation locale="it"><![CDATA[titoli]]></translation>
+      <translation locale="ru"><![CDATA[Заголовки]]></translation>
+      <translation locale="zh"><![CDATA[标题]]></translation>
+      <translation locale="de"><![CDATA[Titel]]></translation>
+      <translation locale="fr"><![CDATA[titres]]></translation>
+      <translation locale="es"><![CDATA[títulos]]></translation>
+      <translation locale="lt"><![CDATA[antraštės]]></translation>
+      <translation locale="uk"><![CDATA[Заголовки]]></translation>
+      <translation locale="sv"><![CDATA[rubriker]]></translation>
+      <translation locale="el"><![CDATA[τίτλοι]]></translation>
+      <translation locale="tr"><![CDATA[başlıklar]]></translation>
+      <translation locale="pt"><![CDATA[títulos]]></translation>
+      <translation locale="pl"><![CDATA[tytuły]]></translation>
+    </item>
+    <item type="label" name="PageTitle">
+      <translation locale="nl"><![CDATA[paginatitel]]></translation>
+      <translation locale="en"><![CDATA[page title]]></translation>
+      <translation locale="hu"><![CDATA[oldalcím]]></translation>
+      <translation locale="ru"><![CDATA[Заголовок]]></translation>
+      <translation locale="it"><![CDATA[titolo di pagina]]></translation>
+      <translation locale="zh"><![CDATA[页面标题]]></translation>
+      <translation locale="de"><![CDATA[Seitentitel]]></translation>
+      <translation locale="fr"><![CDATA[titre de page]]></translation>
+      <translation locale="es"><![CDATA[título de página]]></translation>
+      <translation locale="lt"><![CDATA[puslapio antraštė]]></translation>
+      <translation locale="uk"><![CDATA[Заголовок]]></translation>
+      <translation locale="sv"><![CDATA[sidtitel]]></translation>
+      <translation locale="el"><![CDATA[τίτλος σελίδας]]></translation>
+      <translation locale="tr"><![CDATA[Sayfa başlığı]]></translation>
+      <translation locale="pt"><![CDATA[título de página]]></translation>
+      <translation locale="pl"><![CDATA[tytuł strony]]></translation>
+    </item>
+    <item type="message" name="HelpPageTitle">
+      <translation locale="nl"><![CDATA[De titel die in het browservenster staat (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="en"><![CDATA[The title in the browser window (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="hu"><![CDATA[A cím a böngésző ablakban (<code>&lt;title&gt;</ code>).]]></translation>
+      <translation locale="it"><![CDATA[Il titolo nella finestra del browser (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="ru"><![CDATA[Заголовок сайта. (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="zh"><![CDATA[浏览器标题(<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="de"><![CDATA[Der Titel des Browserfensters (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="fr"><![CDATA[Le titre dans la fenêtre de navigateur (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="es"><![CDATA[El título en la ventana del navegador (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="lt"><![CDATA[Tinklapio antraštė rodoma naršyklės viršuje. (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="sv"><![CDATA[Titeln i webbläsarfönstret (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="el"><![CDATA[Ο τίτλος στο παράθυρο του περιηγητή (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="pt"><![CDATA[O título apresentado na aba do navegador (<code>&lt;title&gt;</code>).]]></translation>
+      <translation locale="pl"><![CDATA[Tytuł znajdujący się w oknie przeglądarki (<code> & lt; title & gt; </ code>).]]></translation>
+    </item>
+    <item type="label" name="NavigationTitle">
+      <translation locale="nl"><![CDATA[navigatietitel]]></translation>
+      <translation locale="en"><![CDATA[navigation title]]></translation>
+      <translation locale="hu"><![CDATA[navigáció címe]]></translation>
+      <translation locale="it"><![CDATA[titolo navigazione]]></translation>
+      <translation locale="ru"><![CDATA[Заголовок]]></translation>
+      <translation locale="zh"><![CDATA[导航标题]]></translation>
+      <translation locale="de"><![CDATA[Navigationstitel]]></translation>
+      <translation locale="fr"><![CDATA[titre navigation]]></translation>
+      <translation locale="es"><![CDATA[título de navegación]]></translation>
+      <translation locale="lt"><![CDATA[antraštė]]></translation>
+      <translation locale="uk"><![CDATA[Заголовок]]></translation>
+      <translation locale="sv"><![CDATA[navigation title]]></translation>
+      <translation locale="el"><![CDATA[τίτλος πλοήγησης]]></translation>
+      <translation locale="pt"><![CDATA[título de navegação]]></translation>
+      <translation locale="pl"><![CDATA[tutuł nawigacji]]></translation>
+    </item>
+    <item type="message" name="HelpNavigationTitle">
+      <translation locale="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
+      <translation locale="en"><![CDATA[The title that is shown in the menu.]]></translation>
+      <translation locale="it"><![CDATA[Il titolo mostrato nel menu.]]></translation>
+      <translation locale="ru"><![CDATA[Заголовок меню.]]></translation>
+      <translation locale="zh"><![CDATA[标题在菜单里显示。]]></translation>
+      <translation locale="de"><![CDATA[Der Titel, der im Menü angezeigt wird.]]></translation>
+      <translation locale="fr"><![CDATA[Le titre affiché dans le menu.]]></translation>
+      <translation locale="hu"><![CDATA[A cím, amely megjelenik a menüben.]]></translation>
+      <translation locale="es"><![CDATA[El título que se muestra en el menú.]]></translation>
+      <translation locale="el"><![CDATA[Ο τίτλος ποιυ εμφανίζεται στο μενού.]]></translation>
+      <translation locale="pl"><![CDATA[Tytuł wyświetlany w menu.]]></translation>
+    </item>
+    <item type="label" name="MetaInformation">
+      <translation locale="nl"><![CDATA[meta-informatie]]></translation>
+      <translation locale="en"><![CDATA[meta information]]></translation>
+      <translation locale="hu"><![CDATA[meta információ]]></translation>
+      <translation locale="it"><![CDATA[meta informazioni]]></translation>
+      <translation locale="ru"><![CDATA[Мета информация]]></translation>
+      <translation locale="zh"><![CDATA[元信息]]></translation>
+      <translation locale="de"><![CDATA[Meta-Information]]></translation>
+      <translation locale="fr"><![CDATA[meta information]]></translation>
+      <translation locale="es"><![CDATA[meta information]]></translation>
+      <translation locale="lt"><![CDATA[meta informacija]]></translation>
+      <translation locale="uk"><![CDATA[Мета-інформація]]></translation>
+      <translation locale="sv"><![CDATA[meta information]]></translation>
+      <translation locale="el"><![CDATA[μετα-πληροφορίες]]></translation>
+      <translation locale="pt"><![CDATA[meta informação]]></translation>
+      <translation locale="pl"><![CDATA[meta informacje]]></translation>
+    </item>
+    <item type="message" name="HelpMetaDescription">
+      <translation locale="nl"><![CDATA[Vat de inhoud kort samen. Deze samenvatting wordt getoond in de resultaten van zoekmachines.]]></translation>
+      <translation locale="en"><![CDATA[Briefly summarize the content. This summary is shown in the results of search engines.]]></translation>
+      <translation locale="hu"><![CDATA[Röviden összefoglalja a tartalmat. Ez az összefoglaló megmutatja a keresőmotor találatait is.]]></translation>
+      <translation locale="it"><![CDATA[Descrivi brevemente il contenuto. Questa descrizione verrà mostrata nei risultati dei motori di ricerca.]]></translation>
+      <translation locale="ru"><![CDATA[Краткое содержание сайта для поисковых систем.]]></translation>
+      <translation locale="zh"><![CDATA[简短地概括内容。这些概述将会显示在搜索引擎的结果中。]]></translation>
+      <translation locale="de"><![CDATA[Fasse kurz den Inhalt zusammen. Diese Zusammenfassung wird in den Ergebnissen von Suchmaschinen angezeigt.]]></translation>
+      <translation locale="fr"><![CDATA[Résumez brièvement le contenu. Ce résumé est affiché dans les pages de résultats de moteurs de recherche.]]></translation>
+      <translation locale="es"><![CDATA[Un breve resumen de su contenido. Este resumen se muestra en los resultados de los motores de búsqueda.]]></translation>
+      <translation locale="lt"><![CDATA[Trumpas tinklapio aprašymas paieškos sistemoms.]]></translation>
+      <translation locale="uk"><![CDATA[Короткий зміст сайту для пошукових систем]]></translation>
+      <translation locale="sv"><![CDATA[Kort sammanfatta innehållet. Denna sammanfattning visas i resultaten av sökmotorer.]]></translation>
+      <translation locale="el"><![CDATA[Γράψτε μία σύντομη περίληψη γιά τα περιεχόμενα. Αυτή η περίληψη εμφανίζεται στα αποτελέσματα των μηχανών αναζήτησης.]]></translation>
+      <translation locale="pt"><![CDATA[Um breve resumo do seu conteúdo. Este resumo é exibido nos resultados do motores de busca.]]></translation>
+      <translation locale="pl"><![CDATA[Krótko streść zawartość. To podsumowanie jest wyświetlane w wynikach wyszukiwarek.]]></translation>
+    </item>
+    <item type="label" name="Keywords">
+      <translation locale="nl"><![CDATA[sleutelwoorden]]></translation>
+      <translation locale="en"><![CDATA[keywords]]></translation>
+      <translation locale="hu"><![CDATA[kulcsszavak]]></translation>
+      <translation locale="it"><![CDATA[parole chiave]]></translation>
+      <translation locale="ru"><![CDATA[Ключевые слова]]></translation>
+      <translation locale="zh"><![CDATA[关键词]]></translation>
+      <translation locale="de"><![CDATA[Keywords]]></translation>
+      <translation locale="fr"><![CDATA[mots clefs]]></translation>
+      <translation locale="es"><![CDATA[palabras clave]]></translation>
+      <translation locale="lt"><![CDATA[raktažodžiai]]></translation>
+      <translation locale="uk"><![CDATA[Ключеві слова]]></translation>
+      <translation locale="sv"><![CDATA[nyckelord]]></translation>
+      <translation locale="el"><![CDATA[λέξεις κλειδιά]]></translation>
+      <translation locale="pt"><![CDATA[palavras chave]]></translation>
+      <translation locale="pl"><![CDATA[słowa kluczowe]]></translation>
+    </item>
+    <item type="label" name="URL">
+      <translation locale="nl"><![CDATA[URL]]></translation>
+      <translation locale="en"><![CDATA[URL]]></translation>
+      <translation locale="hu"><![CDATA[URL]]></translation>
+      <translation locale="ru"><![CDATA[URL]]></translation>
+      <translation locale="it"><![CDATA[URL]]></translation>
+      <translation locale="zh"><![CDATA[URL]]></translation>
+      <translation locale="de"><![CDATA[URL]]></translation>
+      <translation locale="fr"><![CDATA[URL]]></translation>
+      <translation locale="es"><![CDATA[URL]]></translation>
+      <translation locale="lt"><![CDATA[URL]]></translation>
+      <translation locale="uk"><![CDATA[URL]]></translation>
+      <translation locale="sv"><![CDATA[URL]]></translation>
+      <translation locale="el"><![CDATA[διεύθυνση URL]]></translation>
+      <translation locale="tr"><![CDATA[URL]]></translation>
+      <translation locale="pt"><![CDATA[URL]]></translation>
+      <translation locale="pl"><![CDATA[URL]]></translation>
+    </item>
+    <item type="message" name="HelpMetaURL">
+      <translation locale="nl"><![CDATA[Vervang de automatisch gegenereerde URL door een zelfgekozen URL. Alleen kleine alfanumerieke letters en - zijn toegestaan]]></translation>
+      <translation locale="en"><![CDATA[Replace the automaticly generated URL by a custom one. Only alphanumeric lowercase characters and - are allowed]]></translation>
+      <translation locale="hu"><![CDATA[Cserélje le az automatikusan generált URL-t egyénire.]]></translation>
+      <translation locale="it"><![CDATA[Sostituisci l'URL generato automaticamente con uno personalizzato.]]></translation>
+      <translation locale="ru"><![CDATA[Заменяет автоматический URL на пользовательский.]]></translation>
+      <translation locale="zh"><![CDATA[使用自定义链接替代自动生成的链接地址。]]></translation>
+      <translation locale="de"><![CDATA[Ersetze die automatisch generierte URL mit einer individuell angepassten. Es sind nur alphanumerische Kleinbuchstaben und - zulässig]]></translation>
+      <translation locale="fr"><![CDATA[Replacer l'URL automatiquement générée par une URL personnalisée. Seuls les caractères alphanumériques en minuscules et - sont autorisés]]></translation>
+      <translation locale="es"><![CDATA[Remplaza la URL automáticamente generada por una propia.]]></translation>
+      <translation locale="lt"><![CDATA[Ar keisti automatiškai sugeneruotas nuorodas rankiniu būdu sukurtomis?.]]></translation>
+      <translation locale="uk"><![CDATA[Замінює автоматичниний URL на користувацький]]></translation>
+      <translation locale="sv"><![CDATA[Byt ut automatiskt genererade URL: en genom en anpassad en.]]></translation>
+      <translation locale="el"><![CDATA[Αντικαταστήστε την διεύθυνση URL που παρήχθη αυτόματα με μία φτιαχτή δική σας.]]></translation>
+      <translation locale="pt"><![CDATA[Substitua o URL automaticamente gerado por um URL personalizado.]]></translation>
+      <translation locale="pl"><![CDATA[Zastąp automatycznie wygenerowany URL własnym, wybranym adresem URL.]]></translation>
+    </item>
+    <item type="label" name="CanonicalURL">
+      <translation locale="nl"><![CDATA[canonical URL]]></translation>
+      <translation locale="en"><![CDATA[canonical URL]]></translation>
+    </item>
+    <item type="message" name="HelpMetaKeywords">
+      <translation locale="nl"><![CDATA[Kies een aantal goed gekozen termen die de inhoud omschrijven. Vanuit SEO-standpunt bieden deze echter niet langer een meerwaarde.]]></translation>
+      <translation locale="en"><![CDATA[Choose a number of wellthought terms that describe the content. From an SEO point of view, these do not longer present an added value though.]]></translation>
+      <translation locale="hu"><![CDATA[Válassz egy számot a jól átgondolt kifejezések közül, ami jól leírja a tartalmat.]]></translation>
+      <translation locale="it"><![CDATA[Scegli un numero di termini che descrivono il contenuto.]]></translation>
+      <translation locale="ru"><![CDATA[Ключевые слова, описывающие сайт.]]></translation>
+      <translation locale="zh"><![CDATA[请选择适合文章内容的关键词。]]></translation>
+      <translation locale="de"><![CDATA[Gib eine paar ausgewählte Begriffe ein, die den Inhalt gut beschreiben.]]></translation>
+      <translation locale="fr"><![CDATA[Choisissez un nombre de termes bien pensés pour décrire ce contenu.]]></translation>
+      <translation locale="es"><![CDATA[Elija un número de términos que describan el contenido. Desde un punto de vista SEO, esto no presenta un valor añadido.]]></translation>
+      <translation locale="lt"><![CDATA[Raktiniai žodžiai atskirti kableliais, nusakantys tinklapio temą]]></translation>
+      <translation locale="uk"><![CDATA[Ключові слова, що описують сайт]]></translation>
+      <translation locale="sv"><![CDATA[Välja ut ett antal söktermer som beskriver innehållet. Ur ett SEO perspektiv är dessa inte längre föreligger ett mervärde ändå.]]></translation>
+      <translation locale="el"><![CDATA[Επιλέξτε σχετικούς όρους που να περιγράφουν το περιεχόμενο. Όμως από άποψη SEO (μηχανών αναζήτησης), δεν θα έχετε κανένα επιπλέον όφελος.]]></translation>
+      <translation locale="tr"><![CDATA[içeriği tanımlayan kelimeleri seçin.]]></translation>
+      <translation locale="pt"><![CDATA[Escolha um lista de termo que descrevam o conteúdo. Do ponto de vista do SEO, estes valor já não representam uma mais valia.]]></translation>
+      <translation locale="pl"><![CDATA[Wybierz liczbę dobrze dobranych terminów, które opisują treść. Z punktu widzenia SEO nie oferują one jednak żadnej wartości dodanej.]]></translation>
+    </item>
+    <item type="label" name="SearchEngines">
+      <translation locale="nl"><![CDATA[zoekmachinest]]></translation>
+      <translation locale="en"><![CDATA[search engines]]></translation>
+    </item>
+    <item type="label" name="SearchEngineIndexPage">
+      <translation locale="nl"><![CDATA[de pagina indexeren]]></translation>
+      <translation locale="en"><![CDATA[index the page]]></translation>
+    </item>
+    <item type="label" name="Index">
+      <translation locale="nl"><![CDATA[indexeren]]></translation>
+      <translation locale="en"><![CDATA[index]]></translation>
+      <translation locale="hu"><![CDATA[index]]></translation>
+      <translation locale="it"><![CDATA[indice]]></translation>
+      <translation locale="ru"><![CDATA[Главная]]></translation>
+      <translation locale="zh"><![CDATA[索引]]></translation>
+      <translation locale="de"><![CDATA[Index]]></translation>
+      <translation locale="fr"><![CDATA[index]]></translation>
+      <translation locale="es"><![CDATA[index]]></translation>
+      <translation locale="lt"><![CDATA[pirmas]]></translation>
+      <translation locale="uk"><![CDATA[Головна]]></translation>
+      <translation locale="sv"><![CDATA[katalog]]></translation>
+      <translation locale="el"><![CDATA[ευρετήριο]]></translation>
+      <translation locale="pt"><![CDATA[index]]></translation>
+      <translation locale="pl"><![CDATA[indeks]]></translation>
+    </item>
+    <item type="label" name="DoNotIndex">
+      <translation locale="nl"><![CDATA[niet indexeren]]></translation>
+      <translation locale="en"><![CDATA[do not index]]></translation>
+    </item>
+    <item type="label" name="NotSpecified">
+      <translation locale="nl"><![CDATA[niet gespecificeerd]]></translation>
+      <translation locale="en"><![CDATA[not specified]]></translation>
+    </item>
+    <item type="label" name="SearchEngineFollowLinks">
+      <translation locale="nl"><![CDATA[volg links op de pagina]]></translation>
+      <translation locale="en"><![CDATA[follow links on the page]]></translation>
+    </item>
+    <item type="label" name="Follow">
+      <translation locale="nl"><![CDATA[volgen]]></translation>
+      <translation locale="en"><![CDATA[follow]]></translation>
+      <translation locale="hu"><![CDATA[követ]]></translation>
+      <translation locale="it"><![CDATA[segui]]></translation>
+      <translation locale="ru"><![CDATA[Следить]]></translation>
+      <translation locale="zh"><![CDATA[关注]]></translation>
+      <translation locale="de"><![CDATA[Follow]]></translation>
+      <translation locale="fr"><![CDATA[suivre]]></translation>
+      <translation locale="es"><![CDATA[seguir]]></translation>
+      <translation locale="lt"><![CDATA[sekti]]></translation>
+      <translation locale="uk"><![CDATA[Стежити]]></translation>
+      <translation locale="sv"><![CDATA[följer]]></translation>
+      <translation locale="el"><![CDATA[ακολούθα]]></translation>
+      <translation locale="pl"><![CDATA[podążaj]]></translation>
+      <translation locale="pt"><![CDATA[seguir]]></translation>
+    </item>
+    <item type="label" name="DoNotFollow">
+      <translation locale="nl"><![CDATA[niet volgen]]></translation>
+      <translation locale="en"><![CDATA[do not follow]]></translation>
+    </item>
     <Frontend>
       <item type="label" name="Editor">
         <translation locale="nl"><![CDATA[editor]]></translation>

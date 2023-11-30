@@ -9,22 +9,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 enum Locale: string implements TranslatableInterface
 {
-    case English = 'en';
-    case Chinese = 'zh';
-    case Dutch = 'nl';
-    case French = 'fr';
-    case German = 'de';
-    case Greek = 'el';
-    case Hungarian = 'hu';
-    case Italian = 'it';
-    case Lithuanian = 'lt';
-    case Russian = 'ru';
-    case Spanish = 'es';
-    case Swedish = 'sv';
-    case Ukrainian = 'uk';
-    case Polish = 'pl';
-    case Portuguese = 'pt';
-    case Turkish = 'tr';
+    case ENGLISH = 'en';
+    case CHINESE = 'zh';
+    case DUTCH = 'nl';
+    case FRENCH = 'fr';
+    case GERMAN = 'de';
+    case GREEK = 'el';
+    case HUNGARIAN = 'hu';
+    case ITALIAN = 'it';
+    case LITHUANIAN = 'lt';
+    case RUSSIAN = 'ru';
+    case SPANISH = 'es';
+    case SWEDISH = 'sv';
+    case UKRAINIAN = 'uk';
+    case POLISH = 'pl';
+    case PORTUGUESE = 'pt';
+    case TURKISH = 'tr';
+
     public function asTranslatable(): string
     {
         return 'lbl.' . mb_strtoupper($this->value);
@@ -32,7 +33,7 @@ enum Locale: string implements TranslatableInterface
 
     public static function fallback(): self
     {
-        return self::English;
+        return self::ENGLISH;
     }
 
     public static function current(?self $locale = null): self

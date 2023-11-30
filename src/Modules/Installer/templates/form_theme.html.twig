@@ -200,3 +200,12 @@
     </div>
   </div>
 {%- endblock collection_row -%}
+
+{% block toggle_password_widget %}
+  <div class="input-group mb-3" data-role="toggle-password-visibility">
+    {{ form_widget(form) }}
+    <button class="btn btn-default" type="button">
+      <i class="fas fa-eye-slash ms-2"></i>
+    </button>
+  </div>
+{% endblock %}

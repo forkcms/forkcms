@@ -57,10 +57,10 @@ class Meta implements JsonSerializable
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private string|null $custom;
 
-    #[ORM\Column(type: SEOFollowDBALType::NAME)]
+    #[ORM\Column(type: Types::STRING, enumType: SEOFollow::class)]
     private SEOFollow $seoFollow;
 
-    #[ORM\Column(type: SEOIndexDBALType::NAME)]
+    #[ORM\Column(type: Types::STRING, enumType: SEOIndex::class)]
     private SEOIndex $seoIndex;
 
     public function __construct(
@@ -108,8 +108,8 @@ class Meta implements JsonSerializable
         $this->slug = $slug;
         $this->slugOverwrite = $slugOverwrite;
         $this->custom = $custom;
-        $this->seoFollow = $seoFollow ?? SEOFollow::none;
-        $this->seoIndex = $seoIndex ?? SEOIndex::none;
+        $this->seoFollow = $seoFollow ?? SEOFollow::NONE;
+        $this->seoIndex = $seoIndex ?? SEOIndex::NONE;
         $this->canonicalUrl = $canonicalUrl;
         $this->canonicalUrlOverwrite = $canonicalUrlOverwrite;
         $this->settings = $settings ?? $this->settings;

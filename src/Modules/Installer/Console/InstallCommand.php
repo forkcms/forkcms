@@ -142,7 +142,7 @@ class InstallCommand extends Command
             $installerConfiguration->withAuthenticationStep($authenticationStepConfiguration);
         }
 
-        $step = InstallerStep::install;
+        $step = InstallerStep::INSTALL;
 
         if (!$installerConfiguration->isValidForStep($step)) {
             $this->formatter->error(

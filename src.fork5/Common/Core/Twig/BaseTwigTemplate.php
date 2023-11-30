@@ -113,24 +113,8 @@ abstract class BaseTwigTemplate extends TwigEngine
      */
     protected function startGlobals(Environment $twig)
     {
-        // some old globals
-        $twig->addGlobal('var', '');
-        $twig->addGlobal('CRLF', "\n");
-        $twig->addGlobal('TAB', "\t");
-        $twig->addGlobal('now', time());
-        $twig->addGlobal('LANGUAGE', $this->language);
-        $twig->addGlobal('is'.strtoupper($this->language), true);
-        $twig->addGlobal('debug', $this->debugMode);
-
-        $twig->addGlobal('timestamp', time());
-
         // get all defined constants
         $constants = get_defined_constants(true);
-
-        // remove protected constants aka constants that should not be used in the template
-        foreach ($constants['user'] as $key => $value) {
-            $twig->addGlobal($key, $value);
-        }
 
         /* Setup Backend for the Twig environment. */
         if (!$this->forkSettings || !Model::getContainer()->getParameter('fork.is_installed')) {
@@ -164,50 +148,6 @@ abstract class BaseTwigTemplate extends TwigEngine
                 );
             }
         }
-
-        // settings
-        $twig->addGlobal(
-            'SITE_TITLE',
-            $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
-        );
-        $twig->addGlobal(
-            'SITE_URL',
-            SITE_URL
-        );
-        $twig->addGlobal(
-            'SITE_DOMAIN',
-            SITE_DOMAIN
-        );
-
-        // facebook stuff
-        // @deprecated remove this in Fork 6, facebook_admin_ids / facebook_app_id should be removed
-        if ($this->forkSettings->get('Core', 'facebook_admin_ids', null) !== null) {
-            $twig->addGlobal(
-                'FACEBOOK_ADMIN_IDS',
-                $this->forkSettings->get('Core', 'facebook_admin_ids', null)
-            );
-        }
-        if ($this->forkSettings->get('Core', 'facebook_app_id', null) !== null) {
-            $twig->addGlobal(
-                'FACEBOOK_APP_ID',
-                $this->forkSettings->get('Core', 'facebook_app_id', null)
-            );
-        }
-        if ($this->forkSettings->get('Core', 'facebook_app_secret', null) !== null) {
-            $twig->addGlobal(
-                'FACEBOOK_APP_SECRET',
-                $this->forkSettings->get('Core', 'facebook_app_secret', null)
-            );
-        }
-
-        // twitter stuff
-        if ($this->forkSettings->get('Core', 'twitter_site_name', null) !== null) {
-            // strip @ from twitter username
-            $twig->addGlobal(
-                'TWITTER_SITE_NAME',
-                ltrim($this->forkSettings->get('Core', 'twitter_site_name', null), '@')
-            );
-        }
     }
 
     /**
@@ -223,10 +163,6 @@ abstract class BaseTwigTemplate extends TwigEngine
     public function render($template, array $variables = []): string
     {
         if (!empty($this->forms)) {
-            foreach ($this->forms as $form) {
-                // using assign to pass the form as global
-                $this->assignGlobal('form_' . $form->getName(), $form);
-            }
         }
 
         return $this->environment->render($template, array_merge($this->runtimeGlobals, $variables));

@@ -1,6 +1,6 @@
 <footer class="pt-3 mt-4 mt-auto">
   <ul class="nav justify-content-center border-top border-bottom py-3 my-3 bg-black">
-    {% for footer_link in footerLinks %}
+    {% for footer_link in FOOTER_LINKS %}
       <li class="nav-item">
         <a class="nav-link px-2 text-muted" href="{{ footer_link.url }}" title="{{ footer_link.navigation_title }}"{% if footer_link.rel %} rel="{{ footer_link.rel }}"{% endif %}>
           {{ footer_link.navigation_title }}
@@ -8,5 +8,5 @@
       </li>
     {% endfor %}
   </ul>
-  <p class="text-center text-muted"><span itemprop="copyrightYear">{{ date().format('Y') }}</span> {{ siteTitle }}</p>
+  <p class="text-center text-muted"><span itemprop="copyrightYear">{{ date().format('Y') }}</span> {{ SITE_TITLE }}</p>
 </footer>

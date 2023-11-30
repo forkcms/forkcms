@@ -2,11 +2,11 @@
 
 <body class="{{ app.request.locale }} d-flex flex-column h-100" itemscope itemtype="http://schema.org/WebPage">
 {# Site wide HTML just after body tag #}
-{{ site_html_start_of_body|raw }}
+{{ SITE_HTML_START_OF_BODY|raw }}
 {% block navigation %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="{{ url('pages__page__1.' ~ app.request.locale) }}">{{ siteTitle }}</a>
+      <a class="navbar-brand" href="{{ url('pages__page__1.' ~ app.request.locale) }}">{{ SITE_TITLE }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
         <span class="visually-hidden" data-role="label">{{ 'lbl.OpenNavigation'|trans }}</span>
@@ -27,9 +27,9 @@
   {% endblock %}
 
   {% block pageTitle %}
-    {% if not hideContentTitle %}
+    {% if CONTENT_TITLE is not null %}
       <header class="page-header">
-        <h1>{{ contentTitle }}</h1>
+        <h1>{{ CONTENT_TITLE }}</h1>
       </header>
     {% endif %}
   {% endblock %}
@@ -48,11 +48,11 @@
 {% endblock %}
 
 {# General Javascript #}
-{% for js in js_files %}
+{% for js in JS_FILES %}
   <script src="{{ js }}"></script>
 {% endfor %}
 
 {# Site wide HTML just before closing body tag #}
-{{ site_html_end_of_body|raw }}
+{{ SITE_HTML_END_OF_BODY|raw }}
 </body>
 </html>

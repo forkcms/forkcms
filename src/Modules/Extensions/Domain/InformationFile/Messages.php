@@ -28,7 +28,7 @@ final class Messages
         return count(
             array_filter(
                 $this->messages,
-                static fn (TranslationKey $translationKey): bool => $translationKey->getType() === Type::err
+                static fn (TranslationKey $translationKey): bool => $translationKey->getType() === Type::ERROR
             )
         ) === 0;
     }

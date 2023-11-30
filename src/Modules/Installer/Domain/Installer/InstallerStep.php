@@ -4,12 +4,12 @@ namespace ForkCMS\Modules\Installer\Domain\Installer;
 
 enum InstallerStep: int
 {
-    case requirements = 1;
-    case locales = 2;
-    case modules = 3;
-    case database = 4;
-    case authentication = 5;
-    case install = 6;
+    case REQUIREMENTS = 1;
+    case LOCALES = 2;
+    case MODULES = 3;
+    case DATABASE = 4;
+    case AUTHENTICATION = 5;
+    case INSTALL = 6;
     public function next(): self
     {
         return self::from($this->value + 1);

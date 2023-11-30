@@ -33,7 +33,7 @@ final class RequirementCheckerController extends AbstractStepController
 
     public function __invoke(Request $request): Response
     {
-        $step = InstallerStep::requirements;
+        $step = InstallerStep::REQUIREMENTS;
 
         // if all our requirements are met, go to the next step
         if ($this->requirementsChecker->passes($request->query->getBoolean('ignoreWarnings'))) {

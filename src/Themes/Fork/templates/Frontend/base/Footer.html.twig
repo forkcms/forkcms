@@ -1,8 +1,8 @@
 <footer id="footer" class="mt-auto">
   <div class="container">
     <ul class="nav nav-pills justify-content-center">
-      <li class="nav-item"><a class="nav-link" href="{{ url('pages__page__1.' ~ app.request.locale) }}">© <span itemprop="copyrightYear">{{ date().format('Y') }}</span> {{ siteTitle }}</a></li>
-      {% for footer_link in footerLinks %}
+      <li class="nav-item"><a class="nav-link" href="{{ url('pages__page__1.' ~ app.request.locale) }}">© <span itemprop="copyrightYear">{{ date().format('Y') }}</span> {{ SITE_TITLE }}</a></li>
+      {% for footer_link in FOOTER_LINKS %}
         <li class="nav-item">
           <a class="nav-link{% if footer_link.linkClass %} {{ footer_link.linkClass }}{% endif %}" href="{{ footer_link.url }}" title="{{ footer_link.navigationTitle }}"{% if footer_link.rel %} rel="{{ footer_link.rel }}"{% endif %}>
             {{ footer_link.navigationTitle }}

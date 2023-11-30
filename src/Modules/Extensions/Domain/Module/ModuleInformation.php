@@ -18,7 +18,7 @@ use Throwable;
 #[DataGrid('moduleInformation')]
 #[DataGridActionColumn(
     route: 'backend_action',
-    routeAttributes: ['module' => 'extensions', 'action' => 'module_detail'],
+    routeAttributes: ['module' => 'extensions', 'action' => 'module-detail'],
     routeAttributesCallback: [self::class, 'dataGridSlugCallback'],
     label: 'lbl.Details',
     class: 'btn btn-default btn-sm',
@@ -32,7 +32,7 @@ final class ModuleInformation
         #[DataGridPropertyColumn(
             label: 'lbl.Name',
             route: 'backend_action',
-            routeAttributes: ['module' => 'extensions', 'action' => 'module_detail'],
+            routeAttributes: ['module' => 'extensions', 'action' => 'module-detail'],
             routeAttributesCallback: [self::class, 'dataGridSlugCallback'],
             routeRole: ModuleAction::ROLE_PREFIX . 'EXTENSIONS__MODULE_DETAIL',
             columnAttributes: ['class' => 'title'],
