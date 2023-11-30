@@ -360,6 +360,7 @@ export class Controls {
   // bind checkboxes in a row
   bindTableCheckbox () {
     // set classes
+    // @TODO: check if this is used.
     $('tr td.checkbox input.input-checkbox:checked').each((index, element) => {
       if (!$(element).parents('table').hasClass('noSelectedState')) {
         $(element).parents().filter('tr').eq(0).addClass('selected')
