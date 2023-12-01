@@ -93,13 +93,19 @@ class BlockRepository extends SortableRepository
     public function findAllWidgets(): array
     {
         /* @TODO add check for widgets that have been added but aren't in the database yet */
-        return $this->findBy(['type' => Type::WIDGET->value, 'hidden' => false], ['type' => Criteria::ASC, 'position' => Criteria::ASC]);
+        return $this->findBy(
+            ['type' => Type::WIDGET->value, 'hidden' => false],
+            ['type' => Criteria::ASC, 'position' => Criteria::ASC]
+        );
     }
 
     /** @return Block[] */
     public function findAllActions(): array
     {
         /* @TODO add check for actions that have been added but aren't in the database yet */
-        return $this->findBy(['type' => Type::ACTION->value, 'hidden' => false], ['type' => Criteria::ASC, 'position' => Criteria::ASC]);
+        return $this->findBy(
+            ['type' => Type::ACTION->value, 'hidden' => false],
+            ['type' => Criteria::ASC, 'position' => Criteria::ASC]
+        );
     }
 }

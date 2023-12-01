@@ -65,25 +65,23 @@ final class RevisionType extends AbstractType
                         'disable_allow_children' => $revisionDTO->page->isForbiddenToHaveChildren(),
                     ]
                 );
-                $tabs->get(TabsType::getTabNameForLabel('lbl.SEO'))->add(
-                    'meta',
-                    MetaType::class,
-                    [
-                        'disable_slug_overwrite' => $revisionDTO->page->isHome(),
-                        'base_field_name' => 'title',
-                        'base_url' => $this->pageRouter->getRouteForPageId(
-                            $revisionDTO->parentPage !== null
-                                ? $revisionDTO->parentPage->getId()
-                                : Page::PAGE_ID_HOME
-                        ),
-                        'generate_slug_callback_class' => RevisionRepository::class,
-                        'generate_slug_callback_method' => 'generateSlug',
-                        'generate_slug_callback_parameters' => [
-                            $revisionDTO->locale,
-                            $revisionDTO->hasEntity() ? $revisionDTO->getEntity()->getId() : null,
-                        ],
-                    ]
-                );
+                $hasEntity = $revisionDTO->hasEntity();
+                $entity = $revisionDTO->getEntity();
+                $tabs->get(TabsType::getTabNameForLabel('lbl.SEO'))->add('meta', MetaType::class, [
+                    'disable_slug_overwrite' => $revisionDTO->page->isHome(),
+                    'base_field_name' => 'title',
+                    'base_url' => $this->pageRouter->getRouteForPageId(
+                        $revisionDTO->parentPage !== null
+                            ? $revisionDTO->parentPage->getId()
+                            : Page::PAGE_ID_HOME
+                    ),
+                    'generate_slug_callback_class' => RevisionRepository::class,
+                    'generate_slug_callback_method' => 'generateSlug',
+                    'generate_slug_callback_parameters' => [
+                        $revisionDTO->locale,
+                        $hasEntity ? $entity->getId() : null,
+                    ],
+                ]);
                 if ($revisionDTO->hasEntity()) {
                     $event->getForm()->add(
                         'saveAsDraft',

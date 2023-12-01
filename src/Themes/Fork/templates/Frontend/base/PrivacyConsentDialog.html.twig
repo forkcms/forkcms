@@ -1,9 +1,9 @@
 {% if PRIVACY_CONSENT_ENABLED %}
   <div
-    id="privacyConsentDialog"
+    id="privacy-consent-dialog"
     tabindex="-1"
     role="dialog"
-    aria-labelledby="privacyConsentDialogTitle"
+    aria-labelledby="privacy-consent-dialog-title"
     data-role="privacy_consent_dialog"
     data-backdrop="false"
     {% if PRIVACY_CONSENT_DIALOG_HIDE %}
@@ -14,7 +14,7 @@
       <div class="modal-content">
         <form data-role="privacy_consent_dialog_form">
           <div class="modal-header">
-            <h5 id="privacyConsentDialogTitle">{{ 'lbl.PrivacyConsentDialogTitle'|trans|ucfirst }}</h5>
+            <h5 id="privacy-consent-dialog-title">{{ 'lbl.PrivacyConsentDialogTitle'|trans|ucfirst }}</h5>
             <button type="button" class="btn-close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans }}"></button>
           </div>
           <div class="modal-body">

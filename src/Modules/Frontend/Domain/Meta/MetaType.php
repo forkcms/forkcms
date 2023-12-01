@@ -26,8 +26,10 @@ class MetaType extends AbstractType
     /** @var array<int, Meta> */
     private array $meta = [];
 
-    public function __construct(private readonly MetaRepository $metaRepository, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly MetaRepository $metaRepository,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -137,7 +139,9 @@ class MetaType extends AbstractType
             $metaData = $event->getData();
             $parent = $metaForm->getParent();
             if ($parent === null) {
-                throw new LogicException('The MetaType is not a stand alone type, it needs to be used in a parent form');
+                throw new LogicException(
+                    'The MetaType is not a stand alone type, it needs to be used in a parent form'
+                );
             }
 
             $baseField = null;

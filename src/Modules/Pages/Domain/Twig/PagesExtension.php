@@ -66,7 +66,7 @@ final class PagesExtension extends AbstractExtension
                 'nextDepth' => $depth - 1,
                 'excludedIds' => $excludedIds,
                 'template' => $template,
-                'isSubNavigation' => $isSubNavigation,
+                'is_sub_navigation' => $isSubNavigation,
             ]
         );
     }

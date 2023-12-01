@@ -16,7 +16,7 @@
     "@popperjs/core": "^2.11.5",
     "@symfony/webpack-encore": "^4.1.1",
     "bazinga-translator": "^5.0.0",
-    "bootstrap": "^5.1.3",
+    "bootstrap": "^5.3.2",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": "^3.4.3",
     "check-password-strength": "^2.0.0",
@@ -36,17 +36,19 @@
     "jstree": "^3.3.12",
     "jstree-bootstrap-theme": "^1.0.1",
     "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^8.0.0",
     "postcss-import": "^15.0.0",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.3",
     "requestanimationframe": "0.0.23",
+    "sass": "^1.69.5",
     "sass-loader": "^13.2.0",
     "select2": "^4.0.12",
     "select2-bootstrap-5-theme": "^1.2.0",
     "simple-ajax-uploader": "^2.6.7",
     "sortablejs": "^1.15.0",
     "standard": "^17.0.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard-scss": "^11.1.0",
     "terser-webpack-plugin": "^5.0.0",
     "typeahead.js": "^0.11.1",
     "url-loader": "^4.1.1",
@@ -86,7 +88,11 @@
       "/js/",
       "src/Backend/Core/Layout/EditorTemplates/templates.js",
       "src/Frontend/Cache/",
-      "src/Frontend/Core/Js/jquery/jquery.js"
+      "src/Frontend/Core/Js/jquery/jquery.js",
+      "src.fork5"
     ]
+  },
+  "volta": {
+    "node": "20.7.0"
   }
 }

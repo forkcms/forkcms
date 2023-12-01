@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .btn-share {
   color: $white;
   padding: .375rem .5rem;
@@ -14,7 +16,7 @@
 
     &:hover,
     &:focus {
-      background: darken($value, 15%);
+      background: color.adjust($value, $lightness: -15%);
     }
   }
 }

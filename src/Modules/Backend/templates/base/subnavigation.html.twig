@@ -1,11 +1,11 @@
 <ul class="nav navbar-nav navbar-sidebar">
-  {% for mainItem in navigation|filter(item => item.active is defined and item.active) %}
-    {% for subItem in mainItem.children %}
-      <li class="nav-item{% if subItem.active is defined and subItem.active %} active{% endif %}">
-        <a class="nav-link" href="{{ path('backend_action', subItem.slug.routeParameters) }}">{{ subItem.label|trans|ucfirst }}</a>
-        {% if subItem.children is defined and subItem.active is defined and subItem.active %}
+  {% for main_item in navigation|filter(item => item.active is defined and item.active) %}
+    {% for sub_item in main_item.children %}
+      <li class="nav-item{% if sub_item.active is defined and sub_item.active %} active{% endif %}">
+        <a class="nav-link" href="{{ path('backend_action', sub_item.slug.routeParameters) }}">{{ sub_item.label|trans|ucfirst }}</a>
+        {% if sub_item.children is defined and sub_item.active is defined and sub_item.active %}
           <ul class="nav subnav">
-            {% for item in subItem.children %}
+            {% for item in sub_item.children %}
               <li class="nav-item{% if item.active is defined and item.active %} active{% endif %}">
                 <a class="nav-link" href="{{ path('backend_action', item.slug.routeParameters) }}">{{ item.label|trans|ucfirst }}</a>
               </li>

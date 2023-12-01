@@ -1,6 +1,4 @@
 .modal-content {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
   box-shadow: none;
   border-radius: $border-radius-sm;
 
@@ -35,13 +33,10 @@
 }
 
 .modal.fade .modal-dialog {
-  -webkit-transition: transform 200ms ease-out;
-  -moz-transition: transform 200ms ease-out;
   transition: transform 200ms ease-out;
 }
 
 @include media-breakpoint-up(sm) {
-
   .modal-dialog {
     margin: 80px auto;
   }

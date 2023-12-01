@@ -55,11 +55,13 @@ abstract class AbstractFormActionController extends AbstractActionController
     abstract protected function getFormResponse(Request $request): ?Response;
 
     /**
+     * @codingStandardsIgnoreStart
      * @param class-string<FormTypeInterface> $formType
      * @param array<string, mixed> $formOptions
      * @param callable(FormInterface):Response|callable(FormInterface):FormInterface|callable(FormInterface):null|null $defaultCallback
      * @param callable(FormInterface):Response|callable(FormInterface):FormInterface|callable(FormInterface):null|null $validCallback
      * @param callable(FormInterface):FlashMessage|null $flashMessageCallback
+     * @codingStandardsIgnoreEnd
      */
     final protected function handleForm(
         Request $request,
@@ -110,7 +112,7 @@ abstract class AbstractFormActionController extends AbstractActionController
         string $formType = ActionType::class,
         array $options = []
     ): void {
-        $this->assign('crudDeleteAction', $deleteActionSlug->getActionName());
+        $this->assign('crud_delete_action', $deleteActionSlug->getActionName());
         $this->assign(
             'backend_delete_form',
             $this->formFactory->create(

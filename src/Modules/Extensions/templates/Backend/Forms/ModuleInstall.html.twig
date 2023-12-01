@@ -1,7 +1,7 @@
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set installButtonClass = installButtonClass|default('btn-primary btn-sm') %}
+{% set install_button_class = install_button_class|default('btn-primary btn-sm') %}
 {% if is_allowed('ModuleInstall') %}
-  {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, installButtonClass, { "data-bs-toggle":"modal", "type":"button", "data-bs-target":"#confirmInstall" ~ moduleName|e('html_attr')|ucfirst }) }}
+  {{ macro.buttonIcon('', 'download', 'lbl.Install'|trans|ucfirst, install_button_class, {"data-bs-toggle": "modal", "type": "button", "data-bs-target": "#confirmInstall" ~ moduleName|e('html_attr')|ucfirst}) }}
   <div class="modal fade" id="confirmInstall{{ moduleName|e('html_attr')|ucfirst }}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstall{{ moduleName|e('html_attr')|ucfirst }}Title">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -12,9 +12,9 @@
           <p>{{ 'msg.ConfirmModuleInstall'|trans|format(moduleName) }}</p>
         </div>
         <div class="modal-footer">
-          {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', { "data-bs-dismiss":"modal", "type":"button" }) }}
+          {{ macro.buttonIcon('', 'times', 'lbl.No'|trans|ucfirst, 'btn-default', {"data-bs-dismiss": "modal", "type": "button"}) }}
           {{ form_start(installForm) }}
-          {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', { "type":"submit"}) }}
+          {{ macro.buttonIcon(null, 'check', 'lbl.Yes'|trans|ucfirst, 'btn-primary', {"type": "submit"}) }}
           {{ form_end(installForm) }}
         </div>
       </div>

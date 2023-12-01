@@ -1,6 +1,7 @@
 /* General */
 .fork-module-heading {
   --bs-gutter-x: 0.875rem;
+
   background: $white;
   padding: 10px 0;
 
@@ -48,7 +49,7 @@
 .fork-data-grid-avatar {
   display: inline-block;
   line-height: 0;
-  padding: 0 5px 0 5px;
+  padding: 0 5px;
 }
 
 .fork-data-grid-avatar > a {

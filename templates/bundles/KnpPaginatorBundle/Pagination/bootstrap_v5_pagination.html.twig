@@ -1,8 +1,8 @@
 {% if pageCount > 1 %}
   <nav>
-    {% set classAlign = (align is not defined) ? '' : align=='center' ? ' justify-content-center' : (align=='right' ? ' justify-content-end' : '') %}
-    {% set classSize = (size is not defined) ? '' : size=='large' ? ' pagination-lg' : (size=='small' ? ' pagination-sm' : '') %}
-    <ul class="pagination{{ classAlign }}{{ classSize }}">
+    {% set class_align = (align is not defined) ? '' : align == 'center' ? ' justify-content-center' : (align == 'right' ? ' justify-content-end' : '') %}
+    {% set class_size = (size is not defined) ? '' : size == 'large' ? ' pagination-lg' : (size == 'small' ? ' pagination-sm' : '') %}
+    <ul class="pagination{{ class_align }}{{ class_size }}">
 
       {% if previous is defined %}
         <li class="page-item">
@@ -51,7 +51,7 @@
           {% else %}
             <li class="page-item">
               <a class="page-link"
-                 href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+                 href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount - 1 }}</a>
             </li>
           {% endif %}
         {% endif %}

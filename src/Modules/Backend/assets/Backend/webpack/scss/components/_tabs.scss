@@ -26,7 +26,6 @@ div.active.tab-pane:focus {
 }
 
 .nav-tabs {
-
   .has-error,
   .active.has-error {
     .nav-link,
@@ -69,7 +68,6 @@ div.active.tab-pane:focus {
 }
 
 @supports (display: flex) {
-
   .nav-tabs-flex {
     display: flex;
     justify-content: flex-end;
@@ -86,7 +84,6 @@ div.active.tab-pane:focus {
 }
 
 .fork-dashboard-column .nav-tabs .nav-item {
-
   .nav-link {
      background-color: $gray-200;
    }

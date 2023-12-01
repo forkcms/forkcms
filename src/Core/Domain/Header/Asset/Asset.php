@@ -103,7 +103,8 @@ final class Asset
         $realPath = realpath($path);
         if ($realPath === false || !str_starts_with($realPath, $rootRealPath)) {
             throw new InvalidArgumentException(
-                'Did you run webpack already? Otherwise the file does not exist or is in a location that is not allowed: ' . $path
+                'Did you run webpack already? ' .
+                'Otherwise the file does not exist or is in a location that is not allowed: ' . $path
             );
         }
 

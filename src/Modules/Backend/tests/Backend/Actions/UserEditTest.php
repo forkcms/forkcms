@@ -26,7 +26,8 @@ final class UserEditTest extends BackendWebTestCase
                 $user->getEmail(),
             ]
         );
-        self::assertHasLink('Cancel', '/private/en/backend/user-index');
+
+        self::assertHasLink('Users', '/private/en/backend/user-index');
     }
 
     public function testEditWithoutChanges(): void

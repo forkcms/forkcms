@@ -1,20 +1,20 @@
 {% extends '@Backend/base/base.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudIndexModule = null %}
-{% set crudIndexParameters = [] %}
-{% set crudIndexRelative = false %}
-{% set crudIndexLocale = null %}
+{% set crud_index_module = null %}
+{% set crud_index_parameters = [] %}
+{% set crud_index_relative = false %}
+{% set crud_index_locale = null %}
 
 {% block content %}
   {% if importResults is defined %}
     <dl>
-      <dt>{{ 'lbl.Imported'|trans|ucfirst}}</dt>
+      <dt>{{ 'lbl.Imported'|trans|ucfirst }}</dt>
       <dd>{{ importResults.importedCount|trans|ucfirst }}</dd>
-      <dt>{{ 'lbl.Updated'|trans|ucfirst}}</dt>
+      <dt>{{ 'lbl.Updated'|trans|ucfirst }}</dt>
       <dd>{{ importResults.updatedCount }}</dd>
-      <dt>{{ 'lbl.Skipped'|trans|ucfirst}}</dt>
+      <dt>{{ 'lbl.Skipped'|trans|ucfirst }}</dt>
       <dd>{{ importResults.skippedCount }}</dd>
-      <dt>{{ 'lbl.Failed'|trans|ucfirst}}</dt>
+      <dt>{{ 'lbl.Failed'|trans|ucfirst }}</dt>
       <dd>
         <details class="table-responsive">
           <summary>{{ importResults.failed|count }}</summary>

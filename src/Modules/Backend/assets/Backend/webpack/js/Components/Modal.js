@@ -7,11 +7,11 @@ export class Modal {
     }
 
     $modals.on('shown.bs.modal', (e) => {
-      $('#ajaxSpinner').addClass('light')
+      $('#ajax-spinner').addClass('light')
       $(e.currentTarget).attr('aria-hidden', 'false')
     })
     $modals.on('hide.bs.modal', (e) => {
-      $('#ajaxSpinner').removeClass('light')
+      $('#ajax-spinner').removeClass('light')
       $(e.currentTarget).attr('aria-hidden', 'true')
     })
   }

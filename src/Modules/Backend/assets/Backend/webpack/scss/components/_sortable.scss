@@ -1,8 +1,10 @@
+@use 'sass:color';
+
 .sortable-ghost {
-  background: lighten($primary, 45%);
+  background: color.adjust($primary, $lightness: 45%);
 
   > td {
-    background: lighten($primary, 45%);
+    background: color.adjust($primary, $lightness: 45%);
   }
 }
 

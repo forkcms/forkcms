@@ -102,7 +102,7 @@ final class TranslationIndex extends AbstractFormActionController
                 ),
             ];
         }
-        $this->assign('dataGrids', $filteredTranslations);
+        $this->assign('data_grids', $filteredTranslations);
 
         return null;
     }
@@ -151,7 +151,10 @@ final class TranslationIndex extends AbstractFormActionController
                 $locale->asTranslatable(),
                 valueCallback: $this->translationValue(...),
                 html: true,
-                columnAttributesCallback: static function (FilteredTranslation $translation, array $attributes) use ($locale) {
+                columnAttributesCallback: static function (
+                    FilteredTranslation $translation,
+                    array $attributes
+                ) use ($locale) {
                     if ($translation->getValue($locale) === '') {
                         $attributes['class'] = 'highlighted';
                     }

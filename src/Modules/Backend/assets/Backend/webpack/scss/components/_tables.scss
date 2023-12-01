@@ -7,12 +7,12 @@
   border: 1px solid $table-border-color;
 }
 
-.table > tbody > tr > td.dragAndDropHandle,
-.table > tbody > tr > th.dragAndDropHandle,
-.table > thead > tr > th.dragAndDropHandle,
-.table > tbody > tr > td.sortHandle,
-.table > tbody > tr > th.sortHandle,
-.table > thead > tr > th.sortHandle {
+.table > tbody > tr > td.drag-and-drop-handle,
+.table > tbody > tr > th.drag-and-drop-handle,
+.table > thead > tr > th.drag-and-drop-handle,
+.table > tbody > tr > td.sort-handle,
+.table > tbody > tr > th.sort-handle,
+.table > thead > tr > th.sort-handle {
   width: 5%;
 }
 
@@ -24,7 +24,6 @@
 }
 
 .table-align-top {
-
   > tbody > tr > td,
   > tbody > tr > th,
   > tfoot > tr > td {
@@ -33,7 +32,6 @@
 }
 
 .table {
-
   > thead th {
     background: $gray-100;
     color: $gray-700;
@@ -53,14 +51,12 @@
   }
 
   tr {
-
     .highlighted {
       background: rgba($primary, .15);
     }
 
     td,
     th {
-
       &.check .form-check-input {
         margin-left: 0;
         margin-top: 0;
@@ -73,7 +69,6 @@
     }
 
     td {
-
       &.title a {
         font-weight: $font-weight-medium;
       }
@@ -83,7 +78,7 @@
       }
     }
 
-    &.grayedOut td {
+    &.grayed-out td {
       opacity: .6;
     }
   }

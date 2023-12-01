@@ -203,7 +203,11 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             $numberFormat = $user->getSetting('number_format', $numberFormat);
         }
 
-        $numberFormatter = new NumberFormatter($locale->getLocale()->value, NumberFormatter::DECIMAL, '#,##0.####################');
+        $numberFormatter = new NumberFormatter(
+            $locale->getLocale()->value,
+            NumberFormatter::DECIMAL,
+            '#,##0.####################',
+        );
         $separatorSymbols = array_map(
             static fn (string $separator): string => str_replace(
                 ['comma', 'dot', 'space', 'nothing'],

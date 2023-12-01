@@ -2,7 +2,7 @@
   min-width: 25px;
   position: relative;
 
-  &:after {
+  &::after {
     background-image: url('../../../public/images/arrow-down.svg');
     background-size: 8px auto;
     background-position: center center;

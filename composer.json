@@ -82,6 +82,7 @@
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0",
         "symfony/browser-kit": "^6.0",
+        "friendsoftwig/twigcs": "*",
         "dama/doctrine-test-bundle": "^7.2",
         "symfony/css-selector": "6.*"
     },
