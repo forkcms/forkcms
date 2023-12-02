@@ -6,6 +6,7 @@ use Countable;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -189,7 +190,7 @@ abstract class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestC
         );
     }
 
-    final protected static function getClient(KernelBrowser $newClient = null): KernelBrowser
+    final protected static function getClient(AbstractBrowser $newClient = null): ?AbstractBrowser
     {
         static $client;
 

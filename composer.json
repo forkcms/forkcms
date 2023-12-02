@@ -14,7 +14,7 @@
     "homepage": "https://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",

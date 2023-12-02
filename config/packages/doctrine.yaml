@@ -1,10 +1,11 @@
 parameters:
-  env(FORK_DATABASE_VERSION): '5.7'
+  env(FORK_DATABASE_VERSION): '5.7.32'
 doctrine:
   dbal:
     default_connection: default
     connections:
       default:
+        use_savepoints: true
         profiling_collect_backtrace: '%kernel.debug%'
         driver: "pdo_%env(FORK_DATABASE_DRIVER)%"
         host: "%env(FORK_DATABASE_HOST)%"
