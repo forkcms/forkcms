@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:8.2-apache
 LABEL maintainer="Fork CMS <info@fork-cms.com>"
 
 # Enable Apache mod_rewrite
