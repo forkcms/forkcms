@@ -101,7 +101,7 @@
 }
 
 .toast-messaging-wrapper {
-  padding: ($grid-gutter-width / 2) ($grid-gutter-width / 2) 0;
+  padding: calc($grid-gutter-width / 2) calc($grid-gutter-width / 2) 0;
   z-index: $zindex-modal-backdrop + 1;
 
   .toast {

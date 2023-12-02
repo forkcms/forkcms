@@ -2,7 +2,7 @@
 framework:
   secret: '%env(APP_SECRET)%'
   csrf_protection: true
-  annotations: false
+  annotations: true
   http_method_override: false
   handle_all_throwables: true
 

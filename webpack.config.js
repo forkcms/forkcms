@@ -3,7 +3,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webpack-config -vvv', (error, jsonConfig, stderr) => {
+const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webpack-config', (error, jsonConfig, stderr) => {
   if (error) {
     console.log(`error: ${error.message}`)
     return
@@ -53,7 +53,7 @@ for (const THEME_CONFIG of extensionConfig.themes) {
     })
     .addPlugin(new LiveReloadPlugin())
     .disableSingleRuntimeChunk() // we will never load more than one team
-    .enableVueLoader()
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: true })
     .autoProvidejQuery()
     .autoProvideVariables({
       moment: 'moment'
@@ -144,7 +144,7 @@ for (const APPLICATION of ['Installer', 'Frontend', 'Backend']) {
     })
     .addPlugin(new LiveReloadPlugin())
     .enableSingleRuntimeChunk()
-    .enableVueLoader()
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: true })
     .autoProvidejQuery()
     .autoProvideVariables({
       moment: 'moment'
