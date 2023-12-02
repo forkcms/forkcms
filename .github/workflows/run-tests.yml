@@ -81,6 +81,7 @@ jobs:
               env:
                   FORK_INSTALLATION_LOCALE_ENV_PATH: .env.local
                   APP_ENV: test
+                  APP_SECRET: notsosecret
                   FORK_DATABASE_HOST: 127.0.0.1
                   FORK_DATABASE_PORT: 3306
                   FORK_DATABASE_NAME: forkcms_test
@@ -93,6 +94,7 @@ jobs:
               env:
                   FORK_INSTALLATION_LOCALE_ENV_PATH: .env.local
                   APP_ENV: test
+                  APP_SECRET: notsosecret
                   FORK_DATABASE_HOST: 127.0.0.1
                   FORK_DATABASE_PORT: 3306
                   FORK_DATABASE_NAME: forkcms_test

@@ -53,6 +53,12 @@ function installTest()
         ])
     );
 
+    $application->run(
+        new ArrayInput([
+            'command' => 'debug:dotenv',
+        ])
+    );
+
     $kernel->shutdown();
 }
 
