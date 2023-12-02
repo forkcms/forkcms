@@ -7,6 +7,8 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.16.0",
     "@editorjs/editorjs": "^2.23.2",
     "@editorjs/embed": "^2.5.1",
     "@editorjs/header": "^2.6.2",
@@ -22,6 +24,7 @@
     "check-password-strength": "^2.0.0",
     "chokidar": "^3.5.3",
     "core-js": "^3.22.2",
+    "regenerator-runtime": "^0.13.9",
     "cropper": "^4.0.0",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.0",

@@ -1,14 +1,18 @@
-# @TODO refactor this to the modules they belong to
 security:
+  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
-    ForkCMS\Modules\Backend\Domain\User\User:
-      algorithm: auto
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
     backend_user_provider:
       entity:
         class: ForkCMS\Modules\Backend\Domain\User\User
         property: email
   firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    # @TODO refactor this to the backend module
     backend:
       pattern: ^/private
       lazy: true
@@ -26,6 +30,7 @@ security:
       custom_authenticator: ForkCMS\Modules\Backend\Domain\Authentication\BackendAuthenticator
       logout:
         path: backend_logout
+    # @TODO refactor this to the frontend module
     frontend:
       pattern: ^/
       security: false
@@ -33,6 +38,20 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    # @TODO refactor this to the backend module
     - { path: ^/private/\w\w/backend/authentication-login, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication-logout, roles: PUBLIC_ACCESS }
     - { path: ^/private, roles: ROLE_USER }
+
+when@test:
+  security:
+    password_hashers:
+      # By default, password hashers are resource intensive and take time. This is
+      # important to generate secure password hashes. In tests however, secure hashes
+      # are not important, waste resources and increase test times. The following
+      # reduces the work factor to the lowest possible values.
+      Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+        algorithm: auto
+        cost: 4 # Lowest possible value for bcrypt
+        time_cost: 3 # Lowest possible value for argon
+        memory_cost: 10 # Lowest possible value for argon

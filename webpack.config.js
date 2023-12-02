@@ -3,7 +3,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webpack-config -vvv', (error, jsonConfig, stderr) => {
+const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webpack-config', (error, jsonConfig, stderr) => {
   if (error) {
     console.log(`error: ${error.message}`)
     return
@@ -16,6 +16,10 @@ const extensionConfig = JSON.parse(execSync('bin/console forkcms:extensions:webp
 const THEME_PATH = { output: 'public/assets/themes', public: '/assets/themes' }
 const MODULE_PATH = { output: 'public/assets/modules', public: '/assets/modules' }
 const EXPORTS = []
+
+if (!Encore.isRuntimeEnvironmentConfigured()) {
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'prod');
+}
 
 //
 // THEMES SETUP
@@ -33,7 +37,6 @@ for (const THEME_CONFIG of extensionConfig.themes) {
     .setPublicPath(`${THEME_PATH.public}/`)
     .configureImageRule()
     .configureFontRule()
-    // enables @babel/preset-env polyfills
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
@@ -50,16 +53,15 @@ for (const THEME_CONFIG of extensionConfig.themes) {
     })
     .addPlugin(new LiveReloadPlugin())
     .disableSingleRuntimeChunk() // we will never load more than one team
-    .enableVueLoader()
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: true })
     .autoProvidejQuery()
     .autoProvideVariables({
       moment: 'moment'
     })
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {
-    }, {
-      useBuiltIns: 'usage',
-      corejs: 3
+    .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = '3.23';
     })
     .enableSassLoader((options) => {
     }, {
@@ -142,16 +144,15 @@ for (const APPLICATION of ['Installer', 'Frontend', 'Backend']) {
     })
     .addPlugin(new LiveReloadPlugin())
     .enableSingleRuntimeChunk()
-    .enableVueLoader()
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: true })
     .autoProvidejQuery()
     .autoProvideVariables({
       moment: 'moment'
     })
     // enables @babel/preset-env polyfills
-    .configureBabel(() => {
-    }, {
-      useBuiltIns: 'usage',
-      corejs: 3
+    .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = '3.23';
     })
     .enableSassLoader((options) => {
     }, {

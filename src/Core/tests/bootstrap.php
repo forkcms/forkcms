@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use ForkCMS\Core\Domain\Kernel\Kernel;
 use ForkCMS\Core\Domain\PDO\ForkConnection;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -8,9 +7,12 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Dotenv\Dotenv;
 
 $loader = require __DIR__ . '/../../../vendor/autoload.php';
-AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
 (new Dotenv())->loadEnv(__DIR__ . '/../../../.env', null, 'test', ['test_install', 'test']);
+
+if ($_ENV['APP_DEBUG']) {
+    umask(0000);
+}
 
 function installTest()
 {
@@ -48,6 +50,12 @@ function installTest()
     $application->run(
         new ArrayInput([
             'command' => 'forkcms:installer:install',
+        ])
+    );
+
+    $application->run(
+        new ArrayInput([
+            'command' => 'debug:dotenv',
         ])
     );
 

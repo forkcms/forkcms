@@ -1,14 +1,18 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
-  secret: '%kernel.secret%'
+  secret: '%env(APP_SECRET)%'
   csrf_protection: true
+  annotations: true
   http_method_override: false
+  handle_all_throwables: true
 
   # Enables session support. Note that the session will ONLY be started if you read or write from it.
   # Remove or comment this section to explicitly disable session support.
   session:
-    storage_factory_id: session.storage.factory.native
+    handler_id: session.handler.native_file
     save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    cookie_secure: auto
+    cookie_samesite: lax
 
   #esi: true
   #fragments: true
@@ -22,3 +26,12 @@ framework:
   assets:
     packages: # create the "assets.packages" service
   form: ~
+  uid:
+    default_uuid_version: 7
+    time_based_uuid_version: 7
+
+when@test:
+  framework:
+    test: true
+    session:
+      storage_factory_id: session.storage.factory.mock_file
