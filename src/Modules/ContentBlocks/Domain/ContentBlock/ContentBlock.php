@@ -16,14 +16,13 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ContentBlockRepository::class)]
-#[ORM\Table(name: 'contentblocks__contentblock')]
 #[DataGrid('ContentBlock')]
 #[ORM\HasLifecycleCallbacks]
 #[DataGridActionColumn(
     route: 'backend_action',
     routeAttributes: [
-        'module' => 'content_blocks',
-        'action' => 'content_block_edit',
+        'module' => 'content-blocks',
+        'action' => 'content-block-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',

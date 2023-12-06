@@ -21,7 +21,7 @@ final class CreateContentBlockHandler implements CommandHandlerInterface
     {
         $createContentBlock->widget = new Block(
             ModuleBlock::fromFQCN(DetailWidget::class),
-            TranslationKey::label('ContentBlock'),
+            TranslationKey::label('ContentBlocks'),
             locale: $createContentBlock->locale
         );
 

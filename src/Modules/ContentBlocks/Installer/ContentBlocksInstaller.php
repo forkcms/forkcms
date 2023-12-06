@@ -35,8 +35,7 @@ final class ContentBlocksInstaller extends ModuleInstaller
                 ContentBlockAdd::getActionSlug(),
                 ContentBlockEdit::getActionSlug(),
                 ContentBlockDelete::getActionSlug(),
-            ],
-            sequence: 1,
+            ]
         );
     }
 }

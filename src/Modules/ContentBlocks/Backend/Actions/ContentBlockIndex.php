@@ -2,7 +2,6 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Backend\Actions;
 
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;

@@ -4,7 +4,6 @@ namespace ForkCMS\Modules\ContentBlocks\Backend\Actions;
 
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDeleteActionController;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
-use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
