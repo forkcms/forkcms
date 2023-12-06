@@ -2,10 +2,8 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
-use InvalidArgumentException;
-
 enum Status: string
 {
-    case Archived = 'ARCHIVED';
-    case Active = 'ACTIVE';
+    case ARCHIVED = 'archived';
+    case ACTIVE = 'active';
 }

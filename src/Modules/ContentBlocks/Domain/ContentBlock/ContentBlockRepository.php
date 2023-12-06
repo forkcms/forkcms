@@ -34,7 +34,7 @@ final class ContentBlockRepository extends ServiceEntityRepository
         $entityManager->persist($contentBlock);
         $entityManager->flush();
 
-        if ($contentBlock->getStatus() !== Status::Archived) {
+        if ($contentBlock->getStatus() !== Status::ARCHIVED) {
             $this->updateWidget($contentBlock);
         }
     }
@@ -112,7 +112,7 @@ final class ContentBlockRepository extends ServiceEntityRepository
             ->andWhere('cb.locale = :locale')
             ->andWhere('cb.isHidden = :false')
             ->setParameter('id', $id)
-            ->setParameter('active', Status::Active)
+            ->setParameter('active', Status::ACTIVE)
             ->setParameter('locale', Locale::from($language))
             ->setParameter('false', false)
             ->getQuery()
@@ -147,7 +147,7 @@ final class ContentBlockRepository extends ServiceEntityRepository
             ->addOrderBy('cb.updatedOn', 'ASC')
             ->setParameter('id', $contentBlock->getId())
             ->setParameter('locale', $contentBlock->getLocale())
-            ->setParameter('archived', Status::Archived)
+            ->setParameter('archived', Status::ARCHIVED)
             ->getQuery()
             ->getResult();
     }

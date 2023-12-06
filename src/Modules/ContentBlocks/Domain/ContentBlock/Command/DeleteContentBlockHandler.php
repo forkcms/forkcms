@@ -26,7 +26,7 @@ final class DeleteContentBlockHandler implements CommandHandlerInterface
 
         $activeBlock = null;
         foreach ($versions as $version) {
-            if ($version->getStatus() === Status::Active) {
+            if ($version->getStatus() === Status::ACTIVE) {
                 $activeBlock = $version;
             }
         }

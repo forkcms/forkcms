@@ -74,7 +74,7 @@ class ContentBlock
     #[ORM\Column(name: 'hidden', type: 'boolean', options: ['default' => false])]
     private bool $isHidden;
 
-    #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => 'ACTIVE'])]
+    #[ORM\Column(type: 'string', enumType: Status::class, options: ['default' => Status::ACTIVE->value])]
     private Status $status;
 
     private function __construct(ContentBlockDataTransferObject $dataTransferObject)
@@ -138,12 +138,12 @@ class ContentBlock
 
     public function archive(): void
     {
-        $this->status = Status::Archived;
+        $this->status = Status::ARCHIVED;
     }
 
     public function activate(): void
     {
-        $this->status = Status::Active;
+        $this->status = Status::ACTIVE;
     }
 
     public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject): self

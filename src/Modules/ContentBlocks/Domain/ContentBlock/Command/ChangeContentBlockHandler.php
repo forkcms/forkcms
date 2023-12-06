@@ -22,7 +22,7 @@ final readonly class ChangeContentBlockHandler implements CommandHandlerInterfac
 
         $previousActiveContentBlocks = $this->contentBlockRepository->findBy([
             'id' => $contentBlock->getId(),
-            'status' => Status::Active
+            'status' => Status::ACTIVE
         ]);
         foreach ($previousActiveContentBlocks as $previousActiveContentBlock) {
             $previousActiveContentBlock->archive();
