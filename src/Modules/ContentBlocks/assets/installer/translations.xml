@@ -36,20 +36,20 @@
         <translation locale="pl"><![CDATA[dodaj blok treści]]></translation>
       </item>
       <item type="message" name="Added">
-        <translation locale="nl"><![CDATA[Het inhoudsblok werd toegevoegd.]]></translation>
-        <translation locale="en"><![CDATA[The content block was added.]]></translation>
-        <translation locale="it"><![CDATA[Il blocco di contenuto è stato aggiunto.]]></translation>
-        <translation locale="ru"><![CDATA[Блок был добавлен.]]></translation>
-        <translation locale="zh"><![CDATA[内容块已添加。]]></translation>
-        <translation locale="de"><![CDATA[Der Inhaltsblock wurde hinzugefügt.]]></translation>
-        <translation locale="fr"><![CDATA[Le bloc de contenu a été ajouté.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) tartalmi blokk hozzáadva.]]></translation>
-        <translation locale="es"><![CDATA[El bloque de contenido fue agregado.]]></translation>
-        <translation locale="uk"><![CDATA[Блок додано.]]></translation>
-        <translation locale="sv"><![CDATA[Innehålls block har lagts till.]]></translation>
-        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου προστέθηκε.]]></translation>
-        <translation locale="pt"><![CDATA[O bloco de conteúdo foi adicionado.]]></translation>
-        <translation locale="pl"><![CDATA[blok treści został dodany.]]></translation>
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%contentBlock%" werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%contentBlock%" was added.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%contentBlock%" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%contentBlock%" был добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%1$s”已添加。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%contentBlock%" wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%contentBlock%" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%contentBlock%" tartalmi blokk hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%contentBlock%" fue agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Блок "%contentBlock%" додано.]]></translation>
+        <translation locale="sv"><![CDATA[Innehålls block "%contentBlock%" har lagts till.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%contentBlock%" προστέθηκε.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%contentBlock%" foi adicionado.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%contentBlock%" został dodany.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation locale="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>
@@ -67,19 +67,19 @@
         <translation locale="pl"><![CDATA[Jesteś pewny że chcesz usunąć blok treści "%1$s"?]]></translation>
       </item>
       <item type="message" name="Deleted">
-        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd verwijderd.]]></translation>
-        <translation locale="en"><![CDATA[The content block "%1$s" was deleted.]]></translation>
-        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato eliminato.]]></translation>
-        <translation locale="ru"><![CDATA[Блок "%1$s" был удален.]]></translation>
-        <translation locale="zh"><![CDATA[内容块“%1$s”已删除。]]></translation>
-        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gelöscht.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk törölve.]]></translation>
-        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été effacé.]]></translation>
-        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue eliminado.]]></translation>
-        <translation locale="sv"><![CDATA[Innehållsblocket "%1$s" är borttaget.]]></translation>
-        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" διεγράφη.]]></translation>
-        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi removido.]]></translation>
-        <translation locale="pl"><![CDATA[blok treści "%1$s" został usunięty.]]></translation>
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%contentBlock%" werd verwijderd.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%contentBlock%" was deleted.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%contentBlock%" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%contentBlock%" был удален.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%contentBlock%”已删除。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%contentBlock%" wurde gelöscht.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%contentBlock%" tartalmi blokk törölve.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%contentBlock%" a été effacé.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%contentBlock%" fue eliminado.]]></translation>
+        <translation locale="sv"><![CDATA[Innehållsblocket "%contentBlock%" är borttaget.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%contentBlock%" διεγράφη.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%contentBlock%" foi removido.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%contentBlock%" został usunięty.]]></translation>
       </item>
       <item type="label" name="Edit">
         <translation locale="nl"><![CDATA[bewerk inhoudsblok]]></translation>
@@ -97,19 +97,19 @@
         <translation locale="pl"><![CDATA[edytuj blok treści]]></translation>
       </item>
       <item type="message" name="Edited">
-        <translation locale="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>
-        <translation locale="en"><![CDATA[The content block "%1$s" was saved.]]></translation>
-        <translation locale="it"><![CDATA[Il blocco di contenuto "%1$s" è stato salvato.]]></translation>
-        <translation locale="ru"><![CDATA[Блок "%1$s" был обновлен.]]></translation>
-        <translation locale="zh"><![CDATA[内容块“%1$s”已保存。]]></translation>
-        <translation locale="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gespeichert.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" tartalmi blokk elmentve.]]></translation>
-        <translation locale="fr"><![CDATA[Le bloc de contenu "%1$s" a été enregistré.]]></translation>
-        <translation locale="es"><![CDATA[El bloque de contenido "%1$s" fue guardado.]]></translation>
-        <translation locale="sv"><![CDATA[Innehållsblocket "%1$s" sparades.]]></translation>
-        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" αποθηκεύτηκε.]]></translation>
-        <translation locale="pt"><![CDATA[O bloco de conteúdo "%1$s" foi guardado.]]></translation>
-        <translation locale="pl"><![CDATA[blok treści "%1$s" został zapisany.]]></translation>
+        <translation locale="nl"><![CDATA[Het inhoudsblok "%contentBlock%" werd opgeslagen.]]></translation>
+        <translation locale="en"><![CDATA[The content block "%contentBlock%" was saved.]]></translation>
+        <translation locale="it"><![CDATA[Il blocco di contenuto "%contentBlock%" è stato salvato.]]></translation>
+        <translation locale="ru"><![CDATA[Блок "%contentBlock%" был обновлен.]]></translation>
+        <translation locale="zh"><![CDATA[内容块“%contentBlock%”已保存。]]></translation>
+        <translation locale="de"><![CDATA[Der Inhaltsblock "%contentBlock%" wurde gespeichert.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%contentBlock%" tartalmi blokk elmentve.]]></translation>
+        <translation locale="fr"><![CDATA[Le bloc de contenu "%contentBlock%" a été enregistré.]]></translation>
+        <translation locale="es"><![CDATA[El bloque de contenido "%contentBlock%" fue guardado.]]></translation>
+        <translation locale="sv"><![CDATA[Innehållsblocket "%contentBlock%" sparades.]]></translation>
+        <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%contentBlock%" αποθηκεύτηκε.]]></translation>
+        <translation locale="pt"><![CDATA[O bloco de conteúdo "%contentBlock%" foi guardado.]]></translation>
+        <translation locale="pl"><![CDATA[blok treści "%contentBlock%" został zapisany.]]></translation>
       </item>
       <item type="message" name="NoTemplate">
         <translation locale="nl"><![CDATA[Geen template]]></translation>

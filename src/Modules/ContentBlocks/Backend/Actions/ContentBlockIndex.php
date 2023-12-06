@@ -9,7 +9,7 @@ use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Status;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * ContentBlock overview.
+ * Overview of the available content blocks.
  */
 final class ContentBlockIndex extends AbstractDataGridActionController
 {

@@ -11,13 +11,13 @@ use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command\ChangeContentBlock
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
-use ForkCMS\Modules\Frontend\Domain\Block\Event\IsBlockInUseEvent;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Edit an existing ContentBlock.
+ * Edit an existing content block.
  */
 final class ContentBlockEdit extends AbstractFormActionController
 {
@@ -47,8 +47,10 @@ final class ContentBlockEdit extends AbstractFormActionController
             request: $request,
             formType: ContentBlockType::class,
             formData: new ChangeContentBlock($contentBlock),
-            flashMessage: FlashMessage::success('Added'),
             redirectResponse: new RedirectResponse(ContentBlockIndex::getActionSlug()->generateRoute($this->router)),
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
+                return FlashMessage::success('Edited', ['%contentBlock%' => $form->getData()->title]);
+            }
         );
     }
 }

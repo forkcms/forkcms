@@ -45,7 +45,7 @@ abstract class AbstractDeleteActionController extends AbstractFormActionControll
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));
             },
-            flashMessageCallback: $successFlashMessageCallback,
+            successFlashMessageCallback: $successFlashMessageCallback,
         );
 
         if ($response instanceof RedirectResponse) {

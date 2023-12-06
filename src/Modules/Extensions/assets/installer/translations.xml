@@ -320,20 +320,20 @@
         <translation locale="en"><![CDATA[You are now using the theme "%theme%".]]></translation>
       </item>
       <item type="message" name="ThemeTemplateAdded">
-        <translation locale="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
-        <translation locale="en"><![CDATA[The template "%1$s" was added.]]></translation>
-        <translation locale="it"><![CDATA[Il template "%1$s" è stato aggiunto.]]></translation>
-        <translation locale="ru"><![CDATA[Шаблон "%1$s" добавлен.]]></translation>
-        <translation locale="zh"><![CDATA[模板 “%1$s” 已添加。]]></translation>
-        <translation locale="de"><![CDATA[Das Template "%1$s" wurde hinzugefügt.]]></translation>
-        <translation locale="fr"><![CDATA[Le template "%1$s" a été ajouté.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon hozzáadva.]]></translation>
-        <translation locale="es"><![CDATA[La plantilla "%1$s" fue agregado.]]></translation>
-        <translation locale="uk"><![CDATA[Шаблон для "%1$s" додано.]]></translation>
-        <translation locale="sv"><![CDATA[mall "%1$s" har lagts till.]]></translation>
-        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" προστέθηκε.]]></translation>
-        <translation locale="pl"><![CDATA[Szablon "%1$s" został dodany.]]></translation>
-        <translation locale="pt"><![CDATA[O template "%1$s" foi adicionado.]]></translation>
+        <translation locale="nl"><![CDATA[De template "%template%" werd toegevoegd.]]></translation>
+        <translation locale="en"><![CDATA[The template "%template%" was added.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%template%" è stato aggiunto.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%template%" добавлен.]]></translation>
+        <translation locale="zh"><![CDATA[模板 “%template%” 已添加。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%template%" wurde hinzugefügt.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%template%" a été ajouté.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%template%" sablon hozzáadva.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%template%" fue agregado.]]></translation>
+        <translation locale="uk"><![CDATA[Шаблон для "%template%" додано.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%template%" har lagts till.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%template%" προστέθηκε.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%template%" został dodany.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%template%" foi adicionado.]]></translation>
       </item>
       <item type="message" name="HelpPositionsLayoutText">
         <translation locale="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rij toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p>]]></translation>
@@ -580,35 +580,35 @@
         <translation locale="pl"><![CDATA[Pozycja "%1$s" jest duplikatem.]]></translation>
         <translation locale="pt"><![CDATA[A posição "%1$s" encontra-se duplicada.]]></translation>
       </item>
-      <item type="message" name="DeletedTemplate">
-        <translation locale="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
-        <translation locale="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
-        <translation locale="it"><![CDATA[Il template "%1$s" è stato eliminato.]]></translation>
-        <translation locale="ru"><![CDATA[Шаблон "%1$s" удален.]]></translation>
-        <translation locale="zh"><![CDATA[模板“%1$s”已删除。]]></translation>
-        <translation locale="de"><![CDATA[Das Template "%1$s" wurde gelöscht.]]></translation>
-        <translation locale="fr"><![CDATA[Le template "%1$s" a été effacé.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon törölve.]]></translation>
-        <translation locale="es"><![CDATA[La plantilla "%1$s" fue eliminada.]]></translation>
-        <translation locale="sv"><![CDATA[mall "%1$s" är borttaget.]]></translation>
-        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" διεγράφη.]]></translation>
-        <translation locale="pl"><![CDATA[Szablon "%1$s" został usunięty.]]></translation>
-        <translation locale="pt"><![CDATA[O template "%1$s" foi removido.]]></translation>
+      <item type="message" name="ThemeTemplateDeleted">
+        <translation locale="nl"><![CDATA[De template "%template%" werd verwijderd.]]></translation>
+        <translation locale="en"><![CDATA[The template "%template%" was deleted.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%template%" è stato eliminato.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%template%" удален.]]></translation>
+        <translation locale="zh"><![CDATA[模板“%template%”已删除。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%template%" wurde gelöscht.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%template%" a été effacé.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%template%" sablon törölve.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%template%" fue eliminada.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%template%" är borttaget.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%template%" διεγράφη.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%template%" został usunięty.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%template%" foi removido.]]></translation>
       </item>
-      <item type="message" name="EditedTemplate">
-        <translation locale="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
-        <translation locale="en"><![CDATA[The template "%1$s" was saved.]]></translation>
-        <translation locale="it"><![CDATA[Il template "%1$s" è stato salvato.]]></translation>
-        <translation locale="ru"><![CDATA[Шаблон "%1$s" изменен.]]></translation>
-        <translation locale="zh"><![CDATA[模板“%1$s”已保存。]]></translation>
-        <translation locale="de"><![CDATA[Das Template "%1$s" wurde gespeichert.]]></translation>
-        <translation locale="fr"><![CDATA[Le template "%1$s" a été enregistré.]]></translation>
-        <translation locale="hu"><![CDATA[A(z) "%1$s" sablon elmentve.]]></translation>
-        <translation locale="es"><![CDATA[La plantilla "%1$s" fue guardada.]]></translation>
-        <translation locale="sv"><![CDATA[mall "%1$s" sparades.]]></translation>
-        <translation locale="el"><![CDATA[Το πρότυπο "%1$s" αποθηκεύτηκε.]]></translation>
-        <translation locale="pl"><![CDATA[Szablon "%1$s" został zapisany.]]></translation>
-        <translation locale="pt"><![CDATA[O template "%1$s" foi guardado.]]></translation>
+      <item type="message" name="ThemeTemplateEdited">
+        <translation locale="nl"><![CDATA[De template "%template%" werd opgeslagen.]]></translation>
+        <translation locale="en"><![CDATA[The template "%template%" was saved.]]></translation>
+        <translation locale="it"><![CDATA[Il template "%template%" è stato salvato.]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон "%template%" изменен.]]></translation>
+        <translation locale="zh"><![CDATA[模板“%template%”已保存。]]></translation>
+        <translation locale="de"><![CDATA[Das Template "%template%" wurde gespeichert.]]></translation>
+        <translation locale="fr"><![CDATA[Le template "%template%" a été enregistré.]]></translation>
+        <translation locale="hu"><![CDATA[A(z) "%template%" sablon elmentve.]]></translation>
+        <translation locale="es"><![CDATA[La plantilla "%template%" fue guardada.]]></translation>
+        <translation locale="sv"><![CDATA[mall "%template%" sparades.]]></translation>
+        <translation locale="el"><![CDATA[Το πρότυπο "%template%" αποθηκεύτηκε.]]></translation>
+        <translation locale="pl"><![CDATA[Szablon "%template%" został zapisany.]]></translation>
+        <translation locale="pt"><![CDATA[O template "%template%" foi guardado.]]></translation>
       </item>
       <item type="label" name="Overwrite">
         <translation locale="nl"><![CDATA[overschrijf]]></translation>

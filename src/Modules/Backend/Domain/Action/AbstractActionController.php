@@ -4,8 +4,8 @@ namespace ForkCMS\Modules\Backend\Domain\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\MissingIdentifierField;
 use ForkCMS\Core\Domain\Header\Header;
+use ForkCMS\Core\Domain\Util\ArrayUtil;
 use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlug;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use Pageon\DoctrineDataGridBundle\DataGrid\DataGridFactory;
@@ -18,6 +18,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 use Twig\Environment;
 
 abstract class AbstractActionController implements ActionControllerInterface
@@ -107,16 +108,35 @@ abstract class AbstractActionController implements ActionControllerInterface
      */
     final protected function getEntityFromRequest(Request $request, string $entityFQCN, string $key = 'slug'): mixed
     {
+        $notFoundException = new NotFoundHttpException('identifier field not found');
+
         try {
             return $this->getRepository($entityFQCN)
                 ->find(
                     $request->get($key)
-                    ?? $request->query->get($key)
-                    ?? $request->request->get($key)
+                    ?? ArrayUtil::flatten($request->query->all())[$key]
+                    ?? ArrayUtil::flatten($request->request->all())[$key]
+                    ?? throw $notFoundException
                 )
-                ?? throw new NotFoundHttpException('identifier field not found');
-        } catch (MissingIdentifierField) {
-            throw new NotFoundHttpException('identifier field not found');
+                ?? throw $notFoundException;
+        } catch (Throwable) {
+            throw $notFoundException;
+        }
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $entityFQCN
+     *
+     * @return T|null
+     */
+    final protected function getEntityFromRequestOrNull(Request $request, string $entityFQCN, string $key = 'slug'): mixed
+    {
+        try {
+            return $this->getEntityFromRequest($request, $entityFQCN, $key);
+        } catch (NotFoundHttpException) {
+            return null;
         }
     }
 

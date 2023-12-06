@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <translations>
   <Backend>
+    <item type="message" name="EntityAdded">
+      <translation locale="nl"><![CDATA["%entity%" is toegevoegd.]]></translation>
+      <translation locale="en"><![CDATA["%entity%" has been added.]]></translation>
+      <translation locale="it"><![CDATA["%entity%" è stato aggiunto.]]></translation>
+      <translation locale="ru"><![CDATA["%entity%" - добавлено.]]></translation>
+      <translation locale="zh"><![CDATA[“%entity”已添加．]]></translation>
+      <translation locale="de"><![CDATA["%entity%" wurde hinzugefügt.]]></translation>
+      <translation locale="fr"><![CDATA["%entity%" a été ajouté.]]></translation>
+      <translation locale="hu"><![CDATA["%entity%" hozzáadva.]]></translation>
+      <translation locale="es"><![CDATA["%entity%" ha sido agregado.]]></translation>
+      <translation locale="uk"><![CDATA["%entity%" - додано.]]></translation>
+      <translation locale="el"><![CDATA[Το "%entity%" προστέθηκε.]]></translation>
+      <translation locale="pl"><![CDATA["%entity%" został dodany.]]></translation>
+      <translation locale="pt"><![CDATA["%entity%" foi adicionado.]]></translation>
+    </item>
+    <item type="message" name="EntityDeleted">
+      <translation locale="nl"><![CDATA["%entity%" is verwijderd.]]></translation>
+      <translation locale="en"><![CDATA["%entity%" has been deleted.]]></translation>
+      <translation locale="it"><![CDATA["%entity%" è stato eliminato.]]></translation>
+      <translation locale="ru"><![CDATA["%entity%" - удалено.]]></translation>
+      <translation locale="zh"><![CDATA[“%entity”已添加。]]></translation>
+      <translation locale="de"><![CDATA["%entity%" wurde gelöscht.]]></translation>
+      <translation locale="hu"><![CDATA["%entity%" törölve.]]></translation>
+      <translation locale="fr"><![CDATA["%entity%" a été effacé.]]></translation>
+      <translation locale="es"><![CDATA["%entity%" ha sido eliminado.]]></translation>
+      <translation locale="el"><![CDATA[Το "%entity%" διεγράφη.]]></translation>
+      <translation locale="pl"><![CDATA["%entity%" został usunięty.]]></translation>
+      <translation locale="pt"><![CDATA["%entity%" foi removido.]]></translation>
+    </item>
+    <item type="message" name="EntityEdited">
+      <translation locale="nl"><![CDATA[wijzigingen aan "%entity%" werden opgeslaan.]]></translation>
+      <translation locale="en"><![CDATA[changes for "%entity%" has been saved.]]></translation>
+      <translation locale="it"><![CDATA[le modifiche per "%entity%" sono state salvate.]]></translation>
+      <translation locale="ru"><![CDATA["%entity%" - изменено.]]></translation>
+      <translation locale="zh"><![CDATA[“%entity”的变更已保存。]]></translation>
+      <translation locale="de"><![CDATA[Änderungen an "%entity%" wurden gespeichert.]]></translation>
+      <translation locale="hu"><![CDATA["%entity%" változásai elmentve.]]></translation>
+      <translation locale="fr"><![CDATA[Les changements pour "%entity%" ont été enregistrés.]]></translation>
+      <translation locale="es"><![CDATA[los cambios para "%entity%" han sido guardados.]]></translation>
+      <translation locale="el"><![CDATA[Οι αλλαγές στο "%entity%" έχουν αποθηκευτεί.]]></translation>
+      <translation locale="pl"><![CDATA[zmiany dla "%entity%" zostały zapisane.]]></translation>
+      <translation locale="pt"><![CDATA[As alterações feitas a "%entity%" foram guardadas.]]></translation>
+    </item>
     <item type="error" name="PasswordIsRequired">
       <translation locale="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
       <translation locale="en"><![CDATA[Password is a required field.]]></translation>
@@ -1707,49 +1750,6 @@
         <translation locale="uk"><![CDATA[Користувача "%user%" додано.]]></translation>
         <translation locale="el"><![CDATA[Προστέθηκε ο χρήστης "%user%".]]></translation>
         <translation locale="pl"><![CDATA[Użytkownik "%user%" został dodany.]]></translation>
-      </item>
-      <item type="message" name="UserGroupAdded">
-        <translation locale="nl"><![CDATA["%userGroup%" is toegevoegd.]]></translation>
-        <translation locale="en"><![CDATA["%userGroup%" has been added.]]></translation>
-        <translation locale="it"><![CDATA["%userGroup%" è stato aggiunto.]]></translation>
-        <translation locale="ru"><![CDATA["%userGroup%" - добавлено.]]></translation>
-        <translation locale="zh"><![CDATA[“%userGroup”已添加．]]></translation>
-        <translation locale="de"><![CDATA["%userGroup%" wurde hinzugefügt.]]></translation>
-        <translation locale="fr"><![CDATA["%userGroup%" a été ajouté.]]></translation>
-        <translation locale="hu"><![CDATA["%userGroup%" hozzáadva.]]></translation>
-        <translation locale="es"><![CDATA["%userGroup%" ha sido agregado.]]></translation>
-        <translation locale="uk"><![CDATA["%userGroup%" - додано.]]></translation>
-        <translation locale="el"><![CDATA[Το "%userGroup%" προστέθηκε.]]></translation>
-        <translation locale="pl"><![CDATA["%userGroup%" został dodany.]]></translation>
-        <translation locale="pt"><![CDATA["%userGroup%" foi adicionado.]]></translation>
-      </item>
-      <item type="message" name="UserGroupDeleted">
-        <translation locale="nl"><![CDATA["%userGroup%" is verwijderd.]]></translation>
-        <translation locale="en"><![CDATA["%userGroup%" has been deleted.]]></translation>
-        <translation locale="it"><![CDATA["%userGroup%" è stato eliminato.]]></translation>
-        <translation locale="ru"><![CDATA["%userGroup%" - удалено.]]></translation>
-        <translation locale="zh"><![CDATA[“%userGroup”已添加。]]></translation>
-        <translation locale="de"><![CDATA["%userGroup%" wurde gelöscht.]]></translation>
-        <translation locale="hu"><![CDATA["%userGroup%" törölve.]]></translation>
-        <translation locale="fr"><![CDATA["%userGroup%" a été effacé.]]></translation>
-        <translation locale="es"><![CDATA["%userGroup%" ha sido eliminado.]]></translation>
-        <translation locale="el"><![CDATA[Το "%userGroup%" διεγράφη.]]></translation>
-        <translation locale="pl"><![CDATA["%userGroup%" został usunięty.]]></translation>
-        <translation locale="pt"><![CDATA["%userGroup%" foi removido.]]></translation>
-      </item>
-      <item type="message" name="UserGroupEdited">
-        <translation locale="nl"><![CDATA[wijzigingen aan "%userGroup%" werden opgeslaan.]]></translation>
-        <translation locale="en"><![CDATA[changes for "%userGroup%" has been saved.]]></translation>
-        <translation locale="it"><![CDATA[le modifiche per "%userGroup%" sono state salvate.]]></translation>
-        <translation locale="ru"><![CDATA["%userGroup%" - изменено.]]></translation>
-        <translation locale="zh"><![CDATA[“%userGroup”的变更已保存。]]></translation>
-        <translation locale="de"><![CDATA[Änderungen an "%userGroup%" wurden gespeichert.]]></translation>
-        <translation locale="hu"><![CDATA["%userGroup%" változásai elmentve.]]></translation>
-        <translation locale="fr"><![CDATA[Les changements pour "%userGroup%" ont été enregistrés.]]></translation>
-        <translation locale="es"><![CDATA[los cambios para "%userGroup%" han sido guardados.]]></translation>
-        <translation locale="el"><![CDATA[Οι αλλαγές στο "%userGroup%" έχουν αποθηκευτεί.]]></translation>
-        <translation locale="pl"><![CDATA[zmiany dla "%userGroup%" zostały zapisane.]]></translation>
-        <translation locale="pt"><![CDATA[As alterações feitas a "%userGroup%" foram guardadas.]]></translation>
       </item>
       <item type="label" name="LastFailedLoginAttempt">
         <translation locale="nl"><![CDATA[laatste mislukte aanmelding]]></translation>

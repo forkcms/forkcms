@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\Backend\Domain\Action;
 use ForkCMS\Core\Domain\Form\ActionType;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
+use ForkCMS\Core\Domain\Util\ArrayUtil;
 use ForkCMS\Modules\Extensions\Domain\Module\Command\ChangeModuleSettings;
 use ForkCMS\Modules\Extensions\Domain\Module\Module;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
@@ -60,7 +61,7 @@ abstract class AbstractFormActionController extends AbstractActionController
      * @param array<string, mixed> $formOptions
      * @param callable(FormInterface):Response|callable(FormInterface):FormInterface|callable(FormInterface):null|null $defaultCallback
      * @param callable(FormInterface):Response|callable(FormInterface):FormInterface|callable(FormInterface):null|null $validCallback
-     * @param callable(FormInterface):FlashMessage|null $flashMessageCallback
+     * @param callable(FormInterface):FlashMessage|null $successFlashMessageCallback
      * @codingStandardsIgnoreEnd
      */
     final protected function handleForm(
@@ -72,7 +73,7 @@ abstract class AbstractFormActionController extends AbstractActionController
         array $formOptions = [],
         ?callable $defaultCallback = null,
         ?callable $validCallback = null,
-        ?callable $flashMessageCallback = null,
+        ?callable $successFlashMessageCallback = null,
     ): Response|FormInterface|null {
         $defaultCallback ??= function (FormInterface $form): ?FormInterface {
             $this->assign('backend_form', $form->createView());
@@ -92,8 +93,8 @@ abstract class AbstractFormActionController extends AbstractActionController
             $response = $validCallback($form);
             if ($flashMessage instanceof FlashMessage) {
                 $this->header->addFlashMessage($flashMessage);
-            } elseif (is_callable($flashMessageCallback)) {
-                $this->header->addFlashMessage($flashMessageCallback($form));
+            } elseif (is_callable($successFlashMessageCallback)) {
+                $this->header->addFlashMessage($successFlashMessageCallback($form));
             }
 
             return $response;
@@ -161,5 +162,10 @@ abstract class AbstractFormActionController extends AbstractActionController
                 $defaults
             ),
         );
+    }
+
+    final protected function getSubmittedValue(Request $request, string $key): mixed
+    {
+        return ArrayUtil::flatten($request->request->all())[$key] ?? null;
     }
 }
