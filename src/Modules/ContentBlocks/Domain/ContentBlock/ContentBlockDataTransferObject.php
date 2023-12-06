@@ -15,7 +15,7 @@ abstract class ContentBlockDataTransferObject
 
     public Block $widget;
 
-    public int $revisionId;
+    public readonly int $revisionId;
 
     #[Assert\NotBlank(message: 'err.FieldIsRequired')]
     public string $title;
@@ -44,15 +44,15 @@ abstract class ContentBlockDataTransferObject
             return;
         }
 
-        $this->id = $this->contentBlockEntity->getId();
-        $this->widget = $this->contentBlockEntity->getWidget();
-        $this->isVisible = !$this->contentBlockEntity->isHidden();
-        $this->title = $this->contentBlockEntity->getTitle();
-        $this->text = $this->contentBlockEntity->getText();
-        $this->template = $this->contentBlockEntity->getTemplate();
-        $this->locale = $this->contentBlockEntity->getLocale();
-        $this->status = $this->contentBlockEntity->getStatus();
-        $this->revisionId = $this->contentBlockEntity->getRevisionId();
+        $this->id = $contentBlockEntity->getId();
+        $this->widget = $contentBlockEntity->getWidget();
+        $this->isVisible = !$contentBlockEntity->isHidden();
+        $this->title = $contentBlockEntity->getTitle();
+        $this->text = $contentBlockEntity->getText();
+        $this->template = $contentBlockEntity->getTemplate();
+        $this->locale = $contentBlockEntity->getLocale();
+        $this->status = $contentBlockEntity->getStatus();
+        $this->revisionId = $contentBlockEntity->getRevisionId();
     }
 
     public function getEntity(): ?ContentBlock

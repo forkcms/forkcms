@@ -5,13 +5,15 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Service\UpdateContentBlockWidget;
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockChangedEvent;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Status;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final readonly class ChangeContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private ContentBlockRepository $contentBlockRepository
+        private ContentBlockRepository $contentBlockRepository,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -29,5 +31,6 @@ final readonly class ChangeContentBlockHandler implements CommandHandlerInterfac
         }
 
         $this->contentBlockRepository->save($contentBlock);
+        $this->eventDispatcher->dispatch(new ContentBlockChangedEvent($contentBlock));
     }
 }

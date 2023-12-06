@@ -37,7 +37,7 @@ class ContentBlockType extends AbstractType
 
         $builder->add(
             'isVisible',
-            CheckboxType::class,
+            SwitchType::class,
             $isVisibleOptions
         );
     }

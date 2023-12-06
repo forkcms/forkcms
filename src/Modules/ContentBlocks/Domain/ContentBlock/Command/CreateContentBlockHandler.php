@@ -5,15 +5,18 @@ namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreatedEvent;
 use ForkCMS\Modules\ContentBlocks\Frontend\Widgets\Detail as DetailWidget;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Block\ModuleBlock;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final class CreateContentBlockHandler implements CommandHandlerInterface
+final readonly class CreateContentBlockHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly ContentBlockRepository $contentBlockRepository
+        private ContentBlockRepository $contentBlockRepository,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -30,5 +33,6 @@ final class CreateContentBlockHandler implements CommandHandlerInterface
         $contentBlock = ContentBlock::fromDataTransferObject($createContentBlock);
         $this->contentBlockRepository->save($contentBlock);
         $createContentBlock->setEntity($contentBlock);
+        $this->eventDispatcher->dispatch(new ContentBlockCreatedEvent($contentBlock));
     }
 }

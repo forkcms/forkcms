@@ -23,6 +23,8 @@
     ]]>
   </description>
   <events>
-    <!-- TODO -->
+    <event class="ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreatedEvent"><![CDATA[Thrown when a content block is created.]]></event>
+    <event class="ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockChangedEvent"><![CDATA[Thrown when a content block is changed.]]></event>
+    <event class="ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockDeletedEvent"><![CDATA[Thrown when a content block is deleted.]]></event>
   </events>
 </module>
