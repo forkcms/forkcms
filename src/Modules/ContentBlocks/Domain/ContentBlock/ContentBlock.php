@@ -8,7 +8,6 @@ use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\Blameable;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
-use DateTimeImmutable;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
@@ -88,8 +87,6 @@ class ContentBlock
         $this->text = $dataTransferObject->text;
         $this->isHidden = !$dataTransferObject->isVisible;
         $this->status = $dataTransferObject->status;
-        $this->createdBy = $dataTransferObject->createdBy;
-        $this->updatedBy  = $dataTransferObject->updatedBy;
         $this->settings = $dataTransferObject->settings;
     }
 
@@ -137,12 +134,6 @@ class ContentBlock
     public function getStatus(): Status
     {
         return $this->status;
-    }
-
-    #[ORM\PrePersist]
-    public function prePersist(): void
-    {
-        $this->createdOn = $this->updatedOn = new DateTimeImmutable();
     }
 
     public function archive(): void
