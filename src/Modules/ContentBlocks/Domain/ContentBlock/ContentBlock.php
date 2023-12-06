@@ -2,13 +2,15 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\Blameable;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\EntityWithLocaleTrait;
 use ForkCMS\Modules\Frontend\Domain\Block\Block;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
@@ -126,9 +128,9 @@ class ContentBlock
     }
 
     #[DataGridMethodColumn(label: 'lbl.Visible')]
-    public function isVisible(): string
+    public function isVisible(): TranslationKey
     {
-        return $this->isHidden ? 'lbl.No' : 'lbl.Yes';
+        return $this->isHidden ? TranslationKey::label('No') : TranslationKey::label('Yes');
     }
 
     public function getStatus(): Status
@@ -161,5 +163,26 @@ class ContentBlock
         $attributes['slug'] = $contentBlock->getRevisionId();
 
         return $attributes;
+    }
+
+    #[ORM\PostPersist]
+    #[ORM\PostUpdate]
+    public function prePersist(PostPersistEventArgs|PostUpdateEventArgs $args): void
+    {
+        if ($this->status === Status::ARCHIVED) {
+            return;
+        }
+        $objectManager = $args->getObjectManager();
+        $this->widget->getSettings()->add([
+            'label' => $this->title,
+            'content_block_id' => $this->id,
+        ]);
+        if ($this->isHidden()) {
+            $this->widget->hide();
+        } else {
+            $this->widget->show();
+        }
+
+        $objectManager->flush();
     }
 }

@@ -73,25 +73,6 @@ final class ContentBlockRepository extends ServiceEntityRepository
         return $this->findBy(['id' => $contentBlock->getId(), 'locale' => $contentBlock->getLocale()]);
     }
 
-    public function removeByRevisionId(int $revisionId): void
-    {
-        $contentBlock = $this->findOneby(['revisionId' => $revisionId]);
-
-        if ($contentBlock === null) {
-            return;
-        }
-
-        // get all versions
-        $versions = $this->findBy(['id' => $contentBlock->getId(), 'locale' => $contentBlock->getLocale()]);
-
-        $entityManager = $this->getEntityManager();
-        foreach ($versions as $version) {
-            $entityManager->remove($version);
-        }
-
-        $entityManager->flush();
-    }
-
     public function getNextIdForLocale(Locale $locale): int
     {
         return (int) $this->getEntityManager()
