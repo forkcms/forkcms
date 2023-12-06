@@ -53,6 +53,7 @@ abstract class ContentBlockDataTransferObject
         $this->locale = $contentBlockEntity->getLocale();
         $this->status = $contentBlockEntity->getStatus();
         $this->revisionId = $contentBlockEntity->getRevisionId();
+        $this->settings = $contentBlockEntity->getSettings();
     }
 
     public function getEntity(): ?ContentBlock

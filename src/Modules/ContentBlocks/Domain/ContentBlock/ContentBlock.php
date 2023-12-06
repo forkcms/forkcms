@@ -49,7 +49,7 @@ class ContentBlock
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\OneToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
+    #[ORM\ManyToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
     private Block $widget;
 
     #[ORM\Column(type: 'string', options: ['default' => self::DEFAULT_TEMPLATE])]

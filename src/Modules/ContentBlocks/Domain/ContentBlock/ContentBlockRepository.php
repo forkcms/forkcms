@@ -3,13 +3,11 @@
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use ForkCMS\Modules\Frontend\Domain\Block\BlockRepository;
+use ForkCMS\Modules\Frontend\Domain\Block\Event\IsBlockInUseEvent;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
-use ForkCMS\Modules\Pages\Domain\Revision\Revision;
-use ForkCMS\Modules\Pages\Domain\Revision\RevisionRepository;
-use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method ContentBlock|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,7 +21,7 @@ final class ContentBlockRepository extends ServiceEntityRepository
     public function __construct(
         ManagerRegistry $managerRegistry,
         private readonly BlockRepository $blockRepository,
-        private readonly RevisionRepository $revisionRepository
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct($managerRegistry, ContentBlock::class);
     }
@@ -49,13 +47,19 @@ final class ContentBlockRepository extends ServiceEntityRepository
     /** @param ContentBlock[] $contentBlocks */
     public function removeMultiple(array $contentBlocks): void
     {
-        $block = $this->blockRepository->findOneBy(['id' => $contentBlocks[0]->getExtraId()]);
-        $this->revisionRepository->removeFrontendBlockFromRevision($block);
-        $this->blockRepository->remove($block);
+        $widgets = [];
+        foreach ($contentBlocks as $contentBlock) {
+            $widget = $contentBlock->getWidget();
+            $widgets[$widget->getId()] = $widget;
+        }
 
         $entityManager = $this->getEntityManager();
         foreach ($contentBlocks as $contentBlock) {
             $entityManager->remove($contentBlock);
+        }
+
+        foreach ($widgets as $widget) {
+            $this->blockRepository->remove($widget);
         }
 
         $entityManager->flush();
@@ -135,18 +139,9 @@ final class ContentBlockRepository extends ServiceEntityRepository
 
     public function isContentBlockInUse(ContentBlock $contentBlock): bool
     {
-        $result = $this->getEntityManager()->createQueryBuilder()
-            ->from(ContentBlock::class, 'cb')
-            ->select('COUNT(cb.id)')
-            ->innerJoin(Block::class, 'b', Join::WITH, 'b.id = cb.extraId')
-            ->innerJoin(RevisionBlock::class, 'rb', Join::WITH, 'rb.block = b.id')
-            ->innerJoin(Revision::class, 'r', Join::WITH, 'r.id = rb.revision')
-            ->andWhere('cb.revisionId = :revisionId')
-            ->andWhere('r.isArchived IS NULL')
-            ->setParameter('revisionId', $contentBlock->getRevisionId())
-            ->getQuery()
-            ->getSingleScalarResult();
+        $isContentBlockInUseEvent = new IsBlockInUseEvent($contentBlock->getWidget());
+        $this->eventDispatcher->dispatch($isContentBlockInUseEvent);
 
-        return $result !== 0;
+        return $isContentBlockInUseEvent->isInUse();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Backend\Actions;
 
+use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
@@ -10,6 +11,7 @@ use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\Command\ChangeContentBlock
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use ForkCMS\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
+use ForkCMS\Modules\Frontend\Domain\Block\Event\IsBlockInUseEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,16 +30,17 @@ final class ContentBlockEdit extends AbstractFormActionController
 
     protected function getFormResponse(Request $request): ?Response
     {
-        /** @var ContentBlock $contentBlock */
         $contentBlock = $this->getEntityFromRequest($request, ContentBlock::class);
 
-        $this->assign('content_block', $contentBlock);
-        $this->addDeleteForm(
-            ['id' => $contentBlock->getRevisionId()],
-            ActionSlug::fromFQCN(ContentBlockDelete::class)
-        );
+        $this->header->addBreadcrumb(new Breadcrumb($contentBlock->getTitle()));
 
-        $this->assign('content_block_in_use', $this->contentBlockRepository->isContentBlockInUse($contentBlock));
+        if (!$this->contentBlockRepository->isContentBlockInUse($contentBlock)) {
+            $this->addDeleteForm(
+                ['id' => $contentBlock->getRevisionId()],
+                ActionSlug::fromFQCN(ContentBlockDelete::class)
+            );
+        }
+
         $this->assign('revisions', $this->contentBlockRepository->getRevisionsForContentBlock($contentBlock));
 
         return $this->handleForm(

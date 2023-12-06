@@ -89,26 +89,32 @@ final class RevisionRepository extends ServiceEntityRepository implements MetaCa
         }
     }
 
-    public function removeFrontendBlockFromRevision(Block $block): void
+    /** @return Revision[] */
+    public function findRevisionsForFrontendBlock(Block $block, bool $onlyActive = true): array
     {
-        $this->getEntityManager()->getFilters()->disable('softdeleteable');
-
-        $revisions = $this->getEntityManager()->createQueryBuilder()
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
             ->from(Revision::class, 'r')
             ->select('r')
             ->innerJoin('r.blocks', 'rb')
             ->innerJoin('rb.block', 'b')
-            ->andWhere('r.isArchived IS NOT NULL')
             ->andWhere('b.id = :blockId')
-            ->setParameter('blockId', $block->getId())
-            ->getQuery()
-            ->getResult();
+            ->setParameter('blockId', $block->getId());
 
-        /** @var Revision $revision */
-        foreach ($revisions as $revision) {
-            /** @var RevisionBlock $revisionBlock */
+        if ($onlyActive) {
+            $queryBuilder->andWhere('r.isArchived IS NOT NULL');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function deleteFrontendBlockFromRevisions(Block $block): void
+    {
+        $this->getEntityManager()->getFilters()->disable('softdeleteable');
+
+        foreach ($this->findRevisionsForFrontendBlock($block, onlyActive: false) as $revision) {
             foreach ($revision->getBlocks() as $revisionBlock) {
-                if ($revisionBlock->getBlock()->getId() === $block->getId()) {
+                $revisionBlockFrontendBlock = $revisionBlock->getBlock();
+                if ($revisionBlockFrontendBlock !== null && $revisionBlockFrontendBlock->getId() === $block->getId()) {
                     $revision->removeBlock($revisionBlock);
                 }
             }

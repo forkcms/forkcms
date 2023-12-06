@@ -8,11 +8,11 @@ use ForkCMS\Modules\Extensions\Domain\Module\Event\ModuleInstalledEvent;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstallerLocator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class InstallModulesHandler implements CommandHandlerInterface
+final readonly class InstallModulesHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly ModuleInstallerLocator $moduleInstallerLocator,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        private ModuleInstallerLocator $moduleInstallerLocator,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
