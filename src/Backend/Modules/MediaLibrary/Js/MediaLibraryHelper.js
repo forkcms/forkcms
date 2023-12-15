@@ -1416,7 +1416,7 @@ jsBackend.mediaLibraryHelper.upload = {
     // movies not allowed
     if (!moviesAllowed) {
       // select first item (which is all, so we can upload regular media)
-      $uploadingType.find(':first-child').attr('checked', 'checked')
+      $uploadingType.eq(0).attr('checked', 'checked')
     } else {
       if (groupType === 'movie') {
         // select first item (which is all, so we can upload regular media)
