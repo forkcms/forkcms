@@ -126,6 +126,18 @@
         <translation locale="pt"><![CDATA[Sem template]]></translation>
         <translation locale="pl"><![CDATA[Brak szablonu]]></translation>
       </item>
+      <item type="message" name="NoContentBlocksFound">
+        <translation locale="nl"><![CDATA[Er zijn nog geen inhoudsblokken.]]></translation>
+        <translation locale="en"><![CDATA[There are no content blocks yet.]]></translation>
+        <translation locale="fr"><![CDATA[Il n'y a pas encore de blocs de contenu.]]></translation>
+        <translation locale="de"><![CDATA[Es gibt noch keine Inhaltsblöcke.]]></translation>
+      </item>
+      <item type="message" name="AddContentBlock">
+        <translation locale="nl"><![CDATA[Voeg een inhoudsblok toe]]></translation>
+        <translation locale="en"><![CDATA[Add a content block]]></translation>
+        <translation locale="fr"><![CDATA[Ajouter un bloc de contenu]]></translation>
+        <translation locale="de"><![CDATA[Fügen Sie einen Inhaltsblock hinzu]]></translation>
+      </item>
     </ContentBlocks>
   </Backend>
 </translations>
