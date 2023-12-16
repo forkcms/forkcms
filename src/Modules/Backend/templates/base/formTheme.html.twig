@@ -648,3 +648,17 @@
     </button>
   </div>
 {% endblock %}
+
+{% block data_grid_row %}
+  {{ pageon_datagrid(
+    data_grid,
+    {
+      data_grid_empty_action: data_grid_empty_action|default(null),
+      data_grid_empty_module: data_grid_empty_module|default(null),
+      data_grid_empty_parameters: data_grid_empty_parameters|default([]),
+      data_grid_empty_relatives: data_grid_empty_relatives|default(false),
+      data_grid_empty_locale: data_grid_empty_locale|default(null),
+      data_grid_empty_label: data_grid_empty_label|default('lbl.Add')|trans|ucfirst,
+    }
+  ) }}
+{% endblock %}
