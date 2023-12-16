@@ -17,7 +17,7 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 
 #[ORM\Entity(repositoryClass: ContentBlockRepository::class)]
-#[DataGrid('ContentBlock')]
+#[DataGrid('ContentBlock', noResultsMessage: 'msg.NoContentBlocksFound')]
 #[ORM\HasLifecycleCallbacks]
 #[DataGridActionColumn(
     route: 'backend_action',
@@ -127,10 +127,10 @@ class ContentBlock
         return $this->isHidden;
     }
 
-    #[DataGridMethodColumn(label: 'lbl.Visible')]
-    public function isVisible(): TranslationKey
+    #[DataGridMethodColumn(label: 'lbl.VisibleOnSite')]
+    public function isVisible(): bool
     {
-        return $this->isHidden ? TranslationKey::label('No') : TranslationKey::label('Yes');
+        return !$this->isHidden;
     }
 
     public function getStatus(): Status
