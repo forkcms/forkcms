@@ -141,9 +141,9 @@ final class PageController
             /** @var Revision $revision */
             $revision = $menuItem['page']->getActiveRevision();
             $footerLinks[] = [
-                'navigationTitle' => $revision->getNavigationTitle(),
+                'navigation_title' => $revision->getNavigationTitle(),
                 'url' => $this->router->generate($revision->getRouteName()),
-                'linkClass' => $revision->getSetting('linkClass'),
+                'link_class' => $revision->getSetting('linkClass'),
                 'rel' => $revision->getRel(),
             ];
         }

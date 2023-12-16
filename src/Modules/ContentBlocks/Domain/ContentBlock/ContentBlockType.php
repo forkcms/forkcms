@@ -2,19 +2,26 @@
 
 namespace ForkCMS\Modules\ContentBlocks\Domain\ContentBlock;
 
+use ForkCMS\Core\Domain\Application\Application;
 use ForkCMS\Core\Domain\Form\DataGridType;
 use ForkCMS\Core\Domain\Form\EditorType;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Core\Domain\Form\TitleType;
-use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Twig\ForkTemplateLoader;
 use Pageon\DoctrineDataGridBundle\DataGrid\DataGrid;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ContentBlockType extends AbstractType
 {
+    public function __construct(private readonly ForkTemplateLoader $forkTemplateLoader)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['revisions_data_grid'] === null) {
@@ -54,14 +61,29 @@ final class ContentBlockType extends AbstractType
             $isVisibleOptions['attr']['checked'] = 'checked';
         }
 
+        $templates = $this->forkTemplateLoader->getPossibleTemplates(
+            ModuleName::fromFQCN(self::class),
+            Application::FRONTEND,
+            'Widgets'
+        );
+
         $builder
             ->add('title', TitleType::class)
             ->add(
                 'text',
                 EditorType::class,
                 ['required' => true, 'label' => 'lbl.Content']
-            )
-            ->add('isVisible', SwitchType::class, $isVisibleOptions);
+            );
+        if (count($templates) > 1) {
+            $builder->add('template', ChoiceType::class, [
+                'required' => true,
+                'label' => 'lbl.Template',
+                'choices' => $templates,
+                'choice_translation_domain' => false,
+                'preferred_choices' => [ContentBlock::DEFAULT_TEMPLATE],
+            ]);
+        }
+        $builder->add('isVisible', SwitchType::class, $isVisibleOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -9526,24 +9526,6 @@
         <translation language="pl"><![CDATA[tagi]]></translation>
         <translation language="pt"><![CDATA[etiquetas]]></translation>
       </item>
-      <item type="label" name="Template">
-        <translation language="nl"><![CDATA[template]]></translation>
-        <translation language="en"><![CDATA[template]]></translation>
-        <translation language="hu"><![CDATA[sablon]]></translation>
-        <translation language="it"><![CDATA[template]]></translation>
-        <translation language="ru"><![CDATA[Шаблон]]></translation>
-        <translation language="zh"><![CDATA[模板]]></translation>
-        <translation language="de"><![CDATA[Template]]></translation>
-        <translation language="fr"><![CDATA[template]]></translation>
-        <translation language="es"><![CDATA[tema]]></translation>
-        <translation language="lt"><![CDATA[šablonas]]></translation>
-        <translation language="uk"><![CDATA[Шаблон]]></translation>
-        <translation language="sv"><![CDATA[mall]]></translation>
-        <translation language="el"><![CDATA[πρότυπο]]></translation>
-        <translation language="tr"><![CDATA[şablon]]></translation>
-        <translation language="pl"><![CDATA[szablon]]></translation>
-        <translation language="pt"><![CDATA[template]]></translation>
-      </item>
       <item type="label" name="Templates">
         <translation language="nl"><![CDATA[templates]]></translation>
         <translation language="en"><![CDATA[templates]]></translation>

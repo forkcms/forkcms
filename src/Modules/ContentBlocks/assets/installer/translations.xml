@@ -138,6 +138,24 @@
         <translation locale="fr"><![CDATA[Ajouter un bloc de contenu]]></translation>
         <translation locale="de"><![CDATA[Fügen Sie einen Inhaltsblock hinzu]]></translation>
       </item>
+      <item type="label" name="Template">
+        <translation locale="nl"><![CDATA[template]]></translation>
+        <translation locale="en"><![CDATA[template]]></translation>
+        <translation locale="hu"><![CDATA[sablon]]></translation>
+        <translation locale="it"><![CDATA[template]]></translation>
+        <translation locale="ru"><![CDATA[Шаблон]]></translation>
+        <translation locale="zh"><![CDATA[模板]]></translation>
+        <translation locale="de"><![CDATA[Template]]></translation>
+        <translation locale="fr"><![CDATA[template]]></translation>
+        <translation locale="es"><![CDATA[tema]]></translation>
+        <translation locale="lt"><![CDATA[šablonas]]></translation>
+        <translation locale="uk"><![CDATA[Шаблон]]></translation>
+        <translation locale="sv"><![CDATA[mall]]></translation>
+        <translation locale="el"><![CDATA[πρότυπο]]></translation>
+        <translation locale="tr"><![CDATA[şablon]]></translation>
+        <translation locale="pl"><![CDATA[szablon]]></translation>
+        <translation locale="pt"><![CDATA[template]]></translation>
+      </item>
     </ContentBlocks>
   </Backend>
 </translations>

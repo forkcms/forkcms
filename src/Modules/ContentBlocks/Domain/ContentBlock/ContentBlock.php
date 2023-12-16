@@ -61,8 +61,8 @@ class ContentBlock
         label: 'lbl.Title',
         route: 'backend_action',
         routeAttributes: [
-            'module' => 'content_blocks',
-            'action' => 'content_block_edit',
+            'module' => 'content-blocks',
+            'action' => 'content-block-edit',
         ],
         routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
         routeRole: ModuleAction::ROLE_PREFIX . 'CONTENT_BLOCKS__CONTENT_BLOCK_EDIT',

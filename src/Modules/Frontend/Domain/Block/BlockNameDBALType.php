@@ -16,7 +16,8 @@ class BlockNameDBALType extends ValueObjectDBALType
 
     protected function fromString(string $value): Stringable
     {
-        [$prefix, $value] = mb_str_split($value, 8);
+        [$prefix] = mb_str_split($value, 8);
+        $value = str_replace($prefix, '', $value);
 
         return match ($prefix) {
             self::ACTION_PREFIX => ActionName::fromString($value),
