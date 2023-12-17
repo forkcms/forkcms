@@ -1246,22 +1246,6 @@
         <translation language="tr"><![CDATA[Almanca]]></translation>
         <translation language="pt"><![CDATA[Alemão]]></translation>
       </item>
-      <item type="label" name="No">
-        <translation language="nl"><![CDATA[nee]]></translation>
-        <translation language="en"><![CDATA[no]]></translation>
-        <translation language="ru"><![CDATA[нет]]></translation>
-        <translation language="fr"><![CDATA[non]]></translation>
-        <translation language="es"><![CDATA[No]]></translation>
-        <translation language="de"><![CDATA[nein]]></translation>
-        <translation language="lt"><![CDATA[ne]]></translation>
-        <translation language="uk"><![CDATA[Ні]]></translation>
-        <translation language="sv"><![CDATA[nej]]></translation>
-        <translation language="hu"><![CDATA[no]]></translation>
-        <translation language="el"><![CDATA[όχι]]></translation>
-        <translation language="zh"><![CDATA[不]]></translation>
-        <translation language="pt"><![CDATA[não]]></translation>
-        <translation language="pl"><![CDATA[Nie]]></translation>
-      </item>
       <item type="label" name="OldPassword">
         <translation language="nl"><![CDATA[oud wachtwoord]]></translation>
         <translation language="en"><![CDATA[old password]]></translation>
@@ -1917,24 +1901,6 @@
         <translation language="pl"><![CDATA[-]]></translation>
         <translation language="pt"><![CDATA[o]]></translation>
       </item>
-      <item type="label" name="Title">
-        <translation language="nl"><![CDATA[titel]]></translation>
-        <translation language="en"><![CDATA[title]]></translation>
-        <translation language="hu"><![CDATA[cím]]></translation>
-        <translation language="it"><![CDATA[titolo]]></translation>
-        <translation language="fr"><![CDATA[titre]]></translation>
-        <translation language="ru"><![CDATA[Заголовок]]></translation>
-        <translation language="zh"><![CDATA[标题]]></translation>
-        <translation language="de"><![CDATA[Titel]]></translation>
-        <translation language="es"><![CDATA[título]]></translation>
-        <translation language="lt"><![CDATA[antraštė]]></translation>
-        <translation language="uk"><![CDATA[Заголовок]]></translation>
-        <translation language="sv"><![CDATA[titel]]></translation>
-        <translation language="el"><![CDATA[τίτλος]]></translation>
-        <translation language="pl"><![CDATA[tytuł]]></translation>
-        <translation language="tr"><![CDATA[Başlık]]></translation>
-        <translation language="pt"><![CDATA[título]]></translation>
-      </item>
       <item type="label" name="ToFaqOverview">
         <translation language="nl"><![CDATA[naar het FAQ overzicht]]></translation>
         <translation language="en"><![CDATA[to the FAQ overview]]></translation>
@@ -2067,23 +2033,6 @@
         <translation language="el"><![CDATA[έγραψε]]></translation>
         <translation language="pl"><![CDATA[napisał(a)]]></translation>
         <translation language="pt"><![CDATA[escreveu]]></translation>
-      </item>
-      <item type="label" name="Yes">
-        <translation language="nl"><![CDATA[ja]]></translation>
-        <translation language="en"><![CDATA[yes]]></translation>
-        <translation language="ru"><![CDATA[да]]></translation>
-        <translation language="fr"><![CDATA[oui]]></translation>
-        <translation language="es"><![CDATA[Sí]]></translation>
-        <translation language="de"><![CDATA[ja]]></translation>
-        <translation language="lt"><![CDATA[taip]]></translation>
-        <translation language="uk"><![CDATA[Так]]></translation>
-        <translation language="sv"><![CDATA[ja]]></translation>
-        <translation language="hu"><![CDATA[igen]]></translation>
-        <translation language="el"><![CDATA[ναί]]></translation>
-        <translation language="zh"><![CDATA[是]]></translation>
-        <translation language="tr"><![CDATA[Evet]]></translation>
-        <translation language="pt"><![CDATA[sim]]></translation>
-        <translation language="pl"><![CDATA[Tak]]></translation>
       </item>
       <item type="label" name="YouAreHere">
         <translation language="nl"><![CDATA[je bent hier]]></translation>
@@ -5568,23 +5517,6 @@
         <translation language="pt"><![CDATA[criado]]></translation>
         <translation language="pl"><![CDATA[utworzony]]></translation>
       </item>
-      <item type="label" name="CreatedOn">
-        <translation language="en"><![CDATA[created on]]></translation>
-        <translation language="nl"><![CDATA[aangemaakt op]]></translation>
-        <translation language="hu"><![CDATA[létrehozva]]></translation>
-        <translation language="it"><![CDATA[creato il]]></translation>
-        <translation language="ru"><![CDATA[Создано в]]></translation>
-        <translation language="zh"><![CDATA[创建于]]></translation>
-        <translation language="de"><![CDATA[erstellt am]]></translation>
-        <translation language="fr"><![CDATA[créé le]]></translation>
-        <translation language="es"><![CDATA[creado en]]></translation>
-        <translation language="lt"><![CDATA[sukurta -]]></translation>
-        <translation language="uk"><![CDATA[Створено в]]></translation>
-        <translation language="sv"><![CDATA[skapad av]]></translation>
-        <translation language="el"><![CDATA[δημιουργήθηκε στις]]></translation>
-        <translation language="pt"><![CDATA[criado em]]></translation>
-        <translation language="pl"><![CDATA[utworzony dn.]]></translation>
-      </item>
       <item type="label" name="CS">
         <translation language="nl"><![CDATA[Tsjechisch]]></translation>
         <translation language="en"><![CDATA[Czech]]></translation>
@@ -5949,23 +5881,6 @@
         <translation language="el"><![CDATA[μεταβολή]]></translation>
         <translation language="pl"><![CDATA[edytuj]]></translation>
         <translation language="pt"><![CDATA[editar]]></translation>
-      </item>
-      <item type="label" name="EditedOn">
-        <translation language="nl"><![CDATA[bewerkt op]]></translation>
-        <translation language="en"><![CDATA[edited on]]></translation>
-        <translation language="hu"><![CDATA[szerkesztette]]></translation>
-        <translation language="it"><![CDATA[modificato il]]></translation>
-        <translation language="ru"><![CDATA[Редактировано:]]></translation>
-        <translation language="zh"><![CDATA[编辑于]]></translation>
-        <translation language="de"><![CDATA[editiert am]]></translation>
-        <translation language="fr"><![CDATA[édité le]]></translation>
-        <translation language="es"><![CDATA[editado en]]></translation>
-        <translation language="lt"><![CDATA[redagavo:]]></translation>
-        <translation language="uk"><![CDATA[Редаговано:]]></translation>
-        <translation language="sv"><![CDATA[redigeras på]]></translation>
-        <translation language="el"><![CDATA[μεταβλήθηκε στις]]></translation>
-        <translation language="pl"><![CDATA[edytowane w]]></translation>
-        <translation language="pt"><![CDATA[editado em]]></translation>
       </item>
       <item type="label" name="Editor">
         <translation language="nl"><![CDATA[editor]]></translation>
@@ -6903,23 +6818,6 @@
         <translation language="el"><![CDATA[τελευταία μεταβλήθηκε]]></translation>
         <translation language="pt"><![CDATA[última edição]]></translation>
         <translation language="pl"><![CDATA[ostati edytowany]]></translation>
-      </item>
-      <item type="label" name="LastEditedOn">
-        <translation language="nl"><![CDATA[laatst bewerkt op]]></translation>
-        <translation language="en"><![CDATA[last edited on]]></translation>
-        <translation language="hu"><![CDATA[utoljára szerkesztette]]></translation>
-        <translation language="it"><![CDATA[ultima modifica il]]></translation>
-        <translation language="ru"><![CDATA[Последнее редактирование:]]></translation>
-        <translation language="zh"><![CDATA[最后一次编辑于]]></translation>
-        <translation language="de"><![CDATA[zuletzt bearbeitet am]]></translation>
-        <translation language="fr"><![CDATA[dernière édition le]]></translation>
-        <translation language="es"><![CDATA[última edición en]]></translation>
-        <translation language="lt"><![CDATA[redaguota]]></translation>
-        <translation language="uk"><![CDATA[Останнє редагування]]></translation>
-        <translation language="sv"><![CDATA[Senast redigerad den ]]></translation>
-        <translation language="el"><![CDATA[τελευταία μεταβλήθηκε στις]]></translation>
-        <translation language="pt"><![CDATA[última edição em]]></translation>
-        <translation language="pl"><![CDATA[ostatnio edytowany dn.]]></translation>
       </item>
       <item type="label" name="LastFailedLoginAttempt">
         <translation language="nl"><![CDATA[laatste mislukte aanmelding]]></translation>
@@ -8420,24 +8318,6 @@
         <translation language="pt"><![CDATA[página anterior]]></translation>
         <translation language="pl"><![CDATA[poprzednia strona]]></translation>
       </item>
-      <item type="label" name="PreviousVersions">
-        <translation language="nl"><![CDATA[vorige versies]]></translation>
-        <translation language="en"><![CDATA[previous versions]]></translation>
-        <translation language="hu"><![CDATA[előző verziók]]></translation>
-        <translation language="ru"><![CDATA[Пред. версия]]></translation>
-        <translation language="it"><![CDATA[versione precedente]]></translation>
-        <translation language="zh"><![CDATA[上一个版本]]></translation>
-        <translation language="de"><![CDATA[vorherige Versionen]]></translation>
-        <translation language="fr"><![CDATA[versions précédentes]]></translation>
-        <translation language="es"><![CDATA[versiones previas]]></translation>
-        <translation language="lt"><![CDATA[buvusi versija]]></translation>
-        <translation language="uk"><![CDATA[Поп. версія]]></translation>
-        <translation language="sv"><![CDATA[föregående version]]></translation>
-        <translation language="el"><![CDATA[προηγούμενη έκδοση]]></translation>
-        <translation language="tr"><![CDATA[Önceki versiyonlar]]></translation>
-        <translation language="pt"><![CDATA[versões anteriores]]></translation>
-        <translation language="pl"><![CDATA[poprzednia wersja]]></translation>
-      </item>
       <item type="label" name="Price">
         <translation language="en"><![CDATA[price]]></translation>
         <translation language="nl"><![CDATA[prijs]]></translation>
@@ -9646,24 +9526,6 @@
         <translation language="pl"><![CDATA[tagi]]></translation>
         <translation language="pt"><![CDATA[etiquetas]]></translation>
       </item>
-      <item type="label" name="Template">
-        <translation language="nl"><![CDATA[template]]></translation>
-        <translation language="en"><![CDATA[template]]></translation>
-        <translation language="hu"><![CDATA[sablon]]></translation>
-        <translation language="it"><![CDATA[template]]></translation>
-        <translation language="ru"><![CDATA[Шаблон]]></translation>
-        <translation language="zh"><![CDATA[模板]]></translation>
-        <translation language="de"><![CDATA[Template]]></translation>
-        <translation language="fr"><![CDATA[template]]></translation>
-        <translation language="es"><![CDATA[tema]]></translation>
-        <translation language="lt"><![CDATA[šablonas]]></translation>
-        <translation language="uk"><![CDATA[Шаблон]]></translation>
-        <translation language="sv"><![CDATA[mall]]></translation>
-        <translation language="el"><![CDATA[πρότυπο]]></translation>
-        <translation language="tr"><![CDATA[şablon]]></translation>
-        <translation language="pl"><![CDATA[szablon]]></translation>
-        <translation language="pt"><![CDATA[template]]></translation>
-      </item>
       <item type="label" name="Templates">
         <translation language="nl"><![CDATA[templates]]></translation>
         <translation language="en"><![CDATA[templates]]></translation>
@@ -10111,24 +9973,6 @@
         <translation language="pt"><![CDATA[usar este rascunho]]></translation>
         <translation language="pl"><![CDATA[użyj tego szkicu]]></translation>
       </item>
-      <item type="label" name="UseThisVersion">
-        <translation language="nl"><![CDATA[laad deze versie]]></translation>
-        <translation language="en"><![CDATA[use this version]]></translation>
-        <translation language="hu"><![CDATA[ezt a verziót]]></translation>
-        <translation language="ru"><![CDATA[Использовать эту версию]]></translation>
-        <translation language="it"><![CDATA[usa questa versione]]></translation>
-        <translation language="zh"><![CDATA[使用这个版本]]></translation>
-        <translation language="fr"><![CDATA[utiliser cette version]]></translation>
-        <translation language="de"><![CDATA[verwende diese Version]]></translation>
-        <translation language="es"><![CDATA[usar esta versión]]></translation>
-        <translation language="lt"><![CDATA[naudoti šią versiją]]></translation>
-        <translation language="uk"><![CDATA[Використати цю версію]]></translation>
-        <translation language="sv"><![CDATA[använd denna version]]></translation>
-        <translation language="el"><![CDATA[χρήση αυτής της έκδοσης]]></translation>
-        <translation language="tr"><![CDATA[Bu versiyonu kullan]]></translation>
-        <translation language="pt"><![CDATA[usar esta versão]]></translation>
-        <translation language="pl"><![CDATA[użyj tej wersji]]></translation>
-      </item>
       <item type="label" name="Value">
         <translation language="nl"><![CDATA[waarde]]></translation>
         <translation language="en"><![CDATA[value]]></translation>
@@ -10198,23 +10042,6 @@
         <translation language="tr"><![CDATA[Raporu görüntüle]]></translation>
         <translation language="pt"><![CDATA[ver relatório]]></translation>
         <translation language="pl"><![CDATA[zobacz raport]]></translation>
-      </item>
-      <item type="label" name="VisibleOnSite">
-        <translation language="nl"><![CDATA[Zichtbaar op de website]]></translation>
-        <translation language="en"><![CDATA[visible on site]]></translation>
-        <translation language="hu"><![CDATA[látható az oldalon]]></translation>
-        <translation language="ru"><![CDATA[Видимость на сайте]]></translation>
-        <translation language="it"><![CDATA[visibile sul sito]]></translation>
-        <translation language="zh"><![CDATA[在网站上可见]]></translation>
-        <translation language="fr"><![CDATA[visible sur le site]]></translation>
-        <translation language="de"><![CDATA[sichtbar auf der Website]]></translation>
-        <translation language="es"><![CDATA[visible en sitio]]></translation>
-        <translation language="lt"><![CDATA[rodomas tinklapyje]]></translation>
-        <translation language="uk"><![CDATA[Видимість на сайті]]></translation>
-        <translation language="sv"><![CDATA[synlig på hemsidan]]></translation>
-        <translation language="el"><![CDATA[ορατό στον ιστοχώρο]]></translation>
-        <translation language="pt"><![CDATA[disponível no site]]></translation>
-        <translation language="pl"><![CDATA[widoczny na stronie]]></translation>
       </item>
       <item type="label" name="Visitors">
         <translation language="nl"><![CDATA[bezoekers]]></translation>
@@ -11767,23 +11594,6 @@
         <translation language="pt"><![CDATA[Ainda não existem estatísticas para referências.]]></translation>
         <translation language="pl"><![CDATA[Nie ma jeszcze żadnych statystyk dotyczących witryn odsyłających.]]></translation>
       </item>
-      <item type="message" name="NoRevisions">
-        <translation language="nl"><![CDATA[Er zijn nog geen vorige versies.]]></translation>
-        <translation language="en"><![CDATA[There are no previous versions yet.]]></translation>
-        <translation language="hu"><![CDATA[Még nincsenek előző változatok.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora versioni precedenti.]]></translation>
-        <translation language="ru"><![CDATA[Нет ранних версий.]]></translation>
-        <translation language="zh"><![CDATA[没有较早前的版本。]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Versionen.]]></translation>
-        <translation language="fr"><![CDATA[Il n'y a pas encore de version précédente.]]></translation>
-        <translation language="es"><![CDATA[No hay version anterior aun.]]></translation>
-        <translation language="lt"><![CDATA[Nėra kitų versijų]]></translation>
-        <translation language="uk"><![CDATA[Немає ранніх версій]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga tidigare versioner ännu.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη προηγούμενες εκδόσεις.]]></translation>
-        <translation language="pt"><![CDATA[Ainda não existem versões anteriores.]]></translation>
-        <translation language="pl"><![CDATA[Nie ma jeszcze poprzednich wersji.]]></translation>
-      </item>
       <item type="message" name="NoSentMailings">
         <translation language="en"><![CDATA[No mailings have been sent yet.]]></translation>
         <translation language="nl"><![CDATA[Er zijn nog geen mailings verzonden.]]></translation>
@@ -12073,23 +11883,6 @@
         <translation language="el"><![CDATA[Χρησιμοποιείτε ένα πρόχειρο.]]></translation>
         <translation language="pl"><![CDATA[Używasz szkic]]></translation>
         <translation language="pt"><![CDATA[Está a utilizar um rascunho.]]></translation>
-      </item>
-      <item type="message" name="UsingARevision">
-        <translation language="nl"><![CDATA[Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.]]></translation>
-        <translation language="en"><![CDATA[You're using an older version. Save to overwrite the current version.]]></translation>
-        <translation language="hu"><![CDATA[Te egy régi változatot használsz. Ments, hogy felülírd az aktuálisat.]]></translation>
-        <translation language="it"><![CDATA[Stai usando una vecchia versione. Salva per sovrascrivere la versione attuale.]]></translation>
-        <translation language="ru"><![CDATA[Вы используете предыдущую версию. Сохраните для перезаписи.]]></translation>
-        <translation language="zh"><![CDATA[你正在使用较早的版本。保存将会覆盖当前的版本。]]></translation>
-        <translation language="fr"><![CDATA[Vous utilisez une version plus ancienne. Enregistrez pour écraser la version actuelle.]]></translation>
-        <translation language="de"><![CDATA[Du verwendest eine ältere Version. Speicher um die aktuelle Version zu überschreiben.]]></translation>
-        <translation language="es"><![CDATA[Estas usando una versión anterior. Guarda para sobrescribir la versión actual.]]></translation>
-        <translation language="lt"><![CDATA[Jus naudojate senąją versiją, išsaugokite norėdami ją perrašyti]]></translation>
-        <translation language="uk"><![CDATA[Ви використовуюєте попередню версую. Збережіть для перезапису.]]></translation>
-        <translation language="sv"><![CDATA[Du använder en äldre version. Spara för att skriva över den aktuella versionen.]]></translation>
-        <translation language="el"><![CDATA[Χρησιμοποιείτε μία παλαιότερη έκδοση. Κάντε αποθήκευση γιά να επικαλύψετε την τρέχουσα έκδοση.]]></translation>
-        <translation language="pl"><![CDATA[Używasz starszej wersji. Zapisz, aby zastąpić dotychczasową wersję.]]></translation>
-        <translation language="pt"><![CDATA[Está a utilizar uma versão antiga. Guardar pode substituir a versão actual.]]></translation>
       </item>
       <item type="message" name="ValuesAreChanged">
         <translation language="nl"><![CDATA[De gemaakte wijzigingen zullen verloren gaan.]]></translation>

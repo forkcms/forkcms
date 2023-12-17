@@ -26,7 +26,7 @@ final class UserAdd extends AbstractFormActionController
             formOptions: [
                 'validation_groups' => ['Default', 'create'],
             ],
-            flashMessageCallback: static function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserAdded', ['%user%' => $form->getData()->displayName]);
             }
         );

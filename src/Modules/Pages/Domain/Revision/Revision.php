@@ -267,6 +267,12 @@ class Revision
         return $this->blocks;
     }
 
+    public function removeBlock(RevisionBlock $block): void
+    {
+        $this->blocks->removeElement($block);
+        $block->removeBlock();
+    }
+
     #[ORM\PrePersist]
     public function cleanupOldRevisions(PrePersistEventArgs $args): void
     {

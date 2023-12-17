@@ -6,6 +6,8 @@
 {% set crud_index_locale = null %}
 
 {% block content %}
+  {% block content_warning %}
+  {% endblock %}
   {% if form_theme is defined %}
     {% form_theme backend_form with ['@Backend/base/formTheme.html.twig', form_theme] %}
   {% endif %}

@@ -80,7 +80,19 @@ abstract class AbstractBlockController implements BlockControllerInterface
 
     final protected function changeTemplatePath(string $templatePath): void
     {
-        $this->templatePath = $templatePath;
+        if (str_contains($templatePath, '@')) {
+            $this->templatePath = $templatePath;
+
+            return;
+        }
+
+        $moduleBlock = self::getModuleBlock();
+        $this->templatePath = sprintf(
+            '@%s/Frontend/%s/%s',
+            $moduleBlock->getModule()->getName(),
+            $moduleBlock->getName()->getType()->getDirectoryName(),
+            $templatePath,
+        );
     }
 
     public function __invoke(Request $request, Response $response, Block $block): string|array

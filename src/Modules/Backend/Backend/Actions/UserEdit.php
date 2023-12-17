@@ -34,7 +34,7 @@ final class UserEdit extends AbstractFormActionController
             formType: UserType::class,
             formData: new ChangeUser($user),
             redirectResponse: new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router)),
-            flashMessageCallback: static function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserEdited', ['%user%' => $form->getData()->displayName]);
             }
         );

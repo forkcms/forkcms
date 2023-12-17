@@ -145,5 +145,8 @@ abstract class BackendWebTestCase extends WebTestCase
             self::getCrawler()->filter('#content form[name="' . $formName . '"] .form-control.is-invalid'),
             'Not all required fields are marked as invalid.'
         );
+        if ($expectedErrorCount === 0) {
+            self::getClient()?->followRedirect();
+        }
     }
 }

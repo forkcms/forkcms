@@ -44,8 +44,10 @@
         {% set is_html = column.isHtml %}
         {% if value_type == 'DateTime' or value_type == 'DateTimeImmutable' %}
           {% set value = value|user_format_longdatetime %}
-        {% endif %}
-        {% if value_type == 'ForkCMS\\Modules\\Backend\\Domain\\User\\User' %}
+        {% elseif value_type == 'bool' %}
+          {% set value = value|visualiseBool %}
+          {% set is_html = true %}
+        {% elseif value_type == 'ForkCMS\\Modules\\Backend\\Domain\\User\\User' %}
           {% set value %}
             <div class="fork-data-grid-avatar">
               {% if is_allowed('UserEdit', 'Backend') %}<a href="{{ action_url('UserEdit', 'Backend', {slug: value.id}) }}">{% endif %}

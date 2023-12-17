@@ -17,19 +17,15 @@ final class ThemeTemplateDelete extends AbstractDeleteActionController
 {
     public function getFormResponse(Request $request): Response
     {
-        $themeTemplate = $this->getRepository(ThemeTemplate::class)->find($request->request->all('action')['id']);
-
-        if ($themeTemplate === null) {
-            throw new NotFoundHttpException('Theme template not found');
-        }
+        $themeTemplate = $this->getEntityFromRequestOrNull($request, ThemeTemplate::class, 'action.id');
 
         return $this->handleDeleteForm(
             $request,
             DeleteThemeTemplate::class,
             ThemeTemplateIndex::getActionSlug()->withDefaultParameters(
-                ['slug' => $themeTemplate->getTheme()->getName()]
+                ['slug' => $themeTemplate?->getTheme()?->getName()]
             ),
-            FlashMessage::success('DeletedTemplate', ['%1$s' => $themeTemplate->getName()]),
+            FlashMessage::success('ThemeTemplateDeleted', ['%template%' => $themeTemplate?->getName()]),
         );
     }
 }

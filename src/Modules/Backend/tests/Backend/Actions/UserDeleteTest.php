@@ -10,11 +10,6 @@ final class UserDeleteTest extends BackendWebTestCase
 {
     protected const TEST_URL = '/private/en/backend/user-delete';
 
-    public function testErrorWithoutFormSubmission(): void
-    {
-        self::loginBackendUser();
-    }
-
     public function testWithoutSubmitRedirectToIndex(): void
     {
         $user = self::loadPage();

@@ -22,6 +22,7 @@ trait Blameable
 
     /**
      * @Gedmo\Blameable(on="update")
+     * @Gedmo\Blameable(on="create")
      */
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'updatedBy')]

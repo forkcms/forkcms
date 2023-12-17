@@ -40,7 +40,7 @@ final class ThemeActivate extends AbstractFormActionController
 
                 return new RedirectResponse(ThemeIndex::getActionSlug()->generateRoute($this->router));
             },
-            flashMessageCallback: function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('ThemeActivated', ['%theme%' => $form->getData()['name']]);
             }
         );
