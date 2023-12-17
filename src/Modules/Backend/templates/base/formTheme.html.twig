@@ -16,8 +16,8 @@
       {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
-      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
-      <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional')}) %}
+      <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label_html ? label|raw : label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       {% if form.vars.label_tooltip is defined and form.vars.label_tooltip is not empty %}
         {% if not form.vars.label_tooltip_translation_domain and form.vars.label_tooltip_translation_domain is not null %}
@@ -95,10 +95,10 @@
 {%- endblock form_errors %}
 
 {%- block meta_widget -%}
-  {% set customId = form.vars.id ~ '_custom' %}
-  {% set classId = form.vars.id ~ '_class' %}
-  {% set methodId = form.vars.id ~ '_method' %}
-  {% set parametersId = form.vars.id ~ '_parameters' %}
+  {% set custom_id = form.vars.id ~ '_custom' %}
+  {% set class_id = form.vars.id ~ '_class' %}
+  {% set method_id = form.vars.id ~ '_method' %}
+  {% set parameters_id = form.vars.id ~ '_parameters' %}
   <div
     class="js-do-meta-automatically"
     data-base-field-selector="{{ base_field_selector }}"
@@ -113,10 +113,10 @@
     data-slug-overwrite-selector="{{ '#' ~ form.slugOverwrite.vars.id }}"
     data-canonincal-url-overwrite-selector="{{ '#' ~ form.canonicalUrlOverwrite.vars.id }}"
     data-generated-slug-selector="{{ form.vars.generated_slug_selector }}"
-    data-custom-selector="{{ '#' ~ customId }}"
-    data-class-name-selector="{{ '#' ~ classId }}"
-    data-method-name-selector="{{ '#' ~ methodId }}"
-    data-parameters-selector="{{ '#' ~ parametersId }}"
+    data-custom-selector="{{ '#' ~ custom_id }}"
+    data-class-name-selector="{{ '#' ~ class_id }}"
+    data-method-name-selector="{{ '#' ~ method_id }}"
+    data-parameters-selector="{{ '#' ~ parameters_id }}"
   >
     <fieldset>
       <legend>{{ 'lbl.Titles'|trans|ucfirst }}</legend>
@@ -131,16 +131,16 @@
           <small class="form-text text-muted">{{ 'msg.HelpPageTitle'|trans|raw }}</small>
         </div>
       </div>
-      {% set navigationTitle = locateFormView(form, 'navigationTitle') %}
-      {% if navigationTitle is not null %}
+      {% set navigation_title = locateFormView(form, 'navigationTitle') %}
+      {% if navigation_title is not null %}
         <div class="checkboxTextFieldCombo">
           <div class="form-group">
             {{ form_widget(locateFormView(form, 'navigationTitleOverwrite')) }}
           </div>
           <div class="form-group">
-            {{ form_label(navigationTitle) }}
-            {{ form_widget(navigationTitle) }}
-            {{ form_errors(navigationTitle) }}
+            {{ form_label(navigation_title) }}
+            {{ form_widget(navigation_title) }}
+            {{ form_errors(navigation_title) }}
             <small class="form-text text-muted">{{ 'msg.HelpNavigationTitle'|trans|raw }}</small>
           </div>
         </div>
@@ -205,27 +205,27 @@
     </fieldset>
 
     <fieldset class="last">
-      <legend>{{ 'lbl.SEO'|trans|ucfirst }}</legend>
+      <legend>{{ 'lbl.SearchEngines'|trans|ucfirst }}</legend>
       <div class="row">
         <div class="col-md-6">
           <div class="form-group last">
-            <label>{{ 'lbl.Index'|trans|ucfirst }}</label>
+            <label>{{ 'lbl.SearchEngineIndexPage'|trans|ucfirst }}</label>
             {{ form_widget(form.SEOIndex) }}
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label>{{ 'lbl.Follow'|trans|ucfirst }}</label>
+            <label>{{ 'lbl.SearchEngineFollowLinks'|trans|ucfirst }}</label>
             {{ form_widget(form.SEOFollow) }}
           </div>
         </div>
       </div>
     </fieldset>
   </div>
-  <input type="hidden" id="{{ customId }}" value="{{ custom_meta_tags ? '1' : '0' }}">
-  <input type="hidden" id="{{ classId }}" value="{{ generate_slug_callback_class }}">
-  <input type="hidden" id="{{ methodId }}" value="{{ generate_slug_callback_method }}">
-  <input type="hidden" id="{{ parametersId }}" value="{{ generate_slug_callback_parameters }}">
+  <input type="hidden" id="{{ custom_id }}" value="{{ custom_meta_tags ? '1' : '0' }}">
+  <input type="hidden" id="{{ class_id }}" value="{{ generate_slug_callback_class }}">
+  <input type="hidden" id="{{ method_id }}" value="{{ generate_slug_callback_method }}">
+  <input type="hidden" id="{{ parameters_id }}" value="{{ generate_slug_callback_parameters }}">
   {{ form_rest(form) }}
 {%- endblock meta_widget -%}
 
@@ -302,8 +302,8 @@
         {% set prototype_html = prototype_html ~ '</div>' %}
       {% endif %}
 
-      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
-      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+      {% set attr = attr|merge({'data-prototype': prototype_html}) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name}) %}
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
       <div class="card card-default">
@@ -356,7 +356,7 @@
 {% block form_row %}
   {%- set widget_attr = {} -%}
   {%- if help is not empty -%}
-    {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- set widget_attr = {attr: {'aria-describedby': id ~ "_help"}} -%}
   {%- endif -%}
   {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
   <div {% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
@@ -392,8 +392,8 @@
 {% endblock %}
 
 {% block help %}
-  {% for attributeName, attributeValue in attr %}
-    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
+  {% for attribute_name, attribute_value in attr %}
+    {% if attribute_name == 'help' %}<small class="form-text text-muted">{{ attribute_value|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 
@@ -471,8 +471,8 @@
       {% set label = label|trans({}, translation_domain)|ucfirst %}
     {% endif %}
 
-    {% set legend_attr = label_attr|merge({'class': label_attr.class|default('') }) %}
-    <legend{% for attrname,attrvalue in legend_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label }}</legend>
+    {% set legend_attr = label_attr|merge({'class': label_attr.class|default('')}) %}
+    <legend{% for attrname, attrvalue in legend_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label }}</legend>
   {% endif %}
 {% endblock %}
 
@@ -500,8 +500,8 @@
 {% endblock %}
 
 {% block tab_row %}
-  {%- set tabClass = ' tab-pane fade row' ~ (form.parent.children | keys | first == form.vars.name ? ' show active' : '') -%}
-  {{ form_widget(form, {attr: {role:'tabpanel', 'aria-labelledby': form.vars.id ~ '-tab', class: (form.vars.attr.class|default('') ~ tabClass)|trim} }) }}
+  {%- set tab_class = ' tab-pane fade row' ~ (form.parent.children|keys|first == form.vars.name ? ' show active' : '') -%}
+  {{ form_widget(form, {attr: {role: 'tabpanel', 'aria-labelledby': form.vars.id, class: (form.vars.attr.class|default('') ~ tab_class)|trim}}) }}
 {% endblock %}
 
 {% block user_group_permission_row %}
@@ -533,14 +533,13 @@
             <tbody>
             {% for index, permission in permissions %}
               <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                {% set checkboxLabel = form.children[index].vars.label %}
-                {% set checkboxLabelAttr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
-                {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional') }) %}
-                <td
-                  class="check">{{ form_widget(form.children[index], {'label':false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
+                {% set checkbox_label = form.children[index].vars.label %}
+                {% set checkbox_label_attr = form.children[index].vars.label_attr|merge({'for': form.children[index].vars.id}) %}
+                {% set checkbox_label_attr = checkbox_label_attr|merge({'class': form.children[index].vars.label_attr.class|default('') ~ (form.children[index].vars.required ? ' required' : ' optional')}) %}
+                <td class="check">{{ form_widget(form.children[index], {'label': false, 'attr': {'data-select-all-target': form.vars.id ~ '-' ~ module}}) }}</td>
                 <td class="name">
-                  <label{% for attrname,attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                  {{ checkboxLabel }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
+                  <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                  {{ checkbox_label }}{% if form.children[index].vars.required %}{{- block('label_asterisk') -}}{% endif %}
                   </label>
                 </td>
                 <td class="description">{{ permission.description }}</td>
@@ -566,22 +565,21 @@
     </tr>
     </thead>
     <tbody>
-    {% for userCheckbox in form.children %}
-      {% set user = possibleUsers[userCheckbox.vars.value] %}
+    {% for user_checkbox in form.children %}
+      {% set user = possibleUsers[user_checkbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-        <td
-          class="check">{{ form_widget(userCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
+        <td class="check">{{ form_widget(user_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-users'}}) }}</td>
         <td>
-          {% set checkboxLabelAttr = userCheckbox.vars.label_attr|merge({'for': userCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userCheckbox.vars.label_attr.class|default('') ~ (userCheckbox.vars.required ? ' required' : ' optional') }) %}
-          <label{% for attrname,attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-          {{ user.email }}
+          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ user.email }}
           </label>
         </td>
         <td>
-          {% set checkboxLabelAttr = userCheckbox.vars.label_attr|merge({'for': userCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userCheckbox.vars.label_attr.class|default('') ~ (userCheckbox.vars.required ? ' required' : ' optional') }) %}
-          <label{% for attrname,attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {% set checkbox_label_attr = user_checkbox.vars.label_attr|merge({'for': user_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_checkbox.vars.label_attr.class|default('') ~ (user_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
           {{ user.displayName }}
           </label>
         </td>
@@ -601,16 +599,15 @@
     </tr>
     </thead>
     <tbody>
-    {% for userGroupCheckbox in form.children %}
-      {% set userGroup = possibleGroups[userGroupCheckbox.vars.value] %}
+    {% for user_group_checkbox in form.children %}
+      {% set user_group = possibleGroups[user_group_checkbox.vars.value] %}
       <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-        <td
-          class="check">{{ form_widget(userGroupCheckbox, {label:false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
+        <td class="check">{{ form_widget(user_group_checkbox, {label: false, 'attr': {'data-select-all-target': form.vars.id ~ '-userGroups'}}) }}</td>
         <td>
-          {% set checkboxLabelAttr = userGroupCheckbox.vars.label_attr|merge({'for': userGroupCheckbox.vars.id}) %}
-          {% set checkboxLabelAttr = checkboxLabelAttr|merge({'class': userGroupCheckbox.vars.label_attr.class|default('') ~ (userGroupCheckbox.vars.required ? ' required' : ' optional') }) %}
-          <label{% for attrname,attrvalue in checkboxLabelAttr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-          {{ userGroup.name }}
+          {% set checkbox_label_attr = user_group_checkbox.vars.label_attr|merge({'for': user_group_checkbox.vars.id}) %}
+          {% set checkbox_label_attr = checkbox_label_attr|merge({'class': user_group_checkbox.vars.label_attr.class|default('') ~ (user_group_checkbox.vars.required ? ' required' : ' optional')}) %}
+          <label{% for attrname, attrvalue in checkbox_label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          {{ user_group.name }}
           </label>
         </td>
       </tr>
@@ -641,4 +638,27 @@
     </div>
     {{ form_widget(form.children|last) }}
   </div>
+{% endblock %}
+
+{% block toggle_password_widget %}
+  <div class="input-group mb-3" data-role="toggle-password-visibility">
+    {{ form_widget(form) }}
+    <button class="btn btn-default" type="button">
+      <i class="fas fa-eye-slash ms-2"></i>
+    </button>
+  </div>
+{% endblock %}
+
+{% block data_grid_row %}
+  {{ pageon_datagrid(
+    data_grid,
+    {
+      data_grid_empty_action: data_grid_empty_action|default(null),
+      data_grid_empty_module: data_grid_empty_module|default(null),
+      data_grid_empty_parameters: data_grid_empty_parameters|default([]),
+      data_grid_empty_relatives: data_grid_empty_relatives|default(false),
+      data_grid_empty_locale: data_grid_empty_locale|default(null),
+      data_grid_empty_label: data_grid_empty_label|default('lbl.Add')|trans|ucfirst,
+    }
+  ) }}
 {% endblock %}

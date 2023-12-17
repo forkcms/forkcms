@@ -45,7 +45,7 @@ final class FlashMessage
     public static function warning(string $warningMessage, array $parameters = [], Type $translationType = null): self
     {
         return new self(
-            TranslationKey::forType($translationType ?? Type::err, $warningMessage)->withParameters($parameters),
+            TranslationKey::forType($translationType ?? Type::ERROR, $warningMessage)->withParameters($parameters),
             FlashMessageType::WARNING
         );
     }

@@ -1,4 +1,4 @@
-admin-email: test@fork-cms.com
+admin-email: test@example.com
 admin-password: test
 different-debug-email: false
 debug-email: null
@@ -23,4 +23,5 @@ modules:
     - !fork-cms_module Frontend
     - !fork-cms_module Internationalisation
     - !fork-cms_module Pages
+    - !fork-cms_module ContentBlocks
 install-example-data: false

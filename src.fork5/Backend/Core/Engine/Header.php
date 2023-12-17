@@ -250,6 +250,5 @@ final class Header extends KernelLoader
 
     public function appendDetailToBreadcrumbs(string $stringToAppend): void
     {
-        $this->template->assignGlobal('breadcrumbDetail', $stringToAppend);
     }
 }

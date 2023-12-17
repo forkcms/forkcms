@@ -12,6 +12,9 @@ use Twig\Environment;
 
 final class Navigation
 {
+    /** @var array<int, array<string, mixed>> */
+    private $navigation = [];
+
     public function __construct(
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly NavigationCache $navigationCache,
@@ -33,16 +36,15 @@ final class Navigation
     /** @return array<int, array<string, mixed>> */
     private function getNavigationForAllowedModulesAndActions(): array
     {
-        static $navigation;
-        if ($navigation !== null) {
-            return $navigation;
+        if ($this->navigation !== []) {
+            return $this->navigation;
         }
 
-        $navigation = $this->addActiveStateToNavigation(
+        $this->navigation = $this->addActiveStateToNavigation(
             array_filter(array_map($this->getPermissionCheckerFunction(), $this->navigationCache->get()))
         );
 
-        return $navigation;
+        return $this->navigation;
     }
 
     private function getPermissionCheckerFunction(): callable

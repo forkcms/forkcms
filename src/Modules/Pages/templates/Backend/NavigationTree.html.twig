@@ -28,10 +28,10 @@
 
 {% macro parseTree(tree) %}
   <ul>
-    {% for navigationItem in tree %}
-      <li id="page-{{ navigationItem.page.id }}"{% for attr,value in navigationItem.attr %} {{ attr }}='{{ value|raw }}'{% endfor %} data-allow-children="{{ navigationItem.page.getSetting('allowChildren') ? 'true' : 'false' }}" data-allow-move="{{ navigationItem.page.getSetting('allowMove') ? 'true' : 'false' }}">
-        <a href="{{ action_url('PageEdit', null, {'slug': navigationItem.page.id}) }}"><ins>&#160;</ins>{{ navigationItem.page.activeRevision.navigationTitle }}</a>
-        {% if navigationItem.children is not empty %}{{ _self.parseTree(navigationItem.children) }}{% endif %}
+    {% for navigation_item in tree %}
+      <li id="page-{{ navigation_item.page.id }}"{% for attr, value in navigation_item.attr %} {{ attr }}='{{ value|raw }}'{% endfor %} data-allow-children="{{ navigation_item.page.getSetting('allowChildren') ? 'true' : 'false' }}" data-allow-move="{{ navigation_item.page.getSetting('allowMove') ? 'true' : 'false' }}">
+        <a href="{{ action_url('PageEdit', null, {'slug': navigation_item.page.id}) }}"><ins>&#160;</ins>{{ navigation_item.page.activeRevision.navigationTitle }}</a>
+        {% if navigation_item.children is not empty %}{{ _self.parseTree(navigation_item.children) }}{% endif %}
       </li>
     {% endfor %}
   </ul>

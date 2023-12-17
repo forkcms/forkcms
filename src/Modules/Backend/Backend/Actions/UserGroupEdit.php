@@ -31,7 +31,7 @@ final class UserGroupEdit extends AbstractFormActionController
             formType: UserGroupType::class,
             formData: new ChangeUserGroup($userGroup),
             redirectResponse: new RedirectResponse(UserGroupIndex::getActionSlug()->generateRoute($this->router)),
-            flashMessageCallback: static function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserGroupEdited', ['%userGroup%' => $form->getData()->name]);
             }
         );

@@ -14,7 +14,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php: [8.1, 8.2]
+                php: [8.2, 8.3]
                 testsuite: ["functional", "unit", "installer"]
         name: PHPUnit - ${{ matrix.testsuite }} (PHP ${{ matrix.php }})
         services:
@@ -37,7 +37,7 @@ jobs:
                   key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
             - name: Setup PHP with coverage
-              if: ${{ matrix.php == '8.1' }}
+              if: ${{ matrix.php == '8.2' }}
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
@@ -45,7 +45,7 @@ jobs:
                   coverage: PCOV
 
             - name: Setup PHP without coverage
-              if: ${{ matrix.php != '8.1' }}
+              if: ${{ matrix.php != '8.2' }}
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
@@ -69,26 +69,55 @@ jobs:
 
             - run: node_modules/.bin/webpack
 
+            - name: Install Fork CMS
+              run: cp src/Modules/Installer/tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && sed -i 's/forkcms_test/forkcms/g' .env.local
+              env:
+                  FORK_DATABASE_USER: root
+                  FORK_DATABASE_PASSWORD: kingtriton
+
             - name: Execute tests with coverage
-              if: ${{ matrix.php == '8.1' }}
+              if: ${{ matrix.php == '8.2' }}
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}} --coverage-clover=${{ matrix.testsuite}}.clover
+              env:
+                  FORK_INSTALLATION_LOCALE_ENV_PATH: .env.local
+                  APP_ENV: test
+                  APP_SECRET: notsosecret
+                  FORK_DATABASE_HOST: 127.0.0.1
+                  FORK_DATABASE_PORT: 3306
+                  FORK_DATABASE_NAME: forkcms_test
+                  FORK_DATABASE_USER: root
+                  FORK_DATABASE_PASSWORD: kingtriton
 
             - name: Execute tests without coverage
-              if: ${{ matrix.php != '8.1' }}
+              if: ${{ matrix.php != '8.2' }}
               run: bin/simple-phpunit --testsuite=${{ matrix.testsuite}}
+              env:
+                  FORK_INSTALLATION_LOCALE_ENV_PATH: .env.local
+                  APP_ENV: test
+                  APP_SECRET: notsosecret
+                  FORK_DATABASE_HOST: 127.0.0.1
+                  FORK_DATABASE_PORT: 3306
+                  FORK_DATABASE_NAME: forkcms_test
+                  FORK_DATABASE_USER: root
+                  FORK_DATABASE_PASSWORD: kingtriton
 
             - name: Display error logs on failure
               if: ${{ failure() }}
               run: |
-                  [ -r var/log/installer/debug.log ] && cat var/log/installer/debug.log
+                  bin/console debug:dotenv
+                  ls -alh
+                  [ -r var/log/install/debug.log ] && cat var/log/install/debug.log
                   [ -r var/log/test/debug.log ] && cat var/log/test/debug.log
-                  [ -r var/log/test_instal/debug.log ] && cat var/log/test_instal/debug.log
+                  [ -r var/log/test_install/debug.log ] && cat var/log/test_install/debug.log
                   [ -r var/log/prod/debug.log ] && cat var/log/prod/debug.log
                   [ -r var/log/dev/debug.log ] && cat var/log/dev/debug.log
+              env:
+                  FORK_INSTALLATION_LOCALE_ENV_PATH: .env.local
+                  APP_ENV: test
 
             - name: Upload Coverage report
               uses: codecov/codecov-action@v1
-              if: ${{ matrix.php == '8.1' }}
+              if: ${{ matrix.php == '8.2' }}
               with:
                   file: ${{ matrix.testsuite}}.clover
                   flags: ${{ matrix.testsuite}}
@@ -112,7 +141,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.1
+                  php-version: 8.2
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -126,7 +155,7 @@ jobs:
                   APP_ENV: dev
 
             - name: Install Fork CMS
-              run: mv src/Modules/Installer/tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && bin/console cache:clear
+              run: cp src/Modules/Installer/tests/fork-cms-installation-configuration.yaml fork-cms-installation-configuration.yaml && bin/console forkcms:installer:install && bin/console cache:clear
               env:
                   APP_ENV: dev
                   APP_DEBUG: 1
@@ -150,7 +179,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.1
+                  php-version: 8.2
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 
@@ -190,7 +219,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.1
+                  php-version: 8.2
                   extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, bcmath, intl, gd, exif, iconv, imagick
                   coverage: none
 

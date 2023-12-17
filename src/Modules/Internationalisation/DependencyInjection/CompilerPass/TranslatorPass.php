@@ -9,11 +9,11 @@ use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationDomain;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\ForkTranslator;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Security;
 
 final class TranslatorPass implements CompilerPassInterface
 {
@@ -78,13 +78,13 @@ final class TranslatorPass implements CompilerPassInterface
     private function getDatabaseLocales(ContainerBuilder $container): array
     {
         if (!$container->getParameter('fork.is_installed')) {
-            return [Locale::English->value => true];
+            return [Locale::ENGLISH->value => true];
         }
 
         try {
             return ForkConnection::get()->getEnabledLocales();
         } catch (\PDOException $e) {
-            return [Locale::English->value => true];
+            return [Locale::ENGLISH->value => true];
         }
     }
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
-    bootstrap="src/bootstrap.php"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="src/Core/tests/bootstrap.php"
     cacheResultFile="var/cache/.phpunit/test-results"
     executionOrder="depends,defects"
     beStrictAboutOutputDuringTests="true"
@@ -11,6 +12,9 @@
     failOnWarning="true"
     verbose="true"
     defaultTestSuite="unit"
+    backupGlobals="false"
+    colors="true"
+    convertDeprecationsToExceptions="false"
 >
     <testsuites>
         <testsuite name="installer">
@@ -22,12 +26,16 @@
             <directory>src/Modules/*/tests</directory>
             <exclude>src/Modules/Installer</exclude>
             <exclude>src/Modules/*/tests/Controller</exclude>
-            <exclude>src/Modules/*/tests/Actions</exclude>
+            <exclude>src/Modules/*/tests/Backend</exclude>
+            <exclude>src/Modules/*/tests/Frontend</exclude>
+            <exclude>src/Modules/*/tests/Console</exclude>
         </testsuite>
 
         <testsuite name="functional">
             <directory>src/Modules/*/tests/Controller</directory>
-            <directory>src/Modules/*/tests/Actions</directory>
+            <directory>src/Modules/*/tests/Backend</directory>
+            <directory>src/Modules/*/tests/Frontend</directory>
+            <directory>src/Modules/*/tests/Console</directory>
             <exclude>src/Modules/Installer</exclude>
             <exclude>src/Core/tests/Installer</exclude>
         </testsuite>
@@ -45,11 +53,23 @@
         </exclude>
     </coverage>
     <php>
-        <env name="APP_ENV" value="test"/>
+        <ini name="display_errors" value="1" />
+        <ini name="error_reporting" value="-1" />
         <env name="APP_DEBUG" value="1"/>
-        <server name="KERNEL_CLASS" value="ForkCMS\Core\Domain\Kernel\Kernel" />
         <env name="FORK_INSTALLATION_CONFIGURATION_PATH" value="/src/Modules/Installer/tests/fork-cms-installation-configuration.yaml" />
         <env name="FORK_INSTALLATION_LOCALE_ENV_PATH" value="/.env.test.local" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="KERNEL_CLASS" value="ForkCMS\Core\Domain\Kernel\Kernel" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
     </php>
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 </phpunit>

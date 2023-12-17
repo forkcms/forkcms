@@ -2,10 +2,13 @@
 
 namespace ForkCMS\Modules\Frontend\Domain\Block;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
+use ForkCMS\Modules\Frontend\Domain\Block\Event\BeforeDeleteBlockEvent;
 use Gedmo\Sortable\Entity\Repository\SortableRepository;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method Block|null find($id, $lockMode = null, $lockVersion = null)
@@ -13,10 +16,12 @@ use Gedmo\Sortable\Entity\Repository\SortableRepository;
  * @method Block[] findAll()
  * @method Block[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BlockRepository extends SortableRepository
+final class BlockRepository extends SortableRepository implements ServiceEntityRepositoryInterface
 {
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        private readonly EventDispatcherInterface $eventDispatcher
+    ) {
         parent::__construct($entityManager, $entityManager->getClassMetadata(Block::class));
     }
 
@@ -29,6 +34,8 @@ class BlockRepository extends SortableRepository
 
     public function remove(Block $block): void
     {
+        $this->eventDispatcher->dispatch(new BeforeDeleteBlockEvent($block));
+
         $entityManager = $this->getEntityManager();
         $entityManager->remove($block);
         $entityManager->flush();
@@ -93,13 +100,19 @@ class BlockRepository extends SortableRepository
     public function findAllWidgets(): array
     {
         /* @TODO add check for widgets that have been added but aren't in the database yet */
-        return $this->findBy(['type' => Type::WIDGET->value, 'hidden' => false], ['type' => Criteria::ASC, 'position' => Criteria::ASC]);
+        return $this->findBy(
+            ['type' => Type::WIDGET->value, 'hidden' => false],
+            ['type' => Criteria::ASC, 'position' => Criteria::ASC]
+        );
     }
 
     /** @return Block[] */
     public function findAllActions(): array
     {
         /* @TODO add check for actions that have been added but aren't in the database yet */
-        return $this->findBy(['type' => Type::ACTION->value, 'hidden' => false], ['type' => Criteria::ASC, 'position' => Criteria::ASC]);
+        return $this->findBy(
+            ['type' => Type::ACTION->value, 'hidden' => false],
+            ['type' => Criteria::ASC, 'position' => Criteria::ASC]
+        );
     }
 }

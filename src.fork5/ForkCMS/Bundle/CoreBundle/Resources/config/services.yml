@@ -1,8 +1,0 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: true
-
-    fork.validator.url:
-        class: ForkCMS\Bundle\CoreBundle\Validator\UrlValidator

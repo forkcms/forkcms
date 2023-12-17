@@ -26,7 +26,8 @@ final class TranslationFilter
         public ?string $name,
         public ?string $value
     ) {
-        $this->shouldFilter = $application !== null || $moduleName !== null || $type !== [] || $locale !== [] || $name !== null || $value !== null;
+        $this->shouldFilter = $application !== null || $moduleName !== null || $type !== [] ||
+            $locale !== [] || $name !== null || $value !== null;
     }
 
     public static function fromRequest(Request $request): self

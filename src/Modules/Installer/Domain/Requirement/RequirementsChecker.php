@@ -99,7 +99,7 @@ final class RequirementsChecker
                 PHP_VERSION_ID >= 80100,
                 'Your server is running at least php 8.1.0. <br>' . $reasoningBehindTheMinimumPHPVersion,
                 'PHP version must be at least 8.1.0, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version.<br>' . $reasoningBehindTheMinimumPHPVersion,
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'subfolder',
@@ -107,7 +107,7 @@ final class RequirementsChecker
                 array_key_exists('REQUEST_URI', $_SERVER) ? mb_strpos($_SERVER['REQUEST_URI'], '/install') === 0 : true,
                 'Fork CMS is as far as we can detect not running is a subfolder',
                 'Fork CMS can\'t be installed in subfolders',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'mod_rewrite',
@@ -119,7 +119,7 @@ final class RequirementsChecker
                 'Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that the .htaccess file is present (the file starts with a dot, so it may be hidden on your filesystem), being read (AllowOverride directive) and the mod_rewrite module is enabled in Apache. If you are installing Fork CMS on another web server than Apache, make sure you have manually configured your web server to properly rewrite urls.
                  More information can be found in our <a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and web servers">knowledge base</a>.
                  If you are certain that your server is well configured, you may proceed the installation despite this warning.',
-                RequirementStatus::warning
+                RequirementStatus::WARNING
             )
         );
     }
@@ -137,7 +137,7 @@ final class RequirementsChecker
                         $extension['check'],
                         $extension['message'],
                         $extension['message'],
-                        RequirementStatus::error
+                        RequirementStatus::ERROR
                     );
                 },
                 [
@@ -233,7 +233,7 @@ final class RequirementsChecker
                 ini_get('open_basedir') === '',
                 'You are not using open_basedir just like we recommend for forward compatibility',
                 'For forward compatibility we highly recommend you not to use open_basedir.',
-                RequirementStatus::warning
+                RequirementStatus::WARNING
             ),
             Requirement::check(
                 'date.timezone',
@@ -245,7 +245,7 @@ final class RequirementsChecker
                 'date.timezone is set',
                 'date.timezone setting must be set. Make sure your default timezone is supported by your installation of PHP.
                  Check for typos in your php.ini file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.',
-                RequirementStatus::warning
+                RequirementStatus::WARNING
             )
         );
     }
@@ -259,35 +259,35 @@ final class RequirementsChecker
                 function_exists('json_encode'),
                 'json_encode() is available',
                 'json_encode() must be available, install and enable the JSON extension.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'session_start',
                 function_exists('session_start'),
                 'session_start() is available',
                 'session_start() must be available, install and enable the session extension.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'ctype_alpha',
                 function_exists('ctype_alpha'),
                 'ctype_alpha() is available',
                 'ctype_alpha() must be available, install and enable the ctype extension.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'token_get_all',
                 function_exists('token_get_all'),
                 'token_get_all() is available',
                 'token_get_all() must be available, install and enable the Tokenizer extension.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 'simplexml_import_dom',
                 function_exists('simplexml_import_dom'),
                 'simplexml_import_dom() is available',
                 'simplexml_import_dom() must be available, install and enable the SimpleXML extension.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             )
         );
     }
@@ -301,56 +301,56 @@ final class RequirementsChecker
                 $this->isRecursivelyWritable($this->rootDir . '/var/cache/'),
                 'In this location the cache will be stored. This location and all subdirectories are be writable.',
                 'In this location the cache will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 $this->rootDir . '/var/log/*',
                 $this->isRecursivelyWritable($this->rootDir . '/var/log/'),
                 'In this location the logs will be stored. This location and all subdirectories are be writable.',
                 'In this location the logs will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 $this->rootDir . '/public/files/*',
                 $this->isRecursivelyWritable($this->rootDir . '/public/files/'),
                 'In this location all files uploaded by the user/modules will be stored. This location and all subdirectories are be writable.',
                 'In this location all files uploaded by the user/modules will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 $this->rootDir . '/src/Modules/',
                 $this->isWritable($this->rootDir . '/src/Modules/'),
                 'In this location modules will be installed.',
                 'In this location modules will be installed. You can continue the installation, but installing a module will then require a manual upload.',
-                RequirementStatus::warning
+                RequirementStatus::WARNING
             ),
             Requirement::check(
                 $this->rootDir . '/src/Themes/',
                 $this->isWritable($this->rootDir . '/src/Themes/'),
                 'In this location themes will be installed.',
                 'In this location themes will be installed. You can continue the installation, but installing a theme will then require a manual upload.',
-                RequirementStatus::warning
+                RequirementStatus::WARNING
             ),
             Requirement::check(
                 $this->rootDir . '/var/cache/*',
                 $this->isWritable($this->rootDir . '/var/cache/'),
                 'In this location the global cache will be stored. This location and all subdirectories are be writable.',
                 'In this location the global cache will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 $this->rootDir . '/var/log/*',
                 $this->isWritable($this->rootDir . '/var/log/'),
                 'In this location the global logs will be stored. This location and all subdirectories are be writable.',
                 'In this location the global logs will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
             Requirement::check(
                 $this->rootDir . '/config/*',
                 $this->isWritable($this->rootDir . '/config/'),
                 'In this location the global configuration will be stored. This location and all subdirectories are be writable.',
                 'In this location the global configuration will be stored. This location and all subdirectories must be writable.',
-                RequirementStatus::error
+                RequirementStatus::ERROR
             ),
         );
     }

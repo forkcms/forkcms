@@ -37,7 +37,12 @@ final class ConfigurationParser
             ? $installerConfiguration->getDebugEmail() : $installerConfiguration->getAdminEmail();
 
         $isOnHttps = (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-            || ((int) ($_SERVER['SERVER_PORT'] ?? 80)) === 443;
+            || ((int) ($_SERVER['SERVER_PORT'] ?? 80)) === 443 || $_ENV['SITE_PROTOCOL'] === 'https';
+
+        $siteDomain = $_ENV['SITE_DOMAIN'] ?? '';
+        if ($siteDomain === '') {
+            $siteDomain = '127.0.0.1';
+        }
 
         return sprintf(
             'FORK_DATABASE_HOST=%1$s
@@ -57,7 +62,7 @@ APP_SECRET=%10$s',
             $installerConfiguration->getDatabasePassword(),
             $debugEmail,
             $isOnHttps ? 'https' : 'http',
-            $_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? '127.0.0.1',
+            $_SERVER['SERVER_NAME'] ?? $_SERVER['HTTP_HOST'] ?? $siteDomain,
             $installerConfiguration->isMultilingual() ? 'true' : 'false',
             bin2hex(random_bytes(10))
         );
@@ -113,7 +118,9 @@ APP_SECRET=%10$s',
         $configuration['modules'] = array_map(
             static function (TaggedValue $taggedModule) use ($moduleNameMap): ModuleName {
                 if (!array_key_exists($taggedModule->getValue(), $moduleNameMap)) {
-                    throw new InvalidArgumentException('The module "' . $taggedModule->getValue() . '" does not exist.');
+                    throw new InvalidArgumentException(
+                        'The module "' . $taggedModule->getValue() . '" does not exist.'
+                    );
                 }
 
                 return $moduleNameMap[$taggedModule->getValue()];
@@ -196,7 +203,8 @@ APP_SECRET=%10$s',
 
     private function getYamlFilename(): string
     {
-        return $this->rootDir . ($_ENV['FORK_INSTALLATION_CONFIGURATION_PATH'] ?? '/fork-cms-installation-configuration.yaml');
+        $yamlPath = $_ENV['FORK_INSTALLATION_CONFIGURATION_PATH'] ?? '/fork-cms-installation-configuration.yaml';
+        return $this->rootDir . $yamlPath;
     }
 
     private function getDotEnvFilename(): string

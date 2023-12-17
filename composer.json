@@ -10,10 +10,11 @@
         "blog",
         "php"
     ],
+    "version": "6.0.0",
     "homepage": "https://www.fork-cms.com/",
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
@@ -32,7 +33,7 @@
         "symfony/monolog-bundle": "^3.7",
         "codex-team/editor.js": "^2.0",
         "beberlei/doctrineextensions": "^1.2",
-        "symfony/webpack-encore-bundle": "^1.7",
+        "symfony/webpack-encore-bundle": "^2.1",
         "phpoffice/phpspreadsheet": "^1.12",
         "composer/package-versions-deprecated": "^1.11",
         "symfony/flex": "^2.0",
@@ -49,7 +50,7 @@
         "twig/twig": "^3.0",
         "symfony/debug-bundle": "^6.0",
         "symfony/yaml": "^6.0",
-        "doctrine/annotations": "^1.0",
+        "doctrine/annotations": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "symfony/property-access": "^6.0",
         "symfony/property-info": "^6.0",
@@ -70,8 +71,9 @@
         "symfony/lock": "6.*"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",
-        "symfony/phpunit-bridge": "^6.0",
+        "symfony/phpunit-bridge": "^7.0",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-symfony": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
@@ -81,10 +83,16 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0",
-        "symfony/browser-kit": "^6.0"
+        "symfony/browser-kit": "^6.0",
+        "friendsoftwig/twigcs": "*",
+        "dama/doctrine-test-bundle": "^8.0",
+        "symfony/css-selector": "6.*"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",
@@ -110,11 +118,6 @@
             "**/tests/",
             "**/Test/"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ForkCMS\\Tests\\": "tests/"
-        }
     },
     "conflict": {
         "symfony/symfony": "*"

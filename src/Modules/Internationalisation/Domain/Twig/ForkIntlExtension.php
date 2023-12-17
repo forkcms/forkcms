@@ -49,6 +49,18 @@ use Twig\TwigFunction;
  */
 final class ForkIntlExtension extends AbstractExtension implements EventSubscriberInterface
 {
+    /** @var array<string, IntlExtension> */
+    private array $extensions = [];
+
+    /** @var array<string, NumberFormatter> */
+    private array $numberFormatterCache = [];
+
+    /** @var array<string, IntlDateFormatter> */
+    private array $dateFormatter = [];
+
+    /** @var array<string, InstalledLocale> */
+    private array $installedLocales = [];
+
     public function __construct(
         private readonly InstalledLocaleRepository $installedLocaleRepository,
         private readonly ModuleSettings $moduleSettings,
@@ -148,10 +160,9 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     private function getIntlExtension(string $function, Locale $locale): IntlExtension
     {
         $cacheKey = $function . $locale->value;
-        static $extensions = [];
 
-        if (array_key_exists($cacheKey, $extensions)) {
-            return $extensions[$cacheKey];
+        if (array_key_exists($cacheKey, $this->extensions)) {
+            return $this->extensions[$cacheKey];
         }
 
         /** @var User|null $user */
@@ -171,21 +182,20 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             }
         }
 
-        $extensions[$cacheKey] = new IntlExtension(
+        $this->extensions[$cacheKey] = new IntlExtension(
             $this->createIntlDateFormatter($installedLocale, $order, $dateFormatType, $user),
             $this->createNumberFormatter($installedLocale, $user)
         );
 
-        return $extensions[$cacheKey];
+        return $this->extensions[$cacheKey];
     }
 
     private function createNumberFormatter(InstalledLocale $locale, ?User $user): NumberFormatter
     {
         $cacheKey = $locale->getLocale()->value . ($user ? 'user' : '');
-        static $numberFormatterCache = [];
 
-        if (array_key_exists($cacheKey, $numberFormatterCache)) {
-            return $numberFormatterCache[$cacheKey];
+        if (array_key_exists($cacheKey, $this->numberFormatterCache)) {
+            return $this->numberFormatterCache[$cacheKey];
         }
 
         $numberFormat = $locale->getSetting('number_format');
@@ -193,7 +203,11 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             $numberFormat = $user->getSetting('number_format', $numberFormat);
         }
 
-        $numberFormatter = new NumberFormatter($locale->getLocale()->value, NumberFormatter::DECIMAL, '#,##0.####################');
+        $numberFormatter = new NumberFormatter(
+            $locale->getLocale()->value,
+            NumberFormatter::DECIMAL,
+            '#,##0.####################',
+        );
         $separatorSymbols = array_map(
             static fn (string $separator): string => str_replace(
                 ['comma', 'dot', 'space', 'nothing'],
@@ -205,7 +219,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
         $numberFormatter->setSymbol(NumberFormatter::GROUPING_SEPARATOR_SYMBOL, $separatorSymbols[1]);
         $numberFormatter->setSymbol(NumberFormatter::DECIMAL_SEPARATOR_SYMBOL, $separatorSymbols[0]);
 
-        $numberFormatterCache[$cacheKey] = $numberFormatter;
+        $this->numberFormatterCache[$cacheKey] = $numberFormatter;
 
         return $numberFormatter;
     }
@@ -216,10 +230,9 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
         string $dateFormatType = 'short',
         ?User $user = null
     ): IntlDateFormatter {
-        static $dateFormatter = [];
         $cacheKey = $locale->getLocale()->value . $order . $dateFormatType . ($user ? 'user' : '');
-        if (array_key_exists($cacheKey, $dateFormatter)) {
-            return $dateFormatter[$cacheKey];
+        if (array_key_exists($cacheKey, $this->dateFormatter)) {
+            return $this->dateFormatter[$cacheKey];
         }
         $timeFormatKey = $locale->getSetting('time_format');
         $dateFormatKey = $locale->getSetting('date_format_' . $dateFormatType);
@@ -233,7 +246,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
         $dateFormat = $this->moduleSettings->get($coreModule, 'date_formats_' . $dateFormatType)[$dateFormatKey];
         $timeFormat = $this->moduleSettings->get($coreModule, 'time_formats')[$timeFormatKey];
 
-        $dateFormatter[$cacheKey] = new IntlDateFormatter(
+        $this->dateFormatter[$cacheKey] = new IntlDateFormatter(
             null,
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
@@ -242,7 +255,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             sprintf($order, $dateFormat, $timeFormat)
         );
 
-        return $dateFormatter[$cacheKey];
+        return $this->dateFormatter[$cacheKey];
     }
 
     /**
@@ -261,7 +274,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatLongDateTime',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDateTime(
             $env,
             $date,
@@ -289,7 +302,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatLongDate',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDate(
             $env,
             $date,
@@ -317,7 +330,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatUserLongDateTime',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDateTime(
             $env,
             $date,
@@ -345,7 +358,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatUserLongDate',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDate(
             $env,
             $date,
@@ -359,14 +372,13 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
 
     public function getInstalledLocale(Locale $locale): InstalledLocale
     {
-        static $cache = [];
-        if (array_key_exists($locale->value, $cache)) {
-            return $cache[$locale->value];
+        if (array_key_exists($locale->value, $this->installedLocales)) {
+            return $this->installedLocales[$locale->value];
         }
 
-        $cache[$locale->value] = $this->installedLocaleRepository->find($locale->value);
+        $this->installedLocales[$locale->value] = $this->installedLocaleRepository->find($locale->value);
 
-        return $cache[$locale->value];
+        return $this->installedLocales[$locale->value];
     }
 
     public static function getSubscribedEvents(): array

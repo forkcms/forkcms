@@ -8,17 +8,24 @@ use Stringable;
 /** Page title is a wrapper around the breadcrumbs class to make it possible to update the page title automatically */
 final class PageTitle implements Stringable
 {
+    private ?string $overwrittenPageTitle = null;
+
     public function __construct(private readonly BreadcrumbCollection $breadcrumbs)
     {
     }
 
     public function __toString(): string
     {
-        static $pageTitle;
-        if ($pageTitle === null) {
-            $pageTitle = $this->breadcrumbs->asPageTitle();
-        }
+        return $this->getPageTitle();
+    }
 
-        return $pageTitle;
+    public function overwritePageTitle(string $pageTitle): void
+    {
+        $this->overwrittenPageTitle = $pageTitle;
+    }
+
+    public function getPageTitle(): string
+    {
+        return $this->overwrittenPageTitle ?? $this->breadcrumbs->asPageTitle();
     }
 }

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <translations>
   <Backend>
+    <item type="label" name="Content">
+      <translation locale="nl"><![CDATA[inhoud]]></translation>
+      <translation locale="en"><![CDATA[content]]></translation>
+      <translation locale="hu"><![CDATA[tartalom]]></translation>
+      <translation locale="it"><![CDATA[contenuto]]></translation>
+      <translation locale="ru"><![CDATA[Контент]]></translation>
+      <translation locale="zh"><![CDATA[内容]]></translation>
+      <translation locale="de"><![CDATA[Inhalt]]></translation>
+      <translation locale="fr"><![CDATA[contenu]]></translation>
+      <translation locale="es"><![CDATA[contenido]]></translation>
+      <translation locale="lt"><![CDATA[turinys]]></translation>
+      <translation locale="uk"><![CDATA[Контент]]></translation>
+      <translation locale="sv"><![CDATA[innehåll]]></translation>
+      <translation locale="el"><![CDATA[περιεχόμενο]]></translation>
+      <translation locale="pl"><![CDATA[zawartość]]></translation>
+      <translation locale="tr"><![CDATA[içerik]]></translation>
+      <translation locale="pt"><![CDATA[conteúdo]]></translation>
+    </item>
     <item type="label" name="Pages">
       <translation locale="nl"><![CDATA[pagina's]]></translation>
       <translation locale="en"><![CDATA[pages]]></translation>

@@ -17,31 +17,35 @@ abstract class AbstractDeleteActionController extends AbstractFormActionControll
     }
 
     /**
-     * @param callable(FormInterface): FlashMessage|null $flashMessageCallback
+     * @param callable(FormInterface): FlashMessage|null $successFlashMessageCallback
      */
     protected function handleDeleteForm(
         Request $request,
         string $deleteCommandFullyQualifiedClassName,
         ActionSlug $redirectActionSlug,
-        ?FlashMessage $flashMessage = null,
-        ?callable $flashMessageCallback = null,
+        ?FlashMessage $successFlashMessage = null,
+        ?callable $successFlashMessageCallback = null,
+        ?FlashMessage $notFoundFlashMessage = null,
     ): RedirectResponse {
         $response = $this->handleForm(
             request: $request,
             formType: ActionType::class,
-            flashMessage: $flashMessage ?? FlashMessage::success('Deleted'),
+            flashMessage: $successFlashMessage ?? FlashMessage::success('Deleted'),
             formOptions: ['actionSlug' => self::getActionSlug()],
-            defaultCallback: function () use ($redirectActionSlug): RedirectResponse {
-                $this->header->addFlashMessage(FlashMessage::error('NotFound'));
+            defaultCallback: function () use ($redirectActionSlug, $notFoundFlashMessage): RedirectResponse {
+                $this->header->addFlashMessage($notFoundFlashMessage ?? FlashMessage::error('EntityNotFound'));
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));
             },
-            validCallback: function (FormInterface $form) use ($deleteCommandFullyQualifiedClassName, $redirectActionSlug): RedirectResponse {
+            validCallback: function (FormInterface $form) use (
+                $deleteCommandFullyQualifiedClassName,
+                $redirectActionSlug
+            ): RedirectResponse {
                 $this->commandBus->dispatch(new $deleteCommandFullyQualifiedClassName($form->getData()['id']));
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));
             },
-            flashMessageCallback: $flashMessageCallback,
+            successFlashMessageCallback: $successFlashMessageCallback,
         );
 
         if ($response instanceof RedirectResponse) {

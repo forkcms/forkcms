@@ -33,7 +33,7 @@ final class ModuleInstall extends AbstractFormActionController
 
                 return new RedirectResponse(ModuleIndex::getActionSlug()->generateRoute($this->router));
             },
-            flashMessageCallback: function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('ModuleInstalled', ['%module%' => $form->getData()['id']]);
             }
         );

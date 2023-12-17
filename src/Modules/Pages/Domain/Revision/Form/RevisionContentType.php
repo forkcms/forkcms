@@ -92,40 +92,7 @@ final class RevisionContentType extends AbstractType
         }
 
         if ($loadDefaultBlocks) {
-            $form->add('blocks_1', TextareaType::class, ['label' => 'lbl.Content', 'required' => false]); // TODO: remove this
-//            foreach ($this->getDefaultExtrasForTemplate($selectedTemplate) as $block => $defaults) {
-//
-//                $revisionBlocks = new ArrayCollection();
-//
-//                if (empty($defaults)) {
-//                    continue;
-//                }
-//
-//                foreach ($defaults as $sequence => $extraId) {
-//                    $revisionBlocks->add($this->createrevisionBlockForExtraId($extraId, $block, ++$sequence));
-//                }
-//
-//                $form->add(
-//                    'blocks_' . $block,
-//                    CollectionType::class,
-//                    [
-//                        'data' => $revisionBlocks,
-//                        'label' => $block,
-//                        'allow_add' => true,
-//                        'add_button_text' => 'lbl.AddBlock',
-//                        'allow_delete' => true,
-//                        'allow_sequence' => true,
-//                        'sequence_group' => 'pages',
-//                        'property_path' => 'blocks[' . $block . ']',
-//                        'entry_type' => RevisionBlockType::class,
-//                        'entry_options' => [
-//                            'possibleExtraTypes' => $possibleExtraTypes,
-//                        ],
-//                        'block_name' => 'revision_content_block',
-//                        'prototype_data' => new RevisionBlockDataTransferObject(),
-//                    ]
-//                );
-//            }
+            // TODO: implement this
         }
 
         if (!$selectedTemplate->getSettings()->has('positions')) {
@@ -161,37 +128,6 @@ final class RevisionContentType extends AbstractType
             );
         }
     }
-
-//    private function getDefaultExtrasForTemplate(ThemeTemplate $selectedTemplate): array
-//    {
-//        if (isset($selectedTemplate['data']['default_extras_nl'])) {
-//            return $selectedTemplate['data']['default_extras_nl'];
-//        }
-//
-//        if (isset($selectedTemplate['data']['default_extras'])) {
-//            return $selectedTemplate['data']['default_extras'];
-//        }
-//
-//        return [];
-//    }
-
-//    private function createrevisionBlockForExtraId(
-//        ?int $extraId,
-//        string $position,
-//        int $sequence
-//    ): RevisionBlockDataTransferObject {
-//        $revisionBlock = new RevisionBlockDataTransferObject();
-//        $revisionBlock->position = $position;
-//        $revisionBlock->sequence = $sequence;
-//
-//        if ($extraId === null || $extraId === 0) {
-//            return $revisionBlock;
-//        }
-//
-//        $revisionBlock->setModuleExtra($this->moduleExtraRepository->find($extraId));
-//
-//        return $revisionBlock;
-//    }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

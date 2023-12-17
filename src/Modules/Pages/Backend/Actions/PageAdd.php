@@ -40,7 +40,14 @@ final class PageAdd extends AbstractFormActionController
             $validCallback = function (FormInterface $form): RedirectResponse {
                 $this->commandBus->dispatch($form->getData());
 
-                return new RedirectResponse(PageEdit::getActionSlug()->generateRoute($this->router, ['slug' => $form->getData()->page->getId()]));
+                return new RedirectResponse(
+                    PageEdit::getActionSlug()->generateRoute(
+                        $this->router,
+                        [
+                            'slug' => $form->getData()->page->getId(),
+                        ]
+                    )
+                );
             };
         }
 

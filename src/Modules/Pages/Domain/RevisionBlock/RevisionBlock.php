@@ -113,4 +113,9 @@ class RevisionBlock
     {
         return $this->sequence;
     }
+
+    public function removeBlock(): void
+    {
+        $this->block = null;
+    }
 }

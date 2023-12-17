@@ -9,21 +9,23 @@ use ForkCMS\Core\Domain\Header\Asset\Priority;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\Breadcrumb\BreadcrumbCollection;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
+use ForkCMS\Core\Domain\Header\Meta\MetaCollection;
+use ForkCMS\Core\Domain\Header\Meta\MetaLink;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Frontend\Domain\Meta\Meta;
 use ForkCMS\Modules\Frontend\Domain\Privacy\ConsentDialog;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\DataCollectorTranslator;
 use ForkCMS\Modules\Internationalisation\Domain\Translator\ForkTranslator;
 use InvalidArgumentException;
 use LogicException;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -31,19 +33,46 @@ use Twig\Environment;
  */
 final class Header
 {
-    private readonly JsData $jsData;
+    public readonly JsData $jsData;
 
-    private readonly AssetCollection $cssAssets;
-    private readonly AssetCollection $jsAssets;
+    public readonly AssetCollection $cssFiles;
+    public readonly AssetCollection $jsFiles;
 
     public function __construct(
         public readonly BreadcrumbCollection $breadcrumbs,
+        public readonly PageTitle $pageTitle,
+        public readonly ContentTitle $contentTitle,
+        public readonly MetaCollection $meta,
         private readonly RequestStack $requestStack,
         KernelInterface $kernel,
         Security $security,
         TranslatorInterface $translator,
         ConsentDialog $consentDialog,
     ) {
+        $this->jsData = $this->initJsData($kernel, $security, $translator, $consentDialog);
+        $this->jsFiles = new AssetCollection();
+        $this->cssFiles = new AssetCollection();
+    }
+
+    public function appendMeta(Meta $meta): void
+    {
+        $this->contentTitle->overwriteContentTitle($meta->getTitle());
+        $this->meta->addDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
+        $this->meta->addKeywords($meta->getKeywords(), $meta->isKeywordsOverwrite());
+        $this->meta->setSEOFollow($meta->getSEOFollow());
+        $this->meta->setSEOIndex($meta->getSEOIndex());
+
+        if ($meta->isCanonicalUrlOverwrite() && $meta->getCanonicalUrl() !== null && $meta->getCanonicalUrl() !== '') {
+            $this->meta->addMetaLink(MetaLink::canonical($meta->getCanonicalUrl()));
+        }
+    }
+
+    private function initJsData(
+        KernelInterface $kernel,
+        Security $security,
+        TranslatorInterface $translator,
+        ConsentDialog $consentDialog
+    ): JsData {
         $defaults = [
             'default_locale' => $kernel->getContainer()->getParameter('kernel.default_locale'),
             'debug' => $kernel->isDebug(),
@@ -59,26 +88,16 @@ final class Header
             $translationDomain = $translator->getDefaultTranslationDomain();
             $defaults['default_translation_domain'] = $translationDomain->getDomain();
             $fallbackDomain = $translationDomain->getFallback()?->getDomain();
-            $defaults['default_translation_domain_fallback'] = $fallbackDomain ?? $defaults['default_translation_domain'];
+            $defaultTranslationDomain = $fallbackDomain ?? $defaults['default_translation_domain'];
+            $defaults['default_translation_domain_fallback'] = $defaultTranslationDomain;
         }
 
-        $this->jsData = new JsData($defaults);
-        $this->jsAssets = new AssetCollection();
-        $this->cssAssets = new AssetCollection();
+        return new JsData($defaults);
     }
 
     public function addJsData(ModuleName $module, string $key, mixed $value): void
     {
         $this->jsData->add($module, $key, $value);
-    }
-
-    public function parse(Environment $twig): void
-    {
-        $twig->addGlobal('jsData', $this->jsData);
-        $twig->addGlobal('jsFiles', $this->jsAssets);
-        $twig->addGlobal('cssFiles', $this->cssAssets);
-        $twig->addGlobal('breadcrumbs', $this->breadcrumbs);
-        $twig->addGlobal('page_title', new PageTitle($this->breadcrumbs));
     }
 
     private function getFirstPossibleSessionTimeout(): int
@@ -104,7 +123,8 @@ final class Header
             );
         } catch (SessionNotFoundException $e) {
             throw new LogicException(
-                'You cannot use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".',
+                'You cannot use the addFlash method if sessions are disabled. ' .
+                'Enable them in "config/packages/framework.yaml".',
                 0,
                 $e
             );
@@ -113,12 +133,12 @@ final class Header
 
     public function addJs(Asset $assets): void
     {
-        $this->jsAssets->add($assets);
+        $this->jsFiles->add($assets);
     }
 
     public function addCss(Asset $assets): void
     {
-        $this->cssAssets->add($assets);
+        $this->cssFiles->add($assets);
     }
 
     public function addBreadcrumb(Breadcrumb $breadcrumb): void

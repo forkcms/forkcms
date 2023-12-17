@@ -5,11 +5,13 @@ namespace ForkCMS\Modules\Pages\Domain\Revision;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use ForkCMS\Modules\Frontend\Domain\Block\Block;
 use ForkCMS\Modules\Frontend\Domain\Meta\MetaCallbackService;
 use ForkCMS\Modules\Frontend\Domain\Meta\RepositoryWithMetaTrait;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Page\NavigationBuilder;
 use ForkCMS\Modules\Pages\Domain\Page\Page;
+use ForkCMS\Modules\Pages\Domain\RevisionBlock\RevisionBlock;
 
 /**
  * @method Revision|null find($id, $lockMode = null, $lockVersion = null)
@@ -85,5 +87,42 @@ final class RevisionRepository extends ServiceEntityRepository implements MetaCa
                     ->setParameter('parentPage', $subject->getParentPage());
             }
         }
+    }
+
+    /** @return Revision[] */
+    public function findRevisionsForFrontendBlock(Block $block, bool $onlyActive = true): array
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
+            ->from(Revision::class, 'r')
+            ->select('r')
+            ->innerJoin('r.blocks', 'rb')
+            ->innerJoin('rb.block', 'b')
+            ->andWhere('b.id = :blockId')
+            ->setParameter('blockId', $block->getId());
+
+        if ($onlyActive) {
+            $queryBuilder->andWhere('r.isArchived IS NULL');
+        }
+        $revisions = $queryBuilder->getQuery()->disableResultCache()->getResult();
+        $this->getEntityManager()->getFilters()->enable('softdeleteable');
+
+        return $revisions;
+    }
+
+    public function deleteFrontendBlockFromRevisions(Block $block): void
+    {
+        $this->getEntityManager()->getFilters()->disable('softdeleteable');
+
+        foreach ($this->findRevisionsForFrontendBlock($block, onlyActive: false) as $revision) {
+            foreach ($revision->getBlocks() as $revisionBlock) {
+                $revisionBlockFrontendBlock = $revisionBlock->getBlock();
+                if ($revisionBlockFrontendBlock !== null && $revisionBlockFrontendBlock->getId() === $block->getId()) {
+                    $revision->removeBlock($revisionBlock);
+                }
+            }
+        }
+
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->getFilters()->enable('softdeleteable');
     }
 }

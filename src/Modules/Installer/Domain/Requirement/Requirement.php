@@ -20,7 +20,7 @@ final class Requirement
     ): self {
         return new self(
             $name,
-            $requirementIsMet ? RequirementStatus::success : $requirementNotMetStatus,
+            $requirementIsMet ? RequirementStatus::SUCCESS : $requirementNotMetStatus,
             $requirementIsMet ? $requirementIsMetMessage : $requirementNotMetMessage
         );
     }

@@ -29,9 +29,9 @@ final class ThemeTemplateAdd extends AbstractFormActionController
             redirectResponse: new RedirectResponse(
                 ThemeTemplateIndex::getActionSlug()->generateRoute($this->router, ['slug' => $theme->getName()])
             ),
-            flashMessageCallback: static fn (FormInterface $form) => FlashMessage::success(
+            successFlashMessageCallback: static fn (FormInterface $form) => FlashMessage::success(
                 'ThemeTemplateAdded',
-                ['%1$s' => $form->getData()->name]
+                ['template' => $form->getData()->name]
             ),
         );
     }

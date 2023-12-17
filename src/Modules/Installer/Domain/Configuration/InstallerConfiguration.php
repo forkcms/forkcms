@@ -77,7 +77,7 @@ final class InstallerConfiguration
 
     public function withRequirementsStep(): void
     {
-        $this->addStep(InstallerStep::requirements);
+        $this->addStep(InstallerStep::REQUIREMENTS);
     }
 
     public function withLocaleStep(LocalesStepConfiguration $localesStepConfiguration): self
@@ -161,7 +161,9 @@ final class InstallerConfiguration
     public function withDatabaseStep(DatabaseStepConfiguration $databaseStepConfiguration): self
     {
         if (!$databaseStepConfiguration->canConnectToDatabase()) {
-            throw new LogicException('Invalid database credentials for database: ' . $databaseStepConfiguration->databaseName);
+            throw new LogicException(
+                'Invalid database credentials for database: ' . $databaseStepConfiguration->databaseName
+            );
         }
 
         $this->databaseHostname = (string) $databaseStepConfiguration->databaseHostname;

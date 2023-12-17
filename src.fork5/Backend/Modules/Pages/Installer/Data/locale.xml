@@ -595,19 +595,6 @@
         <translation language="el"><![CDATA[Επιπλέον άνω πλοήγηση (πάνω ή κάτω από το μενού), σε κάθε σελίδα.]]></translation>
         <translation language="pl"><![CDATA[Dodatkowa nawigacja górna (ponad/pod menu) na każdej stronie.]]></translation>
       </item>
-      <item type="message" name="HelpNavigationTitle">
-        <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
-        <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
-        <translation language="it"><![CDATA[Il titolo mostrato nel menu.]]></translation>
-        <translation language="ru"><![CDATA[Заголовок меню.]]></translation>
-        <translation language="zh"><![CDATA[标题在菜单里显示。]]></translation>
-        <translation language="de"><![CDATA[Der Titel, der im Menü angezeigt wird.]]></translation>
-        <translation language="fr"><![CDATA[Le titre affiché dans le menu.]]></translation>
-        <translation language="hu"><![CDATA[A cím, amely megjelenik a menüben.]]></translation>
-        <translation language="es"><![CDATA[El título que se muestra en el menú.]]></translation>
-        <translation language="el"><![CDATA[Ο τίτλος ποιυ εμφανίζεται στο μενού.]]></translation>
-        <translation language="pl"><![CDATA[Tytuł wyświetlany w menu.]]></translation>
-      </item>
       <item type="message" name="HomeNoBlock">
         <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
         <translation language="en"><![CDATA[A module can't be linked to the homepage.]]></translation>

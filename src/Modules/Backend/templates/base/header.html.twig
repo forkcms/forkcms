@@ -15,19 +15,19 @@
         </a>
       </p>
       {% if SITE_MULTILINGUAL %}
-        {% set websiteLocales = LOCALES|filter(l => l.isEnabledForWebsite)%}
+        {% set website_locales = LOCALES|filter(l => l.isEnabledForWebsite) %}
         <div class="nav navbar-nav navbar-languages">
           <span class="working-language d-none d-sm-block me-sm-1">{{ 'lbl.NowEditing'|trans|ucfirst }}</span>
-          {% if websiteLocales|count > 1 %}
+          {% if website_locales|count > 1 %}
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" id="navbarLanguagesDropdown">
                 <span class="dropdown-text">{{ LOCALES[app.request.locale].locale.asTranslatable|trans|ucfirst }}</span>
                 <span class="dropdown-angle">{{ macro.icon('angle-right') }}</span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarLanguagesDropdown">
-                {% for workingLocale in LOCALES|filter(l => l.isEnabledForWebsite) %}
-                  <a class="dropdown-item{% if workingLocale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug:app.request.get('slug')}, false, workingLocale.locale.value) }}">
-                    {{ workingLocale.locale.asTranslatable|trans|ucfirst }}
+                {% for working_locale in LOCALES|filter(l => l.isEnabledForWebsite) %}
+                  <a class="dropdown-item{% if working_locale.locale.value == app.request.locale %} active{% endif %}" href="{{ action_path(null, null, {slug: app.request.get('slug')}, false, working_locale.locale.value) }}">
+                    {{ working_locale.locale.asTranslatable|trans|ucfirst }}
                   </a>
                 {% endfor %}
               </ul>

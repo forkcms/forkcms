@@ -49,13 +49,16 @@
   margin-right: 1rem;
   position: relative;
 
-  &:after {
+  &::after {
     content: "\f35d";
     display: none;
+
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
   }
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .svg-inline--fa {
     position: absolute;
     right: -1rem;

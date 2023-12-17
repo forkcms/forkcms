@@ -1,4 +1,0 @@
-content_blocks_api:
-    type:     rest
-    prefix:   /api
-    resource: Backend\Modules\ContentBlocks\Api\ApiController

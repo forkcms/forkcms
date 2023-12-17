@@ -190,12 +190,6 @@ class TwigTemplate extends BaseTwigTemplate
             // assign the authenticated users preferred interface language
             $this->assign('INTERFACE_LANGUAGE', (string) Authentication::getUser()->getSetting('interface_language'));
         }
-
-        // assign some variable constants (such as site-title)
-        $this->assign(
-            'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
-        );
     }
 
     private function parseAuthenticatedUser(): void

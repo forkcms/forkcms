@@ -1,5 +1,4 @@
 @mixin sticky-footer($footer-height, $root-selector: unquote("#root"), $root-footer-selector: unquote("#root-footer"), $footer-selector: unquote("#footer")) {
-
   html, body {
     height: 100%;
   }
@@ -27,9 +26,7 @@
   text-align: center;
 
   .nav-pills {
-
     li {
-
       a {
         border-radius: 0;
         color: $white;
@@ -48,7 +45,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   // add footer height between brackets to make the sticky footer work
   @include sticky-footer(52px);
 }

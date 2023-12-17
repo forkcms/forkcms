@@ -380,24 +380,6 @@
         <translation language="tr"><![CDATA[iletişim]]></translation>
         <translation language="pt"><![CDATA[contacto]]></translation>
       </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[content]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="es"><![CDATA[Contenido]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
-      </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
         <translation language="en"><![CDATA[country]]></translation>
@@ -1264,22 +1246,6 @@
         <translation language="tr"><![CDATA[Almanca]]></translation>
         <translation language="pt"><![CDATA[Alemão]]></translation>
       </item>
-      <item type="label" name="No">
-        <translation language="nl"><![CDATA[nee]]></translation>
-        <translation language="en"><![CDATA[no]]></translation>
-        <translation language="ru"><![CDATA[нет]]></translation>
-        <translation language="fr"><![CDATA[non]]></translation>
-        <translation language="es"><![CDATA[No]]></translation>
-        <translation language="de"><![CDATA[nein]]></translation>
-        <translation language="lt"><![CDATA[ne]]></translation>
-        <translation language="uk"><![CDATA[Ні]]></translation>
-        <translation language="sv"><![CDATA[nej]]></translation>
-        <translation language="hu"><![CDATA[no]]></translation>
-        <translation language="el"><![CDATA[όχι]]></translation>
-        <translation language="zh"><![CDATA[不]]></translation>
-        <translation language="pt"><![CDATA[não]]></translation>
-        <translation language="pl"><![CDATA[Nie]]></translation>
-      </item>
       <item type="label" name="OldPassword">
         <translation language="nl"><![CDATA[oud wachtwoord]]></translation>
         <translation language="en"><![CDATA[old password]]></translation>
@@ -1654,24 +1620,6 @@
         <translation language="tr"><![CDATA[Tekrar ara]]></translation>
         <translation language="pt"><![CDATA[pesquisar de novo]]></translation>
       </item>
-      <item type="label" name="SearchTerm">
-        <translation language="nl"><![CDATA[zoekterm]]></translation>
-        <translation language="en"><![CDATA[searchterm]]></translation>
-        <translation language="hu"><![CDATA[keresési feltételek]]></translation>
-        <translation language="it"><![CDATA[termine di ricerca]]></translation>
-        <translation language="fr"><![CDATA[chercher le terme]]></translation>
-        <translation language="ru"><![CDATA[Ключевые слова]]></translation>
-        <translation language="zh"><![CDATA[搜索词]]></translation>
-        <translation language="de"><![CDATA[Suchbegriff]]></translation>
-        <translation language="es"><![CDATA[buscar el término]]></translation>
-        <translation language="lt"><![CDATA[raktažodžiai]]></translation>
-        <translation language="uk"><![CDATA[Ключові слова]]></translation>
-        <translation language="sv"><![CDATA[sökterm]]></translation>
-        <translation language="el"><![CDATA[όρος αναζήτησης]]></translation>
-        <translation language="pl"><![CDATA[Szukaj frazy]]></translation>
-        <translation language="tr"><![CDATA[arama terimi]]></translation>
-        <translation language="pt"><![CDATA[termo de pesquisa]]></translation>
-      </item>
       <item type="label" name="Send">
         <translation language="nl"><![CDATA[verstuur]]></translation>
         <translation language="en"><![CDATA[send]]></translation>
@@ -1953,24 +1901,6 @@
         <translation language="pl"><![CDATA[-]]></translation>
         <translation language="pt"><![CDATA[o]]></translation>
       </item>
-      <item type="label" name="Title">
-        <translation language="nl"><![CDATA[titel]]></translation>
-        <translation language="en"><![CDATA[title]]></translation>
-        <translation language="hu"><![CDATA[cím]]></translation>
-        <translation language="it"><![CDATA[titolo]]></translation>
-        <translation language="fr"><![CDATA[titre]]></translation>
-        <translation language="ru"><![CDATA[Заголовок]]></translation>
-        <translation language="zh"><![CDATA[标题]]></translation>
-        <translation language="de"><![CDATA[Titel]]></translation>
-        <translation language="es"><![CDATA[título]]></translation>
-        <translation language="lt"><![CDATA[antraštė]]></translation>
-        <translation language="uk"><![CDATA[Заголовок]]></translation>
-        <translation language="sv"><![CDATA[titel]]></translation>
-        <translation language="el"><![CDATA[τίτλος]]></translation>
-        <translation language="pl"><![CDATA[tytuł]]></translation>
-        <translation language="tr"><![CDATA[Başlık]]></translation>
-        <translation language="pt"><![CDATA[título]]></translation>
-      </item>
       <item type="label" name="ToFaqOverview">
         <translation language="nl"><![CDATA[naar het FAQ overzicht]]></translation>
         <translation language="en"><![CDATA[to the FAQ overview]]></translation>
@@ -2103,23 +2033,6 @@
         <translation language="el"><![CDATA[έγραψε]]></translation>
         <translation language="pl"><![CDATA[napisał(a)]]></translation>
         <translation language="pt"><![CDATA[escreveu]]></translation>
-      </item>
-      <item type="label" name="Yes">
-        <translation language="nl"><![CDATA[ja]]></translation>
-        <translation language="en"><![CDATA[yes]]></translation>
-        <translation language="ru"><![CDATA[да]]></translation>
-        <translation language="fr"><![CDATA[oui]]></translation>
-        <translation language="es"><![CDATA[Sí]]></translation>
-        <translation language="de"><![CDATA[ja]]></translation>
-        <translation language="lt"><![CDATA[taip]]></translation>
-        <translation language="uk"><![CDATA[Так]]></translation>
-        <translation language="sv"><![CDATA[ja]]></translation>
-        <translation language="hu"><![CDATA[igen]]></translation>
-        <translation language="el"><![CDATA[ναί]]></translation>
-        <translation language="zh"><![CDATA[是]]></translation>
-        <translation language="tr"><![CDATA[Evet]]></translation>
-        <translation language="pt"><![CDATA[sim]]></translation>
-        <translation language="pl"><![CDATA[Tak]]></translation>
       </item>
       <item type="label" name="YouAreHere">
         <translation language="nl"><![CDATA[je bent hier]]></translation>
@@ -3574,74 +3487,6 @@
         <translation language="tr"><![CDATA[Geçersiz tarih.]]></translation>
         <translation language="pt"><![CDATA[Data inválida.]]></translation>
       </item>
-      <item type="error" name="DisplayNameExists">
-        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This display name is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette nom d'affichage existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[A megjelenítési név foglalt.]]></translation>
-        <translation language="it"><![CDATA[Il nome è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Такое имя уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个显示名称已经被使用了。]]></translation>
-        <translation language="de"><![CDATA[Dieser Nickname ist ist leider schon vergeben.]]></translation>
-        <translation language="es"><![CDATA[Este nombre a mostrar está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks vardas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Таке ім'я вже використовуюється]]></translation>
-        <translation language="sv"><![CDATA[Detta visningsnamn används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ta nazwa jest już zajęta.]]></translation>
-        <translation language="pt"><![CDATA[Este nome de ecrã já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="DisplayNameIsRequired">
-        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Nom d'affichage est un champ obligatoire.]]></translation>
-        <translation language="hu"><![CDATA[Megjelenítési név kötelező.]]></translation>
-        <translation language="it"><![CDATA[Nome è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Имя - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[显示名称必填。]]></translation>
-        <translation language="de"><![CDATA[Nickname ist eine Pflichtangabe.]]></translation>
-        <translation language="es"><![CDATA[Nombre a msotrar es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Vardas - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Ім'я - обовязкове поле]]></translation>
-        <translation language="sv"><![CDATA[Visningsnamn är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Το όνομα οθόνης που θα εμφανίζεται είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole Wyświetlane imię jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[Nome de ecrã é um campo obrigatório.]]></translation>
-      </item>
-      <item type="error" name="EmailExists">
-        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
-        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
-        <translation language="fr"><![CDATA[Cette adresse e-mail existe déjà.]]></translation>
-        <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
-        <translation language="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-mail уже используется.]]></translation>
-        <translation language="zh"><![CDATA[这个Email地址已在使用了。]]></translation>
-        <translation language="de"><![CDATA[Diese E-Mail-Adresse wird bereits verwendet.]]></translation>
-        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
-        <translation language="lt"><![CDATA[Toks el.paštas jau yra.]]></translation>
-        <translation language="uk"><![CDATA[Цей e-mail вже використовується]]></translation>
-        <translation language="sv"><![CDATA[Denna e-postadress används redan.]]></translation>
-        <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι ήδη σε χρήση.]]></translation>
-        <translation language="pl"><![CDATA[Ten adres e-mail jest już zajęty]]></translation>
-        <translation language="pt"><![CDATA[Este endereço de email já se encontra em uso.]]></translation>
-      </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
-        <translation language="it"><![CDATA[Devi fornire una email valida.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="ru"><![CDATA[Введите правильный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
-        <translation language="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
-        <translation language="uk"><![CDATA[Введіт правильний e-mail]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-      </item>
       <item type="error" name="EmailIsRequired">
         <translation language="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[E-mail is a required field.]]></translation>
@@ -3934,23 +3779,6 @@
         <translation language="zh"><![CDATA[你的问题被标记为垃圾内容。]]></translation>
         <translation language="pt"><![CDATA[A sua pergunta foi marcada como SPAM.]]></translation>
       </item>
-      <item type="error" name="PasswordIsRequired">
-        <translation language="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
-        <translation language="en"><![CDATA[Password is a required field.]]></translation>
-        <translation language="fr"><![CDATA[Veuillez entrer votre mot de passe.]]></translation>
-        <translation language="hu"><![CDATA[A jelszó mező kötelező.]]></translation>
-        <translation language="it"><![CDATA[Password è un campo obbligatorio.]]></translation>
-        <translation language="ru"><![CDATA[Пароль - обязательное поле.]]></translation>
-        <translation language="zh"><![CDATA[密码必填。]]></translation>
-        <translation language="de"><![CDATA[Du musst ein Passwort angeben.]]></translation>
-        <translation language="es"><![CDATA[Contraseña es un campo requerido.]]></translation>
-        <translation language="lt"><![CDATA[Slaptažodis - būtinas laukas.]]></translation>
-        <translation language="uk"><![CDATA[Пароль - обов'язкове поле]]></translation>
-        <translation language="sv"><![CDATA[Lösenord är ett obligatoriskt fält.]]></translation>
-        <translation language="el"><![CDATA[Ο Κωδικός είναι υποχρεωτικό πεδίο.]]></translation>
-        <translation language="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
-        <translation language="pt"><![CDATA[A senha é um campo obrigatório.]]></translation>
-      </item>
       <item type="error" name="ProfileIsActive">
         <translation language="en"><![CDATA[This profile is already activated.]]></translation>
         <translation language="nl"><![CDATA[Dit profiel is reeds geactiveerd.]]></translation>
@@ -4051,23 +3879,6 @@
         <translation language="el"><![CDATA[Παρακαλώ κάντε μία ερώτηση]]></translation>
         <translation language="zh"><![CDATA[请填写一个问题。]]></translation>
         <translation language="pt"><![CDATA[Por favor preencha uma pergunta.]]></translation>
-      </item>
-      <item type="error" name="SomethingWentWrong">
-        <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
-        <translation language="en"><![CDATA[Something went wrong.]]></translation>
-        <translation language="hu"><![CDATA[Valami elromlott.]]></translation>
-        <translation language="it"><![CDATA[Qualcosa è andato storto.]]></translation>
-        <translation language="fr"><![CDATA[Un erreur est survenue.]]></translation>
-        <translation language="ru"><![CDATA[Ошибка.]]></translation>
-        <translation language="zh"><![CDATA[出错了。]]></translation>
-        <translation language="de"><![CDATA[Etwas ist schief gelaufen.]]></translation>
-        <translation language="es"><![CDATA[Algo salió mal.]]></translation>
-        <translation language="lt"><![CDATA[Klaida.]]></translation>
-        <translation language="uk"><![CDATA[Помилка]]></translation>
-        <translation language="sv"><![CDATA[Någonting gick fel.]]></translation>
-        <translation language="el"><![CDATA[Συνέβη κάποιο σφάλμα.]]></translation>
-        <translation language="pl"><![CDATA[Coś poszło nie tak.]]></translation>
-        <translation language="pt"><![CDATA[Ocorreu um erro.]]></translation>
       </item>
       <item type="error" name="SubscribeFailed">
         <translation language="en"><![CDATA[Subscribing failed]]></translation>
@@ -5618,24 +5429,6 @@
         <translation language="pl"><![CDATA[formularz kontaktowy]]></translation>
         <translation language="pt"><![CDATA[formulário de contacto]]></translation>
       </item>
-      <item type="label" name="Content">
-        <translation language="nl"><![CDATA[inhoud]]></translation>
-        <translation language="en"><![CDATA[content]]></translation>
-        <translation language="hu"><![CDATA[tartalom]]></translation>
-        <translation language="it"><![CDATA[contenuto]]></translation>
-        <translation language="ru"><![CDATA[Контент]]></translation>
-        <translation language="zh"><![CDATA[内容]]></translation>
-        <translation language="de"><![CDATA[Inhalt]]></translation>
-        <translation language="fr"><![CDATA[contenu]]></translation>
-        <translation language="es"><![CDATA[contenido]]></translation>
-        <translation language="lt"><![CDATA[turinys]]></translation>
-        <translation language="uk"><![CDATA[Контент]]></translation>
-        <translation language="sv"><![CDATA[innehåll]]></translation>
-        <translation language="el"><![CDATA[περιεχόμενο]]></translation>
-        <translation language="pl"><![CDATA[zawartość]]></translation>
-        <translation language="tr"><![CDATA[içerik]]></translation>
-        <translation language="pt"><![CDATA[conteúdo]]></translation>
-      </item>
       <item type="label" name="ContentBlocks">
         <translation language="nl"><![CDATA[inhoudsblokken]]></translation>
         <translation language="en"><![CDATA[content blocks]]></translation>
@@ -5723,23 +5516,6 @@
         <translation language="el"><![CDATA[δημιουργήθηκε]]></translation>
         <translation language="pt"><![CDATA[criado]]></translation>
         <translation language="pl"><![CDATA[utworzony]]></translation>
-      </item>
-      <item type="label" name="CreatedOn">
-        <translation language="en"><![CDATA[created on]]></translation>
-        <translation language="nl"><![CDATA[aangemaakt op]]></translation>
-        <translation language="hu"><![CDATA[létrehozva]]></translation>
-        <translation language="it"><![CDATA[creato il]]></translation>
-        <translation language="ru"><![CDATA[Создано в]]></translation>
-        <translation language="zh"><![CDATA[创建于]]></translation>
-        <translation language="de"><![CDATA[erstellt am]]></translation>
-        <translation language="fr"><![CDATA[créé le]]></translation>
-        <translation language="es"><![CDATA[creado en]]></translation>
-        <translation language="lt"><![CDATA[sukurta -]]></translation>
-        <translation language="uk"><![CDATA[Створено в]]></translation>
-        <translation language="sv"><![CDATA[skapad av]]></translation>
-        <translation language="el"><![CDATA[δημιουργήθηκε στις]]></translation>
-        <translation language="pt"><![CDATA[criado em]]></translation>
-        <translation language="pl"><![CDATA[utworzony dn.]]></translation>
       </item>
       <item type="label" name="CS">
         <translation language="nl"><![CDATA[Tsjechisch]]></translation>
@@ -6106,23 +5882,6 @@
         <translation language="pl"><![CDATA[edytuj]]></translation>
         <translation language="pt"><![CDATA[editar]]></translation>
       </item>
-      <item type="label" name="EditedOn">
-        <translation language="nl"><![CDATA[bewerkt op]]></translation>
-        <translation language="en"><![CDATA[edited on]]></translation>
-        <translation language="hu"><![CDATA[szerkesztette]]></translation>
-        <translation language="it"><![CDATA[modificato il]]></translation>
-        <translation language="ru"><![CDATA[Редактировано:]]></translation>
-        <translation language="zh"><![CDATA[编辑于]]></translation>
-        <translation language="de"><![CDATA[editiert am]]></translation>
-        <translation language="fr"><![CDATA[édité le]]></translation>
-        <translation language="es"><![CDATA[editado en]]></translation>
-        <translation language="lt"><![CDATA[redagavo:]]></translation>
-        <translation language="uk"><![CDATA[Редаговано:]]></translation>
-        <translation language="sv"><![CDATA[redigeras på]]></translation>
-        <translation language="el"><![CDATA[μεταβλήθηκε στις]]></translation>
-        <translation language="pl"><![CDATA[edytowane w]]></translation>
-        <translation language="pt"><![CDATA[editado em]]></translation>
-      </item>
       <item type="label" name="Editor">
         <translation language="nl"><![CDATA[editor]]></translation>
         <translation language="en"><![CDATA[editor]]></translation>
@@ -6461,23 +6220,6 @@
         <translation language="el"><![CDATA[σχόλια φίλτρου γιά ανεπιθύμητη αλληλογραφία]]></translation>
         <translation language="pt"><![CDATA[filtar comentários por spam]]></translation>
         <translation language="pl"><![CDATA[filtruj komenatrze ze spamu]]></translation>
-      </item>
-      <item type="label" name="Follow">
-        <translation language="nl"><![CDATA[follow]]></translation>
-        <translation language="en"><![CDATA[follow]]></translation>
-        <translation language="hu"><![CDATA[követ]]></translation>
-        <translation language="it"><![CDATA[segui]]></translation>
-        <translation language="ru"><![CDATA[Следить]]></translation>
-        <translation language="zh"><![CDATA[关注]]></translation>
-        <translation language="de"><![CDATA[Follow]]></translation>
-        <translation language="fr"><![CDATA[suivre]]></translation>
-        <translation language="es"><![CDATA[seguir]]></translation>
-        <translation language="lt"><![CDATA[sekti]]></translation>
-        <translation language="uk"><![CDATA[Стежити]]></translation>
-        <translation language="sv"><![CDATA[följer]]></translation>
-        <translation language="el"><![CDATA[ακολούθα]]></translation>
-        <translation language="pl"><![CDATA[podążaj]]></translation>
-        <translation language="pt"><![CDATA[seguir]]></translation>
       </item>
       <item type="label" name="For">
         <translation language="en"><![CDATA[for]]></translation>
@@ -6855,23 +6597,6 @@
         <translation language="pt"><![CDATA[em]]></translation>
         <translation language="pl"><![CDATA[w]]></translation>
       </item>
-      <item type="label" name="Index">
-        <translation language="nl"><![CDATA[index]]></translation>
-        <translation language="en"><![CDATA[index]]></translation>
-        <translation language="hu"><![CDATA[index]]></translation>
-        <translation language="it"><![CDATA[indice]]></translation>
-        <translation language="ru"><![CDATA[Главная]]></translation>
-        <translation language="zh"><![CDATA[索引]]></translation>
-        <translation language="de"><![CDATA[Index]]></translation>
-        <translation language="fr"><![CDATA[index]]></translation>
-        <translation language="es"><![CDATA[index]]></translation>
-        <translation language="lt"><![CDATA[pirmas]]></translation>
-        <translation language="uk"><![CDATA[Головна]]></translation>
-        <translation language="sv"><![CDATA[katalog]]></translation>
-        <translation language="el"><![CDATA[ευρετήριο]]></translation>
-        <translation language="pt"><![CDATA[index]]></translation>
-        <translation language="pl"><![CDATA[indeks]]></translation>
-      </item>
       <item type="label" name="IndividualMap">
         <translation language="nl"><![CDATA[widget: individuele kaart]]></translation>
         <translation language="en"><![CDATA[widget: individual map]]></translation>
@@ -7009,23 +6734,6 @@
         <translation language="pt"><![CDATA[palavra chave]]></translation>
         <translation language="pl"><![CDATA[słowo kluczowe]]></translation>
       </item>
-      <item type="label" name="Keywords">
-        <translation language="nl"><![CDATA[sleutelwoorden]]></translation>
-        <translation language="en"><![CDATA[keywords]]></translation>
-        <translation language="hu"><![CDATA[kulcsszavak]]></translation>
-        <translation language="it"><![CDATA[parole chiave]]></translation>
-        <translation language="ru"><![CDATA[Ключевые слова]]></translation>
-        <translation language="zh"><![CDATA[关键词]]></translation>
-        <translation language="de"><![CDATA[Keywords]]></translation>
-        <translation language="fr"><![CDATA[mots clefs]]></translation>
-        <translation language="es"><![CDATA[palabras clave]]></translation>
-        <translation language="lt"><![CDATA[raktažodžiai]]></translation>
-        <translation language="uk"><![CDATA[Ключеві слова]]></translation>
-        <translation language="sv"><![CDATA[nyckelord]]></translation>
-        <translation language="el"><![CDATA[λέξεις κλειδιά]]></translation>
-        <translation language="pt"><![CDATA[palavras chave]]></translation>
-        <translation language="pl"><![CDATA[słowa kluczowe]]></translation>
-      </item>
       <item type="label" name="Label">
         <translation language="nl"><![CDATA[label]]></translation>
         <translation language="en"><![CDATA[label]]></translation>
@@ -7110,23 +6818,6 @@
         <translation language="el"><![CDATA[τελευταία μεταβλήθηκε]]></translation>
         <translation language="pt"><![CDATA[última edição]]></translation>
         <translation language="pl"><![CDATA[ostati edytowany]]></translation>
-      </item>
-      <item type="label" name="LastEditedOn">
-        <translation language="nl"><![CDATA[laatst bewerkt op]]></translation>
-        <translation language="en"><![CDATA[last edited on]]></translation>
-        <translation language="hu"><![CDATA[utoljára szerkesztette]]></translation>
-        <translation language="it"><![CDATA[ultima modifica il]]></translation>
-        <translation language="ru"><![CDATA[Последнее редактирование:]]></translation>
-        <translation language="zh"><![CDATA[最后一次编辑于]]></translation>
-        <translation language="de"><![CDATA[zuletzt bearbeitet am]]></translation>
-        <translation language="fr"><![CDATA[dernière édition le]]></translation>
-        <translation language="es"><![CDATA[última edición en]]></translation>
-        <translation language="lt"><![CDATA[redaguota]]></translation>
-        <translation language="uk"><![CDATA[Останнє редагування]]></translation>
-        <translation language="sv"><![CDATA[Senast redigerad den ]]></translation>
-        <translation language="el"><![CDATA[τελευταία μεταβλήθηκε στις]]></translation>
-        <translation language="pt"><![CDATA[última edição em]]></translation>
-        <translation language="pl"><![CDATA[ostatnio edytowany dn.]]></translation>
       </item>
       <item type="label" name="LastFailedLoginAttempt">
         <translation language="nl"><![CDATA[laatste mislukte aanmelding]]></translation>
@@ -7628,23 +7319,6 @@
         <translation language="pt"><![CDATA[metadata]]></translation>
         <translation language="pl"><![CDATA[metadane]]></translation>
       </item>
-      <item type="label" name="MetaInformation">
-        <translation language="nl"><![CDATA[meta-informatie]]></translation>
-        <translation language="en"><![CDATA[meta information]]></translation>
-        <translation language="hu"><![CDATA[meta információ]]></translation>
-        <translation language="it"><![CDATA[meta informazioni]]></translation>
-        <translation language="ru"><![CDATA[Мета информация]]></translation>
-        <translation language="zh"><![CDATA[元信息]]></translation>
-        <translation language="de"><![CDATA[Meta-Information]]></translation>
-        <translation language="fr"><![CDATA[meta information]]></translation>
-        <translation language="es"><![CDATA[meta information]]></translation>
-        <translation language="lt"><![CDATA[meta informacija]]></translation>
-        <translation language="uk"><![CDATA[Мета-інформація]]></translation>
-        <translation language="sv"><![CDATA[meta information]]></translation>
-        <translation language="el"><![CDATA[μετα-πληροφορίες]]></translation>
-        <translation language="pt"><![CDATA[meta informação]]></translation>
-        <translation language="pl"><![CDATA[meta informacje]]></translation>
-      </item>
       <item type="label" name="MetaNavigation">
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
         <translation language="en"><![CDATA[meta navigation]]></translation>
@@ -7911,23 +7585,6 @@
         <translation language="en"><![CDATA[close tree navigation]]></translation>
         <translation language="pl"><![CDATA[zamknij drzewo nawigacji]]></translation>
       </item>
-      <item type="label" name="NavigationTitle">
-        <translation language="nl"><![CDATA[navigatietitel]]></translation>
-        <translation language="en"><![CDATA[navigation title]]></translation>
-        <translation language="hu"><![CDATA[navigáció címe]]></translation>
-        <translation language="it"><![CDATA[titolo navigazione]]></translation>
-        <translation language="ru"><![CDATA[Заголовок]]></translation>
-        <translation language="zh"><![CDATA[导航标题]]></translation>
-        <translation language="de"><![CDATA[Navigationstitel]]></translation>
-        <translation language="fr"><![CDATA[titre navigation]]></translation>
-        <translation language="es"><![CDATA[título de navegación]]></translation>
-        <translation language="lt"><![CDATA[antraštė]]></translation>
-        <translation language="uk"><![CDATA[Заголовок]]></translation>
-        <translation language="sv"><![CDATA[navigation title]]></translation>
-        <translation language="el"><![CDATA[τίτλος πλοήγησης]]></translation>
-        <translation language="pt"><![CDATA[título de navegação]]></translation>
-        <translation language="pl"><![CDATA[tutuł nawigacji]]></translation>
-      </item>
       <item type="label" name="Never">
         <translation language="nl"><![CDATA[nooit]]></translation>
         <translation language="en"><![CDATA[never]]></translation>
@@ -8154,17 +7811,6 @@
         <translation language="pt"><![CDATA[nenhum]]></translation>
         <translation language="pl"><![CDATA[żaden]]></translation>
       </item>
-      <item type="label" name="NoPreviousLogin">
-        <translation language="nl"><![CDATA[geen eerdere aanmelding]]></translation>
-        <translation language="en"><![CDATA[no previous login]]></translation>
-        <translation language="ru"><![CDATA[нет предыдущих авторизаций]]></translation>
-        <translation language="el"><![CDATA[δεν υπάρχει προηγούμενη σύνδεση]]></translation>
-        <translation language="hu"><![CDATA[nincs korábbi belépés]]></translation>
-        <translation language="zh"><![CDATA[不存在上一次登录]]></translation>
-        <translation language="de"><![CDATA[kein früherer Login]]></translation>
-        <translation language="pt"><![CDATA[sem logins anteriores]]></translation>
-        <translation language="pl"><![CDATA[brak poprzedniego logowania]]></translation>
-      </item>
       <item type="label" name="NoTheme">
         <translation language="nl"><![CDATA[geen thema]]></translation>
         <translation language="en"><![CDATA[no theme]]></translation>
@@ -8354,24 +8000,6 @@
         <translation language="tr"><![CDATA[Sayfalar]]></translation>
         <translation language="pt"><![CDATA[páginas]]></translation>
         <translation language="pl"><![CDATA[strony]]></translation>
-      </item>
-      <item type="label" name="PageTitle">
-        <translation language="nl"><![CDATA[paginatitel]]></translation>
-        <translation language="en"><![CDATA[page title]]></translation>
-        <translation language="hu"><![CDATA[oldalcím]]></translation>
-        <translation language="ru"><![CDATA[Заголовок]]></translation>
-        <translation language="it"><![CDATA[titolo di pagina]]></translation>
-        <translation language="zh"><![CDATA[页面标题]]></translation>
-        <translation language="de"><![CDATA[Seitentitel]]></translation>
-        <translation language="fr"><![CDATA[titre de page]]></translation>
-        <translation language="es"><![CDATA[título de página]]></translation>
-        <translation language="lt"><![CDATA[puslapio antraštė]]></translation>
-        <translation language="uk"><![CDATA[Заголовок]]></translation>
-        <translation language="sv"><![CDATA[sidtitel]]></translation>
-        <translation language="el"><![CDATA[τίτλος σελίδας]]></translation>
-        <translation language="tr"><![CDATA[Sayfa başlığı]]></translation>
-        <translation language="pt"><![CDATA[título de página]]></translation>
-        <translation language="pl"><![CDATA[tytuł strony]]></translation>
       </item>
       <item type="label" name="Pageviews">
         <translation language="nl"><![CDATA[paginaweergaves]]></translation>
@@ -8689,24 +8317,6 @@
         <translation language="tr"><![CDATA[önceki sayfa]]></translation>
         <translation language="pt"><![CDATA[página anterior]]></translation>
         <translation language="pl"><![CDATA[poprzednia strona]]></translation>
-      </item>
-      <item type="label" name="PreviousVersions">
-        <translation language="nl"><![CDATA[vorige versies]]></translation>
-        <translation language="en"><![CDATA[previous versions]]></translation>
-        <translation language="hu"><![CDATA[előző verziók]]></translation>
-        <translation language="ru"><![CDATA[Пред. версия]]></translation>
-        <translation language="it"><![CDATA[versione precedente]]></translation>
-        <translation language="zh"><![CDATA[上一个版本]]></translation>
-        <translation language="de"><![CDATA[vorherige Versionen]]></translation>
-        <translation language="fr"><![CDATA[versions précédentes]]></translation>
-        <translation language="es"><![CDATA[versiones previas]]></translation>
-        <translation language="lt"><![CDATA[buvusi versija]]></translation>
-        <translation language="uk"><![CDATA[Поп. версія]]></translation>
-        <translation language="sv"><![CDATA[föregående version]]></translation>
-        <translation language="el"><![CDATA[προηγούμενη έκδοση]]></translation>
-        <translation language="tr"><![CDATA[Önceki versiyonlar]]></translation>
-        <translation language="pt"><![CDATA[versões anteriores]]></translation>
-        <translation language="pl"><![CDATA[poprzednia wersja]]></translation>
       </item>
       <item type="label" name="Price">
         <translation language="en"><![CDATA[price]]></translation>
@@ -9397,24 +9007,6 @@
         <translation language="pt"><![CDATA[enviado em]]></translation>
         <translation language="pl"><![CDATA[wysłano dn.]]></translation>
       </item>
-      <item type="label" name="SEO">
-        <translation language="nl"><![CDATA[SEO]]></translation>
-        <translation language="en"><![CDATA[SEO]]></translation>
-        <translation language="hu"><![CDATA[SEO]]></translation>
-        <translation language="ru"><![CDATA[SEO]]></translation>
-        <translation language="it"><![CDATA[SEO]]></translation>
-        <translation language="zh"><![CDATA[搜索引擎优化]]></translation>
-        <translation language="de"><![CDATA[SEO]]></translation>
-        <translation language="fr"><![CDATA[SEO]]></translation>
-        <translation language="es"><![CDATA[SEO]]></translation>
-        <translation language="lt"><![CDATA[SEO]]></translation>
-        <translation language="uk"><![CDATA[SEO]]></translation>
-        <translation language="sv"><![CDATA[SEO]]></translation>
-        <translation language="el"><![CDATA[SEO]]></translation>
-        <translation language="tr"><![CDATA[SEO]]></translation>
-        <translation language="pt"><![CDATA[SEO]]></translation>
-        <translation language="pl"><![CDATA[SEO]]></translation>
-      </item>
       <item type="label" name="Server">
         <translation language="nl"><![CDATA[server]]></translation>
         <translation language="en"><![CDATA[server]]></translation>
@@ -9934,24 +9526,6 @@
         <translation language="pl"><![CDATA[tagi]]></translation>
         <translation language="pt"><![CDATA[etiquetas]]></translation>
       </item>
-      <item type="label" name="Template">
-        <translation language="nl"><![CDATA[template]]></translation>
-        <translation language="en"><![CDATA[template]]></translation>
-        <translation language="hu"><![CDATA[sablon]]></translation>
-        <translation language="it"><![CDATA[template]]></translation>
-        <translation language="ru"><![CDATA[Шаблон]]></translation>
-        <translation language="zh"><![CDATA[模板]]></translation>
-        <translation language="de"><![CDATA[Template]]></translation>
-        <translation language="fr"><![CDATA[template]]></translation>
-        <translation language="es"><![CDATA[tema]]></translation>
-        <translation language="lt"><![CDATA[šablonas]]></translation>
-        <translation language="uk"><![CDATA[Шаблон]]></translation>
-        <translation language="sv"><![CDATA[mall]]></translation>
-        <translation language="el"><![CDATA[πρότυπο]]></translation>
-        <translation language="tr"><![CDATA[şablon]]></translation>
-        <translation language="pl"><![CDATA[szablon]]></translation>
-        <translation language="pt"><![CDATA[template]]></translation>
-      </item>
       <item type="label" name="Templates">
         <translation language="nl"><![CDATA[templates]]></translation>
         <translation language="en"><![CDATA[templates]]></translation>
@@ -10115,24 +9689,6 @@
         <translation language="tr"><![CDATA[başlık]]></translation>
         <translation language="pt"><![CDATA[título]]></translation>
         <translation language="pl"><![CDATA[tytuł]]></translation>
-      </item>
-      <item type="label" name="Titles">
-        <translation language="nl"><![CDATA[titels]]></translation>
-        <translation language="en"><![CDATA[titles]]></translation>
-        <translation language="hu"><![CDATA[címek]]></translation>
-        <translation language="it"><![CDATA[titoli]]></translation>
-        <translation language="ru"><![CDATA[Заголовки]]></translation>
-        <translation language="zh"><![CDATA[标题]]></translation>
-        <translation language="de"><![CDATA[Titel]]></translation>
-        <translation language="fr"><![CDATA[titres]]></translation>
-        <translation language="es"><![CDATA[títulos]]></translation>
-        <translation language="lt"><![CDATA[antraštės]]></translation>
-        <translation language="uk"><![CDATA[Заголовки]]></translation>
-        <translation language="sv"><![CDATA[rubriker]]></translation>
-        <translation language="el"><![CDATA[τίτλοι]]></translation>
-        <translation language="tr"><![CDATA[başlıklar]]></translation>
-        <translation language="pt"><![CDATA[títulos]]></translation>
-        <translation language="pl"><![CDATA[tytuły]]></translation>
       </item>
       <item type="label" name="To">
         <translation language="nl"><![CDATA[aan]]></translation>
@@ -10329,28 +9885,6 @@
         <translation language="nl"><![CDATA[filter]]></translation>
         <translation language="en"><![CDATA[filter]]></translation>
       </item>
-      <item type="label" name="URL">
-        <translation language="nl"><![CDATA[URL]]></translation>
-        <translation language="en"><![CDATA[URL]]></translation>
-        <translation language="hu"><![CDATA[URL]]></translation>
-        <translation language="ru"><![CDATA[URL]]></translation>
-        <translation language="it"><![CDATA[URL]]></translation>
-        <translation language="zh"><![CDATA[URL]]></translation>
-        <translation language="de"><![CDATA[URL]]></translation>
-        <translation language="fr"><![CDATA[URL]]></translation>
-        <translation language="es"><![CDATA[URL]]></translation>
-        <translation language="lt"><![CDATA[URL]]></translation>
-        <translation language="uk"><![CDATA[URL]]></translation>
-        <translation language="sv"><![CDATA[URL]]></translation>
-        <translation language="el"><![CDATA[διεύθυνση URL]]></translation>
-        <translation language="tr"><![CDATA[URL]]></translation>
-        <translation language="pt"><![CDATA[URL]]></translation>
-        <translation language="pl"><![CDATA[URL]]></translation>
-      </item>
-      <item type="label" name="CanonicalURL">
-        <translation language="nl"><![CDATA[canonical URL]]></translation>
-        <translation language="en"><![CDATA[canonical URL]]></translation>
-      </item>
       <item type="label" name="UsedIn">
         <translation language="nl"><![CDATA[gebruikt in]]></translation>
         <translation language="en"><![CDATA[used in]]></translation>
@@ -10439,24 +9973,6 @@
         <translation language="pt"><![CDATA[usar este rascunho]]></translation>
         <translation language="pl"><![CDATA[użyj tego szkicu]]></translation>
       </item>
-      <item type="label" name="UseThisVersion">
-        <translation language="nl"><![CDATA[laad deze versie]]></translation>
-        <translation language="en"><![CDATA[use this version]]></translation>
-        <translation language="hu"><![CDATA[ezt a verziót]]></translation>
-        <translation language="ru"><![CDATA[Использовать эту версию]]></translation>
-        <translation language="it"><![CDATA[usa questa versione]]></translation>
-        <translation language="zh"><![CDATA[使用这个版本]]></translation>
-        <translation language="fr"><![CDATA[utiliser cette version]]></translation>
-        <translation language="de"><![CDATA[verwende diese Version]]></translation>
-        <translation language="es"><![CDATA[usar esta versión]]></translation>
-        <translation language="lt"><![CDATA[naudoti šią versiją]]></translation>
-        <translation language="uk"><![CDATA[Використати цю версію]]></translation>
-        <translation language="sv"><![CDATA[använd denna version]]></translation>
-        <translation language="el"><![CDATA[χρήση αυτής της έκδοσης]]></translation>
-        <translation language="tr"><![CDATA[Bu versiyonu kullan]]></translation>
-        <translation language="pt"><![CDATA[usar esta versão]]></translation>
-        <translation language="pl"><![CDATA[użyj tej wersji]]></translation>
-      </item>
       <item type="label" name="Value">
         <translation language="nl"><![CDATA[waarde]]></translation>
         <translation language="en"><![CDATA[value]]></translation>
@@ -10526,23 +10042,6 @@
         <translation language="tr"><![CDATA[Raporu görüntüle]]></translation>
         <translation language="pt"><![CDATA[ver relatório]]></translation>
         <translation language="pl"><![CDATA[zobacz raport]]></translation>
-      </item>
-      <item type="label" name="VisibleOnSite">
-        <translation language="nl"><![CDATA[Zichtbaar op de website]]></translation>
-        <translation language="en"><![CDATA[visible on site]]></translation>
-        <translation language="hu"><![CDATA[látható az oldalon]]></translation>
-        <translation language="ru"><![CDATA[Видимость на сайте]]></translation>
-        <translation language="it"><![CDATA[visibile sul sito]]></translation>
-        <translation language="zh"><![CDATA[在网站上可见]]></translation>
-        <translation language="fr"><![CDATA[visible sur le site]]></translation>
-        <translation language="de"><![CDATA[sichtbar auf der Website]]></translation>
-        <translation language="es"><![CDATA[visible en sitio]]></translation>
-        <translation language="lt"><![CDATA[rodomas tinklapyje]]></translation>
-        <translation language="uk"><![CDATA[Видимість на сайті]]></translation>
-        <translation language="sv"><![CDATA[synlig på hemsidan]]></translation>
-        <translation language="el"><![CDATA[ορατό στον ιστοχώρο]]></translation>
-        <translation language="pt"><![CDATA[disponível no site]]></translation>
-        <translation language="pl"><![CDATA[widoczny na stronie]]></translation>
       </item>
       <item type="label" name="Visitors">
         <translation language="nl"><![CDATA[bezoekers]]></translation>
@@ -11623,58 +11122,6 @@
         <translation language="pt"><![CDATA[Estas metatags serão colocadas na secção <code>&lt;head&gt;</code> da página.]]></translation>
         <translation language="pl"><![CDATA[Te dodatkowe metatagi są umieszczane w sekcji <code> & lt; head & gt; </ code> strony.]]></translation>
       </item>
-      <item type="message" name="HelpMetaDescription">
-        <translation language="nl"><![CDATA[Vat de inhoud kort samen. Deze samenvatting wordt getoond in de resultaten van zoekmachines.]]></translation>
-        <translation language="en"><![CDATA[Briefly summarize the content. This summary is shown in the results of search engines.]]></translation>
-        <translation language="hu"><![CDATA[Röviden összefoglalja a tartalmat. Ez az összefoglaló megmutatja a keresőmotor találatait is.]]></translation>
-        <translation language="it"><![CDATA[Descrivi brevemente il contenuto. Questa descrizione verrà mostrata nei risultati dei motori di ricerca.]]></translation>
-        <translation language="ru"><![CDATA[Краткое содержание сайта для поисковых систем.]]></translation>
-        <translation language="zh"><![CDATA[简短地概括内容。这些概述将会显示在搜索引擎的结果中。]]></translation>
-        <translation language="de"><![CDATA[Fasse kurz den Inhalt zusammen. Diese Zusammenfassung wird in den Ergebnissen von Suchmaschinen angezeigt.]]></translation>
-        <translation language="fr"><![CDATA[Résumez brièvement le contenu. Ce résumé est affiché dans les pages de résultats de moteurs de recherche.]]></translation>
-        <translation language="es"><![CDATA[Un breve resumen de su contenido. Este resumen se muestra en los resultados de los motores de búsqueda.]]></translation>
-        <translation language="lt"><![CDATA[Trumpas tinklapio aprašymas paieškos sistemoms.]]></translation>
-        <translation language="uk"><![CDATA[Короткий зміст сайту для пошукових систем]]></translation>
-        <translation language="sv"><![CDATA[Kort sammanfatta innehållet. Denna sammanfattning visas i resultaten av sökmotorer.]]></translation>
-        <translation language="el"><![CDATA[Γράψτε μία σύντομη περίληψη γιά τα περιεχόμενα. Αυτή η περίληψη εμφανίζεται στα αποτελέσματα των μηχανών αναζήτησης.]]></translation>
-        <translation language="pt"><![CDATA[Um breve resumo do seu conteúdo. Este resumo é exibido nos resultados do motores de busca.]]></translation>
-        <translation language="pl"><![CDATA[Krótko streść zawartość. To podsumowanie jest wyświetlane w wynikach wyszukiwarek.]]></translation>
-      </item>
-      <item type="message" name="HelpMetaKeywords">
-        <translation language="nl"><![CDATA[Kies een aantal goed gekozen termen die de inhoud omschrijven. Vanuit SEO-standpunt bieden deze echter niet langer een meerwaarde.]]></translation>
-        <translation language="en"><![CDATA[Choose a number of wellthought terms that describe the content. From an SEO point of view, these do not longer present an added value though.]]></translation>
-        <translation language="hu"><![CDATA[Válassz egy számot a jól átgondolt kifejezések közül, ami jól leírja a tartalmat.]]></translation>
-        <translation language="it"><![CDATA[Scegli un numero di termini che descrivono il contenuto.]]></translation>
-        <translation language="ru"><![CDATA[Ключевые слова, описывающие сайт.]]></translation>
-        <translation language="zh"><![CDATA[请选择适合文章内容的关键词。]]></translation>
-        <translation language="de"><![CDATA[Gib eine paar ausgewählte Begriffe ein, die den Inhalt gut beschreiben.]]></translation>
-        <translation language="fr"><![CDATA[Choisissez un nombre de termes bien pensés pour décrire ce contenu.]]></translation>
-        <translation language="es"><![CDATA[Elija un número de términos que describan el contenido. Desde un punto de vista SEO, esto no presenta un valor añadido.]]></translation>
-        <translation language="lt"><![CDATA[Raktiniai žodžiai atskirti kableliais, nusakantys tinklapio temą]]></translation>
-        <translation language="uk"><![CDATA[Ключові слова, що описують сайт]]></translation>
-        <translation language="sv"><![CDATA[Välja ut ett antal söktermer som beskriver innehållet. Ur ett SEO perspektiv är dessa inte längre föreligger ett mervärde ändå.]]></translation>
-        <translation language="el"><![CDATA[Επιλέξτε σχετικούς όρους που να περιγράφουν το περιεχόμενο. Όμως από άποψη SEO (μηχανών αναζήτησης), δεν θα έχετε κανένα επιπλέον όφελος.]]></translation>
-        <translation language="tr"><![CDATA[içeriği tanımlayan kelimeleri seçin.]]></translation>
-        <translation language="pt"><![CDATA[Escolha um lista de termo que descrevam o conteúdo. Do ponto de vista do SEO, estes valor já não representam uma mais valia.]]></translation>
-        <translation language="pl"><![CDATA[Wybierz liczbę dobrze dobranych terminów, które opisują treść. Z punktu widzenia SEO nie oferują one jednak żadnej wartości dodanej.]]></translation>
-      </item>
-      <item type="message" name="HelpMetaURL">
-        <translation language="nl"><![CDATA[Vervang de automatisch gegenereerde URL door een zelfgekozen URL. Alleen kleine alfanumerieke letters en - zijn toegestaan]]></translation>
-        <translation language="en"><![CDATA[Replace the automaticly generated URL by a custom one. Only alphanumeric lowercase characters and - are allowed]]></translation>
-        <translation language="hu"><![CDATA[Cserélje le az automatikusan generált URL-t egyénire.]]></translation>
-        <translation language="it"><![CDATA[Sostituisci l'URL generato automaticamente con uno personalizzato.]]></translation>
-        <translation language="ru"><![CDATA[Заменяет автоматический URL на пользовательский.]]></translation>
-        <translation language="zh"><![CDATA[使用自定义链接替代自动生成的链接地址。]]></translation>
-        <translation language="de"><![CDATA[Ersetze die automatisch generierte URL mit einer individuell angepassten. Es sind nur alphanumerische Kleinbuchstaben und - zulässig]]></translation>
-        <translation language="fr"><![CDATA[Replacer l'URL automatiquement générée par une URL personnalisée. Seuls les caractères alphanumériques en minuscules et - sont autorisés]]></translation>
-        <translation language="es"><![CDATA[Remplaza la URL automáticamente generada por una propia.]]></translation>
-        <translation language="lt"><![CDATA[Ar keisti automatiškai sugeneruotas nuorodas rankiniu būdu sukurtomis?.]]></translation>
-        <translation language="uk"><![CDATA[Замінює автоматичниний URL на користувацький]]></translation>
-        <translation language="sv"><![CDATA[Byt ut automatiskt genererade URL: en genom en anpassad en.]]></translation>
-        <translation language="el"><![CDATA[Αντικαταστήστε την διεύθυνση URL που παρήχθη αυτόματα με μία φτιαχτή δική σας.]]></translation>
-        <translation language="pt"><![CDATA[Substitua o URL automaticamente gerado por um URL personalizado.]]></translation>
-        <translation language="pl"><![CDATA[Zastąp automatycznie wygenerowany URL własnym, wybranym adresem URL.]]></translation>
-      </item>
       <item type="message" name="HelpHrefLang">
         <translation language="nl"><![CDATA[Hreflang maakt zoekmachines duidelijk wat de relatie is tussen pagina’s in verschillende talen.]]></translation>
         <translation language="en"><![CDATA[Hreflang tells search engines the relationship between pages in different languages.]]></translation>
@@ -11695,22 +11142,6 @@
         <translation language="el"><![CDATA[Το όνομα που θέλετε να φέρουν οι δημοσιεύσεις σας (π.χ. ως συγγραφέας ενός άρθρου).]]></translation>
         <translation language="pt"><![CDATA[O nome através do qual prentede publicar (ex.: como autor de um artigo).]]></translation>
         <translation language="pl"><![CDATA[Nazwa, pod którą chcesz publikować (na przykład jako autor artykułu na blogu).]]></translation>
-      </item>
-      <item type="message" name="HelpPageTitle">
-        <translation language="nl"><![CDATA[De titel die in het browservenster staat (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="en"><![CDATA[The title in the browser window (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="hu"><![CDATA[A cím a böngésző ablakban (<code>&lt;title&gt;</ code>).]]></translation>
-        <translation language="it"><![CDATA[Il titolo nella finestra del browser (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="ru"><![CDATA[Заголовок сайта. (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="zh"><![CDATA[浏览器标题(<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="de"><![CDATA[Der Titel des Browserfensters (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="fr"><![CDATA[Le titre dans la fenêtre de navigateur (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="es"><![CDATA[El título en la ventana del navegador (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="lt"><![CDATA[Tinklapio antraštė rodoma naršyklės viršuje. (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="sv"><![CDATA[Titeln i webbläsarfönstret (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="el"><![CDATA[Ο τίτλος στο παράθυρο του περιηγητή (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="pt"><![CDATA[O título apresentado na aba do navegador (<code>&lt;title&gt;</code>).]]></translation>
-        <translation language="pl"><![CDATA[Tytuł znajdujący się w oknie przeglądarki (<code> & lt; title & gt; </ code>).]]></translation>
       </item>
       <item type="message" name="HelpResetPassword">
         <translation language="nl"><![CDATA[Vul je gewenste]]></translation>
@@ -12163,23 +11594,6 @@
         <translation language="pt"><![CDATA[Ainda não existem estatísticas para referências.]]></translation>
         <translation language="pl"><![CDATA[Nie ma jeszcze żadnych statystyk dotyczących witryn odsyłających.]]></translation>
       </item>
-      <item type="message" name="NoRevisions">
-        <translation language="nl"><![CDATA[Er zijn nog geen vorige versies.]]></translation>
-        <translation language="en"><![CDATA[There are no previous versions yet.]]></translation>
-        <translation language="hu"><![CDATA[Még nincsenek előző változatok.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora versioni precedenti.]]></translation>
-        <translation language="ru"><![CDATA[Нет ранних версий.]]></translation>
-        <translation language="zh"><![CDATA[没有较早前的版本。]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Versionen.]]></translation>
-        <translation language="fr"><![CDATA[Il n'y a pas encore de version précédente.]]></translation>
-        <translation language="es"><![CDATA[No hay version anterior aun.]]></translation>
-        <translation language="lt"><![CDATA[Nėra kitų versijų]]></translation>
-        <translation language="uk"><![CDATA[Немає ранніх версій]]></translation>
-        <translation language="sv"><![CDATA[Det finns inga tidigare versioner ännu.]]></translation>
-        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη προηγούμενες εκδόσεις.]]></translation>
-        <translation language="pt"><![CDATA[Ainda não existem versões anteriores.]]></translation>
-        <translation language="pl"><![CDATA[Nie ma jeszcze poprzednich wersji.]]></translation>
-      </item>
       <item type="message" name="NoSentMailings">
         <translation language="en"><![CDATA[No mailings have been sent yet.]]></translation>
         <translation language="nl"><![CDATA[Er zijn nog geen mailings verzonden.]]></translation>
@@ -12470,23 +11884,6 @@
         <translation language="pl"><![CDATA[Używasz szkic]]></translation>
         <translation language="pt"><![CDATA[Está a utilizar um rascunho.]]></translation>
       </item>
-      <item type="message" name="UsingARevision">
-        <translation language="nl"><![CDATA[Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.]]></translation>
-        <translation language="en"><![CDATA[You're using an older version. Save to overwrite the current version.]]></translation>
-        <translation language="hu"><![CDATA[Te egy régi változatot használsz. Ments, hogy felülírd az aktuálisat.]]></translation>
-        <translation language="it"><![CDATA[Stai usando una vecchia versione. Salva per sovrascrivere la versione attuale.]]></translation>
-        <translation language="ru"><![CDATA[Вы используете предыдущую версию. Сохраните для перезаписи.]]></translation>
-        <translation language="zh"><![CDATA[你正在使用较早的版本。保存将会覆盖当前的版本。]]></translation>
-        <translation language="fr"><![CDATA[Vous utilisez une version plus ancienne. Enregistrez pour écraser la version actuelle.]]></translation>
-        <translation language="de"><![CDATA[Du verwendest eine ältere Version. Speicher um die aktuelle Version zu überschreiben.]]></translation>
-        <translation language="es"><![CDATA[Estas usando una versión anterior. Guarda para sobrescribir la versión actual.]]></translation>
-        <translation language="lt"><![CDATA[Jus naudojate senąją versiją, išsaugokite norėdami ją perrašyti]]></translation>
-        <translation language="uk"><![CDATA[Ви використовуюєте попередню версую. Збережіть для перезапису.]]></translation>
-        <translation language="sv"><![CDATA[Du använder en äldre version. Spara för att skriva över den aktuella versionen.]]></translation>
-        <translation language="el"><![CDATA[Χρησιμοποιείτε μία παλαιότερη έκδοση. Κάντε αποθήκευση γιά να επικαλύψετε την τρέχουσα έκδοση.]]></translation>
-        <translation language="pl"><![CDATA[Używasz starszej wersji. Zapisz, aby zastąpić dotychczasową wersję.]]></translation>
-        <translation language="pt"><![CDATA[Está a utilizar uma versão antiga. Guardar pode substituir a versão actual.]]></translation>
-      </item>
       <item type="message" name="ValuesAreChanged">
         <translation language="nl"><![CDATA[De gemaakte wijzigingen zullen verloren gaan.]]></translation>
         <translation language="en"><![CDATA[Changes will be lost.]]></translation>
@@ -12752,38 +12149,6 @@
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email υπάρχει ήδη.]]></translation>
         <translation language="pt"><![CDATA[Este endereço de email já se encontra em utilização.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail jest już w użyciu.]]></translation>
-      </item>
-      <item type="error" name="EmailIsInvalid">
-        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Fornisci un indirizzo email.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный E-mail.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas galiojantis el.paštas]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Por favor insira um endereço de email válido.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać poprawny adres e-mail.]]></translation>
-      </item>
-      <item type="error" name="EmailIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een e-mailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
-        <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
-        <translation language="it"><![CDATA[Per favore fornisci un indirizzo email valido.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный email.]]></translation>
-        <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
-        <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
-        <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor introduce un e-mail válido.]]></translation>
-        <translation language="lt"><![CDATA[Būtinas el.pašto adresas (galiojantis)]]></translation>
-        <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
-        <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
-        <translation language="pt"><![CDATA[Endereço de email é um campo obrigatório.]]></translation>
-        <translation language="pl"><![CDATA[Proszę podać adres e-mail.]]></translation>
       </item>
       <item type="error" name="EmailIsUnknown">
         <translation language="nl"><![CDATA[Dit e-mailadres zit niet in onze database.]]></translation>
@@ -13212,22 +12577,6 @@
         <translation language="el"><![CDATA[Δεν μπορώ να δημιουργήσω διεύθυνση URL. Δημιουργήστε μία σελίδα που είναι συνδεδεμένη με αυτή τη λειτουργική μονάδα.]]></translation>
         <translation language="pt"><![CDATA[É impossível gerar o URL. Certifique-se que este módulo está ligado a uma página.]]></translation>
         <translation language="pl"><![CDATA[Nie można wygenerować adresu URL. Upewnij się, że ten moduł jest powiązany ze stroną.]]></translation>
-      </item>
-      <item type="error" name="NonExisting">
-        <translation language="nl"><![CDATA[Dit item bestaat niet.]]></translation>
-        <translation language="en"><![CDATA[This item doesn't exist.]]></translation>
-        <translation language="hu"><![CDATA[Ez az elem nem létezik.]]></translation>
-        <translation language="it"><![CDATA[Questo elemento non esiste.]]></translation>
-        <translation language="ru"><![CDATA[Запись не существует.]]></translation>
-        <translation language="zh"><![CDATA[该项目已不存在。]]></translation>
-        <translation language="fr"><![CDATA[L'élément n'existe pas.]]></translation>
-        <translation language="de"><![CDATA[Dieser Eintrag existiert nicht.]]></translation>
-        <translation language="es"><![CDATA[Este objeto no existe.]]></translation>
-        <translation language="lt"><![CDATA[Įrašų nėra.]]></translation>
-        <translation language="sv"><![CDATA[Detta objekt finns inte.]]></translation>
-        <translation language="el"><![CDATA[Το αντικείμενο δεν υπάρχει.]]></translation>
-        <translation language="pl"><![CDATA[Ta pozycja nie istnieje]]></translation>
-        <translation language="pt"><![CDATA[Este item não existe.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>

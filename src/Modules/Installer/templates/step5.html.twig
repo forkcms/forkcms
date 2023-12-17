@@ -33,6 +33,7 @@
             <div class="mb-2">
               <span class="passwordStrength ms-auto" data-id="install_authentication_password_first" data-role="password-strength-meter">
                 <span class="badge bg-middle badge-sm" data-role="password-strength" data-strength="none">None</span>
+                <span class="badge bg-middle badge-sm" data-role="password-strength" data-strength="too weak">Too weak</span>
                 <span class="badge bg-danger badge-sm" data-role="password-strength" data-strength="weak">Weak</span>
                 <span class="badge bg-warning badge-sm" data-role="password-strength" data-strength="average">Average</span>
                 <span class="badge bg-success badge-sm" data-role="password-strength" data-strength="strong">Strong</span>
@@ -87,7 +88,7 @@
           <div class="btn-group" role="group">
             <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
               Finish installation
-              <div id="ajaxSpinner" style="float: left; margin-top: 4px; display: none;" aria-label="please wait while fork is installing">
+              <div id="ajax-spinner" style="float: left; margin-top: 4px; display: none;" aria-label="please wait while fork is installing">
                 <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
               </div>
             </button>

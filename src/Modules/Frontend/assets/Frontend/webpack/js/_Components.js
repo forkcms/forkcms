@@ -12,6 +12,7 @@ import * as Vue from 'vue/'
 import VEmbed from './Vue-components/VEmbed'
 import VShareButtons from './Vue-components/VShareButtons'
 import { Data } from '../../../../../../Core/assets/js/Components/Data'
+import { TogglePasswordInputType } from '../../../../../../Core/assets/js/Components/TogglePasswordInputType'
 
 export class Components {
   initComponents () {
@@ -26,6 +27,8 @@ export class Components {
     this.twitter = new Twitter()
     this.consentDialog = new ConsentDialog()
 
+    Components.initTogglePasswordInputType()
+
     if ($('[data-v-embed]').length) {
       window.vembed = new Vue({
         el: '[data-v-embed]',
@@ -39,5 +42,11 @@ export class Components {
         components: { VShareButtons }
       })
     }
+  }
+
+  static initTogglePasswordInputType () {
+    document.querySelectorAll('[data-role="toggle-password-visibility"]').forEach((element) => {
+      element.togglePassword = new TogglePasswordInputType(element)
+    })
   }
 }

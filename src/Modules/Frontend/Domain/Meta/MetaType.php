@@ -3,6 +3,7 @@
 namespace ForkCMS\Modules\Frontend\Domain\Meta;
 
 use ForkCMS\Core\Domain\Form\SwitchType;
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
@@ -25,8 +26,10 @@ class MetaType extends AbstractType
     /** @var array<int, Meta> */
     private array $meta = [];
 
-    public function __construct(private readonly MetaRepository $metaRepository, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly MetaRepository $metaRepository,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -106,7 +109,7 @@ class MetaType extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'class' => SEOIndex::class,
-            'choice_label' => static fn (SEOIndex $SEOIndex) => 'lbl.' . ucfirst($SEOIndex->name),
+            'choice_label' => static fn (SEOIndex $SEOIndex): TranslationKey => $SEOIndex->getLabel(),
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -121,7 +124,7 @@ class MetaType extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'class' => SEOFollow::class,
-            'choice_label' => static fn (SEOFollow $SEOFollow) => 'lbl.' . ucfirst($SEOFollow->name),
+            'choice_label' => static fn (SEOFollow $SEOFollow): TranslationKey => $SEOFollow->getLabel(),
             'choice_translation_domain' => true,
             'required' => false,
             'placeholder' => false,
@@ -136,7 +139,9 @@ class MetaType extends AbstractType
             $metaData = $event->getData();
             $parent = $metaForm->getParent();
             if ($parent === null) {
-                throw new LogicException('The MetaType is not a stand alone type, it needs to be used in a parent form');
+                throw new LogicException(
+                    'The MetaType is not a stand alone type, it needs to be used in a parent form'
+                );
             }
 
             $baseField = null;
@@ -195,8 +200,8 @@ class MetaType extends AbstractType
         return function ($meta) {
             if (!$meta instanceof Meta) {
                 return [
-                    'SEOIndex' => SEOIndex::none,
-                    'SEOFollow' => SEOFollow::none,
+                    'SEOIndex' => SEOIndex::NONE,
+                    'SEOFollow' => SEOFollow::NONE,
                 ];
             }
 

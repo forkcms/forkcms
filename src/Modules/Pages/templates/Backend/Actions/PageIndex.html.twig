@@ -1,6 +1,6 @@
-  {% extends '@Backend/base/crud/index.html.twig' %}
+{% extends '@Backend/base/crud/index.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudActionName = 'PageAdd' %}
+{% set crud_action_name = 'PageAdd' %}
 
 {% block sidebarSubNavigation %}
   {% include '@Pages/Backend/NavigationTree.html.twig' with {'overview': true} %}
@@ -22,4 +22,3 @@
     {{ pageon_datagrid(lastEditedDataGrid) }}
   </div>
 {% endblock %}
-
