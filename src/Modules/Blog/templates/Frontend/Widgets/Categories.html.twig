@@ -1,0 +1,26 @@
+{% if categories is not empty %}
+  <aside class="module-blog widget-blog-categories">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
+        <h3>{{ 'lbl.Categories'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        <ul>
+          {% for category in categories %}
+            <li>
+              <a href="{{ get_url_for_block('Blog', 'Category', 'action', {'slug':category.meta.slug}) }}">
+                {{ category.title }}
+                <span class="badge bg-middle text-white">{{ category.total }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+
+    {% block widget_footer %}{% endblock %}
+  </aside>
+{% endif %}

@@ -1,0 +1,89 @@
+<section class="module-blog block-blog-category">
+  {% if not items %}
+    {% block block_no_items %}
+      {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
+    {% endblock %}
+  {% else %}
+    {% block block_heading %}{% endblock %}
+
+    {% block block_body %}
+      <div class="block-body">
+        {% for item in items %}
+          <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+            <meta itemprop="interactionCount" content="UserComments:{{ item.numberOfComments }}">
+            <meta itemprop="author" content="{{ item.createdBy.displayName }}">
+
+            <header class="block-article-heading page-header" role="banner">
+              <h2 itemprop="name">
+                {# TODO temporarily give slug parameter since adding it to url makes Action not found #}
+                {# should be something like {{ get_url_for_block('Blog', 'Detail') ~ '/' ~ item.meta.slug) }} #}
+                <a href="{{ get_url_for_block('Blog', 'Detail', 'action', {'slug':item.meta.slug}) }}">
+                  {{ item.title }}
+                </a>
+              </h2>
+
+              <div>
+                {{ 'msg.WrittenBy'|trans|ucfirst|format(item.createdBy.displayName) }}
+                {{ 'lbl.On'|trans }}
+                <time itemprop="datePublished" datetime="{{ item.publishOn|date('Y-m-d\\TH:i:s' ) }}">
+                  {{ item.publishOn|date('d/m/Y H:i') }}
+                </time>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  {{ 'lbl.Category'|trans|ucfirst }}
+                  <a itemprop="genre" href="#">{{ item.category.title }}</a>.
+                </div>
+
+                {% if item.allowComments %}
+                  <div class="col-md-6">
+                    {% if not item.comments %}
+                      <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
+                        {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                      </a>
+                    {% else %}
+                      <a href="{{ item.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
+                        {% if item.comments_multiple %}
+                          {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                        {% else %}
+                          {{ 'msg.BlogOneComment'|trans }}
+                        {% endif %}
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </header>
+
+            <div class="block-article-body" itemprop="articleBody">
+              <div class="row">
+                {# <div class="{% if item.image %} col-md-8{% else %} col-12{% endif %}"> #}
+                <div class="col-12">
+                  {% if not item.introduction %}
+                    {{ item.text|parseEditor }}
+                  {% else %}
+                    {{ item.introduction|parseEditor }}
+                  {% endif %}
+                </div>
+                {#  if item.image %}
+                  <div class="col-md-4">
+                    <img itemprop="image" class="img-responsive" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" />
+                  </div>
+                {% endif #}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endblock %}
+
+    {% block block_pagination %}
+      <div class="block-footer">
+
+      </div>
+    {% endblock %}
+
+    {% block block_footer %}{% endblock %}
+  {% endif %}
+</section>

@@ -1,0 +1,96 @@
+<section class="module-blog block-blog-index">
+  <article itemscope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="interactionCount" content="UserComments:{{ article.numberOfComments }}">
+    <meta itemprop="author" content="{{ article.createdBy.displayName }}">
+
+    {% block block_heading %}
+      <header class="block-heading page-header" role="banner">
+        <h1 itemprop="name">
+          {{ article.title }}
+        </h1>
+
+        <div>
+          {{ 'msg.WrittenBy'|trans|ucfirst|format(article.createdBy.displayName) }}
+          {{ 'lbl.On'|trans }}
+          <time itemprop="datePublished" datetime="{{ article.publishOn|date('Y-m-d\\TH:i:s' ) }}">
+            {{ article.publishOn|date('d/m/Y H:i') }}
+          </time>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            {{ 'lbl.Category'|trans|ucfirst }}
+            <a itemprop="genre" href="{{ get_url_for_block('Blog', 'Category', 'action', {'slug':article.category.meta.slug}) }}">
+              {{ article.category.title }}
+            </a>
+            .
+          </div>
+
+          {# if item.allow_comments %}
+            <div class="col-md-6">
+              {% if not item.comments %}
+                <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
+                  {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                </a>
+              {% else %}
+                <a href="{{ item.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
+                  {% if item.comments_multiple %}
+                    {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                  {% else %}
+                    {{ 'msg.BlogOneComment'|trans }}
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif #}
+        </div>
+      </header>
+    {% endblock %}
+
+    {% block block_body %}
+      <div class="block-body" itemprop="articleBody">
+        {# if article.image %}
+          <img class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ article.image }}" alt="{{ item.title }}" itemprop="image" />
+        {% endif #}
+        {{ article.text|parseEditor }}
+      </div>
+    {% endblock %}
+
+    {% block block_footer %}
+      Navigation
+      {#
+      <footer class="block-footer mt-4">
+        <nav aria-label="{{ 'lbl.BlogPageNavigationAriaLabel'|trans }}">
+          <ul class="pagination">
+            {% if navigation.previous %}
+              <li class="page-item">
+                <a class="page-link" href="{{ navigation.previous.url }}">&larr;
+                  <span class="visually-hidden">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span>
+                  <span class="title">{{ navigation.previous.title }}</span></a>
+              </li>
+            {% endif %}
+            {% if navigation.next %}
+              <li class="page-item ml-auto">
+                <a class="page-link" href="{{ navigation.next.url }}">
+                  <span class="visually-hidden">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span>
+                  <span class="title">{{ navigation.next.title }}</span> &rarr;
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </footer>
+      #}
+    {% endblock %}
+  </article>
+
+  {% block block_article_comments %}
+    {# todo #}
+  {% endblock %}
+
+  {% if article.allowComments %}
+    {% block block_article_comment_form %}
+      {# todo #}
+    {% endblock %}
+  {% endif %}
+</section>

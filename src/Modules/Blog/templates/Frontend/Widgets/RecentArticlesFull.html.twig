@@ -1,0 +1,94 @@
+{% if articles is not empty %}
+  <section class="module-blog widget-blog-recent-articles-list">
+    {% block widget_heading %}
+      <header class="widget-heading page-header" role="banner">
+        <h3>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h3>
+      </header>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        {% for post in articles %}
+          <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+            <meta itemprop="interactionCount" content="UserComments:{{ post.numberOfComments }}">
+            <meta itemprop="author" content="{{ post.createdBy.displayName }}">
+
+            <header class="block-article-heading" role="banner">
+              <h3 itemprop="name">
+                <a href="{{ get_url_for_block('Blog', 'Detail', 'action', {'slug':post.meta.slug}) }}">
+                  {{ post.title }}
+                </a>
+              </h3>
+
+              <div class="row">
+                <div class="col-md-8">
+                  {{ 'msg.WrittenBy'|trans|ucfirst|format(post.createdBy.displayName) }}
+                  {{ 'lbl.On'|trans }}
+                  <time itemprop="datePublished" datetime="{{ post.publishOn|date('Y-m-d\\TH:i:s' ) }}">
+                    {{ post.publishOn|date('d/m/Y H:i') }}
+                  </time>
+                </div>
+                {#
+                <div class="col-md-4">
+                  {% if post.allow_comments %}
+                    <div class="pull-right">
+                      {% if not post.comments %}
+                        <a href="{{ post.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
+                          {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                        </a>
+                      {% else %}
+                        <a href="{{ post.full_url }}#{{ 'slg.Comments'|trans }}" itemprop="discussionUrl">
+                          {% if post.comments_multiple %}
+                            {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                          {% else %}
+                            {{ 'msg.BlogOneComment'|trans }}
+                          {% endif %}
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+                #}
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  {{ 'lbl.Category'|trans|ucfirst }}
+                  <a itemprop="genre"
+                     href="{{ get_url_for_block('Blog', 'Category', 'action', {'slug':post.category.meta.slug}) }}">
+                    {{ post.category.title }}
+                  </a>
+                </div>
+                <div class="col-md-6">
+                </div>
+              </div>
+            </header>
+
+            <div class="block-article-body" itemprop="articleBody">
+              {#
+              {% if post.image %}
+                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ post.image }}" alt="{{ post.title }}" />
+              {% endif %}
+              #}
+              {% if not post.introduction %}
+                {{ post.text|parseEditor }}
+              {% else %}
+                {{ post.introduction|parseEditor }}
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endblock %}
+
+    {% block widget_footer %}
+      <footer class="widget-footer">
+        <p class="btn-group">
+          <a class="btn btn-primary" href="{{ get_url_for_block('Blog', 'Index', 'action') }}">
+            {{ 'lbl.BlogIndex'|trans|ucfirst }}
+          </a>
+        </p>
+      </footer>
+    {% endblock %}
+  </section>
+{% endif %}

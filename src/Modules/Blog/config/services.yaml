@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ForkCMS\Modules\Blog\Domain\:
+    resource: '../Domain/*'
+
+  ForkCMS\Modules\Blog\Backend\:
+    resource: '../Backend/*'
+
+  ForkCMS\Modules\Blog\Frontend\:
+    resource: '../Frontend/*'
