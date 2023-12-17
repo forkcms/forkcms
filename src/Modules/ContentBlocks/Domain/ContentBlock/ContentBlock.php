@@ -58,6 +58,7 @@ class ContentBlock
     #[ORM\Column(type: 'string')]
     #[DataGridPropertyColumn(
         sortable: true,
+        filterable: true,
         label: 'lbl.Title',
         route: 'backend_action',
         routeAttributes: [

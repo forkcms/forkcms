@@ -39,6 +39,7 @@ abstract class ContentBlockDataTransferObject
         $this->contentBlockEntity = $contentBlockEntity;
 
         if (!$contentBlockEntity instanceof ContentBlock) {
+            $this->status = Status::ACTIVE;
             $this->settings = new SettingsBag();
 
             return;

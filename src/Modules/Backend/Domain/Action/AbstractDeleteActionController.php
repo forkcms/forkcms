@@ -33,7 +33,7 @@ abstract class AbstractDeleteActionController extends AbstractFormActionControll
             flashMessage: $successFlashMessage ?? FlashMessage::success('Deleted'),
             formOptions: ['actionSlug' => self::getActionSlug()],
             defaultCallback: function () use ($redirectActionSlug, $notFoundFlashMessage): RedirectResponse {
-                $this->header->addFlashMessage($notFoundFlashMessage ?? FlashMessage::error('NotFound'));
+                $this->header->addFlashMessage($notFoundFlashMessage ?? FlashMessage::error('EntityNotFound'));
 
                 return new RedirectResponse($redirectActionSlug->generateRoute($this->router));
             },

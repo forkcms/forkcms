@@ -18,23 +18,6 @@
       <translation locale="pl"><![CDATA[bloki zawartości]]></translation>
     </item>
     <ContentBlocks>
-      <item type="label" name="Add">
-        <translation locale="nl"><![CDATA[inhoudsblok toevoegen]]></translation>
-        <translation locale="en"><![CDATA[add content block]]></translation>
-        <translation locale="hu"><![CDATA[új tartalmi blokk]]></translation>
-        <translation locale="it"><![CDATA[aggiungi un blocco di contenuto]]></translation>
-        <translation locale="ru"><![CDATA[Добавить блок]]></translation>
-        <translation locale="zh"><![CDATA[添加内容块]]></translation>
-        <translation locale="de"><![CDATA[Inhaltsblock hinzufügen]]></translation>
-        <translation locale="fr"><![CDATA[ajouter un bloc de contenu]]></translation>
-        <translation locale="es"><![CDATA[agregar bloque de contenido]]></translation>
-        <translation locale="uk"><![CDATA[Додати блок]]></translation>
-        <translation locale="lt"><![CDATA[naujas turinio blokas]]></translation>
-        <translation locale="sv"><![CDATA[lägg till innehålls block]]></translation>
-        <translation locale="el"><![CDATA[Προσθήκη Μπλοκ Περιεχομένου]]></translation>
-        <translation locale="pt"><![CDATA[adicionar bloco de conteúdo]]></translation>
-        <translation locale="pl"><![CDATA[dodaj blok treści]]></translation>
-      </item>
       <item type="message" name="Added">
         <translation locale="nl"><![CDATA[Het inhoudsblok "%contentBlock%" werd toegevoegd.]]></translation>
         <translation locale="en"><![CDATA[The content block "%contentBlock%" was added.]]></translation>
@@ -80,21 +63,6 @@
         <translation locale="el"><![CDATA[Το μπλοκ περιεχομένου "%contentBlock%" διεγράφη.]]></translation>
         <translation locale="pt"><![CDATA[O bloco de conteúdo "%contentBlock%" foi removido.]]></translation>
         <translation locale="pl"><![CDATA[blok treści "%contentBlock%" został usunięty.]]></translation>
-      </item>
-      <item type="label" name="Edit">
-        <translation locale="nl"><![CDATA[bewerk inhoudsblok]]></translation>
-        <translation locale="en"><![CDATA[edit content block]]></translation>
-        <translation locale="it"><![CDATA[modifica il blocco di contenuto]]></translation>
-        <translation locale="ru"><![CDATA[Редактировать]]></translation>
-        <translation locale="zh"><![CDATA[编辑内容块]]></translation>
-        <translation locale="de"><![CDATA[bearbeite Inhaltsblock]]></translation>
-        <translation locale="hu"><![CDATA[tartalmi blokk szerkesztése]]></translation>
-        <translation locale="fr"><![CDATA[éditer le bloc de contenu]]></translation>
-        <translation locale="es"><![CDATA[editar bloque de contenido]]></translation>
-        <translation locale="sv"><![CDATA[ändra innehållsblock]]></translation>
-        <translation locale="el"><![CDATA[Μεταβολή του μπλοκ περιεχομένου]]></translation>
-        <translation locale="pt"><![CDATA[editar bloco de conteúdo]]></translation>
-        <translation locale="pl"><![CDATA[edytuj blok treści]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation locale="nl"><![CDATA[Het inhoudsblok "%contentBlock%" werd opgeslagen.]]></translation>
@@ -155,6 +123,10 @@
         <translation locale="tr"><![CDATA[şablon]]></translation>
         <translation locale="pl"><![CDATA[szablon]]></translation>
         <translation locale="pt"><![CDATA[template]]></translation>
+      </item>
+      <item type="error" name="EntityNotFound">
+        <translation locale="nl"><![CDATA[Sorry, het gevraagde inhoudsblok kon niet gevonden worden]]></translation>
+        <translation locale="en"><![CDATA[Sorry, the requested content block could not be found.]]></translation>
       </item>
     </ContentBlocks>
   </Backend>

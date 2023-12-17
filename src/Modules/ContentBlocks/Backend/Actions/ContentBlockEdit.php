@@ -70,7 +70,10 @@ final class ContentBlockEdit extends AbstractFormActionController
                     entityAlias: 't',
                     sortable: false,
                     filterable: false,
-                    order: 1
+                    order: 1,
+                    route: 'backend_action',
+                    routeAttributes: self::getActionSlug()->getRouteParameters(),
+                    routeAttributesCallback: [ContentBlock::class, 'dataGridEditLinkCallback'],
                 ),
                 Column::createPropertyColumn(
                     name: 'updatedOn',

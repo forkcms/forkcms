@@ -198,6 +198,10 @@
       <translation locale="pl"><![CDATA["%entity%" został usunięty.]]></translation>
       <translation locale="pt"><![CDATA["%entity%" foi removido.]]></translation>
     </item>
+    <item type="error" name="EntityNotFound">
+      <translation locale="nl"><![CDATA[Sorry, het gevraagde item kon niet gevonden worden]]></translation>
+      <translation locale="en"><![CDATA[Sorry, the requested item could not be found.]]></translation>
+    </item>
     <item type="message" name="EntityEdited">
       <translation locale="nl"><![CDATA[wijzigingen aan "%entity%" werden opgeslaan.]]></translation>
       <translation locale="en"><![CDATA[changes for "%entity%" has been saved.]]></translation>
