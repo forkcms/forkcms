@@ -50,6 +50,7 @@ class ContentBlock
     private int $id;
 
     #[ORM\ManyToOne(targetEntity: Block::class, cascade: ['persist'], fetch: 'EAGER')]
+    #[ORM\JoinColumn(nullable: false)]
     private Block $widget;
 
     #[ORM\Column(type: 'string', options: ['default' => self::DEFAULT_TEMPLATE])]

@@ -4,24 +4,17 @@ namespace ForkCMS\Core\Domain\Form;
 
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
-use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Pageon\DoctrineDataGridBundle\DataGrid\DataGrid;
-use ReflectionObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * This form type is a workaround for showing a datagrid in a form.
  */
 final class DataGridType extends AbstractType
 {
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
-    }
-
     public function getBlockPrefix(): string
     {
         return 'data_grid';

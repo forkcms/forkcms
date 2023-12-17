@@ -18,7 +18,8 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class BlockRepository extends SortableRepository implements ServiceEntityRepositoryInterface
 {
-    public function __construct(EntityManagerInterface $entityManager,
+    public function __construct(
+        EntityManagerInterface $entityManager,
         private readonly EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct($entityManager, $entityManager->getClassMetadata(Block::class));

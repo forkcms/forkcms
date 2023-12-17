@@ -15,7 +15,7 @@ abstract class ContentBlockDataTransferObject
 
     public Block $widget;
 
-    public readonly int $revisionId;
+    public int $revisionId;
 
     #[Assert\NotBlank(message: 'err.FieldIsRequired')]
     public string $title;

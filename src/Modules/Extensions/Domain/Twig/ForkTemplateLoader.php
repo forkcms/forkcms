@@ -21,7 +21,6 @@ final class ForkTemplateLoader extends FilesystemLoader
         #[Autowire('%fork.is_installed')]
         bool $forkIsInstalled
     ) {
-
         $filesystem = new Filesystem();
 
         $modulesDirectory = $kernelProjectDir . '/src/Modules/';

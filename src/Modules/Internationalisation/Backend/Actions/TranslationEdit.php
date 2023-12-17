@@ -31,7 +31,7 @@ final class TranslationEdit extends AbstractFormActionController
             formType: TranslationType::class,
             formData: new ChangeTranslation($translation),
             redirectResponse: new RedirectResponse(TranslationIndex::getActionSlug()->generateRoute($this->router)),
-            successFlashMessageCallback: static fn (FormInterface $form) => FlashMessage::success(
+            successFlashMessageCallback: fn (FormInterface $form) => FlashMessage::success(
                 'EntityEdited',
                 ['entity' => $this->translator->trans($form->getData()->getEntity()->getTranslatable())]
             ),
