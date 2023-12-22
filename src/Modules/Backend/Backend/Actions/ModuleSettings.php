@@ -32,22 +32,6 @@ final class ModuleSettings extends AbstractFormActionController
                 $moduleRepository->find($moduleName) ?? throw new RuntimeException($moduleName . ' module not found'),
                 []
             ),
-            validCallback: function (FormInterface $form): Response {
-                $this->commandBus->dispatch($form->getData());
-
-                if (!$this->moduleSettings->get(ModuleName::fromString('Backend'), '2fa_enabled', false)) {
-                    /** @var UserRepository $userRepository */
-                    $userRepository = $this->getRepository(User::class);
-                    $users = $userRepository->findAll();
-
-                    foreach ($users as $user) {
-                        $user->disableTwoFactorAuthentication();
-                        $userRepository->save($user);
-                    }
-                }
-
-                return new RedirectResponse(self::getActionSlug()->generateRoute($this->router));
-            }
         );
     }
 }
