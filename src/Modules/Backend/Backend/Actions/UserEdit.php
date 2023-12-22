@@ -2,11 +2,6 @@
 
 namespace ForkCMS\Modules\Backend\Backend\Actions;
 
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\SvgWriter;
 use ForkCMS\Core\Domain\Header\Breadcrumb\Breadcrumb;
 use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
@@ -14,8 +9,7 @@ use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Backend\Domain\User\Command\ChangeUser;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserType;
-use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
-use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
+use \ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class UserEdit extends AbstractFormActionController
 {
+    private ModuleSettings $moduleSettings;
+
+    public function __construct(
+        private readonly ActionServices $actionServices,
+    ) {
+        parent::__construct($actionServices);
+        $this->moduleSettings = $this->actionServices->moduleSettings;
+    }
+
     public function execute(Request $request): void
     {
         parent::execute($request);
