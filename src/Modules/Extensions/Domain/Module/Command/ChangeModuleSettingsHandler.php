@@ -4,17 +4,17 @@ namespace ForkCMS\Modules\Extensions\Domain\Module\Command;
 
 use ForkCMS\Core\Domain\Kernel\Event\ClearCacheEvent;
 use ForkCMS\Core\Domain\MessageHandler\CommandHandlerInterface;
-use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserRepository;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ChangeModuleSettingsHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly ModuleRepository $moduleRepository,
-        private readonly EventDispatcher $eventDispatcher,
+        private readonly EventDispatcherInterface $eventDispatcher,
         private readonly UserRepository $userRepository,
     ) {
     }
