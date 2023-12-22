@@ -34,7 +34,7 @@ final class UserEditTest extends BackendWebTestCase
     {
         $user = self::loadPage();
         self::assertEmptyFormSubmission('user', 0, 'Save');
-        self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
+        self::assertCurrentUrlEndsWith('/private/en/backend/user-edit');
         self::assertDataGridHasLink($user->getEmail());
         self::assertResponseContains('The settings for "' . $user->getDisplayName() . '" were saved.');
     }
@@ -70,7 +70,7 @@ final class UserEditTest extends BackendWebTestCase
         );
     }
 
-    public function testSubmittedFormRedirectsToIndex(): void
+    public function testSubmittedFormRedirectsToEdit(): void
     {
         self::loadPage();
 
@@ -84,7 +84,7 @@ final class UserEditTest extends BackendWebTestCase
             ],
         );
         self::getClient()->followRedirect();
-        self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
+        self::assertCurrentUrlEndsWith('/private/en/backend/user-edit');
         self::assertDataGridHasLink('jelmer.prins@example.com');
         self::assertResponseContains('The settings for "Jelmer Prins" were saved.');
     }
