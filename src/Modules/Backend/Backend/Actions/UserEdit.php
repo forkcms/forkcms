@@ -9,7 +9,7 @@ use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Backend\Domain\User\Command\ChangeUser;
 use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Backend\Domain\User\UserType;
-use \ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
