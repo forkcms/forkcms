@@ -127,9 +127,9 @@ final class PagesInstaller extends ModuleInstaller
             );
             $revision->title = $this->trans($locale, $title);
             $revision->parentPage = $parentPage;
-            $revision->meta = Meta::forName($title);
+            $revision->meta = Meta::forName($revision->title);
             $revision->type = $type;
-            $revision->settings['navigationTitle'] = $title;
+            $revision->settings['navigationTitle'] = $this->trans($locale, $title);
 
             if ($createRevisionCallback !== null) {
                 $createRevisionCallback($locale, $revision);

@@ -46,7 +46,7 @@ final class ThemeInstall extends AbstractFormActionController
 
                 return new RedirectResponse(ThemeIndex::getActionSlug()->generateRoute($this->router));
             },
-            flashMessageCallback: function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('ThemeInstalled', ['%theme%' => $form->getData()['name']]);
             }
         );

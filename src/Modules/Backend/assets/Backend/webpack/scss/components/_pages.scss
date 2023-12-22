@@ -1,4 +1,4 @@
-.templateVisual {
+.template-visual {
   margin-left: -1.5em;
 
   td {
@@ -6,6 +6,15 @@
     border: 1px solid $gray-100;
     text-align: center;
     vertical-align: middle;
+
+    /* @inc .secondarycontent */
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+    font-size: 10px;
+    padding: 4px 2px;
+
+    span {
+      color: $body-color;
+    }
 
     &:empty,
     &.empty {
@@ -21,17 +30,6 @@
     width: 100%;
   }
 
-  td {
-    /* @inc .secondarycontent */
-    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
-    font-size: 10px;
-    padding: 4px 2px;
-
-    span {
-      color: $body-color;
-    }
-  }
-
   .form-group {
     margin-bottom: 0;
   }
@@ -40,7 +38,7 @@
 /*
     Template visual large
 */
-#templateVisualLarge {
+#template-visual-large {
   clear: both;
   margin: 0 -2px;
 
@@ -82,7 +80,7 @@
 }
 
 @include media-breakpoint-up(xl) {
-  #templateVisualLarge {
+  #template-visual-large {
     margin: 0 -10px;
 
     table {

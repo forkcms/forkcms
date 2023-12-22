@@ -194,14 +194,6 @@ class Page extends KernelLoader
             $this->template->assignGlobal('isPage' . $this->pageId, true);
             $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
-            // hide the cookiebar from within the code to prevent flickering
-            // @deprecated remove this in Fork 6, the privacy consent dialog should be used
-            $this->template->assignGlobal(
-                'cookieBarHide',
-                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
-                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
-            );
-            $this->parsePrivacyConsents();
             $this->parsePositions();
 
             // assign empty positions
@@ -213,8 +205,6 @@ class Page extends KernelLoader
                 $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
             }
 
-            $this->header->parse();
-            $this->breadcrumb->parse();
             $this->parseLanguages();
             $this->footer->parse();
 
@@ -320,30 +310,6 @@ class Page extends KernelLoader
         if (!$this->getContainer()->getParameter('site.multilanguage') || count(Language::getActiveLanguages()) === 1) {
             return;
         }
-
-        $this->template->assignGlobal(
-            'languages',
-            array_map(
-                function (string $language) {
-                    return [
-                        'url' => '/' . $language,
-                        'label' => $language,
-                        'name' => Language::msg(mb_strtoupper($language)),
-                        'current' => $language === LANGUAGE,
-                    ];
-                },
-                Language::getActiveLanguages()
-            )
-        );
-    }
-
-    protected function parsePrivacyConsents(): void
-    {
-        $consentDialog = $this->get(ConsentDialog::class);
-
-        $this->template->assignGlobal('privacyConsentEnabled', $consentDialog->isDialogEnabled());
-        $this->template->assignGlobal('privacyConsentDialogHide', !$consentDialog->shouldDialogBeShown());
-        $this->template->assignGlobal('privacyConsentDialogLevels', $consentDialog->getLevels());
     }
 
     protected function parsePositions(): void

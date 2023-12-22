@@ -2,9 +2,20 @@
 
 namespace ForkCMS\Modules\Frontend\Domain\Meta;
 
+use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+
 enum SEOFollow: string
 {
-    case none = 'none';
-    case follow = 'follow';
-    case noFollow = 'nofollow';
+    case NONE = 'none';
+    case FOLLOW = 'follow';
+    case NO_FOLLOW = 'nofollow';
+
+    public function getLabel(): TranslationKey
+    {
+        return match ($this) {
+            self::NONE => TranslationKey::label('NotSpecified'),
+            self::FOLLOW => TranslationKey::label('Follow'),
+            self::NO_FOLLOW => TranslationKey::label('DoNotFollow'),
+        };
+    }
 }

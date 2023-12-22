@@ -23,4 +23,5 @@ modules:
     - !fork-cms_module Frontend
     - !fork-cms_module Internationalisation
     - !fork-cms_module Pages
+    - !fork-cms_module ContentBlocks
 install-example-data: false

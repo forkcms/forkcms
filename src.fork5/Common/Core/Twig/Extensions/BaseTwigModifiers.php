@@ -193,31 +193,6 @@ class BaseTwigModifiers
     }
 
     /**
-     * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false).
-     *    syntax: {{ showbool($status, $reverse) }}.
-     *
-     * @param string|bool $status
-     * @param bool $reverse show the opposite of the status
-     *
-     * @return string
-     */
-    public static function showBool($status, bool $reverse = false): string
-    {
-        $showTrue = '<strong style="color:green">&#10003;</strong>';
-        $showFalse = '<strong style="color:red">&#10008;</strong>';
-
-        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-            return $reverse ? self::showBool(false) : $showTrue;
-        }
-
-        if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-            return $reverse ? self::showBool(true) : $showFalse;
-        }
-
-        return $status;
-    }
-
-    /**
      * Truncate a string
      *    syntax: {{ $string|truncate($max-length, $append-hellip, $closest-word) }}.
      *

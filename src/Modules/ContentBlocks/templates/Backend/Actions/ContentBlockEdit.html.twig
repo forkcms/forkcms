@@ -1,0 +1,8 @@
+{% extends '@Backend/base/crud/edit.html.twig' %}
+{% set crud_index_action = 'ContentBlockIndex' %}
+
+{% block content_warning %}
+  {% if not contentBlock.status.isActive %}
+    <div class="alert alert-warning">{{ 'msg.UsingARevision'|trans }}</div>
+  {% endif %}
+{% endblock %}

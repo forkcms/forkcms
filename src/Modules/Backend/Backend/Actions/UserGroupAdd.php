@@ -23,7 +23,7 @@ final class UserGroupAdd extends AbstractFormActionController
             formType: UserGroupType::class,
             formData: new CreateUserGroup(),
             redirectResponse: new RedirectResponse(UserGroupIndex::getActionSlug()->generateRoute($this->router)),
-            flashMessageCallback: static function (FormInterface $form): FlashMessage {
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserGroupAdded', ['%userGroup%' => $form->getData()->name]);
             }
         );

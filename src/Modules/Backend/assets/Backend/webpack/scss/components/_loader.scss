@@ -1,4 +1,4 @@
-#ajaxSpinner {
+#ajax-spinner {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,7 @@
   padding: $spacer * 0.5;
   position: fixed;
   left: 50%;
-  top: $grid-gutter-width / 2;
+  top: calc($grid-gutter-width / 2);
   transform: translateX(-50%);
   width: 200px;
   z-index: 9001;

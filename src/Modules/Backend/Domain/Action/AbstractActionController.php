@@ -4,27 +4,21 @@ namespace ForkCMS\Modules\Backend\Domain\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\MissingIdentifierField;
-use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
-use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessageType;
 use ForkCMS\Core\Domain\Header\Header;
-use ForkCMS\Modules\Backend\Backend\Actions\UserEdit;
+use ForkCMS\Core\Domain\Util\ArrayUtil;
 use ForkCMS\Modules\Backend\Domain\AjaxAction\AjaxActionSlug;
-use ForkCMS\Modules\Backend\Domain\User\User;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
-use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
-use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
 use Pageon\DoctrineDataGridBundle\DataGrid\DataGridFactory;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 use Twig\Environment;
 
 abstract class AbstractActionController implements ActionControllerInterface
@@ -42,8 +36,7 @@ abstract class AbstractActionController implements ActionControllerInterface
     protected readonly FormFactoryInterface $formFactory;
     protected readonly MessageBusInterface $commandBus;
     protected readonly AuthorizationCheckerInterface $authorizationChecker;
-    protected readonly ModuleSettings $moduleSettings;
-    protected readonly TokenStorageInterface $tokenStorage;
+    protected readonly EventDispatcherInterface $eventDispatcher;
 
     public function __construct(ActionServices $services)
     {
@@ -56,8 +49,7 @@ abstract class AbstractActionController implements ActionControllerInterface
         $this->formFactory = $services->formFactory;
         $this->commandBus = $services->commandBus;
         $this->authorizationChecker = $services->authorizationChecker;
-        $this->moduleSettings = $services->moduleSettings;
-        $this->tokenStorage = $services->tokenStorage;
+        $this->eventDispatcher = $services->eventDispatcher;
         $actionSlug = self::getActionSlug();
         $this->templatePath = sprintf(
             '@%s/Backend/Actions/%s.html.twig',
@@ -78,61 +70,9 @@ abstract class AbstractActionController implements ActionControllerInterface
 
     public function __invoke(Request $request): Response
     {
-        if ($this->shouldUserConfigure2FA($request)) {
-            $this->header->addFlashMessage(
-                new FlashMessage(
-                    TranslationKey::message('2FAIsRequired'),
-                    FlashMessageType::WARNING
-                )
-            );
-
-            return $this->redirectToUserPage($request);
-        }
-
         $this->execute($request);
 
         return $this->getResponse($request);
-    }
-
-    private function redirectToUserPage(Request $request): Response
-    {
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        return new RedirectResponse(
-            UserEdit::getActionSlug()->generateRoute($this->router, ['slug' => $user->getId()])
-        );
-    }
-
-    private function shouldUserConfigure2FA(Request $request): bool
-    {
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        if ($user instanceof User === false) {
-            return false;
-        }
-
-        $currentUrl = $request->getPathInfo();
-        $redirectUrl = UserEdit::getActionSlug()->generateRoute($this->router, ['slug' => $user->getId()]);
-
-        $required = $this->moduleSettings->get(
-            ModuleName::fromString('Backend'),
-            '2fa_required',
-            false
-        );
-
-        $enabled = $this->moduleSettings->get(
-            ModuleName::fromString('Backend'),
-            '2fa_enabled',
-            false
-        );
-
-
-        if ($required && $enabled && !$user->is2faEnabled() && $currentUrl !== $redirectUrl) {
-            return true;
-        }
-
-        return false;
     }
 
     final protected function assign(string $key, mixed $value): void
@@ -168,16 +108,35 @@ abstract class AbstractActionController implements ActionControllerInterface
      */
     final protected function getEntityFromRequest(Request $request, string $entityFQCN, string $key = 'slug'): mixed
     {
+        $notFoundException = new NotFoundHttpException('identifier field not found');
+
         try {
             return $this->getRepository($entityFQCN)
                 ->find(
                     $request->get($key)
-                    ?? $request->query->get($key)
-                    ?? $request->request->get($key)
+                    ?? ArrayUtil::flatten($request->query->all())[$key]
+                    ?? ArrayUtil::flatten($request->request->all())[$key]
+                    ?? throw $notFoundException
                 )
-                ?? throw new NotFoundHttpException('identifier field not found');
-        } catch (MissingIdentifierField) {
-            throw new NotFoundHttpException('identifier field not found');
+                ?? throw $notFoundException;
+        } catch (Throwable) {
+            throw $notFoundException;
+        }
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $entityFQCN
+     *
+     * @return T|null
+     */
+    final protected function getEntityFromRequestOrNull(Request $request, string $entityFQCN, string $key = 'slug'): mixed
+    {
+        try {
+            return $this->getEntityFromRequest($request, $entityFQCN, $key);
+        } catch (NotFoundHttpException) {
+            return null;
         }
     }
 

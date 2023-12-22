@@ -22,7 +22,6 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   .header {
     min-height: 500px;
 
@@ -33,7 +32,6 @@
 }
 
 @include media-breakpoint-up(xl) {
-
   .header {
     min-height: 600px;
   }

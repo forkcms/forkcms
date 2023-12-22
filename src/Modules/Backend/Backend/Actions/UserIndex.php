@@ -8,7 +8,7 @@ use ForkCMS\Modules\Backend\Domain\User\User;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- *Overview of the available users in the backend.
+ * Overview of the available users in the backend.
  */
 final class UserIndex extends AbstractDataGridActionController
 {

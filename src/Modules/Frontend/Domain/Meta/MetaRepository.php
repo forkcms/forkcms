@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method Meta[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<Meta>
  */
-class MetaRepository extends ServiceEntityRepository
+final class MetaRepository extends ServiceEntityRepository
 {
     /** @param ServiceLocator<MetaCallbackService> $metaCallbacks */
     public function __construct(ManagerRegistry $registry, private readonly ServiceLocator $metaCallbacks)

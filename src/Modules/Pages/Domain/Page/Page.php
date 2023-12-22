@@ -35,7 +35,7 @@ class Page
     private Locale $originalLocale;
 
     /** @var Collection<array-key, Revision> */
-    #[ORM\OneToMany(mappedBy: 'page', targetEntity: Revision::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: Revision::class, cascade: ['persist', 'remove'])]
     private Collection $revisions;
 
     /** @var Collection<array-key, Revision> */

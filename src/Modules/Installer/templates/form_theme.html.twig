@@ -20,8 +20,8 @@
       {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
-      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? '  required' : ' optional'), 'for': form.vars.id }) %}
-      <label {% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? '  required' : ' optional'), 'for': form.vars.id}) %}
+      <label {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       </label>
 
@@ -113,8 +113,8 @@
         {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><button class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|capitalize|raw ~ '</button></div></div>' %}
       {% endif %}
 
-      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
-      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+      {% set attr = attr|merge({'data-prototype': prototype_html}) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name}) %}
     {% endif %}
     <div {{ block('widget_container_attributes') }}>
       <div class="card card-default">
@@ -185,8 +185,8 @@
 {% endblock %}
 
 {% block help %}
-  {% for attributeName, attributeValue in attr %}
-    {% if attributeName == 'help' %}<small class="form-text text-muted">{{ attributeValue|trans }}</small>{% endif %}
+  {% for attribute_name, attribute_value in attr %}
+    {% if attribute_name == 'help' %}<small class="form-text text-muted">{{ attribute_value|trans }}</small>{% endif %}
   {% endfor %}
 {% endblock %}
 

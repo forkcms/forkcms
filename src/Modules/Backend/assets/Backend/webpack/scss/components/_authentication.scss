@@ -7,7 +7,7 @@
   }
 }
 
-#authenticationIndex {
+#authentication-index {
   margin-top: 20px;
 }
 
@@ -26,7 +26,6 @@
 }
 
 .login-form {
-
   .form-group {
     margin-bottom: 10px;
   }
@@ -41,8 +40,6 @@
 
     &:active,
     &:focus {
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
       box-shadow: none;
       outline: none;
     }
@@ -56,7 +53,6 @@
 }
 
 @include media-breakpoint-up(sm) {
-
   .login-block {
     margin-top: -270px;
     position: absolute;

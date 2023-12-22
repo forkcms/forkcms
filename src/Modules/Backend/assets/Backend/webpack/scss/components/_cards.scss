@@ -1,7 +1,5 @@
 .card {
   margin-bottom: 0;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
   box-shadow: none;
 
   .card-heading {
@@ -89,7 +87,6 @@
 }
 
 .card-editor {
-
   .card-body {
     padding: map_get($spacers, 3);
   }
@@ -115,7 +112,6 @@
   margin-bottom: 0;
 
   .card-heading {
-
     a {
       .card-title {
         color: $body-color;
@@ -135,7 +131,7 @@
       color: $body-color;
     }
 
-    .inputCheckbox  + .card-title {
+    .input-checkbox  + .card-title {
       display: inline-block;
     }
   }
@@ -149,11 +145,9 @@
   }
 
   &.card-group-column {
-    flex-direction: column;
-    flex-wrap: nowrap;
+    flex-flow: column nowrap;
 
     .card {
-
       + .card {
         border-left: 1px solid $card-border-color;
       }
@@ -191,7 +185,6 @@
 }
 
 .card-collapse {
-
   .card-heading {
     border-bottom: 0;
   }

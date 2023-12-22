@@ -1,0 +1,12 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "no-descending-specificity": null
+  },
+  "ignoreFiles": [
+    "src/**/scss/plugins/*.scss",
+    "src/Modules/Backend/assets/Backend/webpack/scss/components/_date-time-picker.scss",
+    "src/Modules/Backend/assets/Backend/webpack/scss/components/_codex-editor.scss",
+    "src.fork5"
+  ]
+}

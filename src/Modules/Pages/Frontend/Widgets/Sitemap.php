@@ -51,7 +51,10 @@ class Sitemap extends AbstractWidgetController
             $revision = $page['page']->getActiveRevision($locale);
             $pageData[] = [
                 'title' => $revision->getNavigationTitle(),
-                'url' => $this->router->generate($revision->getRouteName(), referenceType: RouterInterface::ABSOLUTE_URL),
+                'url' => $this->router->generate(
+                    $revision->getRouteName(),
+                    referenceType: RouterInterface::ABSOLUTE_URL
+                ),
                 'children' => $this->getPageData((array) $page['children'], $locale),
             ];
         }

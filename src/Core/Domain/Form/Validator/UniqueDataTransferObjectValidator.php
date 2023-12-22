@@ -272,7 +272,15 @@ final class UniqueDataTransferObjectValidator extends ConstraintValidator
             $dataTransferObject->hasEntity()
             && !$dataTransferObject->getEntity() instanceof $supportedClass
         ) {
-            throw new ConstraintDefinitionException(sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
+            throw new ConstraintDefinitionException(
+                sprintf(
+                    'The "%s" entity repository does not support the "%s" entity. ' .
+                    'The entity should be an instance of or extend "%s".',
+                    $constraint->entityClass,
+                    $class->getName(),
+                    $supportedClass
+                )
+            );
         }
 
         // @phpstan-ignore-next-line

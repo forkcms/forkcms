@@ -25,7 +25,8 @@ final class BlockEditorExtension extends ForkModuleExtension
 //                'cache' => [
 //                    'pools' => [
 //                        'cache.blockEditor' => [
-//                            'adapter' => $container->getParameter('kernel.environment') === 'dev' ? 'cache.adapter.array' : 'cache.app',
+//                            'adapter' => $container->getParameter('kernel.environment') === 'dev' ?
+//                                'cache.adapter.array' : 'cache.app',
 //                            'public' => true,
 //                            'default_lifetime' => 31522400, // one year
 //                        ],

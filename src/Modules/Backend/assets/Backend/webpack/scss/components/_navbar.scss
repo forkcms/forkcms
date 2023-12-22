@@ -2,8 +2,6 @@
   .js-nav-prev,
   .js-nav-next {
     background-color: $blue-darker;
-    -webkit-box-shadow: -3px 0 4px 0 rgba($black, .3);
-    -moz-box-shadow: -3px 0 4px 0 rgba($black, .3);
     box-shadow: -3px 0 4px 0 rgba($black, .3);
     display: none;
     height: 62px;
@@ -13,6 +11,7 @@
     width: 40px;
     z-index: 10;
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .svg-inline--fa {
       color: $white;
       font-size: $font-size-xs;
@@ -23,17 +22,17 @@
   }
 
   .js-nav-prev {
-    -webkit-box-shadow: 3px 0 4px 0 rgba($black, .3);
-    -moz-box-shadow: 3px 0 4px 0 rgba($black, .3);
     box-shadow: 3px 0 4px 0 rgba($black, .3);
     left: 0;
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .svg-inline--fa {
       margin-right: -3.5px;
       right: 50%;
     }
   }
 
+  /* stylelint-disable-next-line selector-class-pattern */
   .js-nav-next .svg-inline--fa {
     left: 50%;
     margin-left: -3.5px;
@@ -41,7 +40,6 @@
 }
 
 .navigation-collapsed {
-
   .toggle-nav-collapse {
     cursor: pointer;
     transition: width 250ms;
@@ -158,8 +156,7 @@
   }
 
   .navbar-nav {
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
     height: 62px;
     left: 0;
     position: relative;
@@ -174,6 +171,7 @@
         padding: 30px 20px 10px;
         position: relative;
 
+        /* stylelint-disable-next-line selector-class-pattern */
         .svg-inline--fa {
           left: 50%;
           margin-left: -8px;
@@ -199,7 +197,6 @@
   width: 100%;
 
   .dropdown {
-
     .dropdown-toggle {
       color: $black;
       text-decoration: none;
@@ -249,6 +246,7 @@
       color: $white;
       padding: 15px 50px;
 
+      /* stylelint-disable-next-line selector-class-pattern */
       .svg-inline--fa {
         color: $white;
         position: absolute;
@@ -260,8 +258,7 @@
     &.active a,
     a:hover,
     a:focus {
-
-      &:before {
+      &::before {
         color: $white;
       }
     }
@@ -271,7 +268,6 @@
     margin-bottom: 20px;
 
     .nav-item {
-
       .nav-link {
         background-color: $white;
         border-color: $gray-200;
@@ -317,7 +313,6 @@
         }
 
         &:last-of-type {
-
           a {
             border-bottom: 0;
           }
@@ -338,7 +333,7 @@
       display: block;
       padding: 0;
 
-      &:after {
+      &::after {
         display: none;
       }
 
@@ -354,7 +349,6 @@
   }
 
   .dropdown {
-
     .dropdown-angle {
       align-items: center;
       background-color: $primary;
@@ -391,7 +385,6 @@
   flex-direction: row;
 
   .dropdown {
-
     a {
       position: relative;
       display: block;
@@ -405,7 +398,7 @@
       font-size: $font-size-sm;
       padding: 0;
 
-      &:after {
+      &::after {
         display: none;
       }
 
@@ -454,12 +447,12 @@
 }
 
 @include media-breakpoint-up(lg) {
-
   .navbar-nav {
     .nav-item {
       float: none;
       width: auto;
 
+      /* stylelint-disable-next-line selector-class-pattern */
       .nav-link .svg-inline--fa {
         left: 16px;
       }
@@ -471,7 +464,6 @@
   }
 
   .navbar-dark {
-
     .navbar-nav {
       flex-direction: column;
       height: auto;
@@ -487,6 +479,7 @@
           height: auto;
           padding: 15px 50px;
 
+          /* stylelint-disable-next-line selector-class-pattern */
           .svg-inline--fa {
             left: 16px;
             margin-left: 0;
@@ -505,7 +498,6 @@
   }
 
   .navigation-collapsed .navbar-dark {
-
     .navbar-nav .nav-item .nav-link {
       padding: 15px 0 15px 50px;
     }
@@ -517,8 +509,7 @@
 
   .main-navigation {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
 
     .navbar {
       padding-bottom: 54px;

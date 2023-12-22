@@ -18,10 +18,10 @@
         {% if item.allow_comments %}
           <a href="{{ item.full_url }}#{{ 'slg.Comment'|trans }}" itemprop="discussionUrl">
             {% if not item.comments %}
-              {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+              {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
             {% else %}
               {% if item.comments_multiple %}
-                {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
               {% else %}
                 {{ 'msg.BlogOneComment'|trans }}
               {% endif %}

@@ -52,17 +52,7 @@ class TwoFactorAuthenticationController extends FormController
         return array_merge(
             $templateVars,
             [
-                'error' => null,
                 'page_title' => $this->translator->trans(TranslationKey::label('2FA')),
-                'SITE_TITLE' => $this->moduleSettings->get(
-                    ModuleName::fromString('Frontend'),
-                    'site_title_' . $request->getLocale(),
-                    $_ENV['SITE_DEFAULT_TITLE']
-                ),
-                'SITE_URL' => $_ENV['SITE_PROTOCOL'] . '://' . $_ENV['SITE_DOMAIN'],
-                'jsFiles' => [],
-                'cssFiles' => [],
-                'jsData' => '',
                 'displayTrustedOption' => $templateVars['displayTrustedOption'] && $this->moduleSettings->get(
                     ModuleName::fromString('Backend'),
                     'trusted_devices_enabled',

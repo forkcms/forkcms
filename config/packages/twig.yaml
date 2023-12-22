@@ -2,5 +2,7 @@ twig:
   debug: "%kernel.debug%"
   strict_variables: "%kernel.debug%"
 
-#  form_themes:
-#    - '%fork.form.theme%'
+when@dev:
+  twig:
+    cache: false
+    auto_reload: true

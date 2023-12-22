@@ -22,9 +22,13 @@ final class UserAdd extends AbstractFormActionController
             request: $request,
             formType: UserType::class,
             formData: new CreateUser(),
+            redirectResponse: new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router)),
             formOptions: [
                 'validation_groups' => ['Default', 'create'],
             ],
+            successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
+                return FlashMessage::success('UserAdded', ['%user%' => $form->getData()->displayName]);
+            },
             validCallback: function (FormInterface $form) use ($request): Response {
                 $this->commandBus->dispatch($form->getData());
 
@@ -41,9 +45,6 @@ final class UserAdd extends AbstractFormActionController
 
                 return new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
             },
-            flashMessageCallback: static function (FormInterface $form): FlashMessage {
-                return FlashMessage::success('UserAdded', ['%user%' => $form->getData()->displayName]);
-            }
         );
     }
 }

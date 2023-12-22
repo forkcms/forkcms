@@ -13,8 +13,10 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class PageRouter implements BlockRouterInterface
 {
-    public function __construct(private readonly RouterInterface $router, private readonly PageRepository $pageRepository)
-    {
+    public function __construct(
+        private readonly RouterInterface $router,
+        private readonly PageRepository $pageRepository,
+    ) {
     }
 
     /** @param array<string, mixed> $parameters */

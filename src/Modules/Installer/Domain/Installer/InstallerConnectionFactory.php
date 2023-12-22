@@ -24,7 +24,7 @@ final class InstallerConnectionFactory extends ConnectionFactory
     ): Connection {
         try {
             $installationData = InstallerConfiguration::fromCache();
-            if (!$installationData->hasStep(InstallerStep::database)) {
+            if (!$installationData->hasStep(InstallerStep::DATABASE)) {
                 return $this->getInstallerConnection($params, $config, $eventManager);
             }
 

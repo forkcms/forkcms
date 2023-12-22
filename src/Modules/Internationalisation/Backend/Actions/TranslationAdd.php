@@ -7,6 +7,7 @@ use ForkCMS\Modules\Backend\Domain\Action\AbstractFormActionController;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\Command\CreateTranslation;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\Translation;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,11 @@ final class TranslationAdd extends AbstractFormActionController
             request: $request,
             formType: TranslationType::class,
             formData: new CreateTranslation($translation),
-            flashMessage: FlashMessage::success('Added'),
-            redirectResponse: new RedirectResponse(TranslationIndex::getActionSlug()->generateRoute($this->router))
+            redirectResponse: new RedirectResponse(TranslationIndex::getActionSlug()->generateRoute($this->router)),
+            successFlashMessageCallback: fn (FormInterface $form) => FlashMessage::success(
+                'EntityAdded',
+                ['entity' => $this->translator->trans($form->getData()->getEntity()->getTranslatable())]
+            ),
         );
     }
 }

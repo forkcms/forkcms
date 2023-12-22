@@ -40,7 +40,7 @@ final class ThemeDetail extends AbstractActionController
         $this->assign('theme', $theme);
         if ($theme->name !== null) {
             $this->assign(
-                'themeInstallForm',
+                'theme_install_form',
                 $this->formFactory->create(
                     ActionType::class,
                     [

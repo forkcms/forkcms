@@ -1,15 +1,15 @@
 {% extends '@Backend/base/base.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudIndexModule = null %}
-{% set crudIndexParameters = [] %}
-{% set crudIndexRelative = false %}
-{% set crudIndexLocale = null %}
-{% set crudIndexLabel = null %}
-{% set crudIndexIcon = null %}
+{% set crud_index_module = null %}
+{% set crud_index_parameters = [] %}
+{% set crud_index_relative = false %}
+{% set crud_index_locale = null %}
+{% set crud_index_label = null %}
+{% set crud_index_icon = null %}
 
 {% block content %}
-  {% if formTheme is defined %}
-    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig',formTheme] %}
+  {% if form_theme is defined %}
+    {% form_theme backend_form with ['@Backend/base/formTheme.html.twig', form_theme] %}
   {% endif %}
   {{ form_start(backend_form) }}
   {{ form_widget(backend_form) }}
@@ -17,9 +17,9 @@
   {{ form_rest(backend_form) }}
 
   <div class="btn-toolbar">
-    {% if crudIndexAction is defined and is_allowed(crudIndexAction, crudIndexModule) %}
+    {% if crud_index_action is defined and is_allowed(crud_index_action, crud_index_module) %}
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon(action_path(crudIndexAction, crudIndexModule, crudIndexParameters, crudIndexRelative, crudIndexLocale), crudIndexIcon|default('bars'), crudIndexLabel|default('lbl.Cancel')|trans|ucfirst, 'btn-default') }}
+        {{ macro.buttonIcon(action_path(crud_index_action, crud_index_module, crud_index_parameters, crud_index_relative, crud_index_locale), crud_index_icon|default('bars'), crud_index_label|default('lbl.Cancel')|trans|ucfirst, 'btn-default') }}
       </div>
     {% endif %}
     <div class="btn-group ms-auto" role="group">

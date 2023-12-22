@@ -1,20 +1,18 @@
-{% import '@Backend/base/macros.html.twig' as macro %}
-
-{% set dataGridEmptyAction = dataGridEmptyAction|default(null) %}
-{% set dataGridEmptyModule = dataGridEmptyModule|default(null) %}
-{% set dataGridEmptyParameters = dataGridEmptyParameters|default([]) %}
-{% set dataGridEmptyRelative = dataGridEmptyRelative|default(false) %}
-{% set dataGridEmptyLocale = dataGridEmptyLocale|default(null) %}
-{% set dataGridEmptyLabel = dataGridEmptyLabel|default('lbl.Add'|trans|ucfirst) %}
-{% set dataGridWrapperClass = dataGridWrapperClass|default('table-responsive fork-data-grid') %}
+{% set data_grid_empty_action = data_grid_empty_action|default(null) %}
+{% set data_grid_empty_module = data_grid_empty_module|default(null) %}
+{% set data_grid_empty_parameters = data_grid_empty_parameters|default([]) %}
+{% set data_grid_empty_relatives = data_grid_empty_relatives|default(false) %}
+{% set data_grid_empty_locale = data_grid_empty_locale|default(null) %}
+{% set data_grid_empty_label = data_grid_empty_label|default('lbl.Add'|trans|ucfirst) %}
+{% set data_grid_wrapper_class = data_grid_wrapper_class|default('table-responsive fork-data-grid') %}
 
 {% if dataGrid.paginator is not empty or dataGrid.paginator.params.filterValue is defined %}
-  <div class="{{ dataGridWrapperClass }}">
-    {% embed '@!PageonDoctrineDataGrid/dataGrid.html.twig'%}
+  <div class="{{ data_grid_wrapper_class }}">
+    {% embed '@!PageonDoctrineDataGrid/dataGrid.html.twig' %}
       {% block thead %}
         <thead>
         <tr>
-          {% set hasFilters = false %}
+          {% set has_filters = false %}
           {% for column in dataGrid.columns %}
             <th scope="col">
               {% if column.showColumnLabel %}
@@ -24,13 +22,13 @@
                   {{ column.label|trans|ucfirst }}
                 {% endif %}
                 {% if(column.filterable) %}
-                  {% set hasFilters = true %}
+                  {% set has_filters = true %}
                 {% endif %}
               {% endif %}
             </th>
           {% endfor %}
         </tr>
-        {% if(hasFilters) %}
+        {% if(has_filters) %}
           <tr>
             {% for column in dataGrid.columns %}
               <th scope="col">{% if(column.filterable) %}{{ knp_pagination_filter(dataGrid.paginator, {(column.fullName): column.label}, {button: 'lbl.Filter'}) }}{% endif %}</th>
@@ -41,28 +39,30 @@
       {% endblock %}
       {% block noResults %}{% endblock %}
       {% block columnValue %}
-        {% set value = column.showColumnLabel or column.hasValueCallback? column.value(attribute(row, column.name), row, column.name) : column.label|trans|ucfirst %}
-        {% set valueType = value|type %}
-        {% set isHtml = column.isHtml %}
-        {% if valueType == 'DateTime' or valueType == 'DateTimeImmutable' %}
+        {% set value = column.showColumnLabel or column.hasValueCallback ? column.value(attribute(row, column.name), row, column.name) : column.label|trans|ucfirst %}
+        {% set value_type = value|type %}
+        {% set is_html = column.isHtml %}
+        {% if value_type == 'DateTime' or value_type == 'DateTimeImmutable' %}
           {% set value = value|user_format_longdatetime %}
-        {% endif %}
-        {% if valueType == 'ForkCMS\\Modules\\Backend\\Domain\\User\\User' %}
+        {% elseif value_type == 'bool' %}
+          {% set value = value|visualiseBool %}
+          {% set is_html = true %}
+        {% elseif value_type == 'ForkCMS\\Modules\\Backend\\Domain\\User\\User' %}
           {% set value %}
             <div class="fork-data-grid-avatar">
               {% if is_allowed('UserEdit', 'Backend') %}<a href="{{ action_url('UserEdit', 'Backend', {slug: value.id}) }}">{% endif %}
                 <img src="{{ '@BackendModuleBackend:images/no-avatar.gif'|imagine_filter('backend_avatar') }}" class="rounded-circle" alt="{{ value.displayname }}" width="24" height="24"/>
-                <span>{{  value.displayname }}</span>
+                <span>{{ value.displayname }}</span>
               {% if is_allowed('UserEdit', 'Backend') %}</a>{% endif %}
             </div>
           {% endset %}
-          {% set isHtml = true %}
+          {% set is_html = true %}
         {% endif %}
         {% if column.route is null %}
-          {% if isHtml %}{{ value|raw }}{% else %}{{ value }}{% endif %}
+          {% if is_html %}{{ value|raw }}{% else %}{{ value }}{% endif %}
         {% else %}
           <a href="{{ path(column.route, column.routeAttributes(row)) }}"{% if column.class %} class="{{ column.class }}"{% endif %}>{% if column.iconClass %}<i class="{{ column.iconClass }}"></i> {% endif %}
-            {% if isHtml %}{{ value|raw }}{% else %}{{ value }}{% endif %}
+            {% if is_html %}{{ value|raw }}{% else %}{{ value }}{% endif %}
           </a>
         {% endif %}
       {% endblock %}
@@ -75,9 +75,9 @@
     <p class="text-black mb-2">
       <strong> {{ (dataGrid.noResultsMessage == 'No results' ? 'lbl.NoResultsFound' : dataGrid.noResultsMessage)|trans|ucfirst }}</strong>
     </p>
-    {% if dataGridEmptyAction is not null %}
-      <a class="empty-state-add" href="{{ action_url(dataGridEmptyAction, dataGridEmptyModule, dataGridEmptyParameters, dataGridEmptyRelative, dataGridEmptyLocale) }}">
-        {{  dataGridEmptyLabel }}
+    {% if data_grid_empty_action is not null %}
+      <a class="empty-state-add" href="{{ action_url(data_grid_empty_action, data_grid_empty_module, data_grid_empty_parameters, data_grid_empty_relatives, data_grid_empty_locale) }}">
+        {{ data_grid_empty_label }}
       </a>
     {% endif %}
   </div>

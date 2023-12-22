@@ -203,7 +203,11 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
             $numberFormat = $user->getSetting('number_format', $numberFormat);
         }
 
-        $numberFormatter = new NumberFormatter($locale->getLocale()->value, NumberFormatter::DECIMAL, '#,##0.####################');
+        $numberFormatter = new NumberFormatter(
+            $locale->getLocale()->value,
+            NumberFormatter::DECIMAL,
+            '#,##0.####################',
+        );
         $separatorSymbols = array_map(
             static fn (string $separator): string => str_replace(
                 ['comma', 'dot', 'space', 'nothing'],
@@ -270,7 +274,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatLongDateTime',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDateTime(
             $env,
             $date,
@@ -298,7 +302,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatLongDate',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDate(
             $env,
             $date,
@@ -326,7 +330,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatUserLongDateTime',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDateTime(
             $env,
             $date,
@@ -354,7 +358,7 @@ final class ForkIntlExtension extends AbstractExtension implements EventSubscrib
     ): string {
         return $this->getIntlExtension(
             'formatUserLongDate',
-            Locale::tryFrom($locale) ?? Locale::i18n()
+            (is_string($locale) ? Locale::tryFrom($locale) : null) ?? Locale::i18n()
         )->formatDate(
             $env,
             $date,

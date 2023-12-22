@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
@@ -184,11 +183,11 @@ class Revision
     {
         $relParts = [];
         $follow = $this->meta->getSEOFollow();
-        if ($follow === SEOFollow::noFollow) {
+        if ($follow === SEOFollow::NO_FOLLOW) {
             $relParts[] = $follow->value;
         }
         $index = $this->meta->getSEOIndex();
-        if ($index === SEOIndex::noIndex) {
+        if ($index === SEOIndex::NO_INDEX) {
             $relParts[] = $index->value;
         }
 
@@ -266,6 +265,12 @@ class Revision
     public function getBlocks(): Collection
     {
         return $this->blocks;
+    }
+
+    public function removeBlock(RevisionBlock $block): void
+    {
+        $this->blocks->removeElement($block);
+        $block->removeBlock();
     }
 
     #[ORM\PrePersist]

@@ -2,7 +2,6 @@
 
 namespace ForkCMS\Modules\Pages\Domain\Twig;
 
-use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\Pages\Domain\Page\NavigationBuilder;
 use ForkCMS\Modules\Pages\Domain\Page\Page;
 use ForkCMS\Modules\Pages\Domain\Revision\MenuType;
@@ -67,7 +66,7 @@ final class PagesExtension extends AbstractExtension
                 'nextDepth' => $depth - 1,
                 'excludedIds' => $excludedIds,
                 'template' => $template,
-                'isSubNavigation' => $isSubNavigation,
+                'is_sub_navigation' => $isSubNavigation,
             ]
         );
     }

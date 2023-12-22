@@ -163,7 +163,6 @@ class Breadcrumb extends KernelLoader
     public function parse(): void
     {
         // assign
-        $this->template->assignGlobal('breadcrumb', $this->items);
     }
 
     public function removeLastElement(): void

@@ -24,15 +24,15 @@
     <div class="fork-module-content">
       <input type="hidden" name="step" value="2" />
       <div id="requirementsInformation">
-        {% for requirementCategory in checker.requirementCategories %}
+        {% for requirement_category in checker.requirementCategories %}
           <div class="card card-default mb-3">
             <div class="card-heading">
-              <h3 class="card-title">{{ requirementCategory.name }}</h3>
+              <h3 class="card-title">{{ requirement_category.name }}</h3>
             </div>
             <div class="card-body">
               <div class="list-group list-group-flush">
-                {% for requirement in requirementCategory.requirements %}
-                  <div class="alert alert-{{ requirement.status.name }}">
+                {% for requirement in requirement_category.requirements %}
+                  <div class="alert alert-{{ requirement.status.value }}">
                     <h3 class="list-group-item-heading">{{ requirement.name }}</h3>
                     <p class="list-group-item-text">{{ requirement.message|raw }}</p>
                   </div>
@@ -47,7 +47,7 @@
       {% if checker.hasWarnings and not checker.hasErrors %}
         <div class="btn-toolbar justify-content-end">
           <div class="btn-group" role="group">
-            <a href="{{ path('install_step1', {ignoreWarnings:true}) }}" id="installerButton" class="btn btn-primary">
+            <a href="{{ path('install_step1', {ignoreWarnings: true}) }}" id="installerButton" class="btn btn-primary">
               <span class="fas fa-download" aria-hidden="true"></span> Install anyway
             </a>
           </div>
