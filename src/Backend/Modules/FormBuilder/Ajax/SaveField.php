@@ -45,7 +45,7 @@ class SaveField extends BackendBaseAJAXAction
         $values = trim($this->getRequest()->request->get('values', ''));
 
         // this is somewhat a nasty hack, but it makes special chars work.
-        $values = \SpoonFilter::htmlspecialcharsDecode($values);
+        $values = html_entity_decode($values);
 
         $defaultValues = trim($this->getRequest()->request->get('default_values', ''));
         $placeholder = trim($this->getRequest()->request->get('placeholder', ''));
@@ -231,10 +231,10 @@ class SaveField extends BackendBaseAJAXAction
         // htmlspecialchars except for paragraphs
         if ($type !== 'paragraph') {
             if ($values !== '') {
-                $values = \SpoonFilter::htmlspecialchars($values);
+                $values = htmlentities($values);
             }
             if ($defaultValues !== '') {
-                $defaultValues = \SpoonFilter::htmlspecialchars($defaultValues);
+                $defaultValues = htmlentities($defaultValues);
             }
         }
 

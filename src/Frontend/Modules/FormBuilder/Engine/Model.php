@@ -65,6 +65,18 @@ class Model
                 $field['settings'] = unserialize($field['settings'], ['allowed_classes' => false]);
             }
 
+            if (isset($field['settings']['values'])) {
+                if (is_array($field['settings']['values'])) {
+                    $field['settings']['values'] = array_map('html_entity_decode', $field['settings']['values']);
+                } else {
+                    $field['settings']['values'] = html_entity_decode($field['settings']['values']);
+                }
+            }
+
+            if (isset($field['settings']['default_values'])) {
+                $field['settings']['default_values'] = html_entity_decode($field['settings']['default_values']);
+            }
+
             // init validations
             $field['validations'] = [];
         }
