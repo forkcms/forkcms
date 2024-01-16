@@ -285,17 +285,21 @@ class Model
      *
      * @param string $string The serialized string that should be formatted
      *
-     * @return string
+     * @return string|null
      */
-    public static function formatRecipients(string $string): string
+    public static function formatRecipients(string $string): ?string
     {
-        return implode(
-            ', ',
-            (array) array_map(
-                'htmlspecialchars',
-                @unserialize($string, ['allowed_classes' => false])
-            )
-        );
+        if ($string) {
+            return implode(
+                ', ',
+                (array)array_map(
+                    'htmlspecialchars',
+                    @unserialize($string, ['allowed_classes' => false])
+                )
+            );
+        }
+
+        return null;
     }
 
     /**
