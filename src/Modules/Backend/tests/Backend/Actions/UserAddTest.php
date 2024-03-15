@@ -79,7 +79,7 @@ final class UserAddTest extends BackendWebTestCase
             ],
         );
         self::getClient()->followRedirect();
-        self::assertCurrentUrlEndsWith('/private/en/backend/user-edit');
+        self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
         self::assertDataGridHasLink('jelmer.prins@example.com');
         self::assertResponseContains('The user "Jelmer Prins" was added.');
     }
