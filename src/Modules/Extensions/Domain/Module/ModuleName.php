@@ -73,4 +73,9 @@ final class ModuleName implements Stringable, JsonSerializable
     {
         return self::fromString('Backend');
     }
+
+    public function equals(ModuleName $other): bool
+    {
+        return $this->getName() === $other->getName();
+    }
 }

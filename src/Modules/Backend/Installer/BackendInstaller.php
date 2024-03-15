@@ -18,6 +18,7 @@ use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroup;
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
 use ForkCMS\Modules\Installer\Domain\Configuration\InstallerConfiguration;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+use ForkCMS\Modules\Backend\Backend\Actions\ModuleSettings;
 use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 
@@ -40,6 +41,10 @@ final class BackendInstaller extends ModuleInstaller
     {
         $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
         $this->createBackendPages();
+
+        // Generate a random 256 bits key as string
+        $key = bin2hex(random_bytes(32));
+        $this->setSetting('2fa_key', $key);
     }
 
     private function createBackendPages(): void
@@ -68,6 +73,21 @@ final class BackendInstaller extends ModuleInstaller
                 UserGroupEdit::getActionSlug(),
                 UserGroupDelete::getActionSlug(),
             ],
+        );
+
+        $navigationItem = $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('LoginSecurity'),
+            null,
+            $this->getSettingsNavigationItem(),
+            [
+                ModuleSettings::getActionSlug(),
+            ],
+        );
+
+        $this->getOrCreateBackendNavigationItem(
+            TranslationKey::label('2FA'),
+            ModuleSettings::getActionSlug(),
+            $navigationItem,
         );
     }
 

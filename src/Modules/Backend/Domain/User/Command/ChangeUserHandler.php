@@ -22,6 +22,7 @@ final class ChangeUserHandler implements CommandHandlerInterface
     {
         $user = User::fromDataTransferObject($changeUser);
         $user->hashPassword($this->passwordHasher);
+
         $this->userRepository->save($user);
         $this->eventDispatcher->dispatch(new UserChangedEvent($user));
     }

@@ -156,6 +156,8 @@ final class ForkTranslator extends Translator
             return match ($mainRequest->get('_route')) {
                 'backend_action',
                 'backend_login' => ActionSlug::fromRequest($mainRequest)->getTranslationDomain(),
+                'backend_2fa_login',
+                'backend_2fa_login_check',
                 'backend_ajax' => AjaxActionSlug::fromRequest($mainRequest)->getTranslationDomain(),
                 default => new TranslationDomain(Application::FRONTEND),
             };

@@ -28,7 +28,23 @@ final class UserAdd extends AbstractFormActionController
             ],
             successFlashMessageCallback: static function (FormInterface $form): FlashMessage {
                 return FlashMessage::success('UserAdded', ['%user%' => $form->getData()->displayName]);
-            }
+            },
+            validCallback: function (FormInterface $form) use ($request): Response {
+                $this->commandBus->dispatch($form->getData());
+
+                if ($form->getData()->enableTwoFactorAuthentication) {
+                    $request->getSession()->set('showBackupCodes', true);
+
+                    return new RedirectResponse(
+                        UserEdit::getActionSlug()->generateRoute(
+                            $this->router,
+                            ['slug' => $form->getData()->getEntity()->getId()]
+                        )
+                    );
+                }
+
+                return new RedirectResponse(UserIndex::getActionSlug()->generateRoute($this->router));
+            },
         );
     }
 }

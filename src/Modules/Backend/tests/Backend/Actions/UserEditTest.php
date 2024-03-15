@@ -4,7 +4,9 @@ namespace ForkCMS\Modules\Backend\tests\Backend\Actions;
 
 use ForkCMS\Modules\Backend\DataFixtures\UserFixture;
 use ForkCMS\Modules\Backend\DataFixtures\UserGroupFixture;
+use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
 use ForkCMS\Modules\Backend\tests\BackendWebTestCase;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
 
 final class UserEditTest extends BackendWebTestCase
 {
@@ -87,6 +89,28 @@ final class UserEditTest extends BackendWebTestCase
         self::assertCurrentUrlEndsWith('/private/en/backend/user-index');
         self::assertDataGridHasLink('jelmer.prins@example.com');
         self::assertResponseContains('The settings for "Jelmer Prins" were saved.');
+    }
+
+    public function testEnableTwoFactorAuthenticationVisible(): void
+    {
+        /** @var ActionServices $actionServices */
+        $actionServices = self::getContainer()->get(ActionServices::class);
+        $actionServices->moduleSettings->set(ModuleName::backend(), '2fa_enabled', true);
+
+        self::loadPage();
+
+        self::assertResponseContains('data-role="enable-two-factor-authorization-button"');
+    }
+
+    public function testEnableTwoFactorAuthenticationNotVisible(): void
+    {
+        /** @var ActionServices $actionServices */
+        $actionServices = self::getContainer()->get(ActionServices::class);
+        $actionServices->moduleSettings->set(ModuleName::backend(), '2fa_enabled', false);
+
+        self::loadPage();
+
+        self::assertResponseDoesNotHaveContent('data-role="enable-two-factor-authorization-button"');
     }
 
     protected static function getClassFixtures(): array

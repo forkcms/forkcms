@@ -640,6 +640,17 @@
   </div>
 {% endblock %}
 
+{% block two_factor_authentication_widget %}
+  {{ form_widget(form) }}
+  {% if form.parent.vars.value.qrCode %}
+    <div class="row">
+      <div class="col-3">
+        <img src="{{ form.parent.vars.value.qrCode }}" class="img-fluid" alt="{{ 'label.UseQRToConfigure2FA'|trans }}">
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
 {% block toggle_password_widget %}
   <div class="input-group mb-3" data-role="toggle-password-visibility">
     {{ form_widget(form) }}

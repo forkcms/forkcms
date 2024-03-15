@@ -17,6 +17,10 @@ security:
       pattern: ^/private
       lazy: true
       provider: backend_user_provider
+      two_factor:
+        auth_form_path: backend_2fa_login
+        check_path: backend_2fa_login_check
+        multi_factor: true
       remember_me:
         secret: '%kernel.secret%'
         path: /private
@@ -38,6 +42,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/private/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
     # @TODO refactor this to the backend module
     - { path: ^/private/\w\w/backend/authentication-login, roles: PUBLIC_ACCESS }
     - { path: ^/private/\w\w/backend/authentication-logout, roles: PUBLIC_ACCESS }

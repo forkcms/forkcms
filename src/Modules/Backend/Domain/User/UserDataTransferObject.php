@@ -39,6 +39,8 @@ abstract class UserDataTransferObject implements UniqueDataTransferObjectInterfa
 
     public bool $superAdmin = false;
 
+    public bool $enableTwoFactorAuthentication = false;
+
     protected ?User $userEntity;
 
     /** @var ArrayCollection<int|string,UserGroup> */

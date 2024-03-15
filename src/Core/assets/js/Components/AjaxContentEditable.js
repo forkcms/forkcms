@@ -1,4 +1,5 @@
 import { Messages } from './Messages'
+import { Data } from './Data'
 
 class EditableContend {
   constructor ($editable, locale) {
@@ -21,20 +22,34 @@ class EditableContend {
       this.tooltip.addClass('invisible')
       this.content.attr('contenteditable', false)
       if (originalContent !== this.content.text()) {
-        $.ajax(
+        const formData = new URLSearchParams()
+        formData.append('content', this.content.text())
+
+        fetch(
+          url,
           {
-            url,
-            data: {
-              content: this.content.text()
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+              'X-CSRF-Token': Data.get('csrf-token'),
+              'X-Requested-With': 'XMLHttpRequest'
             },
-            success: function (XMLHttpRequest) {
-              Messages.add('success', XMLHttpRequest.message || locale.msg('Edited'))
-            },
-            error: function (XMLHttpRequest) {
-              Messages.add('danger', $.parseJSON(XMLHttpRequest.responseText).message)
-            }
+            body: formData
           }
         )
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(response.message)
+            }
+
+            return response.json()
+          })
+          .then(json => {
+            Messages.add('success', json.message || locale.msg('Edited'))
+          })
+          .catch(error => {
+            Messages.add('danger', error.message)
+          })
       }
     })
   }

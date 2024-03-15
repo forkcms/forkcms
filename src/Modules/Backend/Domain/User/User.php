@@ -24,6 +24,9 @@ use InvalidArgumentException;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
+use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -48,7 +51,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__USER_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, TrustedDeviceInterface, BackupCodeInterface
 {
     use Blameable;
 
@@ -95,6 +98,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private DateTimeImmutable|null $deletedAt = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $googleAuthenticatorSecret = null;
+
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    private int $trustedVersion = 0;
+
+    /** @var array<string> */
+    #[ORM\Column(type: 'json')]
+    private array $backupCodes = [];
 
     /** @param Collection<int|string, UserGroup>|null $userGroups */
     public function __construct(
@@ -305,5 +318,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function registerAuthenticationSuccess(): void
     {
         $this->settings->set('last_authentication_success', time());
+    }
+
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return null !== $this->googleAuthenticatorSecret;
+    }
+
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->displayName;
+    }
+
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
+
+    public function getTrustedTokenVersion(): int
+    {
+        return $this->trustedVersion;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBackupCodes(): array
+    {
+        return $this->backupCodes;
+    }
+
+    public function isBackupCode(string $code): bool
+    {
+        return in_array($code, $this->backupCodes);
+    }
+
+    public function invalidateBackupCode(string $code): void
+    {
+        $key = array_search($code, $this->backupCodes);
+        if ($key !== false) {
+            unset($this->backupCodes[$key]);
+        }
+    }
+
+    /**
+     * @param string[] $backupCodes
+     */
+    public function setBackupCodes(array $backupCodes = []): void
+    {
+        $this->backupCodes = $backupCodes;
+    }
+
+    public function is2faEnabled(): bool
+    {
+        return $this->googleAuthenticatorSecret !== null;
+    }
+
+    public function disableTwoFactorAuthentication(): void
+    {
+        $this->googleAuthenticatorSecret = null;
+        $this->backupCodes = [];
     }
 }

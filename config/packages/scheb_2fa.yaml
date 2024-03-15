@@ -1,0 +1,19 @@
+# See the configuration reference at https://symfony.com/bundles/SchebTwoFactorBundle/6.x/configuration.html
+scheb_two_factor:
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+    google:
+        enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").enabled()'
+        template: '@Backend\Backend\2fa.html.twig'
+        server_name: '%env(SITE_DOMAIN)%'
+        issuer: '%env(SITE_DEFAULT_TITLE)%'
+
+    trusted_device:
+        enabled: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").trustedDevices()'
+        extend_lifetime: true
+        lifetime: 2592000 # 30 days in seconds
+        key: '@=service("ForkCMS\\Modules\\Backend\\Domain\\Authentication\\TwoFactorAuthenticationFactory").secret()'
+
+    backup_codes:
+        enabled: true

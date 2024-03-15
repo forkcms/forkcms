@@ -6,6 +6,14 @@ services:
   ForkCMS\Modules\Backend\Controller\LoginController:
     public: true
 
+  ForkCMS\Modules\Backend\Controller\TwoFactorAuthenticationController:
+    public: true
+    arguments:
+      $providerRegistry: '@scheb_two_factor.provider_registry'
+      $logoutUrlGenerator: '@security.logout_url_generator'
+      $trustedDeviceManager: '@scheb_two_factor.default_trusted_device_manager'
+      $trustedFeatureEnabled: true
+
   ForkCMS\Modules\Backend\Controller\BackendController:
     public: true
     arguments:

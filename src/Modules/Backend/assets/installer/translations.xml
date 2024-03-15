@@ -1341,6 +1341,98 @@
       <translation locale="pt"><![CDATA[utilizadores]]></translation>
       <translation locale="pl"><![CDATA[użytkownicy]]></translation>
     </item>
+    <item type="label" name="2FA">
+      <translation locale="nl"><![CDATA[2 stappen authenticatie (2FA)]]></translation>
+      <translation locale="en"><![CDATA[Two-Factor authentication (2FA)]]></translation>
+    </item>
+    <item type="label" name="EnableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Activeer 2 stappen authenticatie]]></translation>
+      <translation locale="en"><![CDATA[Enable two-factor authentication]]></translation>
+    </item>
+    <item type="message" name="2FAIsDisabled">
+      <translation locale="nl"><![CDATA[2 stappen authenticatie is gedeactiveerd]]></translation>
+      <translation locale="en"><![CDATA[Two-factor authentication is disabled]]></translation>
+    </item>
+    <item type="message" name="2FAEnabled">
+      <translation locale="nl"><![CDATA[2 stappen authenticatie is geactiveerd]]></translation>
+      <translation locale="en"><![CDATA[Two-factor authentication is enabled]]></translation>
+    </item>
+    <item type="label" name="DisableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Deactiveer 2 stappen authenticatie]]></translation>
+      <translation locale="en"><![CDATA[Disable two-factor authentication]]></translation>
+    </item>
+    <item type="label" name="TwoFactorAuthenticationKey">
+      <translation locale="nl"><![CDATA[Autorisatie sleutel]]></translation>
+      <translation locale="en"><![CDATA[Authorization key]]></translation>
+    </item>
+    <item type="label" name="RequireTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[Maak 2 stappen authenticatie verplicht]]></translation>
+      <translation locale="en"><![CDATA[Require two-factor authentication]]></translation>
+    </item>
+    <item type="message" name="RequireTwoFactorAuthenticationHelp">
+      <translation locale="nl"><![CDATA[Indien nodig moeten alle gebruikers 2FA configureren bij de volgende login.]]></translation>
+      <translation locale="en"><![CDATA[If required all users will need to configure 2FA on next login.]]></translation>
+    </item>
+    <item type="label" name="EnableTrustedDevices">
+      <translation locale="nl"><![CDATA[Activeer vertrouwde apparaten]]></translation>
+      <translation locale="en"><![CDATA[Enable trusted devices]]></translation>
+    </item>
+    <item type="message" name="EnableTrustedDevicesHelp">
+      <translation locale="nl"><![CDATA[Indien ingeschakeld, mogen gebruikers een apparaat gedurende 30 dagen vertrouwen. Op een vertrouwd apparaat wordt niet om de verificatiecode gevraagd.]]></translation>
+      <translation locale="en"><![CDATA[When enabled users will be allowed to trust a device for 30 days. On a trusted device the verification code will not be asked.]]></translation>
+    </item>
+    <item type="label" name="LoginSecurity">
+      <translation locale="nl"><![CDATA[Login security]]></translation>
+      <translation locale="en"><![CDATA[Login security]]></translation>
+    </item>
+    <item type="message" name="TrustedDevices">
+      <translation locale="nl"><![CDATA[Vertrouw dit apparaat. Gedurende 30 dagen hoeft u geen verificatiecode meer in te voeren.]]></translation>
+      <translation locale="en"><![CDATA[Trust this device. You will not need to give a verification code again for 30 days.]]></translation>
+    </item>
+    <item type="label" name="VerificationCode">
+      <translation locale="nl"><![CDATA[Verificatie Code]]></translation>
+      <translation locale="en"><![CDATA[Verification Code]]></translation>
+    </item>
+    <item type="message" name="FailedToEnableTwoFactorAuthentication">
+      <translation locale="nl"><![CDATA[We konden de twee-factor authenticatie niet activeren. De verificatie code was incorrect.]]></translation>
+      <translation locale="en"><![CDATA[We could not activate two-factor authentication. The verification code was incorrect.]]></translation>
+    </item>
+    <item type="message" name="BackupCodes">
+      <translation locale="nl"><![CDATA[Kopieer deze backupcodes op een veilige plaats]]></translation>
+      <translation locale="en"><![CDATA[Copy these backupcodes in a secure place]]></translation>
+    </item>
+    <item type="message" name="BackupCodesHelp">
+      <translation locale="nl"><![CDATA[Deze codes worden maar eenmalig getoond]]></translation>
+      <translation locale="en"><![CDATA[These codes are only shown once]]></translation>
+    </item>
+    <item type="message" name="2FAIsRequired">
+      <translation locale="nl"><![CDATA[Uw admin heeft twee-factor authenticatie (2FA) verplicht. U moet dit inschakelen voordat u verder kunt gaan.]]></translation>
+      <translation locale="en"><![CDATA[Your administrator has required Two-Factor authentication (2FA). You will need to enable this before you can proceed.]]></translation>
+    </item>
+    <item type="label" name="UseQRToConfigure2FA">
+      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
+      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA.]]></translation>
+    </item>
+    <item type="label" name="UseQRToConfigure2FAHelp">
+      <translation locale="nl"><![CDATA[Gebruik de QR-code om uw authenticator-app te configureren]]></translation>
+      <translation locale="en"><![CDATA[Scan this QR code with your authenticator app to configure 2FA.]]></translation>
+    </item>
+    <item type="label" name="ConfirmBackupCodesSaved">
+      <translation locale="nl"><![CDATA[Ik heb de backup codes opgeslagen.]]></translation>
+      <translation locale="en"><![CDATA[I have saved the backupcodes.]]></translation>
+    </item>
+    <item type="label" name="CopyBackupCodes">
+      <translation locale="nl"><![CDATA[Kopieer backupcodes]]></translation>
+      <translation locale="en"><![CDATA[Copy backupcodes]]></translation>
+    </item>
+    <item type="message" name="CopiedToClipboard">
+      <translation locale="nl"><![CDATA[Gekopieerd naar clipboard]]></translation>
+      <translation locale="en"><![CDATA[Copied to clipboard]]></translation>
+    </item>
+    <item type="error" name="TwoFactorAuthenticationKeyRequired">
+      <translation locale="nl"><![CDATA[Authorization key is verplicht]]></translation>
+      <translation locale="en"><![CDATA[Authorization key is required]]></translation>
+    </item>
     <item type="label" name="RequiredField">
       <translation locale="nl"><![CDATA[verplicht veld]]></translation>
       <translation locale="en"><![CDATA[required field]]></translation>

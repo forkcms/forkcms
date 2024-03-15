@@ -5,8 +5,11 @@ namespace ForkCMS\Modules\Backend\Domain\User;
 use ForkCMS\Core\Domain\Form\SwitchType;
 use ForkCMS\Core\Domain\Form\TabsType;
 use ForkCMS\Core\Domain\Settings\SettingsBag;
+use ForkCMS\Modules\Backend\Domain\User\Command\CreateUser;
 use ForkCMS\Modules\Backend\Domain\User\Event\BuildUserSettingsFormEvent;
 use ForkCMS\Modules\Backend\Domain\UserGroup\UserGroupDataGridChoiceType;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleName;
+use ForkCMS\Modules\Extensions\Domain\Module\ModuleSettings;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -33,7 +36,9 @@ final class UserType extends AbstractType
             TabsType::class,
             [
                 'tabs' => [
-                    'lbl.Authentication' => function (FormBuilderInterface $builder) use ($options): void {
+                    'lbl.Authentication' => function (FormBuilderInterface $builder) use (
+                        $options,
+                    ): void {
                         $builder
                             ->add(
                                 'displayName',
@@ -78,6 +83,7 @@ final class UserType extends AbstractType
                                     'required' => false,
                                 ]
                             );
+
                         /** @var User|null $user */
                         $user = $this->tokenStorage->getToken()?->getUser();
                         if ($user?->isSuperAdmin() ?? false) {

@@ -65,7 +65,7 @@ final class UserAddTest extends BackendWebTestCase
         );
     }
 
-    public function testSubmittedFormRedirectsToIndex(): void
+    public function testSubmittedFormRedirectsToEdit(): void
     {
         self::loadPage();
 
