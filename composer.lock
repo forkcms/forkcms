@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a06cee11609dc3c39b15ec3f19473133",
+    "content-hash": "255e3c4fe22bca2040767f434399c8b9",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4463,6 +4463,51 @@
             "time": "2022-12-20T23:38:28+00:00"
         },
         {
+            "name": "rhukster/dom-sanitizer",
+            "version": "1.0.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rhukster/dom-sanitizer.git",
+                "reference": "b4a19b982b74d2f5f78e683afd2ad00e99a6dc3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rhukster/dom-sanitizer/zipball/b4a19b982b74d2f5f78e683afd2ad00e99a6dc3c",
+                "reference": "b4a19b982b74d2f5f78e683afd2ad00e99a6dc3c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhukster\\DomSanitizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andy Miller",
+                    "email": "rhuk@rhuk.net"
+                }
+            ],
+            "description": "A simple but effective DOM/SVG/MathML Sanitizer for PHP 7.4+",
+            "support": {
+                "issues": "https://github.com/rhukster/dom-sanitizer/issues",
+                "source": "https://github.com/rhukster/dom-sanitizer/tree/1.0.19"
+            },
+            "time": "2026-09-30T16:45:11+00:00"
+        },
+        {
             "name": "simple-bus/doctrine-orm-bridge",
             "version": "v6.2.2",
             "source": {
@@ -6589,7 +6634,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -6598,8 +6643,11 @@
         "ext-zip": "*",
         "ext-gd": "*",
         "ext-intl": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-libxml": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

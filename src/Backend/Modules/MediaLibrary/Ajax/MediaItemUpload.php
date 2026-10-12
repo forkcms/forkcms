@@ -17,6 +17,7 @@ use Backend\Modules\MediaLibrary\Manager\MimeTypeManager;
 use Common\Exception\AjaxExitException;
 use Common\Exception\RedirectException;
 use SimpleBus\Message\Bus\MessageBus;
+use ForkCMS\Utility\Svg\SvgSanitizer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -96,6 +97,11 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         $tempUploadPath = $this->uploadDirectory . '/' . $result['uuid'] . '/' . $result['uploadName'];
         if ($this->fileManager->exists($tempUploadPath)) {
+            // an svg is an active document, so strip the scripts and event handlers while the file still lives
+            // under its unguessable temporary name, it may never be reachable under its final name with the
+            // payload intact
+            $this->sanitizeSvg($tempUploadPath, $result);
+
             // Move file to correct folder
             $this->fileManager->rename($tempUploadPath, $this->uploadDirectory . '/' . $newName);
 
@@ -118,6 +124,27 @@ class MediaItemUpload extends BackendBaseAJAXAction
                 $createMediaItemFromLocalSource->getMediaItem()->jsonSerialize()
             )
         );
+    }
+
+    /**
+     * Strips the active content out of an uploaded svg. An upload that can't be sanitized has its temporary
+     * folder removed again, so a rejected upload never leaves a payload behind on disk.
+     */
+    private function sanitizeSvg(string $path, array $result): void
+    {
+        if (!SvgSanitizer::isSvgFile($path)) {
+            return;
+        }
+
+        try {
+            (new SvgSanitizer())->sanitizeFile($path);
+        } catch (\RuntimeException $runtimeException) {
+            $this->fileManager->deleteFolder($this->uploadDirectory . '/' . $result['uuid']);
+
+            $this->sendResponseForResult(
+                array_merge($result, ['error' => $runtimeException->getMessage(), 'success' => false])
+            );
+        }
     }
 
     private function sendResponseForResult(array $result): void

@@ -48,6 +48,7 @@
             <directory>src/Backend/Modules/*/Tests</directory>
             <directory>src/Frontend/Core/Tests</directory>
             <directory>src/Common/Tests</directory>
+            <directory>src/ForkCMS/Utility/Tests</directory>
             <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
             <exclude>src/Frontend/Modules/*/Tests</exclude>
             <exclude>src/Frontend/Modules/Blog/Tests/Actions</exclude>

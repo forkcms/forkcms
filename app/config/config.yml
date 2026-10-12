@@ -234,6 +234,9 @@ services:
         arguments:
             - "%site.path_www%"
 
+    ForkCMS\Utility\Svg\SvgSanitizer:
+        public: true
+
     ForkCMS\Utility\Csv\Writer:
         public: true
         arguments:

@@ -19,6 +19,9 @@
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-simplexml": "*",
+        "ext-dom": "*",
+        "ext-fileinfo": "*",
+        "ext-libxml": "*",
         "behat/transliterator": "~1.0",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.7",
@@ -48,7 +51,8 @@
         "phpoffice/phpspreadsheet": "^1.12",
         "composer/package-versions-deprecated": "^1.11",
         "guzzlehttp/guzzle": "^6.5",
-        "doctrine/annotations": "^1.14"
+        "doctrine/annotations": "^1.14",
+        "rhukster/dom-sanitizer": "^1.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
