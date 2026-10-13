@@ -55,6 +55,15 @@ class UploadHandlerTest extends TestCase
         self::assertFileExists($this->directory . '/uploads/' . self::UUID . '/image.jpg');
     }
 
+    public function testCombineChunksRejectsMissingChunks(): void
+    {
+        $this->createUploadHandler(self::UUID, 'image.jpg')->combineChunks($this->directory . '/uploads');
+        $result = $this->createUploadHandler(self::UUID, 'other.jpg')->combineChunks($this->directory . '/uploads');
+
+        self::assertFalse($result['success']);
+        self::assertFalse(file_exists($this->directory . '/uploads/' . self::UUID . '/other.jpg'));
+    }
+
     private function createUploadHandler(string $uuid, string $fileName): UploadHandler
     {
         $request = new Request(['done' => ''], ['qquuid' => $uuid, 'qqfilename' => $fileName, 'qqtotalparts' => 1]);

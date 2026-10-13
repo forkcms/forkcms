@@ -68,6 +68,13 @@ class UploadHandler
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
         $totalParts = $this->request->request->getInt('qqtotalparts', 1);
 
+        // a retried completion request finds the chunks already consumed, don't create an empty file then
+        for ($i = 0; $i < $totalParts; ++$i) {
+            if (!is_file($targetFolder . DIRECTORY_SEPARATOR . $i)) {
+                return ['success' => false, 'error' => 'Missing chunks.', 'preventRetry' => true];
+            }
+        }
+
         $targetPath = implode(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
 
