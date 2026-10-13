@@ -227,17 +227,6 @@ class Model
         string $name,
         string $value
     ): array {
-        // create an array for the languages, surrounded by quotes (example: 'en')
-        $aLanguages = [];
-        foreach ($languages as $key => $val) {
-            $aLanguages[$key] = '\'' . $val . '\'';
-        }
-
-        // surround the types with quotes
-        foreach ($types as $key => $val) {
-            $types[$key] = '\'' . $val . '\'';
-        }
-
         // get database
         $database = BackendModel::getContainer()->get('database');
 
@@ -246,13 +235,18 @@ class Model
             'SELECT l.id, l.application, l.module, l.type, l.name, l.value, l.language, UNIX_TIMESTAMP(l.edited_on) as edited_on
              FROM locale AS l
              WHERE
-                 l.language IN (' . implode(',', $aLanguages) . ') AND
+                 l.language IN (' . implode(',', array_fill(0, count($languages), '?')) . ') AND
                  l.name LIKE ? AND
                  l.value LIKE ? AND
-                 l.type IN (' . implode(',', $types) . ')';
+                 l.type IN (' . implode(',', array_fill(0, count($types), '?')) . ')';
 
         // add the parameters
-        $parameters = ['%' . $name . '%', '%' . $value . '%'];
+        $parameters = [
+            ...array_values($languages),
+            '%' . $name . '%',
+            '%' . $value . '%',
+            ...array_values($types),
+        ];
 
         // add module to the query if needed
         if ($module) {
