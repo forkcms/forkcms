@@ -953,6 +953,7 @@ jsBackend.pages.extras = {
         button: 'ajax-upload-' + key,
         url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
         name: 'file',
+        customHeaders: { 'X-CSRF-Token': jsBackend.data.get('csrf-token') },
         accept: 'image/*',
         responseType: 'json',
         onComplete: function (filename, response) {
@@ -1005,6 +1006,7 @@ jsBackend.pages.extras = {
         button: 'ajax-upload-' + key,
         url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
         name: 'file',
+        customHeaders: { 'X-CSRF-Token': jsBackend.data.get('csrf-token') },
         accept: 'image/*',
         responseType: 'json',
         onComplete: function (filename, response) {
