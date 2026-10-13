@@ -78,7 +78,7 @@ jsBackend.location = {
       // create infowindow
       new google.maps.InfoWindow(
         {
-          content: '<h1>' + object.title + '</h1>' + object.text
+          content: '<h1>' + utils.string.htmlEncode(object.title) + '</h1>' + object.text
         }).open(map, marker)
     })
   },
