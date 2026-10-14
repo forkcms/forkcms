@@ -425,12 +425,12 @@ jsBackend.pages.extras = {
     // any items?
     if (typeof extrasData[selectedModule] !== 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] !== 'undefined') {
       if (extrasData[selectedModule]['items'][selectedType].length === 1 && selectedType === 'block') {
-        $('#extraExtraId').append('<option selected="selected" value="' + extrasData[selectedModule]['items'][selectedType][0].id + '">' + extrasData[selectedModule]['items'][selectedType][0].label + '</option>')
+        $('#extraExtraId').append('<option selected="selected" value="' + extrasData[selectedModule]['items'][selectedType][0].id + '">' + utils.string.htmlEncode(extrasData[selectedModule]['items'][selectedType][0].label) + '</option>')
       } else {
         // loop items
         for (var i in extrasData[selectedModule]['items'][selectedType]) {
           // add option
-          $('#extraExtraId').append('<option value="' + extrasData[selectedModule]['items'][selectedType][i].id + '">' + extrasData[selectedModule]['items'][selectedType][i].label + '</option>')
+          $('#extraExtraId').append('<option value="' + extrasData[selectedModule]['items'][selectedType][i].id + '">' + utils.string.htmlEncode(extrasData[selectedModule]['items'][selectedType][i].label) + '</option>')
         }
 
         // show
@@ -953,6 +953,7 @@ jsBackend.pages.extras = {
         button: 'ajax-upload-' + key,
         url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
         name: 'file',
+        customHeaders: { 'X-CSRF-Token': jsBackend.data.get('csrf-token') },
         accept: 'image/*',
         responseType: 'json',
         onComplete: function (filename, response) {
@@ -1005,6 +1006,7 @@ jsBackend.pages.extras = {
         button: 'ajax-upload-' + key,
         url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
         name: 'file',
+        customHeaders: { 'X-CSRF-Token': jsBackend.data.get('csrf-token') },
         accept: 'image/*',
         responseType: 'json',
         onComplete: function (filename, response) {

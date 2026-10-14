@@ -631,7 +631,7 @@
         var inElements = false
 
         // ugly hack to escape entities and quotes
-        value = $('<div />').text(value).html().replace('"', '&quot;')
+        value = $('<div />').text(value).html().replace(/"/g, '&quot;')
 
         // a value should contain the split char
         if (value.split(options.secondSplitChar).length === 1) value = ''
@@ -1096,7 +1096,7 @@
         var inElements = false
 
         // ugly hack to escape entities and quotes
-        value = $('<div />').text(value).html().replace('"', '&quot;')
+        value = $('<div />').text(value).html().replace(/"/g, '&quot;')
 
         // reset box
         $('#addValue-' + id).focus()
@@ -1409,7 +1409,7 @@
         var inElements = false
 
         // ugly hack to escape entities and quotes
-        value = $('<div />').text(value).html().replace('"', '&quot;')
+        value = $('<div />').text(value).html().replace(/"/g, '&quot;')
 
         // reset box
         if ($('#addValue-' + id).val().length > 0) {
@@ -1460,7 +1460,7 @@
           // loop elements
           for (var i in elements) {
             html += '    <li class="list-group-item"><div class="input-group">' +
-              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace('"', '&quot;') + '" />' +
+              '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i].replace(/"/g, '&quot;') + '" />' +
               '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + i + '" title="' + options.removeLabel + '">' +
               '           <span class="fa fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +

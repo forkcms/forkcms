@@ -129,10 +129,13 @@ class Login extends FrontendBaseBlock
 
     private function sanitizeQueryString(string $queryString): string
     {
-        if (!preg_match('/^\//', $queryString) or preg_match('/^\/[^a-zA-Z0-9.-_~]/', $queryString)) {
+        $queryString = filter_var($queryString, FILTER_SANITIZE_URL);
+
+        // only allow a local path: one leading slash and no backslashes, browsers treat "/\" like "//"
+        if (!preg_match('#^/(?!/)[^\\\\]*$#', $queryString)) {
             return SITE_MULTILANGUAGE ? SITE_URL . '/' . LANGUAGE : SITE_URL;
         }
 
-        return filter_var($queryString, FILTER_SANITIZE_URL);
+        return $queryString;
     }
 }

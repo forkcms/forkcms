@@ -385,9 +385,22 @@ class Index extends BackendBaseActionIndex
                     BL::err('FieldIsRequired')
                 );
             }
+            // the ids are rendered inside a <script>, so only allow the id format (e.g. G-XXXX, UA-1234-1, GTM-XXXX)
+            if ($this->form->getField('google_tracking_google_analytics_tracking_id')->isFilled()) {
+                $this->form->getField('google_tracking_google_analytics_tracking_id')->isValidAgainstRegexp(
+                    '/^[A-Z]{1,3}-[A-Z0-9-]+$/i',
+                    BL::err('InvalidValue')
+                );
+            }
             if ($this->form->getField('google_tracking_google_tag_manager_container_id_enabled')->getChecked()) {
                 $this->form->getField('google_tracking_google_tag_manager_container_id')->isFilled(
                     BL::err('FieldIsRequired')
+                );
+            }
+            if ($this->form->getField('google_tracking_google_tag_manager_container_id')->isFilled()) {
+                $this->form->getField('google_tracking_google_tag_manager_container_id')->isValidAgainstRegexp(
+                    '/^GTM-[A-Z0-9]+$/i',
+                    BL::err('InvalidValue')
                 );
             }
 

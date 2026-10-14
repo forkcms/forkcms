@@ -55,12 +55,25 @@ class UploadHandler
 
     public function combineChunks(string $uploadDirectory, string $name = null): array
     {
-        $uuid = $this->request->request->get('qquuid');
         if ($name === null) {
             $name = $this->getName();
         }
+
+        try {
+            $uuid = $this->getUuid();
+            $this->checkFileExtension($name);
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage(), 'preventRetry' => true];
+        }
         $targetFolder = $this->chunksFolder . DIRECTORY_SEPARATOR . $uuid;
         $totalParts = $this->request->request->getInt('qqtotalparts', 1);
+
+        // a retried completion request finds the chunks already consumed, don't create an empty file then
+        for ($i = 0; $i < $totalParts; ++$i) {
+            if (!is_file($targetFolder . DIRECTORY_SEPARATOR . $i)) {
+                return ['success' => false, 'error' => 'Missing chunks.', 'preventRetry' => true];
+            }
+        }
 
         $targetPath = implode(DIRECTORY_SEPARATOR, [$uploadDirectory, $uuid, $name]);
         $this->uploadName = $name;
@@ -103,6 +116,7 @@ class UploadHandler
             $this->checkMaximumSize();
             $this->checkUploadDirectory($uploadDirectory);
             $this->checkType();
+            $uuid = $this->getUuid();
             $file = $this->getFile($uploadDirectory);
             $size = $this->getSize($file);
 
@@ -118,8 +132,6 @@ class UploadHandler
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
-
-        $uuid = $this->request->request->get('qquuid');
 
         // Chunked upload
         if ($this->request->request->getInt('qqtotalparts', 1) > 1) {
@@ -210,6 +222,18 @@ class UploadHandler
                 'Server error. Not a multipart request. Please set forceMultipart to default value (true).'
             );
         }
+    }
+
+    private function getUuid(): string
+    {
+        $uuid = (string) $this->request->request->get('qquuid');
+
+        // The uuid is used as a folder name, so only accept the format fine-uploader generates
+        if (preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $uuid) !== 1) {
+            throw new Exception('Invalid uuid.');
+        }
+
+        return $uuid;
     }
 
     private function checkFileExtension(string $name): void

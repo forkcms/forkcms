@@ -35,6 +35,8 @@ class UploadFile extends AjaxAction
 
     public function execute(): void
     {
+        parent::execute();
+
         $request = $this->getRequest();
 
         try {

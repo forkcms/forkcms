@@ -216,7 +216,8 @@ utils.string = {
    * @param string value
    */
   htmlEncode: function (value) {
-    return $('<div/>').text(value).html()
+    // also escape quotes so the result is safe inside attribute values
+    return $('<div/>').text(value).html().replace(/"/g, '&quot;').replace(/'/g, '&#039;')
   },
 
   /**

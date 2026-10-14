@@ -11,8 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RemoveUploadedFile extends AjaxAction
 {
+    private const ALLOWED_DIRECTORIES = ['UserTemplate'];
+
     public function execute(): void
     {
+        parent::execute();
+
         $request = $this->getRequest();
         if (!$request->request->has('file') || !$request->request->has('type')) {
             $this->output(Response::HTTP_BAD_REQUEST, 'Missing data');
@@ -22,6 +26,11 @@ class RemoveUploadedFile extends AjaxAction
 
         $file = pathinfo($this->getRequest()->request->get('file'), PATHINFO_BASENAME);
         $directory = $this->getRequest()->request->get('type');
+        if (!in_array($directory, self::ALLOWED_DIRECTORIES, true)) {
+            $this->output(Response::HTTP_BAD_REQUEST, 'Invalid type');
+
+            return;
+        }
 
         $path = FRONTEND_FILES_PATH . '/Pages/' . $directory . '/' . $file;
 

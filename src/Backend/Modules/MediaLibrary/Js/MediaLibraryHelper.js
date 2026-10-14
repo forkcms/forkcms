@@ -1544,10 +1544,10 @@ jsBackend.mediaLibraryHelper.templates = {
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-fork="mediaItem" data-folder-id="' + mediaItem.folder.id + '" data-media-id="' + mediaItem.id + '">'
 
     if (mediaItem.type === 'image') {
-      html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
+      html += '<img src="' + utils.string.htmlEncode(mediaItem.preview_source) + '" alt="' + utils.string.htmlEncode(mediaItem.title) + '" title="' + utils.string.htmlEncode(mediaItem.title) + '"/>'
     } else {
       html += '<div class="icon"></div>'
-      html += '<div class="url">' + mediaItem.url + '</div>'
+      html += '<div class="url">' + utils.string.htmlEncode(mediaItem.url) + '</div>'
     }
     html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
@@ -1580,12 +1580,12 @@ jsBackend.mediaLibraryHelper.templates = {
     if (mediaItem.type === 'image') {
       html += '<td class="fullUrl">'
       html += '<label for="media-' + mediaItem.id + '-checkbox">'
-      html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" height="50" />'
+      html += '<img src="' + utils.string.htmlEncode(mediaItem.preview_source) + '" alt="' + utils.string.htmlEncode(mediaItem.title) + '" height="50" />'
       html += '</label>'
       html += '</td>'
     }
 
-    html += '<td class="url"><label for="media-' + mediaItem.id + '-checkbox">' + mediaItem.url + '</label></td>'
+    html += '<td class="url"><label for="media-' + mediaItem.id + '-checkbox">' + utils.string.htmlEncode(mediaItem.url) + '</label></td>'
     html += '<td class="title"><label for="media-' + mediaItem.id + '-checkbox">' + utils.string.htmlEncode(mediaItem.title) + '</label></td>'
     html += '</tr>'
 
@@ -1608,11 +1608,11 @@ jsBackend.mediaLibraryHelper.templates = {
 
     // is image
     if (mediaItem.type === 'image') {
-      html += '<img src="' + mediaItem.preview_source + '" alt="' + mediaItem.title + '" title="' + mediaItem.title + '"/>'
+      html += '<img src="' + utils.string.htmlEncode(mediaItem.preview_source) + '" alt="' + utils.string.htmlEncode(mediaItem.title) + '" title="' + utils.string.htmlEncode(mediaItem.title) + '"/>'
       // is file, movie or audio
     } else {
       html += '<div class="icon"></div>'
-      html += '<div class="url">' + mediaItem.url + '</div>'
+      html += '<div class="url">' + utils.string.htmlEncode(mediaItem.url) + '</div>'
     }
 
     html += '<button type="button" class="disconnectMediaItem" data-fork="disconnect" '
