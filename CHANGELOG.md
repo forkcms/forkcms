@@ -1,3 +1,33 @@
+5.12.3  (2026-10-15)
+------------------
+
+Security:
+* Core: Disallow SVG uploads in CKFinder
+
+Fixed:
+* Core: Report the correct Fork CMS version
+
+
+5.12.2  (2026-10-15)
+------------------
+
+Security:
+* Core: Restrict the GenerateUrl callbacks to module URL methods [#3607](https://github.com/forkcms/forkcms/pull/3607)
+* MediaLibrary, Pages: Sanitize uploaded SVG files [#3607](https://github.com/forkcms/forkcms/pull/3607)
+
+
+5.12.1  (2026-10-14)
+------------------
+
+Security:
+* MediaLibrary: Validate the uuid and extension when combining upload chunks [#3606](https://github.com/forkcms/forkcms/pull/3606)
+* Pages: Require a CSRF token and restrict the folder in the upload AJAX actions [#3606](https://github.com/forkcms/forkcms/pull/3606)
+* Locale: Use query placeholders for languages and types [#3606](https://github.com/forkcms/forkcms/pull/3606)
+* Authentication, Profiles: Only redirect to local paths after login [#3606](https://github.com/forkcms/forkcms/pull/3606)
+* Core: Escape user content rendered in backend HTML [#3606](https://github.com/forkcms/forkcms/pull/3606)
+* Settings: Validate the Google Analytics and Tag Manager ids [#3606](https://github.com/forkcms/forkcms/pull/3606)
+
+
 5.12.0  (2023-07-31)
 ------------------
 
