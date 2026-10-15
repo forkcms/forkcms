@@ -12,6 +12,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * Use this class to add meta url generating to your symfony form.
  *
  * Example: $builder->addEventSubscriber(new AddMetaSubscriber(...));
+ *
+ * The url callback is invoked through MetaRepository::generateUrl, which only accepts the well-known,
+ * side-effect-free module url generators. This limits the callback to:
+ *  - a module model class name: Backend\Modules\<Module>\Engine\Model or the Frontend equivalent,
+ *    container service ids are not resolved;
+ *  - the public static method "getUrl" or "getUrlForCategory" on that class.
+ * Any other class or method is rejected and the meta url can't be generated.
  */
 class AddMetaSubscriber implements EventSubscriberInterface
 {
@@ -31,7 +38,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
     private $generateUrlCallbackClass;
 
     /**
-     * @var string - Name of the public method which returns you the URL, f.e.: "getUrl"
+     * @var string - Name of the public method which returns you the URL, only "getUrl" and "getUrlForCategory" are supported
      */
     private $generateUrlCallbackMethod;
 
