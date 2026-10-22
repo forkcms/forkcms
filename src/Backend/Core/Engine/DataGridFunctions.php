@@ -4,6 +4,7 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use SpoonDate;
 use SpoonFilter;
 
@@ -277,6 +278,19 @@ class DataGridFunctions
         }
 
         return $html;
+    }
+
+    public static function showLink(string $mediaItemId): string
+    {
+        /** @var ?MediaItem $mediaItem */
+        $mediaItem = BackendModel::get('media_library.repository.item')->find($mediaItemId);
+
+        if ($mediaItem === null) {
+            return '';
+        }
+
+        // open in new tab
+        return '<a href="' . $mediaItem->getAbsoluteWebPath() . '" target="_blank" title="' . $mediaItem->getTitle() . '">' . $mediaItem->getAbsoluteWebPath() . '</a>';
     }
 
     /**

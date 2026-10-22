@@ -19,9 +19,8 @@ class MediaItemDataGrid extends DataGridDatabase
     {
         parent::__construct(
             'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
-                COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
+                i.id as link, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
-             LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $this->getWhere($folderId, $searchQuery) . ' GROUP BY i.id',
             $this->getParameters($type, $folderId, $searchQuery)
         );
@@ -141,7 +140,6 @@ class MediaItemDataGrid extends DataGridDatabase
                 'createdOn',
                 'url',
                 'title',
-                'num_connected',
                 'mime',
             ],
             'title'
@@ -163,11 +161,13 @@ class MediaItemDataGrid extends DataGridDatabase
             );
         }
 
-        $this->setColumnURL(
-            'num_connected',
-            $editActionUrl
-            . '&id=[id]'
-            . ($folderId ? '&folder=' . $folderId : '')
+        $this->setColumnFunction(
+            [BackendDataGridFunctions::class, 'showLink'],
+            [
+                '[link]',
+            ],
+            'link',
+            true
         );
 
         // If we have an image, show the image
